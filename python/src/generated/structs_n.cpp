@@ -7,109 +7,127 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // normal_modes_struct
-void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls) {
+void init_normal_modes_struct(nb::module_ &m, nb::class_<NormalModesStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<std::vector<double>>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             optional_ref<const AnormalModeStruct>,
-             optional_ref<const AnormalModeStruct>,
-             optional_ref<const AnormalModeStruct>,
-             optional_ref<const LinacNormalModeStruct>>(),
-         py::arg("synch_int") = py::none(),
-         py::arg("sigE_E") = py::none(),
-         py::arg("sig_z") = py::none(),
-         py::arg("e_loss") = py::none(),
-         py::arg("rf_voltage") = py::none(),
-         py::arg("pz_aperture") = py::none(),
-         py::arg("pz_average") = py::none(),
-         py::arg("momentum_compaction") = py::none(),
-         py::arg("dpz_damp") = py::none(),
-         py::arg("a") = py::none(),
-         py::arg("b") = py::none(),
-         py::arg("z") = py::none(),
-         py::arg("lin") = py::none()
+         "__init__",
+         [](NormalModesStruct *self,
+            std::optional<std::vector<double>> synch_int,
+            std::optional<double> sigE_E,
+            std::optional<double> sig_z,
+            std::optional<double> e_loss,
+            std::optional<double> rf_voltage,
+            std::optional<double> pz_aperture,
+            std::optional<double> pz_average,
+            std::optional<double> momentum_compaction,
+            std::optional<double> dpz_damp,
+            const AnormalModeStruct *a,
+            const AnormalModeStruct *b,
+            const AnormalModeStruct *z,
+            const LinacNormalModeStruct *lin) {
+           new (self) NormalModesStruct(
+               synch_int,
+               sigE_E,
+               sig_z,
+               e_loss,
+               rf_voltage,
+               pz_aperture,
+               pz_average,
+               momentum_compaction,
+               dpz_damp,
+               ptr_to_opt_ref(a),
+               ptr_to_opt_ref(b),
+               ptr_to_opt_ref(z),
+               ptr_to_opt_ref(lin)
+           );
+         },
+         nb::arg("synch_int") = nb::none(),
+         nb::arg("sigE_E") = nb::none(),
+         nb::arg("sig_z") = nb::none(),
+         nb::arg("e_loss") = nb::none(),
+         nb::arg("rf_voltage") = nb::none(),
+         nb::arg("pz_aperture") = nb::none(),
+         nb::arg("pz_average") = nb::none(),
+         nb::arg("momentum_compaction") = nb::none(),
+         nb::arg("dpz_damp") = nb::none(),
+         nb::arg("a") = nb::none(),
+         nb::arg("b") = nb::none(),
+         nb::arg("z") = nb::none(),
+         nb::arg("lin") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "synch_int",
-          py::cpp_function(&NormalModesStruct::synch_int, py::keep_alive<0, 1>()),
+          &NormalModesStruct::synch_int,
           &NormalModesStruct::set_synch_int,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Synchrotron integrals I0, I1, I2, and I3"
       )
-      .def_property(
-          "sigE_E",
-          &NormalModesStruct::sigE_E,
-          &NormalModesStruct::set_sigE_E,
-          "SigmaE/E"
-      )
-      .def_property("sig_z", &NormalModesStruct::sig_z, &NormalModesStruct::set_sig_z, "Sigma_Z")
-      .def_property(
+      .def_prop_rw("sigE_E", &NormalModesStruct::sigE_E, &NormalModesStruct::set_sigE_E, "SigmaE/E")
+      .def_prop_rw("sig_z", &NormalModesStruct::sig_z, &NormalModesStruct::set_sig_z, "Sigma_Z")
+      .def_prop_rw(
           "e_loss",
           &NormalModesStruct::e_loss,
           &NormalModesStruct::set_e_loss,
           "Energy loss / turn (eV)"
       )
-      .def_property(
+      .def_prop_rw(
           "rf_voltage",
           &NormalModesStruct::rf_voltage,
           &NormalModesStruct::set_rf_voltage,
           "Total rfcavity voltage (eV)"
       )
-      .def_property(
+      .def_prop_rw(
           "pz_aperture",
           &NormalModesStruct::pz_aperture,
           &NormalModesStruct::set_pz_aperture,
           "pz aperture limit. Used with Touschek calculations."
       )
-      .def_property(
+      .def_prop_rw(
           "pz_average",
           &NormalModesStruct::pz_average,
           &NormalModesStruct::set_pz_average,
           "Average over branch due to damping."
       )
-      .def_property(
+      .def_prop_rw(
           "momentum_compaction",
           &NormalModesStruct::momentum_compaction,
           &NormalModesStruct::set_momentum_compaction
       )
-      .def_property(
+      .def_prop_rw(
           "dpz_damp",
           &NormalModesStruct::dpz_damp,
           &NormalModesStruct::set_dpz_damp,
           "Change in pz without RF"
       )
-      .def_property(
+      .def_prop_rw(
           "a",
-          py::cpp_function(&NormalModesStruct::a, py::keep_alive<0, 1>()),
-          &NormalModesStruct::set_a
+          &NormalModesStruct::a,
+          &NormalModesStruct::set_a,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "b",
-          py::cpp_function(&NormalModesStruct::b, py::keep_alive<0, 1>()),
-          &NormalModesStruct::set_b
+          &NormalModesStruct::b,
+          &NormalModesStruct::set_b,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "z",
-          py::cpp_function(&NormalModesStruct::z, py::keep_alive<0, 1>()),
-          &NormalModesStruct::set_z
+          &NormalModesStruct::z,
+          &NormalModesStruct::set_z,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "lin",
-          py::cpp_function(&NormalModesStruct::lin, py::keep_alive<0, 1>()),
-          &NormalModesStruct::set_lin
+          &NormalModesStruct::lin,
+          &NormalModesStruct::set_lin,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
 
       .def("__repr__", [](const NormalModesStruct &self) { return to_string(self); })
@@ -122,21 +140,20 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
       )
       .def(
           "__deepcopy__",
-          [](const NormalModesStruct &self, py::dict &memo) { return NormalModesStruct(self); }
+          [](const NormalModesStruct &self, nb::dict &memo) { return NormalModesStruct(self); }
       )
       .def(
           "__eq__",
           [](const NormalModesStruct &self, const NormalModesStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const NormalModesStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -149,31 +166,28 @@ void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &cls)
 
 // =============================================================================
 // nametable_struct
-void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
+void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<int>>(),
-         py::arg("index") = py::none(),
-         py::arg("n_min") = py::none(),
-         py::arg("n_max") = py::none()
+         nb::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<int>>(),
+         nb::arg("index") = nb::none(),
+         nb::arg("n_min") = nb::none(),
+         nb::arg("n_max") = nb::none()
   )
-      .def_property_readonly(
-          "name",
-          py::cpp_function(&NametableStruct::name, py::keep_alive<0, 1>()),
-          "Array of names."
-      )
-      .def_property(
+      .def_prop_ro("name", &NametableStruct::name, nb::keep_alive<0, 1>(), "Array of names.")
+      .def_prop_rw(
           "index",
-          py::cpp_function(&NametableStruct::index, py::keep_alive<0, 1>()),
+          &NametableStruct::index,
           &NametableStruct::set_index,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Sorted index for names(:) array. names(an_index(i)) is in alphabetical order."
       )
-      .def_property(
+      .def_prop_rw(
           "n_min",
           &NametableStruct::n_min,
           &NametableStruct::set_n_min,
           "Set to 0 for use in a lattice."
       )
-      .def_property(
+      .def_prop_rw(
           "n_max",
           &NametableStruct::n_max,
           &NametableStruct::set_n_max,
@@ -190,21 +204,20 @@ void init_nametable_struct(py::module &m, py::class_<NametableStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const NametableStruct &self, py::dict &memo) { return NametableStruct(self); }
+          [](const NametableStruct &self, nb::dict &memo) { return NametableStruct(self); }
       )
       .def(
           "__eq__",
           [](const NametableStruct &self, const NametableStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const NametableStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

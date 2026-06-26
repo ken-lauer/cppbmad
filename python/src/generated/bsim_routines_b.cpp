@@ -1,18 +1,17 @@
 #include "pybmad/generated/bsim_routines_b.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_b(py::module &m) {
+void init_bsim_routines_b(nb::module_ &m) {
   m.def(
       "bbu_add_a_bunch",
       &bsim::bbu_add_a_bunch,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("bbu_param"),
-      py::arg("beam_init"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("bbu_beam"),
+      nb::arg("bbu_param"),
+      nb::arg("beam_init"),
       R"""(Wrapper for Fortran routine bbu_add_a_bunch
 
 Parameters
@@ -29,11 +28,10 @@ beam_init : BeamInitStruct
   m.def(
       "bbu_hom_voltage_calc",
       &bsim::bbu_hom_voltage_calc,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("n_period"),
-      py::arg("ix_stage_last_tracked"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("bbu_beam"),
+      nb::arg("n_period"),
+      nb::arg("ix_stage_last_tracked"),
       R"""(Wrapper for Fortran routine bbu_hom_voltage_calc
 
 Parameters
@@ -50,8 +48,7 @@ ix_stage_last_tracked : int
   m.def(
       "bbu_remove_head_bunch",
       &bsim::bbu_remove_head_bunch,
-      py::arg("bbu_beam"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bbu_beam"),
       R"""(Wrapper for Fortran routine bbu_remove_head_bunch
 
 Parameters
@@ -62,11 +59,10 @@ bbu_beam : BbuBeamStruct
   m.def(
       "bbu_setup",
       &bsim::bbu_setup,
-      py::arg("lat"),
-      py::arg("dt_bunch"),
-      py::arg("bbu_param"),
-      py::arg("bbu_beam"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("dt_bunch"),
+      nb::arg("bbu_param"),
+      nb::arg("bbu_beam"),
       R"""(Wrapper for Fortran routine bbu_setup
 
 Parameters
@@ -83,12 +79,11 @@ bbu_beam : BbuBeamStruct
   m.def(
       "bbu_track_a_stage",
       &bsim::bbu_track_a_stage,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("bbu_param"),
-      py::arg("lost"),
-      py::arg("ix_stage_tracked"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("bbu_beam"),
+      nb::arg("bbu_param"),
+      nb::arg("lost"),
+      nb::arg("ix_stage_tracked"),
       R"""(Wrapper for Fortran routine bbu_track_a_stage
 
 Parameters
@@ -104,37 +99,32 @@ lost : bool
 ix_stage_tracked : int
 )"""
   );
-  py::class_<bsim::BbuTrackAll, std::unique_ptr<bsim::BbuTrackAll>>(
-      m,
-      "BbuTrackAll",
-      "bbu_track_all return type"
-  )
-      .def_readonly("hom_voltage_normalized", &bsim::BbuTrackAll::hom_voltage_normalized)
-      .def_readonly("growth_rate", &bsim::BbuTrackAll::growth_rate)
-      .def_readonly("lost", &bsim::BbuTrackAll::lost)
-      .def_readonly("irep", &bsim::BbuTrackAll::irep)
+  nb::class_<bsim::BbuTrackAll>(m, "BbuTrackAll", "bbu_track_all return type")
+      .def_ro("hom_voltage_normalized", &bsim::BbuTrackAll::hom_voltage_normalized)
+      .def_ro("growth_rate", &bsim::BbuTrackAll::growth_rate)
+      .def_ro("lost", &bsim::BbuTrackAll::lost)
+      .def_ro("irep", &bsim::BbuTrackAll::irep)
       .def("__len__", [](const bsim::BbuTrackAll &) { return 4; })
-      .def("__getitem__", [](const bsim::BbuTrackAll &s, int i) -> py::object {
+      .def("__getitem__", [](const bsim::BbuTrackAll &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.hom_voltage_normalized);
+          return nb::cast(s.hom_voltage_normalized);
         if (i == 1)
-          return py::cast(s.growth_rate);
+          return nb::cast(s.growth_rate);
         if (i == 2)
-          return py::cast(s.lost);
+          return nb::cast(s.lost);
         if (i == 3)
-          return py::cast(s.irep);
-        throw py::index_error();
+          return nb::cast(s.irep);
+        throw nb::index_error();
       });
   m.def(
       "bbu_track_all",
       &bsim::bbu_track_all,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("bbu_param"),
-      py::arg("beam_init"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("bbu_beam"),
+      nb::arg("bbu_param"),
+      nb::arg("beam_init"),
       R"""(Wrapper for Fortran routine bbu_track_all
 
 Parameters

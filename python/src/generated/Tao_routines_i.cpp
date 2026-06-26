@@ -1,21 +1,20 @@
 #include "pybmad/generated/Tao_routines_i.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Tao_routines_i(py::module &m) {
+void init_Tao_routines_i(nb::module_ &m) {
   m.def(
       "integrate_max",
       &Tao::integrate_max,
-      py::arg("ix_start"),
-      py::arg("ix_ele"),
-      py::arg("datum_value"),
-      py::arg("ix_m"),
-      py::arg("branch"),
-      py::arg("vec"),
-      py::arg("datum"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ix_start"),
+      nb::arg("ix_ele"),
+      nb::arg("datum_value"),
+      nb::arg("ix_m"),
+      nb::arg("branch"),
+      nb::arg("vec"),
+      nb::arg("datum"),
       R"""(Wrapper for Fortran routine integrate_max
 
 Parameters
@@ -38,14 +37,13 @@ datum : TaoDataStruct
   m.def(
       "integrate_min",
       &Tao::integrate_min,
-      py::arg("ix_start"),
-      py::arg("ix_ele"),
-      py::arg("datum_value"),
-      py::arg("ix_m"),
-      py::arg("branch"),
-      py::arg("vec"),
-      py::arg("datum"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ix_start"),
+      nb::arg("ix_ele"),
+      nb::arg("datum_value"),
+      nb::arg("ix_m"),
+      nb::arg("branch"),
+      nb::arg("vec"),
+      nb::arg("datum"),
       R"""(Wrapper for Fortran routine integrate_min
 
 Parameters

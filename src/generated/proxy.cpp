@@ -6226,6 +6226,250 @@ int NametableStruct::n_max() const {
   return value;
 }
 void NametableStruct::set_n_max(int value) { nametable_struct_set_integer(fortran_ptr_, 1, value); }
+std::optional<double> AllPointerStruct::r() const {
+  double value;
+  bool is_valid;
+  all_pointer_struct_get_r(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_r(double value) { all_pointer_struct_set_r(fortran_ptr_, value); }
+std::optional<long double> AllPointerStruct::q() const {
+  long double value;
+  bool is_valid;
+  all_pointer_struct_get_q(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_q(long double value) { all_pointer_struct_set_q(fortran_ptr_, value); }
+std::optional<int> AllPointerStruct::i() const {
+  int value;
+  bool is_valid;
+  all_pointer_struct_get_i(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_i(int value) { all_pointer_struct_set_i(fortran_ptr_, value); }
+std::optional<bool> AllPointerStruct::l() const {
+  bool value;
+  bool is_valid;
+  all_pointer_struct_get_l(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_l(bool value) { all_pointer_struct_set_l(fortran_ptr_, value); }
+FArray1D<double> AllPointerStruct::r1() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, all_pointer_struct_get_r1_info);
+}
+void AllPointerStruct::set_r1(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_pointer_struct_set_r1(fortran_ptr_, v.data(), shape);
+}
+FArray1D<int> AllPointerStruct::i1() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_pointer_struct_get_i1_info);
+}
+void AllPointerStruct::set_i1(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_pointer_struct_set_i1(fortran_ptr_, v.data(), shape);
+}
+ParserControllerStructAlloc1D ParserEleStruct::control() const {
+  return ParserControllerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_ele_struct_reallocate_control,
+      parser_ele_struct_get_control_info
+  );
+}
+FCharArray1D ParserEleStruct::field_overlaps() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_field_overlaps_info);
+}
+std::string ParserEleStruct::ref_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_ref_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_ref_name(const std::string &value) {
+  parser_ele_struct_set_ref_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int ParserEleStruct::ix_super_ref_multipass() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_super_ref_multipass(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string ParserEleStruct::ele_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_ele_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_ele_name(const std::string &value) {
+  parser_ele_struct_set_ele_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+FCharArray1D ParserEleStruct::names1() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_names1_info);
+}
+FCharArray1D ParserEleStruct::names2() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_names2_info);
+}
+std::string ParserEleStruct::lat_file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_lat_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_lat_file(const std::string &value) {
+  parser_ele_struct_set_lat_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double ParserEleStruct::offset() const {
+  double value;
+  parser_ele_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_offset(double value) {
+  parser_ele_struct_set_real(fortran_ptr_, 0, value);
+}
+int ParserEleStruct::ix_line_in_file() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_line_in_file(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 1, value);
+}
+int ParserEleStruct::ix_count() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_count(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 2, value);
+}
+int ParserEleStruct::ele_pt() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void ParserEleStruct::set_ele_pt(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 3, value);
+}
+int ParserEleStruct::ref_pt() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void ParserEleStruct::set_ref_pt(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 4, value);
+}
+int ParserEleStruct::index() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void ParserEleStruct::set_index(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 5, value);
+}
+bool ParserEleStruct::superposition_command_here() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_superposition_command_here(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool ParserEleStruct::superposition_has_been_set() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void ParserEleStruct::set_superposition_has_been_set(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool ParserEleStruct::wrap_superimpose() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void ParserEleStruct::set_wrap_superimpose(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool ParserEleStruct::create_jumbo_slave() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void ParserEleStruct::set_create_jumbo_slave(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool ParserEleStruct::is_range() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void ParserEleStruct::set_is_range(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 4, value);
+}
+std::string ParserEleStruct::default_attrib() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_default_attrib_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_default_attrib(const std::string &value) {
+  parser_ele_struct_set_default_attrib(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string ParserControllerStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_controller_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserControllerStruct::set_name(const std::string &value) {
+  parser_controller_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string ParserControllerStruct::attrib_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_controller_struct_get_attrib_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserControllerStruct::set_attrib_name(const std::string &value) {
+  parser_controller_struct_set_attrib_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+ExpressionAtomStructAlloc1D ParserControllerStruct::stack() const {
+  return ExpressionAtomStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_controller_struct_reallocate_stack,
+      parser_controller_struct_get_stack_info
+  );
+}
+RealAlloc1D ParserControllerStruct::y_knot() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_controller_struct_reallocate_y_knot,
+      parser_controller_struct_get_y_knot_info
+  );
+}
+void ParserControllerStruct::set_y_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  parser_controller_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+}
+int ParserControllerStruct::n_stk() const {
+  int value;
+  parser_controller_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserControllerStruct::set_n_stk(int value) {
+  parser_controller_struct_set_integer(fortran_ptr_, 0, value);
+}
 FArray1D<double> TaoSpinDnDpzStruct::vec() const {
   return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_vec_info);
 }
@@ -13657,8 +13901,7 @@ FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
       all_encompassing_struct_get_int8_3d_ptr_info
   );
 }
-void AllEncompassingStruct::set_int8_3d_ptr(
-    const std::vector<std::vector<std::vector<int64_t>>> &v
+void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
 ) {
   ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
 }

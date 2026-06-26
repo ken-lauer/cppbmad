@@ -1,23 +1,20 @@
 #include "pybmad/generated/Bmad_routines_h.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_h(py::module &m) {
+void init_Bmad_routines_h(nb::module_ &m) {
   m.def(
       "hard_multipole_edge_kick",
       &Bmad::hard_multipole_edge_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("orbit"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine hard_multipole_edge_kick (ele, param, particle_at, orbit, mat6, make_matrix)
-
-Routine to track through the hard edge field of a multipole.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orbit"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Routine to track through the hard edge field of a multipole.
 The dipole component is ignored and only quadrupole and higher multipoles are included.
 
 This routine handles elements of type:
@@ -55,9 +52,8 @@ make_matrix : bool, optional
   m.def(
       "has_attribute",
       &Bmad::has_attribute,
-      py::arg("ele"),
-      py::arg("attrib"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("attrib"),
       R"""(Wrapper for Fortran routine has_attribute
 
 Parameters
@@ -74,11 +70,8 @@ has_it : bool
   m.def(
       "has_curvature",
       &Bmad::has_curvature,
-      py::arg("phot_ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function has_curvature (phot_ele) result (curved)
-
-Routine to determine if a surface is potentially curved or is flat.
+      nb::arg("phot_ele"),
+      R"""(Routine to determine if a surface is potentially curved or is flat.
 
 Parameters
 ----------
@@ -94,11 +87,8 @@ curved : bool
   m.def(
       "has_orientation_attributes",
       &Bmad::has_orientation_attributes,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function has_orientation_attributes (ele) result (has_attribs)
-
-Routine to determine whether an element has orientation attributes like x_offset, etc.
+      nb::arg("ele"),
+      R"""(Routine to determine whether an element has orientation attributes like x_offset, etc.
 Also see: has_attribute function.
 
 Parameters
@@ -114,14 +104,24 @@ has_attribs : bool
   );
   m.def(
       "hdf5_write_beam",
-      &Bmad::hdf5_write_beam,
-      py::arg("file_name"),
-      py::arg("bunches"),
-      py::arg("append"),
-      py::arg("error"),
-      py::arg("lat") = py::none(),
-      py::arg("alive_only") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](std::string file_name,
+         BunchStructArray1D bunches,
+         bool append,
+         bool error,
+         LatStruct *lat,
+         std::optional<bool> alive_only) {
+        auto fn = static_cast<
+            void (*)(std::string, BunchStructArray1D, bool, bool, optional_ref<LatStruct>, std::optional<bool>)>(
+            &Bmad::hdf5_write_beam
+        );
+        return fn(file_name, bunches, append, error, ptr_to_opt_ref(lat), alive_only);
+      },
+      nb::arg("file_name"),
+      nb::arg("bunches"),
+      nb::arg("append"),
+      nb::arg("error"),
+      nb::arg("lat") = nb::none(),
+      nb::arg("alive_only") = nb::none(),
       R"""(Wrapper for Fortran routine hdf5_write_beam
 
 Parameters
@@ -142,11 +142,10 @@ alive_only : bool, optional
   m.def(
       "hdf5_write_grid_field",
       &Bmad::hdf5_write_grid_field,
-      py::arg("file_name"),
-      py::arg("ele"),
-      py::arg("g_field"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      nb::arg("g_field"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine hdf5_write_grid_field
 
 Parameters
@@ -163,16 +162,13 @@ err_flag : bool
   m.def(
       "hwang_bend_edge_kick",
       &Bmad::hwang_bend_edge_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("orb"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine hwang_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
-
-Subroutine to track through the edge field of an sbend using a 2nd order map.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orb"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Subroutine to track through the edge field of an sbend using a 2nd order map.
 Adapted from:
   Hwang and S. Y. Lee,
   "Dipole Fringe Field Thin Map for Compact Synchrotrons",

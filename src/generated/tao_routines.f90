@@ -37,15 +37,16 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_pointer_to_universes, tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, &
     tao_quiet_set, tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
     tao_read_phase_space_index, tao_regression_test, tao_remove_blank_characters, tao_run_cmd, &
-    tao_scale_ping_data, tao_set_data_useit_opt, tao_set_invalid, tao_set_opt_vars, &
-    tao_set_var_model_value, tao_set_var_useit_opt, tao_setup_key_table, tao_shape_init, &
-    tao_show_cmd, tao_show_this, tao_single_mode, tao_spin_matrices_calc_needed, &
-    tao_spin_tracking_turn_on, tao_split_component, tao_srdt_calc_needed, tao_subin_uni_number, &
-    tao_symbol_import_from_lat, tao_taper_cmd, tao_to_real, tao_top_level, &
-    tao_turn_on_special_calcs_if_needed_for_plotting, tao_uni_atsign_index, tao_universe_index, &
-    tao_use_data, tao_use_var, tao_user_is_terminating_optimization, tao_var1_name, &
-    tao_var_attrib_name, tao_var_check, tao_var_repoint, tao_var_show_use, tao_var_target_calc, &
-    tao_var_useit_plot_calc, tao_write_cmd, tao_x_axis_cmd
+    tao_scale_ping_data, tao_set_data_useit_opt, tao_set_flags_for_changed_attribute, &
+    tao_set_invalid, tao_set_opt_vars, tao_set_var_model_value, tao_set_var_useit_opt, &
+    tao_setup_key_table, tao_shape_init, tao_show_cmd, tao_show_this, tao_single_mode, &
+    tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, tao_split_component, &
+    tao_srdt_calc_needed, tao_subin_uni_number, tao_symbol_import_from_lat, tao_taper_cmd, &
+    tao_to_real, tao_top_level, tao_turn_on_special_calcs_if_needed_for_plotting, &
+    tao_uni_atsign_index, tao_universe_index, tao_use_data, tao_use_var, &
+    tao_user_is_terminating_optimization, tao_var1_name, tao_var_attrib_name, tao_var_check, &
+    tao_var_repoint, tao_var_show_use, tao_var_target_calc, tao_var_useit_plot_calc, &
+    tao_write_cmd, tao_x_axis_cmd
 
 use tao_init_data_mod, only: tao_add_to_normal_mode_h_array, tao_allocate_data_array, &
     tao_d2_data_stuffit, tao_init_data, tao_init_data_end_stuff, tao_init_data_in_universe
@@ -7053,6 +7054,52 @@ subroutine fortran_tao_set_elements_cmd (ele_list, attribute, value, update) bin
   ! in: f_update 0D_NOT_logical
   f_update = update
   call tao_set_elements_cmd(f_ele_list, f_attribute, f_value, f_update)
+
+end subroutine
+subroutine fortran_tao_set_flags_for_changed_attribute (u, ele_name, ele_ptr, val_ptr, who) &
+    bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_universe_struct
+  use bmad_struct, only: ele_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: u  ! 0D_NOT_type
+  type(tao_universe_struct), pointer :: f_u
+  type(c_ptr), intent(in), value :: ele_name
+  character(len=4096), target :: f_ele_name
+  character(kind=c_char), pointer :: f_ele_name_ptr(:)
+  type(c_ptr), value :: ele_ptr  ! 0D_PTR_type
+  type(ele_struct), pointer :: f_ele_ptr
+  type(c_ptr), value :: val_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_val_ptr
+  type(c_ptr), intent(in), value :: who
+  character(len=4096), target :: f_who
+  character(kind=c_char), pointer :: f_who_ptr(:)
+  character(len=4096), pointer :: f_who_call_ptr
+  ! ** End of parameters **
+  ! in: f_u 0D_NOT_type
+  if (.not. c_associated(u)) return
+  call c_f_pointer(u, f_u)
+  ! in: f_ele_name 0D_NOT_character
+  if (.not. c_associated(ele_name)) return
+  call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
+  call to_f_str(f_ele_name_ptr, f_ele_name)
+  ! in: f_ele_ptr 0D_PTR_type
+  if (c_associated(ele_ptr))   call c_f_pointer(ele_ptr, f_ele_ptr)
+  ! in: f_val_ptr 0D_NOT_type
+  if (c_associated(val_ptr))   call c_f_pointer(val_ptr, f_val_ptr)
+  ! in: f_who 0D_NOT_character
+  if (c_associated(who)) then
+    call c_f_pointer(who, f_who_ptr, [huge(0)])
+    call to_f_str(f_who_ptr, f_who)
+    f_who_call_ptr => f_who
+  else
+    f_who_call_ptr => null()
+  endif
+  call tao_set_flags_for_changed_attribute(f_u, f_ele_name, f_ele_ptr, f_val_ptr, &
+      f_who_call_ptr)
 
 end subroutine
 subroutine fortran_tao_set_floor_plan_axis_label (graph, axis_in, axis_out, which) bind(c)

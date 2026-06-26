@@ -1,7 +1,7 @@
 #include "pybmad/generated/SimUtils_routines_b.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyBinXCenter python_bin_x_center(int ix_bin, double bin1_x_min, double bin_delta) {
@@ -15,37 +15,30 @@ PyBitSet python_bit_set(int word, int pos, bool set_to_1) {
   return py_result;
 }
 
-void init_SimUtils_routines_b(py::module &m) {
-  py::class_<SimUtils::BicubicCmplxEval, std::unique_ptr<SimUtils::BicubicCmplxEval>>(
-      m,
-      "BicubicCmplxEval",
-      "bicubic_cmplx_eval return type"
-  )
-      .def_readonly("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
-      .def_readonly("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
-      .def_readonly("f_val", &SimUtils::BicubicCmplxEval::f_val)
+void init_SimUtils_routines_b(nb::module_ &m) {
+  nb::class_<SimUtils::BicubicCmplxEval>(m, "BicubicCmplxEval", "bicubic_cmplx_eval return type")
+      .def_ro("df_dx", &SimUtils::BicubicCmplxEval::df_dx)
+      .def_ro("df_dy", &SimUtils::BicubicCmplxEval::df_dy)
+      .def_ro("f_val", &SimUtils::BicubicCmplxEval::f_val)
       .def("__len__", [](const SimUtils::BicubicCmplxEval &) { return 3; })
-      .def("__getitem__", [](const SimUtils::BicubicCmplxEval &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::BicubicCmplxEval &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.df_dx);
+          return nb::cast(s.df_dx);
         if (i == 1)
-          return py::cast(s.df_dy);
+          return nb::cast(s.df_dy);
         if (i == 2)
-          return py::cast(s.f_val);
-        throw py::index_error();
+          return nb::cast(s.f_val);
+        throw nb::index_error();
       });
   m.def(
       "bicubic_cmplx_eval",
       &SimUtils::bicubic_cmplx_eval,
-      py::arg("x_norm"),
-      py::arg("y_norm"),
-      py::arg("bi_coef"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy) result (f_val)
-
-Routine to evaluate a bicubic interpolating complex function.
+      nb::arg("x_norm"),
+      nb::arg("y_norm"),
+      nb::arg("bi_coef"),
+      R"""(Routine to evaluate a bicubic interpolating complex function.
 
 Use the routine bicubic_interpolation_cmplx_coefs to generate bi_coef.
 
@@ -78,13 +71,10 @@ df_dy : complex, optional
   m.def(
       "bin_index",
       &SimUtils::bin_index,
-      py::arg("x"),
-      py::arg("bin1_x_min"),
-      py::arg("bin_delta"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bin_index(x, bin1_x_min, bin_delta) result (ix_bin)
-
-Helper function to locate the appropriate histogram bin index.
+      nb::arg("x"),
+      nb::arg("bin1_x_min"),
+      nb::arg("bin_delta"),
+      R"""(Helper function to locate the appropriate histogram bin index.
 
 Parameters
 ----------
@@ -103,33 +93,26 @@ ix_bin : int
     Index of bin x is in.
 )"""
   );
-  py::class_<PyBinXCenter, std::unique_ptr<PyBinXCenter>>(
-      m,
-      "BinXCenter",
-      "bin_x_center return type"
-  )
-      .def_readonly("x_center", &PyBinXCenter::x_center)
-      .def_readonly("ix_bin", &PyBinXCenter::ix_bin)
+  nb::class_<PyBinXCenter>(m, "BinXCenter", "bin_x_center return type")
+      .def_ro("x_center", &PyBinXCenter::x_center)
+      .def_ro("ix_bin", &PyBinXCenter::ix_bin)
       .def("__len__", [](const PyBinXCenter &) { return 2; })
-      .def("__getitem__", [](const PyBinXCenter &s, int i) -> py::object {
+      .def("__getitem__", [](const PyBinXCenter &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.x_center);
+          return nb::cast(s.x_center);
         if (i == 1)
-          return py::cast(s.ix_bin);
-        throw py::index_error();
+          return nb::cast(s.ix_bin);
+        throw nb::index_error();
       });
   m.def(
       "bin_x_center",
       &python_bin_x_center,
-      py::arg("ix_bin"),
-      py::arg("bin1_x_min"),
-      py::arg("bin_delta"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bin_x_center (ix_bin, bin1_x_min, bin_delta) result(x_center)
-
-Helper function to locate the center of a histogram bin.
+      nb::arg("ix_bin"),
+      nb::arg("bin1_x_min"),
+      nb::arg("bin_delta"),
+      R"""(Helper function to locate the center of a histogram bin.
 
 Parameters
 ----------
@@ -148,26 +131,23 @@ ix_bin : int
     Index of bin under question.
 )"""
   );
-  py::class_<PyBitSet, std::unique_ptr<PyBitSet>>(m, "BitSet", "bit_set return type")
-      .def_readonly("word", &PyBitSet::word)
+  nb::class_<PyBitSet>(m, "BitSet", "bit_set return type")
+      .def_ro("word", &PyBitSet::word)
       .def("__len__", [](const PyBitSet &) { return 1; })
-      .def("__getitem__", [](const PyBitSet &s, int i) -> py::object {
+      .def("__getitem__", [](const PyBitSet &s, int i) -> nb::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.word);
-        throw py::index_error();
+          return nb::cast(s.word);
+        throw nb::index_error();
       });
   m.def(
       "bit_set",
       &python_bit_set,
-      py::arg("word"),
-      py::arg("pos"),
-      py::arg("set_to_1"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine bit_set (word, pos, set_to_1)
-
-Routine to set a bit in a word.
+      nb::arg("word"),
+      nb::arg("pos"),
+      nb::arg("set_to_1"),
+      R"""(Routine to set a bit in a word.
 
 Parameters
 ----------
@@ -190,34 +170,31 @@ word : int
     As an output, word: Word with bit set.
 )"""
   );
-  py::class_<SimUtils::BracketIndexForSpline, std::unique_ptr<SimUtils::BracketIndexForSpline>>(
+  nb::class_<SimUtils::BracketIndexForSpline>(
       m,
       "BracketIndexForSpline",
       "bracket_index_for_spline return type"
   )
-      .def_readonly("ix0", &SimUtils::BracketIndexForSpline::ix0)
-      .def_readonly("ok", &SimUtils::BracketIndexForSpline::ok)
+      .def_ro("ix0", &SimUtils::BracketIndexForSpline::ix0)
+      .def_ro("ok", &SimUtils::BracketIndexForSpline::ok)
       .def("__len__", [](const SimUtils::BracketIndexForSpline &) { return 2; })
-      .def("__getitem__", [](const SimUtils::BracketIndexForSpline &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::BracketIndexForSpline &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ix0);
+          return nb::cast(s.ix0);
         if (i == 1)
-          return py::cast(s.ok);
-        throw py::index_error();
+          return nb::cast(s.ok);
+        throw nb::index_error();
       });
   m.def(
       "bracket_index_for_spline",
       &SimUtils::bracket_index_for_spline,
-      py::arg("x_knot"),
-      py::arg("x"),
-      py::arg("strict") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bracket_index_for_spline (x_knot, x, ix0, strict, print_err) result (ok)
-
-Routine to find which interval to use for evaluating a spline.
+      nb::arg("x_knot"),
+      nb::arg("x"),
+      nb::arg("strict") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      R"""(Routine to find which interval to use for evaluating a spline.
 If strict = False (default), x is in range if
       x_knot(1) - (x_knot(2) - x_knot(1)) < x < x_knot(n) + (x_knot(n) - x_knot(n-1))
 If stric = True, x is in range if

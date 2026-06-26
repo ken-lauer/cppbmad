@@ -1927,9 +1927,20 @@ void tao_set_elements_cmd(
     std::string value,
     bool update
 );
-
-// Skipped unusable routine tao_set_flags_for_changed_attribute:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_tao_set_flags_for_changed_attribute(
+    void *u /* 0D_NOT_type in */,
+    const char *ele_name /* 0D_NOT_character in */,
+    void *ele_ptr /* 0D_PTR_type in */,
+    void *val_ptr /* 0D_NOT_type in */,
+    const char *who /* 0D_NOT_character in */
+);
+void tao_set_flags_for_changed_attribute(
+    TaoUniverseStruct &u,
+    std::string ele_name,
+    optional_ref<EleStruct> ele_ptr = std::nullopt,
+    optional_ref<AllPointerStruct> val_ptr = std::nullopt,
+    std::optional<std::string> who = std::nullopt
+);
 extern "C" void fortran_tao_set_floor_plan_axis_label(
     void *graph /* 0D_NOT_type inout */,
     void *axis_in /* 0D_NOT_type inout */,

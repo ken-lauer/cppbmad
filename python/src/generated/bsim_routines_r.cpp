@@ -1,15 +1,14 @@
 #include "pybmad/generated/bsim_routines_r.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_r(py::module &m) {
+void init_bsim_routines_r(nb::module_ &m) {
   m.def(
       "rf_cav_names",
       &bsim::rf_cav_names,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine rf_cav_names
 
 Parameters

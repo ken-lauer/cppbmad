@@ -7,67 +7,80 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // cartesian_map_struct
-void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cls) {
+void init_cartesian_map_struct(nb::module_ &m, nb::class_<CartesianMapStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<double>,
-             std::optional<std::vector<double>>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             optional_ref<const CartesianMapTermStruct>>(),
-         py::arg("field_scale") = py::none(),
-         py::arg("r0") = py::none(),
-         py::arg("master_parameter") = py::none(),
-         py::arg("ele_anchor_pt") = py::none(),
-         py::arg("field_type") = py::none(),
-         py::arg("ptr") = py::none()
+         "__init__",
+         [](CartesianMapStruct *self,
+            std::optional<double> field_scale,
+            std::optional<std::vector<double>> r0,
+            std::optional<int> master_parameter,
+            std::optional<int> ele_anchor_pt,
+            std::optional<int> field_type,
+            const CartesianMapTermStruct *ptr) {
+           new (self) CartesianMapStruct(
+               field_scale,
+               r0,
+               master_parameter,
+               ele_anchor_pt,
+               field_type,
+               ptr_to_opt_ref(ptr)
+           );
+         },
+         nb::arg("field_scale") = nb::none(),
+         nb::arg("r0") = nb::none(),
+         nb::arg("master_parameter") = nb::none(),
+         nb::arg("ele_anchor_pt") = nb::none(),
+         nb::arg("field_type") = nb::none(),
+         nb::arg("ptr") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "field_scale",
           &CartesianMapStruct::field_scale,
           &CartesianMapStruct::set_field_scale,
           "Factor to scale the fields by"
       )
-      .def_property(
+      .def_prop_rw(
           "r0",
-          py::cpp_function(&CartesianMapStruct::r0, py::keep_alive<0, 1>()),
+          &CartesianMapStruct::r0,
           &CartesianMapStruct::set_r0,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Field origin offset."
       )
-      .def_property(
+      .def_prop_rw(
           "master_parameter",
           &CartesianMapStruct::master_parameter,
           &CartesianMapStruct::set_master_parameter,
           "Master parameter in ele%value(:) array to use for scaling the field."
       )
-      .def_property(
+      .def_prop_rw(
           "ele_anchor_pt",
           &CartesianMapStruct::ele_anchor_pt,
           &CartesianMapStruct::set_ele_anchor_pt,
           "anchor_beginning$, anchor_center$, or anchor_end$"
       )
-      .def_property(
+      .def_prop_rw(
           "field_type",
           &CartesianMapStruct::field_type,
           &CartesianMapStruct::set_field_type,
           "or electric$"
       )
-      .def_property(
+      .def_prop_rw(
           "ptr",
-          py::cpp_function(&CartesianMapStruct::ptr, py::keep_alive<0, 1>()),
-          &CartesianMapStruct::set_ptr
+          &CartesianMapStruct::ptr,
+          &CartesianMapStruct::set_ptr,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
       .def_static(
           "new_array1d",
           [](int sz) { return CartesianMapStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -76,8 +89,8 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CartesianMapStruct &self) { return to_string(self); })
@@ -90,21 +103,20 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
       )
       .def(
           "__deepcopy__",
-          [](const CartesianMapStruct &self, py::dict &memo) { return CartesianMapStruct(self); }
+          [](const CartesianMapStruct &self, nb::dict &memo) { return CartesianMapStruct(self); }
       )
       .def(
           "__eq__",
           [](const CartesianMapStruct &self, const CartesianMapStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CartesianMapStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -121,9 +133,9 @@ void init_cartesian_map_struct(py::module &m, py::class_<CartesianMapStruct> &cl
 
 // =============================================================================
 // cartesian_map_term1_struct
-void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1Struct> &cls) {
+void init_cartesian_map_term1_struct(nb::module_ &m, nb::class_<CartesianMapTerm1Struct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -133,30 +145,30 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
              std::optional<double>,
              std::optional<int>,
              std::optional<int>>(),
-         py::arg("coef") = py::none(),
-         py::arg("kx") = py::none(),
-         py::arg("ky") = py::none(),
-         py::arg("kz") = py::none(),
-         py::arg("x0") = py::none(),
-         py::arg("y0") = py::none(),
-         py::arg("phi_z") = py::none(),
-         py::arg("family") = py::none(),
-         py::arg("form") = py::none()
+         nb::arg("coef") = nb::none(),
+         nb::arg("kx") = nb::none(),
+         nb::arg("ky") = nb::none(),
+         nb::arg("kz") = nb::none(),
+         nb::arg("x0") = nb::none(),
+         nb::arg("y0") = nb::none(),
+         nb::arg("phi_z") = nb::none(),
+         nb::arg("family") = nb::none(),
+         nb::arg("form") = nb::none()
   )
-      .def_property("coef", &CartesianMapTerm1Struct::coef, &CartesianMapTerm1Struct::set_coef)
-      .def_property("kx", &CartesianMapTerm1Struct::kx, &CartesianMapTerm1Struct::set_kx)
-      .def_property("ky", &CartesianMapTerm1Struct::ky, &CartesianMapTerm1Struct::set_ky)
-      .def_property("kz", &CartesianMapTerm1Struct::kz, &CartesianMapTerm1Struct::set_kz)
-      .def_property("x0", &CartesianMapTerm1Struct::x0, &CartesianMapTerm1Struct::set_x0)
-      .def_property("y0", &CartesianMapTerm1Struct::y0, &CartesianMapTerm1Struct::set_y0)
-      .def_property("phi_z", &CartesianMapTerm1Struct::phi_z, &CartesianMapTerm1Struct::set_phi_z)
-      .def_property(
+      .def_prop_rw("coef", &CartesianMapTerm1Struct::coef, &CartesianMapTerm1Struct::set_coef)
+      .def_prop_rw("kx", &CartesianMapTerm1Struct::kx, &CartesianMapTerm1Struct::set_kx)
+      .def_prop_rw("ky", &CartesianMapTerm1Struct::ky, &CartesianMapTerm1Struct::set_ky)
+      .def_prop_rw("kz", &CartesianMapTerm1Struct::kz, &CartesianMapTerm1Struct::set_kz)
+      .def_prop_rw("x0", &CartesianMapTerm1Struct::x0, &CartesianMapTerm1Struct::set_x0)
+      .def_prop_rw("y0", &CartesianMapTerm1Struct::y0, &CartesianMapTerm1Struct::set_y0)
+      .def_prop_rw("phi_z", &CartesianMapTerm1Struct::phi_z, &CartesianMapTerm1Struct::set_phi_z)
+      .def_prop_rw(
           "family",
           &CartesianMapTerm1Struct::family,
           &CartesianMapTerm1Struct::set_family,
           "family_x$, etc."
       )
-      .def_property(
+      .def_prop_rw(
           "form",
           &CartesianMapTerm1Struct::form,
           &CartesianMapTerm1Struct::set_form,
@@ -165,7 +177,7 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
       .def_static(
           "new_array1d",
           [](int sz) { return CartesianMapTerm1StructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -174,8 +186,8 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CartesianMapTerm1Struct &self) { return to_string(self); })
@@ -188,7 +200,7 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
       )
       .def(
           "__deepcopy__",
-          [](const CartesianMapTerm1Struct &self, py::dict &memo) {
+          [](const CartesianMapTerm1Struct &self, nb::dict &memo) {
             return CartesianMapTerm1Struct(self);
           }
       )
@@ -197,14 +209,13 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
           [](const CartesianMapTerm1Struct &self, const CartesianMapTerm1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CartesianMapTerm1Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -221,28 +232,25 @@ void init_cartesian_map_term1_struct(py::module &m, py::class_<CartesianMapTerm1
 
 // =============================================================================
 // cartesian_map_term_struct
-void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermStruct> &cls) {
+void init_cartesian_map_term_struct(nb::module_ &m, nb::class_<CartesianMapTermStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::string>, std::optional<int>>(),
-         py::arg("file") = py::none(),
-         py::arg("n_link") = py::none()
+         nb::init<std::optional<std::string>, std::optional<int>>(),
+         nb::arg("file") = nb::none(),
+         nb::arg("n_link") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "file",
           &CartesianMapTermStruct::file,
           &CartesianMapTermStruct::set_file,
           "Input file name. Used also as ID for instances."
       )
-      .def_property(
+      .def_prop_rw(
           "n_link",
           &CartesianMapTermStruct::n_link,
           &CartesianMapTermStruct::set_n_link,
           "For memory management of %term"
       )
-      .def_property_readonly(
-          "term",
-          py::cpp_function(&CartesianMapTermStruct::term, py::keep_alive<0, 1>())
-      )
+      .def_prop_ro("term", &CartesianMapTermStruct::term, nb::keep_alive<0, 1>())
 
       .def("__repr__", [](const CartesianMapTermStruct &self) { return to_string(self); })
 
@@ -254,7 +262,7 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
       )
       .def(
           "__deepcopy__",
-          [](const CartesianMapTermStruct &self, py::dict &memo) {
+          [](const CartesianMapTermStruct &self, nb::dict &memo) {
             return CartesianMapTermStruct(self);
           }
       )
@@ -263,14 +271,13 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
           [](const CartesianMapTermStruct &self, const CartesianMapTermStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CartesianMapTermStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -283,17 +290,14 @@ void init_cartesian_map_term_struct(py::module &m, py::class_<CartesianMapTermSt
 
 // =============================================================================
 // complex_taylor_struct
-void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &cls) {
-  cls.def(py::init<std::optional<std::complex<double>>>(), py::arg("ref") = py::none())
-      .def_property("ref", &ComplexTaylorStruct::ref, &ComplexTaylorStruct::set_ref)
-      .def_property_readonly(
-          "term",
-          py::cpp_function(&ComplexTaylorStruct::term, py::keep_alive<0, 1>())
-      )
+void init_complex_taylor_struct(nb::module_ &m, nb::class_<ComplexTaylorStruct> &cls) {
+  cls.def(nb::init<std::optional<std::complex<double>>>(), nb::arg("ref") = nb::none())
+      .def_prop_rw("ref", &ComplexTaylorStruct::ref, &ComplexTaylorStruct::set_ref)
+      .def_prop_ro("term", &ComplexTaylorStruct::term, nb::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return ComplexTaylorStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -302,8 +306,8 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const ComplexTaylorStruct &self) { return to_string(self); })
@@ -316,21 +320,20 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
       )
       .def(
           "__deepcopy__",
-          [](const ComplexTaylorStruct &self, py::dict &memo) { return ComplexTaylorStruct(self); }
+          [](const ComplexTaylorStruct &self, nb::dict &memo) { return ComplexTaylorStruct(self); }
       )
       .def(
           "__eq__",
           [](const ComplexTaylorStruct &self, const ComplexTaylorStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ComplexTaylorStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -347,22 +350,23 @@ void init_complex_taylor_struct(py::module &m, py::class_<ComplexTaylorStruct> &
 
 // =============================================================================
 // complex_taylor_term_struct
-void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTermStruct> &cls) {
+void init_complex_taylor_term_struct(nb::module_ &m, nb::class_<ComplexTaylorTermStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::complex<double>>, std::optional<std::vector<int>>>(),
-         py::arg("coef") = py::none(),
-         py::arg("expn") = py::none()
+         nb::init<std::optional<std::complex<double>>, std::optional<std::vector<int>>>(),
+         nb::arg("coef") = nb::none(),
+         nb::arg("expn") = nb::none()
   )
-      .def_property("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
-      .def_property(
+      .def_prop_rw("coef", &ComplexTaylorTermStruct::coef, &ComplexTaylorTermStruct::set_coef)
+      .def_prop_rw(
           "expn",
-          py::cpp_function(&ComplexTaylorTermStruct::expn, py::keep_alive<0, 1>()),
-          &ComplexTaylorTermStruct::set_expn
+          &ComplexTaylorTermStruct::expn,
+          &ComplexTaylorTermStruct::set_expn,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
       .def_static(
           "new_array1d",
           [](int sz) { return ComplexTaylorTermStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -371,8 +375,8 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const ComplexTaylorTermStruct &self) { return to_string(self); })
@@ -385,7 +389,7 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
       )
       .def(
           "__deepcopy__",
-          [](const ComplexTaylorTermStruct &self, py::dict &memo) {
+          [](const ComplexTaylorTermStruct &self, nb::dict &memo) {
             return ComplexTaylorTermStruct(self);
           }
       )
@@ -394,14 +398,13 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
           [](const ComplexTaylorTermStruct &self, const ComplexTaylorTermStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ComplexTaylorTermStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -418,41 +421,38 @@ void init_complex_taylor_term_struct(py::module &m, py::class_<ComplexTaylorTerm
 
 // =============================================================================
 // control_ramp1_struct
-void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cls) {
+void init_control_ramp1_struct(nb::module_ &m, nb::class_<ControlRamp1Struct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<std::vector<double>>,
              std::optional<std::string>,
              std::optional<std::string>,
              std::optional<bool>>(),
-         py::arg("y_knot") = py::none(),
-         py::arg("attribute") = py::none(),
-         py::arg("slave_name") = py::none(),
-         py::arg("is_controller") = py::none()
+         nb::arg("y_knot") = nb::none(),
+         nb::arg("attribute") = nb::none(),
+         nb::arg("slave_name") = nb::none(),
+         nb::arg("is_controller") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "y_knot",
-          py::cpp_function(&ControlRamp1Struct::y_knot, py::keep_alive<0, 1>()),
-          &ControlRamp1Struct::set_y_knot
+          &ControlRamp1Struct::y_knot,
+          &ControlRamp1Struct::set_y_knot,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property_readonly(
-          "stack",
-          py::cpp_function(&ControlRamp1Struct::stack, py::keep_alive<0, 1>()),
-          "Evaluation stack"
-      )
-      .def_property(
+      .def_prop_ro("stack", &ControlRamp1Struct::stack, nb::keep_alive<0, 1>(), "Evaluation stack")
+      .def_prop_rw(
           "attribute",
           &ControlRamp1Struct::attribute,
           &ControlRamp1Struct::set_attribute,
           "Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps."
       )
-      .def_property(
+      .def_prop_rw(
           "slave_name",
           &ControlRamp1Struct::slave_name,
           &ControlRamp1Struct::set_slave_name,
           "Name of slave."
       )
-      .def_property(
+      .def_prop_rw(
           "is_controller",
           &ControlRamp1Struct::is_controller,
           &ControlRamp1Struct::set_is_controller,
@@ -461,7 +461,7 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
       .def_static(
           "new_array1d",
           [](int sz) { return ControlRamp1StructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -470,8 +470,8 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const ControlRamp1Struct &self) { return to_string(self); })
@@ -484,21 +484,20 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
       )
       .def(
           "__deepcopy__",
-          [](const ControlRamp1Struct &self, py::dict &memo) { return ControlRamp1Struct(self); }
+          [](const ControlRamp1Struct &self, nb::dict &memo) { return ControlRamp1Struct(self); }
       )
       .def(
           "__eq__",
           [](const ControlRamp1Struct &self, const ControlRamp1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ControlRamp1Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -515,64 +514,74 @@ void init_control_ramp1_struct(py::module &m, py::class_<ControlRamp1Struct> &cl
 
 // =============================================================================
 // control_struct
-void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
+void init_control_struct(nb::module_ &m, nb::class_<ControlStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<double>,
-             std::optional<std::vector<double>>,
-             optional_ref<const LatEleLocStruct>,
-             optional_ref<const LatEleLocStruct>,
-             std::optional<std::string>,
-             std::optional<std::string>,
-             std::optional<int>>(),
-         py::arg("value") = py::none(),
-         py::arg("y_knot") = py::none(),
-         py::arg("slave") = py::none(),
-         py::arg("lord") = py::none(),
-         py::arg("slave_name") = py::none(),
-         py::arg("attribute") = py::none(),
-         py::arg("ix_attrib") = py::none()
+         "__init__",
+         [](ControlStruct *self,
+            std::optional<double> value,
+            std::optional<std::vector<double>> y_knot,
+            const LatEleLocStruct *slave,
+            const LatEleLocStruct *lord,
+            std::optional<std::string> slave_name,
+            std::optional<std::string> attribute,
+            std::optional<int> ix_attrib) {
+           new (self) ControlStruct(
+               value,
+               y_knot,
+               ptr_to_opt_ref(slave),
+               ptr_to_opt_ref(lord),
+               slave_name,
+               attribute,
+               ix_attrib
+           );
+         },
+         nb::arg("value") = nb::none(),
+         nb::arg("y_knot") = nb::none(),
+         nb::arg("slave") = nb::none(),
+         nb::arg("lord") = nb::none(),
+         nb::arg("slave_name") = nb::none(),
+         nb::arg("attribute") = nb::none(),
+         nb::arg("ix_attrib") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "value",
           &ControlStruct::value,
           &ControlStruct::set_value,
           "Used by group, and overlay elements."
       )
-      .def_property(
+      .def_prop_rw(
           "y_knot",
-          py::cpp_function(&ControlStruct::y_knot, py::keep_alive<0, 1>()),
-          &ControlStruct::set_y_knot
+          &ControlStruct::y_knot,
+          &ControlStruct::set_y_knot,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property_readonly(
-          "stack",
-          py::cpp_function(&ControlStruct::stack, py::keep_alive<0, 1>()),
-          "Evaluation stack"
-      )
-      .def_property(
+      .def_prop_ro("stack", &ControlStruct::stack, nb::keep_alive<0, 1>(), "Evaluation stack")
+      .def_prop_rw(
           "slave",
-          py::cpp_function(&ControlStruct::slave, py::keep_alive<0, 1>()),
-          &ControlStruct::set_slave
+          &ControlStruct::slave,
+          &ControlStruct::set_slave,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "lord",
-          py::cpp_function(&ControlStruct::lord, py::keep_alive<0, 1>()),
-          &ControlStruct::set_lord
+          &ControlStruct::lord,
+          &ControlStruct::set_lord,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "slave_name",
           &ControlStruct::slave_name,
           &ControlStruct::set_slave_name,
           "Name of slave."
       )
-      .def_property(
+      .def_prop_rw(
           "attribute",
           &ControlStruct::attribute,
           &ControlStruct::set_attribute,
           "Name of attribute controlled. Set to 'FIELD_OVERLAPS' for field overlaps. Set to "
           "'INPUT' or 'OUTPUT' for feedback slaves."
       )
-      .def_property(
+      .def_prop_rw(
           "ix_attrib",
           &ControlStruct::ix_attrib,
           &ControlStruct::set_ix_attrib,
@@ -581,7 +590,7 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
       .def_static(
           "new_array1d",
           [](int sz) { return ControlStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -590,8 +599,8 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const ControlStruct &self) { return to_string(self); })
@@ -604,21 +613,20 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const ControlStruct &self, py::dict &memo) { return ControlStruct(self); }
+          [](const ControlStruct &self, nb::dict &memo) { return ControlStruct(self); }
       )
       .def(
           "__eq__",
           [](const ControlStruct &self, const ControlStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ControlStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -635,20 +643,20 @@ void init_control_struct(py::module &m, py::class_<ControlStruct> &cls) {
 
 // =============================================================================
 // control_var1_struct
-void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls) {
+void init_control_var1_struct(nb::module_ &m, nb::class_<ControlVar1Struct> &cls) {
   cls.def(
-         py::init<std::optional<std::string>, std::optional<double>, std::optional<double>>(),
-         py::arg("name") = py::none(),
-         py::arg("value") = py::none(),
-         py::arg("old_value") = py::none()
+         nb::init<std::optional<std::string>, std::optional<double>, std::optional<double>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("value") = nb::none(),
+         nb::arg("old_value") = nb::none()
   )
-      .def_property("name", &ControlVar1Struct::name, &ControlVar1Struct::set_name)
-      .def_property("value", &ControlVar1Struct::value, &ControlVar1Struct::set_value)
-      .def_property("old_value", &ControlVar1Struct::old_value, &ControlVar1Struct::set_old_value)
+      .def_prop_rw("name", &ControlVar1Struct::name, &ControlVar1Struct::set_name)
+      .def_prop_rw("value", &ControlVar1Struct::value, &ControlVar1Struct::set_value)
+      .def_prop_rw("old_value", &ControlVar1Struct::old_value, &ControlVar1Struct::set_old_value)
       .def_static(
           "new_array1d",
           [](int sz) { return ControlVar1StructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -657,8 +665,8 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const ControlVar1Struct &self) { return to_string(self); })
@@ -671,21 +679,20 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
       )
       .def(
           "__deepcopy__",
-          [](const ControlVar1Struct &self, py::dict &memo) { return ControlVar1Struct(self); }
+          [](const ControlVar1Struct &self, nb::dict &memo) { return ControlVar1Struct(self); }
       )
       .def(
           "__eq__",
           [](const ControlVar1Struct &self, const ControlVar1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ControlVar1Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -702,26 +709,26 @@ void init_control_var1_struct(py::module &m, py::class_<ControlVar1Struct> &cls)
 
 // =============================================================================
 // controller_struct
-void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
-  cls.def(py::init<std::optional<std::vector<double>>>(), py::arg("x_knot") = py::none())
-      .def_property_readonly(
-          "var",
-          py::cpp_function(&ControllerStruct::var, py::keep_alive<0, 1>())
-      )
-      .def_property_readonly(
+void init_controller_struct(nb::module_ &m, nb::class_<ControllerStruct> &cls) {
+  cls.def(nb::init<std::optional<std::vector<double>>>(), nb::arg("x_knot") = nb::none())
+      .def_prop_ro("var", &ControllerStruct::var, nb::keep_alive<0, 1>())
+      .def_prop_ro(
           "ramp",
-          py::cpp_function(&ControllerStruct::ramp, py::keep_alive<0, 1>()),
+          &ControllerStruct::ramp,
+          nb::keep_alive<0, 1>(),
           "For ramper lord elements"
       )
-      .def_property_readonly(
+      .def_prop_ro(
           "ramper_lord",
-          py::cpp_function(&ControllerStruct::ramper_lord, py::keep_alive<0, 1>()),
+          &ControllerStruct::ramper_lord,
+          nb::keep_alive<0, 1>(),
           "Ramper lord info for this slave"
       )
-      .def_property(
+      .def_prop_rw(
           "x_knot",
-          py::cpp_function(&ControllerStruct::x_knot, py::keep_alive<0, 1>()),
-          &ControllerStruct::set_x_knot
+          &ControllerStruct::x_knot,
+          &ControllerStruct::set_x_knot,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
 
       .def("__repr__", [](const ControllerStruct &self) { return to_string(self); })
@@ -734,21 +741,20 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const ControllerStruct &self, py::dict &memo) { return ControllerStruct(self); }
+          [](const ControllerStruct &self, nb::dict &memo) { return ControllerStruct(self); }
       )
       .def(
           "__eq__",
           [](const ControllerStruct &self, const ControllerStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ControllerStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -761,16 +767,13 @@ void init_controller_struct(py::module &m, py::class_<ControllerStruct> &cls) {
 
 // =============================================================================
 // coord_array_struct
-void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
-  cls.def(py::init<>())
-      .def_property_readonly(
-          "orbit",
-          py::cpp_function(&CoordArrayStruct::orbit, py::keep_alive<0, 1>())
-      )
+void init_coord_array_struct(nb::module_ &m, nb::class_<CoordArrayStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro("orbit", &CoordArrayStruct::orbit, nb::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return CoordArrayStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -779,8 +782,8 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CoordArrayStruct &self) { return to_string(self); })
@@ -793,21 +796,20 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const CoordArrayStruct &self, py::dict &memo) { return CoordArrayStruct(self); }
+          [](const CoordArrayStruct &self, nb::dict &memo) { return CoordArrayStruct(self); }
       )
       .def(
           "__eq__",
           [](const CoordArrayStruct &self, const CoordArrayStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CoordArrayStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -824,9 +826,9 @@ void init_coord_array_struct(py::module &m, py::class_<CoordArrayStruct> &cls) {
 
 // =============================================================================
 // coord_struct
-void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
+void init_coord_struct(nb::module_ &m, nb::class_<CoordStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<std::vector<double>>,
              std::optional<double>,
              std::optional<long double>,
@@ -848,137 +850,141 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
              std::optional<int>,
              std::optional<int>,
              std::optional<int>>(),
-         py::arg("vec") = py::none(),
-         py::arg("s") = py::none(),
-         py::arg("t") = py::none(),
-         py::arg("spin") = py::none(),
-         py::arg("field") = py::none(),
-         py::arg("phase") = py::none(),
-         py::arg("charge") = py::none(),
-         py::arg("dt_ref") = py::none(),
-         py::arg("r") = py::none(),
-         py::arg("p0c") = py::none(),
-         py::arg("E_potential") = py::none(),
-         py::arg("beta") = py::none(),
-         py::arg("ix_ele") = py::none(),
-         py::arg("ix_branch") = py::none(),
-         py::arg("ix_turn") = py::none(),
-         py::arg("ix_user") = py::none(),
-         py::arg("state") = py::none(),
-         py::arg("direction") = py::none(),
-         py::arg("time_dir") = py::none(),
-         py::arg("species") = py::none(),
-         py::arg("location") = py::none()
+         nb::arg("vec") = nb::none(),
+         nb::arg("s") = nb::none(),
+         nb::arg("t") = nb::none(),
+         nb::arg("spin") = nb::none(),
+         nb::arg("field") = nb::none(),
+         nb::arg("phase") = nb::none(),
+         nb::arg("charge") = nb::none(),
+         nb::arg("dt_ref") = nb::none(),
+         nb::arg("r") = nb::none(),
+         nb::arg("p0c") = nb::none(),
+         nb::arg("E_potential") = nb::none(),
+         nb::arg("beta") = nb::none(),
+         nb::arg("ix_ele") = nb::none(),
+         nb::arg("ix_branch") = nb::none(),
+         nb::arg("ix_turn") = nb::none(),
+         nb::arg("ix_user") = nb::none(),
+         nb::arg("state") = nb::none(),
+         nb::arg("direction") = nb::none(),
+         nb::arg("time_dir") = nb::none(),
+         nb::arg("species") = nb::none(),
+         nb::arg("location") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "vec",
-          py::cpp_function(&CoordStruct::vec, py::keep_alive<0, 1>()),
+          &CoordStruct::vec,
           &CoordStruct::set_vec,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "(x, px, y, py, z, pz). Generally phase space for charged particles. See Bmad manual."
       )
-      .def_property("s", &CoordStruct::s, &CoordStruct::set_s, "Longitudinal position")
-      .def_property(
+      .def_prop_rw("s", &CoordStruct::s, &CoordStruct::set_s, "Longitudinal position")
+      .def_prop_rw(
           "t",
           &CoordStruct::t,
           &CoordStruct::set_t,
           "Absolute time (not relative to reference). Note: Quad precision!"
       )
-      .def_property(
+      .def_prop_rw(
           "spin",
-          py::cpp_function(&CoordStruct::spin, py::keep_alive<0, 1>()),
+          &CoordStruct::spin,
           &CoordStruct::set_spin,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Spin."
       )
-      .def_property(
+      .def_prop_rw(
           "field",
-          py::cpp_function(&CoordStruct::field, py::keep_alive<0, 1>()),
+          &CoordStruct::field,
           &CoordStruct::set_field,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Photon E-field intensity (x,y)."
       )
-      .def_property(
+      .def_prop_rw(
           "phase",
-          py::cpp_function(&CoordStruct::phase, py::keep_alive<0, 1>()),
+          &CoordStruct::phase,
           &CoordStruct::set_phase,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Photon E-field phase (x,y). For charged particles, phase(1) is RF phase."
       )
-      .def_property(
+      .def_prop_rw(
           "charge",
           &CoordStruct::charge,
           &CoordStruct::set_charge,
           "Macroparticle weight (which is different from particle species charge). For some space "
           "charge calcs the weight is in Coulombs."
       )
-      .def_property(
+      .def_prop_rw(
           "dt_ref",
           &CoordStruct::dt_ref,
           &CoordStruct::set_dt_ref,
           "Used in: * time tracking for computing z. * by coherent photons = path_length/c_light."
       )
-      .def_property("r", &CoordStruct::r, &CoordStruct::set_r, "For general use. Not used by Bmad.")
-      .def_property(
+      .def_prop_rw("r", &CoordStruct::r, &CoordStruct::set_r, "For general use. Not used by Bmad.")
+      .def_prop_rw(
           "p0c",
           &CoordStruct::p0c,
           &CoordStruct::set_p0c,
           "For non-photons: Reference momentum. For photons: Photon momentum (not reference)."
       )
-      .def_property(
+      .def_prop_rw(
           "E_potential",
           &CoordStruct::E_potential,
           &CoordStruct::set_E_potential,
           "Potential energy."
       )
-      .def_property("beta", &CoordStruct::beta, &CoordStruct::set_beta, "Velocity / c_light.")
-      .def_property(
+      .def_prop_rw("beta", &CoordStruct::beta, &CoordStruct::set_beta, "Velocity / c_light.")
+      .def_prop_rw(
           "ix_ele",
           &CoordStruct::ix_ele,
           &CoordStruct::set_ix_ele,
           "Index of the lattice element the particle is in. May be -1 if element is not associated "
           "with a lattice."
       )
-      .def_property(
+      .def_prop_rw(
           "ix_branch",
           &CoordStruct::ix_branch,
           &CoordStruct::set_ix_branch,
           "Index of the lattice branch the particle is in."
       )
-      .def_property(
+      .def_prop_rw(
           "ix_turn",
           &CoordStruct::ix_turn,
           &CoordStruct::set_ix_turn,
           "Turn index for multiturn tracking."
       )
-      .def_property(
+      .def_prop_rw(
           "ix_user",
           &CoordStruct::ix_user,
           &CoordStruct::set_ix_user,
           "For general use, not used by Bmad."
       )
-      .def_property(
+      .def_prop_rw(
           "state",
           &CoordStruct::state,
           &CoordStruct::set_state,
           "alive$, lost$, lost_neg_x_aperture$, lost_pz$, etc."
       )
-      .def_property(
+      .def_prop_rw(
           "direction",
           &CoordStruct::direction,
           &CoordStruct::set_direction,
           "+1 or -1. Sign of longitudinal direction of motion (ds/dt). This is independent of the "
           "element orientation."
       )
-      .def_property(
+      .def_prop_rw(
           "time_dir",
           &CoordStruct::time_dir,
           &CoordStruct::set_time_dir,
           "+1 or -1. Time direction. -1 => Traveling backwards in time."
       )
-      .def_property(
+      .def_prop_rw(
           "species",
           &CoordStruct::species,
           &CoordStruct::set_species,
           "positron$, proton$, etc."
       )
-      .def_property(
+      .def_prop_rw(
           "location",
           &CoordStruct::location,
           &CoordStruct::set_location,
@@ -987,7 +993,7 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
       .def_static(
           "new_array1d",
           [](int sz) { return CoordStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -996,8 +1002,8 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CoordStruct &self) { return to_string(self); })
@@ -1010,21 +1016,20 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const CoordStruct &self, py::dict &memo) { return CoordStruct(self); }
+          [](const CoordStruct &self, nb::dict &memo) { return CoordStruct(self); }
       )
       .def(
           "__eq__",
           [](const CoordStruct &self, const CoordStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CoordStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -1041,93 +1046,109 @@ void init_coord_struct(py::module &m, py::class_<CoordStruct> &cls) {
 
 // =============================================================================
 // cylindrical_map_struct
-void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct> &cls) {
+void init_cylindrical_map_struct(nb::module_ &m, nb::class_<CylindricalMapStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<double>,
-             std::optional<std::vector<double>>,
-             optional_ref<const CylindricalMapTermStruct>>(),
-         py::arg("m") = py::none(),
-         py::arg("harmonic") = py::none(),
-         py::arg("phi0_fieldmap") = py::none(),
-         py::arg("theta0_azimuth") = py::none(),
-         py::arg("field_scale") = py::none(),
-         py::arg("master_parameter") = py::none(),
-         py::arg("ele_anchor_pt") = py::none(),
-         py::arg("dz") = py::none(),
-         py::arg("r0") = py::none(),
-         py::arg("ptr") = py::none()
+         "__init__",
+         [](CylindricalMapStruct *self,
+            std::optional<int> m,
+            std::optional<int> harmonic,
+            std::optional<double> phi0_fieldmap,
+            std::optional<double> theta0_azimuth,
+            std::optional<double> field_scale,
+            std::optional<int> master_parameter,
+            std::optional<int> ele_anchor_pt,
+            std::optional<double> dz,
+            std::optional<std::vector<double>> r0,
+            const CylindricalMapTermStruct *ptr) {
+           new (self) CylindricalMapStruct(
+               m,
+               harmonic,
+               phi0_fieldmap,
+               theta0_azimuth,
+               field_scale,
+               master_parameter,
+               ele_anchor_pt,
+               dz,
+               r0,
+               ptr_to_opt_ref(ptr)
+           );
+         },
+         nb::arg("m") = nb::none(),
+         nb::arg("harmonic") = nb::none(),
+         nb::arg("phi0_fieldmap") = nb::none(),
+         nb::arg("theta0_azimuth") = nb::none(),
+         nb::arg("field_scale") = nb::none(),
+         nb::arg("master_parameter") = nb::none(),
+         nb::arg("ele_anchor_pt") = nb::none(),
+         nb::arg("dz") = nb::none(),
+         nb::arg("r0") = nb::none(),
+         nb::arg("ptr") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "m",
           &CylindricalMapStruct::m,
           &CylindricalMapStruct::set_m,
           "Azimuthal Mode: varies as cos(m*phi - theta0_azimuth)"
       )
-      .def_property(
+      .def_prop_rw(
           "harmonic",
           &CylindricalMapStruct::harmonic,
           &CylindricalMapStruct::set_harmonic,
           "Harmonic of fundamental"
       )
-      .def_property(
+      .def_prop_rw(
           "phi0_fieldmap",
           &CylindricalMapStruct::phi0_fieldmap,
           &CylindricalMapStruct::set_phi0_fieldmap,
           "Mode oscillates as: twopi * (f * t + phi0_fieldmap)"
       )
-      .def_property(
+      .def_prop_rw(
           "theta0_azimuth",
           &CylindricalMapStruct::theta0_azimuth,
           &CylindricalMapStruct::set_theta0_azimuth,
           "Azimuthal ((x, y) plane) orientation of mode."
       )
-      .def_property(
+      .def_prop_rw(
           "field_scale",
           &CylindricalMapStruct::field_scale,
           &CylindricalMapStruct::set_field_scale,
           "Factor to scale the fields by"
       )
-      .def_property(
+      .def_prop_rw(
           "master_parameter",
           &CylindricalMapStruct::master_parameter,
           &CylindricalMapStruct::set_master_parameter,
           "Master parameter in ele%value(:) array to use for scaling the field."
       )
-      .def_property(
+      .def_prop_rw(
           "ele_anchor_pt",
           &CylindricalMapStruct::ele_anchor_pt,
           &CylindricalMapStruct::set_ele_anchor_pt,
           "anchor_beginning$, anchor_center$, or anchor_end$"
       )
-      .def_property(
+      .def_prop_rw(
           "dz",
           &CylindricalMapStruct::dz,
           &CylindricalMapStruct::set_dz,
           "Distance between sampled field points."
       )
-      .def_property(
+      .def_prop_rw(
           "r0",
-          py::cpp_function(&CylindricalMapStruct::r0, py::keep_alive<0, 1>()),
+          &CylindricalMapStruct::r0,
           &CylindricalMapStruct::set_r0,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Field origin offset."
       )
-      .def_property(
+      .def_prop_rw(
           "ptr",
-          py::cpp_function(&CylindricalMapStruct::ptr, py::keep_alive<0, 1>()),
-          &CylindricalMapStruct::set_ptr
+          &CylindricalMapStruct::ptr,
+          &CylindricalMapStruct::set_ptr,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
       .def_static(
           "new_array1d",
           [](int sz) { return CylindricalMapStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -1136,8 +1157,8 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CylindricalMapStruct &self) { return to_string(self); })
@@ -1150,7 +1171,7 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
       )
       .def(
           "__deepcopy__",
-          [](const CylindricalMapStruct &self, py::dict &memo) {
+          [](const CylindricalMapStruct &self, nb::dict &memo) {
             return CylindricalMapStruct(self);
           }
       )
@@ -1159,14 +1180,13 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
           [](const CylindricalMapStruct &self, const CylindricalMapStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CylindricalMapStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -1183,18 +1203,18 @@ void init_cylindrical_map_struct(py::module &m, py::class_<CylindricalMapStruct>
 
 // =============================================================================
 // cylindrical_map_term1_struct
-void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapTerm1Struct> &cls) {
+void init_cylindrical_map_term1_struct(nb::module_ &m, nb::class_<CylindricalMapTerm1Struct> &cls) {
   cls.def(
-         py::init<std::optional<std::complex<double>>, std::optional<std::complex<double>>>(),
-         py::arg("e_coef") = py::none(),
-         py::arg("b_coef") = py::none()
+         nb::init<std::optional<std::complex<double>>, std::optional<std::complex<double>>>(),
+         nb::arg("e_coef") = nb::none(),
+         nb::arg("b_coef") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "e_coef",
           &CylindricalMapTerm1Struct::e_coef,
           &CylindricalMapTerm1Struct::set_e_coef
       )
-      .def_property(
+      .def_prop_rw(
           "b_coef",
           &CylindricalMapTerm1Struct::b_coef,
           &CylindricalMapTerm1Struct::set_b_coef
@@ -1202,7 +1222,7 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
       .def_static(
           "new_array1d",
           [](int sz) { return CylindricalMapTerm1StructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -1211,8 +1231,8 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const CylindricalMapTerm1Struct &self) { return to_string(self); })
@@ -1225,7 +1245,7 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
       )
       .def(
           "__deepcopy__",
-          [](const CylindricalMapTerm1Struct &self, py::dict &memo) {
+          [](const CylindricalMapTerm1Struct &self, nb::dict &memo) {
             return CylindricalMapTerm1Struct(self);
           }
       )
@@ -1234,14 +1254,13 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
           [](const CylindricalMapTerm1Struct &self, const CylindricalMapTerm1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CylindricalMapTerm1Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -1258,28 +1277,25 @@ void init_cylindrical_map_term1_struct(py::module &m, py::class_<CylindricalMapT
 
 // =============================================================================
 // cylindrical_map_term_struct
-void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTermStruct> &cls) {
+void init_cylindrical_map_term_struct(nb::module_ &m, nb::class_<CylindricalMapTermStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::string>, std::optional<int>>(),
-         py::arg("file") = py::none(),
-         py::arg("n_link") = py::none()
+         nb::init<std::optional<std::string>, std::optional<int>>(),
+         nb::arg("file") = nb::none(),
+         nb::arg("n_link") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "file",
           &CylindricalMapTermStruct::file,
           &CylindricalMapTermStruct::set_file,
           "Input file name. Used also as ID for instances."
       )
-      .def_property(
+      .def_prop_rw(
           "n_link",
           &CylindricalMapTermStruct::n_link,
           &CylindricalMapTermStruct::set_n_link,
           "For memory management of this structure"
       )
-      .def_property_readonly(
-          "term",
-          py::cpp_function(&CylindricalMapTermStruct::term, py::keep_alive<0, 1>())
-      )
+      .def_prop_ro("term", &CylindricalMapTermStruct::term, nb::keep_alive<0, 1>())
 
       .def("__repr__", [](const CylindricalMapTermStruct &self) { return to_string(self); })
 
@@ -1291,7 +1307,7 @@ void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTe
       )
       .def(
           "__deepcopy__",
-          [](const CylindricalMapTermStruct &self, py::dict &memo) {
+          [](const CylindricalMapTermStruct &self, nb::dict &memo) {
             return CylindricalMapTermStruct(self);
           }
       )
@@ -1300,14 +1316,13 @@ void init_cylindrical_map_term_struct(py::module &m, py::class_<CylindricalMapTe
           [](const CylindricalMapTermStruct &self, const CylindricalMapTermStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const CylindricalMapTermStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

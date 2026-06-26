@@ -1,17 +1,16 @@
 #include "pybmad/generated/Bmad_routines_y.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_y(py::module &m) {
+void init_Bmad_routines_y(nb::module_ &m) {
   m.def(
       "ylafun",
       &Bmad::ylafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
       R"""(Wrapper for Fortran routine ylafun
 
 Parameters

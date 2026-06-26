@@ -1,16 +1,15 @@
 #include "pybmad/generated/Bmad_routines_k.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_k(py::module &m) {
+void init_Bmad_routines_k(nb::module_ &m) {
   m.def(
       "key_name_to_key_index",
       &Bmad::key_name_to_key_index,
-      py::arg("key_str"),
-      py::arg("abbrev_allowed") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("key_str"),
+      nb::arg("abbrev_allowed") = nb::none(),
       R"""(Wrapper for Fortran routine key_name_to_key_index
 
 Parameters
@@ -28,35 +27,28 @@ key_index : int
     Index of the key. Set to -1 if key_name not recognized.
 )"""
   );
-  py::class_<Bmad::KickVectorCalc, std::unique_ptr<Bmad::KickVectorCalc>>(
-      m,
-      "KickVectorCalc",
-      "kick_vector_calc return type"
-  )
-      .def_readonly("dr_ds", &Bmad::KickVectorCalc::dr_ds)
-      .def_readonly("err", &Bmad::KickVectorCalc::err)
+  nb::class_<Bmad::KickVectorCalc>(m, "KickVectorCalc", "kick_vector_calc return type")
+      .def_ro("dr_ds", &Bmad::KickVectorCalc::dr_ds)
+      .def_ro("err", &Bmad::KickVectorCalc::err)
       .def("__len__", [](const Bmad::KickVectorCalc &) { return 2; })
-      .def("__getitem__", [](const Bmad::KickVectorCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::KickVectorCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.dr_ds);
+          return nb::cast(s.dr_ds);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "kick_vector_calc",
       &Bmad::kick_vector_calc,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("s_body"),
-      py::arg("orbit"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine kick_vector_calc (ele, param, s_rel, orbit, dr_ds, field, err, print_err)
-
-Subroutine to calculate the dr/ds "kick vector" where
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s_body"),
+      nb::arg("orbit"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Subroutine to calculate the dr/ds "kick vector" where
     r = [x, p_x, y, p_y, z, p_z, t, spin_x,y,z]
 
 Remember: In order to simplify the calculation, in the body of any element, P0 is taken to be
@@ -121,11 +113,8 @@ err : bool
   m.def(
       "kill_complex_taylor",
       &Bmad::kill_complex_taylor,
-      py::arg("complex_taylor"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine kill_complex_taylor (complex_taylor)
-
-Subroutine to deallocate a Bmad complex_taylor map.
+      nb::arg("complex_taylor"),
+      R"""(Subroutine to deallocate a Bmad complex_taylor map.
 
 Parameters
 ----------
@@ -138,8 +127,7 @@ complex_taylor : 1D array of ComplexTaylorStruct
   m.def(
       "kill_ptc_layouts",
       &Bmad::kill_ptc_layouts,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine kill_ptc_layouts
 
 Parameters
@@ -151,8 +139,7 @@ lat : LatStruct
   m.def(
       "kill_taylor",
       &Bmad::kill_taylor,
-      py::arg("bmad_taylor"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bmad_taylor"),
       R"""(Wrapper for Fortran routine kill_taylor
 
 Parameters
@@ -166,11 +153,8 @@ bmad_taylor : 1D array of TaylorStruct
   m.def(
       "kind_name",
       &Bmad::kind_name,
-      py::arg("this_kind"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function kind_name (this_kind) result (kind_str)
-
-function to return the name of a PTC kind.
+      nb::arg("this_kind"),
+      R"""(function to return the name of a PTC kind.
 
 Parameters
 ----------
@@ -183,31 +167,26 @@ kind_str : str
     String representation
 )"""
   );
-  py::class_<Bmad::KnotInterpolate, std::unique_ptr<Bmad::KnotInterpolate>>(
-      m,
-      "KnotInterpolate",
-      "knot_interpolate return type"
-  )
-      .def_readonly("err_flag", &Bmad::KnotInterpolate::err_flag)
-      .def_readonly("y_pt", &Bmad::KnotInterpolate::y_pt)
+  nb::class_<Bmad::KnotInterpolate>(m, "KnotInterpolate", "knot_interpolate return type")
+      .def_ro("err_flag", &Bmad::KnotInterpolate::err_flag)
+      .def_ro("y_pt", &Bmad::KnotInterpolate::y_pt)
       .def("__len__", [](const Bmad::KnotInterpolate &) { return 2; })
-      .def("__getitem__", [](const Bmad::KnotInterpolate &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::KnotInterpolate &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.y_pt);
-        throw py::index_error();
+          return nb::cast(s.y_pt);
+        throw nb::index_error();
       });
   m.def(
       "knot_interpolate",
       &Bmad::knot_interpolate,
-      py::arg("x_knot"),
-      py::arg("y_knot"),
-      py::arg("x_pt"),
-      py::arg("interpolation"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x_knot"),
+      nb::arg("y_knot"),
+      nb::arg("x_pt"),
+      nb::arg("interpolation"),
       R"""(Wrapper for Fortran routine knot_interpolate
 
 Parameters
@@ -236,9 +215,8 @@ y_pt : float
   m.def(
       "knots_to_string",
       &Bmad::knots_to_string,
-      py::arg("x_knot"),
-      py::arg("y_knot"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x_knot"),
+      nb::arg("y_knot"),
       R"""(Wrapper for Fortran routine knots_to_string
 
 Parameters

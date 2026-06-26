@@ -1,15 +1,14 @@
 #include "pybmad/generated/bsim_routines_l.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_l(py::module &m) {
+void init_bsim_routines_l(nb::module_ &m) {
   m.def(
       "logical_to_python",
       &bsim::logical_to_python,
-      py::arg("logic"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("logic"),
       R"""(Wrapper for Fortran routine logical_to_python
 
 Parameters

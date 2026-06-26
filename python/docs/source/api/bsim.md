@@ -124,7 +124,7 @@ All attributes may be passed to the initializer as arguments:
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L559)
 
-::: pybmad.bbu_add_a_bunch
+::: pybmad.bsim.bbu_add_a_bunch
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -133,7 +133,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L657)
 
-::: pybmad.bbu_hom_voltage_calc
+::: pybmad.bsim.bbu_hom_voltage_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -142,7 +142,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L630)
 
-::: pybmad.bbu_remove_head_bunch
+::: pybmad.bsim.bbu_remove_head_bunch
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -151,7 +151,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L82)
 
-::: pybmad.bbu_setup
+::: pybmad.bsim.bbu_setup
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -160,7 +160,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L453)
 
-::: pybmad.bbu_track_a_stage
+::: pybmad.bsim.bbu_track_a_stage
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -169,7 +169,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L213)
 
-::: pybmad.bbu_track_all
+::: pybmad.bsim.bbu_track_all
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -178,7 +178,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L757)
 
-::: pybmad.check_rf_freq
+::: pybmad.bsim.check_rf_freq
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -187,7 +187,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/count_lines_in_file.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/count_lines_in_file.f90#L5)
 
-::: pybmad.count_lines_in_file
+::: pybmad.bsim.count_lines_in_file
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -196,7 +196,7 @@ Fortran source: [`bsim/code/count_lines_in_file.f90`](https://github.com/bmad-si
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L819)
 
-::: pybmad.hom_voltage
+::: pybmad.bsim.hom_voltage
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -205,7 +205,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bsim_interface.f90#L18)
 
-::: pybmad.insert_phase_trombone
+::: pybmad.bsim.insert_phase_trombone
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -214,7 +214,7 @@ Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bma
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L831)
 
-::: pybmad.logical_to_python
+::: pybmad.bsim.logical_to_python
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -223,7 +223,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L732)
 
-::: pybmad.rf_cav_names
+::: pybmad.bsim.rf_cav_names
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -232,7 +232,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bsim_interface.f90#L7)
 
-::: pybmad.set_tune_3d
+::: pybmad.bsim.set_tune_3d
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -241,7 +241,7 @@ Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bma
 
 Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bsim/code/bbu_track_mod.f90#L785)
 
-::: pybmad.write_bunch_by_bunch_info
+::: pybmad.bsim.write_bunch_by_bunch_info
     options:
       show_root_heading: false
       show_root_toc_entry: false

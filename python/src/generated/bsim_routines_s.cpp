@@ -1,21 +1,20 @@
 #include "pybmad/generated/bsim_routines_s.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_s(py::module &m) {
+void init_bsim_routines_s(nb::module_ &m) {
   m.def(
       "set_tune_3d",
       &bsim::set_tune_3d,
-      py::arg("branch"),
-      py::arg("target_tunes"),
-      py::arg("mask") = py::none(),
-      py::arg("use_phase_trombone") = py::none(),
-      py::arg("z_tune_set") = py::none(),
-      py::arg("group_knobs") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
+      nb::arg("target_tunes"),
+      nb::arg("mask") = nb::none(),
+      nb::arg("use_phase_trombone") = nb::none(),
+      nb::arg("z_tune_set") = nb::none(),
+      nb::arg("group_knobs") = nb::none(),
+      nb::arg("print_err") = nb::none(),
       R"""(Wrapper for Fortran routine set_tune_3d
 
 Parameters

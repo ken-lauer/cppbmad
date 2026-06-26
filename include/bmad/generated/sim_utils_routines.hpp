@@ -10,9 +10,12 @@
 using namespace Bmad;
 
 namespace SimUtils {
-
-// Skipped unusable routine all_pointer_to_string:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" bool fortran_all_pointer_to_string(
+    void *a_ptr /* 0D_NOT_type inout */,
+    bool *err /* 0D_NOT_logical in */,
+    const char *str /* 0D_NOT_character out */
+);
+std::string all_pointer_to_string(AllPointerStruct &a_ptr, std::optional<bool> err = std::nullopt);
 extern "C" void fortran_allocate_thread_states();
 void allocate_thread_states();
 extern "C" bool fortran_anomalous_moment_of(
@@ -1653,9 +1656,18 @@ struct Serbd {
   double d;
 };
 SimUtils::Serbd serbd(double y, double m);
-
-// Skipped unusable routine set_all_ptr:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_set_all_ptr(
+    void *a_ptr /* 0D_NOT_type inout */,
+    double &value /* 0D_NOT_real in */,
+    bool *delta /* 0D_NOT_logical in */,
+    double *value_set /* 0D_NOT_real in */
+);
+void set_all_ptr(
+    AllPointerStruct &a_ptr,
+    double value,
+    std::optional<bool> delta = std::nullopt,
+    std::optional<double> value_set = std::nullopt
+);
 extern "C" void fortran_set_env(
     const char *env_name /* 0D_NOT_character in */,
     const char *env_value /* 0D_NOT_character in */,
@@ -2217,9 +2229,9 @@ void type_this_file(std::string filename);
 // - No matching docstring
 extern "C" void fortran_upcase_string(const char *string /* 0D_NOT_character in */);
 void upcase_string(std::string string);
-
-// Skipped unusable routine value_of_all_ptr:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" bool
+fortran_value_of_all_ptr(void *a_ptr /* 0D_NOT_type inout */, double &value /* 0D_NOT_real out */);
+double value_of_all_ptr(AllPointerStruct &a_ptr);
 extern "C" bool fortran_virtual_memory_usage(int &usage /* 0D_NOT_integer out */);
 int virtual_memory_usage();
 extern "C" void fortran_w_mat_to_axis_angle(

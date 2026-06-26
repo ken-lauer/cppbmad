@@ -1167,8 +1167,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()},
-       std::pair{"#branch", to_string(self.branch().size())}}
+      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
+      }
   );
 }
 std::string to_string(const BunchStruct &self) {
@@ -1285,6 +1285,55 @@ std::string to_string(const NametableStruct &self) {
        std::pair{"index", to_string(self.index())},
        std::pair{"n_min", to_string(self.n_min())},
        std::pair{"n_max", to_string(self.n_max())}}
+  );
+}
+std::string to_string(const AllPointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "AllPointerStruct",
+      {std::pair{"r", to_string(self.r())},
+       std::pair{"q", to_string(self.q())},
+       std::pair{"i", to_string(self.i())},
+       std::pair{"l", to_string(self.l())},
+       std::pair{"r1", to_string(self.r1())},
+       std::pair{"i1", to_string(self.i1())}}
+  );
+}
+std::string to_string(const ParserEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ParserEleStruct",
+      {std::pair{"control", "[...]"},
+       std::pair{"field_overlaps", to_string(self.field_overlaps())},
+       std::pair{"ref_name", self.ref_name()},
+       std::pair{"ix_super_ref_multipass", to_string(self.ix_super_ref_multipass())},
+       std::pair{"ele_name", self.ele_name()},
+       std::pair{"names1", to_string(self.names1())},
+       std::pair{"names2", to_string(self.names2())},
+       std::pair{"lat_file", self.lat_file()},
+       std::pair{"offset", to_string(self.offset())},
+       std::pair{"ix_line_in_file", to_string(self.ix_line_in_file())},
+       std::pair{"ix_count", to_string(self.ix_count())},
+       std::pair{"ele_pt", to_string(self.ele_pt())},
+       std::pair{"ref_pt", to_string(self.ref_pt())},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"superposition_command_here", to_string(self.superposition_command_here())},
+       std::pair{"superposition_has_been_set", to_string(self.superposition_has_been_set())},
+       std::pair{"wrap_superimpose", to_string(self.wrap_superimpose())},
+       std::pair{"create_jumbo_slave", to_string(self.create_jumbo_slave())},
+       std::pair{"is_range", to_string(self.is_range())},
+       std::pair{"default_attrib", self.default_attrib()}}
+  );
+}
+std::string to_string(const ParserControllerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ParserControllerStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"attrib_name", self.attrib_name()},
+       std::pair{"stack", "[...]"},
+       std::pair{"y_knot", to_string(self.y_knot())},
+       std::pair{"n_stk", to_string(self.n_stk())}}
   );
 }
 std::string to_string(const TaoSpinDnDpzStruct &self) {
@@ -3648,6 +3697,16 @@ std::string to_string(const Bmad::ParserFastRealRead &self) {
        std::pair{"is_ok", to_string(self.is_ok)}}
   );
 }
+std::string to_string(const Bmad::ParserSetAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::ParserSetAttribute",
+      {std::pair{"delim", self.delim},
+       std::pair{"delim_found", to_string(self.delim_found)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"pele", to_string(self.pele)}}
+  );
+}
 std::string to_string(const Bmad::PhotonAbsorptionAndPhaseShift &self) {
   return repr(
       &self,
@@ -3680,6 +3739,15 @@ std::string to_string(const Bmad::PhotonReflectivity &self) {
        std::pair{"rel_p_specular", to_string(self.rel_p_specular)}}
   );
 }
+std::string to_string(const Bmad::PointerToAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToAttribute",
+      {std::pair{"a_ptr", to_string(self.a_ptr)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"ix_attrib", to_string(self.ix_attrib)}}
+  );
+}
 std::string to_string(const Bmad::PointerToElementAtS &self) {
   return repr(
       &self,
@@ -3704,6 +3772,13 @@ std::string to_string(const Bmad::PointerToGirder &self) {
       "Bmad::PointerToGirder",
       {std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
        std::pair{"girder", to_string(self.girder)}}
+  );
+}
+std::string to_string(const Bmad::PointerToIndexedAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToIndexedAttribute",
+      {std::pair{"a_ptr", to_string(self.a_ptr)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::PointerToLord &self) {
@@ -3785,6 +3860,16 @@ std::string to_string(const Bmad::PointerToWall3d &self) {
       {std::pair{"ds_offset", to_string(self.ds_offset)},
        std::pair{"is_branch_wall", to_string(self.is_branch_wall)},
        std::pair{"wall3d", to_string(self.wall3d)}}
+  );
+}
+std::string to_string(const Bmad::PointersToAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointersToAttribute",
+      {std::pair{"ptr_array", "[...]"},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"eles", "[...]"},
+       std::pair{"ix_attrib", to_string(self.ix_attrib)}}
   );
 }
 std::string to_string(const Bmad::ProjectEmitToXyz &self) {
@@ -4892,8 +4977,8 @@ std::string to_string(const Bmad::WriteLatticeScibmadFormat &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeScibmadFormat",
-      {std::pair{"scibmad_file", self.scibmad_file},
-       std::pair{"err_flag", to_string(self.err_flag)}}
+      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
+      }
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

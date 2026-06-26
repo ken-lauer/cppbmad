@@ -4,6 +4,30 @@ Simulation utility helpers from the sim_utils library.
 
 ## Classes (Fortran Structures)
 
+::: pybmad.AllPointerStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### AllPointerStruct
+
+Fortran struct: `all_pointer_struct` ([`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L45))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `r` | float |  |
+| `q` | float |  |
+| `i` | int |  |
+| `l` | bool |  |
+| `r1` | 1D array of float |  |
+| `i1` | 1D array of int |  |
+
 ::: pybmad.BicubicCmplxCoefStruct
     options:
       heading_level: 0
@@ -274,11 +298,20 @@ All attributes may be passed to the initializer as arguments:
 
 ## Procedures
 
+### all_pointer_to_string
+
+Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L731)
+
+::: pybmad.simutils.all_pointer_to_string
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### allocate_thread_states
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L1151)
 
-::: pybmad.allocate_thread_states
+::: pybmad.simutils.allocate_thread_states
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -287,7 +320,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1430)
 
-::: pybmad.anomalous_moment_of
+::: pybmad.simutils.anomalous_moment_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -296,7 +329,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L882)
 
-::: pybmad.antiparticle
+::: pybmad.simutils.antiparticle
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -305,7 +338,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/all_phase_fft.f90#L135)
 
-::: pybmad.apfft
+::: pybmad.simutils.apfft
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -314,7 +347,7 @@ Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim
 
 Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/all_phase_fft.f90#L39)
 
-::: pybmad.apfft_corr
+::: pybmad.simutils.apfft_corr
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -323,7 +356,7 @@ Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim
 
 Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/all_phase_fft.f90#L174)
 
-::: pybmad.apfft_ext
+::: pybmad.simutils.apfft_ext
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -332,7 +365,7 @@ Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L35)
 
-::: pybmad.asinc
+::: pybmad.simutils.asinc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -341,7 +374,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L43)
 
-::: pybmad.assert_equal
+::: pybmad.simutils.assert_equal
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -350,7 +383,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1773)
 
-::: pybmad.atomic_number
+::: pybmad.simutils.atomic_number
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -359,7 +392,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1213)
 
-::: pybmad.atomic_species_id
+::: pybmad.simutils.atomic_species_id
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -368,7 +401,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L385)
 
-::: pybmad.axis_angle_to_quat
+::: pybmad.simutils.axis_angle_to_quat
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -377,7 +410,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L234)
 
-::: pybmad.axis_angle_to_w_mat
+::: pybmad.simutils.axis_angle_to_w_mat
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -386,7 +419,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1103)
 
-::: pybmad.bicubic_cmplx_eval
+::: pybmad.simutils.bicubic_cmplx_eval
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -395,7 +428,7 @@ Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.co
 
 Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L329)
 
-::: pybmad.bin_index
+::: pybmad.simutils.bin_index
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -404,7 +437,7 @@ Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L353)
 
-::: pybmad.bin_x_center
+::: pybmad.simutils.bin_x_center
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -413,7 +446,7 @@ Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/math/bit_set_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bit_set_mod.f90#L22)
 
-::: pybmad.bit_set
+::: pybmad.simutils.bit_set
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -422,7 +455,7 @@ Fortran source: [`sim_utils/math/bit_set_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L327)
 
-::: pybmad.bracket_index_for_spline
+::: pybmad.simutils.bracket_index_for_spline
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -431,7 +464,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L80)
 
-::: pybmad.calc_file_number
+::: pybmad.simutils.calc_file_number
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -440,7 +473,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L420)
 
-::: pybmad.celbd
+::: pybmad.simutils.celbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -449,7 +482,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/io/command_line_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/command_line_mod.f90#L57)
 
-::: pybmad.cesr_getarg
+::: pybmad.simutils.cesr_getarg
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -458,7 +491,7 @@ Fortran source: [`sim_utils/io/command_line_mod.f90`](https://github.com/bmad-si
 
 Fortran source: [`sim_utils/io/command_line_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/command_line_mod.f90#L23)
 
-::: pybmad.cesr_iargc
+::: pybmad.simutils.cesr_iargc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -467,7 +500,7 @@ Fortran source: [`sim_utils/io/command_line_mod.f90`](https://github.com/bmad-si
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L88)
 
-::: pybmad.change_file_number
+::: pybmad.simutils.change_file_number
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -476,7 +509,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1505)
 
-::: pybmad.charge_of
+::: pybmad.simutils.charge_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -485,7 +518,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1669)
 
-::: pybmad.charge_to_mass_of
+::: pybmad.simutils.charge_to_mass_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -494,7 +527,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/fourier_mod.f90#L29)
 
-::: pybmad.coarse_frequency_estimate
+::: pybmad.simutils.coarse_frequency_estimate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -503,7 +536,7 @@ Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L114)
 
-::: pybmad.complex_error_function
+::: pybmad.simutils.complex_error_function
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -512,7 +545,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L94)
 
-::: pybmad.cos_one
+::: pybmad.simutils.cos_one
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -521,7 +554,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L27)
 
-::: pybmad.cosc
+::: pybmad.simutils.cosc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -530,7 +563,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L105)
 
-::: pybmad.create_a_spline
+::: pybmad.simutils.create_a_spline
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -539,7 +572,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L123)
 
-::: pybmad.cross_product
+::: pybmad.simutils.cross_product
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -548,7 +581,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L130)
 
-::: pybmad.date_and_time_stamp
+::: pybmad.simutils.date_and_time_stamp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -557,7 +590,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/windowLS.f90#L145)
 
-::: pybmad.destfixedwindowls
+::: pybmad.simutils.destfixedwindowls
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -566,7 +599,7 @@ Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L136)
 
-::: pybmad.detab
+::: pybmad.simutils.detab
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -575,7 +608,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L148)
 
-::: pybmad.display_size_and_resolution
+::: pybmad.simutils.display_size_and_resolution
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -584,7 +617,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L155)
 
-::: pybmad.dj_bessel
+::: pybmad.simutils.dj_bessel
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -593,7 +626,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L162)
 
-::: pybmad.djb_hash
+::: pybmad.simutils.djb_hash
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -602,7 +635,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L169)
 
-::: pybmad.djb_str_hash
+::: pybmad.simutils.djb_str_hash
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -611,7 +644,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L181)
 
-::: pybmad.downcase_string
+::: pybmad.simutils.downcase_string
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -620,7 +653,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L271)
 
-::: pybmad.elbd
+::: pybmad.simutils.elbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -629,7 +662,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L371)
 
-::: pybmad.elcbd
+::: pybmad.simutils.elcbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -638,7 +671,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L53)
 
-::: pybmad.ellipinc
+::: pybmad.simutils.ellipinc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -647,7 +680,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L325)
 
-::: pybmad.elsbd
+::: pybmad.simutils.elsbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -656,7 +689,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L573)
 
-::: pybmad.end_akima_spline_calc
+::: pybmad.simutils.end_akima_spline_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -665,7 +698,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L192)
 
-::: pybmad.err_exit
+::: pybmad.simutils.err_exit
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -674,7 +707,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L197)
 
-::: pybmad.factorial
+::: pybmad.simutils.factorial
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -683,7 +716,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L204)
 
-::: pybmad.faddeeva_function
+::: pybmad.simutils.faddeeva_function
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -692,7 +725,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L217)
 
-::: pybmad.fft_1d
+::: pybmad.simutils.fft_1d
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -701,7 +734,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L223)
 
-::: pybmad.file_directorizer
+::: pybmad.simutils.file_directorizer
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -710,7 +743,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L231)
 
-::: pybmad.file_get
+::: pybmad.simutils.file_get
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -719,7 +752,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L238)
 
-::: pybmad.file_get_open
+::: pybmad.simutils.file_get_open
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -728,7 +761,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L247)
 
-::: pybmad.file_suffixer
+::: pybmad.simutils.file_suffixer
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -742,7 +775,7 @@ Fortran sources (overloaded):
 - `find_location_logic`: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1044)
 - `find_location_str`: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1049)
 
-::: pybmad.find_location
+::: pybmad.simutils.find_location
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -751,7 +784,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/fourier_mod.f90#L113)
 
-::: pybmad.fine_frequency_estimate
+::: pybmad.simutils.fine_frequency_estimate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -760,7 +793,7 @@ Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/windowLS.f90#L171)
 
-::: pybmad.fixedwindowls
+::: pybmad.simutils.fixedwindowls
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -769,7 +802,7 @@ Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/fourier_mod.f90#L207)
 
-::: pybmad.fourier_amplitude
+::: pybmad.simutils.fourier_amplitude
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -778,7 +811,7 @@ Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L140)
 
-::: pybmad.gelbd
+::: pybmad.simutils.gelbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -787,7 +820,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L255)
 
-::: pybmad.gen_complete_elliptic
+::: pybmad.simutils.gen_complete_elliptic
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -796,7 +829,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/input_mod.f90#L85)
 
-::: pybmad.get_a_char
+::: pybmad.simutils.get_a_char
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -805,7 +838,7 @@ Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L262)
 
-::: pybmad.get_file_number
+::: pybmad.simutils.get_file_number
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -814,7 +847,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L278)
 
-::: pybmad.get_file_time_stamp
+::: pybmad.simutils.get_file_time_stamp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -823,7 +856,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/input_mod.f90#L36)
 
-::: pybmad.get_tty_char
+::: pybmad.simutils.get_tty_char
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -832,7 +865,7 @@ Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/all_phase_fft.f90#L277)
 
-::: pybmad.hanhan
+::: pybmad.simutils.hanhan
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -841,7 +874,7 @@ Fortran source: [`sim_utils/math/all_phase_fft.f90`](https://github.com/bmad-sim
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L283)
 
-::: pybmad.i_bessel
+::: pybmad.simutils.i_bessel
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -850,7 +883,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L290)
 
-::: pybmad.i_bessel_extended
+::: pybmad.simutils.i_bessel_extended
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -859,7 +892,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L298)
 
-::: pybmad.increment_file_number
+::: pybmad.simutils.increment_file_number
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -868,7 +901,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L306)
 
-::: pybmad.index_nocase
+::: pybmad.simutils.index_nocase
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -877,7 +910,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/windowLS.f90#L76)
 
-::: pybmad.initfixedwindowls
+::: pybmad.simutils.initfixedwindowls
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -886,7 +919,7 @@ Fortran source: [`sim_utils/math/windowLS.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/optimizers/lmdif_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/optimizers/lmdif_mod.f90#L81)
 
-::: pybmad.initial_lmdif
+::: pybmad.simutils.initial_lmdif
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -895,7 +928,7 @@ Fortran source: [`sim_utils/optimizers/lmdif_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L313)
 
-::: pybmad.int_str
+::: pybmad.simutils.int_str
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -904,7 +937,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L328)
 
-::: pybmad.interpolated_fft
+::: pybmad.simutils.interpolated_fft
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -913,7 +946,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L233)
 
-::: pybmad.interpolated_fft_gsl
+::: pybmad.simutils.interpolated_fft_gsl
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -922,7 +955,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L341)
 
-::: pybmad.is_alphabetic
+::: pybmad.simutils.is_alphabetic
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -931,7 +964,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L348)
 
-::: pybmad.is_decreasing_sequence
+::: pybmad.simutils.is_decreasing_sequence
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -940,7 +973,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L211)
 
-::: pybmad.is_false
+::: pybmad.simutils.is_false
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -949,7 +982,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L356)
 
-::: pybmad.is_increasing_sequence
+::: pybmad.simutils.is_increasing_sequence
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -958,7 +991,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L364)
 
-::: pybmad.is_integer
+::: pybmad.simutils.is_integer
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -967,7 +1000,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L372)
 
-::: pybmad.is_logical
+::: pybmad.simutils.is_logical
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -976,7 +1009,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L379)
 
-::: pybmad.is_real
+::: pybmad.simutils.is_real
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -985,7 +1018,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1806)
 
-::: pybmad.is_subatomic_species
+::: pybmad.simutils.is_subatomic_species
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -994,7 +1027,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L178)
 
-::: pybmad.is_true
+::: pybmad.simutils.is_true
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1003,7 +1036,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L396)
 
-::: pybmad.j_bessel
+::: pybmad.simutils.j_bessel
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1012,7 +1045,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L403)
 
-::: pybmad.linear_fit
+::: pybmad.simutils.linear_fit
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1021,7 +1054,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L415)
 
-::: pybmad.linear_fit_2d
+::: pybmad.simutils.linear_fit_2d
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1030,7 +1063,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L432)
 
-::: pybmad.logic_str
+::: pybmad.simutils.logic_str
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1039,7 +1072,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L438)
 
-::: pybmad.lunget
+::: pybmad.simutils.lunget
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1048,7 +1081,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L454)
 
-::: pybmad.make_legal_comment
+::: pybmad.simutils.make_legal_comment
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1057,7 +1090,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1557)
 
-::: pybmad.mass_of
+::: pybmad.simutils.mass_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1066,7 +1099,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L443)
 
-::: pybmad.match_reg
+::: pybmad.simutils.match_reg
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1075,7 +1108,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L460)
 
-::: pybmad.match_wild
+::: pybmad.simutils.match_wild
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1084,7 +1117,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L551)
 
-::: pybmad.match_word
+::: pybmad.simutils.match_word
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1093,7 +1126,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L164)
 
-::: pybmad.maximize_projection
+::: pybmad.simutils.maximize_projection
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1102,7 +1135,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L449)
 
-::: pybmad.milli_sleep
+::: pybmad.simutils.milli_sleep
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1111,7 +1144,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/modulo2_mod.f90#L85)
 
-::: pybmad.modulo2_dp
+::: pybmad.simutils.modulo2_dp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1120,7 +1153,7 @@ Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.c
 
 Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/modulo2_mod.f90#L157)
 
-::: pybmad.modulo2_int
+::: pybmad.simutils.modulo2_int
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1129,7 +1162,7 @@ Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.c
 
 Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/modulo2_mod.f90#L121)
 
-::: pybmad.modulo2_qp
+::: pybmad.simutils.modulo2_qp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1138,7 +1171,7 @@ Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.c
 
 Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/modulo2_mod.f90#L49)
 
-::: pybmad.modulo2_sp
+::: pybmad.simutils.modulo2_sp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1147,7 +1180,7 @@ Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.c
 
 Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L386)
 
-::: pybmad.n_bins_automatic
+::: pybmad.simutils.n_bins_automatic
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1156,7 +1189,7 @@ Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L568)
 
-::: pybmad.n_choose_k
+::: pybmad.simutils.n_choose_k
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1165,7 +1198,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L575)
 
-::: pybmad.n_spline_create
+::: pybmad.simutils.n_spline_create
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1174,7 +1207,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L72)
 
-::: pybmad.naff
+::: pybmad.simutils.naff
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1183,7 +1216,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L583)
 
-::: pybmad.nametable_add
+::: pybmad.simutils.nametable_add
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1192,7 +1225,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L591)
 
-::: pybmad.nametable_bracket_indexx
+::: pybmad.simutils.nametable_bracket_indexx
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1201,7 +1234,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L600)
 
-::: pybmad.nametable_change1
+::: pybmad.simutils.nametable_change1
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1210,7 +1243,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L608)
 
-::: pybmad.nametable_init
+::: pybmad.simutils.nametable_init
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1219,7 +1252,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L615)
 
-::: pybmad.nametable_remove
+::: pybmad.simutils.nametable_remove
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1228,7 +1261,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/fourier_mod.f90#L153)
 
-::: pybmad.negative_ampsquared
+::: pybmad.simutils.negative_ampsquared
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1237,7 +1270,7 @@ Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/fourier_mod.f90#L173)
 
-::: pybmad.negative_dampsquared
+::: pybmad.simutils.negative_dampsquared
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1246,7 +1279,7 @@ Fortran source: [`sim_utils/math/fourier_mod.f90`](https://github.com/bmad-sim/b
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L314)
 
-::: pybmad.omega_to_quat
+::: pybmad.simutils.omega_to_quat
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1255,7 +1288,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1394)
 
-::: pybmad.openpmd_species_name
+::: pybmad.simutils.openpmd_species_name
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1264,7 +1297,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L633)
 
-::: pybmad.ordinal_str
+::: pybmad.simutils.ordinal_str
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1279,7 +1312,7 @@ Fortran sources (overloaded):
 - `out_io_line12`: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L382)
 - `out_io_lines`: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L434)
 
-::: pybmad.out_io
+::: pybmad.simutils.out_io
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1288,7 +1321,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L842)
 
-::: pybmad.out_io_buffer_get_line
+::: pybmad.simutils.out_io_buffer_get_line
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1297,7 +1330,7 @@ Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L822)
 
-::: pybmad.out_io_buffer_num_lines
+::: pybmad.simutils.out_io_buffer_num_lines
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1306,7 +1339,7 @@ Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L799)
 
-::: pybmad.out_io_buffer_reset
+::: pybmad.simutils.out_io_buffer_reset
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1315,7 +1348,7 @@ Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L768)
 
-::: pybmad.out_io_print_and_capture_setup
+::: pybmad.simutils.out_io_print_and_capture_setup
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1324,7 +1357,7 @@ Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L646)
 
-::: pybmad.parse_fortran_format
+::: pybmad.simutils.parse_fortran_format
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1333,7 +1366,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L652)
 
-::: pybmad.pointer_to_locations
+::: pybmad.simutils.pointer_to_locations
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1342,7 +1375,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L1114)
 
-::: pybmad.pointer_to_ran_state
+::: pybmad.simutils.pointer_to_ran_state
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1351,7 +1384,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L661)
 
-::: pybmad.poly_eval
+::: pybmad.simutils.poly_eval
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1360,7 +1393,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L668)
 
-::: pybmad.probability_funct
+::: pybmad.simutils.probability_funct
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1369,7 +1402,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L132)
 
-::: pybmad.projdd
+::: pybmad.simutils.projdd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1378,7 +1411,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L675)
 
-::: pybmad.quadratic_roots
+::: pybmad.simutils.quadratic_roots
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1390,7 +1423,7 @@ Fortran sources (overloaded):
 - `quat_conj_real`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L411)
 - `quat_conj_complex`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L435)
 
-::: pybmad.quat_conj
+::: pybmad.simutils.quat_conj
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1399,7 +1432,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L458)
 
-::: pybmad.quat_inverse
+::: pybmad.simutils.quat_inverse
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1411,7 +1444,7 @@ Fortran sources (overloaded):
 - `quat_mul_real`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L484)
 - `quat_mul_complex`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L551)
 
-::: pybmad.quat_mul
+::: pybmad.simutils.quat_mul
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1423,7 +1456,7 @@ Fortran sources (overloaded):
 - `quat_rotate_real`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L616)
 - `quat_rotate_complex`: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L652)
 
-::: pybmad.quat_rotate
+::: pybmad.simutils.quat_rotate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1432,7 +1465,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L347)
 
-::: pybmad.quat_to_axis_angle
+::: pybmad.simutils.quat_to_axis_angle
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1441,7 +1474,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L281)
 
-::: pybmad.quat_to_omega
+::: pybmad.simutils.quat_to_omega
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1450,7 +1483,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L184)
 
-::: pybmad.quat_to_w_mat
+::: pybmad.simutils.quat_to_w_mat
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1459,7 +1492,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L684)
 
-::: pybmad.query_string
+::: pybmad.simutils.query_string
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1468,7 +1501,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L693)
 
-::: pybmad.quote
+::: pybmad.simutils.quote
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1477,7 +1510,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L698)
 
-::: pybmad.quoten
+::: pybmad.simutils.quoten
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1486,7 +1519,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L891)
 
-::: pybmad.ran_default_state
+::: pybmad.simutils.ran_default_state
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1495,7 +1528,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L622)
 
-::: pybmad.ran_engine
+::: pybmad.simutils.ran_engine
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1504,7 +1537,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L700)
 
-::: pybmad.ran_gauss_converter
+::: pybmad.simutils.ran_gauss_converter
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1513,7 +1546,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L171)
 
-::: pybmad.ran_gauss_scalar
+::: pybmad.simutils.ran_gauss_scalar
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1522,7 +1555,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L405)
 
-::: pybmad.ran_gauss_vector
+::: pybmad.simutils.ran_gauss_vector
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1531,7 +1564,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L860)
 
-::: pybmad.ran_seed_get
+::: pybmad.simutils.ran_seed_get
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1540,7 +1573,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L780)
 
-::: pybmad.ran_seed_put
+::: pybmad.simutils.ran_seed_put
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1552,7 +1585,7 @@ Fortran sources (overloaded):
 - `ran_uniform_scalar`: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L920)
 - `ran_uniform_vector`: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L984)
 
-::: pybmad.ran_uniform
+::: pybmad.simutils.ran_uniform
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1561,7 +1594,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L1185)
 
-::: pybmad.rcelbd
+::: pybmad.simutils.rcelbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1570,7 +1603,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/input_mod.f90#L144)
 
-::: pybmad.read_a_line
+::: pybmad.simutils.read_a_line
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1579,7 +1612,7 @@ Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/input_mod.f90#L267)
 
-::: pybmad.readline_read_history
+::: pybmad.simutils.readline_read_history
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1588,7 +1621,7 @@ Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/input_mod.f90#L291)
 
-::: pybmad.readline_write_history
+::: pybmad.simutils.readline_write_history
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1597,7 +1630,7 @@ Fortran source: [`sim_utils/io/input_mod.f90`](https://github.com/bmad-sim/bmad-
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L745)
 
-::: pybmad.real_num_fortran_format
+::: pybmad.simutils.real_num_fortran_format
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1606,7 +1639,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L779)
 
-::: pybmad.real_path
+::: pybmad.simutils.real_path
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1615,7 +1648,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L785)
 
-::: pybmad.real_str
+::: pybmad.simutils.real_str
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1624,7 +1657,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L704)
 
-::: pybmad.real_to_string
+::: pybmad.simutils.real_to_string
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1633,7 +1666,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L50)
 
-::: pybmad.reallocate_spline
+::: pybmad.simutils.reallocate_spline
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1642,7 +1675,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L1042)
 
-::: pybmad.relbd
+::: pybmad.simutils.relbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1651,7 +1684,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L1135)
 
-::: pybmad.relcbd
+::: pybmad.simutils.relcbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1660,7 +1693,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L1090)
 
-::: pybmad.relsbd
+::: pybmad.simutils.relsbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1669,7 +1702,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L206)
 
-::: pybmad.rgelbd
+::: pybmad.simutils.rgelbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1678,7 +1711,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L793)
 
-::: pybmad.rms_value
+::: pybmad.simutils.rms_value
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1687,7 +1720,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L801)
 
-::: pybmad.rot_2d
+::: pybmad.simutils.rot_2d
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1696,7 +1729,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L737)
 
-::: pybmad.rotate_vec
+::: pybmad.simutils.rotate_vec
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1705,7 +1738,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L689)
 
-::: pybmad.rotate_vec_given_axis_angle
+::: pybmad.simutils.rotate_vec_given_axis_angle
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1714,7 +1747,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/interfaces/precision_def.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/precision_def.f90#L42)
 
-::: pybmad.rp8
+::: pybmad.simutils.rp8
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1723,7 +1756,7 @@ Fortran source: [`sim_utils/interfaces/precision_def.f90`](https://github.com/bm
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L1377)
 
-::: pybmad.rserbd
+::: pybmad.simutils.rserbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1732,7 +1765,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L807)
 
-::: pybmad.run_timer
+::: pybmad.simutils.run_timer
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1741,7 +1774,16 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L923)
 
-::: pybmad.serbd
+::: pybmad.simutils.serbd
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### set_all_ptr
+
+Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L970)
+
+::: pybmad.simutils.set_all_ptr
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1750,7 +1792,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L754)
 
-::: pybmad.set_env
+::: pybmad.simutils.set_env
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1763,7 +1805,7 @@ Fortran sources (overloaded):
 - `set_parameter_int`: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L11)
 - `set_parameter_logic`: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L16)
 
-::: pybmad.set_parameter
+::: pybmad.simutils.set_parameter
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1772,7 +1814,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1700)
 
-::: pybmad.set_species_charge
+::: pybmad.simutils.set_species_charge
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1784,7 +1826,7 @@ Fortran sources (overloaded):
 - `sign_of_real`: [`sim_utils/special_functions/sign_of_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/sign_of_mod.f90#L41)
 - `sign_of_int`: [`sim_utils/special_functions/sign_of_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/sign_of_mod.f90#L72)
 
-::: pybmad.sign_of
+::: pybmad.simutils.sign_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1793,7 +1835,7 @@ Fortran sources (overloaded):
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L814)
 
-::: pybmad.sinc
+::: pybmad.simutils.sinc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1802,7 +1844,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L822)
 
-::: pybmad.sincc
+::: pybmad.simutils.sincc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1811,7 +1853,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L830)
 
-::: pybmad.sinhx_x
+::: pybmad.simutils.sinhx_x
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1820,7 +1862,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L838)
 
-::: pybmad.skip_header
+::: pybmad.simutils.skip_header
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1829,7 +1871,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/naff.f90#L215)
 
-::: pybmad.special_projection
+::: pybmad.simutils.special_projection
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1838,7 +1880,7 @@ Fortran source: [`sim_utils/math/naff.f90`](https://github.com/bmad-sim/bmad-eco
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L966)
 
-::: pybmad.species_id
+::: pybmad.simutils.species_id
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1847,7 +1889,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1356)
 
-::: pybmad.species_id_from_openpmd
+::: pybmad.simutils.species_id_from_openpmd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1856,7 +1898,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1246)
 
-::: pybmad.species_name
+::: pybmad.simutils.species_name
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1865,7 +1907,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L929)
 
-::: pybmad.species_of
+::: pybmad.simutils.species_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1874,7 +1916,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1473)
 
-::: pybmad.spin_of
+::: pybmad.simutils.spin_of
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1883,7 +1925,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L405)
 
-::: pybmad.spline1
+::: pybmad.simutils.spline1
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1892,7 +1934,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L475)
 
-::: pybmad.spline_akima
+::: pybmad.simutils.spline_akima
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1901,7 +1943,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L163)
 
-::: pybmad.spline_akima_interpolate
+::: pybmad.simutils.spline_akima_interpolate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1910,7 +1952,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/spline_mod.f90#L281)
 
-::: pybmad.spline_evaluate
+::: pybmad.simutils.spline_evaluate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1919,7 +1961,7 @@ Fortran source: [`sim_utils/math/spline_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L852)
 
-::: pybmad.sqrt_alpha
+::: pybmad.simutils.sqrt_alpha
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1928,7 +1970,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L844)
 
-::: pybmad.sqrt_one
+::: pybmad.simutils.sqrt_one
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1937,7 +1979,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L760)
 
-::: pybmad.str_count
+::: pybmad.simutils.str_count
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1946,7 +1988,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L998)
 
-::: pybmad.str_downcase
+::: pybmad.simutils.str_downcase
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1955,7 +1997,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L859)
 
-::: pybmad.str_first_in_set
+::: pybmad.simutils.str_first_in_set
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1964,7 +2006,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L867)
 
-::: pybmad.str_first_not_in_set
+::: pybmad.simutils.str_first_not_in_set
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1973,7 +2015,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L874)
 
-::: pybmad.str_last_in_set
+::: pybmad.simutils.str_last_in_set
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1982,7 +2024,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L881)
 
-::: pybmad.str_last_not_in_set
+::: pybmad.simutils.str_last_not_in_set
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1991,7 +2033,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L986)
 
-::: pybmad.str_match_wild
+::: pybmad.simutils.str_match_wild
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2000,7 +2042,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L979)
 
-::: pybmad.str_substitute
+::: pybmad.simutils.str_substitute
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2009,7 +2051,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L992)
 
-::: pybmad.str_upcase
+::: pybmad.simutils.str_upcase
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2018,7 +2060,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L888)
 
-::: pybmad.string_to_int
+::: pybmad.simutils.string_to_int
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2027,7 +2069,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L897)
 
-::: pybmad.string_to_real
+::: pybmad.simutils.string_to_real
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2036,7 +2078,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1010)
 
-::: pybmad.string_trim
+::: pybmad.simutils.string_trim
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2045,7 +2087,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L907)
 
-::: pybmad.string_trim2
+::: pybmad.simutils.string_trim2
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2054,7 +2096,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/optimizers/lmdif_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/optimizers/lmdif_mod.f90#L121)
 
-::: pybmad.suggest_lmdif
+::: pybmad.simutils.suggest_lmdif
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2063,7 +2105,7 @@ Fortran source: [`sim_utils/optimizers/lmdif_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/super_recipes_mod.f90#L112)
 
-::: pybmad.super_bicubic_coef
+::: pybmad.simutils.super_bicubic_coef
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2072,7 +2114,7 @@ Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad
 
 Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/super_recipes_mod.f90#L58)
 
-::: pybmad.super_bicubic_interpolation
+::: pybmad.simutils.super_bicubic_interpolation
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2081,7 +2123,7 @@ Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad
 
 Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/super_recipes_mod.f90#L1506)
 
-::: pybmad.super_polint
+::: pybmad.simutils.super_polint
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2090,7 +2132,7 @@ Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad
 
 Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/super_recipes_mod.f90#L1739)
 
-::: pybmad.super_poly
+::: pybmad.simutils.super_poly
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2099,7 +2141,7 @@ Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L1019)
 
-::: pybmad.super_sobseq
+::: pybmad.simutils.super_sobseq
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2108,7 +2150,7 @@ Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bm
 
 Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/super_recipes_mod.f90#L159)
 
-::: pybmad.super_sort
+::: pybmad.simutils.super_sort
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2117,7 +2159,7 @@ Fortran source: [`sim_utils/math/super_recipes_mod.f90`](https://github.com/bmad
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1004)
 
-::: pybmad.system_command
+::: pybmad.simutils.system_command
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2126,7 +2168,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/special_functions/elliptic_integral_mod.f90#L102)
 
-::: pybmad.test_xgelbd
+::: pybmad.simutils.test_xgelbd
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2135,7 +2177,7 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L930)
 
-::: pybmad.to_str
+::: pybmad.simutils.to_str
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2144,7 +2186,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1433)
 
-::: pybmad.tricubic_cmplx_eval
+::: pybmad.simutils.tricubic_cmplx_eval
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2153,7 +2195,7 @@ Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.co
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L938)
 
-::: pybmad.type_this_file
+::: pybmad.simutils.type_this_file
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2162,7 +2204,16 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L949)
 
-::: pybmad.upcase_string
+::: pybmad.simutils.upcase_string
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### value_of_all_ptr
+
+Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1016)
+
+::: pybmad.simutils.value_of_all_ptr
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2171,7 +2222,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L1023)
 
-::: pybmad.virtual_memory_usage
+::: pybmad.simutils.virtual_memory_usage
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2180,7 +2231,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L102)
 
-::: pybmad.w_mat_to_axis_angle
+::: pybmad.simutils.w_mat_to_axis_angle
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2189,7 +2240,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/rotation_3d_mod.f90#L129)
 
-::: pybmad.w_mat_to_quat
+::: pybmad.simutils.w_mat_to_quat
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2198,7 +2249,7 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L954)
 
-::: pybmad.word_len
+::: pybmad.simutils.word_len
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2207,7 +2258,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L960)
 
-::: pybmad.word_read
+::: pybmad.simutils.word_read
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2216,7 +2267,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 
 Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L1739)
 
-::: pybmad.x0_radiation_length
+::: pybmad.simutils.x0_radiation_length
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2225,7 +2276,7 @@ Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github
 
 Fortran source: [`sim_utils/math/random_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/random_mod.f90#L136)
 
-::: pybmad.zig_table_init
+::: pybmad.simutils.zig_table_init
     options:
       show_root_heading: false
       show_root_toc_entry: false

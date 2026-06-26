@@ -1,18 +1,17 @@
 #include "pybmad/generated/SimUtils_routines_c.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_c(py::module &m) {
+void init_SimUtils_routines_c(nb::module_ &m) {
   m.def(
       "calc_file_number",
       &SimUtils::calc_file_number,
-      py::arg("file_name"),
-      py::arg("num_in"),
-      py::arg("num_out"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("num_in"),
+      nb::arg("num_out"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine calc_file_number
 
 Parameters
@@ -26,24 +25,23 @@ num_out : int
 err_flag : bool
 )"""
   );
-  py::class_<SimUtils::Celbd, std::unique_ptr<SimUtils::Celbd>>(m, "Celbd", "celbd return type")
-      .def_readonly("elb", &SimUtils::Celbd::elb)
-      .def_readonly("eld", &SimUtils::Celbd::eld)
+  nb::class_<SimUtils::Celbd>(m, "Celbd", "celbd return type")
+      .def_ro("elb", &SimUtils::Celbd::elb)
+      .def_ro("eld", &SimUtils::Celbd::eld)
       .def("__len__", [](const SimUtils::Celbd &) { return 2; })
-      .def("__getitem__", [](const SimUtils::Celbd &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::Celbd &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.elb);
+          return nb::cast(s.elb);
         if (i == 1)
-          return py::cast(s.eld);
-        throw py::index_error();
+          return nb::cast(s.eld);
+        throw nb::index_error();
       });
   m.def(
       "celbd",
       &SimUtils::celbd,
-      py::arg("mc"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("mc"),
       R"""(Wrapper for Fortran routine celbd
 
 Parameters
@@ -60,11 +58,8 @@ eld : float
   m.def(
       "cesr_getarg",
       &SimUtils::cesr_getarg,
-      py::arg("i_arg"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine cesr_getarg (i_arg, arg)
-
-Platform independent function to return the i'th command line argument.
+      nb::arg("i_arg"),
+      R"""(Platform independent function to return the i'th command line argument.
 Use this with cesr_iargc.
 
 Note: The difference between this routine and the Fortran instrinsic
@@ -88,10 +83,7 @@ arg : str
   m.def(
       "cesr_iargc",
       &SimUtils::cesr_iargc,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function cesr_iargc ()
-
-Note: Use the Fortran intrinsic command_argument_count instead
+      R"""(Note: Use the Fortran intrinsic command_argument_count instead
 
 Platform independent function to return the number of command line arguments.
 Use this with cesr_getarg.
@@ -100,9 +92,8 @@ Use this with cesr_getarg.
   m.def(
       "change_file_number",
       &SimUtils::change_file_number,
-      py::arg("file_name"),
-      py::arg("change"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("change"),
       R"""(Wrapper for Fortran routine change_file_number
 
 Parameters
@@ -115,12 +106,9 @@ change : int
   m.def(
       "charge_of",
       &SimUtils::charge_of,
-      py::arg("species"),
-      py::arg("default_") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function charge_of (species, default) result (charge)
-
-Routine to return the charge, in units of e+, of a particle.
+      nb::arg("species"),
+      nb::arg("default_") = nb::none(),
+      R"""(Routine to return the charge, in units of e+, of a particle.
 
 Parameters
 ----------
@@ -136,11 +124,8 @@ charge : int
   m.def(
       "charge_to_mass_of",
       &SimUtils::charge_to_mass_of,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function charge_to_mass_of (species) result (charge_mass_ratio)
-
-Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
+      nb::arg("species"),
+      R"""(Routine to return the charge (in units of e+) to mass (in units of eV) ratio of a particle.
 
 Parameters
 ----------
@@ -156,12 +141,9 @@ charge_mass_ratio : float
   m.def(
       "coarse_frequency_estimate",
       &SimUtils::coarse_frequency_estimate,
-      py::arg("data"),
-      py::arg("error") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function coarse_frequency_estimate(data, error) result(frequency)
-
-Simple function to take periodic data and estimate
+      nb::arg("data"),
+      nb::arg("error") = nb::none(),
+      R"""(Simple function to take periodic data and estimate
 the most dominant frequency by FFT.
 
 Parameters
@@ -178,11 +160,10 @@ frequency : float
   m.def(
       "complex_error_function",
       &SimUtils::complex_error_function,
-      py::arg("wr"),
-      py::arg("wi"),
-      py::arg("zr"),
-      py::arg("zi"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("wr"),
+      nb::arg("wi"),
+      nb::arg("zr"),
+      nb::arg("zi"),
       R"""(Wrapper for Fortran routine complex_error_function
 
 Parameters
@@ -199,8 +180,7 @@ zi : float
   m.def(
       "cos_one",
       &SimUtils::cos_one,
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("angle"),
       R"""(Wrapper for Fortran routine cos_one
 
 Parameters
@@ -217,9 +197,8 @@ cos1 : float
   m.def(
       "cosc",
       &SimUtils::cosc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine cosc
 
 Parameters
@@ -239,14 +218,11 @@ y : float
   m.def(
       "create_a_spline",
       &SimUtils::create_a_spline,
-      py::arg("r0"),
-      py::arg("r1"),
-      py::arg("slope0"),
-      py::arg("slope1"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function create_a_spline (r0, r1, slope0, slope1) result (spline)
-
-Routine to create a single spline given end point positions and slopes.
+      nb::arg("r0"),
+      nb::arg("r1"),
+      nb::arg("slope0"),
+      nb::arg("slope1"),
+      R"""(Routine to create a single spline given end point positions and slopes.
 The spline will pass through the data points and have the given slopes
 at these points.
 
@@ -276,9 +252,8 @@ spline : SplineStruct
   m.def(
       "cross_product",
       &SimUtils::cross_product,
-      py::arg("a"),
-      py::arg("b"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("a"),
+      nb::arg("b"),
       R"""(Wrapper for Fortran routine cross_product
 
 Parameters

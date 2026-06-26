@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_c.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyChromCalc python_chrom_calc(
@@ -9,9 +9,9 @@ PyChromCalc python_chrom_calc(
     double delta_e,
     std::optional<double> pz = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
-    optional_ref<CoordStruct> orb0 = std::nullopt
+    CoordStruct *orb0 = nullptr
 ) {
-  auto _result = Bmad::chrom_calc(lat, delta_e, pz, ix_branch, orb0);
+  auto _result = Bmad::chrom_calc(lat, delta_e, pz, ix_branch, ptr_to_opt_ref(orb0));
   auto py_result{PyChromCalc{_result, delta_e}};
   return py_result;
 }
@@ -27,12 +27,11 @@ PyChromTune python_chrom_tune(
   return py_result;
 }
 
-void init_Bmad_routines_c(py::module &m) {
+void init_Bmad_routines_c(nb::module_ &m) {
   m.def(
       "c_to_cbar",
       &Bmad::c_to_cbar,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine c_to_cbar
 
 Parameters
@@ -46,37 +45,40 @@ cbar_mat : 2D array of float (shape: 2,2)
     Cbar matrix.
 )"""
   );
-  py::class_<Bmad::CalcBunchParams, std::unique_ptr<Bmad::CalcBunchParams>>(
-      m,
-      "CalcBunchParams",
-      "calc_bunch_params return type"
-  )
-      .def_readonly("bunch_params", &Bmad::CalcBunchParams::bunch_params)
-      .def_readonly("error", &Bmad::CalcBunchParams::error)
-      .def_readonly("n_mat", &Bmad::CalcBunchParams::n_mat)
+  nb::class_<Bmad::CalcBunchParams>(m, "CalcBunchParams", "calc_bunch_params return type")
+      .def_ro("bunch_params", &Bmad::CalcBunchParams::bunch_params)
+      .def_ro("error", &Bmad::CalcBunchParams::error)
+      .def_ro("n_mat", &Bmad::CalcBunchParams::n_mat)
       .def("__len__", [](const Bmad::CalcBunchParams &) { return 3; })
-      .def("__getitem__", [](const Bmad::CalcBunchParams &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CalcBunchParams &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.bunch_params);
+          return nb::cast(s.bunch_params);
         if (i == 1)
-          return py::cast(s.error);
+          return nb::cast(s.error);
         if (i == 2)
-          return py::cast(s.n_mat);
-        throw py::index_error();
+          return nb::cast(s.n_mat);
+        throw nb::index_error();
       });
   m.def(
       "calc_bunch_params",
-      &Bmad::calc_bunch_params,
-      py::arg("bunch"),
-      py::arg("print_err") = py::none(),
-      py::arg("is_time_coords") = py::none(),
-      py::arg("ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine calc_bunch_params (bunch, bunch_params, error, print_err, n_mat, is_time_coords, ele)
-
-Finds all bunch parameters defined in bunch_params_struct, both normal-mode
+      [](BunchStruct &bunch,
+         std::optional<bool> print_err,
+         std::optional<bool> is_time_coords,
+         EleStruct *ele) {
+        auto fn = static_cast<
+            Bmad::
+                CalcBunchParams (*)(BunchStruct &, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
+            &Bmad::calc_bunch_params
+        );
+        return fn(bunch, print_err, is_time_coords, ptr_to_opt_ref(ele));
+      },
+      nb::arg("bunch"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("is_time_coords") = nb::none(),
+      nb::arg("ele") = nb::none(),
+      R"""(Finds all bunch parameters defined in bunch_params_struct, both normal-mode
 and projected. Projected parameters are found purely from the geometrical
 distribution of the beam. Normal-Mode parameters are found using the method
 developed in:
@@ -114,19 +116,38 @@ n_mat : 2D array of float (shape: 6,6), optional
   );
   m.def(
       "calc_bunch_params_slice",
-      &Bmad::calc_bunch_params_slice,
-      py::arg("bunch"),
-      py::arg("bunch_params"),
-      py::arg("plane"),
-      py::arg("slice_center"),
-      py::arg("slice_spread"),
-      py::arg("print_err") = py::none(),
-      py::arg("is_time_coords") = py::none(),
-      py::arg("ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine calc_bunch_params_slice (bunch, bunch_params, plane, slice_center, slice_spread, err, print_err, is_time_coords, ele)
-
-Finds bunch parameters for a slice of the beam.
+      [](BunchStruct &bunch,
+         BunchParamsStruct &bunch_params,
+         int plane,
+         double slice_center,
+         double slice_spread,
+         std::optional<bool> print_err,
+         std::optional<bool> is_time_coords,
+         EleStruct *ele) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, BunchParamsStruct &, int, double, double, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
+            &Bmad::calc_bunch_params_slice
+        );
+        return fn(
+            bunch,
+            bunch_params,
+            plane,
+            slice_center,
+            slice_spread,
+            print_err,
+            is_time_coords,
+            ptr_to_opt_ref(ele)
+        );
+      },
+      nb::arg("bunch"),
+      nb::arg("bunch_params"),
+      nb::arg("plane"),
+      nb::arg("slice_center"),
+      nb::arg("slice_spread"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("is_time_coords") = nb::none(),
+      nb::arg("ele") = nb::none(),
+      R"""(Finds bunch parameters for a slice of the beam.
 
 Parameters
 ----------
@@ -160,17 +181,32 @@ err : bool
   );
   m.def(
       "calc_bunch_params_z_slice",
-      &Bmad::calc_bunch_params_z_slice,
-      py::arg("bunch"),
-      py::arg("bunch_params"),
-      py::arg("slice_bounds"),
-      py::arg("print_err") = py::none(),
-      py::arg("is_time_coords") = py::none(),
-      py::arg("ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine calc_bunch_params_z_slice (bunch, bunch_params, slice_bounds, err, print_err, is_time_coords, ele)
-
-Finds bunch parameters for a slice of the beam.
+      [](BunchStruct &bunch,
+         BunchParamsStruct &bunch_params,
+         FixedArray1D<Real, 2> slice_bounds,
+         std::optional<bool> print_err,
+         std::optional<bool> is_time_coords,
+         EleStruct *ele) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, BunchParamsStruct &, FixedArray1D<Real, 2>, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
+            &Bmad::calc_bunch_params_z_slice
+        );
+        return fn(
+            bunch,
+            bunch_params,
+            slice_bounds,
+            print_err,
+            is_time_coords,
+            ptr_to_opt_ref(ele)
+        );
+      },
+      nb::arg("bunch"),
+      nb::arg("bunch_params"),
+      nb::arg("slice_bounds"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("is_time_coords") = nb::none(),
+      nb::arg("ele") = nb::none(),
+      R"""(Finds bunch parameters for a slice of the beam.
 
 The slice is specified in terms of percentage of particles ordered by z-position.
 For example, slice_bounds = [0.0, 0.5] specifies the trailing half of the bunch
@@ -202,15 +238,21 @@ err : bool
   );
   m.def(
       "calc_bunch_sigma_matrix_etc",
-      &Bmad::calc_bunch_sigma_matrix_etc,
-      py::arg("particle"),
-      py::arg("charge"),
-      py::arg("is_time_coords") = py::none(),
-      py::arg("ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine calc_bunch_sigma_matrix_etc (particle, charge, bunch_params, is_time_coords, ele)
-
-Routine to find the sigma matrix elements of a particle distribution.
+      [](CoordStructArray1D particle,
+         FArray1D<Real> &charge,
+         std::optional<bool> is_time_coords,
+         EleStruct *ele) {
+        auto fn = static_cast<
+            BunchParamsStruct (*)(CoordStructArray1D, FArray1D<Real> &, std::optional<bool>, optional_ref<EleStruct>)>(
+            &Bmad::calc_bunch_sigma_matrix_etc
+        );
+        return fn(particle, charge, is_time_coords, ptr_to_opt_ref(ele));
+      },
+      nb::arg("particle"),
+      nb::arg("charge"),
+      nb::arg("is_time_coords") = nb::none(),
+      nb::arg("ele") = nb::none(),
+      R"""(Routine to find the sigma matrix elements of a particle distribution.
 
 Parameters
 ----------
@@ -226,40 +268,35 @@ bunch_params : BunchParamsStruct
     Bunch parameters. .sigma(6,6) .centroid.vec(6) .centroid.p0c .rel_max(6) .rel_min(6)
 )"""
   );
-  py::class_<
-      Bmad::CalcEmittancesAndTwissFromSigmaMatrix,
-      std::unique_ptr<Bmad::CalcEmittancesAndTwissFromSigmaMatrix>>(
+  nb::class_<Bmad::CalcEmittancesAndTwissFromSigmaMatrix>(
       m,
       "CalcEmittancesAndTwissFromSigmaMatrix",
       "calc_emittances_and_twiss_from_sigma_matrix return type"
   )
-      .def_readonly("bunch_params", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::bunch_params)
-      .def_readonly("error", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::error)
-      .def_readonly("n_mat", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::n_mat)
+      .def_ro("bunch_params", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::bunch_params)
+      .def_ro("error", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::error)
+      .def_ro("n_mat", &Bmad::CalcEmittancesAndTwissFromSigmaMatrix::n_mat)
       .def("__len__", [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &) { return 3; })
       .def(
           "__getitem__",
-          [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &s, int i) -> py::object {
+          [](const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &s, int i) -> nb::object {
             if (i < 0)
               i += 3;
             if (i == 0)
-              return py::cast(s.bunch_params);
+              return nb::cast(s.bunch_params);
             if (i == 1)
-              return py::cast(s.error);
+              return nb::cast(s.error);
             if (i == 2)
-              return py::cast(s.n_mat);
-            throw py::index_error();
+              return nb::cast(s.n_mat);
+            throw nb::index_error();
           }
       );
   m.def(
       "calc_emittances_and_twiss_from_sigma_matrix",
       &Bmad::calc_emittances_and_twiss_from_sigma_matrix,
-      py::arg("sigma_mat"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine calc_emittances_and_twiss_from_sigma_matrix(sigma_mat, bunch_params, error, print_err, n_mat)
-
-Routine to calc emittances and Twiss function from a beam sigma matrix.
+      nb::arg("sigma_mat"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Routine to calc emittances and Twiss function from a beam sigma matrix.
 See: Andy Wolski "Alternative approach to general coupled linear optics".
 
 Parameters
@@ -286,11 +323,8 @@ n_mat : 2D array of float (shape: 6,6), optional
   m.def(
       "calc_spin_params",
       &Bmad::calc_spin_params,
-      py::arg("bunch"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine calc_spin_params (bunch, bunch_params)
-
-Rotine to calculate spin averages
+      nb::arg("bunch"),
+      R"""(Rotine to calculate spin averages
 
 Parameters
 ----------
@@ -306,10 +340,9 @@ bunch_params : BunchParamsStruct
   m.def(
       "calc_super_slave_key",
       &Bmad::calc_super_slave_key,
-      py::arg("lord1"),
-      py::arg("lord2"),
-      py::arg("create_jumbo_slave") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord1"),
+      nb::arg("lord2"),
+      nb::arg("create_jumbo_slave") = nb::none(),
       R"""(Wrapper for Fortran routine calc_super_slave_key
 
 Parameters
@@ -329,36 +362,29 @@ slave : EleStruct
     Super_slave element.
 )"""
   );
-  py::class_<Bmad::CalcWallRadius, std::unique_ptr<Bmad::CalcWallRadius>>(
-      m,
-      "CalcWallRadius",
-      "calc_wall_radius return type"
-  )
-      .def_readonly("r_wall", &Bmad::CalcWallRadius::r_wall)
-      .def_readonly("dr_dtheta", &Bmad::CalcWallRadius::dr_dtheta)
-      .def_readonly("ix_vertex", &Bmad::CalcWallRadius::ix_vertex)
+  nb::class_<Bmad::CalcWallRadius>(m, "CalcWallRadius", "calc_wall_radius return type")
+      .def_ro("r_wall", &Bmad::CalcWallRadius::r_wall)
+      .def_ro("dr_dtheta", &Bmad::CalcWallRadius::dr_dtheta)
+      .def_ro("ix_vertex", &Bmad::CalcWallRadius::ix_vertex)
       .def("__len__", [](const Bmad::CalcWallRadius &) { return 3; })
-      .def("__getitem__", [](const Bmad::CalcWallRadius &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CalcWallRadius &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.r_wall);
+          return nb::cast(s.r_wall);
         if (i == 1)
-          return py::cast(s.dr_dtheta);
+          return nb::cast(s.dr_dtheta);
         if (i == 2)
-          return py::cast(s.ix_vertex);
-        throw py::index_error();
+          return nb::cast(s.ix_vertex);
+        throw nb::index_error();
       });
   m.def(
       "calc_wall_radius",
       &Bmad::calc_wall_radius,
-      py::arg("v"),
-      py::arg("cos_ang"),
-      py::arg("sin_ang"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine calc_wall_radius (v, cos_ang, sin_ang, r_wall, dr_dtheta, ix_vertex)
-
-Routine to calculate the wall radius at a given angle for a given cross-section
+      nb::arg("v"),
+      nb::arg("cos_ang"),
+      nb::arg("sin_ang"),
+      R"""(Routine to calculate the wall radius at a given angle for a given cross-section
 Additionally, the transverse directional derivative is calculated.
 
 Module needed:
@@ -391,8 +417,7 @@ ix_vertex : int, optional
   m.def(
       "calc_z_tune",
       &Bmad::calc_z_tune,
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
       R"""(Wrapper for Fortran routine calc_z_tune
 
 Parameters
@@ -410,9 +435,8 @@ branch : BranchStruct
   m.def(
       "canonical_to_angle_coords",
       &Bmad::canonical_to_angle_coords,
-      py::arg("orbit"),
-      py::arg("coord_type") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("coord_type") = nb::none(),
       R"""(Wrapper for Fortran routine canonical_to_angle_coords
 
 Parameters
@@ -430,10 +454,9 @@ coord_type : str, optional
   m.def(
       "cbar_to_c",
       &Bmad::cbar_to_c,
-      py::arg("cbar_mat"),
-      py::arg("a"),
-      py::arg("b"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("cbar_mat"),
+      nb::arg("a"),
+      nb::arg("b"),
       R"""(Wrapper for Fortran routine cbar_to_c
 
 Parameters
@@ -455,14 +478,24 @@ c_mat : 2D array of float (shape: 2,2)
   );
   m.def(
       "check_aperture_limit",
-      &Bmad::check_aperture_limit,
-      py::arg("orb"),
-      py::arg("ele"),
-      py::arg("particle_at"),
-      py::arg("param"),
-      py::arg("old_orb") = py::none(),
-      py::arg("check_momentum") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](CoordStruct &orb,
+         EleStruct &ele,
+         int particle_at,
+         LatParamStruct &param,
+         CoordStruct *old_orb,
+         std::optional<bool> check_momentum) {
+        auto fn = static_cast<
+            void (*)(CoordStruct &, EleStruct &, int, LatParamStruct &, optional_ref<CoordStruct>, std::optional<bool>)>(
+            &Bmad::check_aperture_limit
+        );
+        return fn(orb, ele, particle_at, param, ptr_to_opt_ref(old_orb), check_momentum);
+      },
+      nb::arg("orb"),
+      nb::arg("ele"),
+      nb::arg("particle_at"),
+      nb::arg("param"),
+      nb::arg("old_orb") = nb::none(),
+      nb::arg("check_momentum") = nb::none(),
       R"""(Wrapper for Fortran routine check_aperture_limit
 
 Parameters
@@ -490,10 +523,9 @@ check_momentum : bool, optional
   m.def(
       "check_controller_controls",
       &Bmad::check_controller_controls,
-      py::arg("ele_key"),
-      py::arg("contrl"),
-      py::arg("name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_key"),
+      nb::arg("contrl"),
+      nb::arg("name"),
       R"""(Wrapper for Fortran routine check_controller_controls
 
 Parameters
@@ -515,16 +547,19 @@ err : bool
   );
   m.def(
       "check_for_superimpose_problem",
-      &Bmad::check_for_superimpose_problem,
-      py::arg("branch"),
-      py::arg("super_ele"),
-      py::arg("err_flag"),
-      py::arg("wrap"),
-      py::arg("ref_ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine check_for_superimpose_problem (branch, super_ele, err_flag, ref_ele, wrap)
-
-Subroutine to check if there is a problem superimposing an element when there is multipass.
+      [](BranchStruct &branch, EleStruct &super_ele, bool err_flag, bool wrap, EleStruct *ref_ele) {
+        auto fn =
+            static_cast<void (*)(BranchStruct &, EleStruct &, bool, bool, optional_ref<EleStruct>)>(
+                &Bmad::check_for_superimpose_problem
+            );
+        return fn(branch, super_ele, err_flag, wrap, ptr_to_opt_ref(ref_ele));
+      },
+      nb::arg("branch"),
+      nb::arg("super_ele"),
+      nb::arg("err_flag"),
+      nb::arg("wrap"),
+      nb::arg("ref_ele") = nb::none(),
+      R"""(Subroutine to check if there is a problem superimposing an element when there is multipass.
 In particular will check that:
   1) If the ref_ele is part of a multipass region then super_ele must be superimposed
      within the region.
@@ -536,30 +571,25 @@ This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 )"""
   );
-  py::class_<Bmad::CheckIfSInBounds, std::unique_ptr<Bmad::CheckIfSInBounds>>(
-      m,
-      "CheckIfSInBounds",
-      "check_if_s_in_bounds return type"
-  )
-      .def_readonly("err_flag", &Bmad::CheckIfSInBounds::err_flag)
-      .def_readonly("translated_s", &Bmad::CheckIfSInBounds::translated_s)
+  nb::class_<Bmad::CheckIfSInBounds>(m, "CheckIfSInBounds", "check_if_s_in_bounds return type")
+      .def_ro("err_flag", &Bmad::CheckIfSInBounds::err_flag)
+      .def_ro("translated_s", &Bmad::CheckIfSInBounds::translated_s)
       .def("__len__", [](const Bmad::CheckIfSInBounds &) { return 2; })
-      .def("__getitem__", [](const Bmad::CheckIfSInBounds &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CheckIfSInBounds &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.translated_s);
-        throw py::index_error();
+          return nb::cast(s.translated_s);
+        throw nb::index_error();
       });
   m.def(
       "check_if_s_in_bounds",
       &Bmad::check_if_s_in_bounds,
-      py::arg("branch"),
-      py::arg("s"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
+      nb::arg("s"),
+      nb::arg("print_err") = nb::none(),
       R"""(Wrapper for Fortran routine check_if_s_in_bounds
 
 Parameters
@@ -582,32 +612,31 @@ translated_s : float, optional
     position translated to the range [0, branch_length]
 )"""
   );
-  py::class_<Bmad::ChooseQuadsForSetTune, std::unique_ptr<Bmad::ChooseQuadsForSetTune>>(
+  nb::class_<Bmad::ChooseQuadsForSetTune>(
       m,
       "ChooseQuadsForSetTune",
       "choose_quads_for_set_tune return type"
   )
-      .def_readonly("dk1", &Bmad::ChooseQuadsForSetTune::dk1)
-      .def_readonly("eles", &Bmad::ChooseQuadsForSetTune::eles)
-      .def_readonly("err_flag", &Bmad::ChooseQuadsForSetTune::err_flag)
+      .def_ro("dk1", &Bmad::ChooseQuadsForSetTune::dk1)
+      .def_ro("eles", &Bmad::ChooseQuadsForSetTune::eles)
+      .def_ro("err_flag", &Bmad::ChooseQuadsForSetTune::err_flag)
       .def("__len__", [](const Bmad::ChooseQuadsForSetTune &) { return 3; })
-      .def("__getitem__", [](const Bmad::ChooseQuadsForSetTune &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ChooseQuadsForSetTune &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.dk1);
+          return nb::cast(s.dk1);
         if (i == 1)
-          return py::cast(s.eles);
+          return nb::cast(s.eles);
         if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "choose_quads_for_set_tune",
       &Bmad::choose_quads_for_set_tune,
-      py::arg("branch"),
-      py::arg("mask") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
+      nb::arg("mask") = nb::none(),
       R"""(Wrapper for Fortran routine choose_quads_for_set_tune
 
 Parameters
@@ -631,46 +660,45 @@ err_flag : bool, optional
     Set True if there is not one quad with positive dk1 and one quad with negative dk1.
 )"""
   );
-  py::class_<PyChromCalc, std::unique_ptr<PyChromCalc>>(m, "ChromCalc", "chrom_calc return type")
-      .def_readonly("chrom_a", &PyChromCalc::chrom_a)
-      .def_readonly("chrom_b", &PyChromCalc::chrom_b)
-      .def_readonly("err_flag", &PyChromCalc::err_flag)
-      .def_readonly("low_E_lat", &PyChromCalc::low_E_lat)
-      .def_readonly("high_E_lat", &PyChromCalc::high_E_lat)
-      .def_readonly("low_E_orb", &PyChromCalc::low_E_orb)
-      .def_readonly("high_E_orb", &PyChromCalc::high_E_orb)
-      .def_readonly("delta_e", &PyChromCalc::delta_e)
+  nb::class_<PyChromCalc>(m, "ChromCalc", "chrom_calc return type")
+      .def_ro("chrom_a", &PyChromCalc::chrom_a)
+      .def_ro("chrom_b", &PyChromCalc::chrom_b)
+      .def_ro("err_flag", &PyChromCalc::err_flag)
+      .def_ro("low_E_lat", &PyChromCalc::low_E_lat)
+      .def_ro("high_E_lat", &PyChromCalc::high_E_lat)
+      .def_ro("low_E_orb", &PyChromCalc::low_E_orb)
+      .def_ro("high_E_orb", &PyChromCalc::high_E_orb)
+      .def_ro("delta_e", &PyChromCalc::delta_e)
       .def("__len__", [](const PyChromCalc &) { return 8; })
-      .def("__getitem__", [](const PyChromCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const PyChromCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 8;
         if (i == 0)
-          return py::cast(s.chrom_a);
+          return nb::cast(s.chrom_a);
         if (i == 1)
-          return py::cast(s.chrom_b);
+          return nb::cast(s.chrom_b);
         if (i == 2)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 3)
-          return py::cast(s.low_E_lat);
+          return nb::cast(s.low_E_lat);
         if (i == 4)
-          return py::cast(s.high_E_lat);
+          return nb::cast(s.high_E_lat);
         if (i == 5)
-          return py::cast(s.low_E_orb);
+          return nb::cast(s.low_E_orb);
         if (i == 6)
-          return py::cast(s.high_E_orb);
+          return nb::cast(s.high_E_orb);
         if (i == 7)
-          return py::cast(s.delta_e);
-        throw py::index_error();
+          return nb::cast(s.delta_e);
+        throw nb::index_error();
       });
   m.def(
       "chrom_calc",
       &python_chrom_calc,
-      py::arg("lat"),
-      py::arg("delta_e"),
-      py::arg("pz") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("orb0") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("delta_e"),
+      nb::arg("pz") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("orb0") = nb::none(),
       R"""(Wrapper for Fortran routine chrom_calc
 
 Parameters
@@ -724,28 +752,27 @@ high_E_orb : 1D array of CoordStruct, optional
     Orbit computed at E_lat + pz + delta_e.
 )"""
   );
-  py::class_<PyChromTune, std::unique_ptr<PyChromTune>>(m, "ChromTune", "chrom_tune return type")
-      .def_readonly("err_flag", &PyChromTune::err_flag)
-      .def_readonly("delta_e", &PyChromTune::delta_e)
+  nb::class_<PyChromTune>(m, "ChromTune", "chrom_tune return type")
+      .def_ro("err_flag", &PyChromTune::err_flag)
+      .def_ro("delta_e", &PyChromTune::delta_e)
       .def("__len__", [](const PyChromTune &) { return 2; })
-      .def("__getitem__", [](const PyChromTune &s, int i) -> py::object {
+      .def("__getitem__", [](const PyChromTune &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.delta_e);
-        throw py::index_error();
+          return nb::cast(s.delta_e);
+        throw nb::index_error();
       });
   m.def(
       "chrom_tune",
       &python_chrom_tune,
-      py::arg("lat"),
-      py::arg("delta_e"),
-      py::arg("target_x"),
-      py::arg("target_y"),
-      py::arg("err_tol"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("delta_e"),
+      nb::arg("target_x"),
+      nb::arg("target_y"),
+      nb::arg("err_tol"),
       R"""(Wrapper for Fortran routine chrom_tune
 
 Parameters
@@ -786,8 +813,7 @@ err_flag : bool
   m.def(
       "classical_radius",
       &Bmad::classical_radius,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("species"),
       R"""(Wrapper for Fortran routine classical_radius
 
 Parameters
@@ -804,7 +830,6 @@ radius : float
   m.def(
       "clear_lat_1turn_mats",
       &Bmad::clear_lat_1turn_mats,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine clear_lat_1turn_mats
 
 Returns
@@ -816,8 +841,7 @@ lat : LatStruct
   m.def(
       "clear_taylor_maps_from_elements",
       &Bmad::clear_taylor_maps_from_elements,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine clear_taylor_maps_from_elements
 
 Parameters
@@ -831,13 +855,12 @@ lat : LatStruct
   m.def(
       "closed_orbit_calc",
       &Bmad::closed_orbit_calc,
-      py::arg("lat"),
-      py::arg("closed_orb"),
-      py::arg("i_dim") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("closed_orb"),
+      nb::arg("i_dim") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("print_err") = nb::none(),
       R"""(Wrapper for Fortran routine closed_orbit_calc
 
 Parameters
@@ -874,32 +897,42 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ClosedOrbitFromTracking, std::unique_ptr<Bmad::ClosedOrbitFromTracking>>(
+  nb::class_<Bmad::ClosedOrbitFromTracking>(
       m,
       "ClosedOrbitFromTracking",
       "closed_orbit_from_tracking return type"
   )
-      .def_readonly("closed_orb", &Bmad::ClosedOrbitFromTracking::closed_orb)
-      .def_readonly("err_flag", &Bmad::ClosedOrbitFromTracking::err_flag)
+      .def_ro("closed_orb", &Bmad::ClosedOrbitFromTracking::closed_orb)
+      .def_ro("err_flag", &Bmad::ClosedOrbitFromTracking::err_flag)
       .def("__len__", [](const Bmad::ClosedOrbitFromTracking &) { return 2; })
-      .def("__getitem__", [](const Bmad::ClosedOrbitFromTracking &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ClosedOrbitFromTracking &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.closed_orb);
+          return nb::cast(s.closed_orb);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "closed_orbit_from_tracking",
-      &Bmad::closed_orbit_from_tracking,
-      py::arg("lat"),
-      py::arg("i_dim"),
-      py::arg("eps_rel") = py::none(),
-      py::arg("eps_abs") = py::none(),
-      py::arg("init_guess") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct &lat,
+         int i_dim,
+         std::optional<FArray1D<Real>> eps_rel,
+         std::optional<FArray1D<Real>> eps_abs,
+         CoordStruct *init_guess) {
+        auto fn = static_cast<
+            Bmad::
+                ClosedOrbitFromTracking (*)(LatStruct &, int, std::optional<FArray1D<Real>>, std::optional<FArray1D<Real>>, optional_ref<CoordStruct>)>(
+            &Bmad::closed_orbit_from_tracking
+        );
+        return fn(lat, i_dim, eps_rel, eps_abs, ptr_to_opt_ref(init_guess));
+      },
+      nb::arg("lat"),
+      nb::arg("i_dim"),
+      nb::arg("eps_rel") = nb::none(),
+      nb::arg("eps_abs") = nb::none(),
+      nb::arg("init_guess") = nb::none(),
       R"""(Wrapper for Fortran routine closed_orbit_from_tracking
 
 Parameters
@@ -933,8 +966,7 @@ err_flag : bool, optional
   m.def(
       "cmplx_re_str",
       &Bmad::cmplx_re_str,
-      py::arg("cmp"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("cmp"),
       R"""(Wrapper for Fortran routine cmplx_re_str
 
 Parameters
@@ -949,8 +981,7 @@ str_out : str
   m.def(
       "combine_consecutive_elements",
       &Bmad::combine_consecutive_elements,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine combine_consecutive_elements
 
 Parameters
@@ -969,8 +1000,7 @@ error : bool
   m.def(
       "complex_taylor_clean",
       &Bmad::complex_taylor_clean,
-      py::arg("complex_taylor"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("complex_taylor"),
       R"""(Wrapper for Fortran routine complex_taylor_clean
 
 Parameters
@@ -980,14 +1010,10 @@ complex_taylor : ComplexTaylorStruct
   );
   m.def(
       "complex_taylor_coef",
-      py::overload_cast<ComplexTaylorStruct &, FArray1D<Int> &>(&Bmad::complex_taylor_coef),
-      py::arg("complex_taylor"),
-      py::arg("exp"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function complex_taylor_coef (complex_taylor, exp)
-Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
-
-Function to return the coefficient for a particular complex_taylor term
+      nb::overload_cast<ComplexTaylorStruct &, FArray1D<Int> &>(&Bmad::complex_taylor_coef),
+      nb::arg("complex_taylor"),
+      nb::arg("exp"),
+      R"""(Function to return the coefficient for a particular complex_taylor term
 from a complex_taylor Series.
 
 Note: complex_taylor_coef is overloaded by:
@@ -1017,7 +1043,7 @@ Input (complex_taylor_coef2):
   );
   m.def(
       "complex_taylor_coef",
-      py::overload_cast<
+      nb::overload_cast<
           ComplexTaylorStruct &,
           std::optional<int>,
           std::optional<int>,
@@ -1028,21 +1054,17 @@ Input (complex_taylor_coef2):
           std::optional<int>,
           std::optional<int>,
           std::optional<int>>(&Bmad::complex_taylor_coef),
-      py::arg("complex_taylor"),
-      py::arg("i1") = py::none(),
-      py::arg("i2") = py::none(),
-      py::arg("i3") = py::none(),
-      py::arg("i4") = py::none(),
-      py::arg("i5") = py::none(),
-      py::arg("i6") = py::none(),
-      py::arg("i7") = py::none(),
-      py::arg("i8") = py::none(),
-      py::arg("i9") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function complex_taylor_coef (complex_taylor, exp)
-Function complex_taylor_coef (complex_taylor, i1, i2, i3, i4, i5, i6, i7, i8, i9)
-
-Function to return the coefficient for a particular complex_taylor term
+      nb::arg("complex_taylor"),
+      nb::arg("i1") = nb::none(),
+      nb::arg("i2") = nb::none(),
+      nb::arg("i3") = nb::none(),
+      nb::arg("i4") = nb::none(),
+      nb::arg("i5") = nb::none(),
+      nb::arg("i6") = nb::none(),
+      nb::arg("i7") = nb::none(),
+      nb::arg("i8") = nb::none(),
+      nb::arg("i9") = nb::none(),
+      R"""(Function to return the coefficient for a particular complex_taylor term
 from a complex_taylor Series.
 
 Note: complex_taylor_coef is overloaded by:
@@ -1073,9 +1095,8 @@ Input (complex_taylor_coef2):
   m.def(
       "complex_taylor_equal_complex_taylor",
       &Bmad::complex_taylor_equal_complex_taylor,
-      py::arg("complex_taylor1"),
-      py::arg("complex_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("complex_taylor1"),
+      nb::arg("complex_taylor2"),
       R"""(Wrapper for Fortran routine complex_taylor_equal_complex_taylor
 
 Parameters
@@ -1088,11 +1109,8 @@ complex_taylor2 : ComplexTaylorStruct
   m.def(
       "complex_taylor_exponent_index",
       &Bmad::complex_taylor_exponent_index,
-      py::arg("expn"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function complex_taylor_exponent_index(expn) result(index)
-
-Function to associate a unique number with a complex_taylor exponent.
+      nb::arg("expn"),
+      R"""(Function to associate a unique number with a complex_taylor exponent.
 
 The number associated with a complex_taylor_term that is used for the sort is:
     number = sum(exp(i))*10^6 + exp(6)*10^5 + ... + exp(1)*10^0
@@ -1112,41 +1130,35 @@ index : int
   m.def(
       "complex_taylor_make_unit",
       &Bmad::complex_taylor_make_unit,
-      py::arg("complex_taylor"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine complex_taylor_make_unit (complex_taylor)
-
-Subroutine to make the unit complex_taylor map:
+      nb::arg("complex_taylor"),
+      R"""(Subroutine to make the unit complex_taylor map:
       r(out) = Map * r(in) = r(in)
 )"""
   );
-  py::class_<Bmad::ComplexTaylorToMat6, std::unique_ptr<Bmad::ComplexTaylorToMat6>>(
+  nb::class_<Bmad::ComplexTaylorToMat6>(
       m,
       "ComplexTaylorToMat6",
       "complex_taylor_to_mat6 return type"
   )
-      .def_readonly("vec0", &Bmad::ComplexTaylorToMat6::vec0)
-      .def_readonly("mat6", &Bmad::ComplexTaylorToMat6::mat6)
+      .def_ro("vec0", &Bmad::ComplexTaylorToMat6::vec0)
+      .def_ro("mat6", &Bmad::ComplexTaylorToMat6::mat6)
       .def("__len__", [](const Bmad::ComplexTaylorToMat6 &) { return 2; })
-      .def("__getitem__", [](const Bmad::ComplexTaylorToMat6 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ComplexTaylorToMat6 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.vec0);
+          return nb::cast(s.vec0);
         if (i == 1)
-          return py::cast(s.mat6);
-        throw py::index_error();
+          return nb::cast(s.mat6);
+        throw nb::index_error();
       });
   m.def(
       "complex_taylor_to_mat6",
       &Bmad::complex_taylor_to_mat6,
-      py::arg("a_complex_taylor"),
-      py::arg("r_in"),
-      py::arg("r_out") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine complex_taylor_to_mat6 (a_complex_taylor, r_in, vec0, mat6, r_out)
-
-Subroutine to calculate, from a complex_taylor map and about some trajectory:
+      nb::arg("a_complex_taylor"),
+      nb::arg("r_in"),
+      nb::arg("r_out") = nb::none(),
+      R"""(Subroutine to calculate, from a complex_taylor map and about some trajectory:
   The 1st order (Jacobian) transfer matrix.
 
 Parameters
@@ -1172,9 +1184,8 @@ mat6 : 2D array of complex (shape: 6,6)
   m.def(
       "complex_taylors_equal_complex_taylors",
       &Bmad::complex_taylors_equal_complex_taylors,
-      py::arg("complex_taylor1"),
-      py::arg("complex_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("complex_taylor1"),
+      nb::arg("complex_taylor2"),
       R"""(Wrapper for Fortran routine complex_taylors_equal_complex_taylors
 
 Parameters
@@ -1187,23 +1198,37 @@ complex_taylor2 : 1D array of ComplexTaylorStruct
   m.def(
       "compute_slave_coupler",
       &Bmad::compute_slave_coupler,
-      py::arg("slave"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine compute_slave_coupler (slave)
+      nb::arg("slave"),
+      R"""(This routine is not meant for general use.
+)"""
+  );
+  m.def(
+      "compute_super_lord_s",
+      &Bmad::compute_super_lord_s,
+      nb::arg("ref_ele"),
+      nb::arg("super_ele"),
+      nb::arg("pele"),
+      nb::arg("ix_insert"),
+      R"""(Wrapper for Fortran routine compute_super_lord_s
 
-This routine is not meant for general use.
+Parameters
+----------
+ref_ele : EleStruct
+
+super_ele : EleStruct
+
+pele : ParserEleStruct
+
+ix_insert : int
 )"""
   );
   m.def(
       "concat_ele_taylor",
       &Bmad::concat_ele_taylor,
-      py::arg("orb_taylor"),
-      py::arg("ele"),
-      py::arg("spin_taylor") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor)
-
-Routine to concatinate an orbital taylor map and, optionally if present and
+      nb::arg("orb_taylor"),
+      nb::arg("ele"),
+      nb::arg("spin_taylor") = nb::none(),
+      R"""(Routine to concatinate an orbital taylor map and, optionally if present and
 bmad_com%spin_tracking_on = T, a spin taylor map.
 
 Transform:
@@ -1237,13 +1262,10 @@ err_flag : bool
   m.def(
       "concat_taylor",
       &Bmad::concat_taylor,
-      py::arg("taylor1"),
-      py::arg("taylor2"),
-      py::arg("taylor3"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine concat_taylor (taylor1, taylor2, taylor3)
-
-Subroutine to concatinate two taylor maps:
+      nb::arg("taylor1"),
+      nb::arg("taylor2"),
+      nb::arg("taylor3"),
+      R"""(Subroutine to concatinate two taylor maps:
   taylor3[x] = taylor2(taylor1[x])
 
 Note: In general, if taylor2 is a component of an ele_struct, use
@@ -1261,34 +1283,27 @@ taylor3 : 1D array of TaylorStruct
     Concatinated map
 )"""
   );
-  py::class_<Bmad::ConcatTransferMat, std::unique_ptr<Bmad::ConcatTransferMat>>(
-      m,
-      "ConcatTransferMat",
-      "concat_transfer_mat return type"
-  )
-      .def_readonly("mat_out", &Bmad::ConcatTransferMat::mat_out)
-      .def_readonly("vec_out", &Bmad::ConcatTransferMat::vec_out)
+  nb::class_<Bmad::ConcatTransferMat>(m, "ConcatTransferMat", "concat_transfer_mat return type")
+      .def_ro("mat_out", &Bmad::ConcatTransferMat::mat_out)
+      .def_ro("vec_out", &Bmad::ConcatTransferMat::vec_out)
       .def("__len__", [](const Bmad::ConcatTransferMat &) { return 2; })
-      .def("__getitem__", [](const Bmad::ConcatTransferMat &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ConcatTransferMat &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.mat_out);
+          return nb::cast(s.mat_out);
         if (i == 1)
-          return py::cast(s.vec_out);
-        throw py::index_error();
+          return nb::cast(s.vec_out);
+        throw nb::index_error();
       });
   m.def(
       "concat_transfer_mat",
       &Bmad::concat_transfer_mat,
-      py::arg("mat_1"),
-      py::arg("vec_1"),
-      py::arg("mat_0"),
-      py::arg("vec_0"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine concat_transfer_mat (mat_1, vec_1, mat_0, vec_0, mat_out, vec_out)
-
-Routine to concatinate two linear maps:
+      nb::arg("mat_1"),
+      nb::arg("vec_1"),
+      nb::arg("mat_0"),
+      nb::arg("vec_0"),
+      R"""(Routine to concatinate two linear maps:
   mat_out = matmul(mat_1, mat_0)
   vec_out = matmul(mat_1, vec_0) + vec_1
 
@@ -1317,11 +1332,15 @@ vec_out : 1D array of float (shape: 6)
   );
   m.def(
       "control_bookkeeper",
-      &Bmad::control_bookkeeper,
-      py::arg("lat"),
-      py::arg("ele") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct &lat, EleStruct *ele, std::optional<bool> err_flag) {
+        auto fn = static_cast<void (*)(LatStruct &, optional_ref<EleStruct>, std::optional<bool>)>(
+            &Bmad::control_bookkeeper
+        );
+        return fn(lat, ptr_to_opt_ref(ele), err_flag);
+      },
+      nb::arg("lat"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("err_flag") = nb::none(),
       R"""(Wrapper for Fortran routine control_bookkeeper
 
 Parameters
@@ -1340,11 +1359,10 @@ err_flag : bool, optional
   m.def(
       "convert_bend_exact_multipole",
       &Bmad::convert_bend_exact_multipole,
-      py::arg("g"),
-      py::arg("out_type"),
-      py::arg("an"),
-      py::arg("bn"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("g"),
+      nb::arg("out_type"),
+      nb::arg("an"),
+      nb::arg("bn"),
       R"""(Wrapper for Fortran routine convert_bend_exact_multipole
 
 Parameters
@@ -1366,33 +1384,28 @@ bn : 1D array of float (shape: 0:n_pole_maxx)
     As an output, bn: Converted Non-skew multipoles.
 )"""
   );
-  py::class_<Bmad::ConvertCoords, std::unique_ptr<Bmad::ConvertCoords>>(
-      m,
-      "ConvertCoords",
-      "convert_coords return type"
-  )
-      .def_readonly("out_type_str", &Bmad::ConvertCoords::out_type_str)
-      .def_readonly("coord_out", &Bmad::ConvertCoords::coord_out)
-      .def_readonly("err_flag", &Bmad::ConvertCoords::err_flag)
+  nb::class_<Bmad::ConvertCoords>(m, "ConvertCoords", "convert_coords return type")
+      .def_ro("out_type_str", &Bmad::ConvertCoords::out_type_str)
+      .def_ro("coord_out", &Bmad::ConvertCoords::coord_out)
+      .def_ro("err_flag", &Bmad::ConvertCoords::err_flag)
       .def("__len__", [](const Bmad::ConvertCoords &) { return 3; })
-      .def("__getitem__", [](const Bmad::ConvertCoords &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ConvertCoords &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.out_type_str);
+          return nb::cast(s.out_type_str);
         if (i == 1)
-          return py::cast(s.coord_out);
+          return nb::cast(s.coord_out);
         if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "convert_coords",
       &Bmad::convert_coords,
-      py::arg("in_type_str"),
-      py::arg("coord_in"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("in_type_str"),
+      nb::arg("coord_in"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine convert_coords
 
 Parameters
@@ -1424,15 +1437,12 @@ err_flag : bool, optional
   m.def(
       "convert_field_ele_to_lab",
       &Bmad::convert_field_ele_to_lab,
-      py::arg("ele"),
-      py::arg("s_here"),
-      py::arg("forward_transform"),
-      py::arg("calc_dfield") = py::none(),
-      py::arg("calc_potential") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine convert_field_ele_to_lab (ele, s_here, forward_transform, field, calc_dfield, calc_potential)
-
-Convert fields: ele to lab coords
+      nb::arg("ele"),
+      nb::arg("s_here"),
+      nb::arg("forward_transform"),
+      nb::arg("calc_dfield") = nb::none(),
+      nb::arg("calc_potential") = nb::none(),
+      R"""(Convert fields: ele to lab coords
 
 Parameters
 ----------
@@ -1461,12 +1471,11 @@ field : EmFieldStruct
   m.def(
       "convert_local_cartesian_to_local_curvilinear",
       &Bmad::convert_local_cartesian_to_local_curvilinear,
-      py::arg("x"),
-      py::arg("z"),
-      py::arg("g"),
-      py::arg("xout"),
-      py::arg("sout"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("z"),
+      nb::arg("g"),
+      nb::arg("xout"),
+      nb::arg("sout"),
       R"""(Wrapper for Fortran routine convert_local_cartesian_to_local_curvilinear
 
 Parameters
@@ -1485,12 +1494,11 @@ sout : float
   m.def(
       "convert_local_curvilinear_to_local_cartesian",
       &Bmad::convert_local_curvilinear_to_local_cartesian,
-      py::arg("x"),
-      py::arg("s"),
-      py::arg("g"),
-      py::arg("xout"),
-      py::arg("zout"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("s"),
+      nb::arg("g"),
+      nb::arg("xout"),
+      nb::arg("zout"),
       R"""(Wrapper for Fortran routine convert_local_curvilinear_to_local_cartesian
 
 Parameters
@@ -1509,10 +1517,9 @@ zout : float
   m.def(
       "convert_particle_coordinates_s_to_t",
       &Bmad::convert_particle_coordinates_s_to_t,
-      py::arg("particle"),
-      py::arg("s_body"),
-      py::arg("orientation"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("particle"),
+      nb::arg("s_body"),
+      nb::arg("orientation"),
       R"""(Wrapper for Fortran routine convert_particle_coordinates_s_to_t
 
 Parameters
@@ -1530,10 +1537,9 @@ orientation : int
   m.def(
       "convert_particle_coordinates_t_to_s",
       &Bmad::convert_particle_coordinates_t_to_s,
-      py::arg("particle"),
-      py::arg("ele"),
-      py::arg("use_downstream_p0c") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("particle"),
+      nb::arg("ele"),
+      nb::arg("use_downstream_p0c") = nb::none(),
       R"""(Wrapper for Fortran routine convert_particle_coordinates_t_to_s
 
 Parameters
@@ -1554,44 +1560,39 @@ s_body : float, optional
     s-position in element body coords.
 )"""
   );
-  py::class_<Bmad::ConvertPcTo, std::unique_ptr<Bmad::ConvertPcTo>>(
-      m,
-      "ConvertPcTo",
-      "convert_pc_to return type"
-  )
-      .def_readonly("E_tot", &Bmad::ConvertPcTo::E_tot)
-      .def_readonly("gamma", &Bmad::ConvertPcTo::gamma)
-      .def_readonly("kinetic", &Bmad::ConvertPcTo::kinetic)
-      .def_readonly("beta", &Bmad::ConvertPcTo::beta)
-      .def_readonly("brho", &Bmad::ConvertPcTo::brho)
-      .def_readonly("beta1", &Bmad::ConvertPcTo::beta1)
-      .def_readonly("err_flag", &Bmad::ConvertPcTo::err_flag)
+  nb::class_<Bmad::ConvertPcTo>(m, "ConvertPcTo", "convert_pc_to return type")
+      .def_ro("E_tot", &Bmad::ConvertPcTo::E_tot)
+      .def_ro("gamma", &Bmad::ConvertPcTo::gamma)
+      .def_ro("kinetic", &Bmad::ConvertPcTo::kinetic)
+      .def_ro("beta", &Bmad::ConvertPcTo::beta)
+      .def_ro("brho", &Bmad::ConvertPcTo::brho)
+      .def_ro("beta1", &Bmad::ConvertPcTo::beta1)
+      .def_ro("err_flag", &Bmad::ConvertPcTo::err_flag)
       .def("__len__", [](const Bmad::ConvertPcTo &) { return 7; })
-      .def("__getitem__", [](const Bmad::ConvertPcTo &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ConvertPcTo &s, int i) -> nb::object {
         if (i < 0)
           i += 7;
         if (i == 0)
-          return py::cast(s.E_tot);
+          return nb::cast(s.E_tot);
         if (i == 1)
-          return py::cast(s.gamma);
+          return nb::cast(s.gamma);
         if (i == 2)
-          return py::cast(s.kinetic);
+          return nb::cast(s.kinetic);
         if (i == 3)
-          return py::cast(s.beta);
+          return nb::cast(s.beta);
         if (i == 4)
-          return py::cast(s.brho);
+          return nb::cast(s.brho);
         if (i == 5)
-          return py::cast(s.beta1);
+          return nb::cast(s.beta1);
         if (i == 6)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "convert_pc_to",
       &Bmad::convert_pc_to,
-      py::arg("pc"),
-      py::arg("particle"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("pc"),
+      nb::arg("particle"),
       R"""(Wrapper for Fortran routine convert_pc_to
 
 Parameters
@@ -1626,45 +1627,44 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ConvertTotalEnergyTo, std::unique_ptr<Bmad::ConvertTotalEnergyTo>>(
+  nb::class_<Bmad::ConvertTotalEnergyTo>(
       m,
       "ConvertTotalEnergyTo",
       "convert_total_energy_to return type"
   )
-      .def_readonly("gamma", &Bmad::ConvertTotalEnergyTo::gamma)
-      .def_readonly("kinetic", &Bmad::ConvertTotalEnergyTo::kinetic)
-      .def_readonly("beta", &Bmad::ConvertTotalEnergyTo::beta)
-      .def_readonly("pc", &Bmad::ConvertTotalEnergyTo::pc)
-      .def_readonly("brho", &Bmad::ConvertTotalEnergyTo::brho)
-      .def_readonly("beta1", &Bmad::ConvertTotalEnergyTo::beta1)
-      .def_readonly("err_flag", &Bmad::ConvertTotalEnergyTo::err_flag)
+      .def_ro("gamma", &Bmad::ConvertTotalEnergyTo::gamma)
+      .def_ro("kinetic", &Bmad::ConvertTotalEnergyTo::kinetic)
+      .def_ro("beta", &Bmad::ConvertTotalEnergyTo::beta)
+      .def_ro("pc", &Bmad::ConvertTotalEnergyTo::pc)
+      .def_ro("brho", &Bmad::ConvertTotalEnergyTo::brho)
+      .def_ro("beta1", &Bmad::ConvertTotalEnergyTo::beta1)
+      .def_ro("err_flag", &Bmad::ConvertTotalEnergyTo::err_flag)
       .def("__len__", [](const Bmad::ConvertTotalEnergyTo &) { return 7; })
-      .def("__getitem__", [](const Bmad::ConvertTotalEnergyTo &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ConvertTotalEnergyTo &s, int i) -> nb::object {
         if (i < 0)
           i += 7;
         if (i == 0)
-          return py::cast(s.gamma);
+          return nb::cast(s.gamma);
         if (i == 1)
-          return py::cast(s.kinetic);
+          return nb::cast(s.kinetic);
         if (i == 2)
-          return py::cast(s.beta);
+          return nb::cast(s.beta);
         if (i == 3)
-          return py::cast(s.pc);
+          return nb::cast(s.pc);
         if (i == 4)
-          return py::cast(s.brho);
+          return nb::cast(s.brho);
         if (i == 5)
-          return py::cast(s.beta1);
+          return nb::cast(s.beta1);
         if (i == 6)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "convert_total_energy_to",
       &Bmad::convert_total_energy_to,
-      py::arg("E_tot"),
-      py::arg("particle"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("E_tot"),
+      nb::arg("particle"),
+      nb::arg("print_err") = nb::none(),
       R"""(Wrapper for Fortran routine convert_total_energy_to
 
 Parameters
@@ -1702,31 +1702,30 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ConverterDistributionParser, std::unique_ptr<Bmad::ConverterDistributionParser>>(
+  nb::class_<Bmad::ConverterDistributionParser>(
       m,
       "ConverterDistributionParser",
       "converter_distribution_parser return type"
   )
-      .def_readonly("delim", &Bmad::ConverterDistributionParser::delim)
-      .def_readonly("delim_found", &Bmad::ConverterDistributionParser::delim_found)
-      .def_readonly("err_flag", &Bmad::ConverterDistributionParser::err_flag)
+      .def_ro("delim", &Bmad::ConverterDistributionParser::delim)
+      .def_ro("delim_found", &Bmad::ConverterDistributionParser::delim_found)
+      .def_ro("err_flag", &Bmad::ConverterDistributionParser::err_flag)
       .def("__len__", [](const Bmad::ConverterDistributionParser &) { return 3; })
-      .def("__getitem__", [](const Bmad::ConverterDistributionParser &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ConverterDistributionParser &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 1)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine converter_distribution_parser
 
 Parameters
@@ -1751,11 +1750,8 @@ err_flag : bool
   m.def(
       "coord_equal_coord",
       &Bmad::coord_equal_coord,
-      py::arg("coord2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""( Subroutine coord_equal_coord (coord1, coord2)
-
- Subroutine that is used to set one coord equal to another.
+      nb::arg("coord2"),
+      R"""( Subroutine that is used to set one coord equal to another.
 
  Note: This subroutine is called by the overloaded equal sign:
 		coord1 = coord2
@@ -1774,12 +1770,9 @@ coord1 : CoordStruct
   m.def(
       "coord_state_name",
       &Bmad::coord_state_name,
-      py::arg("coord_state"),
-      py::arg("one_word") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function coord_state_name (coord_state) result (state_str)
-
-Routine to return the string representation of a coord%state state.
+      nb::arg("coord_state"),
+      nb::arg("one_word") = nb::none(),
+      R"""(Routine to return the string representation of a coord%state state.
 
 Parameters
 ----------
@@ -1792,30 +1785,25 @@ state_str : str
     String representation.
 )"""
   );
-  py::class_<Bmad::CoordsBodyToLocal, std::unique_ptr<Bmad::CoordsBodyToLocal>>(
-      m,
-      "CoordsBodyToLocal",
-      "coords_body_to_local return type"
-  )
-      .def_readonly("w_mat", &Bmad::CoordsBodyToLocal::w_mat)
-      .def_readonly("local_position", &Bmad::CoordsBodyToLocal::local_position)
+  nb::class_<Bmad::CoordsBodyToLocal>(m, "CoordsBodyToLocal", "coords_body_to_local return type")
+      .def_ro("w_mat", &Bmad::CoordsBodyToLocal::w_mat)
+      .def_ro("local_position", &Bmad::CoordsBodyToLocal::local_position)
       .def("__len__", [](const Bmad::CoordsBodyToLocal &) { return 2; })
-      .def("__getitem__", [](const Bmad::CoordsBodyToLocal &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsBodyToLocal &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.local_position);
-        throw py::index_error();
+          return nb::cast(s.local_position);
+        throw nb::index_error();
       });
   m.def(
       "coords_body_to_local",
       &Bmad::coords_body_to_local,
-      py::arg("body_position"),
-      py::arg("ele"),
-      py::arg("calculate_angles") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("body_position"),
+      nb::arg("ele"),
+      nb::arg("calculate_angles") = nb::none(),
       R"""(Wrapper for Fortran routine coords_body_to_local
 
 Parameters
@@ -1841,30 +1829,29 @@ w_mat : 2D array of float (shape: 3,3), optional
     W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 )"""
   );
-  py::class_<Bmad::CoordsBodyToRelExit, std::unique_ptr<Bmad::CoordsBodyToRelExit>>(
+  nb::class_<Bmad::CoordsBodyToRelExit>(
       m,
       "CoordsBodyToRelExit",
       "coords_body_to_rel_exit return type"
   )
-      .def_readonly("w_mat", &Bmad::CoordsBodyToRelExit::w_mat)
-      .def_readonly("rel_exit", &Bmad::CoordsBodyToRelExit::rel_exit)
+      .def_ro("w_mat", &Bmad::CoordsBodyToRelExit::w_mat)
+      .def_ro("rel_exit", &Bmad::CoordsBodyToRelExit::rel_exit)
       .def("__len__", [](const Bmad::CoordsBodyToRelExit &) { return 2; })
-      .def("__getitem__", [](const Bmad::CoordsBodyToRelExit &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsBodyToRelExit &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.rel_exit);
-        throw py::index_error();
+          return nb::cast(s.rel_exit);
+        throw nb::index_error();
       });
   m.def(
       "coords_body_to_rel_exit",
       &Bmad::coords_body_to_rel_exit,
-      py::arg("body_position"),
-      py::arg("ele"),
-      py::arg("calculate_angles") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("body_position"),
+      nb::arg("ele"),
+      nb::arg("calculate_angles") = nb::none(),
       R"""(Wrapper for Fortran routine coords_body_to_rel_exit
 
 Parameters
@@ -1888,29 +1875,28 @@ w_mat : 2D array of float (shape: 3,3), optional
     W matrix at to transform vectors. v_rel_exit = w_mat . v_body v_body     = transpose(w_mat) . v_rel_exit
 )"""
   );
-  py::class_<Bmad::CoordsCurvilinearToFloor, std::unique_ptr<Bmad::CoordsCurvilinearToFloor>>(
+  nb::class_<Bmad::CoordsCurvilinearToFloor>(
       m,
       "CoordsCurvilinearToFloor",
       "coords_curvilinear_to_floor return type"
   )
-      .def_readonly("err_flag", &Bmad::CoordsCurvilinearToFloor::err_flag)
-      .def_readonly("global_", &Bmad::CoordsCurvilinearToFloor::global)
+      .def_ro("err_flag", &Bmad::CoordsCurvilinearToFloor::err_flag)
+      .def_ro("global_", &Bmad::CoordsCurvilinearToFloor::global)
       .def("__len__", [](const Bmad::CoordsCurvilinearToFloor &) { return 2; })
-      .def("__getitem__", [](const Bmad::CoordsCurvilinearToFloor &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsCurvilinearToFloor &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.global);
-        throw py::index_error();
+          return nb::cast(s.global);
+        throw nb::index_error();
       });
   m.def(
       "coords_curvilinear_to_floor",
       &Bmad::coords_curvilinear_to_floor,
-      py::arg("xys"),
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("xys"),
+      nb::arg("branch"),
       R"""(Wrapper for Fortran routine coords_curvilinear_to_floor
 
 Parameters
@@ -1931,35 +1917,34 @@ global : FloorPositionStruct
     w_mat * v_local
 )"""
   );
-  py::class_<Bmad::CoordsFloorToCurvilinear, std::unique_ptr<Bmad::CoordsFloorToCurvilinear>>(
+  nb::class_<Bmad::CoordsFloorToCurvilinear>(
       m,
       "CoordsFloorToCurvilinear",
       "coords_floor_to_curvilinear return type"
   )
-      .def_readonly("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
-      .def_readonly("status", &Bmad::CoordsFloorToCurvilinear::status)
-      .def_readonly("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
-      .def_readonly("local_coords", &Bmad::CoordsFloorToCurvilinear::local_coords)
+      .def_ro("ele1", &Bmad::CoordsFloorToCurvilinear::ele1)
+      .def_ro("status", &Bmad::CoordsFloorToCurvilinear::status)
+      .def_ro("w_mat", &Bmad::CoordsFloorToCurvilinear::w_mat)
+      .def_ro("local_coords", &Bmad::CoordsFloorToCurvilinear::local_coords)
       .def("__len__", [](const Bmad::CoordsFloorToCurvilinear &) { return 4; })
-      .def("__getitem__", [](const Bmad::CoordsFloorToCurvilinear &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsFloorToCurvilinear &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.ele1);
+          return nb::cast(s.ele1);
         if (i == 1)
-          return py::cast(s.status);
+          return nb::cast(s.status);
         if (i == 2)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 3)
-          return py::cast(s.local_coords);
-        throw py::index_error();
+          return nb::cast(s.local_coords);
+        throw nb::index_error();
       });
   m.def(
       "coords_floor_to_curvilinear",
       &Bmad::coords_floor_to_curvilinear,
-      py::arg("floor_coords"),
-      py::arg("ele0"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("floor_coords"),
+      nb::arg("ele0"),
       R"""(Wrapper for Fortran routine coords_floor_to_curvilinear
 
 Parameters
@@ -1987,35 +1972,32 @@ w_mat : 2D array of float (shape: 3,3), optional
     W matrix at s, to transform vectors from floor to local. w_mat will only be well defined if status = ok$
 )"""
   );
-  py::class_<
-      Bmad::CoordsFloorToLocalCurvilinear,
-      std::unique_ptr<Bmad::CoordsFloorToLocalCurvilinear>>(
+  nb::class_<Bmad::CoordsFloorToLocalCurvilinear>(
       m,
       "CoordsFloorToLocalCurvilinear",
       "coords_floor_to_local_curvilinear return type"
   )
-      .def_readonly("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
-      .def_readonly("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
-      .def_readonly("local_position", &Bmad::CoordsFloorToLocalCurvilinear::local_position)
+      .def_ro("status", &Bmad::CoordsFloorToLocalCurvilinear::status)
+      .def_ro("w_mat", &Bmad::CoordsFloorToLocalCurvilinear::w_mat)
+      .def_ro("local_position", &Bmad::CoordsFloorToLocalCurvilinear::local_position)
       .def("__len__", [](const Bmad::CoordsFloorToLocalCurvilinear &) { return 3; })
-      .def("__getitem__", [](const Bmad::CoordsFloorToLocalCurvilinear &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsFloorToLocalCurvilinear &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.status);
+          return nb::cast(s.status);
         if (i == 1)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 2)
-          return py::cast(s.local_position);
-        throw py::index_error();
+          return nb::cast(s.local_position);
+        throw nb::index_error();
       });
   m.def(
       "coords_floor_to_local_curvilinear",
       &Bmad::coords_floor_to_local_curvilinear,
-      py::arg("global_position"),
-      py::arg("ele"),
-      py::arg("relative_to") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("global_position"),
+      nb::arg("ele"),
+      nb::arg("relative_to") = nb::none(),
       R"""(Wrapper for Fortran routine coords_floor_to_local_curvilinear
 
 Parameters
@@ -2047,11 +2029,10 @@ w_mat : 2D array of float (shape: 3,3), optional
   m.def(
       "coords_floor_to_relative",
       &Bmad::coords_floor_to_relative,
-      py::arg("floor0"),
-      py::arg("global_position"),
-      py::arg("calculate_angles") = py::none(),
-      py::arg("is_delta_position") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("floor0"),
+      nb::arg("global_position"),
+      nb::arg("calculate_angles") = nb::none(),
+      nb::arg("is_delta_position") = nb::none(),
       R"""(Wrapper for Fortran routine coords_floor_to_relative
 
 Parameters
@@ -2076,32 +2057,29 @@ local_position : FloorPositionStruct
     position relative to floor0
 )"""
   );
-  py::class_<
-      Bmad::CoordsLocalCurvilinearToBody,
-      std::unique_ptr<Bmad::CoordsLocalCurvilinearToBody>>(
+  nb::class_<Bmad::CoordsLocalCurvilinearToBody>(
       m,
       "CoordsLocalCurvilinearToBody",
       "coords_local_curvilinear_to_body return type"
   )
-      .def_readonly("w_mat", &Bmad::CoordsLocalCurvilinearToBody::w_mat)
-      .def_readonly("body_position", &Bmad::CoordsLocalCurvilinearToBody::body_position)
+      .def_ro("w_mat", &Bmad::CoordsLocalCurvilinearToBody::w_mat)
+      .def_ro("body_position", &Bmad::CoordsLocalCurvilinearToBody::body_position)
       .def("__len__", [](const Bmad::CoordsLocalCurvilinearToBody &) { return 2; })
-      .def("__getitem__", [](const Bmad::CoordsLocalCurvilinearToBody &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsLocalCurvilinearToBody &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.body_position);
-        throw py::index_error();
+          return nb::cast(s.body_position);
+        throw nb::index_error();
       });
   m.def(
       "coords_local_curvilinear_to_body",
       &Bmad::coords_local_curvilinear_to_body,
-      py::arg("local_position"),
-      py::arg("ele"),
-      py::arg("calculate_angles") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("local_position"),
+      nb::arg("ele"),
+      nb::arg("calculate_angles") = nb::none(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_body
 
 Parameters
@@ -2126,35 +2104,32 @@ w_mat : 2D array of float (shape: 3,3), optional
     W matrix at to transform vectors. v_local  = w_mat . v_body v_body   = transpose(w_mat) . v_local
 )"""
   );
-  py::class_<
-      Bmad::CoordsLocalCurvilinearToFloor,
-      std::unique_ptr<Bmad::CoordsLocalCurvilinearToFloor>>(
+  nb::class_<Bmad::CoordsLocalCurvilinearToFloor>(
       m,
       "CoordsLocalCurvilinearToFloor",
       "coords_local_curvilinear_to_floor return type"
   )
-      .def_readonly("w_mat", &Bmad::CoordsLocalCurvilinearToFloor::w_mat)
-      .def_readonly("global_position", &Bmad::CoordsLocalCurvilinearToFloor::global_position)
+      .def_ro("w_mat", &Bmad::CoordsLocalCurvilinearToFloor::w_mat)
+      .def_ro("global_position", &Bmad::CoordsLocalCurvilinearToFloor::global_position)
       .def("__len__", [](const Bmad::CoordsLocalCurvilinearToFloor &) { return 2; })
-      .def("__getitem__", [](const Bmad::CoordsLocalCurvilinearToFloor &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CoordsLocalCurvilinearToFloor &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.global_position);
-        throw py::index_error();
+          return nb::cast(s.global_position);
+        throw nb::index_error();
       });
   m.def(
       "coords_local_curvilinear_to_floor",
       &Bmad::coords_local_curvilinear_to_floor,
-      py::arg("local_position"),
-      py::arg("ele"),
-      py::arg("in_body_frame") = py::none(),
-      py::arg("calculate_angles") = py::none(),
-      py::arg("end_origin") = py::none(),
-      py::arg("downstream_dir_ref") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("local_position"),
+      nb::arg("ele"),
+      nb::arg("in_body_frame") = nb::none(),
+      nb::arg("calculate_angles") = nb::none(),
+      nb::arg("end_origin") = nb::none(),
+      nb::arg("downstream_dir_ref") = nb::none(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_floor
 
 Parameters
@@ -2199,12 +2174,11 @@ w_mat : 2D array of float (shape: 3,3), optional
   m.def(
       "coords_relative_to_floor",
       &Bmad::coords_relative_to_floor,
-      py::arg("floor0"),
-      py::arg("dr"),
-      py::arg("theta") = py::none(),
-      py::arg("phi") = py::none(),
-      py::arg("psi") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("floor0"),
+      nb::arg("dr"),
+      nb::arg("theta") = nb::none(),
+      nb::arg("phi") = nb::none(),
+      nb::arg("psi") = nb::none(),
       R"""(Wrapper for Fortran routine coords_relative_to_floor
 
 Parameters
@@ -2236,11 +2210,10 @@ floor1 : FloorPositionStruct
   m.def(
       "coulombfun",
       &Bmad::coulombfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
       R"""(Wrapper for Fortran routine coulombfun
 
 Parameters
@@ -2261,12 +2234,9 @@ res : float
   m.def(
       "create_concatenated_wall3d",
       &Bmad::create_concatenated_wall3d,
-      py::arg("lat"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine create_concatenated_wall3d (lat)
-
-Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
+      nb::arg("lat"),
+      nb::arg("err"),
+      R"""(Routine to concatinate lat%branch(i)ele(:)%wall3d%section(:) arrays into
 one lat%branch(i)%wall3d%section(:) array.
 
 Exceptions: capillary and aperture elements do not have their walls included.
@@ -2282,35 +2252,53 @@ lat : LatStruct
     As an output, lat: Lattice
 )"""
   );
-  py::class_<Bmad::CreateElementSlice, std::unique_ptr<Bmad::CreateElementSlice>>(
-      m,
-      "CreateElementSlice",
-      "create_element_slice return type"
-  )
-      .def_readonly("sliced_ele", &Bmad::CreateElementSlice::sliced_ele)
-      .def_readonly("err_flag", &Bmad::CreateElementSlice::err_flag)
+  nb::class_<Bmad::CreateElementSlice>(m, "CreateElementSlice", "create_element_slice return type")
+      .def_ro("sliced_ele", &Bmad::CreateElementSlice::sliced_ele)
+      .def_ro("err_flag", &Bmad::CreateElementSlice::err_flag)
       .def("__len__", [](const Bmad::CreateElementSlice &) { return 2; })
-      .def("__getitem__", [](const Bmad::CreateElementSlice &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CreateElementSlice &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.sliced_ele);
+          return nb::cast(s.sliced_ele);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "create_element_slice",
-      &Bmad::create_element_slice,
-      py::arg("ele_in"),
-      py::arg("l_slice"),
-      py::arg("offset"),
-      py::arg("param"),
-      py::arg("include_upstream_end"),
-      py::arg("include_downstream_end"),
-      py::arg("old_slice") = py::none(),
-      py::arg("orb_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele_in,
+         double l_slice,
+         double offset,
+         LatParamStruct &param,
+         bool include_upstream_end,
+         bool include_downstream_end,
+         EleStruct *old_slice,
+         CoordStruct *orb_in) {
+        auto fn = static_cast<
+            Bmad::
+                CreateElementSlice (*)(EleStruct &, double, double, LatParamStruct &, bool, bool, optional_ref<EleStruct>, optional_ref<CoordStruct>)>(
+            &Bmad::create_element_slice
+        );
+        return fn(
+            ele_in,
+            l_slice,
+            offset,
+            param,
+            include_upstream_end,
+            include_downstream_end,
+            ptr_to_opt_ref(old_slice),
+            ptr_to_opt_ref(orb_in)
+        );
+      },
+      nb::arg("ele_in"),
+      nb::arg("l_slice"),
+      nb::arg("offset"),
+      nb::arg("param"),
+      nb::arg("include_upstream_end"),
+      nb::arg("include_downstream_end"),
+      nb::arg("old_slice") = nb::none(),
+      nb::arg("orb_in") = nb::none(),
       R"""(Wrapper for Fortran routine create_element_slice
 
 Parameters
@@ -2355,11 +2343,10 @@ err_flag : bool
   m.def(
       "create_feedback",
       &Bmad::create_feedback,
-      py::arg("lord"),
-      py::arg("input"),
-      py::arg("output"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
+      nb::arg("input"),
+      nb::arg("output"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine create_feedback
 
 Parameters
@@ -2382,10 +2369,9 @@ err_flag : bool
   m.def(
       "create_field_overlap",
       &Bmad::create_field_overlap,
-      py::arg("lat"),
-      py::arg("lord_name"),
-      py::arg("slave_name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("lord_name"),
+      nb::arg("slave_name"),
       R"""(Wrapper for Fortran routine create_field_overlap
 
 Parameters
@@ -2408,12 +2394,11 @@ err_flag : bool
   m.def(
       "create_girder",
       &Bmad::create_girder,
-      py::arg("lat"),
-      py::arg("ix_girder"),
-      py::arg("contrl"),
-      py::arg("girder_info"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ix_girder"),
+      nb::arg("contrl"),
+      nb::arg("girder_info"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine create_girder
 
 Parameters
@@ -2439,10 +2424,9 @@ err_flag : bool
   m.def(
       "create_group",
       &Bmad::create_group,
-      py::arg("lord"),
-      py::arg("contrl"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
+      nb::arg("contrl"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine create_group
 
 Parameters
@@ -2462,8 +2446,7 @@ err : bool
   m.def(
       "create_lat_ele_nametable",
       &Bmad::create_lat_ele_nametable,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine create_lat_ele_nametable
 
 Parameters
@@ -2480,10 +2463,9 @@ nametable : NametableStruct
   m.def(
       "create_overlay",
       &Bmad::create_overlay,
-      py::arg("lord"),
-      py::arg("contrl"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
+      nb::arg("contrl"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine create_overlay
 
 Parameters
@@ -2500,32 +2482,29 @@ err : bool
     Set True if an attribute is not free to be controlled.
 )"""
   );
-  py::class_<Bmad::CreatePlanarWigglerModel, std::unique_ptr<Bmad::CreatePlanarWigglerModel>>(
+  nb::class_<Bmad::CreatePlanarWigglerModel>(
       m,
       "CreatePlanarWigglerModel",
       "create_planar_wiggler_model return type"
   )
-      .def_readonly("lat", &Bmad::CreatePlanarWigglerModel::lat)
-      .def_readonly("err_flag", &Bmad::CreatePlanarWigglerModel::err_flag)
+      .def_ro("lat", &Bmad::CreatePlanarWigglerModel::lat)
+      .def_ro("err_flag", &Bmad::CreatePlanarWigglerModel::err_flag)
       .def("__len__", [](const Bmad::CreatePlanarWigglerModel &) { return 2; })
-      .def("__getitem__", [](const Bmad::CreatePlanarWigglerModel &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CreatePlanarWigglerModel &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.lat);
+          return nb::cast(s.lat);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "create_planar_wiggler_model",
       &Bmad::create_planar_wiggler_model,
-      py::arg("wiggler_in"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine create_planar_wiggler_model (wiggler_in, lat, err_flag, print_err)
-
-Routine to create series of bend and drift elements to serve as a replacement
+      nb::arg("wiggler_in"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Routine to create series of bend and drift elements to serve as a replacement
 model for a planar wiggler.
 
 This routine is helpful for translating bmad lattices to a language that does not
@@ -2559,10 +2538,9 @@ err_flag : bool, optional
   m.def(
       "create_ramper",
       &Bmad::create_ramper,
-      py::arg("lord"),
-      py::arg("contrl"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
+      nb::arg("contrl"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine create_ramper
 
 Parameters
@@ -2582,12 +2560,9 @@ err : bool
   m.def(
       "create_sol_quad_model",
       &Bmad::create_sol_quad_model,
-      py::arg("sol_quad"),
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine create_sol_quad_model (sol_quad, lat)
-
-Routine to create series of solenoid and quadrupole elements to serve as a replacement
+      nb::arg("sol_quad"),
+      nb::arg("lat"),
+      R"""(Routine to create series of solenoid and quadrupole elements to serve as a replacement
 model for a sol_quad element.
 
 This routine is helpful for translating bmad lattices to a language that does not
@@ -2599,10 +2574,9 @@ Not yet implemented!
   m.def(
       "create_unique_ele_names",
       &Bmad::create_unique_ele_names,
-      py::arg("lat"),
-      py::arg("key"),
-      py::arg("suffix"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("key"),
+      nb::arg("suffix"),
       R"""(Wrapper for Fortran routine create_unique_ele_names
 
 Parameters
@@ -2622,8 +2596,7 @@ suffix : str
   m.def(
       "create_wiggler_cartesian_map",
       &Bmad::create_wiggler_cartesian_map,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine create_wiggler_cartesian_map
 
 Parameters
@@ -2640,8 +2613,7 @@ cart_map : CartesianMapStruct
   m.def(
       "crystal_attribute_bookkeeper",
       &Bmad::crystal_attribute_bookkeeper,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine crystal_attribute_bookkeeper
 
 Parameters
@@ -2653,13 +2625,10 @@ ele : EleStruct
   m.def(
       "crystal_h_misalign",
       &Bmad::crystal_h_misalign,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("h_vec"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine crystal_h_misalign (ele, orbit, h_vec)
-
-Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("h_vec"),
+      R"""(Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
 
 Parameters
 ----------
@@ -2678,11 +2647,8 @@ h_vec : 1D array of float (shape: 3)
   m.def(
       "crystal_type_to_crystal_params",
       &Bmad::crystal_type_to_crystal_params,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine crystal_type_to_crystal_params (ele, err_flag)
-
-Routine to set the crystal parameters based upon the crystal type.
+      nb::arg("ele"),
+      R"""(Routine to set the crystal parameters based upon the crystal type.
 
 Crystal types are of the form:
   "ZZZ(ijk)"
@@ -2705,11 +2671,8 @@ err_flag : bool
   m.def(
       "custom_attribute_ubound_index",
       &Bmad::custom_attribute_ubound_index,
-      py::arg("ele_class"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function custom_attribute_ubound_index(ele_class) result (ix_ubound)
-
-Routine to return, for a given element class, the upper bound index for the ele%custom(:)
+      nb::arg("ele_class"),
+      R"""(Routine to return, for a given element class, the upper bound index for the ele%custom(:)
 array which is needed to accomodate the registered custom attributes for that class.
 
 Parameters
@@ -2723,30 +2686,27 @@ ix_ubound : int
     Maximum index needed.
 )"""
   );
-  py::class_<Bmad::CustomEleAttribNameList, std::unique_ptr<Bmad::CustomEleAttribNameList>>(
+  nb::class_<Bmad::CustomEleAttribNameList>(
       m,
       "CustomEleAttribNameList",
       "custom_ele_attrib_name_list return type"
   )
-      .def_readonly("index_list", &Bmad::CustomEleAttribNameList::index_list)
-      .def_readonly("name_list", &Bmad::CustomEleAttribNameList::name_list)
+      .def_ro("index_list", &Bmad::CustomEleAttribNameList::index_list)
+      .def_ro("name_list", &Bmad::CustomEleAttribNameList::name_list)
       .def("__len__", [](const Bmad::CustomEleAttribNameList &) { return 2; })
-      .def("__getitem__", [](const Bmad::CustomEleAttribNameList &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::CustomEleAttribNameList &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.index_list);
+          return nb::cast(s.index_list);
         if (i == 1)
-          return py::cast(s.name_list);
-        throw py::index_error();
+          return nb::cast(s.name_list);
+        throw nb::index_error();
       });
   m.def(
       "custom_ele_attrib_name_list",
       &Bmad::custom_ele_attrib_name_list,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine custom_ele_attrib_name_list (index_list, name_list)
-
-Routine to create an array (index_list(i), name_list(i)) of custom element attribute names and indexes.
+      R"""(Routine to create an array (index_list(i), name_list(i)) of custom element attribute names and indexes.
 Each name in the name_list is of the form:
   "{<class>::}<attribute_name>"
 where:

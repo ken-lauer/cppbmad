@@ -7,6 +7,25 @@ use precision_def ! , only: global_com, rp
 
 use bmad_struct_proxy_mod
 
+use sim_utils_interface, only: all_pointer_to_string, asinc, assert_equal, calc_file_number, &
+    change_file_number, complex_error_function, cos_one, cosc, cross_product, &
+    date_and_time_stamp, detab, display_size_and_resolution, dj_bessel, djb_hash, djb_str_hash, &
+    downcase_string, err_exit, factorial, faddeeva_function, fft_1d, file_directorizer, &
+    file_get, file_get_open, file_suffixer, find_location, gen_complete_elliptic, &
+    get_file_number, get_file_time_stamp, i_bessel, i_bessel_extended, increment_file_number, &
+    index_nocase, int_str, is_alphabetic, is_decreasing_sequence, is_increasing_sequence, &
+    is_integer, is_logical, is_real, j_bessel, linear_fit, linear_fit_2d, logic_str, lunget, &
+    make_legal_comment, match_reg, match_wild, match_word, milli_sleep, n_choose_k, &
+    n_spline_create, nametable_add, nametable_bracket_indexx, nametable_change1, &
+    nametable_init, nametable_remove, ordinal_str, parse_fortran_format, pointer_to_locations, &
+    poly_eval, probability_funct, quadratic_roots, query_string, quote, quoten, &
+    real_num_fortran_format, real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, &
+    set_all_ptr, set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, &
+    sqrt_one, str_count, str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, &
+    str_last_not_in_set, str_match_wild, str_substitute, str_upcase, string_to_int, &
+    string_to_real, string_trim, string_trim2, system_command, to_str, type_this_file, &
+    upcase_string, value_of_all_ptr, virtual_memory_usage, word_len, word_read
+
 use random_mod, only: allocate_thread_states, pointer_to_ran_state, ran_default_state, &
     ran_engine, ran_gauss_converter, ran_gauss_scalar, ran_gauss_vector, ran_seed_get, &
     ran_seed_put, ran_uniform, super_sobseq, zig_table_init
@@ -17,24 +36,6 @@ use particle_species_mod, only: anomalous_moment_of, antiparticle, atomic_number
     species_name, species_of, spin_of, x0_radiation_length
 
 use all_phase_fft, only: apfft, apfft_corr, apfft_ext, hanhan
-
-use sim_utils_interface, only: asinc, assert_equal, calc_file_number, change_file_number, &
-    complex_error_function, cos_one, cosc, cross_product, date_and_time_stamp, detab, &
-    display_size_and_resolution, dj_bessel, djb_hash, djb_str_hash, downcase_string, err_exit, &
-    factorial, faddeeva_function, fft_1d, file_directorizer, file_get, file_get_open, &
-    file_suffixer, find_location, gen_complete_elliptic, get_file_number, get_file_time_stamp, &
-    i_bessel, i_bessel_extended, increment_file_number, index_nocase, int_str, is_alphabetic, &
-    is_decreasing_sequence, is_increasing_sequence, is_integer, is_logical, is_real, j_bessel, &
-    linear_fit, linear_fit_2d, logic_str, lunget, make_legal_comment, match_reg, match_wild, &
-    match_word, milli_sleep, n_choose_k, n_spline_create, nametable_add, &
-    nametable_bracket_indexx, nametable_change1, nametable_init, nametable_remove, ordinal_str, &
-    parse_fortran_format, pointer_to_locations, poly_eval, probability_funct, quadratic_roots, &
-    query_string, quote, quoten, real_num_fortran_format, real_path, real_str, real_to_string, &
-    rms_value, rot_2d, run_timer, set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, &
-    sqrt_alpha, sqrt_one, str_count, str_downcase, str_first_in_set, str_first_not_in_set, &
-    str_last_in_set, str_last_not_in_set, str_match_wild, str_substitute, str_upcase, &
-    string_to_int, string_to_real, string_trim, string_trim2, system_command, to_str, &
-    type_this_file, upcase_string, virtual_memory_usage, word_len, word_read
 
 use rotation_3d_mod, only: axis_angle_to_quat, axis_angle_to_w_mat, omega_to_quat, quat_conj, &
     quat_inverse, quat_mul, quat_rotate, quat_to_axis_angle, quat_to_omega, quat_to_w_mat, &
@@ -94,6 +95,42 @@ elemental function assc(ptr) result(associated)
   associated = c_associated(ptr)
 end function assc
 
+subroutine fortran_all_pointer_to_string (a_ptr, err, str) bind(c)
+
+  use array_desc_mod
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err
+  logical, target :: f_err_native
+  logical, pointer :: f_err_native_ptr
+  logical(c_bool), pointer :: f_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: str
+  character(len=4096), target :: f_str
+  character(kind=c_char), pointer :: f_str_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), value :: a_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_a_ptr
+  ! ** End of parameters **
+  ! inout: f_a_ptr 0D_NOT_type
+  if (.not. c_associated(a_ptr)) return
+  call c_f_pointer(a_ptr, f_a_ptr)
+  ! in: f_err 0D_NOT_logical
+  if (c_associated(err)) then
+    call c_f_pointer(err, f_err_ptr)
+    f_err_native = f_err_ptr
+    f_err_native_ptr => f_err_native
+  else
+    f_err_native_ptr => null()
+  endif
+  f_str = all_pointer_to_string(f_a_ptr, f_err_native_ptr)
+
+  ! out: f_str 0D_NOT_character
+  call c_f_pointer(str, f_str_ptr, [len_trim(f_str) + 1])
+  call to_c_str(f_str, f_str_ptr)
+end subroutine
 subroutine fortran_allocate_thread_states () bind(c)
 
   use array_desc_mod
@@ -6004,6 +6041,48 @@ subroutine fortran_serbd (y, m, b, d) bind(c)
   call c_f_pointer(d, f_d_ptr)
   f_d_ptr = f_d
 end subroutine
+subroutine fortran_set_all_ptr (a_ptr, value, delta, value_set) bind(c)
+
+  use array_desc_mod
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: value  ! 0D_NOT_real
+  real(rp) :: f_value
+  type(c_ptr), intent(in), value :: delta  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_delta
+  logical, target :: f_delta_native
+  logical, pointer :: f_delta_native_ptr
+  logical(c_bool), pointer :: f_delta_ptr
+  type(c_ptr), intent(in), value :: value_set  ! 0D_NOT_real
+  real(c_double) :: f_value_set
+  real(c_double), pointer :: f_value_set_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: a_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_a_ptr
+  ! ** End of parameters **
+  ! inout: f_a_ptr 0D_NOT_type
+  if (.not. c_associated(a_ptr)) return
+  call c_f_pointer(a_ptr, f_a_ptr)
+  ! in: f_value 0D_NOT_real
+  f_value = value
+  ! in: f_delta 0D_NOT_logical
+  if (c_associated(delta)) then
+    call c_f_pointer(delta, f_delta_ptr)
+    f_delta_native = f_delta_ptr
+    f_delta_native_ptr => f_delta_native
+  else
+    f_delta_native_ptr => null()
+  endif
+  ! in: f_value_set 0D_NOT_real
+  if (c_associated(value_set)) then
+    call c_f_pointer(value_set, f_value_set_ptr)
+  else
+    f_value_set_ptr => null()
+  endif
+  call set_all_ptr(f_a_ptr, f_value, f_delta_native_ptr, f_value_set_ptr)
+
+end subroutine
 subroutine fortran_set_env (env_name, env_value, err_flag) bind(c)
 
   use array_desc_mod
@@ -7686,6 +7765,28 @@ subroutine fortran_upcase_string (string) bind(c)
   call to_f_str(f_string_ptr, f_string)
   call upcase_string(f_string)
 
+end subroutine
+subroutine fortran_value_of_all_ptr (a_ptr, value) bind(c)
+
+  use array_desc_mod
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: value  ! 0D_NOT_real
+  real(rp) :: f_value
+  real(c_double), pointer :: f_value_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: a_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_a_ptr
+  ! ** End of parameters **
+  ! inout: f_a_ptr 0D_NOT_type
+  if (.not. c_associated(a_ptr)) return
+  call c_f_pointer(a_ptr, f_a_ptr)
+  f_value = value_of_all_ptr(f_a_ptr)
+
+  ! out: f_value 0D_NOT_real
+  call c_f_pointer(value, f_value_ptr)
+  f_value_ptr = f_value
 end subroutine
 subroutine fortran_virtual_memory_usage (usage) bind(c)
 

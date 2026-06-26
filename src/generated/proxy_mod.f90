@@ -7,7 +7,8 @@ module bmad_struct_proxy_mod
     use spline_mod, only: spline_struct
   use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, expression_atom_struct, expression_tree_struct, floor_position_struct, gen_grad1_struct, gen_grad_map_struct, gg_taylor_struct, gg_taylor_term_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_struct, linac_normal_mode_struct, mode3_struct, mode_info_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pre_tracker_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct, tricubic_cmplx_coef_struct
-  use sim_utils_struct, only: nametable_struct
+  use sim_utils_struct, only: all_pointer_struct, nametable_struct
+  use bmad_parser_struct, only: parser_controller_struct, parser_ele_struct
   use tao_struct, only: tao_beam_branch_struct, tao_beam_uni_struct, tao_building_wall_orientation_struct, tao_building_wall_point_struct, tao_building_wall_section_struct, tao_building_wall_struct, tao_cmd_history_struct, tao_common_struct, tao_curve_color_struct, tao_curve_orbit_struct, tao_curve_struct, tao_d1_data_struct, tao_d2_data_struct, tao_data_struct, tao_data_var_component_struct, tao_drawing_struct, tao_dynamic_aperture_struct, tao_ele_pointer_struct, tao_ele_shape_struct, tao_eval_node_struct, tao_expression_info_struct, tao_floor_plan_struct, tao_global_struct, tao_graph_struct, tao_histogram_struct, tao_init_struct, tao_lat_sigma_struct, tao_lattice_branch_struct, tao_lattice_struct, tao_model_branch_struct, tao_model_element_struct, tao_ping_scale_struct, tao_plot_cache_struct, tao_plot_page_struct, tao_plot_region_struct, tao_plot_struct, tao_shape_pattern_point_struct, tao_shape_pattern_struct, tao_spin_dn_dpz_struct, tao_spin_ele_struct, tao_spin_map_struct, tao_spin_polarization_struct, tao_super_universe_struct, tao_title_struct, tao_universe_calc_struct, tao_universe_pointer_struct, tao_universe_struct, tao_v1_var_struct, tao_var_slave_struct, tao_var_struct, tao_wave_kick_pt_struct, tao_wave_struct
   use srdt_mod, only: summation_rdt_struct
   use quick_plot_struct, only: qp_axis_struct, qp_legend_struct, qp_line_struct, qp_point_struct, qp_rect_struct, qp_symbol_struct
@@ -416,6 +417,18 @@ module bmad_struct_proxy_mod
   type :: nametable_struct_container_alloc
     type(nametable_struct), allocatable :: data(:)
   end type nametable_struct_container_alloc
+
+  type :: all_pointer_struct_container_alloc
+    type(all_pointer_struct), allocatable :: data(:)
+  end type all_pointer_struct_container_alloc
+
+  type :: parser_ele_struct_container_alloc
+    type(parser_ele_struct), allocatable :: data(:)
+  end type parser_ele_struct_container_alloc
+
+  type :: parser_controller_struct_container_alloc
+    type(parser_controller_struct), allocatable :: data(:)
+  end type parser_controller_struct_container_alloc
 
   type :: tao_spin_dn_dpz_struct_container_alloc
     type(tao_spin_dn_dpz_struct), allocatable :: data(:)
@@ -27934,6 +27947,1095 @@ contains
       endif
       if (.not. allocated(struct_obj%index)) allocate(struct_obj%index(shape(1)))
       struct_obj%index = val
+    endif
+  end subroutine
+
+  !! all_pointer_struct
+
+    function allocate_fortran_all_pointer_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(all_pointer_struct), pointer :: fptr
+      type(all_pointer_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_all_pointer_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(all_pointer_struct), pointer :: fptr
+      type(all_pointer_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_all_pointer_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(all_pointer_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_all_pointer_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(all_pointer_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_all_pointer_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(all_pointer_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_all_pointer_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(all_pointer_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_all_pointer_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
+
+    type(all_pointer_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! all_pointer_struct%r: 0D_PTR_real
+
+  subroutine all_pointer_struct_get_r(struct_obj_ptr, value_out, is_valid) bind(c, name='all_pointer_struct_get_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%r)) then
+      value_out = struct_obj%r ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_r(struct_obj_ptr, value_in) bind(c, name='all_pointer_struct_set_r')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_double), intent(in), value :: value_in
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%r)) then
+      struct_obj%r = value_in
+    endif
+  end subroutine
+
+  ! all_pointer_struct%q: 0D_PTR_real16
+
+  subroutine all_pointer_struct_get_q(struct_obj_ptr, value_out, is_valid) bind(c, name='all_pointer_struct_get_q')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_long_double), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%q)) then
+      value_out = struct_obj%q ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_q(struct_obj_ptr, value_in) bind(c, name='all_pointer_struct_set_q')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    real(c_long_double), intent(in), value :: value_in
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%q)) then
+      struct_obj%q = value_in
+    endif
+  end subroutine
+
+  ! all_pointer_struct%i: 0D_PTR_integer
+
+  subroutine all_pointer_struct_get_i(struct_obj_ptr, value_out, is_valid) bind(c, name='all_pointer_struct_get_i')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%i)) then
+      value_out = struct_obj%i ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_i(struct_obj_ptr, value_in) bind(c, name='all_pointer_struct_set_i')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: value_in
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%i)) then
+      struct_obj%i = value_in
+    endif
+  end subroutine
+
+  ! all_pointer_struct%l: 0D_PTR_logical
+
+  subroutine all_pointer_struct_get_l(struct_obj_ptr, value_out, is_valid) bind(c, name='all_pointer_struct_get_l')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(out) :: value_out
+    logical(c_bool), intent(out) :: is_valid
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%l)) then
+      value_out = struct_obj%l ! Implicit cast/copy
+      is_valid = .true.
+    else
+      is_valid = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_l(struct_obj_ptr, value_in) bind(c, name='all_pointer_struct_set_l')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    logical(c_bool), intent(in), value :: value_in
+    type(all_pointer_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (associated(struct_obj%l)) then
+      struct_obj%l = value_in
+    endif
+  end subroutine
+
+  ! all_pointer_struct%r1: 1D_PTR_real
+
+  subroutine all_pointer_struct_get_r1_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_pointer_struct_get_r1_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_pointer_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%r1) .and. is_contiguous(struct_obj%r1)) then
+      data_ptr = c_loc(struct_obj%r1(lbound(struct_obj%r1, 1)))
+      bounds(1) = int(lbound(struct_obj%r1, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%r1, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_r1(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_pointer_struct_set_r1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_pointer_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%r1)) then
+        if ((size(struct_obj%r1, 1) == shape(1))) then
+           struct_obj%r1 = val
+        endif
+      endif
+    endif
+  end subroutine
+
+  ! all_pointer_struct%i1: 1D_PTR_integer
+
+  subroutine all_pointer_struct_get_i1_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='all_pointer_struct_get_i1_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(all_pointer_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (associated(struct_obj%i1) .and. is_contiguous(struct_obj%i1)) then
+      data_ptr = c_loc(struct_obj%i1(lbound(struct_obj%i1, 1)))
+      bounds(1) = int(lbound(struct_obj%i1, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%i1, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine all_pointer_struct_set_i1(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='all_pointer_struct_set_i1')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(all_pointer_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (associated(struct_obj%i1)) then
+        if ((size(struct_obj%i1, 1) == shape(1))) then
+           struct_obj%i1 = val
+        endif
+      endif
+    endif
+  end subroutine
+
+  !! parser_ele_struct
+
+    function allocate_fortran_parser_ele_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(parser_ele_struct), pointer :: fptr
+      type(parser_ele_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_parser_ele_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(parser_ele_struct), pointer :: fptr
+      type(parser_ele_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_parser_ele_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(parser_ele_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_parser_ele_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(parser_ele_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_parser_ele_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(parser_ele_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_parser_ele_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(parser_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_parser_ele_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
+
+    type(parser_ele_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! dispatch: parser_ele_struct%integer (6 fields)
+
+  subroutine parser_ele_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='parser_ele_struct_get_integer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    integer(c_int), intent(out) :: value_out
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%ix_super_ref_multipass
+    case(1); value_out = struct_obj%ix_line_in_file
+    case(2); value_out = struct_obj%ix_count
+    case(3); value_out = struct_obj%ele_pt
+    case(4); value_out = struct_obj%ref_pt
+    case(5); value_out = struct_obj%index
+    end select
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='parser_ele_struct_set_integer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    integer(c_int), intent(in), value :: value_in
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%ix_super_ref_multipass = value_in
+    case(1); struct_obj%ix_line_in_file = value_in
+    case(2); struct_obj%ix_count = value_in
+    case(3); struct_obj%ele_pt = value_in
+    case(4); struct_obj%ref_pt = value_in
+    case(5); struct_obj%index = value_in
+    end select
+  end subroutine
+
+  ! dispatch: parser_ele_struct%logical (5 fields)
+
+  subroutine parser_ele_struct_get_logical(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='parser_ele_struct_get_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(out) :: value_out
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%superposition_command_here
+    case(1); value_out = struct_obj%superposition_has_been_set
+    case(2); value_out = struct_obj%wrap_superimpose
+    case(3); value_out = struct_obj%create_jumbo_slave
+    case(4); value_out = struct_obj%is_range
+    end select
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_logical(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='parser_ele_struct_set_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(in), value :: value_in
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%superposition_command_here = value_in
+    case(1); struct_obj%superposition_has_been_set = value_in
+    case(2); struct_obj%wrap_superimpose = value_in
+    case(3); struct_obj%create_jumbo_slave = value_in
+    case(4); struct_obj%is_range = value_in
+    end select
+  end subroutine
+
+  ! dispatch: parser_ele_struct%real (1 fields)
+
+  subroutine parser_ele_struct_get_real(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='parser_ele_struct_get_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(out) :: value_out
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%offset
+    end select
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_real(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='parser_ele_struct_set_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(in), value :: value_in
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%offset = value_in
+    end select
+  end subroutine
+
+  ! parser_ele_struct%control: 1D_ALLOC_type
+
+  subroutine parser_ele_struct_get_control_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='parser_ele_struct_get_control_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%control) .and. is_contiguous(struct_obj%control)) then
+      data_ptr = c_loc(struct_obj%control(lbound(struct_obj%control, 1)))
+      bounds(1) = int(lbound(struct_obj%control, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%control, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%control(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine parser_ele_struct_reallocate_control(struct_obj_ptr, lbound_, n) &
+        bind(c, name='parser_ele_struct_reallocate_control')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(parser_ele_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%control)) deallocate(struct_obj%control)
+    else
+      if (allocated(struct_obj%control)) deallocate(struct_obj%control)
+      allocate(struct_obj%control(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
+  ! parser_ele_struct%field_overlaps: 1D_ALLOC_character
+
+  subroutine parser_ele_struct_get_field_overlaps_info(struct_obj_ptr, data_ptr, bounds, str_len, is_allocated) &
+      bind(c, name='parser_ele_struct_get_field_overlaps_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%field_overlaps)) then
+      data_ptr = c_loc(struct_obj%field_overlaps(lbound(struct_obj%field_overlaps, 1)))
+      bounds(1) = int(lbound(struct_obj%field_overlaps, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%field_overlaps, 1), c_int)
+      str_len = int(len(struct_obj%field_overlaps), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! parser_ele_struct%ref_name: 0D_NOT_character
+
+  subroutine parser_ele_struct_get_ref_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_ele_struct_get_ref_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%ref_name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%ref_name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_ref_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_ele_struct_set_ref_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_ele_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%ref_name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! parser_ele_struct%ele_name: 0D_NOT_character
+
+  subroutine parser_ele_struct_get_ele_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_ele_struct_get_ele_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%ele_name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%ele_name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_ele_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_ele_struct_set_ele_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_ele_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%ele_name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! parser_ele_struct%names1: 1D_ALLOC_character
+
+  subroutine parser_ele_struct_get_names1_info(struct_obj_ptr, data_ptr, bounds, str_len, is_allocated) &
+      bind(c, name='parser_ele_struct_get_names1_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%names1)) then
+      data_ptr = c_loc(struct_obj%names1(lbound(struct_obj%names1, 1)))
+      bounds(1) = int(lbound(struct_obj%names1, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%names1, 1), c_int)
+      str_len = int(len(struct_obj%names1), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! parser_ele_struct%names2: 1D_ALLOC_character
+
+  subroutine parser_ele_struct_get_names2_info(struct_obj_ptr, data_ptr, bounds, str_len, is_allocated) &
+      bind(c, name='parser_ele_struct_get_names2_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    integer(c_int), intent(out) :: str_len
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%names2)) then
+      data_ptr = c_loc(struct_obj%names2(lbound(struct_obj%names2, 1)))
+      bounds(1) = int(lbound(struct_obj%names2, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%names2, 1), c_int)
+      str_len = int(len(struct_obj%names2), c_int)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0
+      str_len = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  ! parser_ele_struct%lat_file: 0D_NOT_character
+
+  subroutine parser_ele_struct_get_lat_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_ele_struct_get_lat_file_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%lat_file)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%lat_file), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_lat_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_ele_struct_set_lat_file')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_ele_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%lat_file = str_in ! implicitly handles padding
+  end subroutine
+
+  ! parser_ele_struct%default_attrib: 0D_NOT_character
+
+  subroutine parser_ele_struct_get_default_attrib_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_ele_struct_get_default_attrib_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_ele_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%default_attrib)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%default_attrib), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_ele_struct_set_default_attrib(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_ele_struct_set_default_attrib')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_ele_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%default_attrib = str_in ! implicitly handles padding
+  end subroutine
+
+  !! parser_controller_struct
+
+    function allocate_fortran_parser_controller_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(parser_controller_struct), pointer :: fptr
+      type(parser_controller_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_parser_controller_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(parser_controller_struct), pointer :: fptr
+      type(parser_controller_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_parser_controller_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(parser_controller_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_parser_controller_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(parser_controller_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_parser_controller_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(parser_controller_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_parser_controller_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(parser_controller_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_parser_controller_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
+
+    type(parser_controller_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! dispatch: parser_controller_struct%integer (1 fields)
+
+  subroutine parser_controller_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='parser_controller_struct_get_integer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    integer(c_int), intent(out) :: value_out
+    type(parser_controller_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%n_stk
+    end select
+  end subroutine
+
+
+  subroutine parser_controller_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='parser_controller_struct_set_integer')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    integer(c_int), intent(in), value :: value_in
+    type(parser_controller_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%n_stk = value_in
+    end select
+  end subroutine
+
+  ! parser_controller_struct%name: 0D_NOT_character
+
+  subroutine parser_controller_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_controller_struct_get_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_controller_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_controller_struct_set_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_controller_struct_set_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_controller_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! parser_controller_struct%attrib_name: 0D_NOT_character
+
+  subroutine parser_controller_struct_get_attrib_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='parser_controller_struct_get_attrib_name_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_controller_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%attrib_name)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%attrib_name), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine parser_controller_struct_set_attrib_name(struct_obj_ptr, str_ptr, str_len) bind(c, name='parser_controller_struct_set_attrib_name')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(parser_controller_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%attrib_name = str_in ! implicitly handles padding
+  end subroutine
+
+  ! parser_controller_struct%stack: 1D_ALLOC_type
+
+  subroutine parser_controller_struct_get_stack_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='parser_controller_struct_get_stack_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_controller_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%stack) .and. is_contiguous(struct_obj%stack)) then
+      data_ptr = c_loc(struct_obj%stack(lbound(struct_obj%stack, 1)))
+      bounds(1) = int(lbound(struct_obj%stack, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%stack, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%stack(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine parser_controller_struct_reallocate_stack(struct_obj_ptr, lbound_, n) &
+        bind(c, name='parser_controller_struct_reallocate_stack')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(parser_controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+    else
+      if (allocated(struct_obj%stack)) deallocate(struct_obj%stack)
+      allocate(struct_obj%stack(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
+  ! parser_controller_struct%y_knot: 1D_ALLOC_real
+
+  subroutine parser_controller_struct_get_y_knot_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='parser_controller_struct_get_y_knot_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(parser_controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%y_knot) .and. is_contiguous(struct_obj%y_knot)) then
+      data_ptr = c_loc(struct_obj%y_knot(lbound(struct_obj%y_knot, 1)))
+      bounds(1) = int(lbound(struct_obj%y_knot, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%y_knot, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine parser_controller_struct_reallocate_y_knot(struct_obj_ptr, lbound_, n) &
+        bind(c, name='parser_controller_struct_reallocate_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(parser_controller_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+    else
+      if (allocated(struct_obj%y_knot)) deallocate(struct_obj%y_knot)
+      allocate(struct_obj%y_knot(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
+
+  subroutine parser_controller_struct_set_y_knot(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='parser_controller_struct_set_y_knot')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(parser_controller_struct), pointer :: struct_obj
+    real(c_double), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      if (allocated(struct_obj%y_knot)) then
+         if ((size(struct_obj%y_knot, 1) /= shape(1))) deallocate(struct_obj%y_knot)
+      endif
+      if (.not. allocated(struct_obj%y_knot)) allocate(struct_obj%y_knot(shape(1)))
+      struct_obj%y_knot = val
     endif
   end subroutine
 

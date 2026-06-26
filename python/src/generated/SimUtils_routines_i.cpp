@@ -1,16 +1,15 @@
 #include "pybmad/generated/SimUtils_routines_i.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_i(py::module &m) {
+void init_SimUtils_routines_i(nb::module_ &m) {
   m.def(
       "i_bessel",
       &SimUtils::i_bessel,
-      py::arg("m"),
-      py::arg("arg"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("m"),
+      nb::arg("arg"),
       R"""(Wrapper for Fortran routine i_bessel
 
 Parameters
@@ -30,9 +29,8 @@ i_bes : float
   m.def(
       "i_bessel_extended",
       &SimUtils::i_bessel_extended,
-      py::arg("m"),
-      py::arg("arg"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("m"),
+      nb::arg("arg"),
       R"""(Wrapper for Fortran routine i_bessel_extended
 
 Parameters
@@ -52,11 +50,10 @@ i_bes : complex
   m.def(
       "increment_file_number",
       &SimUtils::increment_file_number,
-      py::arg("file_name"),
-      py::arg("digits"),
-      py::arg("number"),
-      py::arg("cnumber"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("digits"),
+      nb::arg("number"),
+      nb::arg("cnumber"),
       R"""(Wrapper for Fortran routine increment_file_number
 
 Parameters
@@ -73,9 +70,8 @@ cnumber : str
   m.def(
       "index_nocase",
       &SimUtils::index_nocase,
-      py::arg("string1"),
-      py::arg("string2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string1"),
+      nb::arg("string2"),
       R"""(Wrapper for Fortran routine index_nocase
 
 Parameters
@@ -92,14 +88,11 @@ indx : int
   m.def(
       "initfixedwindowls",
       &SimUtils::initfixedwindowls,
-      py::arg("N"),
-      py::arg("dt"),
-      py::arg("order"),
-      py::arg("der"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function initFixedWindowLS
-
-Initializes an instance of the fixed window least squares module.
+      nb::arg("N"),
+      nb::arg("dt"),
+      nb::arg("order"),
+      nb::arg("der"),
+      R"""(Initializes an instance of the fixed window least squares module.
 See module documentation (getf windowLS_mod) for use details.
 Any instance of windowLS created with this module should be destroyed with destFixedWindowLS.
 
@@ -121,16 +114,14 @@ der : int
   m.def(
       "initial_lmdif",
       &SimUtils::initial_lmdif,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine initial_lmdif
 )"""
   );
   m.def(
       "int_str",
       &SimUtils::int_str,
-      py::arg("int_"),
-      py::arg("width") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("int_"),
+      nb::arg("width") = nb::none(),
       R"""(Wrapper for Fortran routine int_str
 
 Parameters
@@ -145,14 +136,11 @@ str : str
   m.def(
       "interpolated_fft",
       &SimUtils::interpolated_fft,
-      py::arg("cdata"),
-      py::arg("calc_ok"),
-      py::arg("opt_dump_spectrum") = py::none(),
-      py::arg("opt_dump_index") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function interpolated_fft (cdata, calc_ok, opt_dump_spectrum, opt_dump_index) result (this_fft)
-
-Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
+      nb::arg("cdata"),
+      nb::arg("calc_ok"),
+      nb::arg("opt_dump_spectrum") = nb::none(),
+      nb::arg("opt_dump_index") = nb::none(),
+      R"""(Windows the complex data and used Numerical Recipes four1 to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 )"""
@@ -160,14 +148,11 @@ available.
   m.def(
       "interpolated_fft_gsl",
       &SimUtils::interpolated_fft_gsl,
-      py::arg("cdata"),
-      py::arg("calc_ok"),
-      py::arg("opt_dump_spectrum") = py::none(),
-      py::arg("opt_dump_index") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(function interpolated_fft_gsl
-
-Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
+      nb::arg("cdata"),
+      nb::arg("calc_ok"),
+      nb::arg("opt_dump_spectrum") = nb::none(),
+      nb::arg("opt_dump_index") = nb::none(),
+      R"""(Windows the complex data and uses a mixed-radix GSL routine to find the peak in the spectrum.
 The result is interpolated to improve the accuracy.  Hanning and Gaussian windowing are
 available.
 )"""
@@ -175,9 +160,8 @@ available.
   m.def(
       "is_alphabetic",
       &SimUtils::is_alphabetic,
-      py::arg("string"),
-      py::arg("valid_chars") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("valid_chars") = nb::none(),
       R"""(no longer exists
 function inverse_prob (val) result (prob)
   import
@@ -190,9 +174,8 @@ end function
   m.def(
       "is_decreasing_sequence",
       &SimUtils::is_decreasing_sequence,
-      py::arg("array"),
-      py::arg("strict") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("array"),
+      nb::arg("strict") = nb::none(),
       R"""(Wrapper for Fortran routine is_decreasing_sequence
 
 Parameters
@@ -212,11 +195,8 @@ is_decreasing : bool
   m.def(
       "is_false",
       &SimUtils::is_false,
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function is_false (param) result (this_false)
-
-Routine to translate from a real number to a boolian True or False.
+      nb::arg("param"),
+      R"""(Routine to translate from a real number to a boolian True or False.
 Translation: 0 = False, nonzero = True
 
 Also see: is_true and int_logic
@@ -239,9 +219,8 @@ this_false : bool
   m.def(
       "is_increasing_sequence",
       &SimUtils::is_increasing_sequence,
-      py::arg("array"),
-      py::arg("strict") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("array"),
+      nb::arg("strict") = nb::none(),
       R"""(Wrapper for Fortran routine is_increasing_sequence
 
 Parameters
@@ -261,11 +240,10 @@ is_increasing : bool
   m.def(
       "is_integer",
       &SimUtils::is_integer,
-      py::arg("string"),
-      py::arg("int_") = py::none(),
-      py::arg("delims") = py::none(),
-      py::arg("ix_word") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("int_") = nb::none(),
+      nb::arg("delims") = nb::none(),
+      nb::arg("ix_word") = nb::none(),
       R"""(Wrapper for Fortran routine is_integer
 
 Parameters
@@ -284,9 +262,8 @@ valid : bool
   m.def(
       "is_logical",
       &SimUtils::is_logical,
-      py::arg("string"),
-      py::arg("ignore") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("ignore") = nb::none(),
       R"""(Wrapper for Fortran routine is_logical
 
 Parameters
@@ -303,10 +280,9 @@ valid : bool
   m.def(
       "is_real",
       &SimUtils::is_real,
-      py::arg("string"),
-      py::arg("ignore") = py::none(),
-      py::arg("real_num") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("ignore") = nb::none(),
+      nb::arg("real_num") = nb::none(),
       R"""(Wrapper for Fortran routine is_real
 
 Parameters
@@ -325,11 +301,8 @@ valid : bool
   m.def(
       "is_subatomic_species",
       &SimUtils::is_subatomic_species,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function is_subatomic_species(species) result (is_subatomic)
-
-Routine to return True if species argument corresponds to a subatomic particle.
+      nb::arg("species"),
+      R"""(Routine to return True if species argument corresponds to a subatomic particle.
 
 Parameters
 ----------
@@ -345,11 +318,8 @@ is_subatomic : bool
   m.def(
       "is_true",
       &SimUtils::is_true,
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function is_true (param) result (this_true)
-
-Routine to translate from a real number to a boolian True or False.
+      nb::arg("param"),
+      R"""(Routine to translate from a real number to a boolian True or False.
 Translation: 0 = False, nonzero = True
 
 Also see: is_false and int_logic

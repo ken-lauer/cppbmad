@@ -1,7 +1,7 @@
 #include "pybmad/generated/CppBmadTest_routines_t.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyTestCharacterScalar python_test_character_scalar(
@@ -86,32 +86,31 @@ PyTestRealScalar python_test_real_scalar(
   return py_result;
 }
 
-void init_CppBmadTest_routines_t(py::module &m) {
-  py::class_<CppBmadTest::TestBunchStructArray, std::unique_ptr<CppBmadTest::TestBunchStructArray>>(
+void init_CppBmadTest_routines_t(nb::module_ &m) {
+  nb::class_<CppBmadTest::TestBunchStructArray>(
       m,
       "TestBunchStructArray",
       "test_bunch_struct_array return type"
   )
-      .def_readonly("arr_out", &CppBmadTest::TestBunchStructArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestBunchStructArray::opt_status)
+      .def_ro("arr_out", &CppBmadTest::TestBunchStructArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestBunchStructArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestBunchStructArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestBunchStructArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestBunchStructArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_bunch_struct_array",
       &CppBmadTest::test_bunch_struct_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_bunch_struct_array
 
 Parameters
@@ -131,33 +130,40 @@ arr_out : 1D array of BunchStruct
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<
-      CppBmadTest::TestBunchStructScalar,
-      std::unique_ptr<CppBmadTest::TestBunchStructScalar>>(
+  nb::class_<CppBmadTest::TestBunchStructScalar>(
       m,
       "TestBunchStructScalar",
       "test_bunch_struct_scalar return type"
   )
-      .def_readonly("val_out", &CppBmadTest::TestBunchStructScalar::val_out)
-      .def_readonly("opt_status", &CppBmadTest::TestBunchStructScalar::opt_status)
+      .def_ro("val_out", &CppBmadTest::TestBunchStructScalar::val_out)
+      .def_ro("opt_status", &CppBmadTest::TestBunchStructScalar::opt_status)
       .def("__len__", [](const CppBmadTest::TestBunchStructScalar &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestBunchStructScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestBunchStructScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_bunch_struct_scalar",
-      &CppBmadTest::test_bunch_struct_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](BunchStruct &val_in,
+         BunchStruct &val_inout,
+         BunchStruct *val_in_opt,
+         BunchStruct *val_inout_opt) {
+        auto fn = static_cast<
+            CppBmadTest::
+                TestBunchStructScalar (*)(BunchStruct &, BunchStruct &, optional_ref<BunchStruct>, optional_ref<BunchStruct>)>(
+            &CppBmadTest::test_bunch_struct_scalar
+        );
+        return fn(val_in, val_inout, ptr_to_opt_ref(val_in_opt), ptr_to_opt_ref(val_inout_opt));
+      },
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_bunch_struct_scalar
 
 Parameters
@@ -177,31 +183,40 @@ val_out : BunchStruct
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<CppBmadTest::TestCharacterArray, std::unique_ptr<CppBmadTest::TestCharacterArray>>(
+  nb::class_<CppBmadTest::TestCharacterArray>(
       m,
       "TestCharacterArray",
       "test_character_array return type"
   )
-      .def_readonly("arr_out", &CppBmadTest::TestCharacterArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestCharacterArray::opt_status)
+      .def_ro("arr_out", &CppBmadTest::TestCharacterArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestCharacterArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestCharacterArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestCharacterArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestCharacterArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_character_array",
-      &CppBmadTest::test_character_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](CharacterAlloc1D &arr_in,
+         CharacterAlloc1D &arr_inout,
+         CharacterAlloc1D *arr_in_opt,
+         CharacterAlloc1D *arr_inout_opt) {
+        auto fn = static_cast<
+            CppBmadTest::
+                TestCharacterArray (*)(CharacterAlloc1D &, CharacterAlloc1D &, optional_ref<CharacterAlloc1D>, optional_ref<CharacterAlloc1D>)>(
+            &CppBmadTest::test_character_array
+        );
+        return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
+      },
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_character_array
 
 Parameters
@@ -221,37 +236,32 @@ arr_out : 1D array of str
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestCharacterScalar, std::unique_ptr<PyTestCharacterScalar>>(
-      m,
-      "TestCharacterScalar",
-      "test_character_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestCharacterScalar::val_out)
-      .def_readonly("opt_status", &PyTestCharacterScalar::opt_status)
-      .def_readonly("val_inout", &PyTestCharacterScalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestCharacterScalar::val_inout_opt)
+  nb::class_<PyTestCharacterScalar>(m, "TestCharacterScalar", "test_character_scalar return type")
+      .def_ro("val_out", &PyTestCharacterScalar::val_out)
+      .def_ro("opt_status", &PyTestCharacterScalar::opt_status)
+      .def_ro("val_inout", &PyTestCharacterScalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestCharacterScalar::val_inout_opt)
       .def("__len__", [](const PyTestCharacterScalar &) { return 4; })
-      .def("__getitem__", [](const PyTestCharacterScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestCharacterScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_character_scalar",
       &python_test_character_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_character_scalar
 
 Parameters
@@ -275,31 +285,26 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : str, optional
 )"""
   );
-  py::class_<CppBmadTest::TestComplexArray, std::unique_ptr<CppBmadTest::TestComplexArray>>(
-      m,
-      "TestComplexArray",
-      "test_complex_array return type"
-  )
-      .def_readonly("arr_out", &CppBmadTest::TestComplexArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestComplexArray::opt_status)
+  nb::class_<CppBmadTest::TestComplexArray>(m, "TestComplexArray", "test_complex_array return type")
+      .def_ro("arr_out", &CppBmadTest::TestComplexArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestComplexArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestComplexArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestComplexArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestComplexArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_complex_array",
       &CppBmadTest::test_complex_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_complex_array
 
 Parameters
@@ -319,37 +324,32 @@ arr_out : 1D array of complex
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestComplexScalar, std::unique_ptr<PyTestComplexScalar>>(
-      m,
-      "TestComplexScalar",
-      "test_complex_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestComplexScalar::val_out)
-      .def_readonly("opt_status", &PyTestComplexScalar::opt_status)
-      .def_readonly("val_inout", &PyTestComplexScalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestComplexScalar::val_inout_opt)
+  nb::class_<PyTestComplexScalar>(m, "TestComplexScalar", "test_complex_scalar return type")
+      .def_ro("val_out", &PyTestComplexScalar::val_out)
+      .def_ro("opt_status", &PyTestComplexScalar::opt_status)
+      .def_ro("val_inout", &PyTestComplexScalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestComplexScalar::val_inout_opt)
       .def("__len__", [](const PyTestComplexScalar &) { return 4; })
-      .def("__getitem__", [](const PyTestComplexScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestComplexScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_complex_scalar",
       &python_test_complex_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_complex_scalar
 
 Parameters
@@ -373,31 +373,30 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : complex, optional
 )"""
   );
-  py::class_<CppBmadTest::TestInteger8Array, std::unique_ptr<CppBmadTest::TestInteger8Array>>(
+  nb::class_<CppBmadTest::TestInteger8Array>(
       m,
       "TestInteger8Array",
       "test_integer8_array return type"
   )
-      .def_readonly("arr_out", &CppBmadTest::TestInteger8Array::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestInteger8Array::opt_status)
+      .def_ro("arr_out", &CppBmadTest::TestInteger8Array::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestInteger8Array::opt_status)
       .def("__len__", [](const CppBmadTest::TestInteger8Array &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestInteger8Array &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestInteger8Array &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_integer8_array",
       &CppBmadTest::test_integer8_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_integer8_array
 
 Parameters
@@ -417,37 +416,32 @@ arr_out : 1D array of int
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestInteger8Scalar, std::unique_ptr<PyTestInteger8Scalar>>(
-      m,
-      "TestInteger8Scalar",
-      "test_integer8_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestInteger8Scalar::val_out)
-      .def_readonly("opt_status", &PyTestInteger8Scalar::opt_status)
-      .def_readonly("val_inout", &PyTestInteger8Scalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestInteger8Scalar::val_inout_opt)
+  nb::class_<PyTestInteger8Scalar>(m, "TestInteger8Scalar", "test_integer8_scalar return type")
+      .def_ro("val_out", &PyTestInteger8Scalar::val_out)
+      .def_ro("opt_status", &PyTestInteger8Scalar::opt_status)
+      .def_ro("val_inout", &PyTestInteger8Scalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestInteger8Scalar::val_inout_opt)
       .def("__len__", [](const PyTestInteger8Scalar &) { return 4; })
-      .def("__getitem__", [](const PyTestInteger8Scalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestInteger8Scalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_integer8_scalar",
       &python_test_integer8_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_integer8_scalar
 
 Parameters
@@ -471,31 +465,26 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : int, optional
 )"""
   );
-  py::class_<CppBmadTest::TestIntegerArray, std::unique_ptr<CppBmadTest::TestIntegerArray>>(
-      m,
-      "TestIntegerArray",
-      "test_integer_array return type"
-  )
-      .def_readonly("arr_out", &CppBmadTest::TestIntegerArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestIntegerArray::opt_status)
+  nb::class_<CppBmadTest::TestIntegerArray>(m, "TestIntegerArray", "test_integer_array return type")
+      .def_ro("arr_out", &CppBmadTest::TestIntegerArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestIntegerArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestIntegerArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestIntegerArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestIntegerArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_integer_array",
       &CppBmadTest::test_integer_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_integer_array
 
 Parameters
@@ -515,37 +504,32 @@ arr_out : 1D array of int
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestIntegerScalar, std::unique_ptr<PyTestIntegerScalar>>(
-      m,
-      "TestIntegerScalar",
-      "test_integer_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestIntegerScalar::val_out)
-      .def_readonly("opt_status", &PyTestIntegerScalar::opt_status)
-      .def_readonly("val_inout", &PyTestIntegerScalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestIntegerScalar::val_inout_opt)
+  nb::class_<PyTestIntegerScalar>(m, "TestIntegerScalar", "test_integer_scalar return type")
+      .def_ro("val_out", &PyTestIntegerScalar::val_out)
+      .def_ro("opt_status", &PyTestIntegerScalar::opt_status)
+      .def_ro("val_inout", &PyTestIntegerScalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestIntegerScalar::val_inout_opt)
       .def("__len__", [](const PyTestIntegerScalar &) { return 4; })
-      .def("__getitem__", [](const PyTestIntegerScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestIntegerScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_integer_scalar",
       &python_test_integer_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_integer_scalar
 
 Parameters
@@ -569,31 +553,36 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : int, optional
 )"""
   );
-  py::class_<CppBmadTest::TestLogicalArray, std::unique_ptr<CppBmadTest::TestLogicalArray>>(
-      m,
-      "TestLogicalArray",
-      "test_logical_array return type"
-  )
-      .def_readonly("arr_out", &CppBmadTest::TestLogicalArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestLogicalArray::opt_status)
+  nb::class_<CppBmadTest::TestLogicalArray>(m, "TestLogicalArray", "test_logical_array return type")
+      .def_ro("arr_out", &CppBmadTest::TestLogicalArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestLogicalArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestLogicalArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestLogicalArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestLogicalArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_logical_array",
-      &CppBmadTest::test_logical_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](BoolAlloc1D &arr_in,
+         BoolAlloc1D &arr_inout,
+         BoolAlloc1D *arr_in_opt,
+         BoolAlloc1D *arr_inout_opt) {
+        auto fn = static_cast<
+            CppBmadTest::
+                TestLogicalArray (*)(BoolAlloc1D &, BoolAlloc1D &, optional_ref<BoolAlloc1D>, optional_ref<BoolAlloc1D>)>(
+            &CppBmadTest::test_logical_array
+        );
+        return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
+      },
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_logical_array
 
 Parameters
@@ -613,37 +602,32 @@ arr_out : 1D array of bool
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestLogicalScalar, std::unique_ptr<PyTestLogicalScalar>>(
-      m,
-      "TestLogicalScalar",
-      "test_logical_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestLogicalScalar::val_out)
-      .def_readonly("opt_status", &PyTestLogicalScalar::opt_status)
-      .def_readonly("val_inout", &PyTestLogicalScalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestLogicalScalar::val_inout_opt)
+  nb::class_<PyTestLogicalScalar>(m, "TestLogicalScalar", "test_logical_scalar return type")
+      .def_ro("val_out", &PyTestLogicalScalar::val_out)
+      .def_ro("opt_status", &PyTestLogicalScalar::opt_status)
+      .def_ro("val_inout", &PyTestLogicalScalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestLogicalScalar::val_inout_opt)
       .def("__len__", [](const PyTestLogicalScalar &) { return 4; })
-      .def("__getitem__", [](const PyTestLogicalScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestLogicalScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_logical_scalar",
       &python_test_logical_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_logical_scalar
 
 Parameters
@@ -667,31 +651,36 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : bool, optional
 )"""
   );
-  py::class_<CppBmadTest::TestReal16Array, std::unique_ptr<CppBmadTest::TestReal16Array>>(
-      m,
-      "TestReal16Array",
-      "test_real16_array return type"
-  )
-      .def_readonly("arr_out", &CppBmadTest::TestReal16Array::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestReal16Array::opt_status)
+  nb::class_<CppBmadTest::TestReal16Array>(m, "TestReal16Array", "test_real16_array return type")
+      .def_ro("arr_out", &CppBmadTest::TestReal16Array::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestReal16Array::opt_status)
       .def("__len__", [](const CppBmadTest::TestReal16Array &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestReal16Array &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestReal16Array &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_real16_array",
-      &CppBmadTest::test_real16_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](Real16Alloc1D &arr_in,
+         Real16Alloc1D &arr_inout,
+         Real16Alloc1D *arr_in_opt,
+         Real16Alloc1D *arr_inout_opt) {
+        auto fn = static_cast<
+            CppBmadTest::
+                TestReal16Array (*)(Real16Alloc1D &, Real16Alloc1D &, optional_ref<Real16Alloc1D>, optional_ref<Real16Alloc1D>)>(
+            &CppBmadTest::test_real16_array
+        );
+        return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
+      },
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_real16_array
 
 Parameters
@@ -711,37 +700,32 @@ arr_out : 1D array of float
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestReal16Scalar, std::unique_ptr<PyTestReal16Scalar>>(
-      m,
-      "TestReal16Scalar",
-      "test_real16_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestReal16Scalar::val_out)
-      .def_readonly("opt_status", &PyTestReal16Scalar::opt_status)
-      .def_readonly("val_inout", &PyTestReal16Scalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestReal16Scalar::val_inout_opt)
+  nb::class_<PyTestReal16Scalar>(m, "TestReal16Scalar", "test_real16_scalar return type")
+      .def_ro("val_out", &PyTestReal16Scalar::val_out)
+      .def_ro("opt_status", &PyTestReal16Scalar::opt_status)
+      .def_ro("val_inout", &PyTestReal16Scalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestReal16Scalar::val_inout_opt)
       .def("__len__", [](const PyTestReal16Scalar &) { return 4; })
-      .def("__getitem__", [](const PyTestReal16Scalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestReal16Scalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_real16_scalar",
       &python_test_real16_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_real16_scalar
 
 Parameters
@@ -765,31 +749,26 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : float, optional
 )"""
   );
-  py::class_<CppBmadTest::TestRealArray, std::unique_ptr<CppBmadTest::TestRealArray>>(
-      m,
-      "TestRealArray",
-      "test_real_array return type"
-  )
-      .def_readonly("arr_out", &CppBmadTest::TestRealArray::arr_out)
-      .def_readonly("opt_status", &CppBmadTest::TestRealArray::opt_status)
+  nb::class_<CppBmadTest::TestRealArray>(m, "TestRealArray", "test_real_array return type")
+      .def_ro("arr_out", &CppBmadTest::TestRealArray::arr_out)
+      .def_ro("opt_status", &CppBmadTest::TestRealArray::opt_status)
       .def("__len__", [](const CppBmadTest::TestRealArray &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestRealArray &s, int i) -> py::object {
+      .def("__getitem__", [](const CppBmadTest::TestRealArray &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.arr_out);
+          return nb::cast(s.arr_out);
         if (i == 1)
-          return py::cast(s.opt_status);
-        throw py::index_error();
+          return nb::cast(s.opt_status);
+        throw nb::index_error();
       });
   m.def(
       "test_real_array",
       &CppBmadTest::test_real_array,
-      py::arg("arr_in"),
-      py::arg("arr_inout"),
-      py::arg("arr_in_opt") = py::none(),
-      py::arg("arr_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr_in"),
+      nb::arg("arr_inout"),
+      nb::arg("arr_in_opt") = nb::none(),
+      nb::arg("arr_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_real_array
 
 Parameters
@@ -809,37 +788,32 @@ arr_out : 1D array of float
 opt_status : 1D array of int (shape: 2)
 )"""
   );
-  py::class_<PyTestRealScalar, std::unique_ptr<PyTestRealScalar>>(
-      m,
-      "TestRealScalar",
-      "test_real_scalar return type"
-  )
-      .def_readonly("val_out", &PyTestRealScalar::val_out)
-      .def_readonly("opt_status", &PyTestRealScalar::opt_status)
-      .def_readonly("val_inout", &PyTestRealScalar::val_inout)
-      .def_readonly("val_inout_opt", &PyTestRealScalar::val_inout_opt)
+  nb::class_<PyTestRealScalar>(m, "TestRealScalar", "test_real_scalar return type")
+      .def_ro("val_out", &PyTestRealScalar::val_out)
+      .def_ro("opt_status", &PyTestRealScalar::opt_status)
+      .def_ro("val_inout", &PyTestRealScalar::val_inout)
+      .def_ro("val_inout_opt", &PyTestRealScalar::val_inout_opt)
       .def("__len__", [](const PyTestRealScalar &) { return 4; })
-      .def("__getitem__", [](const PyTestRealScalar &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTestRealScalar &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.val_out);
+          return nb::cast(s.val_out);
         if (i == 1)
-          return py::cast(s.opt_status);
+          return nb::cast(s.opt_status);
         if (i == 2)
-          return py::cast(s.val_inout);
+          return nb::cast(s.val_inout);
         if (i == 3)
-          return py::cast(s.val_inout_opt);
-        throw py::index_error();
+          return nb::cast(s.val_inout_opt);
+        throw nb::index_error();
       });
   m.def(
       "test_real_scalar",
       &python_test_real_scalar,
-      py::arg("val_in"),
-      py::arg("val_inout"),
-      py::arg("val_in_opt") = py::none(),
-      py::arg("val_inout_opt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("val_in"),
+      nb::arg("val_inout"),
+      nb::arg("val_in_opt") = nb::none(),
+      nb::arg("val_inout_opt") = nb::none(),
       R"""(Wrapper for Fortran routine test_real_scalar
 
 Parameters

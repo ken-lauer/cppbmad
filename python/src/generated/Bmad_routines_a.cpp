@@ -1,45 +1,38 @@
 #include "pybmad/generated/Bmad_routines_a.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_a(py::module &m) {
-  py::class_<Bmad::AbMultipoleKick, std::unique_ptr<Bmad::AbMultipoleKick>>(
-      m,
-      "AbMultipoleKick",
-      "ab_multipole_kick return type"
-  )
-      .def_readonly("kx", &Bmad::AbMultipoleKick::kx)
-      .def_readonly("ky", &Bmad::AbMultipoleKick::ky)
-      .def_readonly("dk", &Bmad::AbMultipoleKick::dk)
+void init_Bmad_routines_a(nb::module_ &m) {
+  nb::class_<Bmad::AbMultipoleKick>(m, "AbMultipoleKick", "ab_multipole_kick return type")
+      .def_ro("kx", &Bmad::AbMultipoleKick::kx)
+      .def_ro("ky", &Bmad::AbMultipoleKick::ky)
+      .def_ro("dk", &Bmad::AbMultipoleKick::dk)
       .def("__len__", [](const Bmad::AbMultipoleKick &) { return 3; })
-      .def("__getitem__", [](const Bmad::AbMultipoleKick &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AbMultipoleKick &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.kx);
+          return nb::cast(s.kx);
         if (i == 1)
-          return py::cast(s.ky);
+          return nb::cast(s.ky);
         if (i == 2)
-          return py::cast(s.dk);
-        throw py::index_error();
+          return nb::cast(s.dk);
+        throw nb::index_error();
       });
   m.def(
       "ab_multipole_kick",
       &Bmad::ab_multipole_kick,
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("n"),
-      py::arg("ref_species"),
-      py::arg("ele_orientation"),
-      py::arg("coord"),
-      py::arg("pole_type") = py::none(),
-      py::arg("scale") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ab_multipole_kick (a, b, n, ref_species, ele_orientation, coord, kx, ky, dk, pole_type, scale)
-
-Subroutine to put in the kick due to an ab_multipole.
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("n"),
+      nb::arg("ref_species"),
+      nb::arg("ele_orientation"),
+      nb::arg("coord"),
+      nb::arg("pole_type") = nb::none(),
+      nb::arg("scale") = nb::none(),
+      R"""(Subroutine to put in the kick due to an ab_multipole.
 
 Parameters
 ----------
@@ -84,19 +77,16 @@ dk : 2D array of float (shape: 2,2), optional
   m.def(
       "ab_multipole_kicks",
       &Bmad::ab_multipole_kicks,
-      py::arg("an"),
-      py::arg("bn"),
-      py::arg("ix_pole_max"),
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("pole_type") = py::none(),
-      py::arg("scale") = py::none(),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ab_multipole_kicks (an, bn, ix_pole_max, ele, orbit, pole_type, scale, mat6, make_matrix)
-
-Routine to put in the kick due to ab_multipole components in an element.
+      nb::arg("an"),
+      nb::arg("bn"),
+      nb::arg("ix_pole_max"),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("pole_type") = nb::none(),
+      nb::arg("scale") = nb::none(),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Routine to put in the kick due to ab_multipole components in an element.
 The kick will be corrected for the orientation of the element and the particle direction of travel.
 Any difference between element p0c and orbit%p0c will be taken into account.
 
@@ -140,12 +130,9 @@ make_matrix : bool, optional
   m.def(
       "absolute_photon_position",
       &Bmad::absolute_photon_position,
-      py::arg("e_orb"),
-      py::arg("photon_orb"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine absolute_photon_position (e_orb, photon_orb)
-
-Routine to calculate the photon phase space coordinates given:
+      nb::arg("e_orb"),
+      nb::arg("photon_orb"),
+      R"""(Routine to calculate the photon phase space coordinates given:
   1) The phase space coords of the emitting charged particle and
   2) The photon phase space coords relative to the emitting particle.
      The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
@@ -165,8 +152,7 @@ photon_orb : CoordStruct
   m.def(
       "absolute_time_tracking",
       &Bmad::absolute_time_tracking,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine absolute_time_tracking
 
 Parameters
@@ -183,10 +169,9 @@ is_abs_time : bool
   m.def(
       "ac_kicker_amp",
       &Bmad::ac_kicker_amp,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("true_time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("true_time") = nb::none(),
       R"""(Wrapper for Fortran routine ac_kicker_amp
 
 Parameters
@@ -207,33 +192,26 @@ ac_amp : float
     Amplitude. Will be set to 1 if the element is not an ac_kicker.
 )"""
   );
-  py::class_<Bmad::ActionToXyz, std::unique_ptr<Bmad::ActionToXyz>>(
-      m,
-      "ActionToXyz",
-      "action_to_xyz return type"
-  )
-      .def_readonly("X", &Bmad::ActionToXyz::X)
-      .def_readonly("err_flag", &Bmad::ActionToXyz::err_flag)
+  nb::class_<Bmad::ActionToXyz>(m, "ActionToXyz", "action_to_xyz return type")
+      .def_ro("X", &Bmad::ActionToXyz::X)
+      .def_ro("err_flag", &Bmad::ActionToXyz::err_flag)
       .def("__len__", [](const Bmad::ActionToXyz &) { return 2; })
-      .def("__getitem__", [](const Bmad::ActionToXyz &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ActionToXyz &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.X);
+          return nb::cast(s.X);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "action_to_xyz",
       &Bmad::action_to_xyz,
-      py::arg("ring"),
-      py::arg("ix"),
-      py::arg("J"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine action_to_xyz(ring, ix, J, X, err_flag)
-
-Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
+      nb::arg("ring"),
+      nb::arg("ix"),
+      nb::arg("J"),
+      R"""(Given the normal mode invariants and phases J of a particle, returns the canonical coordinates.
 
 The J vector looks like:
 J = (sqrt(2Ja)cos(phia), -sqrt(2Ja)sin(phia), sqrt(2Jb)cos(phib), -sqrt(2Jb)sin(phib), sqrt(2Jc)cos(phic), -sqrt(2Jc)sin(phic))
@@ -265,13 +243,12 @@ err_flag : bool
   m.def(
       "add_lattice_control_structs",
       &Bmad::add_lattice_control_structs,
-      py::arg("ele"),
-      py::arg("n_add_slave") = py::none(),
-      py::arg("n_add_lord") = py::none(),
-      py::arg("n_add_slave_field") = py::none(),
-      py::arg("n_add_lord_field") = py::none(),
-      py::arg("add_at_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("n_add_slave") = nb::none(),
+      nb::arg("n_add_lord") = nb::none(),
+      nb::arg("n_add_slave_field") = nb::none(),
+      nb::arg("n_add_lord_field") = nb::none(),
+      nb::arg("add_at_end") = nb::none(),
       R"""(Wrapper for Fortran routine add_lattice_control_structs
 
 Parameters
@@ -296,37 +273,31 @@ add_at_end : bool, optional
     array. If False then new space is added at the front of the array. Default is True.
 )"""
   );
-  py::class_<Bmad::AddSuperimpose, std::unique_ptr<Bmad::AddSuperimpose>>(
-      m,
-      "AddSuperimpose",
-      "add_superimpose return type"
-  )
-      .def_readonly("err_flag", &Bmad::AddSuperimpose::err_flag)
-      .def_readonly("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
+  nb::class_<Bmad::AddSuperimpose>(m, "AddSuperimpose", "add_superimpose return type")
+      .def_ro("err_flag", &Bmad::AddSuperimpose::err_flag)
+      .def_ro("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
       .def("__len__", [](const Bmad::AddSuperimpose &) { return 2; })
-      .def("__getitem__", [](const Bmad::AddSuperimpose &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AddSuperimpose &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.super_ele_out);
-        throw py::index_error();
+          return nb::cast(s.super_ele_out);
+        throw nb::index_error();
       });
   m.def(
       "add_superimpose",
       &Bmad::add_superimpose,
-      py::arg("lat"),
-      py::arg("super_ele_in"),
-      py::arg("ix_branch"),
-      py::arg("save_null_drift") = py::none(),
-      py::arg("create_jumbo_slave") = py::none(),
-      py::arg("ix_insert") = py::none(),
-      py::arg("mangle_slave_names") = py::none(),
-      py::arg("wrap") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine add_superimpose (lat, super_ele_in, ix_branch, err_flag, super_ele_out,
-               save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
+      nb::arg("lat"),
+      nb::arg("super_ele_in"),
+      nb::arg("ix_branch"),
+      nb::arg("save_null_drift") = nb::none(),
+      nb::arg("create_jumbo_slave") = nb::none(),
+      nb::arg("ix_insert") = nb::none(),
+      nb::arg("mangle_slave_names") = nb::none(),
+      nb::arg("wrap") = nb::none(),
+      R"""(               save_null_drift, create_jumbo_slave, ix_insert, mangle_slave_names, wrap)
 
 Routine to superimpose an element. If the element can be inserted
 into the lat without making a super_lord element then this will be done.
@@ -389,11 +360,16 @@ super_ele_out : EleStruct, optional
   );
   m.def(
       "add_this_multipass",
-      &Bmad::add_this_multipass,
-      py::arg("lat"),
-      py::arg("m_slaves"),
-      py::arg("lord_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct &lat, LatEleLocStructArray1D m_slaves, EleStruct *lord_in) {
+        auto fn =
+            static_cast<void (*)(LatStruct &, LatEleLocStructArray1D, optional_ref<EleStruct>)>(
+                &Bmad::add_this_multipass
+            );
+        return fn(lat, m_slaves, ptr_to_opt_ref(lord_in));
+      },
+      nb::arg("lat"),
+      nb::arg("m_slaves"),
+      nb::arg("lord_in") = nb::none(),
       R"""(Wrapper for Fortran routine add_this_multipass
 
 Parameters
@@ -408,14 +384,13 @@ lord_in : EleStruct, optional
   m.def(
       "add_this_name_to_list",
       &Bmad::add_this_name_to_list,
-      py::arg("ele"),
-      py::arg("names"),
-      py::arg("an_indexx"),
-      py::arg("n_names"),
-      py::arg("ix_match"),
-      py::arg("has_been_added"),
-      py::arg("named_eles"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("names"),
+      nb::arg("an_indexx"),
+      nb::arg("n_names"),
+      nb::arg("ix_match"),
+      nb::arg("has_been_added"),
+      nb::arg("named_eles"),
       R"""(Wrapper for Fortran routine add_this_name_to_list
 
 Parameters
@@ -438,37 +413,30 @@ named_eles : 1D array of ElePointerStruct
   m.def(
       "add_this_taylor_term",
       &Bmad::add_this_taylor_term,
-      py::arg("ele"),
-      py::arg("i_out"),
-      py::arg("coef"),
-      py::arg("expn"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine add_this_taylor_term (ele, i_out, coef, expn)
-
-Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
+      nb::arg("ele"),
+      nb::arg("i_out"),
+      nb::arg("coef"),
+      nb::arg("expn"),
+      R"""(Subroutine used by bmad_parser and bmad_parser2 to parse the input file.
 This subroutine is not intended for general use.
 )"""
   );
   m.def(
       "adjust_super_slave_names",
       &Bmad::adjust_super_slave_names,
-      py::arg("lat"),
-      py::arg("ix1_lord"),
-      py::arg("ix2_lord"),
-      py::arg("first_time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine adjust_super_slave_names (lat, ix1_lord, ix2_lord, first_time)
-
-Routine to adjust the names of the slaves.
+      nb::arg("lat"),
+      nb::arg("ix1_lord"),
+      nb::arg("ix2_lord"),
+      nb::arg("first_time") = nb::none(),
+      R"""(Routine to adjust the names of the slaves.
 This routine is used by add_superimpose and is not meant for general use.
 )"""
   );
   m.def(
       "allocate_branch_array",
       &Bmad::allocate_branch_array,
-      py::arg("lat"),
-      py::arg("upper_bound"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("upper_bound"),
       R"""(Wrapper for Fortran routine allocate_branch_array
 
 Parameters
@@ -482,9 +450,8 @@ upper_bound : int
   m.def(
       "allocate_grid_field",
       &Bmad::allocate_grid_field,
-      py::arg("g_field"),
-      py::arg("n_gf"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("g_field"),
+      nb::arg("n_gf"),
       R"""(Wrapper for Fortran routine allocate_grid_field
 
 Parameters
@@ -497,11 +464,10 @@ n_gf : int
   m.def(
       "allocate_lat_ele_array",
       &Bmad::allocate_lat_ele_array,
-      py::arg("lat"),
-      py::arg("upper_bound") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("do_ramper_slave_setup") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("upper_bound") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("do_ramper_slave_setup") = nb::none(),
       R"""(Wrapper for Fortran routine allocate_lat_ele_array
 
 Parameters
@@ -523,9 +489,8 @@ do_ramper_slave_setup : bool, optional
   m.def(
       "angle_between_polars",
       &Bmad::angle_between_polars,
-      py::arg("polar1"),
-      py::arg("polar2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("polar1"),
+      nb::arg("polar2"),
       R"""(Wrapper for Fortran routine angle_between_polars
 
 Parameters
@@ -545,9 +510,8 @@ angle : float
   m.def(
       "angle_to_canonical_coords",
       &Bmad::angle_to_canonical_coords,
-      py::arg("orbit"),
-      py::arg("coord_type") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("coord_type") = nb::none(),
       R"""(Wrapper for Fortran routine angle_to_canonical_coords
 
 Parameters
@@ -565,11 +529,8 @@ coord_type : str, optional
   m.def(
       "aperture_bookkeeper",
       &Bmad::aperture_bookkeeper,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine aperture_bookkeeper (ele)
-
-Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
+      nb::arg("ele"),
+      R"""(Routine to calculate aperture limits when ele%attribute_type is set to auto_aperture$
 
 Parameters
 ----------
@@ -582,8 +543,7 @@ ele : EleStruct
   m.def(
       "apply_all_rampers",
       &Bmad::apply_all_rampers,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine apply_all_rampers
 
 Parameters
@@ -602,12 +562,11 @@ err_flag : bool
   m.def(
       "apply_energy_kick",
       &Bmad::apply_energy_kick,
-      py::arg("dE"),
-      py::arg("orbit"),
-      py::arg("ddE_dr"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("dE"),
+      nb::arg("orbit"),
+      nb::arg("ddE_dr"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine apply_energy_kick
 
 Parameters
@@ -635,11 +594,8 @@ make_matrix : bool, optional
   m.def(
       "apply_patch_to_ptc_fibre",
       &Bmad::apply_patch_to_ptc_fibre,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine apply_patch_to_ptc_fibre (ele)
-
-Routine to take the patch parameters from a Bmad patch element and
+      nb::arg("ele"),
+      R"""(Routine to take the patch parameters from a Bmad patch element and
 transfer them to the associated PTC fibre.
 
 Parameters
@@ -651,8 +607,7 @@ ele : EleStruct
   m.def(
       "apply_rampers_to_slave",
       &Bmad::apply_rampers_to_slave,
-      py::arg("slave"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("slave"),
       R"""(Wrapper for Fortran routine apply_rampers_to_slave
 
 Parameters
@@ -669,9 +624,8 @@ err_flag : bool
   m.def(
       "array_re_str",
       &Bmad::array_re_str,
-      py::arg("arr"),
-      py::arg("parens_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("arr"),
+      nb::arg("parens_in") = nb::none(),
       R"""(Wrapper for Fortran routine array_re_str
 
 Parameters
@@ -688,9 +642,8 @@ str_out : str
   m.def(
       "astra_max_field_reference",
       &Bmad::astra_max_field_reference,
-      py::arg("pt0"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("pt0"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine astra_max_field_reference
 
 Parameters
@@ -707,9 +660,8 @@ field_value : float
   m.def(
       "at_this_ele_end",
       &Bmad::at_this_ele_end,
-      py::arg("now_at"),
-      py::arg("where_at"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("now_at"),
+      nb::arg("where_at"),
       R"""(Wrapper for Fortran routine at_this_ele_end
 
 Parameters
@@ -730,9 +682,8 @@ is_at_this_end : bool
   m.def(
       "attribute_bookkeeper",
       &Bmad::attribute_bookkeeper,
-      py::arg("ele"),
-      py::arg("force_bookkeeping") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("force_bookkeeping") = nb::none(),
       R"""(Wrapper for Fortran routine attribute_bookkeeper
 
 Parameters
@@ -747,42 +698,35 @@ force_bookkeeping : bool, optional
     ele.bookkeeping_stat.attributes.
 )"""
   );
-  py::class_<Bmad::AttributeFree1, std::unique_ptr<Bmad::AttributeFree1>>(
-      m,
-      "AttributeFree1",
-      "attribute_free1 return type"
-  )
-      .def_readonly("why_not_free", &Bmad::AttributeFree1::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree1::free)
+  nb::class_<Bmad::AttributeFree1>(m, "AttributeFree1", "attribute_free1 return type")
+      .def_ro("why_not_free", &Bmad::AttributeFree1::why_not_free)
+      .def_ro("free", &Bmad::AttributeFree1::free)
       .def("__len__", [](const Bmad::AttributeFree1 &) { return 2; })
-      .def("__getitem__", [](const Bmad::AttributeFree1 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AttributeFree1 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.why_not_free);
+          return nb::cast(s.why_not_free);
         if (i == 1)
-          return py::cast(s.free);
-        throw py::index_error();
+          return nb::cast(s.free);
+        throw nb::index_error();
       });
   m.def(
       "attribute_free",
-      py::overload_cast<
+      nb::overload_cast<
           int,
           std::string,
           LatStruct &,
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_free),
-      py::arg("ix_ele"),
-      py::arg("attrib_name"),
-      py::arg("lat"),
-      py::arg("err_print_flag") = py::none(),
-      py::arg("except_overlay") = py::none(),
-      py::arg("dependent_attribs_free") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_free
-
-Overloaded function for:
+      nb::arg("ix_ele"),
+      nb::arg("attrib_name"),
+      nb::arg("lat"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("except_overlay") = nb::none(),
+      nb::arg("dependent_attribs_free") = nb::none(),
+      R"""(Overloaded function for:
   Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free2 (ele, attrib_name, err_print_flag,
@@ -835,40 +779,33 @@ why_not_free : int, optional
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )"""
   );
-  py::class_<Bmad::AttributeFree2, std::unique_ptr<Bmad::AttributeFree2>>(
-      m,
-      "AttributeFree2",
-      "attribute_free2 return type"
-  )
-      .def_readonly("why_not_free", &Bmad::AttributeFree2::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree2::free)
+  nb::class_<Bmad::AttributeFree2>(m, "AttributeFree2", "attribute_free2 return type")
+      .def_ro("why_not_free", &Bmad::AttributeFree2::why_not_free)
+      .def_ro("free", &Bmad::AttributeFree2::free)
       .def("__len__", [](const Bmad::AttributeFree2 &) { return 2; })
-      .def("__getitem__", [](const Bmad::AttributeFree2 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AttributeFree2 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.why_not_free);
+          return nb::cast(s.why_not_free);
         if (i == 1)
-          return py::cast(s.free);
-        throw py::index_error();
+          return nb::cast(s.free);
+        throw nb::index_error();
       });
   m.def(
       "attribute_free",
-      py::overload_cast<
+      nb::overload_cast<
           EleStruct &,
           std::string,
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_free),
-      py::arg("ele"),
-      py::arg("attrib_name"),
-      py::arg("err_print_flag") = py::none(),
-      py::arg("except_overlay") = py::none(),
-      py::arg("dependent_attribs_free") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_free
-
-Overloaded function for:
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("except_overlay") = nb::none(),
+      nb::arg("dependent_attribs_free") = nb::none(),
+      R"""(Overloaded function for:
   Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free2 (ele, attrib_name, err_print_flag,
@@ -918,26 +855,22 @@ why_not_free : int, optional
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )"""
   );
-  py::class_<Bmad::AttributeFree3, std::unique_ptr<Bmad::AttributeFree3>>(
-      m,
-      "AttributeFree3",
-      "attribute_free3 return type"
-  )
-      .def_readonly("why_not_free", &Bmad::AttributeFree3::why_not_free)
-      .def_readonly("free", &Bmad::AttributeFree3::free)
+  nb::class_<Bmad::AttributeFree3>(m, "AttributeFree3", "attribute_free3 return type")
+      .def_ro("why_not_free", &Bmad::AttributeFree3::why_not_free)
+      .def_ro("free", &Bmad::AttributeFree3::free)
       .def("__len__", [](const Bmad::AttributeFree3 &) { return 2; })
-      .def("__getitem__", [](const Bmad::AttributeFree3 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AttributeFree3 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.why_not_free);
+          return nb::cast(s.why_not_free);
         if (i == 1)
-          return py::cast(s.free);
-        throw py::index_error();
+          return nb::cast(s.free);
+        throw nb::index_error();
       });
   m.def(
       "attribute_free",
-      py::overload_cast<
+      nb::overload_cast<
           int,
           int,
           std::string,
@@ -945,17 +878,14 @@ why_not_free : int, optional
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::attribute_free),
-      py::arg("ix_ele"),
-      py::arg("ix_branch"),
-      py::arg("attrib_name"),
-      py::arg("lat"),
-      py::arg("err_print_flag") = py::none(),
-      py::arg("except_overlay") = py::none(),
-      py::arg("dependent_attribs_free") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_free
-
-Overloaded function for:
+      nb::arg("ix_ele"),
+      nb::arg("ix_branch"),
+      nb::arg("attrib_name"),
+      nb::arg("lat"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("except_overlay") = nb::none(),
+      nb::arg("dependent_attribs_free") = nb::none(),
+      R"""(Overloaded function for:
   Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free2 (ele, attrib_name, err_print_flag,
@@ -1011,36 +941,29 @@ why_not_free : int, optional
     element's super_lord. multipass_slave$         -> Attribute is controlled by element's multipass_lord.
 )"""
   );
-  py::class_<Bmad::AttributeIndex1, std::unique_ptr<Bmad::AttributeIndex1>>(
-      m,
-      "AttributeIndex1",
-      "attribute_index1 return type"
-  )
-      .def_readonly("full_name", &Bmad::AttributeIndex1::full_name)
-      .def_readonly("attrib_index", &Bmad::AttributeIndex1::attrib_index)
+  nb::class_<Bmad::AttributeIndex1>(m, "AttributeIndex1", "attribute_index1 return type")
+      .def_ro("full_name", &Bmad::AttributeIndex1::full_name)
+      .def_ro("attrib_index", &Bmad::AttributeIndex1::attrib_index)
       .def("__len__", [](const Bmad::AttributeIndex1 &) { return 2; })
-      .def("__getitem__", [](const Bmad::AttributeIndex1 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AttributeIndex1 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.full_name);
+          return nb::cast(s.full_name);
         if (i == 1)
-          return py::cast(s.attrib_index);
-        throw py::index_error();
+          return nb::cast(s.attrib_index);
+        throw nb::index_error();
       });
   m.def(
       "attribute_index",
-      py::overload_cast<EleStruct &, std::string, std::optional<bool>, std::optional<bool>>(
+      nb::overload_cast<EleStruct &, std::string, std::optional<bool>, std::optional<bool>>(
           &Bmad::attribute_index
       ),
-      py::arg("ele"),
-      py::arg("name"),
-      py::arg("can_abbreviate") = py::none(),
-      py::arg("print_error") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_index (...) result (attrib_index)
-
-Function to return the index of a attribute for a given BMAD element type
+      nb::arg("ele"),
+      nb::arg("name"),
+      nb::arg("can_abbreviate") = nb::none(),
+      nb::arg("print_error") = nb::none(),
+      R"""(Function to return the index of a attribute for a given BMAD element type
 and the name of the attribute. Abbreviations are by default permitted but must be at
 least 3 characters. Exception: overlay and group varialbe names may not
 be abbreviated.
@@ -1080,36 +1003,29 @@ attribute_info
 attribute_name
 )"""
   );
-  py::class_<Bmad::AttributeIndex2, std::unique_ptr<Bmad::AttributeIndex2>>(
-      m,
-      "AttributeIndex2",
-      "attribute_index2 return type"
-  )
-      .def_readonly("full_name", &Bmad::AttributeIndex2::full_name)
-      .def_readonly("attrib_index", &Bmad::AttributeIndex2::attrib_index)
+  nb::class_<Bmad::AttributeIndex2>(m, "AttributeIndex2", "attribute_index2 return type")
+      .def_ro("full_name", &Bmad::AttributeIndex2::full_name)
+      .def_ro("attrib_index", &Bmad::AttributeIndex2::attrib_index)
       .def("__len__", [](const Bmad::AttributeIndex2 &) { return 2; })
-      .def("__getitem__", [](const Bmad::AttributeIndex2 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::AttributeIndex2 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.full_name);
+          return nb::cast(s.full_name);
         if (i == 1)
-          return py::cast(s.attrib_index);
-        throw py::index_error();
+          return nb::cast(s.attrib_index);
+        throw nb::index_error();
       });
   m.def(
       "attribute_index",
-      py::overload_cast<int, std::string, std::optional<bool>, std::optional<bool>>(
+      nb::overload_cast<int, std::string, std::optional<bool>, std::optional<bool>>(
           &Bmad::attribute_index
       ),
-      py::arg("key"),
-      py::arg("name"),
-      py::arg("can_abbreviate") = py::none(),
-      py::arg("print_error") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_index (...) result (attrib_index)
-
-Function to return the index of a attribute for a given BMAD element type
+      nb::arg("key"),
+      nb::arg("name"),
+      nb::arg("can_abbreviate") = nb::none(),
+      nb::arg("print_error") = nb::none(),
+      R"""(Function to return the index of a attribute for a given BMAD element type
 and the name of the attribute. Abbreviations are by default permitted but must be at
 least 3 characters. Exception: overlay and group varialbe names may not
 be abbreviated.
@@ -1151,14 +1067,11 @@ attribute_name
   );
   m.def(
       "attribute_name",
-      py::overload_cast<int, int, std::optional<bool>>(&Bmad::attribute_name),
-      py::arg("key"),
-      py::arg("ix_att"),
-      py::arg("show_private") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_name (...) result (attrib_name)
-
-Function to return the name of an attribute for a particular type of
+      nb::overload_cast<int, int, std::optional<bool>>(&Bmad::attribute_name),
+      nb::arg("key"),
+      nb::arg("ix_att"),
+      nb::arg("show_private") = nb::none(),
+      R"""(Function to return the name of an attribute for a particular type of
 Bmad element.
 
 This routine is an overloaded name for:
@@ -1190,14 +1103,11 @@ attrib_name : str
   );
   m.def(
       "attribute_name",
-      py::overload_cast<EleStruct &, int, std::optional<bool>>(&Bmad::attribute_name),
-      py::arg("ele"),
-      py::arg("ix_att"),
-      py::arg("show_private") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_name (...) result (attrib_name)
-
-Function to return the name of an attribute for a particular type of
+      nb::overload_cast<EleStruct &, int, std::optional<bool>>(&Bmad::attribute_name),
+      nb::arg("ele"),
+      nb::arg("ix_att"),
+      nb::arg("show_private") = nb::none(),
+      R"""(Function to return the name of an attribute for a particular type of
 Bmad element.
 
 This routine is an overloaded name for:
@@ -1227,14 +1137,43 @@ attrib_name : str
 )"""
   );
   m.def(
-      "attribute_type",
-      &Bmad::attribute_type,
-      py::arg("attrib_name"),
-      py::arg("ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_type (attrib_name, ele) result (attrib_type)
+      "attribute_set_bookkeeping",
+      [](EleStruct &ele, std::string attrib_name, bool err_flag, AllPointerStruct *attrib_ptr) {
+        auto fn =
+            static_cast<void (*)(EleStruct &, std::string, bool, optional_ref<AllPointerStruct>)>(
+                &Bmad::attribute_set_bookkeeping
+            );
+        return fn(ele, attrib_name, err_flag, ptr_to_opt_ref(attrib_ptr));
+      },
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      nb::arg("err_flag"),
+      nb::arg("attrib_ptr") = nb::none(),
+      R"""(Wrapper for Fortran routine attribute_set_bookkeeping
 
-Routine to return the logical type of an attribute.
+Parameters
+----------
+ele : EleStruct
+    Element containing the attribute
+
+attrib_name : str
+    Name of the attribute. Must be upper case.
+
+err_flag : bool
+
+attrib_ptr : AllPointerStruct, optional
+    Pointer to the attribute. The presence of this argument saves a small amount of time.
+)"""
+  );
+  m.def(
+      "attribute_type",
+      [](std::string attrib_name, EleStruct *ele) {
+        auto fn = static_cast<int (*)(std::string, optional_ref<EleStruct>)>(&Bmad::attribute_type);
+        return fn(attrib_name, ptr_to_opt_ref(ele));
+      },
+      nb::arg("attrib_name"),
+      nb::arg("ele") = nb::none(),
+      R"""(Routine to return the logical type of an attribute.
 
 A "switch" attribute is an attribute whose value corresponds to some string.
 For example, the "COUPLER_AT" attirbute with value 1 corresponds to "ENTRANCE_END", etc.
@@ -1268,12 +1207,9 @@ attrib_type : int
   m.def(
       "attribute_units",
       &Bmad::attribute_units,
-      py::arg("attrib_name"),
-      py::arg("unrecognized_units") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function attribute_units (attrib_name, unrecognized_units) result (attrib_units)
-
-Routine to return the units associated with an attribute.
+      nb::arg("attrib_name"),
+      nb::arg("unrecognized_units") = nb::none(),
+      R"""(Routine to return the units associated with an attribute.
 Example: attrib_units('P0C') -> 'eV'
 
 Parameters
@@ -1294,12 +1230,11 @@ attrib_units : str
   m.def(
       "autoscale_phase_and_amp",
       &Bmad::autoscale_phase_and_amp,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("scale_phase") = py::none(),
-      py::arg("scale_amp") = py::none(),
-      py::arg("call_bookkeeper") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("scale_phase") = nb::none(),
+      nb::arg("scale_amp") = nb::none(),
+      nb::arg("call_bookkeeper") = nb::none(),
       R"""(Wrapper for Fortran routine autoscale_phase_and_amp
 
 Parameters
@@ -1330,10 +1265,9 @@ err_flag : bool
   m.def(
       "average_twiss",
       &Bmad::average_twiss,
-      py::arg("frac1"),
-      py::arg("twiss1"),
-      py::arg("twiss2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("frac1"),
+      nb::arg("twiss1"),
+      nb::arg("twiss2"),
       R"""(Wrapper for Fortran routine average_twiss
 
 Parameters

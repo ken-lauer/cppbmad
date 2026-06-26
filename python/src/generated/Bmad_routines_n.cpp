@@ -1,17 +1,14 @@
 #include "pybmad/generated/Bmad_routines_n.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_n(py::module &m) {
+void init_Bmad_routines_n(nb::module_ &m) {
   m.def(
       "n_attrib_string_max_len",
       &Bmad::n_attrib_string_max_len,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function n_attrib_string_max_len () result (max_len)
-
-Routine to return the the maximum number of characters in any attribute
+      R"""(Routine to return the the maximum number of characters in any attribute
 name known to bmad.
 
 Returns
@@ -23,9 +20,8 @@ max_len : int
   m.def(
       "new_control",
       &Bmad::new_control,
-      py::arg("lat"),
-      py::arg("ele_name") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ele_name") = nb::none(),
       R"""(Wrapper for Fortran routine new_control
 
 Parameters
@@ -45,11 +41,8 @@ ix_ele : int
   m.def(
       "nint_chk",
       &Bmad::nint_chk,
-      py::arg("re_val"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function nint_chk (re_val) result (int_val)
-
-Returns the nearest integer to re_val.
+      nb::arg("re_val"),
+      R"""(Returns the nearest integer to re_val.
 Also does out-of-bounds error checking.
 Used with bmad parsing.
 
@@ -67,14 +60,13 @@ int_val : int
   m.def(
       "normal_form_complex_taylors",
       &Bmad::normal_form_complex_taylors,
-      py::arg("one_turn_taylor"),
-      py::arg("rf_on"),
-      py::arg("F") = py::none(),
-      py::arg("L") = py::none(),
-      py::arg("A") = py::none(),
-      py::arg("A_inverse") = py::none(),
-      py::arg("order") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("one_turn_taylor"),
+      nb::arg("rf_on"),
+      nb::arg("F") = nb::none(),
+      nb::arg("L") = nb::none(),
+      nb::arg("A") = nb::none(),
+      nb::arg("A_inverse") = nb::none(),
+      nb::arg("order") = nb::none(),
       R"""(Wrapper for Fortran routine normal_form_complex_taylors
 
 Parameters
@@ -94,35 +86,28 @@ A_inverse : 1D array of TaylorStruct (shape: 6), optional
 order : int, optional
 )"""
   );
-  py::class_<Bmad::NormalFormTaylors, std::unique_ptr<Bmad::NormalFormTaylors>>(
-      m,
-      "NormalFormTaylors",
-      "normal_form_taylors return type"
-  )
-      .def_readonly("dhdj", &Bmad::NormalFormTaylors::dhdj)
-      .def_readonly("A", &Bmad::NormalFormTaylors::A)
-      .def_readonly("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
+  nb::class_<Bmad::NormalFormTaylors>(m, "NormalFormTaylors", "normal_form_taylors return type")
+      .def_ro("dhdj", &Bmad::NormalFormTaylors::dhdj)
+      .def_ro("A", &Bmad::NormalFormTaylors::A)
+      .def_ro("A_inverse", &Bmad::NormalFormTaylors::A_inverse)
       .def("__len__", [](const Bmad::NormalFormTaylors &) { return 3; })
-      .def("__getitem__", [](const Bmad::NormalFormTaylors &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::NormalFormTaylors &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.dhdj);
+          return nb::cast(s.dhdj);
         if (i == 1)
-          return py::cast(s.A);
+          return nb::cast(s.A);
         if (i == 2)
-          return py::cast(s.A_inverse);
-        throw py::index_error();
+          return nb::cast(s.A_inverse);
+        throw nb::index_error();
       });
   m.def(
       "normal_form_taylors",
       &Bmad::normal_form_taylors,
-      py::arg("one_turn_taylor"),
-      py::arg("rf_on"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine normal_form_taylors(one_turn_taylor, rf_on, dhdj, A, A_inverse)
-
-Do a normal form decomposition on a one-turn taylor map M:
+      nb::arg("one_turn_taylor"),
+      nb::arg("rf_on"),
+      R"""(Do a normal form decomposition on a one-turn taylor map M:
   M = A o R o A_inverse
 where A maps Floquet (fully normalized) coordinates to lab coordinates.
 In Floquet coordinates, the amplitudes are defined as J_i = (1/2) (x_i^2 + p_i^2).
@@ -156,36 +141,29 @@ A_inverse : 1D array of TaylorStruct (shape: 6), optional
     Map from Lab coordinates to Floquet coordinates
 )"""
   );
-  py::class_<Bmad::NormalMode3Calc, std::unique_ptr<Bmad::NormalMode3Calc>>(
-      m,
-      "NormalMode3Calc",
-      "normal_mode3_calc return type"
-  )
-      .def_readonly("tune", &Bmad::NormalMode3Calc::tune)
-      .def_readonly("B", &Bmad::NormalMode3Calc::B)
-      .def_readonly("HV", &Bmad::NormalMode3Calc::HV)
+  nb::class_<Bmad::NormalMode3Calc>(m, "NormalMode3Calc", "normal_mode3_calc return type")
+      .def_ro("tune", &Bmad::NormalMode3Calc::tune)
+      .def_ro("B", &Bmad::NormalMode3Calc::B)
+      .def_ro("HV", &Bmad::NormalMode3Calc::HV)
       .def("__len__", [](const Bmad::NormalMode3Calc &) { return 3; })
-      .def("__getitem__", [](const Bmad::NormalMode3Calc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::NormalMode3Calc &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.tune);
+          return nb::cast(s.tune);
         if (i == 1)
-          return py::cast(s.B);
+          return nb::cast(s.B);
         if (i == 2)
-          return py::cast(s.HV);
-        throw py::index_error();
+          return nb::cast(s.HV);
+        throw nb::index_error();
       });
   m.def(
       "normal_mode3_calc",
       &Bmad::normal_mode3_calc,
-      py::arg("t6"),
-      py::arg("above_transition") = py::none(),
-      py::arg("abz_tunes") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine normal_mode3_calc (mat, tune, B, HV, above_transition)
-
-Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
+      nb::arg("t6"),
+      nb::arg("above_transition") = nb::none(),
+      nb::arg("abz_tunes") = nb::none(),
+      R"""(Does an Eigen decomposition of the 1-turn transfer matrix (mat) and generates
 B, V, H.
 
 If the above_transition argument is present and false, then the 3rd (z) mode is assumed
@@ -215,9 +193,8 @@ HV : 2D array of float (shape: 6,6)
   m.def(
       "normal_mode_dispersion",
       &Bmad::normal_mode_dispersion,
-      py::arg("ele"),
-      py::arg("reverse") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("reverse") = nb::none(),
       R"""(Wrapper for Fortran routine normal_mode_dispersion
 
 Parameters
@@ -234,11 +211,8 @@ reverse : bool, optional
   m.def(
       "normalize_evecs",
       &Bmad::normalize_evecs,
-      py::arg("evec"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine normalize_evecs(evec, err_flag)
-
-Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
+      nb::arg("evec"),
+      R"""(Normalizes eigenvectors such that transpose(E).S.E = iS, where E = evec_r + i evec_i
 
 Parameters
 ----------
@@ -256,8 +230,7 @@ err_flag : bool
   m.def(
       "num_field_eles",
       &Bmad::num_field_eles,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine num_field_eles
 
 Parameters
@@ -274,9 +247,8 @@ n_field_ele : int
   m.def(
       "num_lords",
       &Bmad::num_lords,
-      py::arg("slave"),
-      py::arg("lord_type"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("slave"),
+      nb::arg("lord_type"),
       R"""(Wrapper for Fortran routine num_lords
 
 Parameters

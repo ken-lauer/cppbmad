@@ -18,17 +18,18 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     add_lattice_control_structs, allocate_branch_array, allocate_grid_field, &
     allocate_lat_ele_array, angle_between_polars, angle_to_canonical_coords, apply_all_rampers, &
     apply_energy_kick, apply_rampers_to_slave, at_this_ele_end, attribute_bookkeeper, &
-    autoscale_phase_and_amp, average_twiss, bbi_kick, bbi_slice_calc, beam_equal_beam, &
-    beam_init_setup, bend_exact_multipole_field, bend_length_has_been_set, bend_shift, &
-    bmad_parser, bmad_parser2, branch_equal_branch, branch_name, bunch_equal_bunch, c_to_cbar, &
-    calc_super_slave_key, calc_z_tune, canonical_to_angle_coords, cbar_to_c, &
-    check_aperture_limit, check_controller_controls, check_if_s_in_bounds, &
-    choose_quads_for_set_tune, chrom_calc, chrom_tune, classical_radius, clear_lat_1turn_mats, &
-    clear_taylor_maps_from_elements, closed_orbit_calc, closed_orbit_from_tracking, &
-    combine_consecutive_elements, complex_taylor_equal_complex_taylor, &
-    complex_taylors_equal_complex_taylors, control_bookkeeper, convert_bend_exact_multipole, &
-    convert_coords, convert_particle_coordinates_s_to_t, convert_particle_coordinates_t_to_s, &
-    convert_pc_to, convert_total_energy_to, converter_distribution_parser, coord_equal_coord, &
+    attribute_set_bookkeeping, autoscale_phase_and_amp, average_twiss, bbi_kick, &
+    bbi_slice_calc, beam_equal_beam, beam_init_setup, bend_exact_multipole_field, &
+    bend_length_has_been_set, bend_shift, bmad_parser, bmad_parser2, branch_equal_branch, &
+    branch_name, bunch_equal_bunch, c_to_cbar, calc_super_slave_key, calc_z_tune, &
+    canonical_to_angle_coords, cbar_to_c, check_aperture_limit, check_controller_controls, &
+    check_if_s_in_bounds, choose_quads_for_set_tune, chrom_calc, chrom_tune, classical_radius, &
+    clear_lat_1turn_mats, clear_taylor_maps_from_elements, closed_orbit_calc, &
+    closed_orbit_from_tracking, combine_consecutive_elements, &
+    complex_taylor_equal_complex_taylor, complex_taylors_equal_complex_taylors, &
+    control_bookkeeper, convert_bend_exact_multipole, convert_coords, &
+    convert_particle_coordinates_s_to_t, convert_particle_coordinates_t_to_s, convert_pc_to, &
+    convert_total_energy_to, converter_distribution_parser, coord_equal_coord, &
     coords_body_to_local, coords_body_to_rel_exit, coords_curvilinear_to_floor, &
     coords_floor_to_curvilinear, coords_floor_to_local_curvilinear, coords_floor_to_relative, &
     coords_local_curvilinear_to_body, coords_local_curvilinear_to_floor, &
@@ -69,38 +70,39 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     orbit_to_floor_phase_space, orbit_to_local_curvilinear, orbit_too_large, &
     order_super_lord_slaves, particle_is_moving_backwards, particle_is_moving_forward, &
     particle_rf_time, patch_flips_propagation_direction, patch_length, physical_ele_end, &
-    pointer_to_branch, pointer_to_ele, pointer_to_fibre, pointer_to_field_ele, &
-    pointer_to_girder, pointer_to_lord, pointer_to_multipass_lord, pointer_to_next_ele, &
-    pointer_to_super_lord, pointer_to_wake_ele, polar_to_spinor, polar_to_vec, ptc_bookkeeper, &
-    ptc_ran_seed_put, ptc_read_flat_file, ptc_set_rf_state_for_c_normal, &
-    ptc_transfer_map_with_spin, radiation_integrals, ramper_slave_setup, ramper_value, &
-    re_allocate_eles, read_digested_bmad_file, reallocate_beam, reallocate_bunch, &
-    reallocate_control, reallocate_coord, reallocate_expression_stack, &
-    rel_tracking_charge_to_mass, relative_mode_flip, remove_dead_from_bunch, &
-    remove_eles_from_lat, remove_lord_slave_link, reverse_lat, rf_coupler_kick, rf_is_on, &
-    rf_ref_time_offset, rotate_for_curved_surface, rotate_spin, rotate_spin_a_step, &
-    rotate_spin_given_field, s_body_calc, s_calc, save_a_beam_step, save_a_bunch_step, &
-    save_a_step, sbend_body_with_k1_map, set_ele_attribute, set_ele_defaults, set_ele_name, &
-    set_ele_real_attribute, set_ele_status_stale, set_flags_for_changed_attribute, &
-    set_fringe_on_off, set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, &
-    set_ptc_base_state, set_status_flags, set_tune, set_twiss, set_z_tune, &
-    significant_difference, slice_lattice, sol_quad_mat6_calc, spin_dn_dpz_from_mat8, &
-    spin_dn_dpz_from_qmap, spin_map1_normalize, spin_mat8_resonance_strengths, &
-    spin_mat_to_eigen, spin_omega, spin_quat_resonance_strengths, spin_taylor_to_linear, &
-    spinor_to_polar, spinor_to_vec, spline_fit_orbit, split_lat, sprint_spin_taylor_map, &
-    start_branch_at, stream_ele_end, strong_beam_sigma_calc, strong_beam_strength, &
-    symp_lie_bmad, taper_mag_strengths, taylor_equal_taylor, taylors_equal_taylors, &
-    tilt_coords, tilt_coords_photon, tilt_mat6, to_surface_coords, track1, track1_bmad, &
-    track1_bmad_photon, track1_bunch_space_charge, track1_linear, track1_runge_kutta, &
-    track1_spin, track1_spin_integration, track1_spin_taylor, track1_symp_lie_ptc, &
-    track1_taylor, track1_time_runge_kutta, track_a_beambeam, track_a_bend, track_a_converter, &
-    track_a_crab_cavity, track_a_drift, track_a_drift_photon, track_a_foil, track_a_gkicker, &
-    track_a_lcavity, track_a_lcavity_old, track_a_mask, track_a_match, track_a_patch, &
-    track_a_pickup, track_a_quadrupole, track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, &
-    track_a_thick_multipole, track_a_wiggler, track_a_zero_length_element, track_all, &
-    track_bunch_time, track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, &
-    transfer_ac_kick, transfer_branch, transfer_branch_parameters, transfer_branches, &
-    transfer_ele, transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
+    pointer_to_attribute, pointer_to_branch, pointer_to_ele, pointer_to_fibre, &
+    pointer_to_field_ele, pointer_to_girder, pointer_to_indexed_attribute, pointer_to_lord, &
+    pointer_to_multipass_lord, pointer_to_next_ele, pointer_to_super_lord, pointer_to_wake_ele, &
+    pointers_to_attribute, polar_to_spinor, polar_to_vec, ptc_bookkeeper, ptc_ran_seed_put, &
+    ptc_read_flat_file, ptc_set_rf_state_for_c_normal, ptc_transfer_map_with_spin, &
+    radiation_integrals, ramper_slave_setup, ramper_value, re_allocate_eles, &
+    read_digested_bmad_file, reallocate_beam, reallocate_bunch, reallocate_control, &
+    reallocate_coord, reallocate_expression_stack, rel_tracking_charge_to_mass, &
+    relative_mode_flip, remove_dead_from_bunch, remove_eles_from_lat, remove_lord_slave_link, &
+    reverse_lat, rf_coupler_kick, rf_is_on, rf_ref_time_offset, rotate_for_curved_surface, &
+    rotate_spin, rotate_spin_a_step, rotate_spin_given_field, s_body_calc, s_calc, &
+    save_a_beam_step, save_a_bunch_step, save_a_step, sbend_body_with_k1_map, &
+    set_ele_attribute, set_ele_defaults, set_ele_name, set_ele_real_attribute, &
+    set_ele_status_stale, set_flags_for_changed_attribute, set_fringe_on_off, &
+    set_lords_status_stale, set_on_off, set_orbit_to_zero, set_ptc, set_ptc_base_state, &
+    set_status_flags, set_tune, set_twiss, set_z_tune, significant_difference, slice_lattice, &
+    sol_quad_mat6_calc, spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, spin_map1_normalize, &
+    spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
+    spin_quat_resonance_strengths, spin_taylor_to_linear, spinor_to_polar, spinor_to_vec, &
+    spline_fit_orbit, split_lat, sprint_spin_taylor_map, start_branch_at, stream_ele_end, &
+    strong_beam_sigma_calc, strong_beam_strength, symp_lie_bmad, taper_mag_strengths, &
+    taylor_equal_taylor, taylors_equal_taylors, tilt_coords, tilt_coords_photon, tilt_mat6, &
+    to_surface_coords, track1, track1_bmad, track1_bmad_photon, track1_bunch_space_charge, &
+    track1_linear, track1_runge_kutta, track1_spin, track1_spin_integration, &
+    track1_spin_taylor, track1_symp_lie_ptc, track1_taylor, track1_time_runge_kutta, &
+    track_a_beambeam, track_a_bend, track_a_converter, track_a_crab_cavity, track_a_drift, &
+    track_a_drift_photon, track_a_foil, track_a_gkicker, track_a_lcavity, track_a_lcavity_old, &
+    track_a_mask, track_a_match, track_a_patch, track_a_pickup, track_a_quadrupole, &
+    track_a_rfcavity, track_a_sad_mult, track_a_sol_quad, track_a_thick_multipole, &
+    track_a_wiggler, track_a_zero_length_element, track_all, track_bunch_time, &
+    track_from_s_to_s, track_many, track_to_surface, tracking_rad_map_setup, transfer_ac_kick, &
+    transfer_branch, transfer_branch_parameters, transfer_branches, transfer_ele, &
+    transfer_ele_taylor, transfer_eles, transfer_fieldmap, transfer_lat, &
     transfer_lat_parameters, transfer_map_calc, transfer_mat2_from_twiss, &
     transfer_mat_from_twiss, transfer_matrix_calc, transfer_twiss, transfer_wake, &
     twiss1_propagate, twiss_and_track_from_s_to_s, twiss_and_track_intra_ele, twiss_at_element, &
@@ -121,14 +123,16 @@ use mode3_mod, only: action_to_xyz, beam_tilts, eigen_decomp_6mat, get_emit_from
 
 use superimpose_mod, only: add_superimpose, adjust_super_slave_names
 
-use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, bp_set_ran_status, &
-    check_for_superimpose_problem, drift_and_pipe_track_methods_adjustment, &
+use bmad_parser_mod, only: add_this_multipass, add_this_taylor_term, &
+    bmad_parser_string_attribute_set, bp_set_ran_status, check_for_superimpose_problem, &
+    compute_super_lord_s, drift_and_pipe_track_methods_adjustment, &
     drift_multipass_name_correction, equal_sign_here, evaluate_array_index, evaluate_logical, &
     expect_one_of, expect_this, form_digested_bmad_file_name, get_called_file, &
-    get_list_of_names, get_next_word, get_sequence_args, get_switch, init_surface_segment, &
-    load_parse_line, nint_chk, parse_cartesian_map, parse_cylindrical_map, parse_gen_grad_map, &
-    parse_grid_field, parse_integer_list, parse_integer_list2, parse_real_list, &
-    parse_real_list2, parser_add_constant, parser_call_check, parser_fast_complex_read, &
+    get_list_of_names, get_next_word, get_overlay_group_names, get_sequence_args, get_switch, &
+    init_surface_segment, load_parse_line, nint_chk, parse_cartesian_map, &
+    parse_cylindrical_map, parse_gen_grad_map, parse_grid_field, parse_integer_list, &
+    parse_integer_list2, parse_real_list, parse_real_list2, parse_superimpose_command, &
+    parser2_add_superimpose, parser_add_constant, parser_call_check, parser_fast_complex_read, &
     parser_fast_integer_read, parser_fast_real_read, parser_file_stack, parser_get_integer, &
     parser_get_logical, parser_identify_fork_to_element, parser_init_custom_elements, &
     parser_print_line, parser_read_lr_wake, parser_read_old_format_lr_wake, &
@@ -294,6 +298,8 @@ use binary_parser_mod, only: open_binary_file, read_binary_cartesian_map, &
 use wake_mod, only: order_particles_in_z, randomize_lr_wake_frequencies, &
     sr_longitudinal_wake_particle, sr_transverse_wake_particle, sr_z_long_wake, track1_lr_wake, &
     track1_sr_wake, zero_lr_wakes_in_lat
+
+use parser_set_attribute_mod, only: parser_set_attribute
 
 use radiation_mod, only: radiation_map_setup, release_rad_int_cache, track1_radiation, &
     track1_radiation_center
@@ -1835,6 +1841,37 @@ subroutine fortran_attribute_name2 (ele, ix_att, show_private, attrib_name) bind
   call c_f_pointer(attrib_name, f_attrib_name_ptr, [len_trim(f_attrib_name) + 1])
   call to_c_str(f_attrib_name, f_attrib_name_ptr)
 end subroutine
+subroutine fortran_attribute_set_bookkeeping (ele, attrib_name, err_flag, attrib_ptr) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  type(c_ptr), value :: attrib_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_attrib_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_attrib_name 0D_NOT_character
+  if (.not. c_associated(attrib_name)) return
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
+  call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  ! in: f_attrib_ptr 0D_NOT_type
+  if (c_associated(attrib_ptr))   call c_f_pointer(attrib_ptr, f_attrib_ptr)
+  call attribute_set_bookkeeping(f_ele, f_attrib_name, f_err_flag, f_attrib_ptr)
+
+end subroutine
 subroutine fortran_attribute_type (attrib_name, ele, attrib_type) bind(c)
 
   use array_desc_mod
@@ -3016,6 +3053,59 @@ subroutine fortran_bmad_parser2 (lat_file, lat, orbit, make_mats6, err_flag, par
   if (c_associated(parse_lat))   call c_f_pointer(parse_lat, f_parse_lat)
   call bmad_parser2(f_lat_file, f_lat, f_orbit, f_make_mats6_native_ptr, f_err_flag_native_ptr, &
       f_parse_lat)
+
+end subroutine
+subroutine fortran_bmad_parser_string_attribute_set (ele, attrib_name, delim, delim_found, &
+    pele, str_out) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  logical(c_bool) :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  type(c_ptr), intent(in), value :: str_out
+  character(len=4096), target :: f_str_out
+  character(kind=c_char), pointer :: f_str_out_ptr(:)
+  character(len=4096), pointer :: f_str_out_call_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  ! ** End of parameters **
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_attrib_name 0D_NOT_character
+  if (.not. c_associated(attrib_name)) return
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
+  call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_delim_found 0D_NOT_logical
+  f_delim_found = delim_found
+  ! inout: f_pele 0D_NOT_type
+  if (c_associated(pele))   call c_f_pointer(pele, f_pele)
+  ! in: f_str_out 0D_NOT_character
+  if (c_associated(str_out)) then
+    call c_f_pointer(str_out, f_str_out_ptr, [huge(0)])
+    call to_f_str(f_str_out_ptr, f_str_out)
+    f_str_out_call_ptr => f_str_out
+  else
+    f_str_out_call_ptr => null()
+  endif
+  call bmad_parser_string_attribute_set(f_ele, f_attrib_name, f_delim, f_delim_found, f_pele, &
+      f_str_out_call_ptr)
 
 end subroutine
 subroutine fortran_bmad_patch_parameters_to_ptc (ang, exi) bind(c)
@@ -4651,6 +4741,37 @@ subroutine fortran_compute_slave_coupler (slave) bind(c)
   if (.not. c_associated(slave)) return
   call c_f_pointer(slave, f_slave)
   call compute_slave_coupler(f_slave)
+
+end subroutine
+subroutine fortran_compute_super_lord_s (ref_ele, super_ele, pele, ix_insert) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: ix_insert  ! 0D_NOT_integer
+  integer :: f_ix_insert
+  ! ** Inout parameters **
+  type(c_ptr), value :: ref_ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ref_ele
+  type(c_ptr), value :: super_ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_super_ele
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  ! ** End of parameters **
+  ! inout: f_ref_ele 0D_NOT_type
+  if (.not. c_associated(ref_ele)) return
+  call c_f_pointer(ref_ele, f_ref_ele)
+  ! inout: f_super_ele 0D_NOT_type
+  if (.not. c_associated(super_ele)) return
+  call c_f_pointer(super_ele, f_super_ele)
+  ! inout: f_pele 0D_NOT_type
+  if (.not. c_associated(pele)) return
+  call c_f_pointer(pele, f_pele)
+  ! in: f_ix_insert 0D_NOT_integer
+  f_ix_insert = ix_insert
+  call compute_super_lord_s(f_ref_ele, f_super_ele, f_pele, f_ix_insert)
 
 end subroutine
 subroutine fortran_concat_ele_taylor (orb_taylor, ele, err_flag, spin_taylor) bind(c)
@@ -13313,6 +13434,64 @@ subroutine fortran_get_next_word (word, ix_word, delim_list, delim, delim_found,
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
+subroutine fortran_get_overlay_group_names (ele, lat, pele, delim, delim_found, &
+    is_control_var_list, err_flag, names_out) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct, lat_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  logical(c_bool) :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  logical(c_bool) :: is_control_var_list  ! 0D_NOT_logical
+  logical :: f_is_control_var_list
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  type(c_ptr), intent(in), value :: names_out
+  type(character_container_alloc), pointer :: f_names_out
+  character(200), allocatable :: f_names_out_local(:)
+  ! ** End of parameters **
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! inout: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  ! inout: f_pele 0D_NOT_type
+  if (.not. c_associated(pele)) return
+  call c_f_pointer(pele, f_pele)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_delim_found 0D_NOT_logical
+  f_delim_found = delim_found
+  ! in: f_is_control_var_list 0D_NOT_logical
+  f_is_control_var_list = is_control_var_list
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(names_out))   call c_f_pointer(names_out, f_names_out)
+  call get_overlay_group_names(f_ele, f_lat, f_pele, f_delim, f_delim_found, &
+      f_is_control_var_list, f_err_flag, f_names_out_local)
+
+  !! copy allocatable character result into container
+  if (c_associated(names_out) .and. allocated(f_names_out_local)) then
+    if (allocated(f_names_out%data)) deallocate(f_names_out%data)
+    allocate(f_names_out%data, source=f_names_out_local)
+  endif
+end subroutine
 subroutine fortran_get_sequence_args (seq_name, arg_list, delim, err_flag) bind(c)
 
   use array_desc_mod
@@ -21530,6 +21709,70 @@ subroutine fortran_parse_real_list2 (lat, err_str, real_array, num_found, delim,
   call c_f_pointer(is_ok, f_is_ok_ptr)
   f_is_ok_ptr = f_is_ok
 end subroutine
+subroutine fortran_parse_superimpose_command (lat, ele, pele, delim) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct, lat_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  ! ** End of parameters **
+  ! inout: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  ! inout: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! inout: f_pele 0D_NOT_type
+  if (.not. c_associated(pele)) return
+  call c_f_pointer(pele, f_pele)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  call parse_superimpose_command(f_lat, f_ele, f_pele, f_delim)
+
+end subroutine
+subroutine fortran_parser2_add_superimpose (lat, super_ele_in, pele, in_lat) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct, lat_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), value :: super_ele_in  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_super_ele_in
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  type(c_ptr), value :: in_lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_in_lat
+  ! ** End of parameters **
+  ! inout: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) return
+  call c_f_pointer(lat, f_lat)
+  ! inout: f_super_ele_in 0D_NOT_type
+  if (.not. c_associated(super_ele_in)) return
+  call c_f_pointer(super_ele_in, f_super_ele_in)
+  ! inout: f_pele 0D_NOT_type
+  if (.not. c_associated(pele)) return
+  call c_f_pointer(pele, f_pele)
+  ! inout: f_in_lat 0D_NOT_type
+  if (c_associated(in_lat))   call c_f_pointer(in_lat, f_in_lat)
+  call parser2_add_superimpose(f_lat, f_super_ele_in, f_pele, f_in_lat)
+
+end subroutine
 subroutine fortran_parser_add_constant (word, lat, redef_is_error) bind(c)
 
   use array_desc_mod
@@ -22129,6 +22372,97 @@ subroutine fortran_parser_read_sr_wake (ele, delim, delim_found, err_flag) bind(
   f_err_flag = err_flag
   call parser_read_sr_wake(f_ele, f_delim, f_delim_found, f_err_flag)
 
+end subroutine
+subroutine fortran_parser_set_attribute (how, ele, delim, delim_found, err_flag, pele, &
+    check_free, heterogeneous_ele_list, set_field_master) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use bmad_parser_struct, only: parser_ele_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: how  ! 0D_NOT_integer
+  integer :: f_how
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: check_free  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_check_free
+  logical, target :: f_check_free_native
+  logical, pointer :: f_check_free_native_ptr
+  logical(c_bool), pointer :: f_check_free_ptr
+  type(c_ptr), intent(in), value :: heterogeneous_ele_list  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_heterogeneous_ele_list
+  logical, target :: f_heterogeneous_ele_list_native
+  logical, pointer :: f_heterogeneous_ele_list_native_ptr
+  logical(c_bool), pointer :: f_heterogeneous_ele_list_ptr
+  type(c_ptr), intent(in), value :: set_field_master  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_set_field_master
+  logical, target :: f_set_field_master_native
+  logical, pointer :: f_set_field_master_native_ptr
+  logical(c_bool), pointer :: f_set_field_master_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: delim
+  character(len=4096), target :: f_delim
+  character(kind=c_char), pointer :: f_delim_ptr(:)
+  type(c_ptr), intent(in), value :: delim_found  ! 0D_NOT_logical
+  logical :: f_delim_found
+  logical(c_bool), pointer :: f_delim_found_ptr
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), value :: pele  ! 0D_NOT_type
+  type(parser_ele_struct), pointer :: f_pele
+  ! ** End of parameters **
+  ! in: f_how 0D_NOT_integer
+  f_how = how
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ele, f_ele)
+  ! out: f_pele 0D_NOT_type
+  if (c_associated(pele))   call c_f_pointer(pele, f_pele)
+  ! in: f_check_free 0D_NOT_logical
+  if (c_associated(check_free)) then
+    call c_f_pointer(check_free, f_check_free_ptr)
+    f_check_free_native = f_check_free_ptr
+    f_check_free_native_ptr => f_check_free_native
+  else
+    f_check_free_native_ptr => null()
+  endif
+  ! in: f_heterogeneous_ele_list 0D_NOT_logical
+  if (c_associated(heterogeneous_ele_list)) then
+    call c_f_pointer(heterogeneous_ele_list, f_heterogeneous_ele_list_ptr)
+    f_heterogeneous_ele_list_native = f_heterogeneous_ele_list_ptr
+    f_heterogeneous_ele_list_native_ptr => f_heterogeneous_ele_list_native
+  else
+    f_heterogeneous_ele_list_native_ptr => null()
+  endif
+  ! in: f_set_field_master 0D_NOT_logical
+  if (c_associated(set_field_master)) then
+    call c_f_pointer(set_field_master, f_set_field_master_ptr)
+    f_set_field_master_native = f_set_field_master_ptr
+    f_set_field_master_native_ptr => f_set_field_master_native
+  else
+    f_set_field_master_native_ptr => null()
+  endif
+  call parser_set_attribute(f_how, f_ele, f_delim, f_delim_found, f_err_flag, f_pele, &
+      f_check_free_native_ptr, f_heterogeneous_ele_list_native_ptr, &
+      f_set_field_master_native_ptr)
+
+  ! out: f_delim 0D_NOT_character
+  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
+  call to_c_str(f_delim, f_delim_ptr)
+  ! out: f_delim_found 0D_NOT_logical
+  call c_f_pointer(delim_found, f_delim_found_ptr)
+  f_delim_found_ptr = f_delim_found
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_pele 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_parser_transfer_control_struct (con_in, con_out, lord, ix_var) bind(c)
 
@@ -22786,6 +23120,99 @@ subroutine fortran_point_photon_emission (ele, param, orbit, direction, max_targ
       f_w_to_surface)
 
 end subroutine
+subroutine fortran_pointer_to_attribute (ele, attrib_name, do_allocation, a_ptr, err_flag, &
+    err_print_flag, ix_attrib, do_unlink) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
+  logical(c_bool) :: do_allocation  ! 0D_NOT_logical
+  logical :: f_do_allocation
+  type(c_ptr), intent(in), value :: err_print_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err_print_flag
+  logical, target :: f_err_print_flag_native
+  logical, pointer :: f_err_print_flag_native_ptr
+  logical(c_bool), pointer :: f_err_print_flag_ptr
+  type(c_ptr), intent(in), value :: do_unlink  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_do_unlink
+  logical, target :: f_do_unlink_native
+  logical, pointer :: f_do_unlink_native_ptr
+  logical(c_bool), pointer :: f_do_unlink_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: a_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_a_ptr
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: ix_attrib  ! 0D_NOT_integer
+  integer :: f_ix_attrib
+  integer(c_int), pointer :: f_ix_attrib_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ele, f_ele)
+  ! in: f_attrib_name 0D_NOT_character
+  if (.not. c_associated(attrib_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
+  call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! in: f_do_allocation 0D_NOT_logical
+  f_do_allocation = do_allocation
+  ! out: f_a_ptr 0D_NOT_type
+  if (.not. c_associated(a_ptr)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(a_ptr, f_a_ptr)
+  ! in: f_err_print_flag 0D_NOT_logical
+  if (c_associated(err_print_flag)) then
+    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
+    f_err_print_flag_native = f_err_print_flag_ptr
+    f_err_print_flag_native_ptr => f_err_print_flag_native
+  else
+    f_err_print_flag_native_ptr => null()
+  endif
+  ! out: f_ix_attrib 0D_NOT_integer
+  if (c_associated(ix_attrib)) then
+    call c_f_pointer(ix_attrib, f_ix_attrib_ptr)
+  else
+    f_ix_attrib_ptr => null()
+  endif
+  ! in: f_do_unlink 0D_NOT_logical
+  if (c_associated(do_unlink)) then
+    call c_f_pointer(do_unlink, f_do_unlink_ptr)
+    f_do_unlink_native = f_do_unlink_ptr
+    f_do_unlink_native_ptr => f_do_unlink_native
+  else
+    f_do_unlink_native_ptr => null()
+  endif
+  call pointer_to_attribute(f_ele, f_attrib_name, f_do_allocation, f_a_ptr, f_err_flag, &
+      f_err_print_flag_native_ptr, f_ix_attrib, f_do_unlink_native_ptr)
+
+  ! out: f_a_ptr 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_ix_attrib 0D_NOT_integer
+  call c_f_pointer(ix_attrib, f_ix_attrib_ptr)
+  f_ix_attrib_ptr = f_ix_attrib
+end subroutine
 subroutine fortran_pointer_to_branch_given_ele (ele, branch_ptr) bind(c)
 
   use array_desc_mod
@@ -23152,6 +23579,67 @@ subroutine fortran_pointer_to_girder (ele, ix_slave_back, girder) bind(c)
   f_ix_slave_back_ptr = f_ix_slave_back
   ! out: f_girder 0D_PTR_type
   girder = c_loc(f_girder)
+end subroutine
+subroutine fortran_pointer_to_indexed_attribute (ele, ix_attrib, do_allocation, a_ptr, &
+    err_flag, err_print_flag) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  integer(c_int) :: ix_attrib  ! 0D_NOT_integer
+  integer :: f_ix_attrib
+  logical(c_bool) :: do_allocation  ! 0D_NOT_logical
+  logical :: f_do_allocation
+  type(c_ptr), intent(in), value :: err_print_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err_print_flag
+  logical, target :: f_err_print_flag_native
+  logical, pointer :: f_err_print_flag_native_ptr
+  logical(c_bool), pointer :: f_err_print_flag_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: a_ptr  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_a_ptr
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ele, f_ele)
+  ! in: f_ix_attrib 0D_NOT_integer
+  f_ix_attrib = ix_attrib
+  ! in: f_do_allocation 0D_NOT_logical
+  f_do_allocation = do_allocation
+  ! out: f_a_ptr 0D_NOT_type
+  if (.not. c_associated(a_ptr)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(a_ptr, f_a_ptr)
+  ! in: f_err_print_flag 0D_NOT_logical
+  if (c_associated(err_print_flag)) then
+    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
+    f_err_print_flag_native = f_err_print_flag_ptr
+    f_err_print_flag_native_ptr => f_err_print_flag_native
+  else
+    f_err_print_flag_native_ptr => null()
+  endif
+  call pointer_to_indexed_attribute(f_ele, f_ix_attrib, f_do_allocation, f_a_ptr, f_err_flag, &
+      f_err_print_flag_native_ptr)
+
+  ! out: f_a_ptr 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_pointer_to_lord (slave, ix_lord, control, ix_slave_back, lord_type, &
     ix_control, ix_ic, lord_ptr) bind(c)
@@ -23776,6 +24264,108 @@ subroutine fortran_pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall, w
   f_is_branch_wall_ptr = f_is_branch_wall
   ! out: f_wall3d 0D_PTR_type
   wall3d = c_loc(f_wall3d)
+end subroutine
+subroutine fortran_pointers_to_attribute (lat, ele_name, attrib_name, do_allocation, ptr_array, &
+    err_flag, err_print_flag, eles, ix_attrib, do_unlink) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_pointer_struct, lat_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  type(c_ptr), intent(in), value :: ele_name
+  character(len=4096), target :: f_ele_name
+  character(kind=c_char), pointer :: f_ele_name_ptr(:)
+  type(c_ptr), intent(in), value :: attrib_name
+  character(len=4096), target :: f_attrib_name
+  character(kind=c_char), pointer :: f_attrib_name_ptr(:)
+  logical(c_bool) :: do_allocation  ! 0D_NOT_logical
+  logical :: f_do_allocation
+  type(c_ptr), intent(in), value :: err_print_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_err_print_flag
+  logical, target :: f_err_print_flag_native
+  logical, pointer :: f_err_print_flag_native_ptr
+  logical(c_bool), pointer :: f_err_print_flag_ptr
+  type(c_ptr), intent(in), value :: do_unlink  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_do_unlink
+  logical, target :: f_do_unlink_native
+  logical, pointer :: f_do_unlink_native_ptr
+  logical(c_bool), pointer :: f_do_unlink_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ptr_array
+  type(all_pointer_struct_container_alloc), pointer :: f_ptr_array
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), intent(in), value :: eles
+  type(ele_pointer_struct_container_alloc), pointer :: f_eles
+  type(c_ptr), intent(in), value :: ix_attrib  ! 0D_NOT_integer
+  integer :: f_ix_attrib
+  integer(c_int), pointer :: f_ix_attrib_ptr
+  ! ** End of parameters **
+  ! in: f_lat 0D_NOT_type
+  if (.not. c_associated(lat)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(lat, f_lat)
+  ! in: f_ele_name 0D_NOT_character
+  if (.not. c_associated(ele_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
+  call to_f_str(f_ele_name_ptr, f_ele_name)
+  ! in: f_attrib_name 0D_NOT_character
+  if (.not. c_associated(attrib_name)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(attrib_name, f_attrib_name_ptr, [huge(0)])
+  call to_f_str(f_attrib_name_ptr, f_attrib_name)
+  ! in: f_do_allocation 0D_NOT_logical
+  f_do_allocation = do_allocation
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(ptr_array))   call c_f_pointer(ptr_array, f_ptr_array)
+  ! in: f_err_print_flag 0D_NOT_logical
+  if (c_associated(err_print_flag)) then
+    call c_f_pointer(err_print_flag, f_err_print_flag_ptr)
+    f_err_print_flag_native = f_err_print_flag_ptr
+    f_err_print_flag_native_ptr => f_err_print_flag_native
+  else
+    f_err_print_flag_native_ptr => null()
+  endif
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(eles))   call c_f_pointer(eles, f_eles)
+  ! out: f_ix_attrib 0D_NOT_integer
+  if (c_associated(ix_attrib)) then
+    call c_f_pointer(ix_attrib, f_ix_attrib_ptr)
+  else
+    f_ix_attrib_ptr => null()
+  endif
+  ! in: f_do_unlink 0D_NOT_logical
+  if (c_associated(do_unlink)) then
+    call c_f_pointer(do_unlink, f_do_unlink_ptr)
+    f_do_unlink_native = f_do_unlink_ptr
+    f_do_unlink_native_ptr => f_do_unlink_native
+  else
+    f_do_unlink_native_ptr => null()
+  endif
+  call pointers_to_attribute(f_lat, f_ele_name, f_attrib_name, f_do_allocation, &
+      f_ptr_array%data, f_err_flag, f_err_print_flag_native_ptr, f_eles%data, f_ix_attrib, &
+      f_do_unlink_native_ptr)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_ix_attrib 0D_NOT_integer
+  call c_f_pointer(ix_attrib, f_ix_attrib_ptr)
+  f_ix_attrib_ptr = f_ix_attrib
 end subroutine
 subroutine fortran_polar_to_spinor (polar, spinor) bind(c)
 
@@ -27438,6 +28028,40 @@ subroutine fortran_set_ele_status_stale (ele, status_group, set_slaves, old_eles
   !! container type array (1D_ALLOC_type)
   if (c_associated(old_eles))   call c_f_pointer(old_eles, f_old_eles)
   call set_ele_status_stale(f_ele, f_status_group, f_set_slaves_native_ptr, f_old_eles%data)
+
+end subroutine
+subroutine fortran_set_flags_for_changed_all_attribute (ele, all_attrib, set_dependent) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  use sim_utils_struct, only: all_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: all_attrib  ! 0D_NOT_type
+  type(all_pointer_struct), pointer :: f_all_attrib
+  type(c_ptr), intent(in), value :: set_dependent  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_set_dependent
+  logical, target :: f_set_dependent_native
+  logical, pointer :: f_set_dependent_native_ptr
+  logical(c_bool), pointer :: f_set_dependent_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_all_attrib 0D_NOT_type
+  if (.not. c_associated(all_attrib)) return
+  call c_f_pointer(all_attrib, f_all_attrib)
+  ! in: f_set_dependent 0D_NOT_logical
+  if (c_associated(set_dependent)) then
+    call c_f_pointer(set_dependent, f_set_dependent_ptr)
+    f_set_dependent_native = f_set_dependent_ptr
+    f_set_dependent_native_ptr => f_set_dependent_native
+  else
+    f_set_dependent_native_ptr => null()
+  endif
+  call set_flags_for_changed_attribute(f_ele, f_all_attrib, f_set_dependent_native_ptr)
 
 end subroutine
 subroutine fortran_set_flags_for_changed_integer_attribute (ele, attrib, set_dependent) bind(c)

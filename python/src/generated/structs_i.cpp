@@ -7,26 +7,27 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // interval1_coef_struct
-void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &cls) {
+void init_interval1_coef_struct(nb::module_ &m, nb::class_<Interval1CoefStruct> &cls) {
   cls.def(
-         py::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
-         py::arg("c0") = py::none(),
-         py::arg("c1") = py::none(),
-         py::arg("n_exp") = py::none()
+         nb::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
+         nb::arg("c0") = nb::none(),
+         nb::arg("c1") = nb::none(),
+         nb::arg("n_exp") = nb::none()
   )
-      .def_property("c0", &Interval1CoefStruct::c0, &Interval1CoefStruct::set_c0)
-      .def_property("c1", &Interval1CoefStruct::c1, &Interval1CoefStruct::set_c1)
-      .def_property("n_exp", &Interval1CoefStruct::n_exp, &Interval1CoefStruct::set_n_exp)
+      .def_prop_rw("c0", &Interval1CoefStruct::c0, &Interval1CoefStruct::set_c0)
+      .def_prop_rw("c1", &Interval1CoefStruct::c1, &Interval1CoefStruct::set_c1)
+      .def_prop_rw("n_exp", &Interval1CoefStruct::n_exp, &Interval1CoefStruct::set_n_exp)
       .def_static(
           "new_array1d",
           [](int sz) { return Interval1CoefStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -35,8 +36,8 @@ void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const Interval1CoefStruct &self) { return to_string(self); })
@@ -49,21 +50,20 @@ void init_interval1_coef_struct(py::module &m, py::class_<Interval1CoefStruct> &
       )
       .def(
           "__deepcopy__",
-          [](const Interval1CoefStruct &self, py::dict &memo) { return Interval1CoefStruct(self); }
+          [](const Interval1CoefStruct &self, nb::dict &memo) { return Interval1CoefStruct(self); }
       )
       .def(
           "__eq__",
           [](const Interval1CoefStruct &self, const Interval1CoefStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const Interval1CoefStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

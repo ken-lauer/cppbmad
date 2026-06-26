@@ -1,15 +1,14 @@
 #include "pybmad/generated/SimUtils_routines_q.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_q(py::module &m) {
+void init_SimUtils_routines_q(nb::module_ &m) {
   m.def(
       "quadratic_roots",
       &SimUtils::quadratic_roots,
-      py::arg("coefs"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("coefs"),
       R"""(Wrapper for Fortran routine quadratic_roots
 
 Parameters
@@ -25,12 +24,9 @@ root : 1D array of complex (shape: 2)
   );
   m.def(
       "quat_conj",
-      py::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
-      py::arg("q_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_conj (q_in) result (q_out)
-
-Overloaded name to create the conjugate of a quaternian.
+      nb::overload_cast<FixedArray1D<Complex, 4>>(&SimUtils::quat_conj),
+      nb::arg("q_in"),
+      R"""(Overloaded name to create the conjugate of a quaternian.
 Overloaded functions are:
   Function quat_conj_real (q_in) result (q_out)
   Function quat_conj_complex (q_in) result (q_out)
@@ -48,12 +44,9 @@ q_out : 1D array of complex (shape: 0:3)
   );
   m.def(
       "quat_conj",
-      py::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
-      py::arg("q_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_conj (q_in) result (q_out)
-
-Overloaded name to create the conjugate of a quaternian.
+      nb::overload_cast<FixedArray1D<Real, 4>>(&SimUtils::quat_conj),
+      nb::arg("q_in"),
+      R"""(Overloaded name to create the conjugate of a quaternian.
 Overloaded functions are:
   Function quat_conj_real (q_in) result (q_out)
   Function quat_conj_complex (q_in) result (q_out)
@@ -72,11 +65,8 @@ q_out : 1D array of float (shape: 0:3)
   m.def(
       "quat_inverse",
       &SimUtils::quat_inverse,
-      py::arg("q_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_inverse (q_in) result (q_out)
-
-Routine to create the inverse of a quaternian.
+      nb::arg("q_in"),
+      R"""(Routine to create the inverse of a quaternian.
 
 Parameters
 ----------
@@ -91,7 +81,7 @@ q_out : 1D array of float (shape: 0:3)
   );
   m.def(
       "quat_mul",
-      py::overload_cast<
+      nb::overload_cast<
           FixedArray1D<Complex, 4>,
           FixedArray1D<Complex, 4>,
           std::optional<FixedArray1D<Complex, 4>>,
@@ -101,19 +91,16 @@ q_out : 1D array of float (shape: 0:3)
           std::optional<FixedArray1D<Complex, 4>>,
           std::optional<FixedArray1D<Complex, 4>>,
           std::optional<FixedArray1D<Complex, 4>>>(&SimUtils::quat_mul),
-      py::arg("q1"),
-      py::arg("q2"),
-      py::arg("q3") = py::none(),
-      py::arg("q4") = py::none(),
-      py::arg("q5") = py::none(),
-      py::arg("q6") = py::none(),
-      py::arg("q7") = py::none(),
-      py::arg("q8") = py::none(),
-      py::arg("q9") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-
-Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      nb::arg("q1"),
+      nb::arg("q2"),
+      nb::arg("q3") = nb::none(),
+      nb::arg("q4") = nb::none(),
+      nb::arg("q5") = nb::none(),
+      nb::arg("q6") = nb::none(),
+      nb::arg("q7") = nb::none(),
+      nb::arg("q8") = nb::none(),
+      nb::arg("q9") = nb::none(),
+      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
 Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 Overloaded functions are:
   Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
@@ -141,7 +128,7 @@ q_out : 1D array of complex (shape: 0:3)
   );
   m.def(
       "quat_mul",
-      py::overload_cast<
+      nb::overload_cast<
           FixedArray1D<Real, 4>,
           FixedArray1D<Real, 4>,
           std::optional<FixedArray1D<Real, 4>>,
@@ -151,19 +138,16 @@ q_out : 1D array of complex (shape: 0:3)
           std::optional<FixedArray1D<Real, 4>>,
           std::optional<FixedArray1D<Real, 4>>,
           std::optional<FixedArray1D<Real, 4>>>(&SimUtils::quat_mul),
-      py::arg("q1"),
-      py::arg("q2"),
-      py::arg("q3") = py::none(),
-      py::arg("q4") = py::none(),
-      py::arg("q5") = py::none(),
-      py::arg("q6") = py::none(),
-      py::arg("q7") = py::none(),
-      py::arg("q8") = py::none(),
-      py::arg("q9") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
-
-Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
+      nb::arg("q1"),
+      nb::arg("q2"),
+      nb::arg("q3") = nb::none(),
+      nb::arg("q4") = nb::none(),
+      nb::arg("q5") = nb::none(),
+      nb::arg("q6") = nb::none(),
+      nb::arg("q7") = nb::none(),
+      nb::arg("q8") = nb::none(),
+      nb::arg("q9") = nb::none(),
+      R"""(Overloaded name to multiply quaternions q_out = q1 * q2 * q3 * q4 * ...
 Note: q_out = q1 * q2 represents a rotation of q2 first followed by q1.
 Overloaded functions are:
   Function quat_mul_real (q1, q2, q3, q4, q5, q6, q7, q8, q9) result (q_out)
@@ -191,13 +175,10 @@ q_out : 1D array of float (shape: 0:3)
   );
   m.def(
       "quat_rotate",
-      py::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(&SimUtils::quat_rotate),
-      py::arg("quat"),
-      py::arg("vec_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_rotate (quat, vec_in) result (vec_out)
-
-Overloaded name to rotate a vector using a quaternion..
+      nb::overload_cast<FixedArray1D<Complex, 4>, FixedArray1D<Complex, 3>>(&SimUtils::quat_rotate),
+      nb::arg("quat"),
+      nb::arg("vec_in"),
+      R"""(Overloaded name to rotate a vector using a quaternion..
 Overloaded functions are:
   Function quat_rotate_real (quat, vec_in) result (vec_out)
   Function quat_rotate_complex (quat, vec_in) result (vec_out)
@@ -218,13 +199,10 @@ vec_out : 1D array of complex (shape: 3)
   );
   m.def(
       "quat_rotate",
-      py::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(&SimUtils::quat_rotate),
-      py::arg("quat"),
-      py::arg("vec_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_rotate (quat, vec_in) result (vec_out)
-
-Overloaded name to rotate a vector using a quaternion..
+      nb::overload_cast<FixedArray1D<Real, 4>, FixedArray1D<Real, 3>>(&SimUtils::quat_rotate),
+      nb::arg("quat"),
+      nb::arg("vec_in"),
+      R"""(Overloaded name to rotate a vector using a quaternion..
 Overloaded functions are:
   Function quat_rotate_real (quat, vec_in) result (vec_out)
   Function quat_rotate_complex (quat, vec_in) result (vec_out)
@@ -243,31 +221,24 @@ vec_out : 1D array of float (shape: 3)
     Final vector.
 )"""
   );
-  py::class_<SimUtils::QuatToAxisAngle, std::unique_ptr<SimUtils::QuatToAxisAngle>>(
-      m,
-      "QuatToAxisAngle",
-      "quat_to_axis_angle return type"
-  )
-      .def_readonly("axis", &SimUtils::QuatToAxisAngle::axis)
-      .def_readonly("angle", &SimUtils::QuatToAxisAngle::angle)
+  nb::class_<SimUtils::QuatToAxisAngle>(m, "QuatToAxisAngle", "quat_to_axis_angle return type")
+      .def_ro("axis", &SimUtils::QuatToAxisAngle::axis)
+      .def_ro("angle", &SimUtils::QuatToAxisAngle::angle)
       .def("__len__", [](const SimUtils::QuatToAxisAngle &) { return 2; })
-      .def("__getitem__", [](const SimUtils::QuatToAxisAngle &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::QuatToAxisAngle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.axis);
+          return nb::cast(s.axis);
         if (i == 1)
-          return py::cast(s.angle);
-        throw py::index_error();
+          return nb::cast(s.angle);
+        throw nb::index_error();
       });
   m.def(
       "quat_to_axis_angle",
       &SimUtils::quat_to_axis_angle,
-      py::arg("quat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine quat_to_axis_angle (quat, axis, angle)
-
-Routine to convert from quaternion to axis + angle representation.
+      nb::arg("quat"),
+      R"""(Routine to convert from quaternion to axis + angle representation.
 The angle will be in the range 0 <= angle <= pi.
 
 Parameters
@@ -287,11 +258,8 @@ angle : float
   m.def(
       "quat_to_omega",
       &SimUtils::quat_to_omega,
-      py::arg("quat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_to_omega (quat) result (omega)
-
-Routine to convert rotation from quaternion representation to omega (axis + angle).
+      nb::arg("quat"),
+      R"""(Routine to convert rotation from quaternion representation to omega (axis + angle).
 
 Parameters
 ----------
@@ -307,11 +275,8 @@ omega : 1D array of float (shape: 3)
   m.def(
       "quat_to_w_mat",
       &SimUtils::quat_to_w_mat,
-      py::arg("quat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function quat_to_w_mat (quat) result (w_mat)
-
-Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
+      nb::arg("quat"),
+      R"""(Routine to construct the 3D rotation matrix w_mat given a rotation quaternion
 
 Parameters
 ----------
@@ -327,12 +292,11 @@ w_mat : 2D array of float (shape: 3,3)
   m.def(
       "query_string",
       &SimUtils::query_string,
-      py::arg("query_str"),
-      py::arg("upcase"),
-      py::arg("return_str"),
-      py::arg("ix"),
-      py::arg("ios"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("query_str"),
+      nb::arg("upcase"),
+      nb::arg("return_str"),
+      nb::arg("ix"),
+      nb::arg("ios"),
       R"""(Wrapper for Fortran routine query_string
 
 Parameters
@@ -351,8 +315,7 @@ ios : int
   m.def(
       "quote",
       &SimUtils::quote,
-      py::arg("str"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("str"),
       R"""(Wrapper for Fortran routine quote
 
 Parameters
@@ -367,9 +330,8 @@ q_str : str
   m.def(
       "quoten",
       &SimUtils::quoten,
-      py::arg("str"),
-      py::arg("delim") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("str"),
+      nb::arg("delim") = nb::none(),
       R"""(Wrapper for Fortran routine quoten
 
 Parameters

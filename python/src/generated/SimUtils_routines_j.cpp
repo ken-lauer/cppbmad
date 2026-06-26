@@ -1,16 +1,15 @@
 #include "pybmad/generated/SimUtils_routines_j.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_j(py::module &m) {
+void init_SimUtils_routines_j(nb::module_ &m) {
   m.def(
       "j_bessel",
       &SimUtils::j_bessel,
-      py::arg("m"),
-      py::arg("arg"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("m"),
+      nb::arg("arg"),
       R"""(Wrapper for Fortran routine j_bessel
 
 Parameters

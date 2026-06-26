@@ -407,9 +407,18 @@ extern "C" bool fortran_attribute_name2(
 );
 std::string
 attribute_name(EleStruct &ele, int ix_att, std::optional<bool> show_private = std::nullopt);
-
-// Skipped unusable routine attribute_set_bookkeeping:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_attribute_set_bookkeeping(
+    void *ele /* 0D_NOT_type in */,
+    const char *attrib_name /* 0D_NOT_character in */,
+    bool &err_flag /* 0D_NOT_logical in */,
+    void *attrib_ptr /* 0D_NOT_type in */
+);
+void attribute_set_bookkeeping(
+    EleStruct &ele,
+    std::string attrib_name,
+    bool err_flag,
+    optional_ref<AllPointerStruct> attrib_ptr = std::nullopt
+);
 extern "C" bool fortran_attribute_type(
     const char *attrib_name /* 0D_NOT_character in */,
     void *ele /* 0D_NOT_type in */,
@@ -733,9 +742,22 @@ void bmad_parser2(
     std::optional<bool> err_flag = std::nullopt,
     optional_ref<LatStruct> parse_lat = std::nullopt
 );
-
-// Skipped unusable routine bmad_parser_string_attribute_set:
-// - Untranslated type: parser_ele_struct (0D)
+extern "C" void fortran_bmad_parser_string_attribute_set(
+    void *ele /* 0D_NOT_type inout */,
+    const char *attrib_name /* 0D_NOT_character in */,
+    const char *delim /* 0D_NOT_character in */,
+    bool &delim_found /* 0D_NOT_logical in */,
+    void *pele /* 0D_NOT_type inout */,
+    const char *str_out /* 0D_NOT_character in */
+);
+void bmad_parser_string_attribute_set(
+    EleStruct &ele,
+    std::string attrib_name,
+    std::string delim,
+    bool delim_found,
+    optional_ref<ParserEleStruct> pele = std::nullopt,
+    std::optional<std::string> str_out = std::nullopt
+);
 extern "C" void fortran_bmad_patch_parameters_to_ptc(
     Bmad::array_descriptor_t &ang /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &exi /* 2D_NOT_real inout */
@@ -1183,9 +1205,18 @@ void complex_taylors_equal_complex_taylors(
 );
 extern "C" void fortran_compute_slave_coupler(void *slave /* 0D_NOT_type inout */);
 void compute_slave_coupler(EleStruct &slave);
-
-// Skipped unusable routine compute_super_lord_s:
-// - Untranslated type: parser_ele_struct (0D)
+extern "C" void fortran_compute_super_lord_s(
+    void *ref_ele /* 0D_NOT_type inout */,
+    void *super_ele /* 0D_NOT_type inout */,
+    void *pele /* 0D_NOT_type inout */,
+    int &ix_insert /* 0D_NOT_integer in */
+);
+void compute_super_lord_s(
+    EleStruct &ref_ele,
+    EleStruct &super_ele,
+    ParserEleStruct &pele,
+    int ix_insert
+);
 extern "C" void fortran_concat_ele_taylor(
     Bmad::array_descriptor_t &orb_taylor /* 1D_NOT_type inout */,
     void *ele /* 0D_NOT_type in */,
@@ -3378,9 +3409,26 @@ Bmad::GetNextWord get_next_word(
 
 // Skipped unusable routine get_opal_fieldgrid_name_and_scaling:
 // - Untranslated type: str_index_struct (0D)
-
-// Skipped unusable routine get_overlay_group_names:
-// - Untranslated type: parser_ele_struct (0D)
+extern "C" void fortran_get_overlay_group_names(
+    void *ele /* 0D_NOT_type inout */,
+    void *lat /* 0D_NOT_type inout */,
+    void *pele /* 0D_NOT_type inout */,
+    const char *delim /* 0D_NOT_character in */,
+    bool &delim_found /* 0D_NOT_logical in */,
+    bool &is_control_var_list /* 0D_NOT_logical in */,
+    bool &err_flag /* 0D_NOT_logical in */,
+    void *names_out /* 1D_ALLOC_character inout */
+);
+void get_overlay_group_names(
+    EleStruct &ele,
+    LatStruct &lat,
+    ParserEleStruct &pele,
+    std::string delim,
+    bool delim_found,
+    bool is_control_var_list,
+    bool err_flag,
+    optional_ref<CharacterAlloc1D> names_out = std::nullopt
+);
 extern "C" void fortran_get_sequence_args(
     const char *seq_name /* 0D_NOT_character in */,
     void *arg_list /* 1D_ALLOC_character inout */,
@@ -5588,12 +5636,30 @@ Bmad::ParseRealList2 parse_real_list2(
 // Skipped unusable routine parse_real_matrix:
 // - Variable in sized array: 2D_ALLOC_real
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine parse_superimpose_command:
-// - Untranslated type: parser_ele_struct (0D)
-
-// Skipped unusable routine parser2_add_superimpose:
-// - Untranslated type: parser_ele_struct (0D)
+extern "C" void fortran_parse_superimpose_command(
+    void *lat /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type inout */,
+    void *pele /* 0D_NOT_type inout */,
+    const char *delim /* 0D_NOT_character in */
+);
+void parse_superimpose_command(
+    LatStruct &lat,
+    EleStruct &ele,
+    ParserEleStruct &pele,
+    std::string delim
+);
+extern "C" void fortran_parser2_add_superimpose(
+    void *lat /* 0D_NOT_type inout */,
+    void *super_ele_in /* 0D_NOT_type inout */,
+    void *pele /* 0D_NOT_type inout */,
+    void *in_lat /* 0D_NOT_type inout */
+);
+void parser2_add_superimpose(
+    LatStruct &lat,
+    EleStruct &super_ele_in,
+    ParserEleStruct &pele,
+    optional_ref<LatStruct> in_lat = std::nullopt
+);
 
 // Skipped unusable routine parser_add_branch:
 // - Untranslated type: seq_struct (1D)
@@ -5609,7 +5675,6 @@ void parser_add_constant(std::string word, LatStruct &lat, bool redef_is_error);
 // - Untranslated type: parser_lat_struct (0D)
 
 // Skipped unusable routine parser_add_superimpose:
-// - Untranslated type: parser_ele_struct (0D)
 // - Untranslated type: parser_lat_struct (0D)
 extern "C" void fortran_parser_call_check(
     const char *word /* 0D_NOT_character in */,
@@ -5633,7 +5698,6 @@ void parser_call_check(
 
 // Skipped unusable routine parser_error:
 // - Untranslated type: seq_struct (0D)
-// - Untranslated type: parser_ele_struct (0D)
 
 // Skipped unusable routine parser_expand_line:
 // - Untranslated type: seq_struct (1D)
@@ -5771,9 +5835,30 @@ extern "C" void fortran_parser_read_sr_wake(
     bool &err_flag /* 0D_NOT_logical in */
 );
 void parser_read_sr_wake(EleStruct &ele, std::string delim, bool delim_found, bool err_flag);
-
-// Skipped unusable routine parser_set_attribute:
-// - Untranslated type: parser_ele_struct (0D)
+extern "C" void fortran_parser_set_attribute(
+    int &how /* 0D_NOT_integer in */,
+    void *ele /* 0D_NOT_type in */,
+    const char *delim /* 0D_NOT_character out */,
+    bool &delim_found /* 0D_NOT_logical out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    void *pele /* 0D_NOT_type out */,
+    bool *check_free /* 0D_NOT_logical in */,
+    bool *heterogeneous_ele_list /* 0D_NOT_logical in */,
+    bool *set_field_master /* 0D_NOT_logical in */
+);
+struct ParserSetAttribute {
+  std::string delim;
+  bool delim_found;
+  bool err_flag;
+  ParserEleStruct pele;
+};
+Bmad::ParserSetAttribute parser_set_attribute(
+    int how,
+    EleStruct &ele,
+    std::optional<bool> check_free = std::nullopt,
+    std::optional<bool> heterogeneous_ele_list = std::nullopt,
+    std::optional<bool> set_field_master = std::nullopt
+);
 extern "C" void fortran_parser_transfer_control_struct(
     void *con_in /* 0D_NOT_type in */,
     void *con_out /* 0D_NOT_type out */,
@@ -5953,9 +6038,28 @@ void point_photon_emission(
     double max_target_area,
     std::optional<FixedArray2D<Real, 3, 3>> w_to_surface = std::nullopt
 );
-
-// Skipped unusable routine pointer_to_attribute:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_pointer_to_attribute(
+    void *ele /* 0D_NOT_type in */,
+    const char *attrib_name /* 0D_NOT_character in */,
+    bool &do_allocation /* 0D_NOT_logical in */,
+    void *a_ptr /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    bool *err_print_flag /* 0D_NOT_logical in */,
+    int &ix_attrib /* 0D_NOT_integer out */,
+    bool *do_unlink /* 0D_NOT_logical in */
+);
+struct PointerToAttribute {
+  AllPointerStruct a_ptr;
+  bool err_flag;
+  int ix_attrib;
+};
+Bmad::PointerToAttribute pointer_to_attribute(
+    EleStruct &ele,
+    std::string attrib_name,
+    bool do_allocation,
+    std::optional<bool> err_print_flag = std::nullopt,
+    std::optional<bool> do_unlink = std::nullopt
+);
 extern "C" bool fortran_pointer_to_branch_given_ele(
     void *ele /* 0D_NOT_type in */,
     void *branch_ptr /* 0D_PTR_type out */
@@ -6049,9 +6153,24 @@ struct PointerToGirder {
   std::optional<EleStruct> girder;
 };
 Bmad::PointerToGirder pointer_to_girder(EleStruct &ele);
-
-// Skipped unusable routine pointer_to_indexed_attribute:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_pointer_to_indexed_attribute(
+    void *ele /* 0D_NOT_type in */,
+    int &ix_attrib /* 0D_NOT_integer in */,
+    bool &do_allocation /* 0D_NOT_logical in */,
+    void *a_ptr /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    bool *err_print_flag /* 0D_NOT_logical in */
+);
+struct PointerToIndexedAttribute {
+  AllPointerStruct a_ptr;
+  bool err_flag;
+};
+Bmad::PointerToIndexedAttribute pointer_to_indexed_attribute(
+    EleStruct &ele,
+    int ix_attrib,
+    bool do_allocation,
+    std::optional<bool> err_print_flag = std::nullopt
+);
 extern "C" bool fortran_pointer_to_lord(
     void *slave /* 0D_NOT_type in */,
     int &ix_lord /* 0D_NOT_integer in */,
@@ -6210,9 +6329,32 @@ struct PointerToWall3d {
   std::optional<Wall3dStruct> wall3d;
 };
 Bmad::PointerToWall3d pointer_to_wall3d(EleStruct &ele, std::optional<int> ix_wall = std::nullopt);
-
-// Skipped unusable routine pointers_to_attribute:
-// - Untranslated type: all_pointer_struct (1D)
+extern "C" void fortran_pointers_to_attribute(
+    void *lat /* 0D_NOT_type in */,
+    const char *ele_name /* 0D_NOT_character in */,
+    const char *attrib_name /* 0D_NOT_character in */,
+    bool &do_allocation /* 0D_NOT_logical in */,
+    void *ptr_array /* 1D_ALLOC_type out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    bool *err_print_flag /* 0D_NOT_logical in */,
+    void *eles /* 1D_ALLOC_type out */,
+    int &ix_attrib /* 0D_NOT_integer out */,
+    bool *do_unlink /* 0D_NOT_logical in */
+);
+struct PointersToAttribute {
+  AllPointerStructAlloc1D ptr_array;
+  bool err_flag;
+  ElePointerStructAlloc1D eles;
+  int ix_attrib;
+};
+Bmad::PointersToAttribute pointers_to_attribute(
+    LatStruct &lat,
+    std::string ele_name,
+    std::string attrib_name,
+    bool do_allocation,
+    std::optional<bool> err_print_flag = std::nullopt,
+    std::optional<bool> do_unlink = std::nullopt
+);
 extern "C" bool fortran_polar_to_spinor(
     void *polar /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &spinor /* 1D_NOT_complex out */
@@ -7217,9 +7359,16 @@ void set_ele_status_stale(
     std::optional<bool> set_slaves = std::nullopt,
     std::optional<ElePointerStructAlloc1D> old_eles = std::nullopt
 );
-
-// Skipped unusable routine set_flags_for_changed_all_attribute:
-// - Untranslated type: all_pointer_struct (0D)
+extern "C" void fortran_set_flags_for_changed_all_attribute(
+    void *ele /* 0D_NOT_type in */,
+    void *all_attrib /* 0D_NOT_type in */,
+    bool *set_dependent /* 0D_NOT_logical in */
+);
+void set_flags_for_changed_attribute(
+    EleStruct &ele,
+    AllPointerStruct &all_attrib,
+    std::optional<bool> set_dependent = std::nullopt
+);
 extern "C" void fortran_set_flags_for_changed_integer_attribute(
     void *ele /* 0D_NOT_type in */,
     int &attrib /* 0D_NOT_integer in */,

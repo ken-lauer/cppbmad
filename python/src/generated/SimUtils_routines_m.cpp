@@ -1,16 +1,15 @@
 #include "pybmad/generated/SimUtils_routines_m.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_m(py::module &m) {
+void init_SimUtils_routines_m(nb::module_ &m) {
   m.def(
       "make_legal_comment",
       &SimUtils::make_legal_comment,
-      py::arg("comment_in"),
-      py::arg("comment_out"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("comment_in"),
+      nb::arg("comment_out"),
       R"""(Wrapper for Fortran routine make_legal_comment
 
 Parameters
@@ -23,11 +22,8 @@ comment_out : str
   m.def(
       "mass_of",
       &SimUtils::mass_of,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function mass_of (species) result (mass)
-
-Routine to return the mass, in units of eV/c^2, of a particle.
+      nb::arg("species"),
+      R"""(Routine to return the mass, in units of eV/c^2, of a particle.
 To convert to AMU divide mass_of value by the constant atomic_mass_unit.
 
 Note: For atoms where the isotopic number is given, the mass is calculated using the neutral atomic mass
@@ -48,9 +44,8 @@ mass : float
   m.def(
       "match_reg",
       &SimUtils::match_reg,
-      py::arg("str"),
-      py::arg("pat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("str"),
+      nb::arg("pat"),
       R"""(Wrapper for Fortran routine match_reg
 
 Parameters
@@ -67,9 +62,8 @@ is_match : bool
   m.def(
       "match_wild",
       &SimUtils::match_wild,
-      py::arg("string"),
-      py::arg("template_"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("template_"),
       R"""(Wrapper for Fortran routine match_wild
 
 Parameters
@@ -84,13 +78,12 @@ is_match : bool
   m.def(
       "match_word",
       &SimUtils::match_word,
-      py::arg("string"),
-      py::arg("names"),
-      py::arg("ix"),
-      py::arg("exact_case") = py::none(),
-      py::arg("can_abbreviate") = py::none(),
-      py::arg("matched_name") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("names"),
+      nb::arg("ix"),
+      nb::arg("exact_case") = nb::none(),
+      nb::arg("can_abbreviate") = nb::none(),
+      nb::arg("matched_name") = nb::none(),
       R"""(Wrapper for Fortran routine match_word
 
 Parameters
@@ -111,20 +104,16 @@ matched_name : str, optional
   m.def(
       "maximize_projection",
       &SimUtils::maximize_projection,
-      py::arg("seed"),
-      py::arg("cdata"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(function maximize_projection
-
-Optimizer that uses Numerical Recipes brent to find a local maximum,
+      nb::arg("seed"),
+      nb::arg("cdata"),
+      R"""(Optimizer that uses Numerical Recipes brent to find a local maximum,
 which is the frequency that maximizes the projection.
 )"""
   );
   m.def(
       "milli_sleep",
       &SimUtils::milli_sleep,
-      py::arg("milli_sec"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("milli_sec"),
       R"""(Wrapper for Fortran routine milli_sleep
 
 Parameters
@@ -135,12 +124,9 @@ milli_sec : int
   m.def(
       "modulo2_dp",
       &SimUtils::modulo2_dp,
-      py::arg("x"),
-      py::arg("amp"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function modulo2 (x, amp) result (mod2)
-
-Function to return
+      nb::arg("x"),
+      nb::arg("amp"),
+      R"""(Function to return
     mod2 = x + 2 * n * amp
 where n is an integer chosen such that
    -amp <= mod2 < amp
@@ -162,12 +148,9 @@ mod2 : float
   m.def(
       "modulo2_int",
       &SimUtils::modulo2_int,
-      py::arg("x"),
-      py::arg("amp"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function modulo2 (x, amp) result (mod2)
-
-Function to return
+      nb::arg("x"),
+      nb::arg("amp"),
+      R"""(Function to return
     mod2 = x + 2 * n * amp
 where n is an integer chosen such that
    -amp <= mod2 < amp
@@ -189,12 +172,9 @@ mod2 : int
   m.def(
       "modulo2_qp",
       &SimUtils::modulo2_qp,
-      py::arg("x"),
-      py::arg("amp"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function modulo2 (x, amp) result (mod2)
-
-Function to return
+      nb::arg("x"),
+      nb::arg("amp"),
+      R"""(Function to return
     mod2 = x + 2 * n * amp
 where n is an integer chosen such that
    -amp <= mod2 < amp
@@ -216,12 +196,9 @@ mod2 : float
   m.def(
       "modulo2_sp",
       &SimUtils::modulo2_sp,
-      py::arg("x"),
-      py::arg("amp"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function modulo2 (x, amp) result (mod2)
-
-Function to return
+      nb::arg("x"),
+      nb::arg("amp"),
+      R"""(Function to return
     mod2 = x + 2 * n * amp
 where n is an integer chosen such that
    -amp <= mod2 < amp

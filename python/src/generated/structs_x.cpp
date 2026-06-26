@@ -7,34 +7,35 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // xy_disp_struct
-void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
+void init_xy_disp_struct(nb::module_ &m, nb::class_<XyDispStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>>(),
-         py::arg("eta") = py::none(),
-         py::arg("etap") = py::none(),
-         py::arg("deta_ds") = py::none(),
-         py::arg("sigma") = py::none(),
-         py::arg("deta_dpz") = py::none(),
-         py::arg("detap_dpz") = py::none()
+         nb::arg("eta") = nb::none(),
+         nb::arg("etap") = nb::none(),
+         nb::arg("deta_ds") = nb::none(),
+         nb::arg("sigma") = nb::none(),
+         nb::arg("deta_dpz") = nb::none(),
+         nb::arg("detap_dpz") = nb::none()
   )
-      .def_property("eta", &XyDispStruct::eta, &XyDispStruct::set_eta)
-      .def_property("etap", &XyDispStruct::etap, &XyDispStruct::set_etap)
-      .def_property("deta_ds", &XyDispStruct::deta_ds, &XyDispStruct::set_deta_ds)
-      .def_property("sigma", &XyDispStruct::sigma, &XyDispStruct::set_sigma)
-      .def_property("deta_dpz", &XyDispStruct::deta_dpz, &XyDispStruct::set_deta_dpz)
-      .def_property("detap_dpz", &XyDispStruct::detap_dpz, &XyDispStruct::set_detap_dpz)
+      .def_prop_rw("eta", &XyDispStruct::eta, &XyDispStruct::set_eta)
+      .def_prop_rw("etap", &XyDispStruct::etap, &XyDispStruct::set_etap)
+      .def_prop_rw("deta_ds", &XyDispStruct::deta_ds, &XyDispStruct::set_deta_ds)
+      .def_prop_rw("sigma", &XyDispStruct::sigma, &XyDispStruct::set_sigma)
+      .def_prop_rw("deta_dpz", &XyDispStruct::deta_dpz, &XyDispStruct::set_deta_dpz)
+      .def_prop_rw("detap_dpz", &XyDispStruct::detap_dpz, &XyDispStruct::set_detap_dpz)
 
       .def("__repr__", [](const XyDispStruct &self) { return to_string(self); })
 
@@ -46,21 +47,20 @@ void init_xy_disp_struct(py::module &m, py::class_<XyDispStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const XyDispStruct &self, py::dict &memo) { return XyDispStruct(self); }
+          [](const XyDispStruct &self, nb::dict &memo) { return XyDispStruct(self); }
       )
       .def(
           "__eq__",
           [](const XyDispStruct &self, const XyDispStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const XyDispStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

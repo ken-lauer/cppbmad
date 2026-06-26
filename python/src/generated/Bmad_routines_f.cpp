@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_f.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyFibreToEle python_fibre_to_ele(
@@ -15,15 +15,14 @@ PyFibreToEle python_fibre_to_ele(
   return py_result;
 }
 
-void init_Bmad_routines_f(py::module &m) {
+void init_Bmad_routines_f(nb::module_ &m) {
   m.def(
       "fft1",
       &Bmad::fft1,
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("n"),
-      py::arg("isn"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("n"),
+      nb::arg("isn"),
       R"""(Wrapper for Fortran routine fft1
 
 Parameters
@@ -41,31 +40,26 @@ Returns
 ierr : int
 )"""
   );
-  py::class_<PyFibreToEle, std::unique_ptr<PyFibreToEle>>(
-      m,
-      "FibreToEle",
-      "fibre_to_ele return type"
-  )
-      .def_readonly("err_flag", &PyFibreToEle::err_flag)
-      .def_readonly("ix_ele", &PyFibreToEle::ix_ele)
+  nb::class_<PyFibreToEle>(m, "FibreToEle", "fibre_to_ele return type")
+      .def_ro("err_flag", &PyFibreToEle::err_flag)
+      .def_ro("ix_ele", &PyFibreToEle::ix_ele)
       .def("__len__", [](const PyFibreToEle &) { return 2; })
-      .def("__getitem__", [](const PyFibreToEle &s, int i) -> py::object {
+      .def("__getitem__", [](const PyFibreToEle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.ix_ele);
-        throw py::index_error();
+          return nb::cast(s.ix_ele);
+        throw nb::index_error();
       });
   m.def(
       "fibre_to_ele",
       &python_fibre_to_ele,
-      py::arg("ptc_fibre"),
-      py::arg("branch"),
-      py::arg("ix_ele"),
-      py::arg("from_mad") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ptc_fibre"),
+      nb::arg("branch"),
+      nb::arg("ix_ele"),
+      nb::arg("from_mad") = nb::none(),
       R"""(Wrapper for Fortran routine fibre_to_ele
 
 Parameters
@@ -100,12 +94,9 @@ err_flag : bool
   m.def(
       "field_attribute_free",
       &Bmad::field_attribute_free,
-      py::arg("ele"),
-      py::arg("attrib_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function field_attribute_free (ele, attrib_name) result (free)
-
-Routine to check if a field attribute is free to vary.
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      R"""(Routine to check if a field attribute is free to vary.
 
 Field attributes are either normalized (EG K2 of a sextupole) or unnormalized (EG B2_GRADIENT of a sextupole).
 Whether normalized or unnormalized attributes are free to vary will depend on the setting  of ele%field_master.
@@ -129,12 +120,9 @@ free : bool
   m.def(
       "finalize_reflectivity_table",
       &Bmad::finalize_reflectivity_table,
-      py::arg("table"),
-      py::arg("in_degrees"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine finalize_reflectivity_table (table, in_degrees)
-
-Routine to finalize the construction of the reflectivity tables for a surface.
+      nb::arg("table"),
+      nb::arg("in_degrees"),
+      R"""(Routine to finalize the construction of the reflectivity tables for a surface.
 
 Parameters
 ----------
@@ -147,29 +135,24 @@ in_degrees : bool
     Table angles in degrees?
 )"""
   );
-  py::class_<Bmad::FindElementEnds, std::unique_ptr<Bmad::FindElementEnds>>(
-      m,
-      "FindElementEnds",
-      "find_element_ends return type"
-  )
-      .def_readonly("ele1", &Bmad::FindElementEnds::ele1)
-      .def_readonly("ele2", &Bmad::FindElementEnds::ele2)
+  nb::class_<Bmad::FindElementEnds>(m, "FindElementEnds", "find_element_ends return type")
+      .def_ro("ele1", &Bmad::FindElementEnds::ele1)
+      .def_ro("ele2", &Bmad::FindElementEnds::ele2)
       .def("__len__", [](const Bmad::FindElementEnds &) { return 2; })
-      .def("__getitem__", [](const Bmad::FindElementEnds &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::FindElementEnds &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ele1);
+          return nb::cast(s.ele1);
         if (i == 1)
-          return py::cast(s.ele2);
-        throw py::index_error();
+          return nb::cast(s.ele2);
+        throw nb::index_error();
       });
   m.def(
       "find_element_ends",
       &Bmad::find_element_ends,
-      py::arg("ele"),
-      py::arg("ix_multipass") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("ix_multipass") = nb::none(),
       R"""(Wrapper for Fortran routine find_element_ends
 
 Parameters
@@ -195,12 +178,9 @@ ele2 : EleStruct, optional
   m.def(
       "find_fwhm",
       &Bmad::find_fwhm,
-      py::arg("bound"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine find_fwhm(bound,args,fwhm)
-
-Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
+      nb::arg("bound"),
+      nb::arg("args"),
+      R"""(Finds the full width at half max of psi(t).  fwhm * c_light / TwoRtTwoLnTwo is taken as the bunch length.
 
 Steps followed:
   Find value for p(0) that normalizes the solution to dpsi/dt.
@@ -223,31 +203,30 @@ fwhm : float
     Full width at half max of psi(t)
 )"""
   );
-  py::class_<Bmad::FindMatchingFieldmap, std::unique_ptr<Bmad::FindMatchingFieldmap>>(
+  nb::class_<Bmad::FindMatchingFieldmap>(
       m,
       "FindMatchingFieldmap",
       "find_matching_fieldmap return type"
   )
-      .def_readonly("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
-      .def_readonly("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
+      .def_ro("match_ele", &Bmad::FindMatchingFieldmap::match_ele)
+      .def_ro("ix_field", &Bmad::FindMatchingFieldmap::ix_field)
       .def("__len__", [](const Bmad::FindMatchingFieldmap &) { return 2; })
-      .def("__getitem__", [](const Bmad::FindMatchingFieldmap &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::FindMatchingFieldmap &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.match_ele);
+          return nb::cast(s.match_ele);
         if (i == 1)
-          return py::cast(s.ix_field);
-        throw py::index_error();
+          return nb::cast(s.ix_field);
+        throw nb::index_error();
       });
   m.def(
       "find_matching_fieldmap",
       &Bmad::find_matching_fieldmap,
-      py::arg("file_name"),
-      py::arg("ele"),
-      py::arg("fm_type"),
-      py::arg("ignore_slaves") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      nb::arg("fm_type"),
+      nb::arg("ignore_slaves") = nb::none(),
       R"""(Wrapper for Fortran routine find_matching_fieldmap
 
 Parameters
@@ -277,13 +256,10 @@ match_ele : EleStruct, optional
   m.def(
       "find_normalization",
       &Bmad::find_normalization,
-      py::arg("bound"),
-      py::arg("p0"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine find_normalization(bound,p0,args,pnrml)
-
-Finds value for boundary condition psi(0) that results in integral
+      nb::arg("bound"),
+      nb::arg("p0"),
+      nb::arg("args"),
+      R"""(Finds value for boundary condition psi(0) that results in integral
 of psi(t) from -bound to +bound to be 1.0.  This is done with the secant method.
 Repeadedly calls integrate_psi with different values for psi(0).
 
@@ -304,30 +280,25 @@ pnrml : float
     Value for psi(0) that results in integral of psi(t) from -bound to +bound being equal to 1.0
 )"""
   );
-  py::class_<Bmad::FloorAnglesToWMat, std::unique_ptr<Bmad::FloorAnglesToWMat>>(
-      m,
-      "FloorAnglesToWMat",
-      "floor_angles_to_w_mat return type"
-  )
-      .def_readonly("w_mat", &Bmad::FloorAnglesToWMat::w_mat)
-      .def_readonly("w_mat_inv", &Bmad::FloorAnglesToWMat::w_mat_inv)
+  nb::class_<Bmad::FloorAnglesToWMat>(m, "FloorAnglesToWMat", "floor_angles_to_w_mat return type")
+      .def_ro("w_mat", &Bmad::FloorAnglesToWMat::w_mat)
+      .def_ro("w_mat_inv", &Bmad::FloorAnglesToWMat::w_mat_inv)
       .def("__len__", [](const Bmad::FloorAnglesToWMat &) { return 2; })
-      .def("__getitem__", [](const Bmad::FloorAnglesToWMat &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::FloorAnglesToWMat &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.w_mat_inv);
-        throw py::index_error();
+          return nb::cast(s.w_mat_inv);
+        throw nb::index_error();
       });
   m.def(
       "floor_angles_to_w_mat",
       &Bmad::floor_angles_to_w_mat,
-      py::arg("theta"),
-      py::arg("phi"),
-      py::arg("psi"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("theta"),
+      nb::arg("phi"),
+      nb::arg("psi"),
       R"""(Wrapper for Fortran routine floor_angles_to_w_mat
 
 Parameters
@@ -350,32 +321,34 @@ w_mat_inv : 2D array of float (shape: 3,3), optional
     Inverse Orientation matrix.
 )"""
   );
-  py::class_<Bmad::FloorWMatToAngles, std::unique_ptr<Bmad::FloorWMatToAngles>>(
-      m,
-      "FloorWMatToAngles",
-      "floor_w_mat_to_angles return type"
-  )
-      .def_readonly("theta", &Bmad::FloorWMatToAngles::theta)
-      .def_readonly("phi", &Bmad::FloorWMatToAngles::phi)
-      .def_readonly("psi", &Bmad::FloorWMatToAngles::psi)
+  nb::class_<Bmad::FloorWMatToAngles>(m, "FloorWMatToAngles", "floor_w_mat_to_angles return type")
+      .def_ro("theta", &Bmad::FloorWMatToAngles::theta)
+      .def_ro("phi", &Bmad::FloorWMatToAngles::phi)
+      .def_ro("psi", &Bmad::FloorWMatToAngles::psi)
       .def("__len__", [](const Bmad::FloorWMatToAngles &) { return 3; })
-      .def("__getitem__", [](const Bmad::FloorWMatToAngles &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::FloorWMatToAngles &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.theta);
+          return nb::cast(s.theta);
         if (i == 1)
-          return py::cast(s.phi);
+          return nb::cast(s.phi);
         if (i == 2)
-          return py::cast(s.psi);
-        throw py::index_error();
+          return nb::cast(s.psi);
+        throw nb::index_error();
       });
   m.def(
       "floor_w_mat_to_angles",
-      &Bmad::floor_w_mat_to_angles,
-      py::arg("w_mat"),
-      py::arg("floor0") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](FixedArray2D<Real, 3, 3> w_mat, FloorPositionStruct *floor0) {
+        auto fn = static_cast<
+            Bmad::
+                FloorWMatToAngles (*)(FixedArray2D<Real, 3, 3>, optional_ref<FloorPositionStruct>)>(
+            &Bmad::floor_w_mat_to_angles
+        );
+        return fn(w_mat, ptr_to_opt_ref(floor0));
+      },
+      nb::arg("w_mat"),
+      nb::arg("floor0") = nb::none(),
       R"""(Wrapper for Fortran routine floor_w_mat_to_angles
 
 Parameters
@@ -402,12 +375,9 @@ psi : float
   m.def(
       "form_complex_taylor",
       &Bmad::form_complex_taylor,
-      py::arg("re_taylor"),
-      py::arg("im_taylor"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine form_complex_taylor (re_taylor, im_taylor, complex_taylor)
-
-Subroutine to form a complex taylor from two taylor series representing
+      nb::arg("re_taylor"),
+      nb::arg("im_taylor"),
+      R"""(Subroutine to form a complex taylor from two taylor series representing
   the real and imaginary parts
 
 Parameters
@@ -424,32 +394,29 @@ complex_taylor : ComplexTaylorStruct
     combined complex taylor
 )"""
   );
-  py::class_<Bmad::FormDigestedBmadFileName, std::unique_ptr<Bmad::FormDigestedBmadFileName>>(
+  nb::class_<Bmad::FormDigestedBmadFileName>(
       m,
       "FormDigestedBmadFileName",
       "form_digested_bmad_file_name return type"
   )
-      .def_readonly("digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
-      .def_readonly("full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
+      .def_ro("digested_file", &Bmad::FormDigestedBmadFileName::digested_file)
+      .def_ro("full_lat_file", &Bmad::FormDigestedBmadFileName::full_lat_file)
       .def("__len__", [](const Bmad::FormDigestedBmadFileName &) { return 2; })
-      .def("__getitem__", [](const Bmad::FormDigestedBmadFileName &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::FormDigestedBmadFileName &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.digested_file);
+          return nb::cast(s.digested_file);
         if (i == 1)
-          return py::cast(s.full_lat_file);
-        throw py::index_error();
+          return nb::cast(s.full_lat_file);
+        throw nb::index_error();
       });
   m.def(
       "form_digested_bmad_file_name",
       &Bmad::form_digested_bmad_file_name,
-      py::arg("lat_file"),
-      py::arg("use_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine form_digested_bmad_file_name (lat_file, digested_file, full_lat_file, use_line)
-
-Subroutine to form the standard name of the Bmad digested file.
+      nb::arg("lat_file"),
+      nb::arg("use_line") = nb::none(),
+      R"""(Subroutine to form the standard name of the Bmad digested file.
 The standard digested file name has the suffix added to the file name:
     suffix = '.digested' + bmad_inc_version$
 Exception: If the use_line argument is present and not blank, the suffix will be:
@@ -476,10 +443,9 @@ full_lat_file : str, optional
   m.def(
       "fringe_here",
       &Bmad::fringe_here,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("particle_at"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("particle_at"),
       R"""(Wrapper for Fortran routine fringe_here
 
 Parameters

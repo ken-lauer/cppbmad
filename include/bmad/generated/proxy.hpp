@@ -1601,6 +1601,87 @@ void nametable_struct_get_index_info(const void *s, void **d, int *bounds, bool 
 void nametable_struct_reallocate_index(void *s, int lb, size_t n);
 
 void nametable_struct_set_index(void *s, const void *d, const int *shape);
+void all_pointer_struct_get_r(const void *struct_obj, double *value_out, bool *is_valid);
+void all_pointer_struct_set_r(void *struct_obj, double value_in);
+void all_pointer_struct_get_q(const void *struct_obj, long double *value_out, bool *is_valid);
+void all_pointer_struct_set_q(void *struct_obj, long double value_in);
+void all_pointer_struct_get_i(const void *struct_obj, int *value_out, bool *is_valid);
+void all_pointer_struct_set_i(void *struct_obj, int value_in);
+void all_pointer_struct_get_l(const void *struct_obj, bool *value_out, bool *is_valid);
+void all_pointer_struct_set_l(void *struct_obj, bool value_in);
+void all_pointer_struct_get_r1_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void all_pointer_struct_set_r1(void *s, const void *d, const int *shape);
+void all_pointer_struct_get_i1_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void all_pointer_struct_set_i1(void *s, const void *d, const int *shape);
+void parser_ele_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void parser_ele_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void parser_ele_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
+void parser_ele_struct_set_logical(void *struct_obj, int field_id, bool value_in);
+void parser_ele_struct_get_real(const void *struct_obj, int field_id, double *value_out);
+void parser_ele_struct_set_real(void *struct_obj, int field_id, double value_in);
+
+void parser_ele_struct_get_control_info(
+    const void *s,
+    void **d,
+    int *bounds,
+    bool *is_alloc,
+    size_t *el_size
+);
+void parser_ele_struct_reallocate_control(void *s, int lb, size_t n);
+
+void parser_ele_struct_get_field_overlaps_info(
+    const void *s,
+    char **d,
+    int *bounds, // [lower, upper]
+    int *str_len,
+    bool *is_alloc
+);
+
+void parser_ele_struct_get_ref_name_info(const void *s, char **d, int *bounds, bool *a);
+void parser_ele_struct_set_ref_name(void *struct_obj, const char *str_ptr, int str_len);
+void parser_ele_struct_get_ele_name_info(const void *s, char **d, int *bounds, bool *a);
+void parser_ele_struct_set_ele_name(void *struct_obj, const char *str_ptr, int str_len);
+
+void parser_ele_struct_get_names1_info(
+    const void *s,
+    char **d,
+    int *bounds, // [lower, upper]
+    int *str_len,
+    bool *is_alloc
+);
+
+void parser_ele_struct_get_names2_info(
+    const void *s,
+    char **d,
+    int *bounds, // [lower, upper]
+    int *str_len,
+    bool *is_alloc
+);
+
+void parser_ele_struct_get_lat_file_info(const void *s, char **d, int *bounds, bool *a);
+void parser_ele_struct_set_lat_file(void *struct_obj, const char *str_ptr, int str_len);
+void parser_ele_struct_get_default_attrib_info(const void *s, char **d, int *bounds, bool *a);
+void parser_ele_struct_set_default_attrib(void *struct_obj, const char *str_ptr, int str_len);
+void parser_controller_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void parser_controller_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void parser_controller_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
+void parser_controller_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
+void parser_controller_struct_get_attrib_name_info(const void *s, char **d, int *bounds, bool *a);
+void parser_controller_struct_set_attrib_name(void *struct_obj, const char *str_ptr, int str_len);
+
+void parser_controller_struct_get_stack_info(
+    const void *s,
+    void **d,
+    int *bounds,
+    bool *is_alloc,
+    size_t *el_size
+);
+void parser_controller_struct_reallocate_stack(void *s, int lb, size_t n);
+
+void parser_controller_struct_get_y_knot_info(const void *s, void **d, int *bounds, bool *is_alloc);
+void parser_controller_struct_reallocate_y_knot(void *s, int lb, size_t n);
+
+void parser_controller_struct_set_y_knot(void *s, const void *d, const int *shape);
 void tao_spin_dn_dpz_struct_get_vec_info(const void *s, double **d, int *bounds, bool *is_alloc);
 void tao_spin_dn_dpz_struct_set_vec(void *s, const void *d, const int *shape);
 void tao_spin_dn_dpz_struct_get_partial_info(
@@ -5281,6 +5362,51 @@ void *allocate_nametable_struct_container();
 void reallocate_nametable_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_nametable_struct_container(void *) noexcept;
 void access_nametable_struct_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
+);
+
+void *allocate_fortran_all_pointer_struct(int n, size_t *element_size);
+void deallocate_fortran_all_pointer_struct(void *ptr, int n) noexcept;
+void copy_fortran_all_pointer_struct(const void *src, void *dst);
+
+void *allocate_all_pointer_struct_container();
+void reallocate_all_pointer_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_all_pointer_struct_container(void *) noexcept;
+void access_all_pointer_struct_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
+);
+
+void *allocate_fortran_parser_ele_struct(int n, size_t *element_size);
+void deallocate_fortran_parser_ele_struct(void *ptr, int n) noexcept;
+void copy_fortran_parser_ele_struct(const void *src, void *dst);
+
+void *allocate_parser_ele_struct_container();
+void reallocate_parser_ele_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_parser_ele_struct_container(void *) noexcept;
+void access_parser_ele_struct_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
+);
+
+void *allocate_fortran_parser_controller_struct(int n, size_t *element_size);
+void deallocate_fortran_parser_controller_struct(void *ptr, int n) noexcept;
+void copy_fortran_parser_controller_struct(const void *src, void *dst);
+
+void *allocate_parser_controller_struct_container();
+void reallocate_parser_controller_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_parser_controller_struct_container(void *) noexcept;
+void access_parser_controller_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -9693,6 +9819,99 @@ struct NametableStructAlloc1D : public FTypeAlloc1D<NametableStructArray1D> {
             access_nametable_struct_container
         ) {}
   NametableStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
+class AllPointerStruct;
+
+using AllPointerStructArray1D = FTypeArray1D<
+    AllPointerStruct,
+    allocate_fortran_all_pointer_struct,
+    deallocate_fortran_all_pointer_struct>;
+using AllPointerStructArray2D = FTypeArray2D<AllPointerStruct>;
+using AllPointerStructArray3D = FTypeArray3D<AllPointerStruct>;
+
+struct AllPointerStructAlloc1D : public FTypeAlloc1D<AllPointerStructArray1D> {
+  using Base = FTypeAlloc1D<AllPointerStructArray1D>;
+  using Base::Base;
+  AllPointerStructAlloc1D()
+      : Base(
+            allocate_all_pointer_struct_container,
+            deallocate_all_pointer_struct_container,
+            reallocate_all_pointer_struct_container_data,
+            access_all_pointer_struct_container
+        ) {}
+  AllPointerStructAlloc1D(int n)
+      : Base(
+            n,
+            allocate_all_pointer_struct_container,
+            deallocate_all_pointer_struct_container,
+            reallocate_all_pointer_struct_container_data,
+            access_all_pointer_struct_container
+        ) {}
+  AllPointerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
+class ParserEleStruct;
+
+using ParserEleStructArray1D = FTypeArray1D<
+    ParserEleStruct,
+    allocate_fortran_parser_ele_struct,
+    deallocate_fortran_parser_ele_struct>;
+using ParserEleStructArray2D = FTypeArray2D<ParserEleStruct>;
+using ParserEleStructArray3D = FTypeArray3D<ParserEleStruct>;
+
+struct ParserEleStructAlloc1D : public FTypeAlloc1D<ParserEleStructArray1D> {
+  using Base = FTypeAlloc1D<ParserEleStructArray1D>;
+  using Base::Base;
+  ParserEleStructAlloc1D()
+      : Base(
+            allocate_parser_ele_struct_container,
+            deallocate_parser_ele_struct_container,
+            reallocate_parser_ele_struct_container_data,
+            access_parser_ele_struct_container
+        ) {}
+  ParserEleStructAlloc1D(int n)
+      : Base(
+            n,
+            allocate_parser_ele_struct_container,
+            deallocate_parser_ele_struct_container,
+            reallocate_parser_ele_struct_container_data,
+            access_parser_ele_struct_container
+        ) {}
+  ParserEleStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
+class ParserControllerStruct;
+
+using ParserControllerStructArray1D = FTypeArray1D<
+    ParserControllerStruct,
+    allocate_fortran_parser_controller_struct,
+    deallocate_fortran_parser_controller_struct>;
+using ParserControllerStructArray2D = FTypeArray2D<ParserControllerStruct>;
+using ParserControllerStructArray3D = FTypeArray3D<ParserControllerStruct>;
+
+struct ParserControllerStructAlloc1D : public FTypeAlloc1D<ParserControllerStructArray1D> {
+  using Base = FTypeAlloc1D<ParserControllerStructArray1D>;
+  using Base::Base;
+  ParserControllerStructAlloc1D()
+      : Base(
+            allocate_parser_controller_struct_container,
+            deallocate_parser_controller_struct_container,
+            reallocate_parser_controller_struct_container_data,
+            access_parser_controller_struct_container
+        ) {}
+  ParserControllerStructAlloc1D(int n)
+      : Base(
+            n,
+            allocate_parser_controller_struct_container,
+            deallocate_parser_controller_struct_container,
+            reallocate_parser_controller_struct_container_data,
+            access_parser_controller_struct_container
+        ) {}
+  ParserControllerStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
@@ -18365,6 +18584,212 @@ public:
 };
 
 template <>
+struct FortranTraits<AllPointerStruct> {
+  static void *allocate() {
+    size_t sz;
+    return allocate_fortran_all_pointer_struct(0, &sz);
+  }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_all_pointer_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_all_pointer_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "all_pointer_struct"; }
+};
+
+class AllPointerStruct : public FortranProxy<AllPointerStruct> {
+public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  explicit AllPointerStruct(
+      std::optional<double> r = std::nullopt,
+      std::optional<long double> q = std::nullopt,
+      std::optional<int> i = std::nullopt,
+      std::optional<bool> l = std::nullopt,
+      std::optional<std::vector<double>> r1 = std::nullopt,
+      std::optional<std::vector<int>> i1 = std::nullopt
+  )
+      : FortranProxy() {
+    if (r)
+      set_r(*r);
+    if (q)
+      set_q(*q);
+    if (i)
+      set_i(*i);
+    if (l)
+      set_l(*l);
+    if (r1)
+      set_r1(*r1);
+    if (i1)
+      set_i1(*i1);
+  }
+
+  std::optional<double> r() const; // 0D_PTR_real
+  void set_r(double value);
+  std::optional<long double> q() const; // 0D_PTR_real16
+  void set_q(long double value);
+  std::optional<int> i() const; // 0D_PTR_integer
+  void set_i(int value);
+  std::optional<bool> l() const; // 0D_PTR_logical
+  void set_l(bool value);
+  FArray1D<double> r1() const; // 1D_PTR_real
+  void set_r1(const std::vector<double> &v);
+  FArray1D<int> i1() const; // 1D_PTR_integer
+  void set_i1(const std::vector<int> &v);
+};
+
+template <>
+struct FortranTraits<ParserEleStruct> {
+  static void *allocate() {
+    size_t sz;
+    return allocate_fortran_parser_ele_struct(0, &sz);
+  }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_parser_ele_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_parser_ele_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "parser_ele_struct"; }
+};
+
+class ParserEleStruct : public FortranProxy<ParserEleStruct> {
+public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  explicit ParserEleStruct(
+      std::optional<std::string> ref_name = std::nullopt,
+      std::optional<int> ix_super_ref_multipass = std::nullopt,
+      std::optional<std::string> ele_name = std::nullopt,
+      std::optional<std::string> lat_file = std::nullopt,
+      std::optional<double> offset = std::nullopt,
+      std::optional<int> ix_line_in_file = std::nullopt,
+      std::optional<int> ix_count = std::nullopt,
+      std::optional<int> ele_pt = std::nullopt,
+      std::optional<int> ref_pt = std::nullopt,
+      std::optional<int> index = std::nullopt,
+      std::optional<bool> superposition_command_here = std::nullopt,
+      std::optional<bool> superposition_has_been_set = std::nullopt,
+      std::optional<bool> wrap_superimpose = std::nullopt,
+      std::optional<bool> create_jumbo_slave = std::nullopt,
+      std::optional<bool> is_range = std::nullopt,
+      std::optional<std::string> default_attrib = std::nullopt
+  )
+      : FortranProxy() {
+    if (ref_name)
+      set_ref_name(*ref_name);
+    if (ix_super_ref_multipass)
+      set_ix_super_ref_multipass(*ix_super_ref_multipass);
+    if (ele_name)
+      set_ele_name(*ele_name);
+    if (lat_file)
+      set_lat_file(*lat_file);
+    if (offset)
+      set_offset(*offset);
+    if (ix_line_in_file)
+      set_ix_line_in_file(*ix_line_in_file);
+    if (ix_count)
+      set_ix_count(*ix_count);
+    if (ele_pt)
+      set_ele_pt(*ele_pt);
+    if (ref_pt)
+      set_ref_pt(*ref_pt);
+    if (index)
+      set_index(*index);
+    if (superposition_command_here)
+      set_superposition_command_here(*superposition_command_here);
+    if (superposition_has_been_set)
+      set_superposition_has_been_set(*superposition_has_been_set);
+    if (wrap_superimpose)
+      set_wrap_superimpose(*wrap_superimpose);
+    if (create_jumbo_slave)
+      set_create_jumbo_slave(*create_jumbo_slave);
+    if (is_range)
+      set_is_range(*is_range);
+    if (default_attrib)
+      set_default_attrib(*default_attrib);
+  }
+
+  ParserControllerStructAlloc1D control() const; // 1D_ALLOC_type
+  FCharArray1D field_overlaps() const; // 1D_ALLOC_character
+  std::string ref_name() const; // 0D_NOT_character
+  void set_ref_name(const std::string &value);
+  int ix_super_ref_multipass() const; // 0D_NOT_integer [dispatch:0]
+  void set_ix_super_ref_multipass(int value);
+  std::string ele_name() const; // 0D_NOT_character
+  void set_ele_name(const std::string &value);
+  FCharArray1D names1() const; // 1D_ALLOC_character
+  FCharArray1D names2() const; // 1D_ALLOC_character
+  std::string lat_file() const; // 0D_NOT_character
+  void set_lat_file(const std::string &value);
+  double offset() const; // 0D_NOT_real [dispatch:0]
+  void set_offset(double value);
+  int ix_line_in_file() const; // 0D_NOT_integer [dispatch:1]
+  void set_ix_line_in_file(int value);
+  int ix_count() const; // 0D_NOT_integer [dispatch:2]
+  void set_ix_count(int value);
+  int ele_pt() const; // 0D_NOT_integer [dispatch:3]
+  void set_ele_pt(int value);
+  int ref_pt() const; // 0D_NOT_integer [dispatch:4]
+  void set_ref_pt(int value);
+  int index() const; // 0D_NOT_integer [dispatch:5]
+  void set_index(int value);
+  bool superposition_command_here() const; // 0D_NOT_logical [dispatch:0]
+  void set_superposition_command_here(bool value);
+  bool superposition_has_been_set() const; // 0D_NOT_logical [dispatch:1]
+  void set_superposition_has_been_set(bool value);
+  bool wrap_superimpose() const; // 0D_NOT_logical [dispatch:2]
+  void set_wrap_superimpose(bool value);
+  bool create_jumbo_slave() const; // 0D_NOT_logical [dispatch:3]
+  void set_create_jumbo_slave(bool value);
+  bool is_range() const; // 0D_NOT_logical [dispatch:4]
+  void set_is_range(bool value);
+  std::string default_attrib() const; // 0D_NOT_character
+  void set_default_attrib(const std::string &value);
+};
+
+template <>
+struct FortranTraits<ParserControllerStruct> {
+  static void *allocate() {
+    size_t sz;
+    return allocate_fortran_parser_controller_struct(0, &sz);
+  }
+  static void deallocate(void *ptr) noexcept {
+    deallocate_fortran_parser_controller_struct(ptr, 0);
+  }
+  static void copy(const void *src, void *dst) { copy_fortran_parser_controller_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "parser_controller_struct"; }
+};
+
+class ParserControllerStruct : public FortranProxy<ParserControllerStruct> {
+public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  explicit ParserControllerStruct(
+      std::optional<std::string> name = std::nullopt,
+      std::optional<std::string> attrib_name = std::nullopt,
+      std::optional<std::vector<double>> y_knot = std::nullopt,
+      std::optional<int> n_stk = std::nullopt
+  )
+      : FortranProxy() {
+    if (name)
+      set_name(*name);
+    if (attrib_name)
+      set_attrib_name(*attrib_name);
+    if (y_knot)
+      set_y_knot(*y_knot);
+    if (n_stk)
+      set_n_stk(*n_stk);
+  }
+
+  std::string name() const; // 0D_NOT_character
+  void set_name(const std::string &value);
+  std::string attrib_name() const; // 0D_NOT_character
+  void set_attrib_name(const std::string &value);
+  ExpressionAtomStructAlloc1D stack() const; // 1D_ALLOC_type
+  RealAlloc1D y_knot() const; // 1D_ALLOC_real
+  void set_y_knot(const std::vector<double> &v);
+  int n_stk() const; // 0D_NOT_integer [dispatch:0]
+  void set_n_stk(int value);
+};
+
+template <>
 struct FortranTraits<TaoSpinDnDpzStruct> {
   static void *allocate() {
     size_t sz;
@@ -24524,8 +24949,7 @@ public:
   FArray2D<std::complex<double>> complex_dp_2d_alloc() const; // 2D_ALLOC_complex
   void set_complex_dp_2d_alloc(const std::vector<std::vector<std::complex<double>>> &v);
   FArray3D<std::complex<double>> complex_dp_3d_alloc() const; // 3D_ALLOC_complex
-  void set_complex_dp_3d_alloc(
-      const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+  void set_complex_dp_3d_alloc(const std::vector<std::vector<std::vector<std::complex<double>>>> &v
   );
   int int_0d() const; // 0D_NOT_integer [dispatch:0]
   void set_int_0d(int value);

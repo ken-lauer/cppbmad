@@ -1,18 +1,17 @@
 #include "pybmad/generated/bsim_routines_w.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_w(py::module &m) {
+void init_bsim_routines_w(nb::module_ &m) {
   m.def(
       "write_bunch_by_bunch_info",
       &bsim::write_bunch_by_bunch_info,
-      py::arg("lat"),
-      py::arg("bbu_beam"),
-      py::arg("bbu_param"),
-      py::arg("this_stage"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("bbu_beam"),
+      nb::arg("bbu_param"),
+      nb::arg("this_stage"),
       R"""(Wrapper for Fortran routine write_bunch_by_bunch_info
 
 Parameters

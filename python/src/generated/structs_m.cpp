@@ -7,57 +7,74 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // mode3_struct
-void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
+void init_mode3_struct(nb::module_ &m, nb::class_<Mode3Struct> &cls) {
   cls.def(
-         py::init<
-             std::optional<std::vector<std::vector<double>>>,
-             optional_ref<const TwissStruct>,
-             optional_ref<const TwissStruct>,
-             optional_ref<const TwissStruct>,
-             optional_ref<const TwissStruct>,
-             optional_ref<const TwissStruct>>(),
-         py::arg("v") = py::none(),
-         py::arg("a") = py::none(),
-         py::arg("b") = py::none(),
-         py::arg("c") = py::none(),
-         py::arg("x") = py::none(),
-         py::arg("y") = py::none()
+         "__init__",
+         [](Mode3Struct *self,
+            std::optional<std::vector<std::vector<double>>> v,
+            const TwissStruct *a,
+            const TwissStruct *b,
+            const TwissStruct *c,
+            const TwissStruct *x,
+            const TwissStruct *y) {
+           new (self) Mode3Struct(
+               v,
+               ptr_to_opt_ref(a),
+               ptr_to_opt_ref(b),
+               ptr_to_opt_ref(c),
+               ptr_to_opt_ref(x),
+               ptr_to_opt_ref(y)
+           );
+         },
+         nb::arg("v") = nb::none(),
+         nb::arg("a") = nb::none(),
+         nb::arg("b") = nb::none(),
+         nb::arg("c") = nb::none(),
+         nb::arg("x") = nb::none(),
+         nb::arg("y") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "v",
-          py::cpp_function(&Mode3Struct::v, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_v
+          &Mode3Struct::v,
+          &Mode3Struct::set_v,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "a",
-          py::cpp_function(&Mode3Struct::a, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_a
+          &Mode3Struct::a,
+          &Mode3Struct::set_a,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "b",
-          py::cpp_function(&Mode3Struct::b, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_b
+          &Mode3Struct::b,
+          &Mode3Struct::set_b,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "c",
-          py::cpp_function(&Mode3Struct::c, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_c
+          &Mode3Struct::c,
+          &Mode3Struct::set_c,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "x",
-          py::cpp_function(&Mode3Struct::x, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_x
+          &Mode3Struct::x,
+          &Mode3Struct::set_x,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "y",
-          py::cpp_function(&Mode3Struct::y, py::keep_alive<0, 1>()),
-          &Mode3Struct::set_y
+          &Mode3Struct::y,
+          &Mode3Struct::set_y,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
 
       .def("__repr__", [](const Mode3Struct &self) { return to_string(self); })
@@ -70,21 +87,20 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const Mode3Struct &self, py::dict &memo) { return Mode3Struct(self); }
+          [](const Mode3Struct &self, nb::dict &memo) { return Mode3Struct(self); }
       )
       .def(
           "__eq__",
           [](const Mode3Struct &self, const Mode3Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const Mode3Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -97,43 +113,43 @@ void init_mode3_struct(py::module &m, py::class_<Mode3Struct> &cls) {
 
 // =============================================================================
 // mode_info_struct
-void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
+void init_mode_info_struct(nb::module_ &m, nb::class_<ModeInfoStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<bool>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>>(),
-         py::arg("stable") = py::none(),
-         py::arg("tune") = py::none(),
-         py::arg("emit") = py::none(),
-         py::arg("chrom") = py::none(),
-         py::arg("sigma") = py::none(),
-         py::arg("sigmap") = py::none()
+         nb::arg("stable") = nb::none(),
+         nb::arg("tune") = nb::none(),
+         nb::arg("emit") = nb::none(),
+         nb::arg("chrom") = nb::none(),
+         nb::arg("sigma") = nb::none(),
+         nb::arg("sigmap") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "stable",
           &ModeInfoStruct::stable,
           &ModeInfoStruct::set_stable,
           "Is the mode stable?"
       )
-      .def_property(
+      .def_prop_rw(
           "tune",
           &ModeInfoStruct::tune,
           &ModeInfoStruct::set_tune,
           "'fractional' tune in radians"
       )
-      .def_property(
+      .def_prop_rw(
           "emit",
           &ModeInfoStruct::emit,
           &ModeInfoStruct::set_emit,
           "Emittance (unnormalized)."
       )
-      .def_property("chrom", &ModeInfoStruct::chrom, &ModeInfoStruct::set_chrom, "Chromaticity.")
-      .def_property("sigma", &ModeInfoStruct::sigma, &ModeInfoStruct::set_sigma, "Beam size.")
-      .def_property(
+      .def_prop_rw("chrom", &ModeInfoStruct::chrom, &ModeInfoStruct::set_chrom, "Chromaticity.")
+      .def_prop_rw("sigma", &ModeInfoStruct::sigma, &ModeInfoStruct::set_sigma, "Beam size.")
+      .def_prop_rw(
           "sigmap",
           &ModeInfoStruct::sigmap,
           &ModeInfoStruct::set_sigmap,
@@ -150,21 +166,20 @@ void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const ModeInfoStruct &self, py::dict &memo) { return ModeInfoStruct(self); }
+          [](const ModeInfoStruct &self, nb::dict &memo) { return ModeInfoStruct(self); }
       )
       .def(
           "__eq__",
           [](const ModeInfoStruct &self, const ModeInfoStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ModeInfoStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -177,43 +192,43 @@ void init_mode_info_struct(py::module &m, py::class_<ModeInfoStruct> &cls) {
 
 // =============================================================================
 // mad_energy_struct
-void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
+void init_mad_energy_struct(nb::module_ &m, nb::class_<MadEnergyStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
              std::optional<int>>(),
-         py::arg("total") = py::none(),
-         py::arg("beta") = py::none(),
-         py::arg("gamma") = py::none(),
-         py::arg("kinetic") = py::none(),
-         py::arg("p0c") = py::none(),
-         py::arg("particle") = py::none()
+         nb::arg("total") = nb::none(),
+         nb::arg("beta") = nb::none(),
+         nb::arg("gamma") = nb::none(),
+         nb::arg("kinetic") = nb::none(),
+         nb::arg("p0c") = nb::none(),
+         nb::arg("particle") = nb::none()
   )
-      .def_property("total", &MadEnergyStruct::total, &MadEnergyStruct::set_total)
-      .def_property(
+      .def_prop_rw("total", &MadEnergyStruct::total, &MadEnergyStruct::set_total)
+      .def_prop_rw(
           "beta",
           &MadEnergyStruct::beta,
           &MadEnergyStruct::set_beta,
           "normalized velocity: v/c"
       )
-      .def_property(
+      .def_prop_rw(
           "gamma",
           &MadEnergyStruct::gamma,
           &MadEnergyStruct::set_gamma,
           "relativistic factor: 1/sqrt(1-beta^2)"
       )
-      .def_property(
+      .def_prop_rw(
           "kinetic",
           &MadEnergyStruct::kinetic,
           &MadEnergyStruct::set_kinetic,
           "kinetic energy"
       )
-      .def_property("p0c", &MadEnergyStruct::p0c, &MadEnergyStruct::set_p0c, "particle momentum")
-      .def_property(
+      .def_prop_rw("p0c", &MadEnergyStruct::p0c, &MadEnergyStruct::set_p0c, "particle momentum")
+      .def_prop_rw(
           "particle",
           &MadEnergyStruct::particle,
           &MadEnergyStruct::set_particle,
@@ -230,21 +245,20 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const MadEnergyStruct &self, py::dict &memo) { return MadEnergyStruct(self); }
+          [](const MadEnergyStruct &self, nb::dict &memo) { return MadEnergyStruct(self); }
       )
       .def(
           "__eq__",
           [](const MadEnergyStruct &self, const MadEnergyStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const MadEnergyStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -257,32 +271,35 @@ void init_mad_energy_struct(py::module &m, py::class_<MadEnergyStruct> &cls) {
 
 // =============================================================================
 // mad_map_struct
-void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
+void init_mad_map_struct(nb::module_ &m, nb::class_<MadMapStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<std::vector<double>>,
              std::optional<std::vector<std::vector<double>>>,
              std::optional<std::vector<std::vector<std::vector<double>>>>>(),
-         py::arg("k") = py::none(),
-         py::arg("r") = py::none(),
-         py::arg("t") = py::none()
+         nb::arg("k") = nb::none(),
+         nb::arg("r") = nb::none(),
+         nb::arg("t") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "k",
-          py::cpp_function(&MadMapStruct::k, py::keep_alive<0, 1>()),
+          &MadMapStruct::k,
           &MadMapStruct::set_k,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "0th order map."
       )
-      .def_property(
+      .def_prop_rw(
           "r",
-          py::cpp_function(&MadMapStruct::r, py::keep_alive<0, 1>()),
+          &MadMapStruct::r,
           &MadMapStruct::set_r,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "1st order map."
       )
-      .def_property(
+      .def_prop_rw(
           "t",
-          py::cpp_function(&MadMapStruct::t, py::keep_alive<0, 1>()),
+          &MadMapStruct::t,
           &MadMapStruct::set_t,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "2nd order map."
       )
 
@@ -296,21 +313,20 @@ void init_mad_map_struct(py::module &m, py::class_<MadMapStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const MadMapStruct &self, py::dict &memo) { return MadMapStruct(self); }
+          [](const MadMapStruct &self, nb::dict &memo) { return MadMapStruct(self); }
       )
       .def(
           "__eq__",
           [](const MadMapStruct &self, const MadMapStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const MadMapStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_o.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyOdeintBmadTime python_odeint_bmad_time(
@@ -10,11 +10,20 @@ PyOdeintBmadTime python_odeint_bmad_time(
     LatParamStruct &param,
     int t_dir,
     double rf_time,
-    optional_ref<TrackStruct> track = std::nullopt,
+    TrackStruct *track = nullptr,
     std::optional<double> t_end = std::nullopt,
-    optional_ref<EmFieldStruct> extra_field = std::nullopt
+    EmFieldStruct *extra_field = nullptr
 ) {
-  auto _result = Bmad::odeint_bmad_time(orb, ele, param, t_dir, rf_time, track, t_end, extra_field);
+  auto _result = Bmad::odeint_bmad_time(
+      orb,
+      ele,
+      param,
+      t_dir,
+      rf_time,
+      ptr_to_opt_ref(track),
+      t_end,
+      ptr_to_opt_ref(extra_field)
+  );
   auto py_result{PyOdeintBmadTime{_result, rf_time}};
   return py_result;
 }
@@ -48,38 +57,31 @@ PyOffsetParticle python_offset_particle(
   return py_result;
 }
 
-void init_Bmad_routines_o(py::module &m) {
-  py::class_<Bmad::OdeintBmad, std::unique_ptr<Bmad::OdeintBmad>>(
-      m,
-      "OdeintBmad",
-      "odeint_bmad return type"
-  )
-      .def_readonly("err_flag", &Bmad::OdeintBmad::err_flag)
-      .def_readonly("track", &Bmad::OdeintBmad::track)
+void init_Bmad_routines_o(nb::module_ &m) {
+  nb::class_<Bmad::OdeintBmad>(m, "OdeintBmad", "odeint_bmad return type")
+      .def_ro("err_flag", &Bmad::OdeintBmad::err_flag)
+      .def_ro("track", &Bmad::OdeintBmad::track)
       .def("__len__", [](const Bmad::OdeintBmad &) { return 2; })
-      .def("__getitem__", [](const Bmad::OdeintBmad &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::OdeintBmad &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
-        throw py::index_error();
+          return nb::cast(s.track);
+        throw nb::index_error();
       });
   m.def(
       "odeint_bmad",
       &Bmad::odeint_bmad,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("s1_body"),
-      py::arg("s2_body"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
-
-Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s1_body"),
+      nb::arg("s2_body"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
 Recipes.  See the NR book for more details.
 
 Notice that this routine has an two tolerances:
@@ -127,41 +129,34 @@ track : TrackStruct, optional
     Structure holding the track information.
 )"""
   );
-  py::class_<PyOdeintBmadTime, std::unique_ptr<PyOdeintBmadTime>>(
-      m,
-      "OdeintBmadTime",
-      "odeint_bmad_time return type"
-  )
-      .def_readonly("err_flag", &PyOdeintBmadTime::err_flag)
-      .def_readonly("dt_step", &PyOdeintBmadTime::dt_step)
-      .def_readonly("rf_time", &PyOdeintBmadTime::rf_time)
+  nb::class_<PyOdeintBmadTime>(m, "OdeintBmadTime", "odeint_bmad_time return type")
+      .def_ro("err_flag", &PyOdeintBmadTime::err_flag)
+      .def_ro("dt_step", &PyOdeintBmadTime::dt_step)
+      .def_ro("rf_time", &PyOdeintBmadTime::rf_time)
       .def("__len__", [](const PyOdeintBmadTime &) { return 3; })
-      .def("__getitem__", [](const PyOdeintBmadTime &s, int i) -> py::object {
+      .def("__getitem__", [](const PyOdeintBmadTime &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.dt_step);
+          return nb::cast(s.dt_step);
         if (i == 2)
-          return py::cast(s.rf_time);
-        throw py::index_error();
+          return nb::cast(s.rf_time);
+        throw nb::index_error();
       });
   m.def(
       "odeint_bmad_time",
       &python_odeint_bmad_time,
-      py::arg("orb"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("t_dir"),
-      py::arg("rf_time"),
-      py::arg("track") = py::none(),
-      py::arg("t_end") = py::none(),
-      py::arg("extra_field") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
-
-Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+      nb::arg("orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("t_dir"),
+      nb::arg("rf_time"),
+      nb::arg("track") = nb::none(),
+      nb::arg("t_end") = nb::none(),
+      nb::arg("extra_field") = nb::none(),
+      R"""(Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
 Recipes.  See the NR book for more details.
 
 Tracking is done until the particle is lost or exits the element.
@@ -212,41 +207,36 @@ dt_step : float, optional
     Next RK time step that this tracker would take based on the error tolerance. Used by track_bunch_time.
 )"""
   );
-  py::class_<PyOffsetParticle, std::unique_ptr<PyOffsetParticle>>(
-      m,
-      "OffsetParticle",
-      "offset_particle return type"
-  )
-      .def_readonly("s_out", &PyOffsetParticle::s_out)
-      .def_readonly("spin_qrot", &PyOffsetParticle::spin_qrot)
-      .def_readonly("time", &PyOffsetParticle::time)
+  nb::class_<PyOffsetParticle>(m, "OffsetParticle", "offset_particle return type")
+      .def_ro("s_out", &PyOffsetParticle::s_out)
+      .def_ro("spin_qrot", &PyOffsetParticle::spin_qrot)
+      .def_ro("time", &PyOffsetParticle::time)
       .def("__len__", [](const PyOffsetParticle &) { return 3; })
-      .def("__getitem__", [](const PyOffsetParticle &s, int i) -> py::object {
+      .def("__getitem__", [](const PyOffsetParticle &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.s_out);
+          return nb::cast(s.s_out);
         if (i == 1)
-          return py::cast(s.spin_qrot);
+          return nb::cast(s.spin_qrot);
         if (i == 2)
-          return py::cast(s.time);
-        throw py::index_error();
+          return nb::cast(s.time);
+        throw nb::index_error();
       });
   m.def(
       "offset_particle",
       &python_offset_particle,
-      py::arg("ele"),
-      py::arg("set"),
-      py::arg("orbit"),
-      py::arg("set_tilt") = py::none(),
-      py::arg("set_hvkicks") = py::none(),
-      py::arg("drift_to_edge") = py::none(),
-      py::arg("s_pos") = py::none(),
-      py::arg("set_spin") = py::none(),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::arg("time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("set"),
+      nb::arg("orbit"),
+      nb::arg("set_tilt") = nb::none(),
+      nb::arg("set_hvkicks") = nb::none(),
+      nb::arg("drift_to_edge") = nb::none(),
+      nb::arg("s_pos") = nb::none(),
+      nb::arg("set_spin") = nb::none(),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      nb::arg("time") = nb::none(),
       R"""(Wrapper for Fortran routine offset_particle
 
 Parameters
@@ -313,12 +303,11 @@ time : float, optional
   m.def(
       "offset_photon",
       &Bmad::offset_photon,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("set"),
-      py::arg("offset_position_only") = py::none(),
-      py::arg("rot_mat") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("set"),
+      nb::arg("offset_position_only") = nb::none(),
+      nb::arg("rot_mat") = nb::none(),
       R"""(Wrapper for Fortran routine offset_photon
 
 Parameters
@@ -345,10 +334,9 @@ rot_mat : 2D array of float (shape: 3,3), optional
   m.def(
       "one_turn_mat_at_ele",
       &Bmad::one_turn_mat_at_ele,
-      py::arg("ele"),
-      py::arg("phi_a"),
-      py::arg("phi_b"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("phi_a"),
+      nb::arg("phi_b"),
       R"""(Wrapper for Fortran routine one_turn_mat_at_ele
 
 Parameters
@@ -368,36 +356,29 @@ mat4 : 2D array of float (shape: 4,4)
     1-Turn coupled matrix.
 )"""
   );
-  py::class_<Bmad::OpenBinaryFile, std::unique_ptr<Bmad::OpenBinaryFile>>(
-      m,
-      "OpenBinaryFile",
-      "open_binary_file return type"
-  )
-      .def_readonly("iu", &Bmad::OpenBinaryFile::iu)
-      .def_readonly("iver", &Bmad::OpenBinaryFile::iver)
-      .def_readonly("is_ok", &Bmad::OpenBinaryFile::is_ok)
+  nb::class_<Bmad::OpenBinaryFile>(m, "OpenBinaryFile", "open_binary_file return type")
+      .def_ro("iu", &Bmad::OpenBinaryFile::iu)
+      .def_ro("iver", &Bmad::OpenBinaryFile::iver)
+      .def_ro("is_ok", &Bmad::OpenBinaryFile::is_ok)
       .def("__len__", [](const Bmad::OpenBinaryFile &) { return 3; })
-      .def("__getitem__", [](const Bmad::OpenBinaryFile &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::OpenBinaryFile &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.iu);
+          return nb::cast(s.iu);
         if (i == 1)
-          return py::cast(s.iver);
+          return nb::cast(s.iver);
         if (i == 2)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "open_binary_file",
       &Bmad::open_binary_file,
-      py::arg("file_name"),
-      py::arg("action"),
-      py::arg("r_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function open_binary_file (file_name, action, iu, r_name, iver) result (is_ok)
-
-Routine to open a binary file for reading or writing.
+      nb::arg("file_name"),
+      nb::arg("action"),
+      nb::arg("r_name"),
+      R"""(Routine to open a binary file for reading or writing.
 
 Parameters
 ----------
@@ -422,35 +403,30 @@ is_ok : bool
     Open OK?
 )"""
   );
-  py::class_<Bmad::OrbitAmplitudeCalc, std::unique_ptr<Bmad::OrbitAmplitudeCalc>>(
-      m,
-      "OrbitAmplitudeCalc",
-      "orbit_amplitude_calc return type"
-  )
-      .def_readonly("amp_a", &Bmad::OrbitAmplitudeCalc::amp_a)
-      .def_readonly("amp_b", &Bmad::OrbitAmplitudeCalc::amp_b)
-      .def_readonly("amp_na", &Bmad::OrbitAmplitudeCalc::amp_na)
-      .def_readonly("amp_nb", &Bmad::OrbitAmplitudeCalc::amp_nb)
+  nb::class_<Bmad::OrbitAmplitudeCalc>(m, "OrbitAmplitudeCalc", "orbit_amplitude_calc return type")
+      .def_ro("amp_a", &Bmad::OrbitAmplitudeCalc::amp_a)
+      .def_ro("amp_b", &Bmad::OrbitAmplitudeCalc::amp_b)
+      .def_ro("amp_na", &Bmad::OrbitAmplitudeCalc::amp_na)
+      .def_ro("amp_nb", &Bmad::OrbitAmplitudeCalc::amp_nb)
       .def("__len__", [](const Bmad::OrbitAmplitudeCalc &) { return 4; })
-      .def("__getitem__", [](const Bmad::OrbitAmplitudeCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::OrbitAmplitudeCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.amp_a);
+          return nb::cast(s.amp_a);
         if (i == 1)
-          return py::cast(s.amp_b);
+          return nb::cast(s.amp_b);
         if (i == 2)
-          return py::cast(s.amp_na);
+          return nb::cast(s.amp_na);
         if (i == 3)
-          return py::cast(s.amp_nb);
-        throw py::index_error();
+          return nb::cast(s.amp_nb);
+        throw nb::index_error();
       });
   m.def(
       "orbit_amplitude_calc",
       &Bmad::orbit_amplitude_calc,
-      py::arg("ele"),
-      py::arg("orb"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orb"),
       R"""(Wrapper for Fortran routine orbit_amplitude_calc
 
 Parameters
@@ -479,11 +455,10 @@ amp_nb : float, optional
   m.def(
       "orbit_reference_energy_correction",
       &Bmad::orbit_reference_energy_correction,
-      py::arg("orbit"),
-      py::arg("p0c_new"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("p0c_new"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine orbit_reference_energy_correction
 
 Parameters
@@ -506,9 +481,8 @@ make_matrix : bool, optional
   m.def(
       "orbit_to_floor_phase_space",
       &Bmad::orbit_to_floor_phase_space,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine orbit_to_floor_phase_space
 
 Parameters
@@ -528,11 +502,10 @@ floor_phase_space : 1D array of float (shape: 6)
   m.def(
       "orbit_to_local_curvilinear",
       &Bmad::orbit_to_local_curvilinear,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("z_direction") = py::none(),
-      py::arg("relative_to") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("z_direction") = nb::none(),
+      nb::arg("relative_to") = nb::none(),
       R"""(Wrapper for Fortran routine orbit_to_local_curvilinear
 
 Parameters
@@ -556,29 +529,24 @@ local_position : FloorPositionStruct
     Position in local coordinates.
 )"""
   );
-  py::class_<Bmad::OrbitTooLarge, std::unique_ptr<Bmad::OrbitTooLarge>>(
-      m,
-      "OrbitTooLarge",
-      "orbit_too_large return type"
-  )
-      .def_readonly("param", &Bmad::OrbitTooLarge::param)
-      .def_readonly("is_too_large", &Bmad::OrbitTooLarge::is_too_large)
+  nb::class_<Bmad::OrbitTooLarge>(m, "OrbitTooLarge", "orbit_too_large return type")
+      .def_ro("param", &Bmad::OrbitTooLarge::param)
+      .def_ro("is_too_large", &Bmad::OrbitTooLarge::is_too_large)
       .def("__len__", [](const Bmad::OrbitTooLarge &) { return 2; })
-      .def("__getitem__", [](const Bmad::OrbitTooLarge &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::OrbitTooLarge &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.param);
+          return nb::cast(s.param);
         if (i == 1)
-          return py::cast(s.is_too_large);
-        throw py::index_error();
+          return nb::cast(s.is_too_large);
+        throw nb::index_error();
       });
   m.def(
       "orbit_too_large",
       &Bmad::orbit_too_large,
-      py::arg("orbit"),
-      py::arg("check_momentum") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("check_momentum") = nb::none(),
       R"""(Wrapper for Fortran routine orbit_too_large
 
 Parameters
@@ -597,33 +565,30 @@ is_too_large : bool
 param : LatParamStruct, optional
 )"""
   );
-  py::class_<Bmad::OrderEvecsByNSimilarity, std::unique_ptr<Bmad::OrderEvecsByNSimilarity>>(
+  nb::class_<Bmad::OrderEvecsByNSimilarity>(
       m,
       "OrderEvecsByNSimilarity",
       "order_evecs_by_n_similarity return type"
   )
-      .def_readonly("evec", &Bmad::OrderEvecsByNSimilarity::evec)
-      .def_readonly("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
+      .def_ro("evec", &Bmad::OrderEvecsByNSimilarity::evec)
+      .def_ro("err_flag", &Bmad::OrderEvecsByNSimilarity::err_flag)
       .def("__len__", [](const Bmad::OrderEvecsByNSimilarity &) { return 2; })
-      .def("__getitem__", [](const Bmad::OrderEvecsByNSimilarity &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::OrderEvecsByNSimilarity &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.evec);
+          return nb::cast(s.evec);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "order_evecs_by_n_similarity",
       &Bmad::order_evecs_by_n_similarity,
-      py::arg("eval"),
-      py::arg("mat_tunes"),
-      py::arg("Nmat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine order_evecs_by_N_similarity(evec, eval, mat_tunes, Nmat, err_flag)
-
-This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
+      nb::arg("eval"),
+      nb::arg("mat_tunes"),
+      nb::arg("Nmat"),
+      R"""(This subroutine orderes the eigensystem such that Nmat.mat_symp_conj(N) is closest
 to the identity.  Nmat is supplied externally.
 
 Parameters
@@ -651,13 +616,10 @@ err_flag : bool
   m.def(
       "order_evecs_by_plane_dominance",
       &Bmad::order_evecs_by_plane_dominance,
-      py::arg("evec"),
-      py::arg("eval"),
-      py::arg("mat_tunes") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine order_evecs_by_plane_dominance(evec, eval, mat_tunes)
-
-This subroutine orderes the eigensystem according to which modes dominate the horizontal,
+      nb::arg("evec"),
+      nb::arg("eval"),
+      nb::arg("mat_tunes") = nb::none(),
+      R"""(This subroutine orderes the eigensystem according to which modes dominate the horizontal,
 vertical, and longitudinal planes.  This subroutine works well in machines
 that are not strongly coupled.  In machines with strong coupling, where the relation
 between the three eigenmodes a, b, c and the three lab coordinates x, y, z can change
@@ -684,14 +646,11 @@ mat_tunes : 1D array of float (shape: 3), optional
   m.def(
       "order_evecs_by_tune",
       &Bmad::order_evecs_by_tune,
-      py::arg("evec"),
-      py::arg("eval"),
-      py::arg("mat_tunes"),
-      py::arg("abz_tunes"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine order_evecs_by_tune(evec, eval, mat_tunes, abz_tunes, err_flag)
-
-This subroutine orders the eigensystem by matching the tunes of the eigensystem to
+      nb::arg("evec"),
+      nb::arg("eval"),
+      nb::arg("mat_tunes"),
+      nb::arg("abz_tunes"),
+      R"""(This subroutine orders the eigensystem by matching the tunes of the eigensystem to
 externally supplied tunes abz_tunes.  abz_tunes is in radians.
 
 Parameters
@@ -721,11 +680,8 @@ err_flag : bool
   m.def(
       "order_particles_in_z",
       &Bmad::order_particles_in_z,
-      py::arg("bunch"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine order_particles_in_z (bunch)
-
-Routine to order the particles longitudinally in terms of decreasing %vec(5).
+      nb::arg("bunch"),
+      R"""(Routine to order the particles longitudinally in terms of decreasing %vec(5).
 That is from large z (head of bunch) to small z.
 Only live particles are ordered.
 
@@ -738,9 +694,8 @@ bunch : BunchStruct
   m.def(
       "order_super_lord_slaves",
       &Bmad::order_super_lord_slaves,
-      py::arg("lat"),
-      py::arg("ix_lord"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ix_lord"),
       R"""(Wrapper for Fortran routine order_super_lord_slaves
 
 Parameters
@@ -757,10 +712,9 @@ ix_lord : int
   m.def(
       "osc_alloc_freespace_array",
       &Bmad::osc_alloc_freespace_array,
-      py::arg("nlo"),
-      py::arg("nhi"),
-      py::arg("npad"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nlo"),
+      nb::arg("nhi"),
+      nb::arg("npad"),
       R"""(Wrapper for Fortran routine osc_alloc_freespace_array
 
 Parameters
@@ -775,10 +729,9 @@ npad : 1D array of int (shape: 3)
   m.def(
       "osc_alloc_image_array",
       &Bmad::osc_alloc_image_array,
-      py::arg("nlo"),
-      py::arg("nhi"),
-      py::arg("npad"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nlo"),
+      nb::arg("nhi"),
+      nb::arg("npad"),
       R"""(Wrapper for Fortran routine osc_alloc_image_array
 
 Parameters
@@ -793,10 +746,9 @@ npad : 1D array of int (shape: 3)
   m.def(
       "osc_alloc_rectpipe_arrays",
       &Bmad::osc_alloc_rectpipe_arrays,
-      py::arg("nlo"),
-      py::arg("nhi"),
-      py::arg("npad"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nlo"),
+      nb::arg("nhi"),
+      nb::arg("npad"),
       R"""(Wrapper for Fortran routine osc_alloc_rectpipe_arrays
 
 Parameters
@@ -811,13 +763,12 @@ npad : 1D array of int (shape: 3)
   m.def(
       "osc_getgrnpipe",
       &Bmad::osc_getgrnpipe,
-      py::arg("gam"),
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("delta"),
-      py::arg("umin"),
-      py::arg("npad"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("gam"),
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("delta"),
+      nb::arg("umin"),
+      nb::arg("npad"),
       R"""(Wrapper for Fortran routine osc_getgrnpipe
 
 Parameters
@@ -838,22 +789,20 @@ npad : 1D array of int (shape: 3)
   m.def(
       "osc_read_rectpipe_grn",
       &Bmad::osc_read_rectpipe_grn,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine osc_read_rectpipe_grn
 )"""
   );
   m.def(
       "osc_write_rectpipe_grn",
       &Bmad::osc_write_rectpipe_grn,
-      py::arg("apipe"),
-      py::arg("bpipe"),
-      py::arg("delta"),
-      py::arg("umin"),
-      py::arg("umax"),
-      py::arg("nlo"),
-      py::arg("nhi"),
-      py::arg("gamma"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("apipe"),
+      nb::arg("bpipe"),
+      nb::arg("delta"),
+      nb::arg("umin"),
+      nb::arg("umax"),
+      nb::arg("nlo"),
+      nb::arg("nhi"),
+      nb::arg("gamma"),
       R"""(Wrapper for Fortran routine osc_write_rectpipe_grn
 
 Parameters

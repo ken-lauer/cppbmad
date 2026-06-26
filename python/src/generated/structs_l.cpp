@@ -7,24 +7,25 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // lat_ele_loc_struct
-void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
+void init_lat_ele_loc_struct(nb::module_ &m, nb::class_<LatEleLocStruct> &cls) {
   cls.def(
-         py::init<std::optional<int>, std::optional<int>>(),
-         py::arg("ix_ele") = py::none(),
-         py::arg("ix_branch") = py::none()
+         nb::init<std::optional<int>, std::optional<int>>(),
+         nb::arg("ix_ele") = nb::none(),
+         nb::arg("ix_branch") = nb::none()
   )
-      .def_property("ix_ele", &LatEleLocStruct::ix_ele, &LatEleLocStruct::set_ix_ele)
-      .def_property("ix_branch", &LatEleLocStruct::ix_branch, &LatEleLocStruct::set_ix_branch)
+      .def_prop_rw("ix_ele", &LatEleLocStruct::ix_ele, &LatEleLocStruct::set_ix_ele)
+      .def_prop_rw("ix_branch", &LatEleLocStruct::ix_branch, &LatEleLocStruct::set_ix_branch)
       .def_static(
           "new_array1d",
           [](int sz) { return LatEleLocStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -33,8 +34,8 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleLocStruct &self) { return to_string(self); })
@@ -47,21 +48,20 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const LatEleLocStruct &self, py::dict &memo) { return LatEleLocStruct(self); }
+          [](const LatEleLocStruct &self, nb::dict &memo) { return LatEleLocStruct(self); }
       )
       .def(
           "__eq__",
           [](const LatEleLocStruct &self, const LatEleLocStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatEleLocStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -78,19 +78,19 @@ void init_lat_ele_loc_struct(py::module &m, py::class_<LatEleLocStruct> &cls) {
 
 // =============================================================================
 // lat_ele_order1_struct
-void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &cls) {
+void init_lat_ele_order1_struct(nb::module_ &m, nb::class_<LatEleOrder1Struct> &cls) {
   cls.def(
-         py::init<std::optional<int>, std::optional<int>>(),
-         py::arg("ix_branch") = py::none(),
-         py::arg("ix_order") = py::none()
+         nb::init<std::optional<int>, std::optional<int>>(),
+         nb::arg("ix_branch") = nb::none(),
+         nb::arg("ix_order") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "ix_branch",
           &LatEleOrder1Struct::ix_branch,
           &LatEleOrder1Struct::set_ix_branch,
           "Branch index"
       )
-      .def_property(
+      .def_prop_rw(
           "ix_order",
           &LatEleOrder1Struct::ix_order,
           &LatEleOrder1Struct::set_ix_order,
@@ -99,7 +99,7 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
       .def_static(
           "new_array1d",
           [](int sz) { return LatEleOrder1StructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -108,8 +108,8 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleOrder1Struct &self) { return to_string(self); })
@@ -122,21 +122,20 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
       )
       .def(
           "__deepcopy__",
-          [](const LatEleOrder1Struct &self, py::dict &memo) { return LatEleOrder1Struct(self); }
+          [](const LatEleOrder1Struct &self, nb::dict &memo) { return LatEleOrder1Struct(self); }
       )
       .def(
           "__eq__",
           [](const LatEleOrder1Struct &self, const LatEleOrder1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatEleOrder1Struct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -153,16 +152,13 @@ void init_lat_ele_order1_struct(py::module &m, py::class_<LatEleOrder1Struct> &c
 
 // =============================================================================
 // lat_ele_order_array_struct
-void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayStruct> &cls) {
-  cls.def(py::init<>())
-      .def_property_readonly(
-          "ele",
-          py::cpp_function(&LatEleOrderArrayStruct::ele, py::keep_alive<0, 1>())
-      )
+void init_lat_ele_order_array_struct(nb::module_ &m, nb::class_<LatEleOrderArrayStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro("ele", &LatEleOrderArrayStruct::ele, nb::keep_alive<0, 1>())
       .def_static(
           "new_array1d",
           [](int sz) { return LatEleOrderArrayStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -171,8 +167,8 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const LatEleOrderArrayStruct &self) { return to_string(self); })
@@ -185,7 +181,7 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
       )
       .def(
           "__deepcopy__",
-          [](const LatEleOrderArrayStruct &self, py::dict &memo) {
+          [](const LatEleOrderArrayStruct &self, nb::dict &memo) {
             return LatEleOrderArrayStruct(self);
           }
       )
@@ -194,14 +190,13 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
           [](const LatEleOrderArrayStruct &self, const LatEleOrderArrayStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatEleOrderArrayStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -218,12 +213,9 @@ void init_lat_ele_order_array_struct(py::module &m, py::class_<LatEleOrderArrayS
 
 // =============================================================================
 // lat_ele_order_struct
-void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls) {
-  cls.def(py::init<>())
-      .def_property_readonly(
-          "branch",
-          py::cpp_function(&LatEleOrderStruct::branch, py::keep_alive<0, 1>())
-      )
+void init_lat_ele_order_struct(nb::module_ &m, nb::class_<LatEleOrderStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro("branch", &LatEleOrderStruct::branch, nb::keep_alive<0, 1>())
 
       .def("__repr__", [](const LatEleOrderStruct &self) { return to_string(self); })
 
@@ -235,21 +227,20 @@ void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls
       )
       .def(
           "__deepcopy__",
-          [](const LatEleOrderStruct &self, py::dict &memo) { return LatEleOrderStruct(self); }
+          [](const LatEleOrderStruct &self, nb::dict &memo) { return LatEleOrderStruct(self); }
       )
       .def(
           "__eq__",
           [](const LatEleOrderStruct &self, const LatEleOrderStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatEleOrderStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -262,146 +253,166 @@ void init_lat_ele_order_struct(py::module &m, py::class_<LatEleOrderStruct> &cls
 
 // =============================================================================
 // lat_param_struct
-void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
+void init_lat_param_struct(nb::module_ &m, nb::class_<LatParamStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<std::vector<std::vector<double>>>,
-             std::optional<std::vector<std::vector<double>>>,
-             std::optional<double>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<bool>,
-             std::optional<bool>,
-             std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
-             optional_ref<const BookkeepingStateStruct>,
-             optional_ref<const BeamInitStruct>>(),
-         py::arg("n_part") = py::none(),
-         py::arg("total_length") = py::none(),
-         py::arg("unstable_factor") = py::none(),
-         py::arg("t1_with_RF") = py::none(),
-         py::arg("t1_no_RF") = py::none(),
-         py::arg("spin_tune") = py::none(),
-         py::arg("particle") = py::none(),
-         py::arg("default_tracking_species") = py::none(),
-         py::arg("geometry") = py::none(),
-         py::arg("ixx") = py::none(),
-         py::arg("stable") = py::none(),
-         py::arg("live_branch") = py::none(),
-         py::arg("g1_integral") = py::none(),
-         py::arg("g2_integral") = py::none(),
-         py::arg("g3_integral") = py::none(),
-         py::arg("bookkeeping_state") = py::none(),
-         py::arg("beam_init") = py::none()
+         "__init__",
+         [](LatParamStruct *self,
+            std::optional<double> n_part,
+            std::optional<double> total_length,
+            std::optional<double> unstable_factor,
+            std::optional<std::vector<std::vector<double>>> t1_with_RF,
+            std::optional<std::vector<std::vector<double>>> t1_no_RF,
+            std::optional<double> spin_tune,
+            std::optional<int> particle,
+            std::optional<int> default_tracking_species,
+            std::optional<int> geometry,
+            std::optional<int> ixx,
+            std::optional<bool> stable,
+            std::optional<bool> live_branch,
+            std::optional<double> g1_integral,
+            std::optional<double> g2_integral,
+            std::optional<double> g3_integral,
+            const BookkeepingStateStruct *bookkeeping_state,
+            const BeamInitStruct *beam_init) {
+           new (self) LatParamStruct(
+               n_part,
+               total_length,
+               unstable_factor,
+               t1_with_RF,
+               t1_no_RF,
+               spin_tune,
+               particle,
+               default_tracking_species,
+               geometry,
+               ixx,
+               stable,
+               live_branch,
+               g1_integral,
+               g2_integral,
+               g3_integral,
+               ptr_to_opt_ref(bookkeeping_state),
+               ptr_to_opt_ref(beam_init)
+           );
+         },
+         nb::arg("n_part") = nb::none(),
+         nb::arg("total_length") = nb::none(),
+         nb::arg("unstable_factor") = nb::none(),
+         nb::arg("t1_with_RF") = nb::none(),
+         nb::arg("t1_no_RF") = nb::none(),
+         nb::arg("spin_tune") = nb::none(),
+         nb::arg("particle") = nb::none(),
+         nb::arg("default_tracking_species") = nb::none(),
+         nb::arg("geometry") = nb::none(),
+         nb::arg("ixx") = nb::none(),
+         nb::arg("stable") = nb::none(),
+         nb::arg("live_branch") = nb::none(),
+         nb::arg("g1_integral") = nb::none(),
+         nb::arg("g2_integral") = nb::none(),
+         nb::arg("g3_integral") = nb::none(),
+         nb::arg("bookkeeping_state") = nb::none(),
+         nb::arg("beam_init") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "n_part",
           &LatParamStruct::n_part,
           &LatParamStruct::set_n_part,
           "Particles/bunch (for BeamBeam elements)."
       )
-      .def_property(
+      .def_prop_rw(
           "total_length",
           &LatParamStruct::total_length,
           &LatParamStruct::set_total_length,
           "total_length of branch. Warning: branch may not start at s = 0."
       )
-      .def_property(
+      .def_prop_rw(
           "unstable_factor",
           &LatParamStruct::unstable_factor,
           &LatParamStruct::set_unstable_factor,
           "If positive: Growth rate/turn if unstable in closed branches or "
           "|orbit-aperture|/aperture if particle hits wall. Zero otherwise."
       )
-      .def_property(
+      .def_prop_rw(
           "t1_with_RF",
-          py::cpp_function(&LatParamStruct::t1_with_RF, py::keep_alive<0, 1>()),
+          &LatParamStruct::t1_with_RF,
           &LatParamStruct::set_t1_with_RF,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Full 1-turn matrix with RF on."
       )
-      .def_property(
+      .def_prop_rw(
           "t1_no_RF",
-          py::cpp_function(&LatParamStruct::t1_no_RF, py::keep_alive<0, 1>()),
+          &LatParamStruct::t1_no_RF,
           &LatParamStruct::set_t1_no_RF,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Full 1-turn matrix with RF off."
       )
-      .def_property(
+      .def_prop_rw(
           "spin_tune",
           &LatParamStruct::spin_tune,
           &LatParamStruct::set_spin_tune,
           "Closed orbit spin tune."
       )
-      .def_property(
+      .def_prop_rw(
           "particle",
           &LatParamStruct::particle,
           &LatParamStruct::set_particle,
           "Reference particle: positron$, electron$, etc. Call lattice_bookkeeper if this is "
           "changed."
       )
-      .def_property(
+      .def_prop_rw(
           "default_tracking_species",
           &LatParamStruct::default_tracking_species,
           &LatParamStruct::set_default_tracking_species,
           "Default particle type to use in tracking."
       )
-      .def_property(
+      .def_prop_rw(
           "geometry",
           &LatParamStruct::geometry,
           &LatParamStruct::set_geometry,
           "open$ or closed$"
       )
-      .def_property(
-          "ixx",
-          &LatParamStruct::ixx,
-          &LatParamStruct::set_ixx,
-          "Integer for general use"
-      )
-      .def_property(
+      .def_prop_rw("ixx", &LatParamStruct::ixx, &LatParamStruct::set_ixx, "Integer for general use")
+      .def_prop_rw(
           "stable",
           &LatParamStruct::stable,
           &LatParamStruct::set_stable,
           "is closed lat stable?"
       )
-      .def_property(
+      .def_prop_rw(
           "live_branch",
           &LatParamStruct::live_branch,
           &LatParamStruct::set_live_branch,
           "Should tracking be done on the branch?"
       )
-      .def_property(
+      .def_prop_rw(
           "g1_integral",
           &LatParamStruct::g1_integral,
           &LatParamStruct::set_g1_integral,
           "Approximate |g| (bending strength) integral of branch."
       )
-      .def_property(
+      .def_prop_rw(
           "g2_integral",
           &LatParamStruct::g2_integral,
           &LatParamStruct::set_g2_integral,
           "Approximate g^2 integral of branch."
       )
-      .def_property(
+      .def_prop_rw(
           "g3_integral",
           &LatParamStruct::g3_integral,
           &LatParamStruct::set_g3_integral,
           "Approximate g^2 integral of branch."
       )
-      .def_property(
+      .def_prop_rw(
           "bookkeeping_state",
-          py::cpp_function(&LatParamStruct::bookkeeping_state, py::keep_alive<0, 1>()),
+          &LatParamStruct::bookkeeping_state,
           &LatParamStruct::set_bookkeeping_state,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Overall status for the branch."
       )
-      .def_property(
+      .def_prop_rw(
           "beam_init",
-          py::cpp_function(&LatParamStruct::beam_init, py::keep_alive<0, 1>()),
+          &LatParamStruct::beam_init,
           &LatParamStruct::set_beam_init,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "For beam initialization."
       )
 
@@ -415,21 +426,20 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
       )
       .def(
           "__deepcopy__",
-          [](const LatParamStruct &self, py::dict &memo) { return LatParamStruct(self); }
+          [](const LatParamStruct &self, nb::dict &memo) { return LatParamStruct(self); }
       )
       .def(
           "__eq__",
           [](const LatParamStruct &self, const LatParamStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatParamStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -442,222 +452,258 @@ void init_lat_param_struct(py::module &m, py::class_<LatParamStruct> &cls) {
 
 // =============================================================================
 // lat_struct
-void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
+void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
   cls.def(
-         py::init<
-             std::optional<std::string>,
-             std::optional<std::string>,
-             std::optional<std::string>,
-             std::optional<std::string>,
-             std::optional<std::string>,
-             optional_ref<const ModeInfoStruct>,
-             optional_ref<const ModeInfoStruct>,
-             optional_ref<const ModeInfoStruct>,
-             optional_ref<const LatParamStruct>,
-             optional_ref<const BookkeepingStateStruct>,
-             optional_ref<const EleStruct>,
-             optional_ref<const CoordStruct>,
-             optional_ref<const BeamInitStruct>,
-             optional_ref<const PreTrackerStruct>,
-             std::optional<std::vector<double>>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<std::vector<int>>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<bool>>(),
-         py::arg("use_name") = py::none(),
-         py::arg("lattice") = py::none(),
-         py::arg("machine") = py::none(),
-         py::arg("input_file_name") = py::none(),
-         py::arg("title") = py::none(),
-         py::arg("a") = py::none(),
-         py::arg("b") = py::none(),
-         py::arg("z") = py::none(),
-         py::arg("param") = py::none(),
-         py::arg("lord_state") = py::none(),
-         py::arg("ele_init") = py::none(),
-         py::arg("particle_start") = py::none(),
-         py::arg("beam_init") = py::none(),
-         py::arg("pre_tracker") = py::none(),
-         py::arg("custom") = py::none(),
-         py::arg("version") = py::none(),
-         py::arg("n_ele_track") = py::none(),
-         py::arg("n_ele_max") = py::none(),
-         py::arg("n_control_max") = py::none(),
-         py::arg("n_ic_max") = py::none(),
-         py::arg("input_taylor_order") = py::none(),
-         py::arg("ic") = py::none(),
-         py::arg("photon_type") = py::none(),
-         py::arg("creation_hash") = py::none(),
-         py::arg("ramper_slave_bookkeeping") = py::none(),
-         py::arg("parser_make_xfer_mats") = py::none()
+         "__init__",
+         [](LatStruct *self,
+            std::optional<std::string> use_name,
+            std::optional<std::string> lattice,
+            std::optional<std::string> machine,
+            std::optional<std::string> input_file_name,
+            std::optional<std::string> title,
+            const ModeInfoStruct *a,
+            const ModeInfoStruct *b,
+            const ModeInfoStruct *z,
+            const LatParamStruct *param,
+            const BookkeepingStateStruct *lord_state,
+            const EleStruct *ele_init,
+            const CoordStruct *particle_start,
+            const BeamInitStruct *beam_init,
+            const PreTrackerStruct *pre_tracker,
+            std::optional<std::vector<double>> custom,
+            std::optional<int> version,
+            std::optional<int> n_ele_track,
+            std::optional<int> n_ele_max,
+            std::optional<int> n_control_max,
+            std::optional<int> n_ic_max,
+            std::optional<int> input_taylor_order,
+            std::optional<std::vector<int>> ic,
+            std::optional<int> photon_type,
+            std::optional<int> creation_hash,
+            std::optional<int> ramper_slave_bookkeeping,
+            std::optional<bool> parser_make_xfer_mats) {
+           new (self) LatStruct(
+               use_name,
+               lattice,
+               machine,
+               input_file_name,
+               title,
+               ptr_to_opt_ref(a),
+               ptr_to_opt_ref(b),
+               ptr_to_opt_ref(z),
+               ptr_to_opt_ref(param),
+               ptr_to_opt_ref(lord_state),
+               ptr_to_opt_ref(ele_init),
+               ptr_to_opt_ref(particle_start),
+               ptr_to_opt_ref(beam_init),
+               ptr_to_opt_ref(pre_tracker),
+               custom,
+               version,
+               n_ele_track,
+               n_ele_max,
+               n_control_max,
+               n_ic_max,
+               input_taylor_order,
+               ic,
+               photon_type,
+               creation_hash,
+               ramper_slave_bookkeeping,
+               parser_make_xfer_mats
+           );
+         },
+         nb::arg("use_name") = nb::none(),
+         nb::arg("lattice") = nb::none(),
+         nb::arg("machine") = nb::none(),
+         nb::arg("input_file_name") = nb::none(),
+         nb::arg("title") = nb::none(),
+         nb::arg("a") = nb::none(),
+         nb::arg("b") = nb::none(),
+         nb::arg("z") = nb::none(),
+         nb::arg("param") = nb::none(),
+         nb::arg("lord_state") = nb::none(),
+         nb::arg("ele_init") = nb::none(),
+         nb::arg("particle_start") = nb::none(),
+         nb::arg("beam_init") = nb::none(),
+         nb::arg("pre_tracker") = nb::none(),
+         nb::arg("custom") = nb::none(),
+         nb::arg("version") = nb::none(),
+         nb::arg("n_ele_track") = nb::none(),
+         nb::arg("n_ele_max") = nb::none(),
+         nb::arg("n_control_max") = nb::none(),
+         nb::arg("n_ic_max") = nb::none(),
+         nb::arg("input_taylor_order") = nb::none(),
+         nb::arg("ic") = nb::none(),
+         nb::arg("photon_type") = nb::none(),
+         nb::arg("creation_hash") = nb::none(),
+         nb::arg("ramper_slave_bookkeeping") = nb::none(),
+         nb::arg("parser_make_xfer_mats") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "use_name",
           &LatStruct::use_name,
           &LatStruct::set_use_name,
           "Name of lat given by USE statement"
       )
-      .def_property("lattice", &LatStruct::lattice, &LatStruct::set_lattice, "Lattice")
-      .def_property(
+      .def_prop_rw("lattice", &LatStruct::lattice, &LatStruct::set_lattice, "Lattice")
+      .def_prop_rw(
           "machine",
           &LatStruct::machine,
           &LatStruct::set_machine,
           "Name of the machine the lattice is for ('LHC', etc)."
       )
-      .def_property(
+      .def_prop_rw(
           "input_file_name",
           &LatStruct::input_file_name,
           &LatStruct::set_input_file_name,
           "Name of the lattice input file"
       )
-      .def_property("title", &LatStruct::title, &LatStruct::set_title, "General title")
-      .def_property_readonly(
+      .def_prop_rw("title", &LatStruct::title, &LatStruct::set_title, "General title")
+      .def_prop_ro(
           "print_str",
-          py::cpp_function(&LatStruct::print_str, py::keep_alive<0, 1>()),
+          &LatStruct::print_str,
+          nb::keep_alive<0, 1>(),
           "Saved print statements."
       )
-      .def_property_readonly(
+      .def_prop_ro(
           "constant",
-          py::cpp_function(&LatStruct::constant, py::keep_alive<0, 1>()),
+          &LatStruct::constant,
+          nb::keep_alive<0, 1>(),
           "Constants defined in the lattice"
       )
-      .def_property(
+      .def_prop_rw(
           "a",
-          py::cpp_function(&LatStruct::a, py::keep_alive<0, 1>()),
+          &LatStruct::a,
           &LatStruct::set_a,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Tunes (fractional part), etc."
       )
-      .def_property(
+      .def_prop_rw(
           "b",
-          py::cpp_function(&LatStruct::b, py::keep_alive<0, 1>()),
+          &LatStruct::b,
           &LatStruct::set_b,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Tunes (fractional part), etc."
       )
-      .def_property(
+      .def_prop_rw(
           "z",
-          py::cpp_function(&LatStruct::z, py::keep_alive<0, 1>()),
+          &LatStruct::z,
           &LatStruct::set_z,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Tunes (fractional part), etc."
       )
-      .def_property(
+      .def_prop_rw(
           "param",
-          py::cpp_function(&LatStruct::param, py::keep_alive<0, 1>()),
+          &LatStruct::param,
           &LatStruct::set_param,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Parameters"
       )
-      .def_property(
+      .def_prop_rw(
           "lord_state",
-          py::cpp_function(&LatStruct::lord_state, py::keep_alive<0, 1>()),
+          &LatStruct::lord_state,
           &LatStruct::set_lord_state,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "lord bookkeeping status."
       )
-      .def_property(
+      .def_prop_rw(
           "ele_init",
-          py::cpp_function(&LatStruct::ele_init, py::keep_alive<0, 1>()),
+          &LatStruct::ele_init,
           &LatStruct::set_ele_init,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "For use by any program"
       )
-      .def_property_readonly(
+      .def_prop_ro(
           "ele",
-          py::cpp_function(&LatStruct::ele, py::keep_alive<0, 1>()),
+          &LatStruct::ele,
+          nb::keep_alive<0, 1>(),
           "Array of elements [=> branch(0)]."
       )
-      .def_property_readonly(
-          "branch",
-          py::cpp_function(&LatStruct::branch, py::keep_alive<0, 1>()),
-          "Branch(0:) array"
-      )
-      .def_property_readonly(
-          "control",
-          py::cpp_function(&LatStruct::control, py::keep_alive<0, 1>()),
-          "Control list"
-      )
-      .def_property(
+      .def_prop_ro("branch", &LatStruct::branch, nb::keep_alive<0, 1>(), "Branch(0:) array")
+      .def_prop_ro("control", &LatStruct::control, nb::keep_alive<0, 1>(), "Control list")
+      .def_prop_rw(
           "particle_start",
-          py::cpp_function(&LatStruct::particle_start, py::keep_alive<0, 1>()),
+          &LatStruct::particle_start,
           &LatStruct::set_particle_start,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Starting particle_coords."
       )
-      .def_property(
+      .def_prop_rw(
           "beam_init",
-          py::cpp_function(&LatStruct::beam_init, py::keep_alive<0, 1>()),
+          &LatStruct::beam_init,
           &LatStruct::set_beam_init,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Beam initialization."
       )
-      .def_property(
+      .def_prop_rw(
           "pre_tracker",
-          py::cpp_function(&LatStruct::pre_tracker, py::keep_alive<0, 1>()),
+          &LatStruct::pre_tracker,
           &LatStruct::set_pre_tracker,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "For OPAL/IMPACT-T"
       )
-      .def_property(
+      .def_prop_rw(
           "custom",
-          py::cpp_function(&LatStruct::custom, py::keep_alive<0, 1>()),
+          &LatStruct::custom,
           &LatStruct::set_custom,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Custom attributes."
       )
-      .def_property("version", &LatStruct::version, &LatStruct::set_version, "Version number")
-      .def_property(
+      .def_prop_rw("version", &LatStruct::version, &LatStruct::set_version, "Version number")
+      .def_prop_rw(
           "n_ele_track",
           &LatStruct::n_ele_track,
           &LatStruct::set_n_ele_track,
           "Number of lat elements to track through."
       )
-      .def_property(
+      .def_prop_rw(
           "n_ele_max",
           &LatStruct::n_ele_max,
           &LatStruct::set_n_ele_max,
           "Index of last valid element in %ele(:) array"
       )
-      .def_property(
+      .def_prop_rw(
           "n_control_max",
           &LatStruct::n_control_max,
           &LatStruct::set_n_control_max,
           "Last index used in control_array"
       )
-      .def_property(
+      .def_prop_rw(
           "n_ic_max",
           &LatStruct::n_ic_max,
           &LatStruct::set_n_ic_max,
           "Last index used in ic_array"
       )
-      .def_property(
+      .def_prop_rw(
           "input_taylor_order",
           &LatStruct::input_taylor_order,
           &LatStruct::set_input_taylor_order,
           "As set in the input file"
       )
-      .def_property(
+      .def_prop_rw(
           "ic",
-          py::cpp_function(&LatStruct::ic, py::keep_alive<0, 1>()),
+          &LatStruct::ic,
           &LatStruct::set_ic,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "Index to %control(:) from slaves."
       )
-      .def_property(
+      .def_prop_rw(
           "photon_type",
           &LatStruct::photon_type,
           &LatStruct::set_photon_type,
           "Or coherent$. For X-ray simulations."
       )
-      .def_property(
+      .def_prop_rw(
           "creation_hash",
           &LatStruct::creation_hash,
           &LatStruct::set_creation_hash,
           "Set by bmad_parser. creation_hash will vary if any of the lattice files are modified."
       )
-      .def_property(
+      .def_prop_rw(
           "ramper_slave_bookkeeping",
           &LatStruct::ramper_slave_bookkeeping,
           &LatStruct::set_ramper_slave_bookkeeping
       )
-      .def_property(
+      .def_prop_rw(
           "parser_make_xfer_mats",
           &LatStruct::parser_make_xfer_mats,
           &LatStruct::set_parser_make_xfer_mats,
@@ -666,7 +712,7 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
       .def_static(
           "new_array1d",
           [](int sz) { return LatStructAlloc1D(sz); },
-          py::arg("sz") = 0
+          nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
@@ -675,8 +721,8 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
-          py::arg("lbound"),
-          py::arg("ubound")
+          nb::arg("lbound"),
+          nb::arg("ubound")
       )
 
       .def("__repr__", [](const LatStruct &self) { return to_string(self); })
@@ -687,20 +733,19 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
             return LatStruct(self); // under-the-hood fortran copy
           }
       )
-      .def("__deepcopy__", [](const LatStruct &self, py::dict &memo) { return LatStruct(self); })
+      .def("__deepcopy__", [](const LatStruct &self, nb::dict &memo) { return LatStruct(self); })
       .def(
           "__eq__",
           [](const LatStruct &self, const LatStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LatStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -717,9 +762,9 @@ void init_lat_struct(py::module &m, py::class_<LatStruct> &cls) {
 
 // =============================================================================
 // linac_normal_mode_struct
-void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStruct> &cls) {
+void init_linac_normal_mode_struct(nb::module_ &m, nb::class_<LinacNormalModeStruct> &cls) {
   cls.def(
-         py::init<
+         nb::init<
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
@@ -727,51 +772,51 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
              std::optional<double>,
              std::optional<double>,
              std::optional<double>>(),
-         py::arg("i2_E4") = py::none(),
-         py::arg("i3_E7") = py::none(),
-         py::arg("i5a_E6") = py::none(),
-         py::arg("i5b_E6") = py::none(),
-         py::arg("sig_E1") = py::none(),
-         py::arg("a_emittance_end") = py::none(),
-         py::arg("b_emittance_end") = py::none()
+         nb::arg("i2_E4") = nb::none(),
+         nb::arg("i3_E7") = nb::none(),
+         nb::arg("i5a_E6") = nb::none(),
+         nb::arg("i5b_E6") = nb::none(),
+         nb::arg("sig_E1") = nb::none(),
+         nb::arg("a_emittance_end") = nb::none(),
+         nb::arg("b_emittance_end") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "i2_E4",
           &LinacNormalModeStruct::i2_E4,
           &LinacNormalModeStruct::set_i2_E4,
           "Integral: g^2 * gamma^4"
       )
-      .def_property(
+      .def_prop_rw(
           "i3_E7",
           &LinacNormalModeStruct::i3_E7,
           &LinacNormalModeStruct::set_i3_E7,
           "Integral: g^3 * gamma^7"
       )
-      .def_property(
+      .def_prop_rw(
           "i5a_E6",
           &LinacNormalModeStruct::i5a_E6,
           &LinacNormalModeStruct::set_i5a_E6,
           "Integral: (g^3 * H_a) * gamma^6"
       )
-      .def_property(
+      .def_prop_rw(
           "i5b_E6",
           &LinacNormalModeStruct::i5b_E6,
           &LinacNormalModeStruct::set_i5b_E6,
           "Integral: (g^3 * H_b) * gamma^6"
       )
-      .def_property(
+      .def_prop_rw(
           "sig_E1",
           &LinacNormalModeStruct::sig_E1,
           &LinacNormalModeStruct::set_sig_E1,
           "Energy spread after 1 pass (eV)"
       )
-      .def_property(
+      .def_prop_rw(
           "a_emittance_end",
           &LinacNormalModeStruct::a_emittance_end,
           &LinacNormalModeStruct::set_a_emittance_end,
           "a mode emittance at end of linac"
       )
-      .def_property(
+      .def_prop_rw(
           "b_emittance_end",
           &LinacNormalModeStruct::b_emittance_end,
           &LinacNormalModeStruct::set_b_emittance_end,
@@ -788,7 +833,7 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
       )
       .def(
           "__deepcopy__",
-          [](const LinacNormalModeStruct &self, py::dict &memo) {
+          [](const LinacNormalModeStruct &self, nb::dict &memo) {
             return LinacNormalModeStruct(self);
           }
       )
@@ -797,14 +842,13 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
           [](const LinacNormalModeStruct &self, const LinacNormalModeStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const LinacNormalModeStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 
@@ -817,91 +861,111 @@ void init_linac_normal_mode_struct(py::module &m, py::class_<LinacNormalModeStru
 
 // =============================================================================
 // layout
-void init_layout(py::module &m, py::class_<Layout> &cls) {
+void init_layout(nb::module_ &m, nb::class_<Layout> &cls) {
   cls.def(
-         py::init<
-             std::optional<std::string>,
-             std::optional<int>,
-             std::optional<double>,
-             std::optional<bool>,
-             std::optional<int>,
-             std::optional<int>,
-             std::optional<double>,
-             std::optional<int>,
-             optional_ref<const Fibre>,
-             optional_ref<const Fibre>,
-             optional_ref<const Fibre>,
-             optional_ref<const Fibre>,
-             optional_ref<const Fibre>,
-             optional_ref<const Layout>,
-             optional_ref<const Layout>>(),
-         py::arg("NAME") = py::none(),
-         py::arg("INDEX") = py::none(),
-         py::arg("HARMONIC_NUMBER") = py::none(),
-         py::arg("CLOSED") = py::none(),
-         py::arg("N") = py::none(),
-         py::arg("NTHIN") = py::none(),
-         py::arg("THIN") = py::none(),
-         py::arg("LASTPOS") = py::none(),
-         py::arg("LAST") = py::none(),
-         py::arg("END") = py::none(),
-         py::arg("START") = py::none(),
-         py::arg("START_GROUND") = py::none(),
-         py::arg("END_GROUND") = py::none(),
-         py::arg("NEXT") = py::none(),
-         py::arg("PREVIOUS") = py::none()
+         "__init__",
+         [](Layout *self,
+            std::optional<std::string> NAME,
+            std::optional<int> INDEX,
+            std::optional<double> HARMONIC_NUMBER,
+            std::optional<bool> CLOSED,
+            std::optional<int> N,
+            std::optional<int> NTHIN,
+            std::optional<double> THIN,
+            std::optional<int> LASTPOS,
+            const Fibre *LAST,
+            const Fibre *END,
+            const Fibre *START,
+            const Fibre *START_GROUND,
+            const Fibre *END_GROUND,
+            const Layout *NEXT,
+            const Layout *PREVIOUS) {
+           new (self) Layout(
+               NAME,
+               INDEX,
+               HARMONIC_NUMBER,
+               CLOSED,
+               N,
+               NTHIN,
+               THIN,
+               LASTPOS,
+               ptr_to_opt_ref(LAST),
+               ptr_to_opt_ref(END),
+               ptr_to_opt_ref(START),
+               ptr_to_opt_ref(START_GROUND),
+               ptr_to_opt_ref(END_GROUND),
+               ptr_to_opt_ref(NEXT),
+               ptr_to_opt_ref(PREVIOUS)
+           );
+         },
+         nb::arg("NAME") = nb::none(),
+         nb::arg("INDEX") = nb::none(),
+         nb::arg("HARMONIC_NUMBER") = nb::none(),
+         nb::arg("CLOSED") = nb::none(),
+         nb::arg("N") = nb::none(),
+         nb::arg("NTHIN") = nb::none(),
+         nb::arg("THIN") = nb::none(),
+         nb::arg("LASTPOS") = nb::none(),
+         nb::arg("LAST") = nb::none(),
+         nb::arg("END") = nb::none(),
+         nb::arg("START") = nb::none(),
+         nb::arg("START_GROUND") = nb::none(),
+         nb::arg("END_GROUND") = nb::none(),
+         nb::arg("NEXT") = nb::none(),
+         nb::arg("PREVIOUS") = nb::none()
   )
-      .def_property("NAME", &Layout::NAME, &Layout::set_NAME, "IDENTIFICATION")
-      .def_property("INDEX", &Layout::INDEX, &Layout::set_INDEX, "IDENTIFICATION, CHARGE SIGN")
-      .def_property("HARMONIC_NUMBER", &Layout::HARMONIC_NUMBER, &Layout::set_HARMONIC_NUMBER)
-      .def_property("CLOSED", &Layout::CLOSED, &Layout::set_CLOSED)
-      .def_property("N", &Layout::N, &Layout::set_N, "TOTAL ELEMENT IN THE CHAIN")
-      .def_property(
+      .def_prop_rw("NAME", &Layout::NAME, &Layout::set_NAME, "IDENTIFICATION")
+      .def_prop_rw("INDEX", &Layout::INDEX, &Layout::set_INDEX, "IDENTIFICATION, CHARGE SIGN")
+      .def_prop_rw("HARMONIC_NUMBER", &Layout::HARMONIC_NUMBER, &Layout::set_HARMONIC_NUMBER)
+      .def_prop_rw("CLOSED", &Layout::CLOSED, &Layout::set_CLOSED)
+      .def_prop_rw("N", &Layout::N, &Layout::set_N, "TOTAL ELEMENT IN THE CHAIN")
+      .def_prop_rw(
           "NTHIN",
           &Layout::NTHIN,
           &Layout::set_NTHIN,
           "NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES)"
       )
-      .def_property(
+      .def_prop_rw(
           "THIN",
           &Layout::THIN,
           &Layout::set_THIN,
           "PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT"
       )
-      .def_property("LASTPOS", &Layout::LASTPOS, &Layout::set_LASTPOS, "POSITION OF LAST VISITED")
-      .def_property(
+      .def_prop_rw("LASTPOS", &Layout::LASTPOS, &Layout::set_LASTPOS, "POSITION OF LAST VISITED")
+      .def_prop_rw(
           "LAST",
-          py::cpp_function(&Layout::LAST, py::keep_alive<0, 1>()),
+          &Layout::LAST,
           &Layout::set_LAST,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "LAST VISITED"
       )
-      .def_property("END", py::cpp_function(&Layout::END, py::keep_alive<0, 1>()), &Layout::set_END)
-      .def_property(
+      .def_prop_rw("END", &Layout::END, &Layout::set_END, nb::for_getter(nb::keep_alive<0, 1>()))
+      .def_prop_rw(
           "START",
-          py::cpp_function(&Layout::START, py::keep_alive<0, 1>()),
-          &Layout::set_START
+          &Layout::START,
+          &Layout::set_START,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
-      .def_property(
+      .def_prop_rw(
           "START_GROUND",
-          py::cpp_function(&Layout::START_GROUND, py::keep_alive<0, 1>()),
+          &Layout::START_GROUND,
           &Layout::set_START_GROUND,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING"
       )
-      .def_property(
+      .def_prop_rw(
           "END_GROUND",
-          py::cpp_function(&Layout::END_GROUND, py::keep_alive<0, 1>()),
+          &Layout::END_GROUND,
           &Layout::set_END_GROUND,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING"
       )
-      .def_property(
-          "NEXT",
-          py::cpp_function(&Layout::NEXT, py::keep_alive<0, 1>()),
-          &Layout::set_NEXT
-      )
-      .def_property(
+      .def_prop_rw("NEXT", &Layout::NEXT, &Layout::set_NEXT, nb::for_getter(nb::keep_alive<0, 1>()))
+      .def_prop_rw(
           "PREVIOUS",
-          py::cpp_function(&Layout::PREVIOUS, py::keep_alive<0, 1>()),
-          &Layout::set_PREVIOUS
+          &Layout::PREVIOUS,
+          &Layout::set_PREVIOUS,
+          nb::for_getter(nb::keep_alive<0, 1>())
       )
 
       .def("__repr__", [](const Layout &self) { return to_string(self); })
@@ -912,20 +976,19 @@ void init_layout(py::module &m, py::class_<Layout> &cls) {
             return Layout(self); // under-the-hood fortran copy
           }
       )
-      .def("__deepcopy__", [](const Layout &self, py::dict &memo) { return Layout(self); })
+      .def("__deepcopy__", [](const Layout &self, nb::dict &memo) { return Layout(self); })
       .def(
           "__eq__",
           [](const Layout &self, const Layout &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const Layout &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

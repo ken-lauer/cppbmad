@@ -14,6 +14,22 @@
 using namespace Bmad;
 
 using json = nlohmann::json;
+std::string SimUtils::all_pointer_to_string(AllPointerStruct &a_ptr, std::optional<bool> err) {
+  bool err_lvalue;
+  auto *_err{&err_lvalue};
+  if (err.has_value()) {
+    err_lvalue = err.value();
+  } else {
+    _err = nullptr;
+  }
+  char _str[4096];
+  fortran_all_pointer_to_string(
+      /* void* */ a_ptr.get_fortran_ptr(),
+      /* bool* */ _err,
+      /* const char* */ _str
+  );
+  return _str;
+}
 void SimUtils::allocate_thread_states() { fortran_allocate_thread_states(); }
 double SimUtils::anomalous_moment_of(int species) {
   double _moment{};
@@ -677,9 +693,11 @@ int SimUtils::find_location(FArray1D<Int> &arr, int value) {
 int SimUtils::find_location(BoolAlloc1D &arr, bool value) {
   // intent=inout allocatable general array
   int _ix_match{};
-  fortran_find_location_logic(/* void* */ arr.get_fortran_ptr(),
-                              /* bool& */ value,
-                              /* int& */ _ix_match);
+  fortran_find_location_logic(
+      /* void* */ arr.get_fortran_ptr(),
+      /* bool& */ value,
+      /* int& */ _ix_match
+  );
   return _ix_match;
 }
 int SimUtils::find_location(FArray1D<Real> &arr, double value) {
@@ -700,9 +718,11 @@ int SimUtils::find_location(CharacterAlloc1D &arr, std::string value) {
   // intent=inout character array container
   auto _value = value.c_str();
   int _ix_match{};
-  fortran_find_location_str(/* void* */ arr.get_fortran_ptr(),
-                            /* const char* */ _value,
-                            /* int& */ _ix_match);
+  fortran_find_location_str(
+      /* void* */ arr.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* int& */ _ix_match
+  );
   return _ix_match;
 }
 double SimUtils::fine_frequency_estimate(FArray1D<Real> &data) {
@@ -1339,9 +1359,11 @@ void SimUtils::naff(
 }
 void SimUtils::nametable_add(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_add(/* void* */ nametable.get_fortran_ptr(),
-                        /* const char* */ _name,
-                        /* int& */ ix_name);
+  fortran_nametable_add(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int& */ ix_name
+  );
 }
 int SimUtils::nametable_bracket_indexx(
     NametableStruct &nametable,
@@ -1357,17 +1379,21 @@ int SimUtils::nametable_bracket_indexx(
     _n_match = nullptr;
   }
   int _ix_max{};
-  fortran_nametable_bracket_indexx(/* void* */ nametable.get_fortran_ptr(),
-                                   /* const char* */ _name,
-                                   /* int* */ _n_match,
-                                   /* int& */ _ix_max);
+  fortran_nametable_bracket_indexx(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int* */ _n_match,
+      /* int& */ _ix_max
+  );
   return _ix_max;
 }
 void SimUtils::nametable_change1(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_change1(/* void* */ nametable.get_fortran_ptr(),
-                            /* const char* */ _name,
-                            /* int& */ ix_name);
+  fortran_nametable_change1(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int& */ ix_name
+  );
 }
 void SimUtils::nametable_init(
     NametableStruct &nametable,
@@ -1388,9 +1414,11 @@ void SimUtils::nametable_init(
   } else {
     _n_max = nullptr;
   }
-  fortran_nametable_init(/* void* */ nametable.get_fortran_ptr(),
-                         /* int* */ _n_min,
-                         /* int* */ _n_max);
+  fortran_nametable_init(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* int* */ _n_min,
+      /* int* */ _n_max
+  );
 }
 void SimUtils::nametable_remove(NametableStruct &nametable, int ix_name) {
   fortran_nametable_remove(/* void* */ nametable.get_fortran_ptr(), /* int& */ ix_name);
@@ -2248,9 +2276,11 @@ std::string SimUtils::quoten(CharacterAlloc1D &str, std::optional<std::string> d
   // intent=inout character array container
   const char *_delim = delim.has_value() ? delim->c_str() : nullptr;
   char _q_str[4096];
-  fortran_quoten(/* void* */ str.get_fortran_ptr(),
-                 /* const char* */ _delim,
-                 /* const char* */ _q_str);
+  fortran_quoten(
+      /* void* */ str.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* const char* */ _q_str
+  );
   return _q_str;
 }
 RandomStateStruct SimUtils::ran_default_state(optional_ref<RandomStateStruct> set_state) {
@@ -2547,10 +2577,12 @@ void SimUtils::reallocate_spline(
   } else {
     _exact = nullptr;
   }
-  fortran_reallocate_spline(/* void* */ spline.get_fortran_ptr(),
-                            /* int& */ n,
-                            /* int* */ _n_min,
-                            /* bool* */ _exact);
+  fortran_reallocate_spline(
+      /* void* */ spline.get_fortran_ptr(),
+      /* int& */ n,
+      /* int* */ _n_min,
+      /* bool* */ _exact
+  );
 }
 void SimUtils::relbd(double phi, double phic, double mc, double b, double d) {
   fortran_relbd(
@@ -2685,6 +2717,33 @@ SimUtils::Serbd SimUtils::serbd(double y, double m) {
   double _d{};
   fortran_serbd(/* double& */ y, /* double& */ m, /* double& */ _b, /* double& */ _d);
   return Serbd{_b, _d};
+}
+void SimUtils::set_all_ptr(
+    AllPointerStruct &a_ptr,
+    double value,
+    std::optional<bool> delta,
+    std::optional<double> value_set
+) {
+  bool delta_lvalue;
+  auto *_delta{&delta_lvalue};
+  if (delta.has_value()) {
+    delta_lvalue = delta.value();
+  } else {
+    _delta = nullptr;
+  }
+  double value_set_lvalue;
+  auto *_value_set{&value_set_lvalue};
+  if (value_set.has_value()) {
+    value_set_lvalue = value_set.value();
+  } else {
+    _value_set = nullptr;
+  }
+  fortran_set_all_ptr(
+      /* void* */ a_ptr.get_fortran_ptr(),
+      /* double& */ value,
+      /* bool* */ _delta,
+      /* double* */ _value_set
+  );
 }
 void SimUtils::set_env(std::string env_name, std::string env_value, bool err_flag) {
   auto _env_name = env_name.c_str();
@@ -2860,10 +2919,12 @@ double SimUtils::spline1(SplineStruct &a_spline, double x, std::optional<int> n)
     _n = nullptr;
   }
   double _y{};
-  fortran_spline1(/* void* */ a_spline.get_fortran_ptr(),
-                  /* double& */ x,
-                  /* int* */ _n,
-                  /* double& */ _y);
+  fortran_spline1(
+      /* void* */ a_spline.get_fortran_ptr(),
+      /* double& */ x,
+      /* int* */ _n,
+      /* double& */ _y
+  );
   return _y;
 }
 bool SimUtils::spline_akima(SplineStructArray1D spline) {
@@ -3363,6 +3424,11 @@ void SimUtils::type_this_file(std::string filename) {
 void SimUtils::upcase_string(std::string string) {
   auto _string = string.c_str();
   fortran_upcase_string(/* const char* */ _string);
+}
+double SimUtils::value_of_all_ptr(AllPointerStruct &a_ptr) {
+  double _value{};
+  fortran_value_of_all_ptr(/* void* */ a_ptr.get_fortran_ptr(), /* double& */ _value);
+  return _value;
 }
 int SimUtils::virtual_memory_usage() {
   int _usage{};

@@ -1,12 +1,12 @@
 #pragma once
-#include <pybind11/pybind11.h>
+#include <nanobind/nanobind.h>
 
 #include "bmad/generated/proxy.hpp"
 #include "pybmad/generated/structs.hpp"
-namespace py = pybind11;
+namespace nb = nanobind;
 
 using namespace Bmad;
 
 // Per-struct init functions
-void init_floor_position_struct(py::module &m, py::class_<FloorPositionStruct> &class_);
-void init_fibre(py::module &m, py::class_<Fibre> &class_);
+void init_floor_position_struct(nb::module_ &m, nb::class_<FloorPositionStruct> &class_);
+void init_fibre(nb::module_ &m, nb::class_<Fibre> &class_);
