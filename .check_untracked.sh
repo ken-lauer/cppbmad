@@ -2,6 +2,7 @@
 
 paths_to_check=(
   "src/generated/*.cpp"
+  "src/generated/*.f90"
   "include/bmad/generated/*.hpp"
   "python/src/generated/*.cpp"
   "python/include/pybmad/generated/*.hpp"
