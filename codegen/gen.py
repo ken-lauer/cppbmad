@@ -213,9 +213,7 @@ def load_context(
 
     settings_and_routines, routine_structs = load_routines(params, parsed_structs, params)
 
-    # TODO: considering opening up the struct list completely
-    # params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
-    params.struct_list = params.struct_list
+    params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
