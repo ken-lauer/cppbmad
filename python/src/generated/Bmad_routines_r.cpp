@@ -1025,6 +1025,14 @@ exact : bool, optional
 )"""
   );
   m.def(
+      "reallocate_sequence",
+      &Bmad::reallocate_sequence,
+      nb::arg("sequence"),
+      nb::arg("n_seq"),
+      R"""(No docstring available.
+)"""
+  );
+  m.def(
       "rel_tracking_charge_to_mass",
       &Bmad::rel_tracking_charge_to_mass,
       nb::arg("orbit"),

@@ -4,6 +4,52 @@ Tao (The Tool for Accelerator Optics)
 
 ## Classes (Fortran Structures)
 
+::: pybmad.DoLoopStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### DoLoopStruct
+
+Fortran struct: `do_loop_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L741))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str | do loop index name |
+| `index` | int | for do loops |
+| `start` | int | for do loops |
+| `end` | int | for do loops |
+| `step` | int | for do loops |
+| `n_line_start` | int | lines in each nested loop |
+| `n_line_end` | int | lines in each nested loop |
+| `value` | int |  |
+
+::: pybmad.TaoAliasStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoAliasStruct
+
+Fortran struct: `tao_alias_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L718))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str |  |
+| `expanded_str` | str |  |
+
 ::: pybmad.TaoBeamBranchStruct
     options:
       heading_level: 0
@@ -159,6 +205,35 @@ All attributes may be passed to the initializer as arguments:
 | `cmd` | str | The command |
 | `ix` | int | Command index (1st command has ix = 1, etc.) Note: Commands from command files will be assigned an index. |
 
+::: pybmad.TaoCommandFileStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoCommandFileStruct
+
+Fortran struct: `tao_command_file_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L725))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `full_name` | str |  |
+| `dir` | str |  |
+| `ix_unit` | int |  |
+| `cmd_arg` | 1D array of str (shape: 9) | Command file arguments. |
+| `quiet` | str |  |
+| `paused` | bool | Is the command file paused? |
+| `n_line` | int | Current line number |
+| `reset_at_end` | bool | Reset lattice_calc_on and plot_on at end of file? |
+| `lattice_calc_save` | bool |  |
+| `plot_save` | bool |  |
+| `multi_cmd` | str | Commands not yet executed when there are mulitple commands on a line |
+
 ::: pybmad.TaoCommonStruct
     options:
       heading_level: 0
@@ -176,7 +251,12 @@ All attributes may be passed to the initializer as arguments:
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
+| `alias` | [1D array of TaoAliasStruct (shape: 200)](tao.md#taoaliasstruct) |  |
+| `key` | [1D array of TaoAliasStruct (shape: 100)](tao.md#taoaliasstruct) |  |
+| `cmd_file` | [1D array of TaoCommandFileStruct](tao.md#taocommandfilestruct) |  |
+| `symbolic_num` | [1D array of NamedNumberStruct](sim_utils.md#namednumberstruct) | Named numbers |
 | `plot_place_buffer` | [1D array of TaoPlotRegionStruct](tao.md#taoplotregionstruct) | Used when %external_plotting is on. |
+| `do_loop` | [1D array of DoLoopStruct](tao.md#doloopstruct) |  |
 | `covar` | 2D array of float |  |
 | `alpha` | 2D array of float |  |
 | `dummy_target` | float | Dummy varaible |
@@ -216,6 +296,25 @@ All attributes may be passed to the initializer as arguments:
 | `valid_plot_who` | 1D array of str (shape: 10) | model, base, ref etc... |
 | `single_mode_buffer` | str |  |
 | `cmd` | str | Used for the cmd history |
+
+::: pybmad.TaoCurveArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoCurveArrayStruct
+
+Fortran struct: `tao_curve_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L378))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `c` | [TaoCurveStruct](tao.md#taocurvestruct) |  |
 
 ::: pybmad.TaoCurveColorStruct
     options:
@@ -318,6 +417,25 @@ All attributes may be passed to the initializer as arguments:
 | `smooth_line_calc` | bool | Calculate data between element edge points? |
 | `valid` | bool | valid data? |
 
+::: pybmad.TaoD1DataArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoD1DataArrayStruct
+
+Fortran struct: `tao_d1_data_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L512))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `d1` | [TaoD1DataStruct](tao.md#taod1datastruct) |  |
+
 ::: pybmad.TaoD1DataStruct
     options:
       heading_level: 0
@@ -338,6 +456,25 @@ All attributes may be passed to the initializer as arguments:
 | `name` | str | Eg: 'x', etc. |
 | `d2` | [TaoD2DataStruct](tao.md#taod2datastruct) | ptr to parent d2_data |
 | `d` | [1D array of TaoDataStruct](tao.md#taodatastruct) | Pointer to the appropriate section in u%data |
+
+::: pybmad.TaoD2DataArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoD2DataArrayStruct
+
+Fortran struct: `tao_d2_data_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L516))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `d2` | [TaoD2DataStruct](tao.md#taod2datastruct) |  |
 
 ::: pybmad.TaoD2DataStruct
     options:
@@ -368,6 +505,25 @@ All attributes may be passed to the initializer as arguments:
 | `ix_ref` | int | Index of the reference data set. |
 | `data_read_in` | bool | A data set has been read in? |
 | `ref_read_in` | bool | A reference data set has been read in? |
+
+::: pybmad.TaoDataArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoDataArrayStruct
+
+Fortran struct: `tao_data_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L508))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `d` | [TaoDataStruct](tao.md#taodatastruct) |  |
 
 ::: pybmad.TaoDataStruct
     options:
@@ -517,6 +673,33 @@ All attributes may be passed to the initializer as arguments:
 | `eles` | [1D array of ElePointerStruct](bmad.md#elepointerstruct) |  |
 | `n_loc` | int |  |
 
+::: pybmad.TaoEleShapeInput
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoEleShapeInput
+
+Fortran struct: `tao_ele_shape_input` ([`tao/code/tao_input_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_input_struct.f90#L218))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ele_id` | str | element "key::name" to match to. |
+| `shape` | str | Shape to draw |
+| `color` | str | Color of shape |
+| `size` | float | plot vertical height |
+| `label` | str | Can be: 'name', 's', 'none' |
+| `draw` | bool | Draw the shape? |
+| `multi` | bool | Can be part of a multi-shape. |
+| `line_width` | int | Width of lines used to draw the shape. |
+| `offset` | float | Vertical offset. |
+
 ::: pybmad.TaoEleShapeStruct
     options:
       heading_level: 0
@@ -569,6 +752,7 @@ All attributes may be passed to the initializer as arguments:
 | `scale` | float | Scale factor for ping data |
 | `value` | 1D array of float |  |
 | `info` | [1D array of TaoExpressionInfoStruct](tao.md#taoexpressioninfostruct) |  |
+| `value_ptr` | [1D array of TaoRealPointerStruct](tao.md#taorealpointerstruct) | Used to point to data, lattice parameters, etc |
 | `node` | [1D array of TaoEvalNodeStruct](tao.md#taoevalnodestruct) | Child nodes for tree construction. |
 
 ::: pybmad.TaoExpressionInfoStruct
@@ -709,6 +893,25 @@ All attributes may be passed to the initializer as arguments:
 | `expression_tree_on` | bool | Use an expression tree instead of a stack? |
 | `verbose_on` | bool | For verbose output. Used with debugging. |
 
+::: pybmad.TaoGraphArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoGraphArrayStruct
+
+Fortran struct: `tao_graph_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L374))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `g` | [TaoGraphStruct](tao.md#taographstruct) |  |
+
 ::: pybmad.TaoGraphStruct
     options:
       heading_level: 0
@@ -845,6 +1048,25 @@ All attributes may be passed to the initializer as arguments:
 | `symbol_import_arg` | str | -symbol_import       command line argument |
 | `unique_name_suffix` | str |  |
 
+::: pybmad.TaoIntegerArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoIntegerArrayStruct
+
+Fortran struct: `tao_integer_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L82))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `i` | int |  |
+
 ::: pybmad.TaoLatSigmaStruct
     options:
       heading_level: 0
@@ -937,9 +1159,29 @@ All attributes may be passed to the initializer as arguments:
 | `lat` | [LatStruct](bmad.md#latstruct) | lattice structures |
 | `high_E_lat` | [LatStruct](bmad.md#latstruct) | For chrom calc. |
 | `low_E_lat` | [LatStruct](bmad.md#latstruct) | For chrom calc. |
+| `u` | [TaoUniverseStruct](tao.md#taouniversestruct) | Parent universe |
 | `rad_int_by_ele_ri` | [RadIntAllEleStruct](bmad.md#radintallelestruct) |  |
 | `rad_int_by_ele_6d` | [RadIntAllEleStruct](bmad.md#radintallelestruct) |  |
 | `tao_branch` | [1D array of TaoLatticeBranchStruct](tao.md#taolatticebranchstruct) |  |
+
+::: pybmad.TaoLogicalArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoLogicalArrayStruct
+
+Fortran struct: `tao_logical_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L78))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `l` | bool |  |
 
 ::: pybmad.TaoModelBranchStruct
     options:
@@ -1004,6 +1246,25 @@ All attributes may be passed to the initializer as arguments:
 | `b_mode_meas` | float |  |
 | `b_mode_ref` | float |  |
 
+::: pybmad.TaoPlotArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoPlotArrayStruct
+
+Fortran struct: `tao_plot_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L370))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `p` | [TaoPlotStruct](tao.md#taoplotstruct) |  |
+
 ::: pybmad.TaoPlotCacheStruct
     options:
       heading_level: 0
@@ -1024,6 +1285,45 @@ All attributes may be passed to the initializer as arguments:
 | `ele_to_s` | [EleStruct](bmad.md#elestruct) | Integrated element from branch beginning. Will be marked as a hybrid element. |
 | `orbit` | [CoordStruct](bmad.md#coordstruct) |  |
 | `err` | bool |  |
+
+::: pybmad.TaoPlotPageInput
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoPlotPageInput
+
+Fortran struct: `tao_plot_page_input` ([`tao/code/tao_input_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_input_struct.f90#L194))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `title` | [TaoTitleStruct](tao.md#taotitlestruct) | Title  at top of page. |
+| `subtitle` | [TaoTitleStruct](tao.md#taotitlestruct) | Subtitle at top of page. |
+| `border` | [QpRectStruct](sim_utils.md#qprectstruct) | Border around plots edge of page. |
+| `plot_display_type` | str |  |
+| `size` | 1D array of float (shape: 2) | width and height of window in pixels. |
+| `text_height` | float | In points. Scales the height of all text |
+| `main_title_text_scale` | float | Relative to text_height |
+| `graph_title_text_scale` | float | Relative to text_height |
+| `axis_number_text_scale` | float | Relative to text_height |
+| `axis_label_text_scale` | float | Relative to text_height |
+| `legend_text_scale` | float | Relative to text_height |
+| `key_table_text_scale` | float | Relative to text_height |
+| `floor_plan_shape_scale` | float |  |
+| `floor_plan_text_scale` | float | Scale used = floor_plan_text_scale * legend_text_scale |
+| `lat_layout_shape_scale` | float |  |
+| `lat_layout_text_scale` | float | Scale used = lat_layout_text_scale * legend_text_scale |
+| `curve_legend_line_len` | float | OLD STYLE. Points. |
+| `curve_legend_text_offset` | float | OLD STYLE. Points. |
+| `n_curve_pts` | int | Number of points for plotting a smooth curve |
+| `delete_overlapping_plots` | bool | Delete overlapping plots when a plot is placed? |
+| `draw_graph_title_suffix` | bool |  |
 
 ::: pybmad.TaoPlotPageStruct
     options:
@@ -1124,6 +1424,27 @@ All attributes may be passed to the initializer as arguments:
 | `list_with_show_plot_command` | bool | False used for default plots to shorten the output of "show plot" |
 | `phantom` | bool | Used by tao_plot_init to add info lines to "show plot -templates" |
 | `default_plot` | bool | One of Tao's default plots? |
+
+::: pybmad.TaoRealPointerStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoRealPointerStruct
+
+Fortran struct: `tao_real_pointer_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L72))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `r` | float |  |
+| `good_value` | bool |  |
+| `good_user` | bool |  |
 
 ::: pybmad.TaoShapePatternPointStruct
     options:
@@ -1273,6 +1594,25 @@ All attributes may be passed to the initializer as arguments:
 | `q_1turn` | [SpinOrbitMap1Struct](bmad.md#spinorbitmap1struct) | Save results from spin_concat_linear_maps in tao_spin_polarization. |
 | `q_ele` | [1D array of SpinOrbitMap1Struct](bmad.md#spinorbitmap1struct) | Save results from spin_concat_linear_maps in tao_spin_polarization. |
 
+::: pybmad.TaoStringArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoStringArrayStruct
+
+Fortran struct: `tao_string_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L86))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `s` | str |  |
+
 ::: pybmad.TaoSuperUniverseStruct
     options:
       heading_level: 0
@@ -1328,6 +1668,28 @@ All attributes may be passed to the initializer as arguments:
 | `units` | str | %BOX, POINTS, etc... |
 | `justify` | str | Left, Center, or Right justification. |
 | `draw_it` | bool | draw the title? |
+
+::: pybmad.TaoTop10Struct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoTop10Struct
+
+Fortran struct: `tao_top10_struct` ([`tao/code/tao_top10_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_top10_mod.f90#L9))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str | name of contributor |
+| `value` | float | contribution to the merit function |
+| `index` | int | index of contributor. |
+| `valid` | bool | valid entry? |
 
 ::: pybmad.TaoUniverseCalcStruct
     options:
@@ -1417,6 +1779,25 @@ All attributes may be passed to the initializer as arguments:
 | `design_same_as_previous` | bool | Design lat same as the previous uni? |
 | `picked_uni` | bool | Scratch logical. |
 
+::: pybmad.TaoV1VarArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoV1VarArrayStruct
+
+Fortran struct: `tao_v1_var_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L606))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `v1` | [TaoV1VarStruct](tao.md#taov1varstruct) |  |
+
 ::: pybmad.TaoV1VarStruct
     options:
       heading_level: 0
@@ -1437,6 +1818,25 @@ All attributes may be passed to the initializer as arguments:
 | `name` | str | V1 variable name. Eg: 'quad_k1'. |
 | `ix_v1_var` | int | Index to s%v1_var(:) array |
 | `v` | [1D array of TaoVarStruct](tao.md#taovarstruct) | Pointer to the appropriate section in s%var. |
+
+::: pybmad.TaoVarArrayStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TaoVarArrayStruct
+
+Fortran struct: `tao_var_array_struct` ([`tao/code/tao_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_struct.f90#L602))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `v` | [TaoVarStruct](tao.md#taovarstruct) |  |
 
 ::: pybmad.TaoVarSlaveStruct
     options:
@@ -2341,6 +2741,28 @@ Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_ele_shape_input_to_struct
+
+Not exposed at the top level — import as `pybmad.tao.tao_ele_shape_input_to_struct`.
+
+Fortran source: [`tao/code/tao_input_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_input_struct.f90#L351)
+
+::: pybmad.tao.tao_ele_shape_input_to_struct
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_ele_shape_struct_to_input
+
+Not exposed at the top level — import as `pybmad.tao.tao_ele_shape_struct_to_input`.
+
+Fortran source: [`tao/code/tao_input_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_input_struct.f90#L328)
+
+::: pybmad.tao.tao_ele_shape_struct_to_input
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_eval_floor_orbit
 
 Not exposed at the top level — import as `pybmad.tao.tao_eval_floor_orbit`.
@@ -2484,6 +2906,17 @@ Fortran source: [`tao/code/tao_expression_tree_mod.f90`](https://github.com/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_find_data
+
+Not exposed at the top level — import as `pybmad.tao.tao_find_data`.
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L362)
+
+::: pybmad.tao.tao_find_data
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_find_plot_region
 
 Not exposed at the top level — import as `pybmad.tao.tao_find_plot_region`.
@@ -2491,6 +2924,28 @@ Not exposed at the top level — import as `pybmad.tao.tao_find_plot_region`.
 Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L397)
 
 ::: pybmad.tao.tao_find_plot_region
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_find_plots
+
+Not exposed at the top level — import as `pybmad.tao.tao_find_plots`.
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L406)
+
+::: pybmad.tao.tao_find_plots
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_find_var
+
+Not exposed at the top level — import as `pybmad.tao.tao_find_var`.
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L382)
+
+::: pybmad.tao.tao_find_var
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3320,6 +3775,17 @@ Fortran source: [`tao/code/tao_plot_mod.f90`](https://github.com/bmad-sim/bmad-e
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_pointer_to_branches
+
+Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_branches`.
+
+Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L625)
+
+::: pybmad.tao.tao_pointer_to_branches
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_pointer_to_building_wall_shape
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_building_wall_shape`.
@@ -3429,6 +3895,17 @@ Not exposed at the top level — import as `pybmad.tao.tao_print_command_line_in
 Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L744)
 
 ::: pybmad.tao.tao_print_command_line_info
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_print_vars
+
+Not exposed at the top level — import as `pybmad.tao.tao_print_vars`.
+
+Fortran source: [`tao/code/tao_top10_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_top10_mod.f90#L634)
+
+::: pybmad.tao.tao_print_vars
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3939,6 +4416,17 @@ Fortran source: [`tao/code/tao_set_mod.f90`](https://github.com/bmad-sim/bmad-ec
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_set_plotting
+
+Not exposed at the top level — import as `pybmad.tao.tao_set_plotting`.
+
+Fortran source: [`tao/code/tao_input_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_input_struct.f90#L236)
+
+::: pybmad.tao.tao_set_plotting
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_set_ptc_com_cmd
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_ptc_com_cmd`.
@@ -4320,6 +4808,17 @@ Not exposed at the top level — import as `pybmad.tao.tao_to_real`.
 Fortran source: [`tao/code/tao_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_interface.f90#L958)
 
 ::: pybmad.tao.tao_to_real
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_to_top10
+
+Not exposed at the top level — import as `pybmad.tao.tao_to_top10`.
+
+Fortran source: [`tao/code/tao_top10_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/tao/code/tao_top10_mod.f90#L235)
+
+::: pybmad.tao.tao_to_top10
     options:
       show_root_heading: false
       show_root_toc_entry: false

@@ -1498,6 +1498,39 @@ ix_shape_min : int, optional
     As an output, ix_shape_min: Ele_shape(
 )"""
   );
+  m.def(
+      "tao_ele_shape_input_to_struct",
+      &Tao::tao_ele_shape_input_to_struct,
+      nb::arg("shape_input"),
+      nb::arg("namelist_name") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_ele_shape_input_to_struct
+
+Parameters
+----------
+shape_input : TaoEleShapeInput
+
+namelist_name : str, optional
+
+Returns
+-------
+shape_struct : TaoEleShapeStruct
+)"""
+  );
+  m.def(
+      "tao_ele_shape_struct_to_input",
+      &Tao::tao_ele_shape_struct_to_input,
+      nb::arg("shape_struct"),
+      R"""(Wrapper for Fortran routine tao_ele_shape_struct_to_input
+
+Parameters
+----------
+shape_struct : TaoEleShapeStruct
+
+Returns
+-------
+shape_input : TaoEleShapeInput
+)"""
+  );
   nb::class_<Tao::TaoEvalFloorOrbit>(m, "TaoEvalFloorOrbit", "tao_eval_floor_orbit return type")
       .def_ro("valid_value", &Tao::TaoEvalFloorOrbit::valid_value)
       .def_ro("why_invalid", &Tao::TaoEvalFloorOrbit::why_invalid)
@@ -2506,6 +2539,95 @@ str_out : str
     Expression string.
 )"""
   );
+  nb::class_<Tao::TaoFindData>(m, "TaoFindData", "tao_find_data return type")
+      .def_ro("err", &Tao::TaoFindData::err)
+      .def_ro("d2_array", &Tao::TaoFindData::d2_array)
+      .def_ro("d1_array", &Tao::TaoFindData::d1_array)
+      .def_ro("d_array", &Tao::TaoFindData::d_array)
+      .def_ro("re_array", &Tao::TaoFindData::re_array)
+      .def_ro("log_array", &Tao::TaoFindData::log_array)
+      .def_ro("str_array", &Tao::TaoFindData::str_array)
+      .def_ro("int_array", &Tao::TaoFindData::int_array)
+      .def_ro("component", &Tao::TaoFindData::component)
+      .def("__len__", [](const Tao::TaoFindData &) { return 9; })
+      .def("__getitem__", [](const Tao::TaoFindData &s, int i) -> nb::object {
+        if (i < 0)
+          i += 9;
+        if (i == 0)
+          return nb::cast(s.err);
+        if (i == 1)
+          return nb::cast(s.d2_array);
+        if (i == 2)
+          return nb::cast(s.d1_array);
+        if (i == 3)
+          return nb::cast(s.d_array);
+        if (i == 4)
+          return nb::cast(s.re_array);
+        if (i == 5)
+          return nb::cast(s.log_array);
+        if (i == 6)
+          return nb::cast(s.str_array);
+        if (i == 7)
+          return nb::cast(s.int_array);
+        if (i == 8)
+          return nb::cast(s.component);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_find_data",
+      &Tao::tao_find_data,
+      nb::arg("data_name"),
+      nb::arg("ix_uni") = nb::none(),
+      nb::arg("dflt_index") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_find_data
+
+Parameters
+----------
+data_name : str
+    The data name type. Eg: "3@orbit.x[2:5,10]|meas"
+
+ix_uni : int, optional
+    Index of default universe to use. If ix_uni = 0 then "viewed" universe will be used. Also, if not present
+    then the "viewed" universe will be used.
+
+dflt_index : str, optional
+    If present and non-negative, and if no index is specified by the data_name argument, this index is used in
+    the evaluation.
+
+print_err : bool, optional
+    Print error message if data is not found? Default is True.
+
+Returns
+-------
+err : bool
+    Err condition
+
+d2_array : 1D array of TaoD2DataArrayStruct, optional
+    Array of pointers to all the matching d2_data structure. Size(d2_array) = 0 if no structures found.
+
+d1_array : 1D array of TaoD1DataArrayStruct, optional
+    Array of pointers to all the matching d1_data structures. Size(d1_array) = 0 if no structures found.
+
+d_array : 1D array of TaoDataArrayStruct, optional
+    Array of pointers to all the matching tao_data_structs.  Size(d_array) = 0 if no structures found.
+
+re_array : 1D array of TaoRealPointerStruct, optional
+    Array of pointers to real component values.  Size(re_array) = 0 if no structures found.
+
+log_array : 1D array of TaoLogicalArrayStruct, optional
+    Array of pointers to logical component values.  Size(log_array) = 0 if no structures found.
+
+str_array : 1D array of TaoStringArrayStruct, optional
+    Array of pointers to character component values.  Size(str_array) = 0 if no structures found.
+
+int_array : 1D array of TaoIntegerArrayStruct, optional
+    Array of pointers to integer component values.  Size(int_array) = 0 if no structures found.
+
+component : str, optional
+    Name of the component. E.G: 'good_user' set to ' ' if no component present.
+)"""
+  );
   nb::class_<Tao::TaoFindPlotRegion>(m, "TaoFindPlotRegion", "tao_find_plot_region return type")
       .def_ro("err", &Tao::TaoFindPlotRegion::err)
       .def_ro("region", &Tao::TaoFindPlotRegion::region)
@@ -2541,6 +2663,141 @@ err : bool
 
 region : TaoPlotRegionStruct, optional
     Region found.
+)"""
+  );
+  nb::class_<Tao::TaoFindPlots>(m, "TaoFindPlots", "tao_find_plots return type")
+      .def_ro("err", &Tao::TaoFindPlots::err)
+      .def_ro("plot", &Tao::TaoFindPlots::plot)
+      .def_ro("graph", &Tao::TaoFindPlots::graph)
+      .def_ro("curve", &Tao::TaoFindPlots::curve)
+      .def("__len__", [](const Tao::TaoFindPlots &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoFindPlots &s, int i) -> nb::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return nb::cast(s.err);
+        if (i == 1)
+          return nb::cast(s.plot);
+        if (i == 2)
+          return nb::cast(s.graph);
+        if (i == 3)
+          return nb::cast(s.curve);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_find_plots",
+      &Tao::tao_find_plots,
+      nb::arg("name"),
+      nb::arg("where"),
+      nb::arg("print_flag") = nb::none(),
+      nb::arg("blank_means_all") = nb::none(),
+      nb::arg("only_visible") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_find_plots
+
+Parameters
+----------
+name : str
+    Name of plot or region.
+
+where : str
+    Where to look: 'TEMPLATE', 'REGION', 'BOTH' For where = 'BOTH', if something is found in a plot region,
+    then the templates will not be searched
+
+print_flag : bool, optional
+    If present and False then surpress error messages. Default is True.
+
+blank_means_all : bool, optional
+    If present and True then blank graph or curve fields get  interpreted as "*".
+
+only_visible : bool, optional
+    Default is True. If True and s.global.plot_on = True then only include visible plots. If False then plot
+    visible setting is ignored.
+
+Returns
+-------
+err : bool
+    Set True on error. False otherwise.
+
+plot : 1D array of TaoPlotArrayStruct, optional
+    Array of plots. If error => size set to 0.
+
+graph : 1D array of TaoGraphArrayStruct, optional
+    Array of graphs. If error => size set to 0.
+
+curve : 1D array of TaoCurveArrayStruct, optional
+    Array of curves. If error => size set to 0.
+)"""
+  );
+  nb::class_<Tao::TaoFindVar>(m, "TaoFindVar", "tao_find_var return type")
+      .def_ro("err", &Tao::TaoFindVar::err)
+      .def_ro("v1_array", &Tao::TaoFindVar::v1_array)
+      .def_ro("v_array", &Tao::TaoFindVar::v_array)
+      .def_ro("re_array", &Tao::TaoFindVar::re_array)
+      .def_ro("log_array", &Tao::TaoFindVar::log_array)
+      .def_ro("str_array", &Tao::TaoFindVar::str_array)
+      .def_ro("component", &Tao::TaoFindVar::component)
+      .def("__len__", [](const Tao::TaoFindVar &) { return 7; })
+      .def("__getitem__", [](const Tao::TaoFindVar &s, int i) -> nb::object {
+        if (i < 0)
+          i += 7;
+        if (i == 0)
+          return nb::cast(s.err);
+        if (i == 1)
+          return nb::cast(s.v1_array);
+        if (i == 2)
+          return nb::cast(s.v_array);
+        if (i == 3)
+          return nb::cast(s.re_array);
+        if (i == 4)
+          return nb::cast(s.log_array);
+        if (i == 5)
+          return nb::cast(s.str_array);
+        if (i == 6)
+          return nb::cast(s.component);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_find_var",
+      &Tao::tao_find_var,
+      nb::arg("var_name"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("dflt_var_index") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_find_var
+
+Parameters
+----------
+var_name : str
+    Name of the variable.
+
+print_err : bool, optional
+    Print error message if data is not found? Default is True.
+
+dflt_var_index : str, optional
+    If present and "[...]" var selection substring is not present, then dflt_var_index will be used. [Do not
+    include the brackets in this string.]
+
+Returns
+-------
+err : bool
+    err condition
+
+v1_array : 1D array of TaoV1VarArrayStruct, optional
+    Array of pointers to all the v1_var structures.
+
+v_array : 1D array of TaoVarArrayStruct, optional
+    Array of pointers to the variable data point.
+
+re_array : 1D array of TaoRealPointerStruct, optional
+    Array of pointers to the real component values.
+
+log_array : 1D array of TaoLogicalArrayStruct, optional
+    Array of pointers to logical component values.
+
+str_array : 1D array of TaoStringArrayStruct, optional
+    Array of pointers to character component values.
+
+component : str, optional
+    Name of the component. E.G: 'good_user' set to ' ' if no component present.
 )"""
   );
   m.def(
@@ -4424,6 +4681,49 @@ graph : TaoGraphStruct
     Graph to plot.
 )"""
   );
+  nb::class_<Tao::TaoPointerToBranches>(
+      m,
+      "TaoPointerToBranches",
+      "tao_pointer_to_branches return type"
+  )
+      .def_ro("branches", &Tao::TaoPointerToBranches::branches)
+      .def_ro("unis", &Tao::TaoPointerToBranches::unis)
+      .def_ro("err", &Tao::TaoPointerToBranches::err)
+      .def("__len__", [](const Tao::TaoPointerToBranches &) { return 3; })
+      .def("__getitem__", [](const Tao::TaoPointerToBranches &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.branches);
+        if (i == 1)
+          return nb::cast(s.unis);
+        if (i == 2)
+          return nb::cast(s.err);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_pointer_to_branches",
+      &Tao::tao_pointer_to_branches,
+      nb::arg("branch_str"),
+      R"""(Wrapper for Fortran routine tao_pointer_to_branches
+
+Parameters
+----------
+branch_str : str
+    String specifying what branches to use.
+
+Returns
+-------
+branches : 1D array of BranchPointerStruct
+    Array of pointers to branches.
+
+unis : 1D array of TaoUniversePointerStruct
+    Array of corresponding universes.
+
+err : bool
+    Set True if there is an error.
+)"""
+  );
   m.def(
       "tao_pointer_to_building_wall_shape",
       &Tao::tao_pointer_to_building_wall_shape,
@@ -4794,6 +5094,40 @@ err : bool
       "tao_print_command_line_info",
       &Tao::tao_print_command_line_info,
       R"""(Wrapper for Fortran routine tao_print_command_line_info
+)"""
+  );
+  m.def(
+      "tao_print_vars",
+      &Tao::tao_print_vars,
+      nb::arg("iu"),
+      nb::arg("ix_uni"),
+      nb::arg("show_good_opt_only") = nb::none(),
+      nb::arg("tao_format") = nb::none(),
+      nb::arg("v_array") = nb::none(),
+      R"""(Routine to print a list of set statements for the Bmad parameters controlled by the Tao variables.
+The set statements are Bmad lattice format compatible.
+
+When tao_format = True, the output is in the form "set variable <name> = <value>"
+so the file can be used as a Tao command file. If tao_format = False, the format
+is suitable for inclusion in a Bmad lattice file.
+
+Parameters
+----------
+iu : int
+    File unit number. 0 => print to the terminal.
+
+ix_uni : int
+    Universe index. If zero print slave parameters for all universes. If non-zero, only print set statements
+    for slave parameters of this universe. Ignored if tao_format = True.
+
+show_good_opt_only : bool, optional
+    If True, only show slave parameters of variables used in optimization.
+
+tao_format : bool, optional
+    Output format. Default False. See above.
+
+v_array : 1D array of TaoVarArrayStruct, optional
+    Variable array. If present, restrict printing to parameters of these variables.
 )"""
   );
   m.def(
@@ -5795,6 +6129,26 @@ value_str2 : str, optional
 )"""
   );
   m.def(
+      "tao_set_plotting",
+      &Tao::tao_set_plotting,
+      nb::arg("plot_input"),
+      nb::arg("plot_page"),
+      nb::arg("use_cmd_line_geom"),
+      nb::arg("reverse") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_set_plotting
+
+Parameters
+----------
+plot_input : TaoPlotPageInput
+
+plot_page : TaoPlotPageStruct
+
+use_cmd_line_geom : bool
+
+reverse : bool, optional
+)"""
+  );
+  m.def(
       "tao_set_ptc_com_cmd",
       &Tao::tao_set_ptc_com_cmd,
       nb::arg("who"),
@@ -6595,6 +6949,38 @@ value : float
 
 err_flag : bool
     TRUE on error.
+)"""
+  );
+  m.def(
+      "tao_to_top10",
+      &Tao::tao_to_top10,
+      nb::arg("top10"),
+      nb::arg("value"),
+      nb::arg("name"),
+      nb::arg("c_index"),
+      nb::arg("order"),
+      R"""(Routine to order the largest contributors to the merit function in
+a list. Call this routine for each contributor.
+
+Note: Before first calling this routine set:
+  top10(:)%valid = .false.
+
+Parameters
+----------
+top10 : 1D array of TaoTop10Struct
+    List of top contributors. Note that the list is not limited to 10 entries.
+
+value : float
+    value of the contributor.
+
+name : str
+    Name of the contributor..
+
+c_index : int
+    Index of the contributor.
+
+order : str
+    Ordering of the list. Possibilities are:
 )"""
   );
   m.def(

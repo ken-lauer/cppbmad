@@ -763,6 +763,92 @@ Tl : float
 )"""
   );
   m.def(
+      "touschek_lifetime_ele_by_ele",
+      &Bmad::touschek_lifetime_ele_by_ele,
+      nb::arg("mode"),
+      nb::arg("lat"),
+      nb::arg("momentum_aperture"),
+      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
+for each element the momentum_aperture array of momentum_aperture_structs.
+This calculation is based on Piwinski 1998 "The Touschek Effect In
+Strong Focusing Storage Rings".  This is the most general case, equation 31.
+42.
+
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
+
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
+
+This function assumes that the twiss parameters
+been calculated, and that mode has been populated with emittance and bunch length.
+
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
+
+lat : LatStruct
+    Lattice
+
+momentum_aperture : 1D array of MomentumApertureStruct
+    ele-by-ele unsymmatric apertures
+
+Returns
+-------
+Tl : float
+    Touschek lifetime in seconds
+)"""
+  );
+  m.def(
+      "touschek_lifetime_with_aperture",
+      &Bmad::touschek_lifetime_with_aperture,
+      nb::arg("mode"),
+      nb::arg("lat"),
+      nb::arg("momentum_aperture"),
+      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
+for each s-coordinate in the momentum_aperture array of momentum_aperture_structs.
+This calculation is based on Piwinski 1998 "The Touschek Effect In
+Strong Focusing Storage Rings".  This is the most general case, equation 31.
+42.
+
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
+
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
+
+This function assumes that the twiss parameters
+been calculated, and that mode has been populated with emittance and bunch length.
+
+This function assumes that momentum_aperture(0)%s==0 and momentum_aperture(last)%s==lat%param%total_length.
+
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
+
+lat : LatStruct
+    Lattice
+
+momentum_aperture : 1D array of MomentumApertureStruct
+    loc-by-loc unsymmatric apertures
+
+Returns
+-------
+Tl : float
+    Touschek lifetime in seconds
+)"""
+  );
+  m.def(
       "touschek_rate1",
       &Bmad::touschek_rate1,
       nb::arg("mode"),

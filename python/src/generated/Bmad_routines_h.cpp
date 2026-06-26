@@ -103,6 +103,92 @@ has_attribs : bool
 )"""
   );
   m.def(
+      "hdf5_read_beam",
+      [](std::string file_name,
+         BeamStruct &beam,
+         bool error,
+         EleStruct *ele,
+         PmdHeaderStruct *pmd_header,
+         std::optional<bool> print_mom_shift_warning,
+         std::optional<bool> conserve_momentum) {
+        auto fn = static_cast<
+            void (*)(std::string, BeamStruct &, bool, optional_ref<EleStruct>, optional_ref<PmdHeaderStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::hdf5_read_beam
+        );
+        return fn(
+            file_name,
+            beam,
+            error,
+            ptr_to_opt_ref(ele),
+            ptr_to_opt_ref(pmd_header),
+            print_mom_shift_warning,
+            conserve_momentum
+        );
+      },
+      nb::arg("file_name"),
+      nb::arg("beam"),
+      nb::arg("error"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("pmd_header") = nb::none(),
+      nb::arg("print_mom_shift_warning") = nb::none(),
+      nb::arg("conserve_momentum") = nb::none(),
+      R"""(Wrapper for Fortran routine hdf5_read_beam
+
+Parameters
+----------
+file_name : str
+
+beam : BeamStruct
+
+error : bool
+
+ele : EleStruct, optional
+
+pmd_header : PmdHeaderStruct, optional
+
+print_mom_shift_warning : bool, optional
+
+conserve_momentum : bool, optional
+)"""
+  );
+  m.def(
+      "hdf5_read_grid_field",
+      [](std::string file_name,
+         EleStruct &ele,
+         GridFieldStructArray1D g_field,
+         bool err_flag,
+         PmdHeaderStruct *pmd_header,
+         std::optional<bool> combine) {
+        auto fn = static_cast<
+            void (*)(std::string, EleStruct &, GridFieldStructArray1D, bool, optional_ref<PmdHeaderStruct>, std::optional<bool>)>(
+            &Bmad::hdf5_read_grid_field
+        );
+        return fn(file_name, ele, g_field, err_flag, ptr_to_opt_ref(pmd_header), combine);
+      },
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      nb::arg("g_field"),
+      nb::arg("err_flag"),
+      nb::arg("pmd_header") = nb::none(),
+      nb::arg("combine") = nb::none(),
+      R"""(Wrapper for Fortran routine hdf5_read_grid_field
+
+Parameters
+----------
+file_name : str
+
+ele : EleStruct
+
+g_field : 1D array of GridFieldStruct
+
+err_flag : bool
+
+pmd_header : PmdHeaderStruct, optional
+
+combine : bool, optional
+)"""
+  );
+  m.def(
       "hdf5_write_beam",
       [](std::string file_name,
          BunchStructArray1D bunches,

@@ -217,4 +217,22 @@ mod2 : float
     Result
 )"""
   );
+  m.def(
+      "molecular_components",
+      &SimUtils::molecular_components,
+      nb::arg("molecule"),
+      R"""(Routine to decompose a molecule into its components.
+For example: molecule = 'H2O' => component(1) = ('H', 2), component(2) = ('O', 1)
+
+Parameters
+----------
+molecule : str
+    Molecular name.
+
+Returns
+-------
+component : 1D array of MolecularComponentStruct
+    Array of components.
+)"""
+  );
 }

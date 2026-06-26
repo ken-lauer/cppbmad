@@ -19,6 +19,225 @@ PyInitAttributeName1 python_init_attribute_name1(
 
 void init_Bmad_routines_i(nb::module_ &m) {
   m.def(
+      "i_csr",
+      &Bmad::i_csr,
+      nb::arg("kick1"),
+      nb::arg("i_bin"),
+      nb::arg("csr"),
+      R"""(Routine to calculate the CSR kick integral (at y = 0)
+
+Parameters
+----------
+kick1 : CsrKick1Struct
+
+i_bin : int
+    Bin index.
+
+csr : CsrStruct
+)"""
+  );
+  m.def(
+      "ibs1",
+      &Bmad::ibs1,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("rates"),
+      nb::arg("i") = nb::none(),
+      nb::arg("s") = nb::none(),
+      R"""(Calculates IBS growth rates at some location in a lattice.
+The IBS rates are betatron growth rates.  That is, they are the rate of
+change in sigma_x, sigma_y, and sigma_p.  The emittance growth
+rate is twice the betatron growth rate.
+1/T_emit = 2/T_betatron.
+eg  emit(t) = emit_0 * exp(-2*t/T_betatron) because emit = sigma^2/beta
+
+ Available IBS formulas (ibs_sim_params%formula):
+   cimp - Completely Integrated Modified Piwinski
+   bjmt - Bjorken-Mtingwa formulation general to bunched beams (time consuming)
+   bane - Bane approximation of Bjorken-Mtingwa formulation
+   mpzt - Modified Piwinski with Zotter's Integral
+   mpxx - Modified Piwinski with a constant Coulomb log.
+   kubo - Kubo and Oide's sigma matrix-based
+
+Either i or s, but not both, must be specified.
+)"""
+  );
+  m.def(
+      "ibs_blowup1turn",
+      &Bmad::ibs_blowup1turn,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      R"""(Updates beam emittances with effect of IBS for
+one turn on the lattice.
+
+Parameters
+----------
+lat : LatStruct
+    lattice
+
+ibs_sim_params : IbsSimParamStruct
+    Parameters for calculation of IBS rates
+)"""
+  );
+  nb::class_<Bmad::IbsDeltaCalc>(m, "IbsDeltaCalc", "ibs_delta_calc return type")
+      .def_ro("delta_sigma_energy", &Bmad::IbsDeltaCalc::delta_sigma_energy)
+      .def_ro("delta_emit_a", &Bmad::IbsDeltaCalc::delta_emit_a)
+      .def_ro("delta_emit_b", &Bmad::IbsDeltaCalc::delta_emit_b)
+      .def("__len__", [](const Bmad::IbsDeltaCalc &) { return 3; })
+      .def("__getitem__", [](const Bmad::IbsDeltaCalc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.delta_sigma_energy);
+        if (i == 1)
+          return nb::cast(s.delta_emit_a);
+        if (i == 2)
+          return nb::cast(s.delta_emit_b);
+        throw nb::index_error();
+      });
+  m.def(
+      "ibs_delta_calc",
+      &Bmad::ibs_delta_calc,
+      nb::arg("lat"),
+      nb::arg("ix"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("sigma_mat") = nb::none(),
+      R"""(Calculates change in energy spread and emittances due to IBS for a single element.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ix : int
+    index of element to use: lat.ele(ix)
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for calculation of IBS rates.
+
+sigma_mat : 2D array of float (shape: 6,6), optional
+    Beam's sigma matrix. Required for 'kubo' method.
+
+Returns
+-------
+delta_sigma_energy : float, optional
+    change in energy spread in eV
+
+delta_emit_a : float, optional
+    change in a-mode emittance (geometric)
+
+delta_emit_b : float, optional
+    change in b-mode emittance (geometric)
+)"""
+  );
+  m.def(
+      "ibs_equib_der",
+      &Bmad::ibs_equib_der,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("inmode"),
+      nb::arg("granularity"),
+      R"""(Computes equilibrium beam sizes by calculating emittance growth rates from IBS growth rates.
+Steps beam size through time till equilibrium is reached.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation
+
+inmode : NormalModesStruct
+    natural beam parameters
+
+granularity : float
+    Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter. Set to -1 to calculate
+    element-by-element.
+
+Returns
+-------
+ibsmode : NormalModesStruct
+    beam parameters after IBS effects
+)"""
+  );
+  m.def(
+      "ibs_equib_rlx",
+      &Bmad::ibs_equib_rlx,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("inmode"),
+      nb::arg("ratio"),
+      nb::arg("initial_blow_up"),
+      nb::arg("granularity"),
+      R"""(Iterates to equilibrium beam conditions using relaxation method
+
+This method requires that the initial beam size be larger than the equilibrium beam size.
+An initial_blow_up of 3 to 5 is a good place to start.
+
+See ibs_rates subroutine for available IBS rate formulas.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation
+
+inmode : NormalModesStruct
+    natural beam parameters
+
+ratio : float
+    Ratio of vert_emit_coupling / vert_emit_total
+
+initial_blow_up : 1D array of float (shape: 3)
+    Factor multiplied to all thre bunch dimensions prior to starting iteration.
+
+granularity : float
+    Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter.
+
+Returns
+-------
+ibsmode : NormalModesStruct
+    beam parameters after IBS effects
+)"""
+  );
+  m.def(
+      "ibs_lifetime",
+      &Bmad::ibs_lifetime,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("maxratio"),
+      nb::arg("granularity"),
+      R"""(This module computes the beam lifetime due to
+the diffusion process according to equation 12
+from page 129 of The Handbook for Accelerator
+Physics and Engineering 2nd edition.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking.
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for calculation of IBS rates.
+
+maxratio : IbsMaxratioStruct
+    Ax,y,p/sigma_x,y,p where Ax,y,p is the maximum sigma.  Note that this quantity is just the ratio, not the
+    ratio squared.  For example, maxratio%Rx = 1.1 says that the maximum acceptable beamsize is 10% larger
+    than the beamsize before IBS effects.
+
+granularity : float
+    Step size when slicing lattice.  -1 for element-by-element.
+
+Returns
+-------
+lifetime : IbsLifetimeStruct
+    structure returning IBS lifetimes
+)"""
+  );
+  m.def(
       "ibs_matrix_c",
       &Bmad::ibs_matrix_c,
       nb::arg("sigma_mat"),
@@ -46,6 +265,33 @@ species : int
 Returns
 -------
 ibs_mat : 2D array of float (shape: 6,6)
+)"""
+  );
+  m.def(
+      "ibs_rates1turn",
+      &Bmad::ibs_rates1turn,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("granularity"),
+      R"""(Calculates IBS risetimes for given lat
+This is basically a front-end for the various formulas
+available in this module of calculating IBS rates.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking.
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation.
+
+granularity : float
+    slice length.  -1 for element-by-element.
+
+Returns
+-------
+rates1turn : IbsStruct
+    ibs rates for onr turn on the lattice.
 )"""
   );
   m.def(
@@ -178,6 +424,20 @@ dz : float
 Returns
 -------
 res : float
+)"""
+  );
+  m.def(
+      "image_charge_kick_calc",
+      &Bmad::image_charge_kick_calc,
+      nb::arg("kick1"),
+      nb::arg("csr"),
+      R"""(Routine to calculate the image charge kick.
+
+Parameters
+----------
+kick1 : CsrKick1Struct
+
+csr : CsrStruct
 )"""
   );
   nb::class_<PyInitAttributeName1>(m, "InitAttributeName1", "init_attribute_name1 return type")
@@ -853,6 +1113,38 @@ ele : EleStruct
 )"""
   );
   m.def(
+      "init_fringe_info",
+      [](EleStruct &ele, CoordStruct *orbit, std::optional<int> leng_sign) {
+        auto fn = static_cast<
+            FringeFieldInfoStruct (*)(EleStruct &, optional_ref<CoordStruct>, std::optional<int>)>(
+            &Bmad::init_fringe_info
+        );
+        return fn(ele, ptr_to_opt_ref(orbit), leng_sign);
+      },
+      nb::arg("ele"),
+      nb::arg("orbit") = nb::none(),
+      nb::arg("leng_sign") = nb::none(),
+      R"""(Wrapper for Fortran routine init_fringe_info
+
+Parameters
+----------
+ele : EleStruct
+    Lattice element associated with fringe_info.
+
+orbit : CoordStruct, optional
+    Particle position. Must be present for a full init. If not full init only fringe_info.has_fringe will be
+    set.
+
+leng_sign : int, optional
+    Is element length positive (+1) or negative (-1)? Must be present if orbit is present.
+
+Returns
+-------
+fringe_info : FringeFieldInfoStruct
+    Fringe information.
+)"""
+  );
+  m.def(
       "init_gg_taylor_series",
       &Bmad::init_gg_taylor_series,
       nb::arg("gg_taylor"),
@@ -1236,6 +1528,51 @@ orbit : 1D array of float (shape: 6)
 orbit_max : 1D array of float (shape: 6)
 
 tol_dp : float
+)"""
+  );
+  nb::class_<Bmad::InterpolateField>(m, "InterpolateField", "interpolate_field return type")
+      .def_ro("E", &Bmad::InterpolateField::E)
+      .def_ro("B", &Bmad::InterpolateField::B)
+      .def("__len__", [](const Bmad::InterpolateField &) { return 2; })
+      .def("__getitem__", [](const Bmad::InterpolateField &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.E);
+        if (i == 1)
+          return nb::cast(s.B);
+        throw nb::index_error();
+      });
+  m.def(
+      "interpolate_field",
+      &Bmad::interpolate_field,
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
+      nb::arg("mesh3d"),
+      R"""(Interpolate field on mesh
+
+Parameters
+----------
+x : float
+    coordinates to interpolate
+
+y : float
+    coordinates to interpolate
+
+z : float
+    coordinates to interpolate
+
+mesh3d : Mesh3dStruct
+    contains efield, bfield
+
+Returns
+-------
+E : 1D array of float (shape: 3), optional
+    interpolated electric field at x, y, z
+
+B : 1D array of float (shape: 3), optional
+    interpolated magnetic field at x, y, z
 )"""
   );
   m.def(

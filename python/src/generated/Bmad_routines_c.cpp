@@ -320,6 +320,53 @@ n_mat : 2D array of float (shape: 6,6), optional
     51.).
 )"""
   );
+  nb::class_<Bmad::CalcNextFringeEdge>(m, "CalcNextFringeEdge", "calc_next_fringe_edge return type")
+      .def_ro("s_edge_body", &Bmad::CalcNextFringeEdge::s_edge_body)
+      .def_ro("fringe_info", &Bmad::CalcNextFringeEdge::fringe_info)
+      .def("__len__", [](const Bmad::CalcNextFringeEdge &) { return 2; })
+      .def("__getitem__", [](const Bmad::CalcNextFringeEdge &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.s_edge_body);
+        if (i == 1)
+          return nb::cast(s.fringe_info);
+        throw nb::index_error();
+      });
+  m.def(
+      "calc_next_fringe_edge",
+      &Bmad::calc_next_fringe_edge,
+      nb::arg("track_ele"),
+      nb::arg("orbit"),
+      nb::arg("init_needed") = nb::none(),
+      nb::arg("time_tracking") = nb::none(),
+      R"""(Wrapper for Fortran routine calc_next_fringe_edge
+
+Parameters
+----------
+track_ele : EleStruct
+    Element being tracked through.
+
+orbit : CoordStruct
+    Particle position
+
+init_needed : bool, optional
+    If present and True then initialize.
+
+time_tracking : bool, optional
+    If present and True then this routine is being called by the time Runge-Kutta tracker. Default is False.
+
+Returns
+-------
+s_edge_body : float
+    S position of next hard edge in track_ele body frame. If there are no more hard edges then s_edge_body
+    will be set to ele.value(l$) if orbit.direction*orbit.time_dir*ele.orientation = 1, and set to 0
+    otherwise.
+
+fringe_info : FringeFieldInfoStruct
+    Information on the next fringe to track through.
+)"""
+  );
   m.def(
       "calc_spin_params",
       &Bmad::calc_spin_params,
@@ -415,6 +462,43 @@ ix_vertex : int, optional
 )"""
   );
   m.def(
+      "calc_wiggler_g_params",
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         double s_rel,
+         CoordStruct &orb,
+         RadIntTrackPointStruct &pt,
+         RadIntInfoStruct *info) {
+        auto fn = static_cast<
+            void (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, RadIntTrackPointStruct &, optional_ref<RadIntInfoStruct>)>(
+            &Bmad::calc_wiggler_g_params
+        );
+        return fn(ele, param, s_rel, orb, pt, ptr_to_opt_ref(info));
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s_rel"),
+      nb::arg("orb"),
+      nb::arg("pt"),
+      nb::arg("info") = nb::none(),
+      R"""(Wrapper for Fortran routine calc_wiggler_g_params
+
+Parameters
+----------
+ele : EleStruct
+
+param : LatParamStruct
+
+s_rel : float
+
+orb : CoordStruct
+
+pt : RadIntTrackPointStruct
+
+info : RadIntInfoStruct, optional
+)"""
+  );
+  m.def(
       "calc_z_tune",
       &Bmad::calc_z_tune,
       nb::arg("branch"),
@@ -449,6 +533,87 @@ orbit : CoordStruct
 coord_type : str, optional
     Angular coordinates type '' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
     y, y' = dy/ds, dt = -z / (beta * c), pz)
+)"""
+  );
+  m.def(
+      "capillary_photon_hit_spot_calc",
+      &Bmad::capillary_photon_hit_spot_calc,
+      nb::arg("photon"),
+      nb::arg("ele"),
+      R"""(Routine to interpolate to where the photon has hit the capillary.
+
+Parameters
+----------
+photon : PhotonTrackStruct
+    Input coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon: Photon at capillary wall
+
+ele : EleStruct
+    Capillary element
+)"""
+  );
+  m.def(
+      "capillary_propagate_photon_a_step",
+      &Bmad::capillary_propagate_photon_a_step,
+      nb::arg("photon"),
+      nb::arg("ele"),
+      nb::arg("dlen"),
+      R"""(Routine to track a photon a step of a given length
+
+Parameters
+----------
+photon : PhotonTrackStruct
+    Input coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon: Output coordinates.
+
+ele : EleStruct
+    Capillary element
+
+dlen : float
+    Length to propagate a photon. The actual propagation length may be less if stop_at_boundary is True.
+
+Returns
+-------
+stop_at_boundary : bool
+    If True then stop at cross-section boundary.
+)"""
+  );
+  m.def(
+      "capillary_reflect_photon",
+      &Bmad::capillary_reflect_photon,
+      nb::arg("photon"),
+      nb::arg("ele"),
+      R"""(Routine to reflect a photon from the capillary wall.
+
+Parameters
+----------
+photon : PhotonTrackStruct
+    Input coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon: Output coordinates.
+
+ele : EleStruct
+    Capillary element
+)"""
+  );
+  m.def(
+      "capillary_track_photon_to_wall",
+      &Bmad::capillary_track_photon_to_wall,
+      nb::arg("photon"),
+      nb::arg("ele"),
+      R"""(Routine to track through a capillary.
+
+Parameters
+----------
+photon : PhotonTrackStruct
+    Input coordinates.
+    This parameter is an input/output and is modified in-place.
+    As an output, photon: Output coordinates.
+
+ele : EleStruct
+    Capillary element
 )"""
   );
   m.def(
@@ -808,6 +973,24 @@ err_flag : bool
     .false. if match successful, .true. if failed Fails if takes longer than 100 iterations. If it fails the
     sextupoles are set to the last value calculated. Note: This subroutine assumes the Twiss parameters have
     been computed.
+)"""
+  );
+  m.def(
+      "cimp1",
+      &Bmad::cimp1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(This is an implementation of equations 34,38-40 from "Intrabeam
+scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+It is a modified version of the Piwinski IBS formulation.
+The integral (34) is handled with a piecewise interpolation generated
+in mathematica.  The interpolation is accurate beyond 1% through it's
+effective range (.0001 - 3000).
+
+This is the quickest of the three IBS formuations in this module.
+
+rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
 )"""
   );
   m.def(
@@ -2208,6 +2391,21 @@ floor1 : FloorPositionStruct
 )"""
   );
   m.def(
+      "cos_phi",
+      &Bmad::cos_phi,
+      nb::arg("sigma"),
+      nb::arg("t"),
+      nb::arg("phi"),
+      nb::arg("d_param"),
+      R"""( computes  unnormalized cumulative distribution function in phi for a given x
+ polar angles relative to surface normal
+ azimuthal angle relative to plane of incidence (plane of incoming ray and surface normal)
+ 1/y suppressed
+
+Private routine to calculate integrated probability distribution in x = sin(graze_angle_out).
+)"""
+  );
+  m.def(
       "coulombfun",
       &Bmad::coulombfun,
       nb::arg("u"),
@@ -2622,6 +2820,78 @@ ele : EleStruct
     Crystal element.
 )"""
   );
+  nb::class_<Bmad::CrystalDiffractionFieldCalc>(
+      m,
+      "CrystalDiffractionFieldCalc",
+      "crystal_diffraction_field_calc return type"
+  )
+      .def_ro("e_field", &Bmad::CrystalDiffractionFieldCalc::e_field)
+      .def_ro("e_phase", &Bmad::CrystalDiffractionFieldCalc::e_phase)
+      .def_ro("orbit_state", &Bmad::CrystalDiffractionFieldCalc::orbit_state)
+      .def_ro("dr", &Bmad::CrystalDiffractionFieldCalc::dr)
+      .def("__len__", [](const Bmad::CrystalDiffractionFieldCalc &) { return 4; })
+      .def("__getitem__", [](const Bmad::CrystalDiffractionFieldCalc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return nb::cast(s.e_field);
+        if (i == 1)
+          return nb::cast(s.e_phase);
+        if (i == 2)
+          return nb::cast(s.orbit_state);
+        if (i == 3)
+          return nb::cast(s.dr);
+        throw nb::index_error();
+      });
+  m.def(
+      "crystal_diffraction_field_calc",
+      &Bmad::crystal_diffraction_field_calc,
+      nb::arg("cp"),
+      nb::arg("ele"),
+      nb::arg("thickness"),
+      nb::arg("param"),
+      nb::arg("p_factor"),
+      nb::arg("do_branch_calc"),
+      nb::arg("follow_undiffracted") = nb::none(),
+      R"""(Routine to compute the photon field after reflection.
+
+Parameters
+----------
+cp : CrystalParamStruct
+    Crystal parameters.
+
+ele : EleStruct
+    Crystal element.
+
+thickness : float
+    Crystal thickness
+
+param : LatParamStruct
+
+p_factor : float
+    Polarization factor.
+
+do_branch_calc : bool
+    Calculate probability of branching to alpha or beta branches?
+
+follow_undiffracted : bool, optional
+    Used with mosaic crystals to calcuate undefracted channel. Default is False.
+
+Returns
+-------
+e_field : float
+    Output field amplitude assuming initial field is 1.
+
+e_phase : float
+    Field phase advance.
+
+orbit_state : int
+    Set to lost$ if crystal is to thick to transmit a photon.
+
+dr : 1D array of float (shape: 3)
+    (x,y,z) orbit change.
+)"""
+  );
   m.def(
       "crystal_h_misalign",
       &Bmad::crystal_h_misalign,
@@ -2666,6 +2936,79 @@ Returns
 -------
 err_flag : bool
     Set True if crystal type is unrecognized. False otherwise.
+)"""
+  );
+  m.def(
+      "csr_and_sc_apply_kicks",
+      &Bmad::csr_and_sc_apply_kicks,
+      nb::arg("ele"),
+      nb::arg("csr"),
+      nb::arg("particle"),
+      R"""(Routine to calculate the longitudinal coherent synchrotron radiation kick.
+
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
+
+csr : CsrStruct
+
+particle : 1D array of CoordStruct
+    Particles to kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, particle: Particles with kick applied.
+)"""
+  );
+  m.def(
+      "csr_bin_kicks",
+      &Bmad::csr_bin_kicks,
+      nb::arg("ele"),
+      nb::arg("ds_kick_pt"),
+      nb::arg("csr"),
+      R"""(Routine to cache intermediate values needed for the csr calculations.
+
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
+
+ds_kick_pt : float
+    Distance between the beginning of the element we are tracking through and the kick point (which is within
+    this element).
+
+csr : CsrStruct
+
+Returns
+-------
+err_flag : bool
+    Set True if there is an error. False otherwise
+)"""
+  );
+  m.def(
+      "csr_bin_particles",
+      &Bmad::csr_bin_particles,
+      nb::arg("ele"),
+      nb::arg("particle"),
+      nb::arg("err_flag"),
+      R"""(Routine to bin the particles longitudinally in s.
+
+To avoid noise in the calculation, every particle is considered to have a
+triangular distribution with a base length  given by
+  space_charge_com%particle_bin_span * csr%dz_slice.
+That is, particles will, in general, overlap multiple bins.
+
+Parameters
+----------
+ele : EleStruct
+    Element being tracked through.
+
+particle : 1D array of CoordStruct
+    Array of particles Other:
+
+Returns
+-------
+csr : CsrStruct
+    The bin structure.
 )"""
   );
   m.def(

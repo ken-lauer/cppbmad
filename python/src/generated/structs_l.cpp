@@ -451,6 +451,76 @@ void init_lat_param_struct(nb::module_ &m, nb::class_<LatParamStruct> &cls) {
 }
 
 // =============================================================================
+// lat_pointer_struct
+void init_lat_pointer_struct(nb::module_ &m, nb::class_<LatPointerStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](LatPointerStruct *self, const LatStruct *lat) {
+           new (self) LatPointerStruct(ptr_to_opt_ref(lat));
+         },
+         nb::arg("lat") = nb::none()
+  )
+      .def_prop_rw(
+          "lat",
+          &LatPointerStruct::lat,
+          &LatPointerStruct::set_lat,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return LatPointerStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LatPointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const LatPointerStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LatPointerStruct &self) {
+            return LatPointerStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const LatPointerStruct &self, nb::dict &memo) { return LatPointerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LatPointerStruct &self, const LatPointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LatPointerStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<LatPointerStructArray1D, LatPointerStructAlloc1D>(
+      m,
+      "LatPointerStructArray1D",
+      "LatPointerStructAlloc1D"
+  );
+  // 2D LatPointerStruct arrays are not used in structs/routines
+  // 3D LatPointerStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // lat_struct
 void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
   cls.def(
@@ -470,6 +540,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
             const CoordStruct *particle_start,
             const BeamInitStruct *beam_init,
             const PreTrackerStruct *pre_tracker,
+            const NametableStruct *nametable,
             std::optional<std::vector<double>> custom,
             std::optional<int> version,
             std::optional<int> n_ele_track,
@@ -497,6 +568,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
                ptr_to_opt_ref(particle_start),
                ptr_to_opt_ref(beam_init),
                ptr_to_opt_ref(pre_tracker),
+               ptr_to_opt_ref(nametable),
                custom,
                version,
                n_ele_track,
@@ -525,6 +597,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
          nb::arg("particle_start") = nb::none(),
          nb::arg("beam_init") = nb::none(),
          nb::arg("pre_tracker") = nb::none(),
+         nb::arg("nametable") = nb::none(),
          nb::arg("custom") = nb::none(),
          nb::arg("version") = nb::none(),
          nb::arg("n_ele_track") = nb::none(),
@@ -640,6 +713,13 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
           &LatStruct::set_pre_tracker,
           nb::for_getter(nb::keep_alive<0, 1>()),
           "For OPAL/IMPACT-T"
+      )
+      .def_prop_rw(
+          "nametable",
+          &LatStruct::nametable,
+          &LatStruct::set_nametable,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "For quick searching by element name."
       )
       .def_prop_rw(
           "custom",
@@ -860,44 +940,169 @@ void init_linac_normal_mode_struct(nb::module_ &m, nb::class_<LinacNormalModeStr
 }
 
 // =============================================================================
+// linear_ele_isf_struct
+void init_linear_ele_isf_struct(nb::module_ &m, nb::class_<LinearEleIsfStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro(
+          "node",
+          &LinearEleIsfStruct::node,
+          nb::keep_alive<0, 1>(),
+          "Array per PTC integration node."
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return LinearEleIsfStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LinearEleIsfStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const LinearEleIsfStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LinearEleIsfStruct &self) {
+            return LinearEleIsfStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const LinearEleIsfStruct &self, nb::dict &memo) { return LinearEleIsfStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LinearEleIsfStruct &self, const LinearEleIsfStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LinearEleIsfStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<LinearEleIsfStructArray1D, LinearEleIsfStructAlloc1D>(
+      m,
+      "LinearEleIsfStructArray1D",
+      "LinearEleIsfStructAlloc1D"
+  );
+  // 2D LinearEleIsfStruct arrays are not used in structs/routines
+  // 3D LinearEleIsfStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// linear_isf1_struct
+void init_linear_isf1_struct(nb::module_ &m, nb::class_<LinearIsf1Struct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<double>>(),
+         nb::arg("orb0") = nb::none(),
+         nb::arg("isf") = nb::none(),
+         nb::arg("s") = nb::none()
+  )
+      .def_prop_rw(
+          "orb0",
+          &LinearIsf1Struct::orb0,
+          &LinearIsf1Struct::set_orb0,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Closed orbit."
+      )
+      .def_prop_rw(
+          "isf",
+          &LinearIsf1Struct::isf,
+          &LinearIsf1Struct::set_isf,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Linear ISF map at a given point."
+      )
+      .def_prop_rw(
+          "s",
+          &LinearIsf1Struct::s,
+          &LinearIsf1Struct::set_s,
+          "Offset from beginning of element. !! real(rp) :: m_1turn(6,6) = 0   ! Orbital 1-turn "
+          "matrix."
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return LinearIsf1StructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = LinearIsf1StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const LinearIsf1Struct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const LinearIsf1Struct &self) {
+            return LinearIsf1Struct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const LinearIsf1Struct &self, nb::dict &memo) { return LinearIsf1Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const LinearIsf1Struct &self, const LinearIsf1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const LinearIsf1Struct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<LinearIsf1StructArray1D, LinearIsf1StructAlloc1D>(
+      m,
+      "LinearIsf1StructArray1D",
+      "LinearIsf1StructAlloc1D"
+  );
+  // 2D LinearIsf1Struct arrays are not used in structs/routines
+  // 3D LinearIsf1Struct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // layout
 void init_layout(nb::module_ &m, nb::class_<Layout> &cls) {
   cls.def(
-         "__init__",
-         [](Layout *self,
-            std::optional<std::string> NAME,
-            std::optional<int> INDEX,
-            std::optional<double> HARMONIC_NUMBER,
-            std::optional<bool> CLOSED,
-            std::optional<int> N,
-            std::optional<int> NTHIN,
-            std::optional<double> THIN,
-            std::optional<int> LASTPOS,
-            const Fibre *LAST,
-            const Fibre *END,
-            const Fibre *START,
-            const Fibre *START_GROUND,
-            const Fibre *END_GROUND,
-            const Layout *NEXT,
-            const Layout *PREVIOUS) {
-           new (self) Layout(
-               NAME,
-               INDEX,
-               HARMONIC_NUMBER,
-               CLOSED,
-               N,
-               NTHIN,
-               THIN,
-               LASTPOS,
-               ptr_to_opt_ref(LAST),
-               ptr_to_opt_ref(END),
-               ptr_to_opt_ref(START),
-               ptr_to_opt_ref(START_GROUND),
-               ptr_to_opt_ref(END_GROUND),
-               ptr_to_opt_ref(NEXT),
-               ptr_to_opt_ref(PREVIOUS)
-           );
-         },
+         nb::init<
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<int>>(),
          nb::arg("NAME") = nb::none(),
          nb::arg("INDEX") = nb::none(),
          nb::arg("HARMONIC_NUMBER") = nb::none(),
@@ -905,14 +1110,7 @@ void init_layout(nb::module_ &m, nb::class_<Layout> &cls) {
          nb::arg("N") = nb::none(),
          nb::arg("NTHIN") = nb::none(),
          nb::arg("THIN") = nb::none(),
-         nb::arg("LASTPOS") = nb::none(),
-         nb::arg("LAST") = nb::none(),
-         nb::arg("END") = nb::none(),
-         nb::arg("START") = nb::none(),
-         nb::arg("START_GROUND") = nb::none(),
-         nb::arg("END_GROUND") = nb::none(),
-         nb::arg("NEXT") = nb::none(),
-         nb::arg("PREVIOUS") = nb::none()
+         nb::arg("LASTPOS") = nb::none()
   )
       .def_prop_rw("NAME", &Layout::NAME, &Layout::set_NAME, "IDENTIFICATION")
       .def_prop_rw("INDEX", &Layout::INDEX, &Layout::set_INDEX, "IDENTIFICATION, CHARGE SIGN")
@@ -932,41 +1130,6 @@ void init_layout(nb::module_ &m, nb::class_<Layout> &cls) {
           "PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT"
       )
       .def_prop_rw("LASTPOS", &Layout::LASTPOS, &Layout::set_LASTPOS, "POSITION OF LAST VISITED")
-      .def_prop_rw(
-          "LAST",
-          &Layout::LAST,
-          &Layout::set_LAST,
-          nb::for_getter(nb::keep_alive<0, 1>()),
-          "LAST VISITED"
-      )
-      .def_prop_rw("END", &Layout::END, &Layout::set_END, nb::for_getter(nb::keep_alive<0, 1>()))
-      .def_prop_rw(
-          "START",
-          &Layout::START,
-          &Layout::set_START,
-          nb::for_getter(nb::keep_alive<0, 1>())
-      )
-      .def_prop_rw(
-          "START_GROUND",
-          &Layout::START_GROUND,
-          &Layout::set_START_GROUND,
-          nb::for_getter(nb::keep_alive<0, 1>()),
-          "STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING"
-      )
-      .def_prop_rw(
-          "END_GROUND",
-          &Layout::END_GROUND,
-          &Layout::set_END_GROUND,
-          nb::for_getter(nb::keep_alive<0, 1>()),
-          "STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING"
-      )
-      .def_prop_rw("NEXT", &Layout::NEXT, &Layout::set_NEXT, nb::for_getter(nb::keep_alive<0, 1>()))
-      .def_prop_rw(
-          "PREVIOUS",
-          &Layout::PREVIOUS,
-          &Layout::set_PREVIOUS,
-          nb::for_getter(nb::keep_alive<0, 1>())
-      )
 
       .def("__repr__", [](const Layout &self) { return to_string(self); })
 

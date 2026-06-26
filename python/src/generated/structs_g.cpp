@@ -13,6 +13,99 @@ using namespace Pybmad;
 namespace nb = nanobind;
 
 // =============================================================================
+// general_bin_struct
+void init_general_bin_struct(nb::module_ &m, nb::class_<GeneralBinStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>,
+             std::optional<int>,
+             std::optional<std::vector<int>>>(),
+         nb::arg("count") = nb::none(),
+         nb::arg("min") = nb::none(),
+         nb::arg("max") = nb::none(),
+         nb::arg("delta") = nb::none(),
+         nb::arg("dim") = nb::none(),
+         nb::arg("n") = nb::none()
+  )
+      .def_prop_rw(
+          "count",
+          &GeneralBinStruct::count,
+          &GeneralBinStruct::set_count,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Counts (or weight) in each bin"
+      )
+      .def_prop_rw(
+          "min",
+          &GeneralBinStruct::min,
+          &GeneralBinStruct::set_min,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Bounds for the bins"
+      )
+      .def_prop_rw(
+          "max",
+          &GeneralBinStruct::max,
+          &GeneralBinStruct::set_max,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "delta",
+          &GeneralBinStruct::delta,
+          &GeneralBinStruct::set_delta,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Size of a bin"
+      )
+      .def_prop_rw(
+          "dim",
+          &GeneralBinStruct::dim,
+          &GeneralBinStruct::set_dim,
+          "Number of dimensions"
+      )
+      .def_prop_rw(
+          "n",
+          &GeneralBinStruct::n,
+          &GeneralBinStruct::set_n,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "number of bins in each dimension"
+      )
+
+      .def("__repr__", [](const GeneralBinStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GeneralBinStruct &self) {
+            return GeneralBinStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const GeneralBinStruct &self, nb::dict &memo) { return GeneralBinStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GeneralBinStruct &self, const GeneralBinStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GeneralBinStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D GeneralBinStruct arrays are not used in structs/routines
+  // 2D GeneralBinStruct arrays are not used in structs/routines
+  // 3D GeneralBinStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // gen_grad1_struct
 void init_gen_grad1_struct(nb::module_ &m, nb::class_<GenGrad1Struct> &cls) {
   cls.def(
@@ -765,4 +858,85 @@ void init_grid_field_struct(nb::module_ &m, nb::class_<GridFieldStruct> &cls) {
   );
   // 2D GridFieldStruct arrays are not used in structs/routines
   // 3D GridFieldStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// gpt_lat_param_struct
+void init_gpt_lat_param_struct(nb::module_ &m, nb::class_<GptLatParamStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>>(),
+         nb::arg("fieldmap_dimension") = nb::none(),
+         nb::arg("only_write_autophase_parameters") = nb::none(),
+         nb::arg("gpt_filename") = nb::none(),
+         nb::arg("header_file_name") = nb::none(),
+         nb::arg("tracking_end_element") = nb::none()
+  )
+      .def_prop_rw(
+          "fieldmap_dimension",
+          &GptLatParamStruct::fieldmap_dimension,
+          &GptLatParamStruct::set_fieldmap_dimension,
+          "Dimensions for field map. 1 or 3"
+      )
+      .def_prop_rw(
+          "only_write_autophase_parameters",
+          &GptLatParamStruct::only_write_autophase_parameters,
+          &GptLatParamStruct::set_only_write_autophase_parameters,
+          "Option to only write phasing info"
+      )
+      .def_prop_rw(
+          "gpt_filename",
+          &GptLatParamStruct::gpt_filename,
+          &GptLatParamStruct::set_gpt_filename,
+          "Blank => Append '.gpt' to Bmad lattice file name."
+      )
+      .def_prop_rw(
+          "header_file_name",
+          &GptLatParamStruct::header_file_name,
+          &GptLatParamStruct::set_header_file_name,
+          "Header file to include in gpt file."
+      )
+      .def_prop_rw(
+          "tracking_end_element",
+          &GptLatParamStruct::tracking_end_element,
+          &GptLatParamStruct::set_tracking_end_element,
+          "Bmad lattice element name or index."
+      )
+
+      .def("__repr__", [](const GptLatParamStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const GptLatParamStruct &self) {
+            return GptLatParamStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const GptLatParamStruct &self, nb::dict &memo) { return GptLatParamStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const GptLatParamStruct &self, const GptLatParamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const GptLatParamStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D GptLatParamStruct arrays are not used in structs/routines
+  // 2D GptLatParamStruct arrays are not used in structs/routines
+  // 3D GptLatParamStruct arrays are not used in structs/routines
 }

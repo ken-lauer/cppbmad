@@ -72,6 +72,36 @@ value : float
 )"""
   );
   m.def(
+      "general_bin_count",
+      &SimUtils::general_bin_count,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for getting the count at a general index. Count will be 0 if out of bounds
+)"""
+  );
+  m.def(
+      "general_bin_index",
+      &SimUtils::general_bin_index,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for looking up an index in the 1D count array
+)"""
+  );
+  m.def(
+      "general_bin_index_in_bounds",
+      &SimUtils::general_bin_index_in_bounds,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for checking bounds
+)"""
+  );
+  m.def(
       "get_a_char",
       [](bool wait, CharacterAlloc1D *ignore_this) {
         auto fn =

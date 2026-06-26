@@ -165,6 +165,70 @@ void init_normal_modes_struct(nb::module_ &m, nb::class_<NormalModesStruct> &cls
 }
 
 // =============================================================================
+// named_number_struct
+void init_named_number_struct(nb::module_ &m, nb::class_<NamedNumberStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<std::string>, std::optional<double>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("value") = nb::none()
+  )
+      .def_prop_rw("name", &NamedNumberStruct::name, &NamedNumberStruct::set_name)
+      .def_prop_rw("value", &NamedNumberStruct::value, &NamedNumberStruct::set_value)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return NamedNumberStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = NamedNumberStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const NamedNumberStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const NamedNumberStruct &self) {
+            return NamedNumberStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const NamedNumberStruct &self, nb::dict &memo) { return NamedNumberStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const NamedNumberStruct &self, const NamedNumberStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const NamedNumberStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<NamedNumberStructArray1D, NamedNumberStructAlloc1D>(
+      m,
+      "NamedNumberStructArray1D",
+      "NamedNumberStructAlloc1D"
+  );
+  // 2D NamedNumberStruct arrays are not used in structs/routines
+  // 3D NamedNumberStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // nametable_struct
 void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &cls) {
   cls.def(

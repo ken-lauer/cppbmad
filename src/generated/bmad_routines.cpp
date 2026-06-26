@@ -234,6 +234,12 @@ void Bmad::add_lattice_control_structs(
       /* bool* */ _add_at_end
   );
 }
+void Bmad::add_ptc_layout_to_list(PtcBranch1Struct &branch_ptc_info, Layout &layout_end) {
+  fortran_add_ptc_layout_to_list(
+      /* void* */ branch_ptc_info.get_fortran_ptr(),
+      /* void* */ layout_end.get_fortran_ptr()
+  );
+}
 Bmad::AddSuperimpose Bmad::add_superimpose(
     LatStruct &lat,
     EleStruct &super_ele_in,
@@ -418,6 +424,9 @@ void Bmad::allocate_lat_ele_array(
       /* bool* */ _do_ramper_slave_setup
   );
 }
+void Bmad::allocate_plat(ParserLatStruct &plat, int n_ele_max) {
+  fortran_allocate_plat(/* void* */ plat.get_fortran_ptr(), /* int& */ n_ele_max);
+}
 double Bmad::angle_between_polars(SpinPolarStruct &polar1, SpinPolarStruct &polar2) {
   double _angle{};
   fortran_angle_between_polars(
@@ -441,6 +450,64 @@ bool Bmad::apply_all_rampers(LatStruct &lat) {
   bool _err_flag{};
   fortran_apply_all_rampers(/* void* */ lat.get_fortran_ptr(), /* bool& */ _err_flag);
   return _err_flag;
+}
+void Bmad::apply_element_edge_kick(
+    CoordStruct &orb,
+    FringeFieldInfoStruct &fringe_info,
+    EleStruct &track_ele,
+    LatParamStruct &param,
+    bool track_spin,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6,
+    std::optional<bool> make_matrix,
+    std::optional<double> rf_time,
+    std::optional<bool> apply_sol_fringe
+) {
+  // mat6: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  Bmad::array_descriptor_t _mat6_desc;
+  _mat6_desc.rank = 2;
+  double _mat6_vec[6 * 6];
+  _mat6_desc.data_ptr = _mat6_vec;
+  if (mat6.has_value()) {
+    matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
+  } else {
+    _mat6_desc.data_ptr = nullptr;
+  }
+  bool make_matrix_lvalue;
+  auto *_make_matrix{&make_matrix_lvalue};
+  if (make_matrix.has_value()) {
+    make_matrix_lvalue = make_matrix.value();
+  } else {
+    _make_matrix = nullptr;
+  }
+  double rf_time_lvalue;
+  auto *_rf_time{&rf_time_lvalue};
+  if (rf_time.has_value()) {
+    rf_time_lvalue = rf_time.value();
+  } else {
+    _rf_time = nullptr;
+  }
+  bool apply_sol_fringe_lvalue;
+  auto *_apply_sol_fringe{&apply_sol_fringe_lvalue};
+  if (apply_sol_fringe.has_value()) {
+    apply_sol_fringe_lvalue = apply_sol_fringe.value();
+  } else {
+    _apply_sol_fringe = nullptr;
+  }
+  fortran_apply_element_edge_kick(
+      /* void* */ orb.get_fortran_ptr(),
+      /* void* */ fringe_info.get_fortran_ptr(),
+      /* void* */ track_ele.get_fortran_ptr(),
+      /* void* */ param.get_fortran_ptr(),
+      /* bool& */ track_spin,
+      /* Bmad::array_descriptor_t& */ _mat6_desc,
+      /* bool* */ _make_matrix,
+      /* double* */ _rf_time,
+      /* bool* */ _apply_sol_fringe
+  );
+  if (mat6.has_value())
+    vec_to_matrix(_mat6_vec, mat6.value());
 }
 void Bmad::apply_energy_kick(
     double dE,
@@ -482,6 +549,18 @@ void Bmad::apply_energy_kick(
   );
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
+}
+void Bmad::apply_fft_3d_kicks(CsrStruct &csr, CoordStructArray1D particle) {
+  // particle: CoordStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _particle_desc;
+  _particle_desc.rank = 1;
+  _particle_desc.data_ptr = particle.data();
+  _particle_desc.dims[0] = particle.size();
+  _particle_desc.strides[0] = 1;
+  fortran_apply_fft_3d_kicks(
+      /* void* */ csr.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _particle_desc
+  );
 }
 void Bmad::apply_patch_to_ptc_fibre(EleStruct &ele) {
   fortran_apply_patch_to_ptc_fibre(/* void* */ ele.get_fortran_ptr());
@@ -728,6 +807,15 @@ Bmad::AttributeIndex2 Bmad::attribute_index(
   );
   return AttributeIndex2{_full_name, _attrib_index};
 }
+EleAttributeStruct Bmad::attribute_info(EleStruct &ele, int ix_att) {
+  EleAttributeStruct _attrib_info;
+  fortran_attribute_info(
+      /* void* */ ele.get_fortran_ptr(),
+      /* int& */ ix_att,
+      /* void* */ _attrib_info.get_fortran_ptr()
+  );
+  return std::move(_attrib_info);
+}
 std::string Bmad::attribute_name(int key, int ix_att, std::optional<bool> show_private) {
   bool show_private_lvalue;
   auto *_show_private{&show_private_lvalue};
@@ -846,6 +934,16 @@ TwissStruct Bmad::average_twiss(double frac1, TwissStruct &twiss1, TwissStruct &
       /* void* */ _ave_twiss.get_fortran_ptr()
   );
   return std::move(_ave_twiss);
+}
+IbsStruct Bmad::bane1(EleStruct &ele, double coulomb_log, double n_part) {
+  IbsStruct _rates;
+  fortran_bane1(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* void* */ _rates.get_fortran_ptr(),
+      /* double& */ n_part
+  );
+  return std::move(_rates);
 }
 Bmad::BbiKick
 Bmad::bbi_kick(double x, double y, FixedArray1D<Real, 2> sigma, std::optional<bool> linear_kick) {
@@ -1267,6 +1365,29 @@ double Bmad::bend_vert_angle_integ_prob(double vert_angle, double E_rel, double 
   );
   return _integ_prob;
 }
+IbsStruct Bmad::bjmt1(EleStruct &ele, double coulomb_log, double n_part) {
+  IbsStruct _rates;
+  fortran_bjmt1(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* void* */ _rates.get_fortran_ptr(),
+      /* double& */ n_part
+  );
+  return std::move(_rates);
+}
+void Bmad::bl_via_mat(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &mode,
+    double sig_z
+) {
+  fortran_bl_via_mat(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ mode.get_fortran_ptr(),
+      /* double& */ sig_z
+  );
+}
 double Bmad::bl_via_vlassov(
     double current,
     double alpha,
@@ -1643,6 +1764,38 @@ Bmad::CalcEmittancesAndTwissFromSigmaMatrix Bmad::calc_emittances_and_twiss_from
   vec_to_matrix(_n_mat_vec, n_mat);
   return CalcEmittancesAndTwissFromSigmaMatrix{std::move(_bunch_params), _error, n_mat};
 }
+Bmad::CalcNextFringeEdge Bmad::calc_next_fringe_edge(
+    EleStruct &track_ele,
+    CoordStruct &orbit,
+    std::optional<bool> init_needed,
+    std::optional<bool> time_tracking
+) {
+  double _s_edge_body{};
+  FringeFieldInfoStruct _fringe_info;
+  bool init_needed_lvalue;
+  auto *_init_needed{&init_needed_lvalue};
+  if (init_needed.has_value()) {
+    init_needed_lvalue = init_needed.value();
+  } else {
+    _init_needed = nullptr;
+  }
+  bool time_tracking_lvalue;
+  auto *_time_tracking{&time_tracking_lvalue};
+  if (time_tracking.has_value()) {
+    time_tracking_lvalue = time_tracking.value();
+  } else {
+    _time_tracking = nullptr;
+  }
+  fortran_calc_next_fringe_edge(
+      /* void* */ track_ele.get_fortran_ptr(),
+      /* double& */ _s_edge_body,
+      /* void* */ _fringe_info.get_fortran_ptr(),
+      /* void* */ orbit.get_fortran_ptr(),
+      /* bool* */ _init_needed,
+      /* bool* */ _time_tracking
+  );
+  return CalcNextFringeEdge{_s_edge_body, std::move(_fringe_info)};
+}
 BunchParamsStruct Bmad::calc_spin_params(BunchStruct &bunch) {
   BunchParamsStruct _bunch_params;
   fortran_calc_spin_params(
@@ -1693,6 +1846,24 @@ Bmad::calc_wall_radius(Wall3dVertexStructArray1D v, double cos_ang, double sin_a
   );
   return CalcWallRadius{_r_wall, _dr_dtheta, _ix_vertex};
 }
+void Bmad::calc_wiggler_g_params(
+    EleStruct &ele,
+    LatParamStruct &param,
+    double s_rel,
+    CoordStruct &orb,
+    RadIntTrackPointStruct &pt,
+    optional_ref<RadIntInfoStruct> info
+) {
+  auto *_info = info.has_value() ? info->get().get_fortran_ptr() : nullptr; // input, optional
+  fortran_calc_wiggler_g_params(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ param.get_fortran_ptr(),
+      /* double& */ s_rel,
+      /* void* */ orb.get_fortran_ptr(),
+      /* void* */ pt.get_fortran_ptr(),
+      /* void* */ _info
+  );
+}
 void Bmad::calc_z_tune(BranchStruct &branch) {
   fortran_calc_z_tune(/* void* */ branch.get_fortran_ptr());
 }
@@ -1701,6 +1872,38 @@ void Bmad::canonical_to_angle_coords(CoordStruct &orbit, std::optional<std::stri
   fortran_canonical_to_angle_coords(
       /* void* */ orbit.get_fortran_ptr(),
       /* const char* */ _coord_type
+  );
+}
+void Bmad::capillary_photon_hit_spot_calc(PhotonTrackStruct &photon, EleStruct &ele) {
+  fortran_capillary_photon_hit_spot_calc(
+      /* void* */ photon.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr()
+  );
+}
+bool Bmad::capillary_propagate_photon_a_step(
+    PhotonTrackStruct &photon,
+    EleStruct &ele,
+    double dlen
+) {
+  bool _stop_at_boundary{};
+  fortran_capillary_propagate_photon_a_step(
+      /* void* */ photon.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ dlen,
+      /* bool& */ _stop_at_boundary
+  );
+  return _stop_at_boundary;
+}
+void Bmad::capillary_reflect_photon(PhotonTrackStruct &photon, EleStruct &ele) {
+  fortran_capillary_reflect_photon(
+      /* void* */ photon.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr()
+  );
+}
+void Bmad::capillary_track_photon_to_wall(PhotonTrackStruct &photon, EleStruct &ele) {
+  fortran_capillary_track_photon_to_wall(
+      /* void* */ photon.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr()
   );
 }
 FixedArray2D<Real, 2, 2>
@@ -1899,6 +2102,16 @@ bool Bmad::chrom_tune(
       /* bool& */ _err_flag
   );
   return _err_flag;
+}
+IbsStruct Bmad::cimp1(EleStruct &ele, double coulomb_log, double n_part) {
+  IbsStruct _rates;
+  fortran_cimp1(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* void* */ _rates.get_fortran_ptr(),
+      /* double& */ n_part
+  );
+  return std::move(_rates);
 }
 double Bmad::classical_radius(int species) {
   double _radius{};
@@ -2902,6 +3115,17 @@ FloorPositionStruct Bmad::coords_relative_to_floor(
   );
   return std::move(_floor1);
 }
+double Bmad::cos_phi(double sigma, double t, double phi, DiffuseParamStruct &d_param) {
+  double _cphi{};
+  fortran_cos_phi(
+      /* double& */ sigma,
+      /* double& */ t,
+      /* double& */ phi,
+      /* void* */ d_param.get_fortran_ptr(),
+      /* double& */ _cphi
+  );
+  return _cphi;
+}
 double Bmad::coulombfun(double u, double v, double w, double gam) {
   double _res{};
   fortran_coulombfun(
@@ -3084,6 +3308,46 @@ CartesianMapStruct Bmad::create_wiggler_cartesian_map(EleStruct &ele) {
 void Bmad::crystal_attribute_bookkeeper(EleStruct &ele) {
   fortran_crystal_attribute_bookkeeper(/* void* */ ele.get_fortran_ptr());
 }
+Bmad::CrystalDiffractionFieldCalc Bmad::crystal_diffraction_field_calc(
+    CrystalParamStruct &cp,
+    EleStruct &ele,
+    double thickness,
+    LatParamStruct &param,
+    double p_factor,
+    bool do_branch_calc,
+    std::optional<bool> follow_undiffracted
+) {
+  double _e_field{};
+  double _e_phase{};
+  int _orbit_state{};
+  // dr: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _dr_desc;
+  _dr_desc.rank = 1;
+  FixedArray1D<Real, 3> _dr;
+  _dr_desc.data_ptr = _dr.data();
+  _dr_desc.dims[0] = _dr.size();
+  bool follow_undiffracted_lvalue;
+  auto *_follow_undiffracted{&follow_undiffracted_lvalue};
+  if (follow_undiffracted.has_value()) {
+    follow_undiffracted_lvalue = follow_undiffracted.value();
+  } else {
+    _follow_undiffracted = nullptr;
+  }
+  fortran_crystal_diffraction_field_calc(
+      /* void* */ cp.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ thickness,
+      /* void* */ param.get_fortran_ptr(),
+      /* double& */ p_factor,
+      /* bool& */ do_branch_calc,
+      /* double& */ _e_field,
+      /* double& */ _e_phase,
+      /* int& */ _orbit_state,
+      /* Bmad::array_descriptor_t& */ _dr_desc,
+      /* bool* */ _follow_undiffracted
+  );
+  return CrystalDiffractionFieldCalc{_e_field, _e_phase, _orbit_state, _dr};
+}
 void Bmad::crystal_h_misalign(EleStruct &ele, CoordStruct &orbit, FixedArray1D<Real, 3> h_vec) {
   // h_vec: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
   Bmad::array_descriptor_t _h_vec_desc;
@@ -3100,6 +3364,45 @@ bool Bmad::crystal_type_to_crystal_params(EleStruct &ele) {
   bool _err_flag{};
   fortran_crystal_type_to_crystal_params(/* void* */ ele.get_fortran_ptr(), /* bool& */ _err_flag);
   return _err_flag;
+}
+void Bmad::csr_and_sc_apply_kicks(EleStruct &ele, CsrStruct &csr, CoordStructArray1D particle) {
+  // particle: CoordStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _particle_desc;
+  _particle_desc.rank = 1;
+  _particle_desc.data_ptr = particle.data();
+  _particle_desc.dims[0] = particle.size();
+  _particle_desc.strides[0] = 1;
+  fortran_csr_and_sc_apply_kicks(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ csr.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _particle_desc
+  );
+}
+bool Bmad::csr_bin_kicks(EleStruct &ele, double ds_kick_pt, CsrStruct &csr) {
+  bool _err_flag{};
+  fortran_csr_bin_kicks(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ ds_kick_pt,
+      /* void* */ csr.get_fortran_ptr(),
+      /* bool& */ _err_flag
+  );
+  return _err_flag;
+}
+CsrStruct Bmad::csr_bin_particles(EleStruct &ele, CoordStructArray1D particle, bool err_flag) {
+  // particle: CoordStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _particle_desc;
+  _particle_desc.rank = 1;
+  _particle_desc.data_ptr = particle.data();
+  _particle_desc.dims[0] = particle.size();
+  _particle_desc.strides[0] = 1;
+  CsrStruct _csr;
+  fortran_csr_bin_particles(
+      /* void* */ ele.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _particle_desc,
+      /* void* */ _csr.get_fortran_ptr(),
+      /* bool& */ err_flag
+  );
+  return std::move(_csr);
 }
 int Bmad::custom_attribute_ubound_index(int ele_class) {
   int _ix_ubound{};
@@ -3189,6 +3492,83 @@ int Bmad::default_tracking_species(LatParamStruct &param) {
   int _species{};
   fortran_default_tracking_species(/* void* */ param.get_fortran_ptr(), /* int& */ _species);
   return _species;
+}
+Mesh3dStruct Bmad::deposit_particles(
+    FArray1D<Real> &xa,
+    FArray1D<Real> &ya,
+    FArray1D<Real> &za,
+    std::optional<FArray1D<Real>> qa,
+    std::optional<double> total_charge,
+    std::optional<bool> resize_mesh,
+    std::optional<double> mesh_growth_factor,
+    std::optional<double> mesh_shrink_factor
+) {
+  // xa: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _xa_desc;
+  _xa_desc.rank = 1;
+  _xa_desc.data_ptr = xa.data();
+  _xa_desc.dims[0] = xa.size();
+  // ya: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _ya_desc;
+  _ya_desc.rank = 1;
+  _ya_desc.data_ptr = ya.data();
+  _ya_desc.dims[0] = ya.size();
+  // za: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _za_desc;
+  _za_desc.rank = 1;
+  _za_desc.data_ptr = za.data();
+  _za_desc.dims[0] = za.size();
+  Mesh3dStruct _mesh3d;
+  // qa: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _qa_desc;
+  _qa_desc.rank = 1;
+  if (qa.has_value()) {
+    _qa_desc.data_ptr = qa->data();
+    _qa_desc.dims[0] = qa->size();
+  } else {
+    _qa_desc.data_ptr = nullptr;
+    _qa_desc.dims[0] = 0;
+  }
+  double total_charge_lvalue;
+  auto *_total_charge{&total_charge_lvalue};
+  if (total_charge.has_value()) {
+    total_charge_lvalue = total_charge.value();
+  } else {
+    _total_charge = nullptr;
+  }
+  bool resize_mesh_lvalue;
+  auto *_resize_mesh{&resize_mesh_lvalue};
+  if (resize_mesh.has_value()) {
+    resize_mesh_lvalue = resize_mesh.value();
+  } else {
+    _resize_mesh = nullptr;
+  }
+  double mesh_growth_factor_lvalue;
+  auto *_mesh_growth_factor{&mesh_growth_factor_lvalue};
+  if (mesh_growth_factor.has_value()) {
+    mesh_growth_factor_lvalue = mesh_growth_factor.value();
+  } else {
+    _mesh_growth_factor = nullptr;
+  }
+  double mesh_shrink_factor_lvalue;
+  auto *_mesh_shrink_factor{&mesh_shrink_factor_lvalue};
+  if (mesh_shrink_factor.has_value()) {
+    mesh_shrink_factor_lvalue = mesh_shrink_factor.value();
+  } else {
+    _mesh_shrink_factor = nullptr;
+  }
+  fortran_deposit_particles(
+      /* Bmad::array_descriptor_t& */ _xa_desc,
+      /* Bmad::array_descriptor_t& */ _ya_desc,
+      /* Bmad::array_descriptor_t& */ _za_desc,
+      /* void* */ _mesh3d.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _qa_desc,
+      /* double* */ _total_charge,
+      /* bool* */ _resize_mesh,
+      /* double* */ _mesh_growth_factor,
+      /* double* */ _mesh_shrink_factor
+  );
+  return std::move(_mesh3d);
 }
 FixedArray1D<Int, 2> Bmad::detector_pixel_pt(CoordStruct &orbit, EleStruct &ele) {
   // ix_pix: out NOT (CppWrapperGeneralArgumentArray) (['2'])
@@ -5806,6 +6186,29 @@ Bmad::gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, doub
   );
   return _field;
 }
+Bmad::GetAstraFieldgridNameAndScaling Bmad::get_astra_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    StrIndexStruct &name_indexx,
+    std::optional<int> dimensions
+) {
+  char _output_name[4096];
+  double _field_scale{};
+  int dimensions_lvalue;
+  auto *_dimensions{&dimensions_lvalue};
+  if (dimensions.has_value()) {
+    dimensions_lvalue = dimensions.value();
+  } else {
+    _dimensions = nullptr;
+  }
+  fortran_get_astra_fieldgrid_name_and_scaling(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ name_indexx.get_fortran_ptr(),
+      /* const char* */ _output_name,
+      /* double& */ _field_scale,
+      /* int* */ _dimensions
+  );
+  return GetAstraFieldgridNameAndScaling{_output_name, _field_scale};
+}
 double Bmad::get_bl_from_fwhm(double bound, FixedArray1D<Real, 8> args) {
   // args: in NOT (CppWrapperGeneralArgumentArray) (['1:8'])
   Bmad::array_descriptor_t _args_desc;
@@ -5864,6 +6267,31 @@ Bmad::GetEmitFromSigmaMat Bmad::get_emit_from_sigma_mat(
   );
   return GetEmitFromSigmaMat{_normal, _err_flag};
 }
+Bmad::GetGptFieldgridNameAndScaling Bmad::get_gpt_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    StrIndexStruct &name_indexx,
+    std::optional<int> dimensions
+) {
+  char _output_name[4096];
+  double _field_scale{};
+  double _ref_time{};
+  int dimensions_lvalue;
+  auto *_dimensions{&dimensions_lvalue};
+  if (dimensions.has_value()) {
+    dimensions_lvalue = dimensions.value();
+  } else {
+    _dimensions = nullptr;
+  }
+  fortran_get_gpt_fieldgrid_name_and_scaling(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ name_indexx.get_fortran_ptr(),
+      /* const char* */ _output_name,
+      /* double& */ _field_scale,
+      /* double& */ _ref_time,
+      /* int* */ _dimensions
+  );
+  return GetGptFieldgridNameAndScaling{_output_name, _field_scale, _ref_time};
+}
 void Bmad::get_list_of_names(
     EleStruct &ele,
     std::string err_str,
@@ -5921,6 +6349,22 @@ Bmad::GetNextWord Bmad::get_next_word(
       /* bool& */ _err_flag
   );
   return GetNextWord{_ix_word, _delim, _delim_found, _err_flag};
+}
+Bmad::GetOpalFieldgridNameAndScaling Bmad::get_opal_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    LatParamStruct &param,
+    StrIndexStruct &name_indexx
+) {
+  char _output_name[4096];
+  double _field_scale{};
+  fortran_get_opal_fieldgrid_name_and_scaling(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ param.get_fortran_ptr(),
+      /* void* */ name_indexx.get_fortran_ptr(),
+      /* const char* */ _output_name,
+      /* double& */ _field_scale
+  );
+  return GetOpalFieldgridNameAndScaling{_output_name, _field_scale};
 }
 void Bmad::get_overlay_group_names(
     EleStruct &ele,
@@ -6178,6 +6622,76 @@ bool Bmad::has_orientation_attributes(EleStruct &ele) {
   fortran_has_orientation_attributes(/* void* */ ele.get_fortran_ptr(), /* bool& */ _has_attribs);
   return _has_attribs;
 }
+void Bmad::hdf5_read_beam(
+    std::string file_name,
+    BeamStruct &beam,
+    bool error,
+    optional_ref<EleStruct> ele,
+    optional_ref<PmdHeaderStruct> pmd_header,
+    std::optional<bool> print_mom_shift_warning,
+    std::optional<bool> conserve_momentum
+) {
+  auto _file_name = file_name.c_str();
+  auto *_ele = ele.has_value() ? ele->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_pmd_header =
+      pmd_header.has_value() ? pmd_header->get().get_fortran_ptr() : nullptr; // input, optional
+  bool print_mom_shift_warning_lvalue;
+  auto *_print_mom_shift_warning{&print_mom_shift_warning_lvalue};
+  if (print_mom_shift_warning.has_value()) {
+    print_mom_shift_warning_lvalue = print_mom_shift_warning.value();
+  } else {
+    _print_mom_shift_warning = nullptr;
+  }
+  bool conserve_momentum_lvalue;
+  auto *_conserve_momentum{&conserve_momentum_lvalue};
+  if (conserve_momentum.has_value()) {
+    conserve_momentum_lvalue = conserve_momentum.value();
+  } else {
+    _conserve_momentum = nullptr;
+  }
+  fortran_hdf5_read_beam(
+      /* const char* */ _file_name,
+      /* void* */ beam.get_fortran_ptr(),
+      /* bool& */ error,
+      /* void* */ _ele,
+      /* void* */ _pmd_header,
+      /* bool* */ _print_mom_shift_warning,
+      /* bool* */ _conserve_momentum
+  );
+}
+void Bmad::hdf5_read_grid_field(
+    std::string file_name,
+    EleStruct &ele,
+    GridFieldStructArray1D g_field,
+    bool err_flag,
+    optional_ref<PmdHeaderStruct> pmd_header,
+    std::optional<bool> combine
+) {
+  auto _file_name = file_name.c_str();
+  // g_field: GridFieldStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _g_field_desc;
+  _g_field_desc.rank = 1;
+  _g_field_desc.data_ptr = g_field.data();
+  _g_field_desc.dims[0] = g_field.size();
+  _g_field_desc.strides[0] = 1;
+  auto *_pmd_header =
+      pmd_header.has_value() ? pmd_header->get().get_fortran_ptr() : nullptr; // input, optional
+  bool combine_lvalue;
+  auto *_combine{&combine_lvalue};
+  if (combine.has_value()) {
+    combine_lvalue = combine.value();
+  } else {
+    _combine = nullptr;
+  }
+  fortran_hdf5_read_grid_field(
+      /* const char* */ _file_name,
+      /* void* */ ele.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _g_field_desc,
+      /* bool& */ err_flag,
+      /* void* */ _pmd_header,
+      /* bool* */ _combine
+  );
+}
 void Bmad::hdf5_write_beam(
     std::string file_name,
     BunchStructArray1D bunches,
@@ -6268,6 +6782,137 @@ void Bmad::hwang_bend_edge_kick(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
+void Bmad::i_csr(CsrKick1Struct &kick1, int i_bin, CsrStruct &csr) {
+  fortran_i_csr(
+      /* void* */ kick1.get_fortran_ptr(),
+      /* int& */ i_bin,
+      /* void* */ csr.get_fortran_ptr()
+  );
+}
+void Bmad::ibs1(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    IbsStruct &rates,
+    std::optional<int> i,
+    std::optional<double> s
+) {
+  int i_lvalue;
+  auto *_i{&i_lvalue};
+  if (i.has_value()) {
+    i_lvalue = i.value();
+  } else {
+    _i = nullptr;
+  }
+  double s_lvalue;
+  auto *_s{&s_lvalue};
+  if (s.has_value()) {
+    s_lvalue = s.value();
+  } else {
+    _s = nullptr;
+  }
+  fortran_ibs1(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ rates.get_fortran_ptr(),
+      /* int* */ _i,
+      /* double* */ _s
+  );
+}
+void Bmad::ibs_blowup1turn(LatStruct &lat, IbsSimParamStruct &ibs_sim_params) {
+  fortran_ibs_blowup1turn(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr()
+  );
+}
+Bmad::IbsDeltaCalc Bmad::ibs_delta_calc(
+    LatStruct &lat,
+    int ix,
+    IbsSimParamStruct &ibs_sim_params,
+    std::optional<FixedArray2D<Real, 6, 6>> sigma_mat
+) {
+  // sigma_mat: in NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  Bmad::array_descriptor_t _sigma_mat_desc;
+  _sigma_mat_desc.rank = 2;
+  double _sigma_mat_vec[6 * 6];
+  _sigma_mat_desc.data_ptr = _sigma_mat_vec;
+  if (sigma_mat.has_value()) {
+    matrix_to_vec(sigma_mat.value(), _sigma_mat_vec);
+    _sigma_mat_desc.dims[0] = 6;
+    _sigma_mat_desc.dims[1] = 6;
+  } else {
+    _sigma_mat_desc.data_ptr = nullptr;
+  }
+  double _delta_sigma_energy{};
+  double _delta_emit_a{};
+  double _delta_emit_b{};
+  fortran_ibs_delta_calc(
+      /* void* */ lat.get_fortran_ptr(),
+      /* int& */ ix,
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _sigma_mat_desc,
+      /* double& */ _delta_sigma_energy,
+      /* double& */ _delta_emit_a,
+      /* double& */ _delta_emit_b
+  );
+  return IbsDeltaCalc{_delta_sigma_energy, _delta_emit_a, _delta_emit_b};
+}
+NormalModesStruct Bmad::ibs_equib_der(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &inmode,
+    double granularity
+) {
+  NormalModesStruct _ibsmode;
+  fortran_ibs_equib_der(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ inmode.get_fortran_ptr(),
+      /* void* */ _ibsmode.get_fortran_ptr(),
+      /* double& */ granularity
+  );
+  return std::move(_ibsmode);
+}
+NormalModesStruct Bmad::ibs_equib_rlx(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &inmode,
+    double ratio,
+    FixedArray1D<Real, 3> initial_blow_up,
+    double granularity
+) {
+  NormalModesStruct _ibsmode;
+  // initial_blow_up: in NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _initial_blow_up_desc;
+  _initial_blow_up_desc.rank = 1;
+  _initial_blow_up_desc.data_ptr = initial_blow_up.data();
+  _initial_blow_up_desc.dims[0] = initial_blow_up.size();
+  fortran_ibs_equib_rlx(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ inmode.get_fortran_ptr(),
+      /* void* */ _ibsmode.get_fortran_ptr(),
+      /* double& */ ratio,
+      /* Bmad::array_descriptor_t& */ _initial_blow_up_desc,
+      /* double& */ granularity
+  );
+  return std::move(_ibsmode);
+}
+IbsLifetimeStruct Bmad::ibs_lifetime(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    IbsMaxratioStruct &maxratio,
+    double granularity
+) {
+  IbsLifetimeStruct _lifetime;
+  fortran_ibs_lifetime(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ maxratio.get_fortran_ptr(),
+      /* void* */ _lifetime.get_fortran_ptr(),
+      /* double& */ granularity
+  );
+  return std::move(_lifetime);
+}
 FixedArray2D<Real, 6, 6> Bmad::ibs_matrix_c(
     FixedArray2D<Real, 6, 6> sigma_mat,
     bool tail_cut,
@@ -6304,6 +6949,17 @@ FixedArray2D<Real, 6, 6> Bmad::ibs_matrix_c(
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   vec_to_matrix(_ibs_mat_vec, ibs_mat);
   return ibs_mat;
+}
+IbsStruct
+Bmad::ibs_rates1turn(LatStruct &lat, IbsSimParamStruct &ibs_sim_params, double granularity) {
+  IbsStruct _rates1turn;
+  fortran_ibs_rates1turn(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ _rates1turn.get_fortran_ptr(),
+      /* double& */ granularity
+  );
+  return std::move(_rates1turn);
 }
 double
 Bmad::igfcoulombfun(double u, double v, double w, double gam, double dx, double dy, double dz) {
@@ -6361,6 +7017,12 @@ double Bmad::igfezfun(double u, double v, double w, double gam, double dx, doubl
       /* double& */ _res
   );
   return _res;
+}
+void Bmad::image_charge_kick_calc(CsrKick1Struct &kick1, CsrStruct &csr) {
+  fortran_image_charge_kick_calc(
+      /* void* */ kick1.get_fortran_ptr(),
+      /* void* */ csr.get_fortran_ptr()
+  );
 }
 void Bmad::init_attribute_name1(
     bool &is_ok,
@@ -6811,6 +7473,28 @@ EleStruct Bmad::init_ele(
   );
   return std::move(_ele);
 }
+FringeFieldInfoStruct Bmad::init_fringe_info(
+    EleStruct &ele,
+    optional_ref<CoordStruct> orbit,
+    std::optional<int> leng_sign
+) {
+  FringeFieldInfoStruct _fringe_info;
+  auto *_orbit = orbit.has_value() ? orbit->get().get_fortran_ptr() : nullptr; // input, optional
+  int leng_sign_lvalue;
+  auto *_leng_sign{&leng_sign_lvalue};
+  if (leng_sign.has_value()) {
+    leng_sign_lvalue = leng_sign.value();
+  } else {
+    _leng_sign = nullptr;
+  }
+  fortran_init_fringe_info(
+      /* void* */ _fringe_info.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ _orbit,
+      /* int* */ _leng_sign
+  );
+  return std::move(_fringe_info);
+}
 void Bmad::init_gg_taylor_series(
     GgTaylorStruct &gg_taylor,
     int n_term,
@@ -7131,6 +7815,29 @@ void Bmad::integration_timer(
       /* Bmad::array_descriptor_t& */ _orbit_max_desc,
       /* double& */ tol_dp
   );
+}
+Bmad::InterpolateField Bmad::interpolate_field(double x, double y, double z, Mesh3dStruct &mesh3d) {
+  // E: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _E_desc;
+  _E_desc.rank = 1;
+  FixedArray1D<Real, 3> _E;
+  _E_desc.data_ptr = _E.data();
+  _E_desc.dims[0] = _E.size();
+  // B: out NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _B_desc;
+  _B_desc.rank = 1;
+  FixedArray1D<Real, 3> _B;
+  _B_desc.data_ptr = _B.data();
+  _B_desc.dims[0] = _B.size();
+  fortran_interpolate_field(
+      /* double& */ x,
+      /* double& */ y,
+      /* double& */ z,
+      /* void* */ mesh3d.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _E_desc,
+      /* Bmad::array_descriptor_t& */ _B_desc
+  );
+  return InterpolateField{_E, _B};
 }
 FixedArray1D<Real, 3> Bmad::ion_kick(
     CoordStruct &orbit,
@@ -7573,6 +8280,12 @@ double Bmad::low_energy_z_correction(
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
   return _dz;
+}
+void Bmad::lsc_kick_params_calc(EleStruct &ele, CsrStruct &csr) {
+  fortran_lsc_kick_params_calc(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ csr.get_fortran_ptr()
+  );
 }
 MadMapStruct Bmad::mad_add_offsets_and_multipoles(EleStruct &ele) {
   MadMapStruct _map;
@@ -8570,6 +9283,39 @@ double Bmad::momentum_compaction(BranchStruct &branch) {
   fortran_momentum_compaction(/* void* */ branch.get_fortran_ptr(), /* double& */ _mom_comp);
   return _mom_comp;
 }
+IbsStruct Bmad::mpxx1(EleStruct &ele, double coulomb_log, double n_part) {
+  IbsStruct _rates;
+  fortran_mpxx1(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* void* */ _rates.get_fortran_ptr(),
+      /* double& */ n_part
+  );
+  return std::move(_rates);
+}
+IbsStruct Bmad::mpzt1(EleStruct &ele, double coulomb_log, double n_part) {
+  IbsStruct _rates;
+  fortran_mpzt1(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* void* */ _rates.get_fortran_ptr(),
+      /* double& */ n_part
+  );
+  return std::move(_rates);
+}
+void Bmad::multi_coulomb_log(
+    IbsSimParamStruct &ibs_sim_params,
+    EleStruct &ele,
+    double coulomb_log,
+    double n_part
+) {
+  fortran_multi_coulomb_log(
+      /* void* */ ibs_sim_params.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ coulomb_log,
+      /* double& */ n_part
+  );
+}
 Bmad::MultiTurnTrackingAnalysis
 Bmad::multi_turn_tracking_analysis(CoordStructArray1D track, int i_dim) {
   // track: CoordStruct in (CppWrapperTypeArgumentArray)
@@ -8611,6 +9357,14 @@ bool Bmad::multilayer_type_to_multilayer_params(EleStruct &ele) {
   );
   return _err_flag;
 }
+MultipassAllInfoStruct Bmad::multipass_all_info(LatStruct &lat) {
+  MultipassAllInfoStruct _info;
+  fortran_multipass_all_info(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ _info.get_fortran_ptr()
+  );
+  return std::move(_info);
+}
 Bmad::MultipassChain Bmad::multipass_chain(EleStruct &ele, std::optional<bool> use_super_lord) {
   int _ix_pass{};
   int _n_links{};
@@ -8631,6 +9385,17 @@ Bmad::MultipassChain Bmad::multipass_chain(EleStruct &ele, std::optional<bool> u
       /* bool* */ _use_super_lord
   );
   return MultipassChain{_ix_pass, _n_links, std::move(chain_ele)};
+}
+void Bmad::multipass_region_info(
+    LatStruct &lat,
+    MultipassRegionLatStruct &mult_lat,
+    MultipassAllInfoStruct &m_info
+) {
+  fortran_multipass_region_info(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ mult_lat.get_fortran_ptr(),
+      /* void* */ m_info.get_fortran_ptr()
+  );
 }
 Bmad::Multipole1AbToKt Bmad::multipole1_ab_to_kt(double an, double bn, int n) {
   double _knl{};
@@ -10014,6 +10779,20 @@ Bmad::ParseIntegerList2 Bmad::parse_integer_list2(
   );
   return ParseIntegerList2{_num_found, _delim, _delim_found, _is_ok};
 }
+void Bmad::parse_line_or_list(
+    SeqStructAlloc1D sequence,
+    int iseq_tot,
+    LatStruct &lat,
+    bool top_level
+) {
+  // intent=inout allocatable type array
+  fortran_parse_line_or_list(
+      /* void* */ sequence.get_fortran_ptr(),
+      /* int& */ iseq_tot,
+      /* void* */ lat.get_fortran_ptr(),
+      /* bool& */ top_level
+  );
+}
 Bmad::ParseRealList Bmad::parse_real_list(
     LatStruct &lat,
     std::string err_str,
@@ -10146,12 +10925,69 @@ void Bmad::parser2_add_superimpose(
       /* void* */ _in_lat
   );
 }
+void Bmad::parser_add_branch(
+    EleStruct &fork_ele,
+    LatStruct &lat,
+    SeqStructAlloc1D sequence,
+    CharacterAlloc1D &seq_name,
+    IntAlloc1D &seq_indexx,
+    bool no_end_marker,
+    LatStruct &in_lat,
+    ParserLatStruct &plat,
+    bool created_new_branch,
+    std::optional<std::string> new_branch_name
+) {
+  // intent=inout allocatable type array
+  // intent=inout character array container
+  // intent=inout allocatable general array
+  const char *_new_branch_name = new_branch_name.has_value() ? new_branch_name->c_str() : nullptr;
+  fortran_parser_add_branch(
+      /* void* */ fork_ele.get_fortran_ptr(),
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ sequence.get_fortran_ptr(),
+      /* void* */ seq_name.get_fortran_ptr(),
+      /* void* */ seq_indexx.get_fortran_ptr(),
+      /* bool& */ no_end_marker,
+      /* void* */ in_lat.get_fortran_ptr(),
+      /* void* */ plat.get_fortran_ptr(),
+      /* bool& */ created_new_branch,
+      /* const char* */ _new_branch_name
+  );
+}
 void Bmad::parser_add_constant(std::string word, LatStruct &lat, bool redef_is_error) {
   auto _word = word.c_str();
   fortran_parser_add_constant(
       /* const char* */ _word,
       /* void* */ lat.get_fortran_ptr(),
       /* bool& */ redef_is_error
+  );
+}
+Bmad::ParserAddLords
+Bmad::parser_add_lords(LatStruct &lord_lat, int n_ele_max, ParserLatStruct &plat) {
+  LatStruct _lat;
+  LatStruct _check_lat;
+  fortran_parser_add_lords(
+      /* void* */ lord_lat.get_fortran_ptr(),
+      /* int& */ n_ele_max,
+      /* void* */ plat.get_fortran_ptr(),
+      /* void* */ _lat.get_fortran_ptr(),
+      /* void* */ _check_lat.get_fortran_ptr()
+  );
+  return ParserAddLords{std::move(_lat), std::move(_check_lat)};
+}
+void Bmad::parser_add_superimpose(
+    BranchStruct &branch,
+    EleStruct &super_ele_in,
+    ParserEleStruct &pele,
+    LatStruct &in_lat,
+    ParserLatStruct &plat
+) {
+  fortran_parser_add_superimpose(
+      /* void* */ branch.get_fortran_ptr(),
+      /* void* */ super_ele_in.get_fortran_ptr(),
+      /* void* */ pele.get_fortran_ptr(),
+      /* void* */ in_lat.get_fortran_ptr(),
+      /* void* */ plat.get_fortran_ptr()
   );
 }
 void Bmad::parser_call_check(
@@ -10179,6 +11015,127 @@ void Bmad::parser_call_check(
       /* bool& */ call_found,
       /* bool* */ _err_flag
   );
+}
+void Bmad::parser_debug_print_info(
+    LatStruct &lat,
+    std::string debug_line,
+    std::optional<SeqStructArray1D> sequence
+) {
+  auto _debug_line = debug_line.c_str();
+  // sequence: SeqStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _sequence_desc;
+  _sequence_desc.rank = 1;
+  if (sequence) {
+    _sequence_desc.data_ptr = sequence->data();
+    _sequence_desc.dims[0] = sequence->size();
+  } else {
+    _sequence_desc.data_ptr = nullptr;
+    _sequence_desc.dims[0] = 0;
+  }
+  _sequence_desc.strides[0] = 1;
+  fortran_parser_debug_print_info(
+      /* void* */ lat.get_fortran_ptr(),
+      /* const char* */ _debug_line,
+      /* Bmad::array_descriptor_t& */ _sequence_desc
+  );
+}
+void Bmad::parser_error(
+    std::string what1,
+    std::optional<std::string> what2,
+    std::optional<std::string> what3,
+    std::optional<std::string> what4,
+    optional_ref<SeqStruct> seq,
+    optional_ref<ParserEleStruct> pele,
+    std::optional<bool> stop_here,
+    std::optional<int> level,
+    std::optional<FArray1D<Real>> r_array,
+    std::optional<FArray1D<Int>> i_array
+) {
+  auto _what1 = what1.c_str();
+  const char *_what2 = what2.has_value() ? what2->c_str() : nullptr;
+  const char *_what3 = what3.has_value() ? what3->c_str() : nullptr;
+  const char *_what4 = what4.has_value() ? what4->c_str() : nullptr;
+  auto *_seq = seq.has_value() ? seq->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_pele = pele.has_value() ? pele->get().get_fortran_ptr() : nullptr; // input, optional
+  bool stop_here_lvalue;
+  auto *_stop_here{&stop_here_lvalue};
+  if (stop_here.has_value()) {
+    stop_here_lvalue = stop_here.value();
+  } else {
+    _stop_here = nullptr;
+  }
+  int level_lvalue;
+  auto *_level{&level_lvalue};
+  if (level.has_value()) {
+    level_lvalue = level.value();
+  } else {
+    _level = nullptr;
+  }
+  // r_array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _r_array_desc;
+  _r_array_desc.rank = 1;
+  if (r_array.has_value()) {
+    _r_array_desc.data_ptr = r_array->data();
+    _r_array_desc.dims[0] = r_array->size();
+  } else {
+    _r_array_desc.data_ptr = nullptr;
+    _r_array_desc.dims[0] = 0;
+  }
+  // i_array: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _i_array_desc;
+  _i_array_desc.rank = 1;
+  if (i_array.has_value()) {
+    _i_array_desc.data_ptr = i_array->data();
+    _i_array_desc.dims[0] = i_array->size();
+  } else {
+    _i_array_desc.data_ptr = nullptr;
+    _i_array_desc.dims[0] = 0;
+  }
+  fortran_parser_error(
+      /* const char* */ _what1,
+      /* const char* */ _what2,
+      /* const char* */ _what3,
+      /* const char* */ _what4,
+      /* void* */ _seq,
+      /* void* */ _pele,
+      /* bool* */ _stop_here,
+      /* int* */ _level,
+      /* Bmad::array_descriptor_t& */ _r_array_desc,
+      /* Bmad::array_descriptor_t& */ _i_array_desc
+  );
+}
+Bmad::ParserExpandLine Bmad::parser_expand_line(
+    int i_lev,
+    std::string line_name,
+    SeqStructAlloc1D sequence,
+    CharacterAlloc1D &seq_name,
+    IntAlloc1D &seq_indexx,
+    bool no_end_marker,
+    optional_ref<LatStruct> lat,
+    optional_ref<LatStruct> in_lat
+) {
+  auto _line_name = line_name.c_str();
+  // intent=in allocatable type array
+  // intent=in character array container
+  // intent=in allocatable general array
+  int _n_ele_expand{};
+  auto *_lat = lat.has_value() ? lat->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_in_lat = in_lat.has_value() ? in_lat->get().get_fortran_ptr() : nullptr; // input, optional
+  // intent=out allocatable type array
+  auto expanded_line{BaseLineEleStructAlloc1D()};
+  fortran_parser_expand_line(
+      /* int& */ i_lev,
+      /* const char* */ _line_name,
+      /* void* */ sequence.get_fortran_ptr(),
+      /* void* */ seq_name.get_fortran_ptr(),
+      /* void* */ seq_indexx.get_fortran_ptr(),
+      /* bool& */ no_end_marker,
+      /* int& */ _n_ele_expand,
+      /* void* */ _lat,
+      /* void* */ _in_lat,
+      /* void* */ expanded_line.get_fortran_ptr()
+  );
+  return ParserExpandLine{_n_ele_expand, std::move(expanded_line)};
 }
 Bmad::ParserFastComplexRead
 Bmad::parser_fast_complex_read(FArray1D<Complex> &cmplx_vec, EleStruct &ele, std::string err_str) {
@@ -10633,6 +11590,30 @@ Bmad::PhotonAddToDetectorStatistics Bmad::photon_add_to_detector_statistics(
       /* void* */ _pixel_pt
   );
   return PhotonAddToDetectorStatistics{_ix_pt, _iy_pt};
+}
+Bmad::PhotonDiffuseScattering Bmad::photon_diffuse_scattering(
+    double graze_angle_in,
+    double energy,
+    PhotonReflectSurfaceStruct &surface
+) {
+  double _graze_angle_out{};
+  double _phi_out{};
+  DiffuseParamStruct _diffuse_param;
+  fortran_photon_diffuse_scattering(
+      /* double& */ graze_angle_in,
+      /* double& */ energy,
+      /* void* */ surface.get_fortran_ptr(),
+      /* double& */ _graze_angle_out,
+      /* double& */ _phi_out,
+      /* void* */ _diffuse_param.get_fortran_ptr()
+  );
+  return PhotonDiffuseScattering{_graze_angle_out, _phi_out, std::move(_diffuse_param)};
+}
+PhotonInitSplinesStruct Bmad::photon_read_spline(std::string spline_dir) {
+  auto _spline_dir = spline_dir.c_str();
+  PhotonInitSplinesStruct _splines;
+  fortran_photon_read_spline(/* const char* */ _spline_dir, /* void* */ _splines.get_fortran_ptr());
+  return std::move(_splines);
 }
 Bmad::PhotonReflection
 Bmad::photon_reflection(double graze_angle_in, double energy, PhotonReflectSurfaceStruct &surface) {
@@ -11295,6 +12276,20 @@ FixedArray1D<Real, 3> Bmad::polar_to_vec(SpinPolarStruct &polar) {
   );
   return _vec;
 }
+void Bmad::print_mesh3d(Mesh3dStruct &mesh3d) {
+  fortran_print_mesh3d(/* void* */ mesh3d.get_fortran_ptr());
+}
+double
+Bmad::prob_x_diffuse(double x, DiffuseParamStruct &d_param, PhotonReflectSurfaceStruct &surface) {
+  double _prob_x{};
+  fortran_prob_x_diffuse(
+      /* double& */ x,
+      /* void* */ d_param.get_fortran_ptr(),
+      /* void* */ surface.get_fortran_ptr(),
+      /* double& */ _prob_x
+  );
+  return _prob_x;
+}
 Bmad::ProjectEmitToXyz Bmad::project_emit_to_xyz(LatStruct &ring, int ix, NormalModesStruct &mode) {
   double _sigma_x{};
   double _sigma_y{};
@@ -11308,6 +12303,23 @@ Bmad::ProjectEmitToXyz Bmad::project_emit_to_xyz(LatStruct &ring, int ix, Normal
       /* double& */ _sigma_z
   );
   return ProjectEmitToXyz{_sigma_x, _sigma_y, _sigma_z};
+}
+void Bmad::propagate_part_way(
+    CoordStruct &orb_start,
+    LatParamStruct &param,
+    RadIntTrackPointStruct &pt,
+    RadIntInfoStruct &info,
+    double z_here,
+    EleStruct &runt
+) {
+  fortran_propagate_part_way(
+      /* void* */ orb_start.get_fortran_ptr(),
+      /* void* */ param.get_fortran_ptr(),
+      /* void* */ pt.get_fortran_ptr(),
+      /* void* */ info.get_fortran_ptr(),
+      /* double& */ z_here,
+      /* void* */ runt.get_fortran_ptr()
+  );
 }
 double Bmad::psi_prime_sca(double t, double p, FixedArray1D<Real, 8> args) {
   double _dpdt{};
@@ -11452,6 +12464,9 @@ Bmad::PtcEmitCalc Bmad::ptc_emit_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> s
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   return PtcEmitCalc{std::move(_norm_mode), std::move(_closed_orb)};
 }
+void Bmad::ptc_kill_map_with_radiation(PtcRadMapStruct &rad_map) {
+  fortran_ptc_kill_map_with_radiation(/* void* */ rad_map.get_fortran_ptr());
+}
 void Bmad::ptc_layouts_resplit(
     double dKL_max,
     double l_max,
@@ -11500,6 +12515,15 @@ void Bmad::ptc_layouts_resplit(
       /* Bmad::array_descriptor_t& */ _crossover_wiggler_desc
   );
 }
+LinearEleIsfStructAlloc1D Bmad::ptc_linear_isf_calc(BranchStruct &branch) {
+  // intent=out allocatable type array
+  auto ele_isf{LinearEleIsfStructAlloc1D()};
+  fortran_ptc_linear_isf_calc(
+      /* void* */ branch.get_fortran_ptr(),
+      /* void* */ ele_isf.get_fortran_ptr()
+  );
+  return std::move(ele_isf);
+}
 void Bmad::ptc_one_turn_mat_and_closed_orbit_calc(BranchStruct &branch, std::optional<double> pz) {
   double pz_lvalue;
   auto *_pz{&pz_lvalue};
@@ -11545,10 +12569,77 @@ Bmad::PtcReadFlatFile Bmad::ptc_read_flat_file(
   );
   return PtcReadFlatFile{_err_flag, std::move(_lat)};
 }
+Bmad::PtcReadMapWithRadiation Bmad::ptc_read_map_with_radiation(
+    std::optional<std::string> file_name,
+    std::optional<int> file_unit
+) {
+  PtcRadMapStruct _rad_map;
+  bool _err_flag{};
+  const char *_file_name = file_name.has_value() ? file_name->c_str() : nullptr;
+  int file_unit_lvalue;
+  auto *_file_unit{&file_unit_lvalue};
+  if (file_unit.has_value()) {
+    file_unit_lvalue = file_unit.value();
+  } else {
+    _file_unit = nullptr;
+  }
+  fortran_ptc_read_map_with_radiation(
+      /* void* */ _rad_map.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* const char* */ _file_name,
+      /* int* */ _file_unit
+  );
+  return PtcReadMapWithRadiation{std::move(_rad_map), _err_flag};
+}
 void Bmad::ptc_set_rf_state_for_c_normal(bool nocavity) {
   fortran_ptc_set_rf_state_for_c_normal(/* bool& */ nocavity);
 }
 void Bmad::ptc_set_taylor_order_if_needed() { fortran_ptc_set_taylor_order_if_needed(); }
+Bmad::PtcSetupMapWithRadiation Bmad::ptc_setup_map_with_radiation(
+    EleStruct &ele1,
+    optional_ref<EleStruct> ele2,
+    std::optional<int> map_order,
+    std::optional<bool> include_damping,
+    std::optional<bool> create_symplectic_map,
+    optional_ref<CoordStruct> orbit1
+) {
+  PtcRadMapStruct _rad_map;
+  auto *_ele2 = ele2.has_value() ? ele2->get().get_fortran_ptr() : nullptr; // input, optional
+  int map_order_lvalue;
+  auto *_map_order{&map_order_lvalue};
+  if (map_order.has_value()) {
+    map_order_lvalue = map_order.value();
+  } else {
+    _map_order = nullptr;
+  }
+  bool include_damping_lvalue;
+  auto *_include_damping{&include_damping_lvalue};
+  if (include_damping.has_value()) {
+    include_damping_lvalue = include_damping.value();
+  } else {
+    _include_damping = nullptr;
+  }
+  bool create_symplectic_map_lvalue;
+  auto *_create_symplectic_map{&create_symplectic_map_lvalue};
+  if (create_symplectic_map.has_value()) {
+    create_symplectic_map_lvalue = create_symplectic_map.value();
+  } else {
+    _create_symplectic_map = nullptr;
+  }
+  auto *_orbit1 = orbit1.has_value() ? orbit1->get().get_fortran_ptr() : nullptr; // input, optional
+  bool _err_flag{};
+  fortran_ptc_setup_map_with_radiation(
+      /* void* */ _rad_map.get_fortran_ptr(),
+      /* void* */ ele1.get_fortran_ptr(),
+      /* void* */ _ele2,
+      /* int* */ _map_order,
+      /* bool* */ _include_damping,
+      /* bool* */ _create_symplectic_map,
+      /* void* */ _orbit1,
+      /* bool& */ _err_flag
+  );
+  return PtcSetupMapWithRadiation{std::move(_rad_map), _err_flag};
+}
 Bmad::PtcSpinCalc Bmad::ptc_spin_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> sigma_mat) {
   NormalModesStruct _norm_mode;
   // sigma_mat: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
@@ -11569,6 +12660,15 @@ Bmad::PtcSpinCalc Bmad::ptc_spin_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> s
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   return PtcSpinCalc{std::move(_norm_mode), std::move(_closed_orb)};
 }
+SpinMatchingStructAlloc1D Bmad::ptc_spin_matching_calc(BranchStruct &branch) {
+  // intent=out allocatable type array
+  auto match_info{SpinMatchingStructAlloc1D()};
+  fortran_ptc_spin_matching_calc(
+      /* void* */ branch.get_fortran_ptr(),
+      /* void* */ match_info.get_fortran_ptr()
+  );
+  return std::move(match_info);
+}
 Bmad::PtcTrackAll Bmad::ptc_track_all(BranchStruct &branch, CoordStructAlloc1D orbit) {
   // intent=inout allocatable type array
   int _track_state{};
@@ -11580,6 +12680,33 @@ Bmad::PtcTrackAll Bmad::ptc_track_all(BranchStruct &branch, CoordStructAlloc1D o
       /* bool& */ _err_flag
   );
   return PtcTrackAll{_track_state, _err_flag};
+}
+void Bmad::ptc_track_map_with_radiation(
+    CoordStruct &orbit,
+    PtcRadMapStruct &rad_map,
+    std::optional<bool> rad_damp,
+    std::optional<bool> rad_fluct
+) {
+  bool rad_damp_lvalue;
+  auto *_rad_damp{&rad_damp_lvalue};
+  if (rad_damp.has_value()) {
+    rad_damp_lvalue = rad_damp.value();
+  } else {
+    _rad_damp = nullptr;
+  }
+  bool rad_fluct_lvalue;
+  auto *_rad_fluct{&rad_fluct_lvalue};
+  if (rad_fluct.has_value()) {
+    rad_fluct_lvalue = rad_fluct.value();
+  } else {
+    _rad_fluct = nullptr;
+  }
+  fortran_ptc_track_map_with_radiation(
+      /* void* */ orbit.get_fortran_ptr(),
+      /* void* */ rad_map.get_fortran_ptr(),
+      /* bool* */ _rad_damp,
+      /* bool* */ _rad_fluct
+  );
 }
 bool Bmad::ptc_transfer_map_with_spin(
     BranchStruct &branch,
@@ -11644,6 +12771,36 @@ bool Bmad::ptc_transfer_map_with_spin(
       /* bool* */ _unit_start
   );
   return _err_flag;
+}
+void Bmad::ptc_write_map_with_radiation(
+    PtcRadMapStruct &rad_map,
+    std::optional<std::string> file_name,
+    std::optional<int> file_unit
+) {
+  const char *_file_name = file_name.has_value() ? file_name->c_str() : nullptr;
+  int file_unit_lvalue;
+  auto *_file_unit{&file_unit_lvalue};
+  if (file_unit.has_value()) {
+    file_unit_lvalue = file_unit.value();
+  } else {
+    _file_unit = nullptr;
+  }
+  fortran_ptc_write_map_with_radiation(
+      /* void* */ rad_map.get_fortran_ptr(),
+      /* const char* */ _file_name,
+      /* int* */ _file_unit
+  );
+}
+double Bmad::ptwo(double sigma, double t, double phi, DiffuseParamStruct &d_param) {
+  double _p_two{};
+  fortran_ptwo(
+      /* double& */ sigma,
+      /* double& */ t,
+      /* double& */ phi,
+      /* void* */ d_param.get_fortran_ptr(),
+      /* double& */ _p_two
+  );
+  return _p_two;
 }
 FixedArray2D<Real, 6, 6>
 Bmad::pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, double sig_z) {
@@ -12151,6 +13308,10 @@ void Bmad::reallocate_expression_stack(
       /* bool* */ _exact
   );
 }
+void Bmad::reallocate_sequence(SeqStructAlloc1D sequence, int n_seq) {
+  // intent=inout allocatable type array
+  fortran_reallocate_sequence(/* void* */ sequence.get_fortran_ptr(), /* int& */ n_seq);
+}
 double Bmad::rel_tracking_charge_to_mass(CoordStruct &orbit, int ref_species) {
   double _rel_charge{};
   fortran_rel_tracking_charge_to_mass(
@@ -12594,6 +13755,33 @@ double Bmad::s_body_calc(CoordStruct &orbit, EleStruct &ele) {
   return _s_body;
 }
 void Bmad::s_calc(LatStruct &lat) { fortran_s_calc(/* void* */ lat.get_fortran_ptr()); }
+double Bmad::s_ref_to_s_chord(double s_ref, CsrEleInfoStruct &eleinfo) {
+  double _s_chord{};
+  fortran_s_ref_to_s_chord(
+      /* double& */ s_ref,
+      /* void* */ eleinfo.get_fortran_ptr(),
+      /* double& */ _s_chord
+  );
+  return _s_chord;
+}
+Bmad::SSourceCalc
+Bmad::s_source_calc(CsrKick1Struct &kick1, CsrStruct &csr, FixedArray1D<Real, 3> dr_match) {
+  bool _err_flag{};
+  // dr_match: inout NOT (CppWrapperGeneralArgumentArray) (['3'])
+  Bmad::array_descriptor_t _dr_match_desc;
+  _dr_match_desc.rank = 1;
+  _dr_match_desc.data_ptr = dr_match.data();
+  _dr_match_desc.dims[0] = dr_match.size();
+  double _s_source{};
+  fortran_s_source_calc(
+      /* void* */ kick1.get_fortran_ptr(),
+      /* void* */ csr.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* Bmad::array_descriptor_t& */ _dr_match_desc,
+      /* double& */ _s_source
+  );
+  return SSourceCalc{_err_flag, _s_source};
+}
 void Bmad::sad_mult_hard_bend_edge_kick(
     EleStruct &ele,
     LatParamStruct &param,
@@ -12910,6 +14098,33 @@ CoordStruct Bmad::set_active_fixer(EleStruct &fixer, std::optional<bool> turn_on
       /* void* */ _orbit.get_fortran_ptr()
   );
   return std::move(_orbit);
+}
+Bmad::SetBranchAndEleForOmp Bmad::set_branch_and_ele_for_omp(
+    int ix_lat,
+    LatEleLocStruct &ele0_loc,
+    LatPointerStructArray1D lats,
+    LatStruct &lat
+) {
+  // lats: LatPointerStruct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _lats_desc;
+  _lats_desc.rank = 1;
+  _lats_desc.data_ptr = lats.data();
+  _lats_desc.dims[0] = lats.size();
+  _lats_desc.strides[0] = 1;
+  void *_branch;
+  void *_ele0;
+  fortran_set_branch_and_ele_for_omp(
+      /* int& */ ix_lat,
+      /* void* */ ele0_loc.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _lats_desc,
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ &_branch,
+      /* void* */ &_ele0
+  );
+  return SetBranchAndEleForOmp{
+      std::move((_branch ? std::make_optional<BranchStruct>(_branch) : std::nullopt)),
+      std::move((_ele0 ? std::make_optional<EleStruct>(_ele0) : std::nullopt))
+  };
 }
 bool Bmad::set_custom_attribute_name(std::string custom_name, std::optional<int> custom_index) {
   auto _custom_name = custom_name.c_str();
@@ -13665,6 +14880,114 @@ ComplexTaylorStruct Bmad::sort_complex_taylor_terms(ComplexTaylorStruct &complex
       /* void* */ _complex_taylor_sorted.get_fortran_ptr()
   );
   return std::move(_complex_taylor_sorted);
+}
+void Bmad::space_charge_cathodeimages(
+    Mesh3dStruct &mesh3d,
+    std::optional<bool> direct_field_calc,
+    std::optional<bool> integrated_green_function,
+    std::optional<int> image_method
+) {
+  bool direct_field_calc_lvalue;
+  auto *_direct_field_calc{&direct_field_calc_lvalue};
+  if (direct_field_calc.has_value()) {
+    direct_field_calc_lvalue = direct_field_calc.value();
+  } else {
+    _direct_field_calc = nullptr;
+  }
+  bool integrated_green_function_lvalue;
+  auto *_integrated_green_function{&integrated_green_function_lvalue};
+  if (integrated_green_function.has_value()) {
+    integrated_green_function_lvalue = integrated_green_function.value();
+  } else {
+    _integrated_green_function = nullptr;
+  }
+  int image_method_lvalue;
+  auto *_image_method{&image_method_lvalue};
+  if (image_method.has_value()) {
+    image_method_lvalue = image_method.value();
+  } else {
+    _image_method = nullptr;
+  }
+  fortran_space_charge_cathodeimages(
+      /* void* */ mesh3d.get_fortran_ptr(),
+      /* bool* */ _direct_field_calc,
+      /* bool* */ _integrated_green_function,
+      /* int* */ _image_method
+  );
+}
+void Bmad::space_charge_freespace(
+    Mesh3dStruct &mesh3d,
+    std::optional<bool> direct_field_calc,
+    std::optional<bool> integrated_green_function
+) {
+  bool direct_field_calc_lvalue;
+  auto *_direct_field_calc{&direct_field_calc_lvalue};
+  if (direct_field_calc.has_value()) {
+    direct_field_calc_lvalue = direct_field_calc.value();
+  } else {
+    _direct_field_calc = nullptr;
+  }
+  bool integrated_green_function_lvalue;
+  auto *_integrated_green_function{&integrated_green_function_lvalue};
+  if (integrated_green_function.has_value()) {
+    integrated_green_function_lvalue = integrated_green_function.value();
+  } else {
+    _integrated_green_function = nullptr;
+  }
+  fortran_space_charge_freespace(
+      /* void* */ mesh3d.get_fortran_ptr(),
+      /* bool* */ _direct_field_calc,
+      /* bool* */ _integrated_green_function
+  );
+}
+void Bmad::space_charge_rectpipe(
+    Mesh3dStruct &mesh3d,
+    double apipe,
+    double bpipe,
+    std::optional<bool> direct_field_calc,
+    std::optional<bool> integrated_green_function
+) {
+  bool direct_field_calc_lvalue;
+  auto *_direct_field_calc{&direct_field_calc_lvalue};
+  if (direct_field_calc.has_value()) {
+    direct_field_calc_lvalue = direct_field_calc.value();
+  } else {
+    _direct_field_calc = nullptr;
+  }
+  bool integrated_green_function_lvalue;
+  auto *_integrated_green_function{&integrated_green_function_lvalue};
+  if (integrated_green_function.has_value()) {
+    integrated_green_function_lvalue = integrated_green_function.value();
+  } else {
+    _integrated_green_function = nullptr;
+  }
+  fortran_space_charge_rectpipe(
+      /* void* */ mesh3d.get_fortran_ptr(),
+      /* double& */ apipe,
+      /* double& */ bpipe,
+      /* bool* */ _direct_field_calc,
+      /* bool* */ _integrated_green_function
+  );
+}
+double Bmad::spin_depolarization_rate(
+    BranchStruct &branch,
+    SpinMatchingStructArray1D match_info,
+    RadIntAllEleStruct &rad_int_by_ele
+) {
+  // match_info: SpinMatchingStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _match_info_desc;
+  _match_info_desc.rank = 1;
+  _match_info_desc.data_ptr = match_info.data();
+  _match_info_desc.dims[0] = match_info.size();
+  _match_info_desc.strides[0] = 1;
+  double _depol_rate{};
+  fortran_spin_depolarization_rate(
+      /* void* */ branch.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _match_info_desc,
+      /* void* */ rad_int_by_ele.get_fortran_ptr(),
+      /* double& */ _depol_rate
+  );
+  return _depol_rate;
 }
 Bmad::SpinDnDpzFromMat8 Bmad::spin_dn_dpz_from_mat8(
     FixedArray2D<Real, 8, 8> mat_1turn,
@@ -14814,6 +16137,46 @@ double Bmad::touschek_lifetime(NormalModesStruct &mode, LatStruct &lat) {
       /* void* */ mode.get_fortran_ptr(),
       /* double& */ _Tl,
       /* void* */ lat.get_fortran_ptr()
+  );
+  return _Tl;
+}
+double Bmad::touschek_lifetime_ele_by_ele(
+    NormalModesStruct &mode,
+    LatStruct &lat,
+    MomentumApertureStructArray1D momentum_aperture
+) {
+  double _Tl{};
+  // momentum_aperture: MomentumApertureStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _momentum_aperture_desc;
+  _momentum_aperture_desc.rank = 1;
+  _momentum_aperture_desc.data_ptr = momentum_aperture.data();
+  _momentum_aperture_desc.dims[0] = momentum_aperture.size();
+  _momentum_aperture_desc.strides[0] = 1;
+  fortran_touschek_lifetime_ele_by_ele(
+      /* void* */ mode.get_fortran_ptr(),
+      /* double& */ _Tl,
+      /* void* */ lat.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _momentum_aperture_desc
+  );
+  return _Tl;
+}
+double Bmad::touschek_lifetime_with_aperture(
+    NormalModesStruct &mode,
+    LatStruct &lat,
+    MomentumApertureStructArray1D momentum_aperture
+) {
+  double _Tl{};
+  // momentum_aperture: MomentumApertureStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _momentum_aperture_desc;
+  _momentum_aperture_desc.rank = 1;
+  _momentum_aperture_desc.data_ptr = momentum_aperture.data();
+  _momentum_aperture_desc.dims[0] = momentum_aperture.size();
+  _momentum_aperture_desc.strides[0] = 1;
+  fortran_touschek_lifetime_with_aperture(
+      /* void* */ mode.get_fortran_ptr(),
+      /* double& */ _Tl,
+      /* void* */ lat.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _momentum_aperture_desc
   );
   return _Tl;
 }
@@ -18251,6 +19614,30 @@ void Bmad::write_astra_bend(
       /* Bmad::array_descriptor_t& */ _d4_desc
   );
 }
+void Bmad::write_astra_ele(
+    int iu,
+    EleStruct &ele,
+    int id,
+    optional_ref<StrIndexStruct> fieldgrid_names,
+    std::optional<int> dimensions
+) {
+  auto *_fieldgrid_names = fieldgrid_names.has_value() ? fieldgrid_names->get().get_fortran_ptr()
+                                                       : nullptr; // input, optional
+  int dimensions_lvalue;
+  auto *_dimensions{&dimensions_lvalue};
+  if (dimensions.has_value()) {
+    dimensions_lvalue = dimensions.value();
+  } else {
+    _dimensions = nullptr;
+  }
+  fortran_write_astra_ele(
+      /* int& */ iu,
+      /* void* */ ele.get_fortran_ptr(),
+      /* int& */ id,
+      /* void* */ _fieldgrid_names,
+      /* int* */ _dimensions
+  );
+}
 Bmad::WriteAstraFieldGridFile
 Bmad::write_astra_field_grid_file(int astra_file_unit, EleStruct &ele, std::optional<double> dz) {
   double _maxfield{};
@@ -18294,6 +19681,20 @@ Bmad::WriteAstraFieldGridFile3d Bmad::write_astra_field_grid_file_3d(
       /* bool& */ _err
   );
   return WriteAstraFieldGridFile3d{_maxfield, _err};
+}
+bool Bmad::write_astra_lattice_file(
+    int astra_file_unit,
+    LatStruct &lat,
+    AstraLatticeParamStruct &astra_lattice_param
+) {
+  bool _err{};
+  fortran_write_astra_lattice_file(
+      /* int& */ astra_file_unit,
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ astra_lattice_param.get_fortran_ptr(),
+      /* bool& */ _err
+  );
+  return _err;
 }
 void Bmad::write_beam_file(
     std::string file_name,
@@ -18444,6 +19845,63 @@ bool Bmad::write_bmad_lattice_file(
   );
   return _err;
 }
+bool Bmad::write_digested_bmad_file(
+    std::string digested_name,
+    LatStruct &lat,
+    std::optional<int> n_files,
+    optional_ref<CharacterAlloc1D> file_names,
+    optional_ref<ExtraParsingInfoStruct> extra
+) {
+  auto _digested_name = digested_name.c_str();
+  int n_files_lvalue;
+  auto *_n_files{&n_files_lvalue};
+  if (n_files.has_value()) {
+    n_files_lvalue = n_files.value();
+  } else {
+    _n_files = nullptr;
+  }
+  // intent=in character array container
+  auto *_file_names =
+      file_names.has_value() ? file_names->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_extra = extra.has_value() ? extra->get().get_fortran_ptr() : nullptr; // input, optional
+  bool _err_flag{};
+  fortran_write_digested_bmad_file(
+      /* const char* */ _digested_name,
+      /* void* */ lat.get_fortran_ptr(),
+      /* int* */ _n_files,
+      /* void* */ _file_names,
+      /* void* */ _extra,
+      /* bool& */ _err_flag
+  );
+  return _err_flag;
+}
+void Bmad::write_gpt_ele(
+    int iu,
+    EleStruct &ele,
+    std::string name,
+    int dimensions,
+    optional_ref<StrIndexStruct> fieldgrid_names,
+    std::optional<bool> only_phasing
+) {
+  auto _name = name.c_str();
+  auto *_fieldgrid_names = fieldgrid_names.has_value() ? fieldgrid_names->get().get_fortran_ptr()
+                                                       : nullptr; // input, optional
+  bool only_phasing_lvalue;
+  auto *_only_phasing{&only_phasing_lvalue};
+  if (only_phasing.has_value()) {
+    only_phasing_lvalue = only_phasing.value();
+  } else {
+    _only_phasing = nullptr;
+  }
+  fortran_write_gpt_ele(
+      /* int& */ iu,
+      /* void* */ ele.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* void* */ _fieldgrid_names,
+      /* int& */ dimensions,
+      /* bool* */ _only_phasing
+  );
+}
 Bmad::WriteGptFieldGridFile1d
 Bmad::write_gpt_field_grid_file_1d(int gpt_file_unit, EleStruct &ele, std::optional<double> dz) {
   double _maxfield{};
@@ -18534,6 +19992,15 @@ Bmad::WriteGptFieldGridFile3d Bmad::write_gpt_field_grid_file_3d(
       /* bool& */ _err
   );
   return WriteGptFieldGridFile3d{_maxfield, _ref_time, _err};
+}
+bool Bmad::write_gpt_lattice_file(LatStruct &lat, GptLatParamStruct &gpt_lat_param) {
+  bool _err{};
+  fortran_write_gpt_lattice_file(
+      /* void* */ lat.get_fortran_ptr(),
+      /* void* */ gpt_lat_param.get_fortran_ptr(),
+      /* bool& */ _err
+  );
+  return _err;
 }
 void Bmad::write_lat_line(
     std::string &line,

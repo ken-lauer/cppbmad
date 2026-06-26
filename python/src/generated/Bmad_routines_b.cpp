@@ -5,6 +5,18 @@ using namespace nanobind::literals;
 using namespace Pybmad;
 
 void init_Bmad_routines_b(nb::module_ &m) {
+  m.def(
+      "bane1",
+      &Bmad::bane1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(This is an implementation of equations 10-15 from "Intrabeam
+scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+It is a high energy approximation of the Bjorken-Mtingwa IBS
+formulation.
+)"""
+  );
   nb::class_<Bmad::BbiKick>(m, "BbiKick", "bbi_kick return type")
       .def_ro("nk", &Bmad::BbiKick::nk)
       .def_ro("dnk", &Bmad::BbiKick::dnk)
@@ -652,6 +664,31 @@ Returns
 -------
 integ_prob : float
     Integrated probability. Will be in the range [0, 1].
+)"""
+  );
+  m.def(
+      "bjmt1",
+      &Bmad::bjmt1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(This is an implementation of equations 1-9 from "Intrabeam
+scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+
+This formulation is one of the slowest methods for calculating IBS rates.
+
+rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
+)"""
+  );
+  m.def(
+      "bl_via_mat",
+      &Bmad::bl_via_mat,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("mode"),
+      nb::arg("sig_z"),
+      R"""(Calculates bunch length while taking PWD effects into account.
+PWD is approximated as a defocusing rf voltage.
 )"""
   );
   m.def(

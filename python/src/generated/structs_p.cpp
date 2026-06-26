@@ -215,6 +215,21 @@ void init_parser_ele_struct(nb::module_ &m, nb::class_<ParserEleStruct> &cls) {
           &ParserEleStruct::set_default_attrib,
           "For group/overlay elements: slave attribute"
       )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return ParserEleStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = ParserEleStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
 
       .def("__repr__", [](const ParserEleStruct &self) { return to_string(self); })
 
@@ -245,9 +260,53 @@ void init_parser_ele_struct(nb::module_ &m, nb::class_<ParserEleStruct> &cls) {
 
       ;
 
-  // 1D ParserEleStruct arrays are not used in structs/routines
+  bind_1d_type_array_pair<ParserEleStructArray1D, ParserEleStructAlloc1D>(
+      m,
+      "ParserEleStructArray1D",
+      "ParserEleStructAlloc1D"
+  );
   // 2D ParserEleStruct arrays are not used in structs/routines
   // 3D ParserEleStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// parser_lat_struct
+void init_parser_lat_struct(nb::module_ &m, nb::class_<ParserLatStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro("ele", &ParserLatStruct::ele, nb::keep_alive<0, 1>())
+
+      .def("__repr__", [](const ParserLatStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ParserLatStruct &self) {
+            return ParserLatStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const ParserLatStruct &self, nb::dict &memo) { return ParserLatStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const ParserLatStruct &self, const ParserLatStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ParserLatStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D ParserLatStruct arrays are not used in structs/routines
+  // 2D ParserLatStruct arrays are not used in structs/routines
+  // 3D ParserLatStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -959,6 +1018,92 @@ void init_pixel_pt_struct(nb::module_ &m, nb::class_<PixelPtStruct> &cls) {
 }
 
 // =============================================================================
+// pmd_header_struct
+void init_pmd_header_struct(nb::module_ &m, nb::class_<PmdHeaderStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>>(),
+         nb::arg("openPMD") = nb::none(),
+         nb::arg("openPMDextension") = nb::none(),
+         nb::arg("basePath") = nb::none(),
+         nb::arg("particlesPath") = nb::none(),
+         nb::arg("meshesPath") = nb::none(),
+         nb::arg("author") = nb::none(),
+         nb::arg("software") = nb::none(),
+         nb::arg("softwareVersion") = nb::none(),
+         nb::arg("date") = nb::none(),
+         nb::arg("latticeFile") = nb::none(),
+         nb::arg("latticeName") = nb::none()
+  )
+      .def_prop_rw("openPMD", &PmdHeaderStruct::openPMD, &PmdHeaderStruct::set_openPMD)
+      .def_prop_rw(
+          "openPMDextension",
+          &PmdHeaderStruct::openPMDextension,
+          &PmdHeaderStruct::set_openPMDextension
+      )
+      .def_prop_rw("basePath", &PmdHeaderStruct::basePath, &PmdHeaderStruct::set_basePath)
+      .def_prop_rw(
+          "particlesPath",
+          &PmdHeaderStruct::particlesPath,
+          &PmdHeaderStruct::set_particlesPath
+      )
+      .def_prop_rw("meshesPath", &PmdHeaderStruct::meshesPath, &PmdHeaderStruct::set_meshesPath)
+      .def_prop_rw("author", &PmdHeaderStruct::author, &PmdHeaderStruct::set_author)
+      .def_prop_rw("software", &PmdHeaderStruct::software, &PmdHeaderStruct::set_software)
+      .def_prop_rw(
+          "softwareVersion",
+          &PmdHeaderStruct::softwareVersion,
+          &PmdHeaderStruct::set_softwareVersion
+      )
+      .def_prop_rw("date", &PmdHeaderStruct::date, &PmdHeaderStruct::set_date)
+      .def_prop_rw("latticeFile", &PmdHeaderStruct::latticeFile, &PmdHeaderStruct::set_latticeFile)
+      .def_prop_rw("latticeName", &PmdHeaderStruct::latticeName, &PmdHeaderStruct::set_latticeName)
+
+      .def("__repr__", [](const PmdHeaderStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PmdHeaderStruct &self) {
+            return PmdHeaderStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PmdHeaderStruct &self, nb::dict &memo) { return PmdHeaderStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PmdHeaderStruct &self, const PmdHeaderStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PmdHeaderStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PmdHeaderStruct arrays are not used in structs/routines
+  // 2D PmdHeaderStruct arrays are not used in structs/routines
+  // 3D PmdHeaderStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // pre_tracker_struct
 void init_pre_tracker_struct(nb::module_ &m, nb::class_<PreTrackerStruct> &cls) {
   cls.def(
@@ -1018,6 +1163,106 @@ void init_pre_tracker_struct(nb::module_ &m, nb::class_<PreTrackerStruct> &cls) 
   // 1D PreTrackerStruct arrays are not used in structs/routines
   // 2D PreTrackerStruct arrays are not used in structs/routines
   // 3D PreTrackerStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// ptc_branch1_struct
+void init_ptc_branch1_struct(nb::module_ &m, nb::class_<PtcBranch1Struct> &cls) {
+  cls.def(nb::init<>())
+      .def_prop_ro("m_u_layout", &PtcBranch1Struct::m_u_layout, nb::keep_alive<0, 1>())
+
+      .def("__repr__", [](const PtcBranch1Struct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PtcBranch1Struct &self) {
+            return PtcBranch1Struct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PtcBranch1Struct &self, nb::dict &memo) { return PtcBranch1Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PtcBranch1Struct &self, const PtcBranch1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PtcBranch1Struct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PtcBranch1Struct arrays are not used in structs/routines
+  // 2D PtcBranch1Struct arrays are not used in structs/routines
+  // 3D PtcBranch1Struct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// ptc_layout_pointer_struct
+void init_ptc_layout_pointer_struct(nb::module_ &m, nb::class_<PtcLayoutPointerStruct> &cls) {
+  cls.def(nb::init<>())
+      .def_static(
+          "new_array1d",
+          [](int sz) { return PtcLayoutPointerStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = PtcLayoutPointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const PtcLayoutPointerStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PtcLayoutPointerStruct &self) {
+            return PtcLayoutPointerStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PtcLayoutPointerStruct &self, nb::dict &memo) {
+            return PtcLayoutPointerStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const PtcLayoutPointerStruct &self, const PtcLayoutPointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PtcLayoutPointerStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<PtcLayoutPointerStructArray1D, PtcLayoutPointerStructAlloc1D>(
+      m,
+      "PtcLayoutPointerStructArray1D",
+      "PtcLayoutPointerStructAlloc1D"
+  );
+  // 2D PtcLayoutPointerStruct arrays are not used in structs/routines
+  // 3D PtcLayoutPointerStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1087,4 +1332,481 @@ void init_ptc_normal_form_struct(nb::module_ &m, nb::class_<PtcNormalFormStruct>
   // 1D PtcNormalFormStruct arrays are not used in structs/routines
   // 2D PtcNormalFormStruct arrays are not used in structs/routines
   // 3D PtcNormalFormStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// photon_coord_struct
+void init_photon_coord_struct(nb::module_ &m, nb::class_<PhotonCoordStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](PhotonCoordStruct *self,
+            const CoordStruct *orb,
+            std::optional<double> track_len,
+            std::optional<int> ix_section) {
+           new (self) PhotonCoordStruct(ptr_to_opt_ref(orb), track_len, ix_section);
+         },
+         nb::arg("orb") = nb::none(),
+         nb::arg("track_len") = nb::none(),
+         nb::arg("ix_section") = nb::none()
+  )
+      .def_prop_rw(
+          "orb",
+          &PhotonCoordStruct::orb,
+          &PhotonCoordStruct::set_orb,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Phase space: orb%vec = (x, vx/c, y, vy/c, s, vs/c)"
+      )
+      .def_prop_rw(
+          "track_len",
+          &PhotonCoordStruct::track_len,
+          &PhotonCoordStruct::set_track_len,
+          "Total track length from the start of the element."
+      )
+      .def_prop_rw(
+          "ix_section",
+          &PhotonCoordStruct::ix_section,
+          &PhotonCoordStruct::set_ix_section,
+          "Cross section index"
+      )
+
+      .def("__repr__", [](const PhotonCoordStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonCoordStruct &self) {
+            return PhotonCoordStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PhotonCoordStruct &self, nb::dict &memo) { return PhotonCoordStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonCoordStruct &self, const PhotonCoordStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonCoordStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PhotonCoordStruct arrays are not used in structs/routines
+  // 2D PhotonCoordStruct arrays are not used in structs/routines
+  // 3D PhotonCoordStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// photon_track_struct
+void init_photon_track_struct(nb::module_ &m, nb::class_<PhotonTrackStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](PhotonTrackStruct *self, const PhotonCoordStruct *old, const PhotonCoordStruct *now) {
+           new (self) PhotonTrackStruct(ptr_to_opt_ref(old), ptr_to_opt_ref(now));
+         },
+         nb::arg("old") = nb::none(),
+         nb::arg("now") = nb::none()
+  )
+      .def_prop_rw(
+          "old",
+          &PhotonTrackStruct::old,
+          &PhotonTrackStruct::set_old,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "now",
+          &PhotonTrackStruct::now,
+          &PhotonTrackStruct::set_now,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+
+      .def("__repr__", [](const PhotonTrackStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonTrackStruct &self) {
+            return PhotonTrackStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PhotonTrackStruct &self, nb::dict &memo) { return PhotonTrackStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonTrackStruct &self, const PhotonTrackStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonTrackStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PhotonTrackStruct arrays are not used in structs/routines
+  // 2D PhotonTrackStruct arrays are not used in structs/routines
+  // 3D PhotonTrackStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// photon_init_splines_struct
+void init_photon_init_splines_struct(nb::module_ &m, nb::class_<PhotonInitSplinesStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<std::string>, std::optional<int>>(),
+         nb::arg("source_type") = nb::none(),
+         nb::arg("spline_space_dimensions") = nb::none()
+  )
+      .def_prop_rw(
+          "source_type",
+          &PhotonInitSplinesStruct::source_type,
+          &PhotonInitSplinesStruct::set_source_type,
+          "'bend', 'wiggler', 'undulator'"
+      )
+      .def_prop_rw(
+          "spline_space_dimensions",
+          &PhotonInitSplinesStruct::spline_space_dimensions,
+          &PhotonInitSplinesStruct::set_spline_space_dimensions,
+          "Dimensions: [energy, y_angle, x_angle, x, y]"
+      )
+      .def_prop_ro("energy_prob", &PhotonInitSplinesStruct::energy_prob, nb::keep_alive<0, 1>())
+      .def_prop_ro("y_angle", &PhotonInitSplinesStruct::y_angle, nb::keep_alive<0, 1>())
+
+      .def("__repr__", [](const PhotonInitSplinesStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonInitSplinesStruct &self) {
+            return PhotonInitSplinesStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PhotonInitSplinesStruct &self, nb::dict &memo) {
+            return PhotonInitSplinesStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonInitSplinesStruct &self, const PhotonInitSplinesStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonInitSplinesStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PhotonInitSplinesStruct arrays are not used in structs/routines
+  // 2D PhotonInitSplinesStruct arrays are not used in structs/routines
+  // 3D PhotonInitSplinesStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// photon_init_x_angle_spline_struct
+void init_photon_init_x_angle_spline_struct(
+    nb::module_ &m,
+    nb::class_<PhotonInitXAngleSplineStruct> &cls
+) {
+  cls.def(nb::init<>())
+      .def_prop_ro("prob", &PhotonInitXAngleSplineStruct::prob, nb::keep_alive<0, 1>())
+      .def_prop_ro("pl", &PhotonInitXAngleSplineStruct::pl, nb::keep_alive<0, 1>())
+      .def_prop_ro("pc", &PhotonInitXAngleSplineStruct::pc, nb::keep_alive<0, 1>())
+      .def_prop_ro("pl45", &PhotonInitXAngleSplineStruct::pl45, nb::keep_alive<0, 1>())
+      .def_static(
+          "new_array1d",
+          [](int sz) { return PhotonInitXAngleSplineStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = PhotonInitXAngleSplineStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const PhotonInitXAngleSplineStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonInitXAngleSplineStruct &self) {
+            return PhotonInitXAngleSplineStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PhotonInitXAngleSplineStruct &self, nb::dict &memo) {
+            return PhotonInitXAngleSplineStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonInitXAngleSplineStruct &self, const PhotonInitXAngleSplineStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonInitXAngleSplineStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<PhotonInitXAngleSplineStructArray1D, PhotonInitXAngleSplineStructAlloc1D>(
+      m,
+      "PhotonInitXAngleSplineStructArray1D",
+      "PhotonInitXAngleSplineStructAlloc1D"
+  );
+  // 2D PhotonInitXAngleSplineStruct arrays are not used in structs/routines
+  // 3D PhotonInitXAngleSplineStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// photon_init_y_angle_spline_struct
+void init_photon_init_y_angle_spline_struct(
+    nb::module_ &m,
+    nb::class_<PhotonInitYAngleSplineStruct> &cls
+) {
+  cls.def(nb::init<>())
+      .def_prop_ro("prob", &PhotonInitYAngleSplineStruct::prob, nb::keep_alive<0, 1>())
+      .def_prop_ro("pl", &PhotonInitYAngleSplineStruct::pl, nb::keep_alive<0, 1>())
+      .def_prop_ro("pc", &PhotonInitYAngleSplineStruct::pc, nb::keep_alive<0, 1>())
+      .def_prop_ro("pl45", &PhotonInitYAngleSplineStruct::pl45, nb::keep_alive<0, 1>())
+      .def_prop_ro("x_angle", &PhotonInitYAngleSplineStruct::x_angle, nb::keep_alive<0, 1>())
+      .def_static(
+          "new_array1d",
+          [](int sz) { return PhotonInitYAngleSplineStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = PhotonInitYAngleSplineStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const PhotonInitYAngleSplineStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PhotonInitYAngleSplineStruct &self) {
+            return PhotonInitYAngleSplineStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PhotonInitYAngleSplineStruct &self, nb::dict &memo) {
+            return PhotonInitYAngleSplineStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const PhotonInitYAngleSplineStruct &self, const PhotonInitYAngleSplineStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PhotonInitYAngleSplineStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<PhotonInitYAngleSplineStructArray1D, PhotonInitYAngleSplineStructAlloc1D>(
+      m,
+      "PhotonInitYAngleSplineStructArray1D",
+      "PhotonInitYAngleSplineStructAlloc1D"
+  );
+  // 2D PhotonInitYAngleSplineStruct arrays are not used in structs/routines
+  // 3D PhotonInitYAngleSplineStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// ptc_rad_map_struct
+void init_ptc_rad_map_struct(nb::module_ &m, nb::class_<PtcRadMapStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<double>>,
+             std::optional<std::vector<double>>>(),
+         nb::arg("lattice_file") = nb::none(),
+         nb::arg("dref_time") = nb::none(),
+         nb::arg("p0c_start") = nb::none(),
+         nb::arg("p0c_end") = nb::none(),
+         nb::arg("s_end") = nb::none(),
+         nb::arg("map_order") = nb::none(),
+         nb::arg("radiation_damping_on") = nb::none(),
+         nb::arg("ix_branch") = nb::none(),
+         nb::arg("ix_ele_start") = nb::none(),
+         nb::arg("ix_ele_end") = nb::none(),
+         nb::arg("nodamp_mat") = nb::none(),
+         nb::arg("damp_mat") = nb::none(),
+         nb::arg("stoc_mat") = nb::none(),
+         nb::arg("ref0") = nb::none(),
+         nb::arg("ref1") = nb::none()
+  )
+      .def_prop_rw(
+          "lattice_file",
+          &PtcRadMapStruct::lattice_file,
+          &PtcRadMapStruct::set_lattice_file,
+          "Name of the lattice file"
+      )
+      .def_prop_rw(
+          "dref_time",
+          &PtcRadMapStruct::dref_time,
+          &PtcRadMapStruct::set_dref_time,
+          "Time ref particle takes."
+      )
+      .def_prop_rw(
+          "p0c_start",
+          &PtcRadMapStruct::p0c_start,
+          &PtcRadMapStruct::set_p0c_start,
+          "ref momentum at start"
+      )
+      .def_prop_rw(
+          "p0c_end",
+          &PtcRadMapStruct::p0c_end,
+          &PtcRadMapStruct::set_p0c_end,
+          "ref momentum at end"
+      )
+      .def_prop_rw(
+          "s_end",
+          &PtcRadMapStruct::s_end,
+          &PtcRadMapStruct::set_s_end,
+          "Ending s-position"
+      )
+      .def_prop_rw("map_order", &PtcRadMapStruct::map_order, &PtcRadMapStruct::set_map_order)
+      .def_prop_rw(
+          "radiation_damping_on",
+          &PtcRadMapStruct::radiation_damping_on,
+          &PtcRadMapStruct::set_radiation_damping_on
+      )
+      .def_prop_rw("ix_branch", &PtcRadMapStruct::ix_branch, &PtcRadMapStruct::set_ix_branch)
+      .def_prop_rw(
+          "ix_ele_start",
+          &PtcRadMapStruct::ix_ele_start,
+          &PtcRadMapStruct::set_ix_ele_start,
+          "Start point for making the map"
+      )
+      .def_prop_rw(
+          "ix_ele_end",
+          &PtcRadMapStruct::ix_ele_end,
+          &PtcRadMapStruct::set_ix_ele_end,
+          "End point for making the map"
+      )
+      .def_prop_rw(
+          "nodamp_mat",
+          &PtcRadMapStruct::nodamp_mat,
+          &PtcRadMapStruct::set_nodamp_mat,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Nondamped orbital matrix. M_orbit = M_damp * M_nodamp"
+      )
+      .def_prop_rw(
+          "damp_mat",
+          &PtcRadMapStruct::damp_mat,
+          &PtcRadMapStruct::set_damp_mat,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Damping 'correction' to orbital matrix. Stoc_mat is referenced to the start of the map. "
+          "That is, it is applied before the transport matrix."
+      )
+      .def_prop_rw(
+          "stoc_mat",
+          &PtcRadMapStruct::stoc_mat,
+          &PtcRadMapStruct::set_stoc_mat,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Stochatic matrix for the orbit."
+      )
+      .def_prop_rw(
+          "ref0",
+          &PtcRadMapStruct::ref0,
+          &PtcRadMapStruct::set_ref0,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Reference orbit at start."
+      )
+      .def_prop_rw(
+          "ref1",
+          &PtcRadMapStruct::ref1,
+          &PtcRadMapStruct::set_ref1,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Reference orbit at end."
+      )
+
+      .def("__repr__", [](const PtcRadMapStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const PtcRadMapStruct &self) {
+            return PtcRadMapStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const PtcRadMapStruct &self, nb::dict &memo) { return PtcRadMapStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const PtcRadMapStruct &self, const PtcRadMapStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const PtcRadMapStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D PtcRadMapStruct arrays are not used in structs/routines
+  // 2D PtcRadMapStruct arrays are not used in structs/routines
+  // 3D PtcRadMapStruct arrays are not used in structs/routines
 }

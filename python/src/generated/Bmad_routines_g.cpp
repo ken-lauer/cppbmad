@@ -188,6 +188,56 @@ Returns
 field : 1D array of float (shape: 3)
 )"""
   );
+  nb::class_<Bmad::GetAstraFieldgridNameAndScaling>(
+      m,
+      "GetAstraFieldgridNameAndScaling",
+      "get_astra_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetAstraFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetAstraFieldgridNameAndScaling::field_scale)
+      .def("__len__", [](const Bmad::GetAstraFieldgridNameAndScaling &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetAstraFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_astra_fieldgrid_name_and_scaling",
+      &Bmad::get_astra_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("name_indexx"),
+      nb::arg("dimensions") = nb::none(),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_astra_field_grid_file.
+  If the field grid file does not exist, it is written.
+
+  Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+dimensions : int, optional
+    1 or 3 dimensions. Default: 1
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
+)"""
+  );
   m.def(
       "get_bl_from_fwhm",
       &Bmad::get_bl_from_fwhm,
@@ -283,6 +333,62 @@ err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
 )"""
   );
+  nb::class_<Bmad::GetGptFieldgridNameAndScaling>(
+      m,
+      "GetGptFieldgridNameAndScaling",
+      "get_gpt_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetGptFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetGptFieldgridNameAndScaling::field_scale)
+      .def_ro("ref_time", &Bmad::GetGptFieldgridNameAndScaling::ref_time)
+      .def("__len__", [](const Bmad::GetGptFieldgridNameAndScaling &) { return 3; })
+      .def("__getitem__", [](const Bmad::GetGptFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        if (i == 2)
+          return nb::cast(s.ref_time);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_gpt_fieldgrid_name_and_scaling",
+      &Bmad::get_gpt_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("name_indexx"),
+      nb::arg("dimensions") = nb::none(),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_gpt_field_grid_file.
+  If the field grid file does not exist, it is written.
+
+  Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+dimensions : int, optional
+    1, 2, or 3 dimensions.
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
+
+ref_time : float
+    time that the field was evaluated at
+)"""
+  );
   m.def(
       "get_list_of_names",
       &Bmad::get_list_of_names,
@@ -353,6 +459,54 @@ delim_found : bool
 
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
+)"""
+  );
+  nb::class_<Bmad::GetOpalFieldgridNameAndScaling>(
+      m,
+      "GetOpalFieldgridNameAndScaling",
+      "get_opal_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetOpalFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetOpalFieldgridNameAndScaling::field_scale)
+      .def("__len__", [](const Bmad::GetOpalFieldgridNameAndScaling &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetOpalFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_opal_fieldgrid_name_and_scaling",
+      &Bmad::get_opal_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("name_indexx"),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_opal_field_grid_file.
+  If the field grid file does not exist, it is written
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+param : LatParamStruct
+    Contains lattice information
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
 )"""
   );
   m.def(

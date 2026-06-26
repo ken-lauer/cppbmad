@@ -17,4 +17,7 @@ void init_ramper_lord_struct(nb::module_ &m, nb::class_<RamperLordStruct> &class
 void init_resonance_h_struct(nb::module_ &m, nb::class_<ResonanceHStruct> &class_);
 void init_rf_ele_struct(nb::module_ &m, nb::class_<RfEleStruct> &class_);
 void init_rf_stair_step_struct(nb::module_ &m, nb::class_<RfStairStepStruct> &class_);
+void init_rad_int_cache1_struct(nb::module_ &m, nb::class_<RadIntCache1Struct> &class_);
+void init_rad_int_info_struct(nb::module_ &m, nb::class_<RadIntInfoStruct> &class_);
+void init_rad_int_track_point_struct(nb::module_ &m, nb::class_<RadIntTrackPointStruct> &class_);
 void init_random_state_struct(nb::module_ &m, nb::class_<RandomStateStruct> &class_);

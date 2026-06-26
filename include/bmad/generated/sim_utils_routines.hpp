@@ -135,35 +135,93 @@ bicubic_cmplx_eval(double x_norm, double y_norm, BicubicCmplxCoefStruct &bi_coef
 
 // Skipped unusable routine bicubic_compute_cmplx_field_at_2d_box:
 // - Array bounds handling: Calls in array bounds are not supported
-// - Untranslated type: cmplx_field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine bicubic_compute_field_at_2d_box:
 // - Array bounds handling: Calls in array bounds are not supported
-// - Untranslated type: field_at_2d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine bicubic_eval:
-// - Untranslated type: bicubic_coef_struct (0D)
-
-// Skipped unusable routine bicubic_interpolation_cmplx_coefs:
-// - Untranslated type: cmplx_field_at_2d_box_struct (0D)
-
-// Skipped unusable routine bicubic_interpolation_coefs:
-// - Untranslated type: field_at_2d_box_struct (0D)
-// - Untranslated type: bicubic_coef_struct (0D)
-
-// Skipped unusable routine bin_2d:
-// - Untranslated type: general_bin_struct (0D)
-
-// Skipped unusable routine bin_data:
-// - Untranslated type: bin_struct (0D)
-
-// Skipped unusable routine bin_data_density:
-// - Untranslated type: bin_struct (0D)
-
-// Skipped unusable routine bin_data_density_2d:
-// - Untranslated type: general_bin_struct (0D)
+extern "C" bool fortran_bicubic_eval(
+    double &x_norm /* 0D_NOT_real in */,
+    double &y_norm /* 0D_NOT_real in */,
+    void *bi_coef /* 0D_NOT_type in */,
+    double &df_dx /* 0D_NOT_real out */,
+    double &df_dy /* 0D_NOT_real out */,
+    double &f_val /* 0D_NOT_real out */
+);
+struct BicubicEval {
+  double df_dx;
+  double df_dy;
+  double f_val;
+};
+SimUtils::BicubicEval bicubic_eval(double x_norm, double y_norm, BicubicCoefStruct &bi_coef);
+extern "C" void fortran_bicubic_interpolation_cmplx_coefs(
+    void *field_at_box /* 0D_NOT_type in */,
+    void *bi_coef /* 0D_NOT_type out */
+);
+BicubicCmplxCoefStruct bicubic_interpolation_cmplx_coefs(CmplxFieldAt2dBoxStruct &field_at_box);
+extern "C" void fortran_bicubic_interpolation_coefs(
+    void *field_at_box /* 0D_NOT_type in */,
+    void *bi_coef /* 0D_NOT_type out */
+);
+BicubicCoefStruct bicubic_interpolation_coefs(FieldAt2dBoxStruct &field_at_box);
+extern "C" bool fortran_bin_2d(
+    Bmad::array_descriptor_t &data1 /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &data2 /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &weight /* 1D_NOT_real in */,
+    double *min1 /* 0D_NOT_real in */,
+    double *max1 /* 0D_NOT_real in */,
+    double *min2 /* 0D_NOT_real in */,
+    double *max2 /* 0D_NOT_real in */,
+    int *n_bins1 /* 0D_NOT_integer in */,
+    int *n_bins2 /* 0D_NOT_integer in */,
+    void *bin_data /* 0D_NOT_type out */
+);
+GeneralBinStruct bin_2d(
+    FArray1D<Real> &data1,
+    FArray1D<Real> &data2,
+    std::optional<FArray1D<Real>> weight = std::nullopt,
+    std::optional<double> min1 = std::nullopt,
+    std::optional<double> max1 = std::nullopt,
+    std::optional<double> min2 = std::nullopt,
+    std::optional<double> max2 = std::nullopt,
+    std::optional<int> n_bins1 = std::nullopt,
+    std::optional<int> n_bins2 = std::nullopt
+);
+extern "C" bool fortran_bin_data(
+    Bmad::array_descriptor_t &data /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &weight /* 1D_NOT_real in */,
+    double *min /* 0D_NOT_real in */,
+    double *max /* 0D_NOT_real in */,
+    int *n_bins /* 0D_NOT_integer in */,
+    void *binned_data /* 0D_NOT_type out */
+);
+BinStruct bin_data(
+    FArray1D<Real> &data,
+    std::optional<FArray1D<Real>> weight = std::nullopt,
+    std::optional<double> min = std::nullopt,
+    std::optional<double> max = std::nullopt,
+    std::optional<int> n_bins = std::nullopt
+);
+extern "C" bool fortran_bin_data_density(
+    void *bin_data /* 0D_NOT_type in */,
+    double &x /* 0D_NOT_real in */,
+    int *order /* 0D_NOT_integer in */,
+    double &r /* 0D_NOT_real out */
+);
+double bin_data_density(BinStruct &bin_data, double x, std::optional<int> order = std::nullopt);
+extern "C" bool fortran_bin_data_density_2d(
+    void *bin_data /* 0D_NOT_type in */,
+    double &x /* 0D_NOT_real in */,
+    double &y /* 0D_NOT_real in */,
+    int *order /* 0D_NOT_integer in */,
+    double &r0 /* 0D_NOT_real out */
+);
+double bin_data_density_2d(
+    GeneralBinStruct &bin_data,
+    double x,
+    double y,
+    std::optional<int> order = std::nullopt
+);
 extern "C" bool fortran_bin_index(
     double &x /* 0D_NOT_real in */,
     double &bin1_x_min /* 0D_NOT_real in */,
@@ -274,9 +332,12 @@ extern "C" bool fortran_cosc(
     double &y /* 0D_NOT_real out */
 );
 double cosc(double x, std::optional<int> nd = std::nullopt);
-
-// Skipped unusable routine count_at_index:
-// - Untranslated type: bin_struct (0D)
+extern "C" bool fortran_count_at_index(
+    void *bin_data /* 0D_NOT_type inout */,
+    int &index /* 0D_NOT_integer in */,
+    double &c /* 0D_NOT_real out */
+);
+double count_at_index(BinStruct &bin_data, int index);
 
 // Skipped unusable routine covar_expand:
 // - Variable inout sized array: 2D_NOT_real
@@ -577,15 +638,45 @@ double gen_complete_elliptic(
     double s,
     std::optional<double> err_tol = std::nullopt
 );
-
-// Skipped unusable routine general_bin_count:
-// - Untranslated type: general_bin_struct (0D)
-
-// Skipped unusable routine general_bin_index:
-// - Untranslated type: general_bin_struct (0D)
-
-// Skipped unusable routine general_bin_index_in_bounds:
-// - Untranslated type: general_bin_struct (0D)
+extern "C" bool fortran_general_bin_count(
+    void *bin_data /* 0D_NOT_type inout */,
+    int &ix1 /* 0D_NOT_integer in */,
+    int *ix2 /* 0D_NOT_integer in */,
+    int *ix3 /* 0D_NOT_integer in */,
+    double &count /* 0D_NOT_real out */
+);
+double general_bin_count(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2 = std::nullopt,
+    std::optional<int> ix3 = std::nullopt
+);
+extern "C" bool fortran_general_bin_index(
+    void *bin_data /* 0D_NOT_type inout */,
+    int &ix1 /* 0D_NOT_integer in */,
+    int *ix2 /* 0D_NOT_integer in */,
+    int *ix3 /* 0D_NOT_integer in */,
+    int &index /* 0D_NOT_integer out */
+);
+int general_bin_index(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2 = std::nullopt,
+    std::optional<int> ix3 = std::nullopt
+);
+extern "C" bool fortran_general_bin_index_in_bounds(
+    void *bin_data /* 0D_NOT_type inout */,
+    int &ix1 /* 0D_NOT_integer in */,
+    int *ix2 /* 0D_NOT_integer in */,
+    int *ix3 /* 0D_NOT_integer in */,
+    bool &in_bounds /* 0D_NOT_logical out */
+);
+bool general_bin_index_in_bounds(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2 = std::nullopt,
+    std::optional<int> ix3 = std::nullopt
+);
 extern "C" void fortran_get_a_char(
     const char *this_char /* 0D_NOT_character out */,
     bool &wait /* 0D_NOT_logical in */,
@@ -928,9 +1019,11 @@ extern "C" bool fortran_modulo2_sp(
     double &mod2 /* 0D_NOT_real out */
 );
 double modulo2_sp(double x, double amp);
-
-// Skipped unusable routine molecular_components:
-// - Untranslated type: molecular_component_struct (1D)
+extern "C" void fortran_molecular_components(
+    const char *molecule /* 0D_NOT_character in */,
+    void *component /* 1D_ALLOC_type out */
+);
+MolecularComponentStructAlloc1D molecular_components(std::string molecule);
 extern "C" bool
 fortran_n_bins_automatic(int &n_data /* 0D_NOT_integer in */, int &n /* 0D_NOT_integer out */);
 int n_bins_automatic(int n_data);
@@ -1191,10 +1284,21 @@ void out_io(
 
 // Skipped unusable routine outer_product:
 // - Module name unset
-
-// Skipped unusable routine output_direct:
-// - Untranslated type: out_io_output_direct_struct (0D)
-// - Untranslated type: out_io_output_direct_struct (0D)
+extern "C" void fortran_output_direct(
+    int *file_unit /* 0D_NOT_integer in */,
+    bool *print_and_capture /* 0D_NOT_logical in */,
+    int *min_level /* 0D_NOT_integer in */,
+    int *max_level /* 0D_NOT_integer in */,
+    void *set /* 0D_NOT_type in */,
+    void *get /* 0D_NOT_type out */
+);
+OutIoOutputDirectStruct output_direct(
+    std::optional<int> file_unit = std::nullopt,
+    std::optional<bool> print_and_capture = std::nullopt,
+    std::optional<int> min_level = std::nullopt,
+    std::optional<int> max_level = std::nullopt,
+    optional_ref<OutIoOutputDirectStruct> set = std::nullopt
+);
 extern "C" void fortran_parse_fortran_format(
     const char *format_str /* 0D_NOT_character in */,
     int &n_repeat /* 0D_NOT_integer in */,
@@ -2202,23 +2306,39 @@ tricubic_cmplx_eval(double x_norm, double y_norm, double z_norm, TricubicCmplxCo
 
 // Skipped unusable routine tricubic_compute_cmplx_field_at_3d_box:
 // - Array bounds handling: Calls in array bounds are not supported
-// - Untranslated type: cmplx_field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
 
 // Skipped unusable routine tricubic_compute_field_at_3d_box:
 // - Array bounds handling: Calls in array bounds are not supported
-// - Untranslated type: field_at_3d_box_struct (0D)
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tricubic_eval:
-// - Untranslated type: tricubic_coef_struct (0D)
-
-// Skipped unusable routine tricubic_interpolation_cmplx_coefs:
-// - Untranslated type: cmplx_field_at_3d_box_struct (0D)
-
-// Skipped unusable routine tricubic_interpolation_coefs:
-// - Untranslated type: field_at_3d_box_struct (0D)
-// - Untranslated type: tricubic_coef_struct (0D)
+extern "C" bool fortran_tricubic_eval(
+    double &x_norm /* 0D_NOT_real in */,
+    double &y_norm /* 0D_NOT_real in */,
+    double &z_norm /* 0D_NOT_real in */,
+    void *tri_coef /* 0D_NOT_type in */,
+    double &df_dx /* 0D_NOT_real out */,
+    double &df_dy /* 0D_NOT_real out */,
+    double &df_dz /* 0D_NOT_real out */,
+    double &f_val /* 0D_NOT_real out */
+);
+struct TricubicEval {
+  double df_dx;
+  double df_dy;
+  double df_dz;
+  double f_val;
+};
+SimUtils::TricubicEval
+tricubic_eval(double x_norm, double y_norm, double z_norm, TricubicCoefStruct &tri_coef);
+extern "C" void fortran_tricubic_interpolation_cmplx_coefs(
+    void *field_at_box /* 0D_NOT_type in */,
+    void *tri_coef /* 0D_NOT_type out */
+);
+TricubicCmplxCoefStruct tricubic_interpolation_cmplx_coefs(CmplxFieldAt3dBoxStruct &field_at_box);
+extern "C" void fortran_tricubic_interpolation_coefs(
+    void *field_at_box /* 0D_NOT_type in */,
+    void *tri_coef /* 0D_NOT_type out */
+);
+TricubicCoefStruct tricubic_interpolation_coefs(FieldAt3dBoxStruct &field_at_box);
 extern "C" void fortran_type_this_file(const char *filename /* 0D_NOT_character in */);
 void type_this_file(std::string filename);
 

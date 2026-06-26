@@ -106,9 +106,11 @@ void add_lattice_control_structs(
     std::optional<int> n_add_lord_field = std::nullopt,
     std::optional<bool> add_at_end = std::nullopt
 );
-
-// Skipped unusable routine add_ptc_layout_to_list:
-// - Untranslated type: ptc_branch1_struct (0D)
+extern "C" void fortran_add_ptc_layout_to_list(
+    void *branch_ptc_info /* 0D_NOT_type inout */,
+    void *layout_end /* 0D_NOT_type in */
+);
+void add_ptc_layout_to_list(PtcBranch1Struct &branch_ptc_info, Layout &layout_end);
 extern "C" void fortran_add_superimpose(
     void *lat /* 0D_NOT_type inout */,
     void *super_ele_in /* 0D_NOT_type in */,
@@ -207,9 +209,9 @@ void allocate_lat_ele_array(
     std::optional<int> ix_branch = std::nullopt,
     std::optional<bool> do_ramper_slave_setup = std::nullopt
 );
-
-// Skipped unusable routine allocate_plat:
-// - Untranslated type: parser_lat_struct (0D)
+extern "C" void
+fortran_allocate_plat(void *plat /* 0D_NOT_type inout */, int &n_ele_max /* 0D_NOT_integer in */);
+void allocate_plat(ParserLatStruct &plat, int n_ele_max);
 
 // Skipped unusable routine aml_parser:
 // - Routine in configuration skip list
@@ -234,9 +236,28 @@ extern "C" void fortran_apply_all_rampers(
     bool &err_flag /* 0D_NOT_logical out */
 );
 bool apply_all_rampers(LatStruct &lat);
-
-// Skipped unusable routine apply_element_edge_kick:
-// - Untranslated type: fringe_field_info_struct (0D)
+extern "C" void fortran_apply_element_edge_kick(
+    void *orb /* 0D_NOT_type inout */,
+    void *fringe_info /* 0D_NOT_type inout */,
+    void *track_ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
+    bool &track_spin /* 0D_NOT_logical in */,
+    Bmad::array_descriptor_t &mat6 /* 2D_NOT_real inout */,
+    bool *make_matrix /* 0D_NOT_logical in */,
+    double *rf_time /* 0D_NOT_real in */,
+    bool *apply_sol_fringe /* 0D_NOT_logical in */
+);
+void apply_element_edge_kick(
+    CoordStruct &orb,
+    FringeFieldInfoStruct &fringe_info,
+    EleStruct &track_ele,
+    LatParamStruct &param,
+    bool track_spin,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
+    std::optional<bool> make_matrix = std::nullopt,
+    std::optional<double> rf_time = std::nullopt,
+    std::optional<bool> apply_sol_fringe = std::nullopt
+);
 
 // Skipped unusable routine apply_element_edge_kick_hook_def:
 // - Routine in configuration skip list
@@ -254,9 +275,11 @@ void apply_energy_kick(
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt
 );
-
-// Skipped unusable routine apply_fft_3d_kicks:
-// - Untranslated type: csr_struct (0D)
+extern "C" void fortran_apply_fft_3d_kicks(
+    void *csr /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &particle /* 1D_NOT_type inout */
+);
+void apply_fft_3d_kicks(CsrStruct &csr, CoordStructArray1D particle);
 extern "C" void fortran_apply_patch_to_ptc_fibre(void *ele /* 0D_NOT_type in */);
 void apply_patch_to_ptc_fibre(EleStruct &ele);
 extern "C" void fortran_apply_rampers_to_slave(
@@ -389,9 +412,12 @@ Bmad::AttributeIndex2 attribute_index(
     std::optional<bool> can_abbreviate = std::nullopt,
     std::optional<bool> print_error = std::nullopt
 );
-
-// Skipped unusable routine attribute_info:
-// - Untranslated type: ele_attribute_struct (0D)
+extern "C" bool fortran_attribute_info(
+    void *ele /* 0D_NOT_type in */,
+    int &ix_att /* 0D_NOT_integer in */,
+    void *attrib_info /* 0D_NOT_type out */
+);
+EleAttributeStruct attribute_info(EleStruct &ele, int ix_att);
 extern "C" bool fortran_attribute_name1(
     int &key /* 0D_NOT_integer in */,
     int &ix_att /* 0D_NOT_integer in */,
@@ -456,9 +482,13 @@ extern "C" bool fortran_average_twiss(
     void *ave_twiss /* 0D_NOT_type out */
 );
 TwissStruct average_twiss(double frac1, TwissStruct &twiss1, TwissStruct &twiss2);
-
-// Skipped unusable routine bane1:
-// - Untranslated type: ibs_struct (0D)
+extern "C" void fortran_bane1(
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    void *rates /* 0D_NOT_type out */,
+    double &n_part /* 0D_NOT_real in */
+);
+IbsStruct bane1(EleStruct &ele, double coulomb_log, double n_part);
 extern "C" void fortran_bbi_kick(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
@@ -669,15 +699,28 @@ extern "C" bool fortran_bend_vert_angle_integ_prob(
     double &integ_prob /* 0D_NOT_real out */
 );
 double bend_vert_angle_integ_prob(double vert_angle, double E_rel, double gamma);
-
-// Skipped unusable routine bjmt1:
-// - Untranslated type: ibs_struct (0D)
+extern "C" void fortran_bjmt1(
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    void *rates /* 0D_NOT_type out */,
+    double &n_part /* 0D_NOT_real in */
+);
+IbsStruct bjmt1(EleStruct &ele, double coulomb_log, double n_part);
 
 // Skipped unusable routine bjmt_integrand:
 // - Untranslated type: c_ptr (0D)
-
-// Skipped unusable routine bl_via_mat:
-// - Untranslated type: ibs_sim_param_struct (0D)
+extern "C" void fortran_bl_via_mat(
+    void *lat /* 0D_NOT_type inout */,
+    void *ibs_sim_params /* 0D_NOT_type inout */,
+    void *mode /* 0D_NOT_type inout */,
+    double &sig_z /* 0D_NOT_real in */
+);
+void bl_via_mat(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &mode,
+    double sig_z
+);
 extern "C" void fortran_bl_via_vlassov(
     double &current /* 0D_NOT_real in */,
     double &alpha /* 0D_NOT_real in */,
@@ -886,9 +929,24 @@ Bmad::CalcEmittancesAndTwissFromSigmaMatrix calc_emittances_and_twiss_from_sigma
     FixedArray2D<Real, 6, 6> sigma_mat,
     std::optional<bool> print_err = std::nullopt
 );
-
-// Skipped unusable routine calc_next_fringe_edge:
-// - Untranslated type: fringe_field_info_struct (0D)
+extern "C" void fortran_calc_next_fringe_edge(
+    void *track_ele /* 0D_NOT_type in */,
+    double &s_edge_body /* 0D_NOT_real out */,
+    void *fringe_info /* 0D_NOT_type out */,
+    void *orbit /* 0D_NOT_type in */,
+    bool *init_needed /* 0D_NOT_logical in */,
+    bool *time_tracking /* 0D_NOT_logical in */
+);
+struct CalcNextFringeEdge {
+  double s_edge_body;
+  FringeFieldInfoStruct fringe_info;
+};
+Bmad::CalcNextFringeEdge calc_next_fringe_edge(
+    EleStruct &track_ele,
+    CoordStruct &orbit,
+    std::optional<bool> init_needed = std::nullopt,
+    std::optional<bool> time_tracking = std::nullopt
+);
 extern "C" void fortran_calc_spin_params(
     void *bunch /* 0D_NOT_type in */,
     void *bunch_params /* 0D_NOT_type out */
@@ -919,10 +977,22 @@ struct CalcWallRadius {
   int ix_vertex;
 };
 Bmad::CalcWallRadius calc_wall_radius(Wall3dVertexStructArray1D v, double cos_ang, double sin_ang);
-
-// Skipped unusable routine calc_wiggler_g_params:
-// - Untranslated type: rad_int_track_point_struct (0D)
-// - Untranslated type: rad_int_info_struct (0D)
+extern "C" void fortran_calc_wiggler_g_params(
+    void *ele /* 0D_NOT_type inout */,
+    void *param /* 0D_NOT_type inout */,
+    double &s_rel /* 0D_NOT_real in */,
+    void *orb /* 0D_NOT_type inout */,
+    void *pt /* 0D_NOT_type inout */,
+    void *info /* 0D_NOT_type inout */
+);
+void calc_wiggler_g_params(
+    EleStruct &ele,
+    LatParamStruct &param,
+    double s_rel,
+    CoordStruct &orb,
+    RadIntTrackPointStruct &pt,
+    optional_ref<RadIntInfoStruct> info = std::nullopt
+);
 extern "C" void fortran_calc_z_tune(void *branch /* 0D_NOT_type inout */);
 void calc_z_tune(BranchStruct &branch);
 extern "C" void fortran_canonical_to_angle_coords(
@@ -933,18 +1003,28 @@ void canonical_to_angle_coords(
     CoordStruct &orbit,
     std::optional<std::string> coord_type = std::nullopt
 );
-
-// Skipped unusable routine capillary_photon_hit_spot_calc:
-// - Untranslated type: photon_track_struct (0D)
-
-// Skipped unusable routine capillary_propagate_photon_a_step:
-// - Untranslated type: photon_track_struct (0D)
-
-// Skipped unusable routine capillary_reflect_photon:
-// - Untranslated type: photon_track_struct (0D)
-
-// Skipped unusable routine capillary_track_photon_to_wall:
-// - Untranslated type: photon_track_struct (0D)
+extern "C" void fortran_capillary_photon_hit_spot_calc(
+    void *photon /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */
+);
+void capillary_photon_hit_spot_calc(PhotonTrackStruct &photon, EleStruct &ele);
+extern "C" void fortran_capillary_propagate_photon_a_step(
+    void *photon /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */,
+    double &dlen /* 0D_NOT_real in */,
+    bool &stop_at_boundary /* 0D_NOT_logical out */
+);
+bool capillary_propagate_photon_a_step(PhotonTrackStruct &photon, EleStruct &ele, double dlen);
+extern "C" void fortran_capillary_reflect_photon(
+    void *photon /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */
+);
+void capillary_reflect_photon(PhotonTrackStruct &photon, EleStruct &ele);
+extern "C" void fortran_capillary_track_photon_to_wall(
+    void *photon /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */
+);
+void capillary_track_photon_to_wall(PhotonTrackStruct &photon, EleStruct &ele);
 extern "C" void fortran_cbar_to_c(
     Bmad::array_descriptor_t &cbar_mat /* 2D_NOT_real in */,
     void *a /* 0D_NOT_type in */,
@@ -1065,9 +1145,13 @@ extern "C" void fortran_chrom_tune(
     bool &err_flag /* 0D_NOT_logical out */
 );
 bool chrom_tune(LatStruct &lat, double &delta_e, double target_x, double target_y, double err_tol);
-
-// Skipped unusable routine cimp1:
-// - Untranslated type: ibs_struct (0D)
+extern "C" void fortran_cimp1(
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    void *rates /* 0D_NOT_type out */,
+    double &n_part /* 0D_NOT_real in */
+);
+IbsStruct cimp1(EleStruct &ele, double coulomb_log, double n_part);
 extern "C" bool fortran_classical_radius(
     int &species /* 0D_NOT_integer in */,
     double &radius /* 0D_NOT_real out */
@@ -1572,9 +1656,14 @@ FloorPositionStruct coords_relative_to_floor(
     std::optional<double> phi = std::nullopt,
     std::optional<double> psi = std::nullopt
 );
-
-// Skipped unusable routine cos_phi:
-// - Untranslated type: diffuse_param_struct (0D)
+extern "C" bool fortran_cos_phi(
+    double &sigma /* 0D_NOT_real in */,
+    double &t /* 0D_NOT_real in */,
+    double &phi /* 0D_NOT_real in */,
+    void *d_param /* 0D_NOT_type inout */,
+    double &cphi /* 0D_NOT_real out */
+);
+double cos_phi(double sigma, double t, double phi, DiffuseParamStruct &d_param);
 extern "C" bool fortran_coulombfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -1700,9 +1789,34 @@ extern "C" void fortran_create_wiggler_cartesian_map(
 CartesianMapStruct create_wiggler_cartesian_map(EleStruct &ele);
 extern "C" void fortran_crystal_attribute_bookkeeper(void *ele /* 0D_NOT_type inout */);
 void crystal_attribute_bookkeeper(EleStruct &ele);
-
-// Skipped unusable routine crystal_diffraction_field_calc:
-// - Untranslated type: crystal_param_struct (0D)
+extern "C" void fortran_crystal_diffraction_field_calc(
+    void *cp /* 0D_NOT_type in */,
+    void *ele /* 0D_NOT_type in */,
+    double &thickness /* 0D_NOT_real in */,
+    void *param /* 0D_NOT_type in */,
+    double &p_factor /* 0D_NOT_real in */,
+    bool &do_branch_calc /* 0D_NOT_logical in */,
+    double &e_field /* 0D_NOT_real out */,
+    double &e_phase /* 0D_NOT_real out */,
+    int &orbit_state /* 0D_NOT_integer out */,
+    Bmad::array_descriptor_t &dr /* 1D_NOT_real out */,
+    bool *follow_undiffracted /* 0D_NOT_logical in */
+);
+struct CrystalDiffractionFieldCalc {
+  double e_field;
+  double e_phase;
+  int orbit_state;
+  FixedArray1D<Real, 3> dr;
+};
+Bmad::CrystalDiffractionFieldCalc crystal_diffraction_field_calc(
+    CrystalParamStruct &cp,
+    EleStruct &ele,
+    double thickness,
+    LatParamStruct &param,
+    double p_factor,
+    bool do_branch_calc,
+    std::optional<bool> follow_undiffracted = std::nullopt
+);
 extern "C" void fortran_crystal_h_misalign(
     void *ele /* 0D_NOT_type in */,
     void *orbit /* 0D_NOT_type in */,
@@ -1718,15 +1832,26 @@ bool crystal_type_to_crystal_params(EleStruct &ele);
 // Skipped unusable routine csr3d_steady_state_solver:
 // - Variable in sized array: 3D_NOT_real
 // - Variable inout sized array: 4D_NOT_real
-
-// Skipped unusable routine csr_and_sc_apply_kicks:
-// - Untranslated type: csr_struct (0D)
-
-// Skipped unusable routine csr_bin_kicks:
-// - Untranslated type: csr_struct (0D)
-
-// Skipped unusable routine csr_bin_particles:
-// - Untranslated type: csr_struct (0D)
+extern "C" void fortran_csr_and_sc_apply_kicks(
+    void *ele /* 0D_NOT_type in */,
+    void *csr /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &particle /* 1D_NOT_type inout */
+);
+void csr_and_sc_apply_kicks(EleStruct &ele, CsrStruct &csr, CoordStructArray1D particle);
+extern "C" void fortran_csr_bin_kicks(
+    void *ele /* 0D_NOT_type in */,
+    double &ds_kick_pt /* 0D_NOT_real in */,
+    void *csr /* 0D_NOT_type inout */,
+    bool &err_flag /* 0D_NOT_logical out */
+);
+bool csr_bin_kicks(EleStruct &ele, double ds_kick_pt, CsrStruct &csr);
+extern "C" void fortran_csr_bin_particles(
+    void *ele /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &particle /* 1D_NOT_type in */,
+    void *csr /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical in */
+);
+CsrStruct csr_bin_particles(EleStruct &ele, CoordStructArray1D particle, bool err_flag);
 extern "C" bool fortran_custom_attribute_ubound_index(
     int &ele_class /* 0D_NOT_integer in */,
     int &ix_ubound /* 0D_NOT_integer out */
@@ -1779,9 +1904,27 @@ extern "C" bool fortran_default_tracking_species(
     int &species /* 0D_NOT_integer out */
 );
 int default_tracking_species(LatParamStruct &param);
-
-// Skipped unusable routine deposit_particles:
-// - Untranslated type: mesh3d_struct (0D)
+extern "C" void fortran_deposit_particles(
+    Bmad::array_descriptor_t &xa /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &ya /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &za /* 1D_NOT_real in */,
+    void *mesh3d /* 0D_NOT_type out */,
+    Bmad::array_descriptor_t &qa /* 1D_NOT_real in */,
+    double *total_charge /* 0D_NOT_real in */,
+    bool *resize_mesh /* 0D_NOT_logical in */,
+    double *mesh_growth_factor /* 0D_NOT_real in */,
+    double *mesh_shrink_factor /* 0D_NOT_real in */
+);
+Mesh3dStruct deposit_particles(
+    FArray1D<Real> &xa,
+    FArray1D<Real> &ya,
+    FArray1D<Real> &za,
+    std::optional<FArray1D<Real>> qa = std::nullopt,
+    std::optional<double> total_charge = std::nullopt,
+    std::optional<bool> resize_mesh = std::nullopt,
+    std::optional<double> mesh_growth_factor = std::nullopt,
+    std::optional<double> mesh_shrink_factor = std::nullopt
+);
 extern "C" bool fortran_detector_pixel_pt(
     void *orbit /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
@@ -3333,9 +3476,22 @@ extern "C" bool fortran_gen_grad_field(
 );
 FixedArray1D<Real, 3>
 gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, double theta);
-
-// Skipped unusable routine get_astra_fieldgrid_name_and_scaling:
-// - Untranslated type: str_index_struct (0D)
+extern "C" void fortran_get_astra_fieldgrid_name_and_scaling(
+    void *ele /* 0D_NOT_type in */,
+    void *name_indexx /* 0D_NOT_type inout */,
+    const char *output_name /* 0D_NOT_character out */,
+    double &field_scale /* 0D_NOT_real out */,
+    int *dimensions /* 0D_NOT_integer in */
+);
+struct GetAstraFieldgridNameAndScaling {
+  std::string output_name;
+  double field_scale;
+};
+Bmad::GetAstraFieldgridNameAndScaling get_astra_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    StrIndexStruct &name_indexx,
+    std::optional<int> dimensions = std::nullopt
+);
 extern "C" void fortran_get_bl_from_fwhm(
     double &bound /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &args /* 1D_NOT_real in */,
@@ -3365,9 +3521,24 @@ Bmad::GetEmitFromSigmaMat get_emit_from_sigma_mat(
     FixedArray2D<Real, 6, 6> sigma_mat,
     std::optional<FixedArray2D<Real, 6, 6>> Nmat = std::nullopt
 );
-
-// Skipped unusable routine get_gpt_fieldgrid_name_and_scaling:
-// - Untranslated type: str_index_struct (0D)
+extern "C" void fortran_get_gpt_fieldgrid_name_and_scaling(
+    void *ele /* 0D_NOT_type in */,
+    void *name_indexx /* 0D_NOT_type inout */,
+    const char *output_name /* 0D_NOT_character out */,
+    double &field_scale /* 0D_NOT_real out */,
+    double &ref_time /* 0D_NOT_real out */,
+    int *dimensions /* 0D_NOT_integer in */
+);
+struct GetGptFieldgridNameAndScaling {
+  std::string output_name;
+  double field_scale;
+  double ref_time;
+};
+Bmad::GetGptFieldgridNameAndScaling get_gpt_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    StrIndexStruct &name_indexx,
+    std::optional<int> dimensions = std::nullopt
+);
 extern "C" void fortran_get_list_of_names(
     void *ele /* 0D_NOT_type inout */,
     const char *err_str /* 0D_NOT_character in */,
@@ -3406,9 +3577,22 @@ Bmad::GetNextWord get_next_word(
     std::optional<bool> upper_case_word = std::nullopt,
     std::optional<bool> call_check = std::nullopt
 );
-
-// Skipped unusable routine get_opal_fieldgrid_name_and_scaling:
-// - Untranslated type: str_index_struct (0D)
+extern "C" void fortran_get_opal_fieldgrid_name_and_scaling(
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
+    void *name_indexx /* 0D_NOT_type inout */,
+    const char *output_name /* 0D_NOT_character out */,
+    double &field_scale /* 0D_NOT_real out */
+);
+struct GetOpalFieldgridNameAndScaling {
+  std::string output_name;
+  double field_scale;
+};
+Bmad::GetOpalFieldgridNameAndScaling get_opal_fieldgrid_name_and_scaling(
+    EleStruct &ele,
+    LatParamStruct &param,
+    StrIndexStruct &name_indexx
+);
 extern "C" void fortran_get_overlay_group_names(
     void *ele /* 0D_NOT_type inout */,
     void *lat /* 0D_NOT_type inout */,
@@ -3570,12 +3754,40 @@ extern "C" bool fortran_has_orientation_attributes(
     bool &has_attribs /* 0D_NOT_logical out */
 );
 bool has_orientation_attributes(EleStruct &ele);
-
-// Skipped unusable routine hdf5_read_beam:
-// - Untranslated type: pmd_header_struct (0D)
-
-// Skipped unusable routine hdf5_read_grid_field:
-// - Untranslated type: pmd_header_struct (0D)
+extern "C" void fortran_hdf5_read_beam(
+    const char *file_name /* 0D_NOT_character in */,
+    void *beam /* 0D_NOT_type inout */,
+    bool &error /* 0D_NOT_logical in */,
+    void *ele /* 0D_NOT_type inout */,
+    void *pmd_header /* 0D_NOT_type inout */,
+    bool *print_mom_shift_warning /* 0D_NOT_logical in */,
+    bool *conserve_momentum /* 0D_NOT_logical in */
+);
+void hdf5_read_beam(
+    std::string file_name,
+    BeamStruct &beam,
+    bool error,
+    optional_ref<EleStruct> ele = std::nullopt,
+    optional_ref<PmdHeaderStruct> pmd_header = std::nullopt,
+    std::optional<bool> print_mom_shift_warning = std::nullopt,
+    std::optional<bool> conserve_momentum = std::nullopt
+);
+extern "C" void fortran_hdf5_read_grid_field(
+    const char *file_name /* 0D_NOT_character in */,
+    void *ele /* 0D_NOT_type inout */,
+    Bmad::array_descriptor_t &g_field /* 1D_PTR_type inout */,
+    bool &err_flag /* 0D_NOT_logical in */,
+    void *pmd_header /* 0D_NOT_type inout */,
+    bool *combine /* 0D_NOT_logical in */
+);
+void hdf5_read_grid_field(
+    std::string file_name,
+    EleStruct &ele,
+    GridFieldStructArray1D g_field,
+    bool err_flag,
+    optional_ref<PmdHeaderStruct> pmd_header = std::nullopt,
+    std::optional<bool> combine = std::nullopt
+);
 extern "C" void fortran_hdf5_write_beam(
     const char *file_name /* 0D_NOT_character in */,
     Bmad::array_descriptor_t &bunches /* 1D_NOT_type inout */,
@@ -3620,31 +3832,94 @@ void hwang_bend_edge_kick(
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt
 );
-
-// Skipped unusable routine i_csr:
-// - Untranslated type: csr_kick1_struct (0D)
-// - Untranslated type: csr_struct (0D)
-
-// Skipped unusable routine ibs1:
-// - Untranslated type: ibs_sim_param_struct (0D)
-// - Untranslated type: ibs_struct (0D)
-
-// Skipped unusable routine ibs_blowup1turn:
-// - Untranslated type: ibs_sim_param_struct (0D)
-
-// Skipped unusable routine ibs_delta_calc:
-// - Untranslated type: ibs_sim_param_struct (0D)
-
-// Skipped unusable routine ibs_equib_der:
-// - Untranslated type: ibs_sim_param_struct (0D)
-
-// Skipped unusable routine ibs_equib_rlx:
-// - Untranslated type: ibs_sim_param_struct (0D)
-
-// Skipped unusable routine ibs_lifetime:
-// - Untranslated type: ibs_sim_param_struct (0D)
-// - Untranslated type: ibs_maxratio_struct (0D)
-// - Untranslated type: ibs_lifetime_struct (0D)
+extern "C" void fortran_i_csr(
+    void *kick1 /* 0D_NOT_type inout */,
+    int &i_bin /* 0D_NOT_integer in */,
+    void *csr /* 0D_NOT_type in */
+);
+void i_csr(CsrKick1Struct &kick1, int i_bin, CsrStruct &csr);
+extern "C" void fortran_ibs1(
+    void *lat /* 0D_NOT_type inout */,
+    void *ibs_sim_params /* 0D_NOT_type inout */,
+    void *rates /* 0D_NOT_type inout */,
+    int *i /* 0D_NOT_integer in */,
+    double *s /* 0D_NOT_real in */
+);
+void ibs1(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    IbsStruct &rates,
+    std::optional<int> i = std::nullopt,
+    std::optional<double> s = std::nullopt
+);
+extern "C" void fortran_ibs_blowup1turn(
+    void *lat /* 0D_NOT_type inout */,
+    void *ibs_sim_params /* 0D_NOT_type in */
+);
+void ibs_blowup1turn(LatStruct &lat, IbsSimParamStruct &ibs_sim_params);
+extern "C" void fortran_ibs_delta_calc(
+    void *lat /* 0D_NOT_type in */,
+    int &ix /* 0D_NOT_integer in */,
+    void *ibs_sim_params /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &sigma_mat /* 2D_NOT_real in */,
+    double &delta_sigma_energy /* 0D_NOT_real out */,
+    double &delta_emit_a /* 0D_NOT_real out */,
+    double &delta_emit_b /* 0D_NOT_real out */
+);
+struct IbsDeltaCalc {
+  double delta_sigma_energy;
+  double delta_emit_a;
+  double delta_emit_b;
+};
+Bmad::IbsDeltaCalc ibs_delta_calc(
+    LatStruct &lat,
+    int ix,
+    IbsSimParamStruct &ibs_sim_params,
+    std::optional<FixedArray2D<Real, 6, 6>> sigma_mat = std::nullopt
+);
+extern "C" void fortran_ibs_equib_der(
+    void *lat /* 0D_NOT_type in */,
+    void *ibs_sim_params /* 0D_NOT_type in */,
+    void *inmode /* 0D_NOT_type in */,
+    void *ibsmode /* 0D_NOT_type out */,
+    double &granularity /* 0D_NOT_real in */
+);
+NormalModesStruct ibs_equib_der(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &inmode,
+    double granularity
+);
+extern "C" void fortran_ibs_equib_rlx(
+    void *lat /* 0D_NOT_type in */,
+    void *ibs_sim_params /* 0D_NOT_type in */,
+    void *inmode /* 0D_NOT_type in */,
+    void *ibsmode /* 0D_NOT_type out */,
+    double &ratio /* 0D_NOT_real in */,
+    Bmad::array_descriptor_t &initial_blow_up /* 1D_NOT_real in */,
+    double &granularity /* 0D_NOT_real in */
+);
+NormalModesStruct ibs_equib_rlx(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    NormalModesStruct &inmode,
+    double ratio,
+    FixedArray1D<Real, 3> initial_blow_up,
+    double granularity
+);
+extern "C" void fortran_ibs_lifetime(
+    void *lat /* 0D_NOT_type in */,
+    void *ibs_sim_params /* 0D_NOT_type in */,
+    void *maxratio /* 0D_NOT_type in */,
+    void *lifetime /* 0D_NOT_type out */,
+    double &granularity /* 0D_NOT_real in */
+);
+IbsLifetimeStruct ibs_lifetime(
+    LatStruct &lat,
+    IbsSimParamStruct &ibs_sim_params,
+    IbsMaxratioStruct &maxratio,
+    double granularity
+);
 extern "C" bool fortran_ibs_matrix_c(
     Bmad::array_descriptor_t &sigma_mat /* 2D_NOT_real inout */,
     bool &tail_cut /* 0D_NOT_logical in */,
@@ -3662,10 +3937,13 @@ FixedArray2D<Real, 6, 6> ibs_matrix_c(
     double n_part,
     int species
 );
-
-// Skipped unusable routine ibs_rates1turn:
-// - Untranslated type: ibs_sim_param_struct (0D)
-// - Untranslated type: ibs_struct (0D)
+extern "C" void fortran_ibs_rates1turn(
+    void *lat /* 0D_NOT_type in */,
+    void *ibs_sim_params /* 0D_NOT_type in */,
+    void *rates1turn /* 0D_NOT_type out */,
+    double &granularity /* 0D_NOT_real in */
+);
+IbsStruct ibs_rates1turn(LatStruct &lat, IbsSimParamStruct &ibs_sim_params, double granularity);
 extern "C" bool fortran_igfcoulombfun(
     double &u /* 0D_NOT_real in */,
     double &v /* 0D_NOT_real in */,
@@ -3710,10 +3988,9 @@ extern "C" bool fortran_igfezfun(
     double &res /* 0D_NOT_real out */
 );
 double igfezfun(double u, double v, double w, double gam, double dx, double dy, double dz);
-
-// Skipped unusable routine image_charge_kick_calc:
-// - Untranslated type: csr_kick1_struct (0D)
-// - Untranslated type: csr_struct (0D)
+extern "C" void
+fortran_image_charge_kick_calc(void *kick1 /* 0D_NOT_type inout */, void *csr /* 0D_NOT_type in */);
+void image_charge_kick_calc(CsrKick1Struct &kick1, CsrStruct &csr);
 
 // Skipped unusable routine imageconvcorr3d:
 // - Array bounds handling: "Enum 'RILO' found in bounds 'rilo' but not in provided map."
@@ -3897,9 +4174,17 @@ EleStruct init_ele(
     std::optional<int> ix_ele = std::nullopt,
     optional_ref<BranchStruct> branch = std::nullopt
 );
-
-// Skipped unusable routine init_fringe_info:
-// - Untranslated type: fringe_field_info_struct (0D)
+extern "C" void fortran_init_fringe_info(
+    void *fringe_info /* 0D_NOT_type out */,
+    void *ele /* 0D_NOT_type in */,
+    void *orbit /* 0D_NOT_type in */,
+    int *leng_sign /* 0D_NOT_integer in */
+);
+FringeFieldInfoStruct init_fringe_info(
+    EleStruct &ele,
+    optional_ref<CoordStruct> orbit = std::nullopt,
+    std::optional<int> leng_sign = std::nullopt
+);
 extern "C" void fortran_init_gg_taylor_series(
     void *gg_taylor /* 0D_NOT_type inout */,
     int &n_term /* 0D_NOT_integer in */,
@@ -4073,15 +4358,24 @@ void integration_timer(
     FixedArray1D<Real, 6> orbit_max,
     double tol_dp
 );
-
-// Skipped unusable routine interpolate_field:
-// - Untranslated type: mesh3d_struct (0D)
+extern "C" void fortran_interpolate_field(
+    double &x /* 0D_NOT_real in */,
+    double &y /* 0D_NOT_real in */,
+    double &z /* 0D_NOT_real in */,
+    void *mesh3d /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &E /* 1D_NOT_real out */,
+    Bmad::array_descriptor_t &B /* 1D_NOT_real out */
+);
+struct InterpolateField {
+  FixedArray1D<Real, 3> E;
+  FixedArray1D<Real, 3> B;
+};
+Bmad::InterpolateField interpolate_field(double x, double y, double z, Mesh3dStruct &mesh3d);
 
 // Skipped unusable routine interpolate_field_batch:
 // - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
 // - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
 // - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
-// - Untranslated type: mesh3d_struct (0D)
 // - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
 // - Array bounds handling: "Enum 'N_PTS' found in bounds 'n_pts' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
@@ -4310,9 +4604,9 @@ double low_energy_z_correction(
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt
 );
-
-// Skipped unusable routine lsc_kick_params_calc:
-// - Untranslated type: csr_struct (0D)
+extern "C" void
+fortran_lsc_kick_params_calc(void *ele /* 0D_NOT_type in */, void *csr /* 0D_NOT_type inout */);
+void lsc_kick_params_calc(EleStruct &ele, CsrStruct &csr);
 extern "C" void fortran_mad_add_offsets_and_multipoles(
     void *ele /* 0D_NOT_type in */,
     void *map /* 0D_NOT_type out */
@@ -4815,18 +5109,35 @@ extern "C" bool fortran_momentum_compaction(
     double &mom_comp /* 0D_NOT_real out */
 );
 double momentum_compaction(BranchStruct &branch);
-
-// Skipped unusable routine mpxx1:
-// - Untranslated type: ibs_struct (0D)
+extern "C" void fortran_mpxx1(
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    void *rates /* 0D_NOT_type out */,
+    double &n_part /* 0D_NOT_real in */
+);
+IbsStruct mpxx1(EleStruct &ele, double coulomb_log, double n_part);
 
 // Skipped unusable routine mpxx_integrand:
 // - Untranslated type: c_ptr (0D)
-
-// Skipped unusable routine mpzt1:
-// - Untranslated type: ibs_struct (0D)
-
-// Skipped unusable routine multi_coulomb_log:
-// - Untranslated type: ibs_sim_param_struct (0D)
+extern "C" void fortran_mpzt1(
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    void *rates /* 0D_NOT_type out */,
+    double &n_part /* 0D_NOT_real in */
+);
+IbsStruct mpzt1(EleStruct &ele, double coulomb_log, double n_part);
+extern "C" void fortran_multi_coulomb_log(
+    void *ibs_sim_params /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type inout */,
+    double &coulomb_log /* 0D_NOT_real in */,
+    double &n_part /* 0D_NOT_real in */
+);
+void multi_coulomb_log(
+    IbsSimParamStruct &ibs_sim_params,
+    EleStruct &ele,
+    double coulomb_log,
+    double n_part
+);
 extern "C" void fortran_multi_turn_tracking_analysis(
     Bmad::array_descriptor_t &track /* 1D_NOT_type in */,
     int &i_dim /* 0D_NOT_integer in */,
@@ -4854,9 +5165,9 @@ extern "C" void fortran_multilayer_type_to_multilayer_params(
     bool &err_flag /* 0D_NOT_logical out */
 );
 bool multilayer_type_to_multilayer_params(EleStruct &ele);
-
-// Skipped unusable routine multipass_all_info:
-// - Untranslated type: multipass_all_info_struct (0D)
+extern "C" void
+fortran_multipass_all_info(void *lat /* 0D_NOT_type in */, void *info /* 0D_NOT_type out */);
+MultipassAllInfoStruct multipass_all_info(LatStruct &lat);
 extern "C" void fortran_multipass_chain(
     void *ele /* 0D_NOT_type in */,
     int &ix_pass /* 0D_NOT_integer out */,
@@ -4871,10 +5182,16 @@ struct MultipassChain {
 };
 Bmad::MultipassChain
 multipass_chain(EleStruct &ele, std::optional<bool> use_super_lord = std::nullopt);
-
-// Skipped unusable routine multipass_region_info:
-// - Untranslated type: multipass_region_lat_struct (0D)
-// - Untranslated type: multipass_all_info_struct (0D)
+extern "C" void fortran_multipass_region_info(
+    void *lat /* 0D_NOT_type inout */,
+    void *mult_lat /* 0D_NOT_type inout */,
+    void *m_info /* 0D_NOT_type inout */
+);
+void multipass_region_info(
+    LatStruct &lat,
+    MultipassRegionLatStruct &mult_lat,
+    MultipassAllInfoStruct &m_info
+);
 extern "C" void fortran_multipole1_ab_to_kt(
     double &an /* 0D_NOT_real in */,
     double &bn /* 0D_NOT_real in */,
@@ -5567,9 +5884,13 @@ Bmad::ParseIntegerList2 parse_integer_list2(
     std::optional<std::string> close_delim = std::nullopt,
     std::optional<int> default_value = std::nullopt
 );
-
-// Skipped unusable routine parse_line_or_list:
-// - Untranslated type: seq_struct (1D)
+extern "C" void fortran_parse_line_or_list(
+    void *sequence /* 1D_ALLOC_type inout */,
+    int &iseq_tot /* 0D_NOT_integer in */,
+    void *lat /* 0D_NOT_type inout */,
+    bool &top_level /* 0D_NOT_logical in */
+);
+void parse_line_or_list(SeqStructAlloc1D sequence, int iseq_tot, LatStruct &lat, bool top_level);
 extern "C" bool fortran_parse_real_list(
     void *lat /* 0D_NOT_type in */,
     const char *err_str /* 0D_NOT_character in */,
@@ -5660,22 +5981,62 @@ void parser2_add_superimpose(
     ParserEleStruct &pele,
     optional_ref<LatStruct> in_lat = std::nullopt
 );
-
-// Skipped unusable routine parser_add_branch:
-// - Untranslated type: seq_struct (1D)
-// - Untranslated type: parser_lat_struct (0D)
+extern "C" void fortran_parser_add_branch(
+    void *fork_ele /* 0D_NOT_type inout */,
+    void *lat /* 0D_NOT_type inout */,
+    void *sequence /* 1D_ALLOC_type inout */,
+    void *seq_name /* 1D_ALLOC_character inout */,
+    void *seq_indexx /* 1D_ALLOC_integer inout */,
+    bool &no_end_marker /* 0D_NOT_logical in */,
+    void *in_lat /* 0D_NOT_type inout */,
+    void *plat /* 0D_NOT_type inout */,
+    bool &created_new_branch /* 0D_NOT_logical in */,
+    const char *new_branch_name /* 0D_NOT_character in */
+);
+void parser_add_branch(
+    EleStruct &fork_ele,
+    LatStruct &lat,
+    SeqStructAlloc1D sequence,
+    CharacterAlloc1D &seq_name,
+    IntAlloc1D &seq_indexx,
+    bool no_end_marker,
+    LatStruct &in_lat,
+    ParserLatStruct &plat,
+    bool created_new_branch,
+    std::optional<std::string> new_branch_name = std::nullopt
+);
 extern "C" void fortran_parser_add_constant(
     const char *word /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type inout */,
     bool &redef_is_error /* 0D_NOT_logical in */
 );
 void parser_add_constant(std::string word, LatStruct &lat, bool redef_is_error);
-
-// Skipped unusable routine parser_add_lords:
-// - Untranslated type: parser_lat_struct (0D)
-
-// Skipped unusable routine parser_add_superimpose:
-// - Untranslated type: parser_lat_struct (0D)
+extern "C" void fortran_parser_add_lords(
+    void *lord_lat /* 0D_NOT_type in */,
+    int &n_ele_max /* 0D_NOT_integer in */,
+    void *plat /* 0D_NOT_type in */,
+    void *lat /* 0D_NOT_type out */,
+    void *check_lat /* 0D_NOT_type out */
+);
+struct ParserAddLords {
+  LatStruct lat;
+  LatStruct check_lat;
+};
+Bmad::ParserAddLords parser_add_lords(LatStruct &lord_lat, int n_ele_max, ParserLatStruct &plat);
+extern "C" void fortran_parser_add_superimpose(
+    void *branch /* 0D_NOT_type inout */,
+    void *super_ele_in /* 0D_NOT_type inout */,
+    void *pele /* 0D_NOT_type inout */,
+    void *in_lat /* 0D_NOT_type inout */,
+    void *plat /* 0D_NOT_type inout */
+);
+void parser_add_superimpose(
+    BranchStruct &branch,
+    EleStruct &super_ele_in,
+    ParserEleStruct &pele,
+    LatStruct &in_lat,
+    ParserLatStruct &plat
+);
 extern "C" void fortran_parser_call_check(
     const char *word /* 0D_NOT_character in */,
     int &ix_word /* 0D_NOT_integer in */,
@@ -5692,16 +6053,66 @@ void parser_call_check(
     bool call_found,
     std::optional<bool> err_flag = std::nullopt
 );
-
-// Skipped unusable routine parser_debug_print_info:
-// - Untranslated type: seq_struct (1D)
-
-// Skipped unusable routine parser_error:
-// - Untranslated type: seq_struct (0D)
-
-// Skipped unusable routine parser_expand_line:
-// - Untranslated type: seq_struct (1D)
-// - Untranslated type: base_line_ele_struct (1D)
+extern "C" void fortran_parser_debug_print_info(
+    void *lat /* 0D_NOT_type inout */,
+    const char *debug_line /* 0D_NOT_character in */,
+    Bmad::array_descriptor_t &sequence /* 1D_NOT_type inout */
+);
+void parser_debug_print_info(
+    LatStruct &lat,
+    std::string debug_line,
+    std::optional<SeqStructArray1D> sequence = std::nullopt
+);
+extern "C" void fortran_parser_error(
+    const char *what1 /* 0D_NOT_character in */,
+    const char *what2 /* 0D_NOT_character in */,
+    const char *what3 /* 0D_NOT_character in */,
+    const char *what4 /* 0D_NOT_character in */,
+    void *seq /* 0D_NOT_type in */,
+    void *pele /* 0D_NOT_type in */,
+    bool *stop_here /* 0D_NOT_logical in */,
+    int *level /* 0D_NOT_integer in */,
+    Bmad::array_descriptor_t &r_array /* 1D_NOT_real in */,
+    Bmad::array_descriptor_t &i_array /* 1D_NOT_integer in */
+);
+void parser_error(
+    std::string what1,
+    std::optional<std::string> what2 = std::nullopt,
+    std::optional<std::string> what3 = std::nullopt,
+    std::optional<std::string> what4 = std::nullopt,
+    optional_ref<SeqStruct> seq = std::nullopt,
+    optional_ref<ParserEleStruct> pele = std::nullopt,
+    std::optional<bool> stop_here = std::nullopt,
+    std::optional<int> level = std::nullopt,
+    std::optional<FArray1D<Real>> r_array = std::nullopt,
+    std::optional<FArray1D<Int>> i_array = std::nullopt
+);
+extern "C" void fortran_parser_expand_line(
+    int &i_lev /* 0D_NOT_integer in */,
+    const char *line_name /* 0D_NOT_character in */,
+    void *sequence /* 1D_ALLOC_type in */,
+    void *seq_name /* 1D_ALLOC_character in */,
+    void *seq_indexx /* 1D_ALLOC_integer in */,
+    bool &no_end_marker /* 0D_NOT_logical in */,
+    int &n_ele_expand /* 0D_NOT_integer out */,
+    void *lat /* 0D_NOT_type inout */,
+    void *in_lat /* 0D_NOT_type in */,
+    void *expanded_line /* 1D_ALLOC_type out */
+);
+struct ParserExpandLine {
+  int n_ele_expand;
+  BaseLineEleStructAlloc1D expanded_line;
+};
+Bmad::ParserExpandLine parser_expand_line(
+    int i_lev,
+    std::string line_name,
+    SeqStructAlloc1D sequence,
+    CharacterAlloc1D &seq_name,
+    IntAlloc1D &seq_indexx,
+    bool no_end_marker,
+    optional_ref<LatStruct> lat = std::nullopt,
+    optional_ref<LatStruct> in_lat = std::nullopt
+);
 extern "C" bool fortran_parser_fast_complex_read(
     Bmad::array_descriptor_t &cmplx_vec /* 1D_NOT_complex inout */,
     void *ele /* 0D_NOT_type in */,
@@ -5955,12 +6366,29 @@ Bmad::PhotonAddToDetectorStatistics photon_add_to_detector_statistics(
     EleStruct &ele,
     optional_ref<PixelPtStruct> pixel_pt = std::nullopt
 );
-
-// Skipped unusable routine photon_diffuse_scattering:
-// - Untranslated type: diffuse_param_struct (0D)
-
-// Skipped unusable routine photon_read_spline:
-// - Untranslated type: photon_init_splines_struct (0D)
+extern "C" void fortran_photon_diffuse_scattering(
+    double &graze_angle_in /* 0D_NOT_real in */,
+    double &energy /* 0D_NOT_real in */,
+    void *surface /* 0D_NOT_type in */,
+    double &graze_angle_out /* 0D_NOT_real out */,
+    double &phi_out /* 0D_NOT_real out */,
+    void *diffuse_param /* 0D_NOT_type out */
+);
+struct PhotonDiffuseScattering {
+  double graze_angle_out;
+  double phi_out;
+  DiffuseParamStruct diffuse_param;
+};
+Bmad::PhotonDiffuseScattering photon_diffuse_scattering(
+    double graze_angle_in,
+    double energy,
+    PhotonReflectSurfaceStruct &surface
+);
+extern "C" void fortran_photon_read_spline(
+    const char *spline_dir /* 0D_NOT_character in */,
+    void *splines /* 0D_NOT_type out */
+);
+PhotonInitSplinesStruct photon_read_spline(std::string spline_dir);
 extern "C" void fortran_photon_reflection(
     double &graze_angle_in /* 0D_NOT_real in */,
     double &energy /* 0D_NOT_real in */,
@@ -6365,12 +6793,15 @@ extern "C" bool fortran_polar_to_vec(
     Bmad::array_descriptor_t &vec /* 1D_NOT_real out */
 );
 FixedArray1D<Real, 3> polar_to_vec(SpinPolarStruct &polar);
-
-// Skipped unusable routine print_mesh3d:
-// - Untranslated type: mesh3d_struct (0D)
-
-// Skipped unusable routine prob_x_diffuse:
-// - Untranslated type: diffuse_param_struct (0D)
+extern "C" void fortran_print_mesh3d(void *mesh3d /* 0D_NOT_type inout */);
+void print_mesh3d(Mesh3dStruct &mesh3d);
+extern "C" bool fortran_prob_x_diffuse(
+    double &x /* 0D_NOT_real in */,
+    void *d_param /* 0D_NOT_type inout */,
+    void *surface /* 0D_NOT_type inout */,
+    double &prob_x /* 0D_NOT_real out */
+);
+double prob_x_diffuse(double x, DiffuseParamStruct &d_param, PhotonReflectSurfaceStruct &surface);
 extern "C" void fortran_project_emit_to_xyz(
     void *ring /* 0D_NOT_type in */,
     int &ix /* 0D_NOT_integer in */,
@@ -6385,10 +6816,22 @@ struct ProjectEmitToXyz {
   double sigma_z;
 };
 Bmad::ProjectEmitToXyz project_emit_to_xyz(LatStruct &ring, int ix, NormalModesStruct &mode);
-
-// Skipped unusable routine propagate_part_way:
-// - Untranslated type: rad_int_track_point_struct (0D)
-// - Untranslated type: rad_int_info_struct (0D)
+extern "C" void fortran_propagate_part_way(
+    void *orb_start /* 0D_NOT_type inout */,
+    void *param /* 0D_NOT_type inout */,
+    void *pt /* 0D_NOT_type inout */,
+    void *info /* 0D_NOT_type inout */,
+    double &z_here /* 0D_NOT_real in */,
+    void *runt /* 0D_NOT_type inout */
+);
+void propagate_part_way(
+    CoordStruct &orb_start,
+    LatParamStruct &param,
+    RadIntTrackPointStruct &pt,
+    RadIntInfoStruct &info,
+    double z_here,
+    EleStruct &runt
+);
 
 // Skipped unusable routine psi_prime:
 // - Untranslated type: c_ptr (0D)
@@ -6455,9 +6898,8 @@ struct PtcEmitCalc {
   CoordStruct closed_orb;
 };
 Bmad::PtcEmitCalc ptc_emit_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> sigma_mat);
-
-// Skipped unusable routine ptc_kill_map_with_radiation:
-// - Untranslated type: ptc_rad_map_struct (0D)
+extern "C" void fortran_ptc_kill_map_with_radiation(void *rad_map /* 0D_NOT_type inout */);
+void ptc_kill_map_with_radiation(PtcRadMapStruct &rad_map);
 extern "C" void fortran_ptc_layouts_resplit(
     double &dKL_max /* 0D_NOT_real in */,
     double &l_max /* 0D_NOT_real in */,
@@ -6478,9 +6920,11 @@ void ptc_layouts_resplit(
     std::optional<FixedArray1D<Int, 2>> crossover = std::nullopt,
     std::optional<FixedArray1D<Int, 2>> crossover_wiggler = std::nullopt
 );
-
-// Skipped unusable routine ptc_linear_isf_calc:
-// - Untranslated type: linear_ele_isf_struct (1D)
+extern "C" void fortran_ptc_linear_isf_calc(
+    void *branch /* 0D_NOT_type in */,
+    void *ele_isf /* 1D_ALLOC_type out */
+);
+LinearEleIsfStructAlloc1D ptc_linear_isf_calc(BranchStruct &branch);
 
 // Skipped unusable routine ptc_map_to_normal_form:
 // - Untranslated type: probe_8 (0D)
@@ -6514,16 +6958,46 @@ Bmad::PtcReadFlatFile ptc_read_flat_file(
     std::optional<bool> create_end_marker = std::nullopt,
     std::optional<bool> from_mad = std::nullopt
 );
-
-// Skipped unusable routine ptc_read_map_with_radiation:
-// - Untranslated type: ptc_rad_map_struct (0D)
+extern "C" void fortran_ptc_read_map_with_radiation(
+    void *rad_map /* 0D_NOT_type out */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    const char *file_name /* 0D_NOT_character in */,
+    int *file_unit /* 0D_NOT_integer in */
+);
+struct PtcReadMapWithRadiation {
+  PtcRadMapStruct rad_map;
+  bool err_flag;
+};
+Bmad::PtcReadMapWithRadiation ptc_read_map_with_radiation(
+    std::optional<std::string> file_name = std::nullopt,
+    std::optional<int> file_unit = std::nullopt
+);
 extern "C" void fortran_ptc_set_rf_state_for_c_normal(bool &nocavity /* 0D_NOT_logical in */);
 void ptc_set_rf_state_for_c_normal(bool nocavity);
 extern "C" void fortran_ptc_set_taylor_order_if_needed();
 void ptc_set_taylor_order_if_needed();
-
-// Skipped unusable routine ptc_setup_map_with_radiation:
-// - Untranslated type: ptc_rad_map_struct (0D)
+extern "C" void fortran_ptc_setup_map_with_radiation(
+    void *rad_map /* 0D_NOT_type out */,
+    void *ele1 /* 0D_NOT_type in */,
+    void *ele2 /* 0D_NOT_type in */,
+    int *map_order /* 0D_NOT_integer in */,
+    bool *include_damping /* 0D_NOT_logical in */,
+    bool *create_symplectic_map /* 0D_NOT_logical in */,
+    void *orbit1 /* 0D_NOT_type in */,
+    bool &err_flag /* 0D_NOT_logical out */
+);
+struct PtcSetupMapWithRadiation {
+  PtcRadMapStruct rad_map;
+  bool err_flag;
+};
+Bmad::PtcSetupMapWithRadiation ptc_setup_map_with_radiation(
+    EleStruct &ele1,
+    optional_ref<EleStruct> ele2 = std::nullopt,
+    std::optional<int> map_order = std::nullopt,
+    std::optional<bool> include_damping = std::nullopt,
+    std::optional<bool> create_symplectic_map = std::nullopt,
+    optional_ref<CoordStruct> orbit1 = std::nullopt
+);
 
 // Skipped unusable routine ptc_setup_tracking_with_damping_and_excitation:
 // - Untranslated type: internal_state (0D)
@@ -6538,9 +7012,11 @@ struct PtcSpinCalc {
   CoordStruct closed_orb;
 };
 Bmad::PtcSpinCalc ptc_spin_calc(EleStruct &ele, FixedArray2D<Real, 6, 6> sigma_mat);
-
-// Skipped unusable routine ptc_spin_matching_calc:
-// - Untranslated type: spin_matching_struct (1D)
+extern "C" void fortran_ptc_spin_matching_calc(
+    void *branch /* 0D_NOT_type in */,
+    void *match_info /* 1D_ALLOC_type out */
+);
+SpinMatchingStructAlloc1D ptc_spin_matching_calc(BranchStruct &branch);
 
 // Skipped unusable routine ptc_taylors_equal_bmad_taylors:
 // - Untranslated type: taylor (1D)
@@ -6555,9 +7031,18 @@ struct PtcTrackAll {
   bool err_flag;
 };
 Bmad::PtcTrackAll ptc_track_all(BranchStruct &branch, CoordStructAlloc1D orbit);
-
-// Skipped unusable routine ptc_track_map_with_radiation:
-// - Untranslated type: ptc_rad_map_struct (0D)
+extern "C" void fortran_ptc_track_map_with_radiation(
+    void *orbit /* 0D_NOT_type inout */,
+    void *rad_map /* 0D_NOT_type in */,
+    bool *rad_damp /* 0D_NOT_logical in */,
+    bool *rad_fluct /* 0D_NOT_logical in */
+);
+void ptc_track_map_with_radiation(
+    CoordStruct &orbit,
+    PtcRadMapStruct &rad_map,
+    std::optional<bool> rad_damp = std::nullopt,
+    std::optional<bool> rad_fluct = std::nullopt
+);
 extern "C" void fortran_ptc_transfer_map_with_spin(
     void *branch /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &t_map /* 1D_NOT_type inout */,
@@ -6579,12 +7064,24 @@ bool ptc_transfer_map_with_spin(
     std::optional<bool> one_turn = std::nullopt,
     std::optional<bool> unit_start = std::nullopt
 );
-
-// Skipped unusable routine ptc_write_map_with_radiation:
-// - Untranslated type: ptc_rad_map_struct (0D)
-
-// Skipped unusable routine ptwo:
-// - Untranslated type: diffuse_param_struct (0D)
+extern "C" void fortran_ptc_write_map_with_radiation(
+    void *rad_map /* 0D_NOT_type in */,
+    const char *file_name /* 0D_NOT_character in */,
+    int *file_unit /* 0D_NOT_integer in */
+);
+void ptc_write_map_with_radiation(
+    PtcRadMapStruct &rad_map,
+    std::optional<std::string> file_name = std::nullopt,
+    std::optional<int> file_unit = std::nullopt
+);
+extern "C" bool fortran_ptwo(
+    double &sigma /* 0D_NOT_real in */,
+    double &t /* 0D_NOT_real in */,
+    double &phi /* 0D_NOT_real in */,
+    void *d_param /* 0D_NOT_type inout */,
+    double &p_two /* 0D_NOT_real out */
+);
+double ptwo(double sigma, double t, double phi, DiffuseParamStruct &d_param);
 extern "C" bool fortran_pwd_mat(
     void *lat /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &t6 /* 2D_NOT_real in */,
@@ -6597,8 +7094,6 @@ pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, double s
 
 // Skipped unusable routine qromb_rad_int:
 // - Array bounds handling: "Enum 'NUM_INT' found in bounds 'num_int' but not in provided map."
-// - Untranslated type: rad_int_track_point_struct (0D)
-// - Untranslated type: rad_int_info_struct (0D)
 
 // Skipped unusable routine quad_mat2_calc:
 // - Variable inout sized array: 2D_NOT_real
@@ -6925,9 +7420,11 @@ void reallocate_expression_stack(
     int n,
     std::optional<bool> exact = std::nullopt
 );
-
-// Skipped unusable routine reallocate_sequence:
-// - Untranslated type: seq_struct (1D)
+extern "C" void fortran_reallocate_sequence(
+    void *sequence /* 1D_ALLOC_type inout */,
+    int &n_seq /* 0D_NOT_integer in */
+);
+void reallocate_sequence(SeqStructAlloc1D sequence, int n_seq);
 
 // Skipped unusable routine reals_8_equal_bmad_taylors:
 // - Untranslated type: real_8 (1D)
@@ -7145,13 +7642,25 @@ extern "C" bool fortran_s_body_calc(
 double s_body_calc(CoordStruct &orbit, EleStruct &ele);
 extern "C" void fortran_s_calc(void *lat /* 0D_NOT_type inout */);
 void s_calc(LatStruct &lat);
-
-// Skipped unusable routine s_ref_to_s_chord:
-// - Untranslated type: csr_ele_info_struct (0D)
-
-// Skipped unusable routine s_source_calc:
-// - Untranslated type: csr_kick1_struct (0D)
-// - Untranslated type: csr_struct (0D)
+extern "C" bool fortran_s_ref_to_s_chord(
+    double &s_ref /* 0D_NOT_real in */,
+    void *eleinfo /* 0D_NOT_type in */,
+    double &s_chord /* 0D_NOT_real out */
+);
+double s_ref_to_s_chord(double s_ref, CsrEleInfoStruct &eleinfo);
+extern "C" bool fortran_s_source_calc(
+    void *kick1 /* 0D_NOT_type inout */,
+    void *csr /* 0D_NOT_type in */,
+    bool &err_flag /* 0D_NOT_logical out */,
+    Bmad::array_descriptor_t &dr_match /* 1D_NOT_real inout */,
+    double &s_source /* 0D_NOT_real out */
+);
+struct SSourceCalc {
+  bool err_flag;
+  double s_source;
+};
+Bmad::SSourceCalc
+s_source_calc(CsrKick1Struct &kick1, CsrStruct &csr, FixedArray1D<Real, 3> dr_match);
 extern "C" void fortran_sad_mult_hard_bend_edge_kick(
     void *ele /* 0D_NOT_type in */,
     void *param /* 0D_NOT_type in */,
@@ -7296,9 +7805,24 @@ extern "C" void fortran_set_active_fixer(
     void *orbit /* 0D_NOT_type out */
 );
 CoordStruct set_active_fixer(EleStruct &fixer, std::optional<bool> turn_on = std::nullopt);
-
-// Skipped unusable routine set_branch_and_ele_for_omp:
-// - Untranslated type: lat_pointer_struct (1D)
+extern "C" void fortran_set_branch_and_ele_for_omp(
+    int &ix_lat /* 0D_NOT_integer in */,
+    void *ele0_loc /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &lats /* 1D_NOT_type inout */,
+    void *lat /* 0D_NOT_type in */,
+    void *branch /* 0D_PTR_type out */,
+    void *ele0 /* 0D_PTR_type out */
+);
+struct SetBranchAndEleForOmp {
+  std::optional<BranchStruct> branch;
+  std::optional<EleStruct> ele0;
+};
+Bmad::SetBranchAndEleForOmp set_branch_and_ele_for_omp(
+    int ix_lat,
+    LatEleLocStruct &ele0_loc,
+    LatPointerStructArray1D lats,
+    LatStruct &lat
+);
 extern "C" void fortran_set_custom_attribute_name(
     const char *custom_name /* 0D_NOT_character in */,
     bool &err_flag /* 0D_NOT_logical out */,
@@ -7680,24 +8204,58 @@ ComplexTaylorStruct sort_complex_taylor_terms(ComplexTaylorStruct &complex_taylo
 // - Untranslated type: universal_taylor (0D)
 
 // Skipped unusable routine space_charge_3d:
-// - Untranslated type: mesh3d_struct (0D)
 // - Variable in sized array: 4D_ALLOC_real
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine space_charge_cathodeimages:
-// - Untranslated type: mesh3d_struct (0D)
-
-// Skipped unusable routine space_charge_freespace:
-// - Untranslated type: mesh3d_struct (0D)
-
-// Skipped unusable routine space_charge_rectpipe:
-// - Untranslated type: mesh3d_struct (0D)
+extern "C" void fortran_space_charge_cathodeimages(
+    void *mesh3d /* 0D_NOT_type inout */,
+    bool *direct_field_calc /* 0D_NOT_logical in */,
+    bool *integrated_green_function /* 0D_NOT_logical in */,
+    int *image_method /* 0D_NOT_integer in */
+);
+void space_charge_cathodeimages(
+    Mesh3dStruct &mesh3d,
+    std::optional<bool> direct_field_calc = std::nullopt,
+    std::optional<bool> integrated_green_function = std::nullopt,
+    std::optional<int> image_method = std::nullopt
+);
+extern "C" void fortran_space_charge_freespace(
+    void *mesh3d /* 0D_NOT_type inout */,
+    bool *direct_field_calc /* 0D_NOT_logical in */,
+    bool *integrated_green_function /* 0D_NOT_logical in */
+);
+void space_charge_freespace(
+    Mesh3dStruct &mesh3d,
+    std::optional<bool> direct_field_calc = std::nullopt,
+    std::optional<bool> integrated_green_function = std::nullopt
+);
+extern "C" void fortran_space_charge_rectpipe(
+    void *mesh3d /* 0D_NOT_type inout */,
+    double &apipe /* 0D_NOT_real in */,
+    double &bpipe /* 0D_NOT_real in */,
+    bool *direct_field_calc /* 0D_NOT_logical in */,
+    bool *integrated_green_function /* 0D_NOT_logical in */
+);
+void space_charge_rectpipe(
+    Mesh3dStruct &mesh3d,
+    double apipe,
+    double bpipe,
+    std::optional<bool> direct_field_calc = std::nullopt,
+    std::optional<bool> integrated_green_function = std::nullopt
+);
 
 // Skipped unusable routine spin_concat_linear_maps:
 // - Routine in configuration skip list
-
-// Skipped unusable routine spin_depolarization_rate:
-// - Untranslated type: spin_matching_struct (1D)
+extern "C" bool fortran_spin_depolarization_rate(
+    void *branch /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &match_info /* 1D_NOT_type in */,
+    void *rad_int_by_ele /* 0D_NOT_type in */,
+    double &depol_rate /* 0D_NOT_real out */
+);
+double spin_depolarization_rate(
+    BranchStruct &branch,
+    SpinMatchingStructArray1D match_info,
+    RadIntAllEleStruct &rad_int_by_ele
+);
 extern "C" bool fortran_spin_dn_dpz_from_mat8(
     Bmad::array_descriptor_t &mat_1turn /* 2D_NOT_real in */,
     Bmad::array_descriptor_t &dn_dpz_partial /* 2D_NOT_real in */,
@@ -8237,12 +8795,28 @@ extern "C" void fortran_touschek_lifetime(
     void *lat /* 0D_NOT_type in */
 );
 double touschek_lifetime(NormalModesStruct &mode, LatStruct &lat);
-
-// Skipped unusable routine touschek_lifetime_ele_by_ele:
-// - Untranslated type: momentum_aperture_struct (1D)
-
-// Skipped unusable routine touschek_lifetime_with_aperture:
-// - Untranslated type: momentum_aperture_struct (1D)
+extern "C" void fortran_touschek_lifetime_ele_by_ele(
+    void *mode /* 0D_NOT_type in */,
+    double &Tl /* 0D_NOT_real out */,
+    void *lat /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &momentum_aperture /* 1D_NOT_type in */
+);
+double touschek_lifetime_ele_by_ele(
+    NormalModesStruct &mode,
+    LatStruct &lat,
+    MomentumApertureStructArray1D momentum_aperture
+);
+extern "C" void fortran_touschek_lifetime_with_aperture(
+    void *mode /* 0D_NOT_type in */,
+    double &Tl /* 0D_NOT_real out */,
+    void *lat /* 0D_NOT_type in */,
+    Bmad::array_descriptor_t &momentum_aperture /* 1D_NOT_type in */
+);
+double touschek_lifetime_with_aperture(
+    NormalModesStruct &mode,
+    LatStruct &lat,
+    MomentumApertureStructArray1D momentum_aperture
+);
 extern "C" void fortran_touschek_rate1(
     void *mode /* 0D_NOT_type in */,
     double &rate /* 0D_NOT_real out */,
@@ -9872,9 +10446,20 @@ void write_astra_bend(
     FixedArray1D<Real, 2> d3,
     FixedArray1D<Real, 2> d4
 );
-
-// Skipped unusable routine write_astra_ele:
-// - Untranslated type: str_index_struct (0D)
+extern "C" void fortran_write_astra_ele(
+    int &iu /* 0D_NOT_integer in */,
+    void *ele /* 0D_NOT_type inout */,
+    int &id /* 0D_NOT_integer in */,
+    void *fieldgrid_names /* 0D_NOT_type inout */,
+    int *dimensions /* 0D_NOT_integer in */
+);
+void write_astra_ele(
+    int iu,
+    EleStruct &ele,
+    int id,
+    optional_ref<StrIndexStruct> fieldgrid_names = std::nullopt,
+    std::optional<int> dimensions = std::nullopt
+);
 extern "C" void fortran_write_astra_field_grid_file(
     int &astra_file_unit /* 0D_NOT_integer in */,
     void *ele /* 0D_NOT_type in */,
@@ -9907,9 +10492,17 @@ Bmad::WriteAstraFieldGridFile3d write_astra_field_grid_file_3d(
     EleStruct &ele,
     std::optional<double> dz = std::nullopt
 );
-
-// Skipped unusable routine write_astra_lattice_file:
-// - Untranslated type: astra_lattice_param_struct (0D)
+extern "C" void fortran_write_astra_lattice_file(
+    int &astra_file_unit /* 0D_NOT_integer in */,
+    void *lat /* 0D_NOT_type in */,
+    void *astra_lattice_param /* 0D_NOT_type inout */,
+    bool &err /* 0D_NOT_logical out */
+);
+bool write_astra_lattice_file(
+    int astra_file_unit,
+    LatStruct &lat,
+    AstraLatticeParamStruct &astra_lattice_param
+);
 extern "C" void fortran_write_beam_file(
     const char *file_name /* 0D_NOT_character in */,
     void *beam /* 0D_NOT_type in */,
@@ -9991,12 +10584,37 @@ bool write_bmad_lattice_file(
     std::optional<int> output_form = std::nullopt,
     optional_ref<CoordStruct> orbit0 = std::nullopt
 );
-
-// Skipped unusable routine write_digested_bmad_file:
-// - Untranslated type: extra_parsing_info_struct (0D)
-
-// Skipped unusable routine write_gpt_ele:
-// - Untranslated type: str_index_struct (0D)
+extern "C" void fortran_write_digested_bmad_file(
+    const char *digested_name /* 0D_NOT_character in */,
+    void *lat /* 0D_NOT_type in */,
+    int *n_files /* 0D_NOT_integer in */,
+    void *file_names /* 1D_NOT_character in */,
+    void *extra /* 0D_NOT_type in */,
+    bool &err_flag /* 0D_NOT_logical out */
+);
+bool write_digested_bmad_file(
+    std::string digested_name,
+    LatStruct &lat,
+    std::optional<int> n_files = std::nullopt,
+    optional_ref<CharacterAlloc1D> file_names = std::nullopt,
+    optional_ref<ExtraParsingInfoStruct> extra = std::nullopt
+);
+extern "C" void fortran_write_gpt_ele(
+    int &iu /* 0D_NOT_integer in */,
+    void *ele /* 0D_NOT_type inout */,
+    const char *name /* 0D_NOT_character in */,
+    void *fieldgrid_names /* 0D_NOT_type inout */,
+    int &dimensions /* 0D_NOT_integer in */,
+    bool *only_phasing /* 0D_NOT_logical in */
+);
+void write_gpt_ele(
+    int iu,
+    EleStruct &ele,
+    std::string name,
+    int dimensions,
+    optional_ref<StrIndexStruct> fieldgrid_names = std::nullopt,
+    std::optional<bool> only_phasing = std::nullopt
+);
 extern "C" void fortran_write_gpt_field_grid_file_1d(
     int &gpt_file_unit /* 0D_NOT_integer in */,
     void *ele /* 0D_NOT_type in */,
@@ -10055,9 +10673,12 @@ Bmad::WriteGptFieldGridFile3d write_gpt_field_grid_file_3d(
     EleStruct &ele,
     std::optional<double> dz = std::nullopt
 );
-
-// Skipped unusable routine write_gpt_lattice_file:
-// - Untranslated type: gpt_lat_param_struct (0D)
+extern "C" void fortran_write_gpt_lattice_file(
+    void *lat /* 0D_NOT_type in */,
+    void *gpt_lat_param /* 0D_NOT_type in */,
+    bool &err /* 0D_NOT_logical out */
+);
+bool write_gpt_lattice_file(LatStruct &lat, GptLatParamStruct &gpt_lat_param);
 extern "C" void fortran_write_lat_line(
     const char *line /* 0D_NOT_character inout */,
     int &iu /* 0D_NOT_integer in */,

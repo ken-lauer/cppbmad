@@ -740,6 +740,375 @@ void init_rf_stair_step_struct(nb::module_ &m, nb::class_<RfStairStepStruct> &cl
 }
 
 // =============================================================================
+// rad_int_cache1_struct
+void init_rad_int_cache1_struct(nb::module_ &m, nb::class_<RadIntCache1Struct> &cls) {
+  cls.def(
+         nb::init<std::optional<int>, std::optional<int>>(),
+         nb::arg("n_pt") = nb::none(),
+         nb::arg("cache_type") = nb::none()
+  )
+      .def_prop_ro("pt", &RadIntCache1Struct::pt, nb::keep_alive<0, 1>(), "pt(0:n_pt)")
+      .def_prop_rw(
+          "n_pt",
+          &RadIntCache1Struct::n_pt,
+          &RadIntCache1Struct::set_n_pt,
+          "Upper bound of pt(0:n_pt)"
+      )
+      .def_prop_rw(
+          "cache_type",
+          &RadIntCache1Struct::cache_type,
+          &RadIntCache1Struct::set_cache_type
+      )
+
+      .def("__repr__", [](const RadIntCache1Struct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadIntCache1Struct &self) {
+            return RadIntCache1Struct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const RadIntCache1Struct &self, nb::dict &memo) { return RadIntCache1Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RadIntCache1Struct &self, const RadIntCache1Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadIntCache1Struct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D RadIntCache1Struct arrays are not used in structs/routines
+  // 2D RadIntCache1Struct arrays are not used in structs/routines
+  // 3D RadIntCache1Struct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// rad_int_info_struct
+void init_rad_int_info_struct(nb::module_ &m, nb::class_<RadIntInfoStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](RadIntInfoStruct *self,
+            const BranchStruct *branch,
+            const EleStruct *ele,
+            const TwissStruct *a,
+            const TwissStruct *b,
+            const RadIntCache1Struct *cache_ele,
+            std::optional<std::vector<double>> eta_a,
+            std::optional<std::vector<double>> eta_b,
+            std::optional<double> g,
+            std::optional<double> g2,
+            std::optional<double> g_x,
+            std::optional<double> g_y,
+            std::optional<double> dg2_x,
+            std::optional<double> dg2_y) {
+           new (self) RadIntInfoStruct(
+               ptr_to_opt_ref(branch),
+               ptr_to_opt_ref(ele),
+               ptr_to_opt_ref(a),
+               ptr_to_opt_ref(b),
+               ptr_to_opt_ref(cache_ele),
+               eta_a,
+               eta_b,
+               g,
+               g2,
+               g_x,
+               g_y,
+               dg2_x,
+               dg2_y
+           );
+         },
+         nb::arg("branch") = nb::none(),
+         nb::arg("ele") = nb::none(),
+         nb::arg("a") = nb::none(),
+         nb::arg("b") = nb::none(),
+         nb::arg("cache_ele") = nb::none(),
+         nb::arg("eta_a") = nb::none(),
+         nb::arg("eta_b") = nb::none(),
+         nb::arg("g") = nb::none(),
+         nb::arg("g2") = nb::none(),
+         nb::arg("g_x") = nb::none(),
+         nb::arg("g_y") = nb::none(),
+         nb::arg("dg2_x") = nb::none(),
+         nb::arg("dg2_y") = nb::none()
+  )
+      .def_prop_rw(
+          "branch",
+          &RadIntInfoStruct::branch,
+          &RadIntInfoStruct::set_branch,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "ele",
+          &RadIntInfoStruct::ele,
+          &RadIntInfoStruct::set_ele,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_ro("orbit", &RadIntInfoStruct::orbit, nb::keep_alive<0, 1>())
+      .def_prop_rw(
+          "a",
+          &RadIntInfoStruct::a,
+          &RadIntInfoStruct::set_a,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "b",
+          &RadIntInfoStruct::b,
+          &RadIntInfoStruct::set_b,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "cache_ele",
+          &RadIntInfoStruct::cache_ele,
+          &RadIntInfoStruct::set_cache_ele,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "pointer to cache in use"
+      )
+      .def_prop_rw(
+          "eta_a",
+          &RadIntInfoStruct::eta_a,
+          &RadIntInfoStruct::set_eta_a,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "eta_b",
+          &RadIntInfoStruct::eta_b,
+          &RadIntInfoStruct::set_eta_b,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "g",
+          &RadIntInfoStruct::g,
+          &RadIntInfoStruct::set_g,
+          "bending strength (1/bending_radius)"
+      )
+      .def_prop_rw(
+          "g2",
+          &RadIntInfoStruct::g2,
+          &RadIntInfoStruct::set_g2,
+          "bending strength (1/bending_radius)"
+      )
+      .def_prop_rw(
+          "g_x",
+          &RadIntInfoStruct::g_x,
+          &RadIntInfoStruct::set_g_x,
+          "components in x-y plane"
+      )
+      .def_prop_rw(
+          "g_y",
+          &RadIntInfoStruct::g_y,
+          &RadIntInfoStruct::set_g_y,
+          "components in x-y plane"
+      )
+      .def_prop_rw("dg2_x", &RadIntInfoStruct::dg2_x, &RadIntInfoStruct::set_dg2_x)
+      .def_prop_rw("dg2_y", &RadIntInfoStruct::dg2_y, &RadIntInfoStruct::set_dg2_y)
+
+      .def("__repr__", [](const RadIntInfoStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadIntInfoStruct &self) {
+            return RadIntInfoStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const RadIntInfoStruct &self, nb::dict &memo) { return RadIntInfoStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const RadIntInfoStruct &self, const RadIntInfoStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadIntInfoStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D RadIntInfoStruct arrays are not used in structs/routines
+  // 2D RadIntInfoStruct arrays are not used in structs/routines
+  // 3D RadIntInfoStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// rad_int_track_point_struct
+void init_rad_int_track_point_struct(nb::module_ &m, nb::class_<RadIntTrackPointStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](RadIntTrackPointStruct *self,
+            std::optional<double> s_body,
+            std::optional<std::vector<std::vector<double>>> mat6,
+            std::optional<std::vector<double>> vec0,
+            const CoordStruct *ref_orb_in,
+            const CoordStruct *ref_orb_out,
+            std::optional<double> g_x0,
+            std::optional<double> g_y0,
+            std::optional<double> dgx_dx,
+            std::optional<double> dgx_dy,
+            std::optional<double> dgy_dx,
+            std::optional<double> dgy_dy) {
+           new (self) RadIntTrackPointStruct(
+               s_body,
+               mat6,
+               vec0,
+               ptr_to_opt_ref(ref_orb_in),
+               ptr_to_opt_ref(ref_orb_out),
+               g_x0,
+               g_y0,
+               dgx_dx,
+               dgx_dy,
+               dgy_dx,
+               dgy_dy
+           );
+         },
+         nb::arg("s_body") = nb::none(),
+         nb::arg("mat6") = nb::none(),
+         nb::arg("vec0") = nb::none(),
+         nb::arg("ref_orb_in") = nb::none(),
+         nb::arg("ref_orb_out") = nb::none(),
+         nb::arg("g_x0") = nb::none(),
+         nb::arg("g_y0") = nb::none(),
+         nb::arg("dgx_dx") = nb::none(),
+         nb::arg("dgx_dy") = nb::none(),
+         nb::arg("dgy_dx") = nb::none(),
+         nb::arg("dgy_dy") = nb::none()
+  )
+      .def_prop_rw("s_body", &RadIntTrackPointStruct::s_body, &RadIntTrackPointStruct::set_s_body)
+      .def_prop_rw(
+          "mat6",
+          &RadIntTrackPointStruct::mat6,
+          &RadIntTrackPointStruct::set_mat6,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "vec0",
+          &RadIntTrackPointStruct::vec0,
+          &RadIntTrackPointStruct::set_vec0,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "ref_orb_in",
+          &RadIntTrackPointStruct::ref_orb_in,
+          &RadIntTrackPointStruct::set_ref_orb_in,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "ref_orb_out",
+          &RadIntTrackPointStruct::ref_orb_out,
+          &RadIntTrackPointStruct::set_ref_orb_out,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "g_x0",
+          &RadIntTrackPointStruct::g_x0,
+          &RadIntTrackPointStruct::set_g_x0,
+          "Additional g factors for bends."
+      )
+      .def_prop_rw(
+          "g_y0",
+          &RadIntTrackPointStruct::g_y0,
+          &RadIntTrackPointStruct::set_g_y0,
+          "Additional g factors for bends."
+      )
+      .def_prop_rw(
+          "dgx_dx",
+          &RadIntTrackPointStruct::dgx_dx,
+          &RadIntTrackPointStruct::set_dgx_dx,
+          "bending strength gradient"
+      )
+      .def_prop_rw(
+          "dgx_dy",
+          &RadIntTrackPointStruct::dgx_dy,
+          &RadIntTrackPointStruct::set_dgx_dy,
+          "bending strength gradient"
+      )
+      .def_prop_rw(
+          "dgy_dx",
+          &RadIntTrackPointStruct::dgy_dx,
+          &RadIntTrackPointStruct::set_dgy_dx,
+          "bending strength gradient"
+      )
+      .def_prop_rw(
+          "dgy_dy",
+          &RadIntTrackPointStruct::dgy_dy,
+          &RadIntTrackPointStruct::set_dgy_dy,
+          "bending strength gradient"
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return RadIntTrackPointStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = RadIntTrackPointStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const RadIntTrackPointStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const RadIntTrackPointStruct &self) {
+            return RadIntTrackPointStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const RadIntTrackPointStruct &self, nb::dict &memo) {
+            return RadIntTrackPointStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const RadIntTrackPointStruct &self, const RadIntTrackPointStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const RadIntTrackPointStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<RadIntTrackPointStructArray1D, RadIntTrackPointStructAlloc1D>(
+      m,
+      "RadIntTrackPointStructArray1D",
+      "RadIntTrackPointStructAlloc1D"
+  );
+  // 2D RadIntTrackPointStruct arrays are not used in structs/routines
+  // 3D RadIntTrackPointStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // random_state_struct
 void init_random_state_struct(nb::module_ &m, nb::class_<RandomStateStruct> &cls) {
   cls.def(

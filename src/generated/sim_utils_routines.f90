@@ -32,8 +32,8 @@ use random_mod, only: allocate_thread_states, pointer_to_ran_state, ran_default_
 
 use particle_species_mod, only: anomalous_moment_of, antiparticle, atomic_number, &
     atomic_species_id, charge_of, charge_to_mass_of, is_subatomic_species, mass_of, &
-    openpmd_species_name, set_species_charge, species_id, species_id_from_openpmd, &
-    species_name, species_of, spin_of, x0_radiation_length
+    molecular_components, openpmd_species_name, set_species_charge, species_id, &
+    species_id_from_openpmd, species_name, species_of, spin_of, x0_radiation_length
 
 use all_phase_fft, only: apfft, apfft_corr, apfft_ext, hanhan
 
@@ -41,9 +41,13 @@ use rotation_3d_mod, only: axis_angle_to_quat, axis_angle_to_w_mat, omega_to_qua
     quat_inverse, quat_mul, quat_rotate, quat_to_axis_angle, quat_to_omega, quat_to_w_mat, &
     rotate_vec, rotate_vec_given_axis_angle, w_mat_to_axis_angle, w_mat_to_quat
 
-use cubic_interpolation_mod, only: bicubic_cmplx_eval, tricubic_cmplx_eval
+use cubic_interpolation_mod, only: bicubic_cmplx_eval, bicubic_eval, &
+    bicubic_interpolation_cmplx_coefs, bicubic_interpolation_coefs, tricubic_cmplx_eval, &
+    tricubic_eval, tricubic_interpolation_cmplx_coefs, tricubic_interpolation_coefs
 
-use bin_mod, only: bin_index, bin_x_center, n_bins_automatic
+use bin_mod, only: bin_2d, bin_data, bin_data_density, bin_data_density_2d, bin_index, &
+    bin_x_center, count_at_index, general_bin_count, general_bin_index, &
+    general_bin_index_in_bounds, n_bins_automatic
 
 use bit_mod, only: bit_set
 
@@ -73,7 +77,7 @@ use sim_utils_struct, only: is_false, is_true
 use modulo2_mod, only: modulo2_dp, modulo2_int, modulo2_qp, modulo2_sp
 
 use output_mod, only: out_io, out_io_buffer_get_line, out_io_buffer_num_lines, &
-    out_io_buffer_reset, out_io_print_and_capture_setup
+    out_io_buffer_reset, out_io_print_and_capture_setup, output_direct
 
 use precision_def, only: rp8
 
@@ -594,6 +598,349 @@ subroutine fortran_bicubic_cmplx_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_
   call c_f_pointer(f_val, f_f_val_ptr)
   f_f_val_ptr = f_f_val
 end subroutine
+subroutine fortran_bicubic_eval (x_norm, y_norm, bi_coef, df_dx, df_dy, f_val) bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: bicubic_coef_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x_norm  ! 0D_NOT_real
+  real(rp) :: f_x_norm
+  real(c_double) :: y_norm  ! 0D_NOT_real
+  real(rp) :: f_y_norm
+  type(c_ptr), value :: bi_coef  ! 0D_NOT_type
+  type(bicubic_coef_struct), pointer :: f_bi_coef
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: df_dx  ! 0D_NOT_real
+  real(rp) :: f_df_dx
+  real(c_double), pointer :: f_df_dx_ptr
+  type(c_ptr), intent(in), value :: df_dy  ! 0D_NOT_real
+  real(rp) :: f_df_dy
+  real(c_double), pointer :: f_df_dy_ptr
+  type(c_ptr), intent(in), value :: f_val  ! 0D_NOT_real
+  real(rp) :: f_f_val
+  real(c_double), pointer :: f_f_val_ptr
+  ! ** End of parameters **
+  ! in: f_x_norm 0D_NOT_real
+  f_x_norm = x_norm
+  ! in: f_y_norm 0D_NOT_real
+  f_y_norm = y_norm
+  ! in: f_bi_coef 0D_NOT_type
+  if (.not. c_associated(bi_coef)) return
+  call c_f_pointer(bi_coef, f_bi_coef)
+  ! out: f_df_dx 0D_NOT_real
+  if (c_associated(df_dx)) then
+    call c_f_pointer(df_dx, f_df_dx_ptr)
+  else
+    f_df_dx_ptr => null()
+  endif
+  ! out: f_df_dy 0D_NOT_real
+  if (c_associated(df_dy)) then
+    call c_f_pointer(df_dy, f_df_dy_ptr)
+  else
+    f_df_dy_ptr => null()
+  endif
+  f_f_val = bicubic_eval(f_x_norm, f_y_norm, f_bi_coef, f_df_dx, f_df_dy)
+
+  ! out: f_df_dx 0D_NOT_real
+  call c_f_pointer(df_dx, f_df_dx_ptr)
+  f_df_dx_ptr = f_df_dx
+  ! out: f_df_dy 0D_NOT_real
+  call c_f_pointer(df_dy, f_df_dy_ptr)
+  f_df_dy_ptr = f_df_dy
+  ! out: f_f_val 0D_NOT_real
+  call c_f_pointer(f_val, f_f_val_ptr)
+  f_f_val_ptr = f_f_val
+end subroutine
+subroutine fortran_bicubic_interpolation_cmplx_coefs (field_at_box, bi_coef) bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: bicubic_cmplx_coef_struct, cmplx_field_at_2D_box_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: field_at_box  ! 0D_NOT_type
+  type(cmplx_field_at_2D_box_struct), pointer :: f_field_at_box
+  ! ** Out parameters **
+  type(c_ptr), value :: bi_coef  ! 0D_NOT_type
+  type(bicubic_cmplx_coef_struct), pointer :: f_bi_coef
+  ! ** End of parameters **
+  ! in: f_field_at_box 0D_NOT_type
+  if (.not. c_associated(field_at_box)) return
+  call c_f_pointer(field_at_box, f_field_at_box)
+  ! out: f_bi_coef 0D_NOT_type
+  if (.not. c_associated(bi_coef)) return
+  call c_f_pointer(bi_coef, f_bi_coef)
+  call bicubic_interpolation_cmplx_coefs(f_field_at_box, f_bi_coef)
+
+  ! out: f_bi_coef 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_bicubic_interpolation_coefs (field_at_box, bi_coef) bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: bicubic_coef_struct, field_at_2D_box_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: field_at_box  ! 0D_NOT_type
+  type(field_at_2D_box_struct), pointer :: f_field_at_box
+  ! ** Out parameters **
+  type(c_ptr), value :: bi_coef  ! 0D_NOT_type
+  type(bicubic_coef_struct), pointer :: f_bi_coef
+  ! ** End of parameters **
+  ! in: f_field_at_box 0D_NOT_type
+  if (.not. c_associated(field_at_box)) return
+  call c_f_pointer(field_at_box, f_field_at_box)
+  ! out: f_bi_coef 0D_NOT_type
+  if (.not. c_associated(bi_coef)) return
+  call c_f_pointer(bi_coef, f_bi_coef)
+  call bicubic_interpolation_coefs(f_field_at_box, f_bi_coef)
+
+  ! out: f_bi_coef 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_bin_2d (data1, data2, weight, min1, max1, min2, max2, n_bins1, n_bins2, &
+    bin_data) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: general_bin_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: data1
+  real(rp), pointer :: f_data1(:)
+  real(c_double), pointer :: f_data1_ptr(:)
+  type(array_descriptor_t), intent(in) :: data2
+  real(rp), pointer :: f_data2(:)
+  real(c_double), pointer :: f_data2_ptr(:)
+  type(array_descriptor_t), intent(in) :: weight
+  real(rp), pointer :: f_weight(:)
+  real(c_double), pointer :: f_weight_ptr(:)
+  type(c_ptr), intent(in), value :: min1  ! 0D_NOT_real
+  real(c_double) :: f_min1
+  real(c_double), pointer :: f_min1_ptr
+  type(c_ptr), intent(in), value :: max1  ! 0D_NOT_real
+  real(c_double) :: f_max1
+  real(c_double), pointer :: f_max1_ptr
+  type(c_ptr), intent(in), value :: min2  ! 0D_NOT_real
+  real(c_double) :: f_min2
+  real(c_double), pointer :: f_min2_ptr
+  type(c_ptr), intent(in), value :: max2  ! 0D_NOT_real
+  real(c_double) :: f_max2
+  real(c_double), pointer :: f_max2_ptr
+  type(c_ptr), intent(in), value :: n_bins1  ! 0D_NOT_integer
+  integer(c_int) :: f_n_bins1
+  integer(c_int), pointer :: f_n_bins1_ptr
+  type(c_ptr), intent(in), value :: n_bins2  ! 0D_NOT_integer
+  integer(c_int) :: f_n_bins2
+  integer(c_int), pointer :: f_n_bins2_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(general_bin_struct), pointer :: f_bin_data
+  ! ** End of parameters **
+  !! general array (1D_NOT_real) in
+  if (c_associated(data1%data_ptr)) then
+    call c_f_pointer(data1%data_ptr, f_data1_ptr, [data1%dims(1)])
+    f_data1 => f_data1_ptr
+  else
+    f_data1 => null()
+  endif
+  !! general array (1D_NOT_real) in
+  if (c_associated(data2%data_ptr)) then
+    call c_f_pointer(data2%data_ptr, f_data2_ptr, [data2%dims(1)])
+    f_data2 => f_data2_ptr
+  else
+    f_data2 => null()
+  endif
+  !! general array (1D_NOT_real) in
+  if (c_associated(weight%data_ptr)) then
+    call c_f_pointer(weight%data_ptr, f_weight_ptr, [weight%dims(1)])
+    f_weight => f_weight_ptr
+  else
+    f_weight => null()
+  endif
+  ! in: f_min1 0D_NOT_real
+  if (c_associated(min1)) then
+    call c_f_pointer(min1, f_min1_ptr)
+  else
+    f_min1_ptr => null()
+  endif
+  ! in: f_max1 0D_NOT_real
+  if (c_associated(max1)) then
+    call c_f_pointer(max1, f_max1_ptr)
+  else
+    f_max1_ptr => null()
+  endif
+  ! in: f_min2 0D_NOT_real
+  if (c_associated(min2)) then
+    call c_f_pointer(min2, f_min2_ptr)
+  else
+    f_min2_ptr => null()
+  endif
+  ! in: f_max2 0D_NOT_real
+  if (c_associated(max2)) then
+    call c_f_pointer(max2, f_max2_ptr)
+  else
+    f_max2_ptr => null()
+  endif
+  ! in: f_n_bins1 0D_NOT_integer
+  if (c_associated(n_bins1)) then
+    call c_f_pointer(n_bins1, f_n_bins1_ptr)
+  else
+    f_n_bins1_ptr => null()
+  endif
+  ! in: f_n_bins2 0D_NOT_integer
+  if (c_associated(n_bins2)) then
+    call c_f_pointer(n_bins2, f_n_bins2_ptr)
+  else
+    f_n_bins2_ptr => null()
+  endif
+  ! out: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  f_bin_data = bin_2d(f_data1, f_data2, f_weight, f_min1_ptr, f_max1_ptr, f_min2_ptr, &
+      f_max2_ptr, f_n_bins1_ptr, f_n_bins2_ptr)
+
+  ! out: f_bin_data 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_bin_data (data, weight, min, max, n_bins, binned_data) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: bin_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: data
+  real(rp), pointer :: f_data(:)
+  real(c_double), pointer :: f_data_ptr(:)
+  type(array_descriptor_t), intent(in) :: weight
+  real(rp), pointer :: f_weight(:)
+  real(c_double), pointer :: f_weight_ptr(:)
+  type(c_ptr), intent(in), value :: min  ! 0D_NOT_real
+  real(c_double) :: f_min
+  real(c_double), pointer :: f_min_ptr
+  type(c_ptr), intent(in), value :: max  ! 0D_NOT_real
+  real(c_double) :: f_max
+  real(c_double), pointer :: f_max_ptr
+  type(c_ptr), intent(in), value :: n_bins  ! 0D_NOT_integer
+  integer(c_int) :: f_n_bins
+  integer(c_int), pointer :: f_n_bins_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: binned_data  ! 0D_NOT_type
+  type(bin_struct), pointer :: f_binned_data
+  ! ** End of parameters **
+  !! general array (1D_NOT_real) in
+  if (c_associated(data%data_ptr)) then
+    call c_f_pointer(data%data_ptr, f_data_ptr, [data%dims(1)])
+    f_data => f_data_ptr
+  else
+    f_data => null()
+  endif
+  !! general array (1D_NOT_real) in
+  if (c_associated(weight%data_ptr)) then
+    call c_f_pointer(weight%data_ptr, f_weight_ptr, [weight%dims(1)])
+    f_weight => f_weight_ptr
+  else
+    f_weight => null()
+  endif
+  ! in: f_min 0D_NOT_real
+  if (c_associated(min)) then
+    call c_f_pointer(min, f_min_ptr)
+  else
+    f_min_ptr => null()
+  endif
+  ! in: f_max 0D_NOT_real
+  if (c_associated(max)) then
+    call c_f_pointer(max, f_max_ptr)
+  else
+    f_max_ptr => null()
+  endif
+  ! in: f_n_bins 0D_NOT_integer
+  if (c_associated(n_bins)) then
+    call c_f_pointer(n_bins, f_n_bins_ptr)
+  else
+    f_n_bins_ptr => null()
+  endif
+  ! out: f_binned_data 0D_NOT_type
+  if (.not. c_associated(binned_data)) return
+  call c_f_pointer(binned_data, f_binned_data)
+  f_binned_data = bin_data(f_data, f_weight, f_min_ptr, f_max_ptr, f_n_bins_ptr)
+
+  ! out: f_binned_data 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_bin_data_density (bin_data, x, order, r) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: bin_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(bin_struct), pointer :: f_bin_data
+  real(c_double) :: x  ! 0D_NOT_real
+  real(rp) :: f_x
+  type(c_ptr), intent(in), value :: order  ! 0D_NOT_integer
+  integer(c_int) :: f_order
+  integer(c_int), pointer :: f_order_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: r  ! 0D_NOT_real
+  real(rp) :: f_r
+  real(c_double), pointer :: f_r_ptr
+  ! ** End of parameters **
+  ! in: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_order 0D_NOT_integer
+  if (c_associated(order)) then
+    call c_f_pointer(order, f_order_ptr)
+  else
+    f_order_ptr => null()
+  endif
+  f_r = bin_data_density(f_bin_data, f_x, f_order_ptr)
+
+  ! out: f_r 0D_NOT_real
+  call c_f_pointer(r, f_r_ptr)
+  f_r_ptr = f_r
+end subroutine
+subroutine fortran_bin_data_density_2d (bin_data, x, y, order, r0) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: general_bin_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(general_bin_struct), pointer :: f_bin_data
+  real(c_double) :: x  ! 0D_NOT_real
+  real(rp) :: f_x
+  real(c_double) :: y  ! 0D_NOT_real
+  real(rp) :: f_y
+  type(c_ptr), intent(in), value :: order  ! 0D_NOT_integer
+  integer(c_int) :: f_order
+  integer(c_int), pointer :: f_order_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: r0  ! 0D_NOT_real
+  real(rp) :: f_r0
+  real(c_double), pointer :: f_r0_ptr
+  ! ** End of parameters **
+  ! in: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_y 0D_NOT_real
+  f_y = y
+  ! in: f_order 0D_NOT_integer
+  if (c_associated(order)) then
+    call c_f_pointer(order, f_order_ptr)
+  else
+    f_order_ptr => null()
+  endif
+  f_r0 = bin_data_density_2d(f_bin_data, f_x, f_y, f_order_ptr)
+
+  ! out: f_r0 0D_NOT_real
+  call c_f_pointer(r0, f_r0_ptr)
+  f_r0_ptr = f_r0
+end subroutine
 subroutine fortran_bin_index (x, bin1_x_min, bin_delta, ix_bin) bind(c)
 
   use array_desc_mod
@@ -1020,6 +1367,33 @@ subroutine fortran_cosc (x, nd, y) bind(c)
   ! out: f_y 0D_NOT_real
   call c_f_pointer(y, f_y_ptr)
   f_y_ptr = f_y
+end subroutine
+subroutine fortran_count_at_index (bin_data, index, c) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: bin_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: index  ! 0D_NOT_integer
+  integer :: f_index
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: c  ! 0D_NOT_real
+  real(rp) :: f_c
+  real(c_double), pointer :: f_c_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(bin_struct), pointer :: f_bin_data
+  ! ** End of parameters **
+  ! inout: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_index 0D_NOT_integer
+  f_index = index
+  f_c = count_at_index(f_bin_data, f_index)
+
+  ! out: f_c 0D_NOT_real
+  call c_f_pointer(c, f_c_ptr)
+  f_c_ptr = f_c
 end subroutine
 subroutine fortran_create_a_spline (r0, r1, slope0, slope1, spline) bind(c)
 
@@ -2003,6 +2377,141 @@ subroutine fortran_gen_complete_elliptic (kc, p, c, s, err_tol, value) bind(c)
   ! out: f_value 0D_NOT_real
   call c_f_pointer(value, f_value_ptr)
   f_value_ptr = f_value
+end subroutine
+subroutine fortran_general_bin_count (bin_data, ix1, ix2, ix3, count) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: general_bin_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: ix1  ! 0D_NOT_integer
+  integer :: f_ix1
+  type(c_ptr), intent(in), value :: ix2  ! 0D_NOT_integer
+  integer(c_int) :: f_ix2
+  integer(c_int), pointer :: f_ix2_ptr
+  type(c_ptr), intent(in), value :: ix3  ! 0D_NOT_integer
+  integer(c_int) :: f_ix3
+  integer(c_int), pointer :: f_ix3_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: count  ! 0D_NOT_real
+  real(rp) :: f_count
+  real(c_double), pointer :: f_count_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(general_bin_struct), pointer :: f_bin_data
+  ! ** End of parameters **
+  ! inout: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_ix1 0D_NOT_integer
+  f_ix1 = ix1
+  ! in: f_ix2 0D_NOT_integer
+  if (c_associated(ix2)) then
+    call c_f_pointer(ix2, f_ix2_ptr)
+  else
+    f_ix2_ptr => null()
+  endif
+  ! in: f_ix3 0D_NOT_integer
+  if (c_associated(ix3)) then
+    call c_f_pointer(ix3, f_ix3_ptr)
+  else
+    f_ix3_ptr => null()
+  endif
+  f_count = general_bin_count(f_bin_data, f_ix1, f_ix2_ptr, f_ix3_ptr)
+
+  ! out: f_count 0D_NOT_real
+  call c_f_pointer(count, f_count_ptr)
+  f_count_ptr = f_count
+end subroutine
+subroutine fortran_general_bin_index (bin_data, ix1, ix2, ix3, index) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: general_bin_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: ix1  ! 0D_NOT_integer
+  integer :: f_ix1
+  type(c_ptr), intent(in), value :: ix2  ! 0D_NOT_integer
+  integer(c_int) :: f_ix2
+  integer(c_int), pointer :: f_ix2_ptr
+  type(c_ptr), intent(in), value :: ix3  ! 0D_NOT_integer
+  integer(c_int) :: f_ix3
+  integer(c_int), pointer :: f_ix3_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: index  ! 0D_NOT_integer
+  integer :: f_index
+  integer(c_int), pointer :: f_index_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(general_bin_struct), pointer :: f_bin_data
+  ! ** End of parameters **
+  ! inout: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_ix1 0D_NOT_integer
+  f_ix1 = ix1
+  ! in: f_ix2 0D_NOT_integer
+  if (c_associated(ix2)) then
+    call c_f_pointer(ix2, f_ix2_ptr)
+  else
+    f_ix2_ptr => null()
+  endif
+  ! in: f_ix3 0D_NOT_integer
+  if (c_associated(ix3)) then
+    call c_f_pointer(ix3, f_ix3_ptr)
+  else
+    f_ix3_ptr => null()
+  endif
+  f_index = general_bin_index(f_bin_data, f_ix1, f_ix2_ptr, f_ix3_ptr)
+
+  ! out: f_index 0D_NOT_integer
+  call c_f_pointer(index, f_index_ptr)
+  f_index_ptr = f_index
+end subroutine
+subroutine fortran_general_bin_index_in_bounds (bin_data, ix1, ix2, ix3, in_bounds) bind(c)
+
+  use array_desc_mod
+  use bin_mod, only: general_bin_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: ix1  ! 0D_NOT_integer
+  integer :: f_ix1
+  type(c_ptr), intent(in), value :: ix2  ! 0D_NOT_integer
+  integer(c_int) :: f_ix2
+  integer(c_int), pointer :: f_ix2_ptr
+  type(c_ptr), intent(in), value :: ix3  ! 0D_NOT_integer
+  integer(c_int) :: f_ix3
+  integer(c_int), pointer :: f_ix3_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: in_bounds  ! 0D_NOT_logical
+  logical :: f_in_bounds
+  logical(c_bool), pointer :: f_in_bounds_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: bin_data  ! 0D_NOT_type
+  type(general_bin_struct), pointer :: f_bin_data
+  ! ** End of parameters **
+  ! inout: f_bin_data 0D_NOT_type
+  if (.not. c_associated(bin_data)) return
+  call c_f_pointer(bin_data, f_bin_data)
+  ! in: f_ix1 0D_NOT_integer
+  f_ix1 = ix1
+  ! in: f_ix2 0D_NOT_integer
+  if (c_associated(ix2)) then
+    call c_f_pointer(ix2, f_ix2_ptr)
+  else
+    f_ix2_ptr => null()
+  endif
+  ! in: f_ix3 0D_NOT_integer
+  if (c_associated(ix3)) then
+    call c_f_pointer(ix3, f_ix3_ptr)
+  else
+    f_ix3_ptr => null()
+  endif
+  f_in_bounds = general_bin_index_in_bounds(f_bin_data, f_ix1, f_ix2_ptr, f_ix3_ptr)
+
+  ! out: f_in_bounds 0D_NOT_logical
+  call c_f_pointer(in_bounds, f_in_bounds_ptr)
+  f_in_bounds_ptr = f_in_bounds
 end subroutine
 subroutine fortran_get_a_char (this_char, wait, ignore_this) bind(c)
 
@@ -3209,6 +3718,28 @@ subroutine fortran_modulo2_sp (x, amp, mod2) bind(c)
   call c_f_pointer(mod2, f_mod2_ptr)
   f_mod2_ptr = f_mod2
 end subroutine
+subroutine fortran_molecular_components (molecule, component) bind(c)
+
+  use array_desc_mod
+  use sim_utils_struct, only: molecular_component_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: molecule
+  character(len=4096), target :: f_molecule
+  character(kind=c_char), pointer :: f_molecule_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: component
+  type(molecular_component_struct_container_alloc), pointer :: f_component
+  ! ** End of parameters **
+  ! in: f_molecule 0D_NOT_character
+  if (.not. c_associated(molecule)) return
+  call c_f_pointer(molecule, f_molecule_ptr, [huge(0)])
+  call to_f_str(f_molecule_ptr, f_molecule)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(component))   call c_f_pointer(component, f_component)
+  call molecular_components(f_molecule, f_component%data)
+
+end subroutine
 subroutine fortran_n_bins_automatic (n_data, n) bind(c)
 
   use array_desc_mod
@@ -4138,6 +4669,69 @@ subroutine fortran_out_io_real (level, routine_name, line, r_num, insert_tag_lin
   endif
   call out_io(f_level, f_routine_name, f_line, f_r_num, f_insert_tag_line_native_ptr)
 
+end subroutine
+subroutine fortran_output_direct (file_unit, print_and_capture, min_level, max_level, set, get) &
+    bind(c)
+
+  use array_desc_mod
+  use output_mod, only: out_io_output_direct_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: file_unit  ! 0D_NOT_integer
+  integer(c_int) :: f_file_unit
+  integer(c_int), pointer :: f_file_unit_ptr
+  type(c_ptr), intent(in), value :: print_and_capture  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_and_capture
+  logical, target :: f_print_and_capture_native
+  logical, pointer :: f_print_and_capture_native_ptr
+  logical(c_bool), pointer :: f_print_and_capture_ptr
+  type(c_ptr), intent(in), value :: min_level  ! 0D_NOT_integer
+  integer(c_int) :: f_min_level
+  integer(c_int), pointer :: f_min_level_ptr
+  type(c_ptr), intent(in), value :: max_level  ! 0D_NOT_integer
+  integer(c_int) :: f_max_level
+  integer(c_int), pointer :: f_max_level_ptr
+  type(c_ptr), value :: set  ! 0D_NOT_type
+  type(out_io_output_direct_struct), pointer :: f_set
+  ! ** Out parameters **
+  type(c_ptr), value :: get  ! 0D_NOT_type
+  type(out_io_output_direct_struct), pointer :: f_get
+  ! ** End of parameters **
+  ! in: f_file_unit 0D_NOT_integer
+  if (c_associated(file_unit)) then
+    call c_f_pointer(file_unit, f_file_unit_ptr)
+  else
+    f_file_unit_ptr => null()
+  endif
+  ! in: f_print_and_capture 0D_NOT_logical
+  if (c_associated(print_and_capture)) then
+    call c_f_pointer(print_and_capture, f_print_and_capture_ptr)
+    f_print_and_capture_native = f_print_and_capture_ptr
+    f_print_and_capture_native_ptr => f_print_and_capture_native
+  else
+    f_print_and_capture_native_ptr => null()
+  endif
+  ! in: f_min_level 0D_NOT_integer
+  if (c_associated(min_level)) then
+    call c_f_pointer(min_level, f_min_level_ptr)
+  else
+    f_min_level_ptr => null()
+  endif
+  ! in: f_max_level 0D_NOT_integer
+  if (c_associated(max_level)) then
+    call c_f_pointer(max_level, f_max_level_ptr)
+  else
+    f_max_level_ptr => null()
+  endif
+  ! in: f_set 0D_NOT_type
+  if (c_associated(set))   call c_f_pointer(set, f_set)
+  ! out: f_get 0D_NOT_type
+  if (c_associated(get))   call c_f_pointer(get, f_get)
+  call output_direct(f_file_unit_ptr, f_print_and_capture_native_ptr, f_min_level_ptr, &
+      f_max_level_ptr, f_set, f_get)
+
+  ! out: f_get 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_parse_fortran_format (format_str, n_repeat, power, descrip, width, digits) &
     bind(c)
@@ -7733,6 +8327,123 @@ subroutine fortran_tricubic_cmplx_eval (x_norm, y_norm, z_norm, tri_coef, df_dx,
   ! out: f_f_val 0D_NOT_complex
   call c_f_pointer(f_val, f_f_val_ptr)
   f_f_val_ptr = f_f_val
+end subroutine
+subroutine fortran_tricubic_eval (x_norm, y_norm, z_norm, tri_coef, df_dx, df_dy, df_dz, f_val) &
+    bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: tricubic_coef_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x_norm  ! 0D_NOT_real
+  real(rp) :: f_x_norm
+  real(c_double) :: y_norm  ! 0D_NOT_real
+  real(rp) :: f_y_norm
+  real(c_double) :: z_norm  ! 0D_NOT_real
+  real(rp) :: f_z_norm
+  type(c_ptr), value :: tri_coef  ! 0D_NOT_type
+  type(tricubic_coef_struct), pointer :: f_tri_coef
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: df_dx  ! 0D_NOT_real
+  real(rp) :: f_df_dx
+  real(c_double), pointer :: f_df_dx_ptr
+  type(c_ptr), intent(in), value :: df_dy  ! 0D_NOT_real
+  real(rp) :: f_df_dy
+  real(c_double), pointer :: f_df_dy_ptr
+  type(c_ptr), intent(in), value :: df_dz  ! 0D_NOT_real
+  real(rp) :: f_df_dz
+  real(c_double), pointer :: f_df_dz_ptr
+  type(c_ptr), intent(in), value :: f_val  ! 0D_NOT_real
+  real(rp) :: f_f_val
+  real(c_double), pointer :: f_f_val_ptr
+  ! ** End of parameters **
+  ! in: f_x_norm 0D_NOT_real
+  f_x_norm = x_norm
+  ! in: f_y_norm 0D_NOT_real
+  f_y_norm = y_norm
+  ! in: f_z_norm 0D_NOT_real
+  f_z_norm = z_norm
+  ! in: f_tri_coef 0D_NOT_type
+  if (.not. c_associated(tri_coef)) return
+  call c_f_pointer(tri_coef, f_tri_coef)
+  ! out: f_df_dx 0D_NOT_real
+  if (c_associated(df_dx)) then
+    call c_f_pointer(df_dx, f_df_dx_ptr)
+  else
+    f_df_dx_ptr => null()
+  endif
+  ! out: f_df_dy 0D_NOT_real
+  if (c_associated(df_dy)) then
+    call c_f_pointer(df_dy, f_df_dy_ptr)
+  else
+    f_df_dy_ptr => null()
+  endif
+  ! out: f_df_dz 0D_NOT_real
+  if (c_associated(df_dz)) then
+    call c_f_pointer(df_dz, f_df_dz_ptr)
+  else
+    f_df_dz_ptr => null()
+  endif
+  f_f_val = tricubic_eval(f_x_norm, f_y_norm, f_z_norm, f_tri_coef, f_df_dx, f_df_dy, f_df_dz)
+
+  ! out: f_df_dx 0D_NOT_real
+  call c_f_pointer(df_dx, f_df_dx_ptr)
+  f_df_dx_ptr = f_df_dx
+  ! out: f_df_dy 0D_NOT_real
+  call c_f_pointer(df_dy, f_df_dy_ptr)
+  f_df_dy_ptr = f_df_dy
+  ! out: f_df_dz 0D_NOT_real
+  call c_f_pointer(df_dz, f_df_dz_ptr)
+  f_df_dz_ptr = f_df_dz
+  ! out: f_f_val 0D_NOT_real
+  call c_f_pointer(f_val, f_f_val_ptr)
+  f_f_val_ptr = f_f_val
+end subroutine
+subroutine fortran_tricubic_interpolation_cmplx_coefs (field_at_box, tri_coef) bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: cmplx_field_at_3D_box_struct, tricubic_cmplx_coef_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: field_at_box  ! 0D_NOT_type
+  type(cmplx_field_at_3D_box_struct), pointer :: f_field_at_box
+  ! ** Out parameters **
+  type(c_ptr), value :: tri_coef  ! 0D_NOT_type
+  type(tricubic_cmplx_coef_struct), pointer :: f_tri_coef
+  ! ** End of parameters **
+  ! in: f_field_at_box 0D_NOT_type
+  if (.not. c_associated(field_at_box)) return
+  call c_f_pointer(field_at_box, f_field_at_box)
+  ! out: f_tri_coef 0D_NOT_type
+  if (.not. c_associated(tri_coef)) return
+  call c_f_pointer(tri_coef, f_tri_coef)
+  call tricubic_interpolation_cmplx_coefs(f_field_at_box, f_tri_coef)
+
+  ! out: f_tri_coef 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_tricubic_interpolation_coefs (field_at_box, tri_coef) bind(c)
+
+  use array_desc_mod
+  use cubic_interpolation_mod, only: field_at_3D_box_struct, tricubic_coef_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: field_at_box  ! 0D_NOT_type
+  type(field_at_3D_box_struct), pointer :: f_field_at_box
+  ! ** Out parameters **
+  type(c_ptr), value :: tri_coef  ! 0D_NOT_type
+  type(tricubic_coef_struct), pointer :: f_tri_coef
+  ! ** End of parameters **
+  ! in: f_field_at_box 0D_NOT_type
+  if (.not. c_associated(field_at_box)) return
+  call c_f_pointer(field_at_box, f_field_at_box)
+  ! out: f_tri_coef 0D_NOT_type
+  if (.not. c_associated(tri_coef)) return
+  call c_f_pointer(tri_coef, f_tri_coef)
+  call tricubic_interpolation_coefs(f_field_at_box, f_tri_coef)
+
+  ! out: f_tri_coef 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_type_this_file (filename) bind(c)
 

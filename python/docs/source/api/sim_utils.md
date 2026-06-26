@@ -48,6 +48,289 @@ All attributes may be passed to the initializer as arguments:
 | `coef` | 2D array of complex (shape: 0:3,0:3) | Coefs |
 | `i_box` | 1D array of int (shape: 2) | index at lower box corner. |
 
+::: pybmad.BicubicCoefStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### BicubicCoefStruct
+
+Fortran struct: `bicubic_coef_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L43))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `coef` | 2D array of float (shape: 0:3,0:3) | Coefs |
+| `i_box` | 1D array of int (shape: 2) | index at lower box corner. |
+
+::: pybmad.BinStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### BinStruct
+
+Fortran struct: `bin_struct` ([`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L9))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `count` | 1D array of float | Counts (or weight) in each bin |
+| `min` | float | Bounds for the bins |
+| `max` | float |  |
+| `delta` | float | Size of a bin |
+| `n` | int | Number of bins |
+
+::: pybmad.CmplxField1At2DPtStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CmplxField1At2DPtStruct
+
+Fortran struct: `cmplx_field1_at_2D_pt_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L55))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `f` | complex | Field |
+| `df_dx` | complex | Normalized field 1st derivatives |
+| `df_dy` | complex | Normalized field 1st derivatives |
+| `d2f_dxdy` | complex | Normalized field 2nd derivative |
+
+::: pybmad.CmplxField1At3DPtStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CmplxField1At3DPtStruct
+
+Fortran struct: `cmplx_field1_at_3D_pt_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L110))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `f` | complex | Field |
+| `df_dx` | complex | Normalized field 1st derivatives |
+| `df_dy` | complex | Normalized field 1st derivatives |
+| `df_dz` | complex | Normalized field 1st derivatives |
+| `d2f_dxdy` | complex | Normalized field 2nd derivatives |
+| `d2f_dxdz` | complex | Normalized field 2nd derivatives |
+| `d2f_dydz` | complex | Normalized field 2nd derivatives |
+| `d3f_dxdydz` | complex | Normalized field 3rd derivative |
+
+::: pybmad.CmplxFieldAt2DBoxStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CmplxFieldAt2DBoxStruct
+
+Fortran struct: `cmplx_field_at_2D_box_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L63))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pt` | 2D array of CmplxField1At2dPtStruct (shape: 0:1, 0:1) |  |
+| `i_box` | 1D array of int (shape: 2) | index at lower box corner. |
+
+::: pybmad.CmplxFieldAt3DBoxStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CmplxFieldAt3DBoxStruct
+
+Fortran struct: `cmplx_field_at_3D_box_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L119))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pt` | 3D array of CmplxField1At3dPtStruct (shape: 0:1, 0:1, 0:1) |  |
+| `i_box` | 1D array of int (shape: 3) | index at lower box corner. |
+
+::: pybmad.Field1At2DPtStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### Field1At2DPtStruct
+
+Fortran struct: `field1_at_2D_pt_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L28))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `f` | float | Field |
+| `df_dx` | float | Normalized field 1st derivatives |
+| `df_dy` | float | Normalized field 1st derivatives |
+| `d2f_dxdy` | float | Normalized field 2nd derivative |
+
+::: pybmad.Field1At3DPtStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### Field1At3DPtStruct
+
+Fortran struct: `field1_at_3D_pt_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L82))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `f` | float | Field |
+| `df_dx` | float | Normalized field 1st derivatives |
+| `df_dy` | float | Normalized field 1st derivatives |
+| `df_dz` | float | Normalized field 1st derivatives |
+| `d2f_dxdy` | float | Normalized field 2nd derivatives |
+| `d2f_dxdz` | float | Normalized field 2nd derivatives |
+| `d2f_dydz` | float | Normalized field 2nd derivatives |
+| `d3f_dxdydz` | float | Normalized field 3rd derivative |
+
+::: pybmad.FieldAt2DBoxStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### FieldAt2DBoxStruct
+
+Fortran struct: `field_at_2D_box_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L36))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pt` | 2D array of Field1At2dPtStruct (shape: 0:1, 0:1) |  |
+| `i_box` | 1D array of int (shape: 2) | index at lower box corner. |
+
+::: pybmad.FieldAt3DBoxStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### FieldAt3DBoxStruct
+
+Fortran struct: `field_at_3D_box_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L91))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pt` | 3D array of Field1At3dPtStruct (shape: 0:1, 0:1, 0:1) |  |
+| `i_box` | 1D array of int (shape: 3) | index at lower box corner. |
+
+::: pybmad.GeneralBinStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### GeneralBinStruct
+
+Fortran struct: `general_bin_struct` ([`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L17))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `count` | 1D array of float | Counts (or weight) in each bin |
+| `min` | 1D array of float (shape: 3) | Bounds for the bins |
+| `max` | 1D array of float (shape: 3) |  |
+| `delta` | 1D array of float (shape: 3) | Size of a bin |
+| `dim` | int | Number of dimensions |
+| `n` | 1D array of int (shape: 3) | number of bins in each dimension |
+
+::: pybmad.MolecularComponentStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MolecularComponentStruct
+
+Fortran struct: `molecular_component_struct` ([`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L78))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `atom` | str |  |
+| `number` | int |  |
+
+::: pybmad.NamedNumberStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### NamedNumberStruct
+
+Fortran struct: `named_number_struct` ([`sim_utils/interfaces/precision_def.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/precision_def.f90#L18))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str |  |
+| `value` | float |  |
+
 ::: pybmad.NametableStruct
     options:
       heading_level: 0
@@ -69,6 +352,26 @@ All attributes may be passed to the initializer as arguments:
 | `index` | 1D array of int | Sorted index for names(:) array. names(an_index(i)) is in alphabetical order. |
 | `n_min` | int | Set to 0 for use in a lattice. |
 | `n_max` | int | Use only names(n_min:n_max) part of array. |
+
+::: pybmad.OutIoOutputDirectStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### OutIoOutputDirectStruct
+
+Fortran struct: `out_io_output_direct_struct` ([`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L28))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `print_and_capture` | 1D array of bool (shape: -1:10) |  |
+| `file_unit` | 1D array of int (shape: -1:10) |  |
 
 ::: pybmad.QpAxisStruct
     options:
@@ -276,6 +579,28 @@ All attributes may be passed to the initializer as arguments:
 | `x1` | float | Point at end of spline |
 | `coef` | 1D array of float (shape: 0:3) | coefficients for cubic spline |
 
+::: pybmad.StrIndexStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### StrIndexStruct
+
+Fortran struct: `str_index_struct` ([`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L18))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | [1D array of VarLengthStringStruct](sim_utils.md#varlengthstringstruct) | Array of names. |
+| `index` | 1D array of int | Sorted index for names(:) array. names(an_index(i)) is in alphabetical order. |
+| `n_min` | int |  |
+| `n_max` | int | Use only names(n_min:n_max) part of array. |
+
 ::: pybmad.TricubicCmplxCoefStruct
     options:
       heading_level: 0
@@ -295,6 +620,45 @@ All attributes may be passed to the initializer as arguments:
 |-----------|------|-------------|
 | `coef` | 3D array of complex (shape: 0:3,0:3,0:3) | Coefs |
 | `i_box` | 1D array of int (shape: 3) | index at lower box corner. |
+
+::: pybmad.TricubicCoefStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### TricubicCoefStruct
+
+Fortran struct: `tricubic_coef_struct` ([`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L98))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `coef` | 3D array of float (shape: 0:3,0:3,0:3) | Coefs |
+| `i_box` | 1D array of int (shape: 3) | index at lower box corner. |
+
+::: pybmad.VarLengthStringStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### VarLengthStringStruct
+
+Fortran struct: `var_length_string_struct` ([`sim_utils/interfaces/sim_utils_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_struct.f90#L14))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `str` | str |  |
 
 ## Procedures
 
@@ -420,6 +784,69 @@ Fortran source: [`sim_utils/math/rotation_3d_mod.f90`](https://github.com/bmad-s
 Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1103)
 
 ::: pybmad.simutils.bicubic_cmplx_eval
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bicubic_eval
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L472)
+
+::: pybmad.simutils.bicubic_eval
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bicubic_interpolation_cmplx_coefs
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1049)
+
+::: pybmad.simutils.bicubic_interpolation_cmplx_coefs
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bicubic_interpolation_coefs
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L418)
+
+::: pybmad.simutils.bicubic_interpolation_coefs
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bin_2d
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L254)
+
+::: pybmad.simutils.bin_2d
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bin_data
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L107)
+
+::: pybmad.simutils.bin_data
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bin_data_density
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L46)
+
+::: pybmad.simutils.bin_data_density
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bin_data_density_2d
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L162)
+
+::: pybmad.simutils.bin_data_density_2d
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -555,6 +982,15 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L27)
 
 ::: pybmad.simutils.cosc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### count_at_index
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L369)
+
+::: pybmad.simutils.count_at_index
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -821,6 +1257,33 @@ Fortran source: [`sim_utils/special_functions/elliptic_integral_mod.f90`](https:
 Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/sim_utils_interface.f90#L255)
 
 ::: pybmad.simutils.gen_complete_elliptic
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### general_bin_count
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L414)
+
+::: pybmad.simutils.general_bin_count
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### general_bin_index
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L399)
+
+::: pybmad.simutils.general_bin_index
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### general_bin_index_in_bounds
+
+Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L438)
+
+::: pybmad.simutils.general_bin_index_in_bounds
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -1176,6 +1639,15 @@ Fortran source: [`sim_utils/special_functions/modulo2_mod.f90`](https://github.c
       show_root_heading: false
       show_root_toc_entry: false
 
+### molecular_components
+
+Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/interfaces/particle_species_mod.f90#L812)
+
+::: pybmad.simutils.molecular_components
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### n_bins_automatic
 
 Fortran source: [`sim_utils/math/bin_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/bin_mod.f90#L386)
@@ -1349,6 +1821,15 @@ Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad
 Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L768)
 
 ::: pybmad.simutils.out_io_print_and_capture_setup
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### output_direct
+
+Fortran source: [`sim_utils/io/output_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/io/output_mod.f90#L161)
+
+::: pybmad.simutils.output_direct
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -2187,6 +2668,33 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`](https://github.
 Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1433)
 
 ::: pybmad.simutils.tricubic_cmplx_eval
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tricubic_eval
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L800)
+
+::: pybmad.simutils.tricubic_eval
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tricubic_interpolation_cmplx_coefs
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L1373)
+
+::: pybmad.simutils.tricubic_interpolation_cmplx_coefs
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tricubic_interpolation_coefs
+
+Fortran source: [`sim_utils/math/cubic_interpolation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/sim_utils/math/cubic_interpolation_mod.f90#L740)
+
+::: pybmad.simutils.tricubic_interpolation_coefs
     options:
       show_root_heading: false
       show_root_toc_entry: false

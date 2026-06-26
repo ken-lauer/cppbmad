@@ -13,6 +13,90 @@ using namespace Pybmad;
 namespace nb = nanobind;
 
 // =============================================================================
+// ele_attribute_struct
+void init_ele_attribute_struct(nb::module_ &m, nb::class_<EleAttributeStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<double>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("state") = nb::none(),
+         nb::arg("kind") = nb::none(),
+         nb::arg("units") = nb::none(),
+         nb::arg("ix_attrib") = nb::none(),
+         nb::arg("value") = nb::none()
+  )
+      .def_prop_rw("name", &EleAttributeStruct::name, &EleAttributeStruct::set_name)
+      .def_prop_rw(
+          "state",
+          &EleAttributeStruct::state,
+          &EleAttributeStruct::set_state,
+          "See above."
+      )
+      .def_prop_rw(
+          "kind",
+          &EleAttributeStruct::kind,
+          &EleAttributeStruct::set_kind,
+          "Is_switch$, is_real$, etc. See attribute_type routine."
+      )
+      .def_prop_rw(
+          "units",
+          &EleAttributeStruct::units,
+          &EleAttributeStruct::set_units,
+          "EG: 'T*m'."
+      )
+      .def_prop_rw(
+          "ix_attrib",
+          &EleAttributeStruct::ix_attrib,
+          &EleAttributeStruct::set_ix_attrib,
+          "Attribute index. Frequently will be where in the ele%value(:) array the attribute is."
+      )
+      .def_prop_rw(
+          "value",
+          &EleAttributeStruct::value,
+          &EleAttributeStruct::set_value,
+          "Used by type_ele."
+      )
+
+      .def("__repr__", [](const EleAttributeStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const EleAttributeStruct &self) {
+            return EleAttributeStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const EleAttributeStruct &self, nb::dict &memo) { return EleAttributeStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const EleAttributeStruct &self, const EleAttributeStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EleAttributeStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D EleAttributeStruct arrays are not used in structs/routines
+  // 2D EleAttributeStruct arrays are not used in structs/routines
+  // 3D EleAttributeStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // ele_pointer_struct
 void init_ele_pointer_struct(nb::module_ &m, nb::class_<ElePointerStruct> &cls) {
   cls.def(
@@ -96,7 +180,7 @@ void init_ele_pointer_struct(nb::module_ &m, nb::class_<ElePointerStruct> &cls) 
       "ElePointerStructArray1D",
       "ElePointerStructAlloc1D"
   );
-  // 2D ElePointerStruct arrays are not used in structs/routines
+  bind_FTypeArrayND<ElePointerStructArray2D>(m, "ElePointerStructArray2D");
   // 3D ElePointerStruct arrays are not used in structs/routines
 }
 
@@ -120,9 +204,10 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
             const BookkeepingStateStruct *bookkeeping_state,
             const BranchStruct *branch,
             const ControllerStruct *control,
+            const ConverterStruct *converter,
             const RfEleStruct *rf,
+            const FoilStruct *foil,
             const EleStruct *lord,
-            const Fibre *ptc_fibre,
             const FloorPositionStruct *floor,
             const HighEnergySpaceChargeStruct *high_energy_space_charge,
             const Mode3Struct *mode3,
@@ -205,9 +290,10 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
                ptr_to_opt_ref(bookkeeping_state),
                ptr_to_opt_ref(branch),
                ptr_to_opt_ref(control),
+               ptr_to_opt_ref(converter),
                ptr_to_opt_ref(rf),
+               ptr_to_opt_ref(foil),
                ptr_to_opt_ref(lord),
-               ptr_to_opt_ref(ptc_fibre),
                ptr_to_opt_ref(floor),
                ptr_to_opt_ref(high_energy_space_charge),
                ptr_to_opt_ref(mode3),
@@ -291,9 +377,10 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
          nb::arg("bookkeeping_state") = nb::none(),
          nb::arg("branch") = nb::none(),
          nb::arg("control") = nb::none(),
+         nb::arg("converter") = nb::none(),
          nb::arg("rf") = nb::none(),
+         nb::arg("foil") = nb::none(),
          nb::arg("lord") = nb::none(),
-         nb::arg("ptc_fibre") = nb::none(),
          nb::arg("floor") = nb::none(),
          nb::arg("high_energy_space_charge") = nb::none(),
          nb::arg("mode3") = nb::none(),
@@ -436,6 +523,13 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
           "group & overlay variables."
       )
       .def_prop_rw(
+          "converter",
+          &EleStruct::converter,
+          &EleStruct::set_converter,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "EG: Positron converter in linac."
+      )
+      .def_prop_rw(
           "rf",
           &EleStruct::rf,
           &EleStruct::set_rf,
@@ -443,20 +537,17 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
           "RF parameters."
       )
       .def_prop_rw(
+          "foil",
+          &EleStruct::foil,
+          &EleStruct::set_foil,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
           "lord",
           &EleStruct::lord,
           &EleStruct::set_lord,
           nb::for_getter(nb::keep_alive<0, 1>()),
           "Pointer to a slice lord."
-      )
-      .def_prop_rw(
-          "ptc_fibre",
-          &EleStruct::ptc_fibre,
-          &EleStruct::set_ptc_fibre,
-          nb::for_getter(nb::keep_alive<0, 1>()),
-          "PTC track corresponding to this ele. %floor is floor coord of lab coordinates at the "
-          "downstream end. Notice that if ele%direction = -1, the lab coords have the z-axis "
-          "antiparallel to the +s-direction."
       )
       .def_prop_rw(
           "floor",
@@ -483,6 +574,7 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
           &EleStruct::set_photon,
           nb::for_getter(nb::keep_alive<0, 1>())
       )
+      // 0D_ALLOC_type multipole_cache proxy support missing
       .def_prop_rw(
           "rad_map",
           &EleStruct::rad_map,
@@ -1304,4 +1396,625 @@ void init_expression_tree_struct(nb::module_ &m, nb::class_<ExpressionTreeStruct
   );
   // 2D ExpressionTreeStruct arrays are not used in structs/routines
   // 3D ExpressionTreeStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// extra_parsing_info_struct
+void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](ExtraParsingInfoStruct *self,
+            const RandomStateStruct *ran_state,
+            std::optional<int> ran_seed,
+            std::optional<bool> undeterministic_ran_function_called,
+            std::optional<bool> d_orb_set,
+            std::optional<bool> max_aperture_limit_set,
+            std::optional<bool> default_ds_step_set,
+            std::optional<bool> significant_length_set,
+            std::optional<bool> rel_tol_tracking_set,
+            std::optional<bool> abs_tol_tracking_set,
+            std::optional<bool> rel_tol_adaptive_tracking_set,
+            std::optional<bool> abs_tol_adaptive_tracking_set,
+            std::optional<bool> init_ds_adaptive_tracking_set,
+            std::optional<bool> min_ds_adaptive_tracking_set,
+            std::optional<bool> fatal_ds_adaptive_tracking_set,
+            std::optional<bool> synch_rad_scale_set,
+            std::optional<bool> autoscale_amp_abs_tol_set,
+            std::optional<bool> autoscale_amp_rel_tol_set,
+            std::optional<bool> autoscale_phase_tol_set,
+            std::optional<bool> rf_phase_below_transition_ref_set,
+            std::optional<bool> electric_dipole_moment_set,
+            std::optional<bool> taylor_order_set,
+            std::optional<bool> runge_kutta_order_set,
+            std::optional<bool> default_integ_order_set,
+            std::optional<bool> sr_wakes_on_set,
+            std::optional<bool> lr_wakes_on_set,
+            std::optional<bool> high_energy_space_charge_on_set,
+            std::optional<bool> high_energy_space_charge_linear_set,
+            std::optional<bool> csr_and_space_charge_on_set,
+            std::optional<bool> spin_tracking_on_set,
+            std::optional<bool> spin_sokolov_ternov_flipping_on_set,
+            std::optional<bool> radiation_damping_on_set,
+            std::optional<bool> radiation_zero_average_set,
+            std::optional<bool> radiation_fluctuations_on_set,
+            std::optional<bool> conserve_taylor_maps_set,
+            std::optional<bool> absolute_time_tracking_set,
+            std::optional<bool> absolute_time_ref_shift_set,
+            std::optional<bool> convert_to_kinetic_momentum_set,
+            std::optional<bool> aperture_limit_on_set,
+            std::optional<bool> normalize_twiss_set,
+            std::optional<bool> sad_eps_scale_set,
+            std::optional<bool> sad_amp_max_set,
+            std::optional<bool> sad_n_div_max_set,
+            std::optional<bool> max_num_runge_kutta_step_set,
+            std::optional<bool> spin_n0_direction_user_set_set,
+            std::optional<bool> debug_set,
+            std::optional<bool> ds_track_step_set,
+            std::optional<bool> dt_track_step_set,
+            std::optional<bool> cathode_strength_cutoff_set,
+            std::optional<bool> sc_rel_tol_tracking_set,
+            std::optional<bool> sc_abs_tol_tracking_set,
+            std::optional<bool> beam_chamber_height_set,
+            std::optional<bool> lsc_sigma_cutoff_set,
+            std::optional<bool> particle_sigma_cutoff_set,
+            std::optional<bool> space_charge_mesh_size_set,
+            std::optional<bool> csr3d_mesh_size_set,
+            std::optional<bool> n_bin_set,
+            std::optional<bool> particle_bin_span_set,
+            std::optional<bool> n_shield_images_set,
+            std::optional<bool> sc_min_in_bin_set,
+            std::optional<bool> lsc_kick_transverse_dependence_set,
+            std::optional<bool> sc_debug_set,
+            std::optional<bool> diagnostic_output_file_set,
+            std::optional<bool> old_integrator_set,
+            std::optional<bool> use_orientation_patches_set,
+            std::optional<bool> print_info_messages_set,
+            std::optional<bool> max_fringe_order_set,
+            std::optional<bool> exact_model_set,
+            std::optional<bool> exact_misalign_set,
+            std::optional<bool> vertical_kick_set,
+            std::optional<bool> cut_factor_set,
+            std::optional<bool> translate_patch_drift_time_set) {
+           new (self) ExtraParsingInfoStruct(
+               ptr_to_opt_ref(ran_state),
+               ran_seed,
+               undeterministic_ran_function_called,
+               d_orb_set,
+               max_aperture_limit_set,
+               default_ds_step_set,
+               significant_length_set,
+               rel_tol_tracking_set,
+               abs_tol_tracking_set,
+               rel_tol_adaptive_tracking_set,
+               abs_tol_adaptive_tracking_set,
+               init_ds_adaptive_tracking_set,
+               min_ds_adaptive_tracking_set,
+               fatal_ds_adaptive_tracking_set,
+               synch_rad_scale_set,
+               autoscale_amp_abs_tol_set,
+               autoscale_amp_rel_tol_set,
+               autoscale_phase_tol_set,
+               rf_phase_below_transition_ref_set,
+               electric_dipole_moment_set,
+               taylor_order_set,
+               runge_kutta_order_set,
+               default_integ_order_set,
+               sr_wakes_on_set,
+               lr_wakes_on_set,
+               high_energy_space_charge_on_set,
+               high_energy_space_charge_linear_set,
+               csr_and_space_charge_on_set,
+               spin_tracking_on_set,
+               spin_sokolov_ternov_flipping_on_set,
+               radiation_damping_on_set,
+               radiation_zero_average_set,
+               radiation_fluctuations_on_set,
+               conserve_taylor_maps_set,
+               absolute_time_tracking_set,
+               absolute_time_ref_shift_set,
+               convert_to_kinetic_momentum_set,
+               aperture_limit_on_set,
+               normalize_twiss_set,
+               sad_eps_scale_set,
+               sad_amp_max_set,
+               sad_n_div_max_set,
+               max_num_runge_kutta_step_set,
+               spin_n0_direction_user_set_set,
+               debug_set,
+               ds_track_step_set,
+               dt_track_step_set,
+               cathode_strength_cutoff_set,
+               sc_rel_tol_tracking_set,
+               sc_abs_tol_tracking_set,
+               beam_chamber_height_set,
+               lsc_sigma_cutoff_set,
+               particle_sigma_cutoff_set,
+               space_charge_mesh_size_set,
+               csr3d_mesh_size_set,
+               n_bin_set,
+               particle_bin_span_set,
+               n_shield_images_set,
+               sc_min_in_bin_set,
+               lsc_kick_transverse_dependence_set,
+               sc_debug_set,
+               diagnostic_output_file_set,
+               old_integrator_set,
+               use_orientation_patches_set,
+               print_info_messages_set,
+               max_fringe_order_set,
+               exact_model_set,
+               exact_misalign_set,
+               vertical_kick_set,
+               cut_factor_set,
+               translate_patch_drift_time_set
+           );
+         },
+         nb::arg("ran_state") = nb::none(),
+         nb::arg("ran_seed") = nb::none(),
+         nb::arg("undeterministic_ran_function_called") = nb::none(),
+         nb::arg("d_orb_set") = nb::none(),
+         nb::arg("max_aperture_limit_set") = nb::none(),
+         nb::arg("default_ds_step_set") = nb::none(),
+         nb::arg("significant_length_set") = nb::none(),
+         nb::arg("rel_tol_tracking_set") = nb::none(),
+         nb::arg("abs_tol_tracking_set") = nb::none(),
+         nb::arg("rel_tol_adaptive_tracking_set") = nb::none(),
+         nb::arg("abs_tol_adaptive_tracking_set") = nb::none(),
+         nb::arg("init_ds_adaptive_tracking_set") = nb::none(),
+         nb::arg("min_ds_adaptive_tracking_set") = nb::none(),
+         nb::arg("fatal_ds_adaptive_tracking_set") = nb::none(),
+         nb::arg("synch_rad_scale_set") = nb::none(),
+         nb::arg("autoscale_amp_abs_tol_set") = nb::none(),
+         nb::arg("autoscale_amp_rel_tol_set") = nb::none(),
+         nb::arg("autoscale_phase_tol_set") = nb::none(),
+         nb::arg("rf_phase_below_transition_ref_set") = nb::none(),
+         nb::arg("electric_dipole_moment_set") = nb::none(),
+         nb::arg("taylor_order_set") = nb::none(),
+         nb::arg("runge_kutta_order_set") = nb::none(),
+         nb::arg("default_integ_order_set") = nb::none(),
+         nb::arg("sr_wakes_on_set") = nb::none(),
+         nb::arg("lr_wakes_on_set") = nb::none(),
+         nb::arg("high_energy_space_charge_on_set") = nb::none(),
+         nb::arg("high_energy_space_charge_linear_set") = nb::none(),
+         nb::arg("csr_and_space_charge_on_set") = nb::none(),
+         nb::arg("spin_tracking_on_set") = nb::none(),
+         nb::arg("spin_sokolov_ternov_flipping_on_set") = nb::none(),
+         nb::arg("radiation_damping_on_set") = nb::none(),
+         nb::arg("radiation_zero_average_set") = nb::none(),
+         nb::arg("radiation_fluctuations_on_set") = nb::none(),
+         nb::arg("conserve_taylor_maps_set") = nb::none(),
+         nb::arg("absolute_time_tracking_set") = nb::none(),
+         nb::arg("absolute_time_ref_shift_set") = nb::none(),
+         nb::arg("convert_to_kinetic_momentum_set") = nb::none(),
+         nb::arg("aperture_limit_on_set") = nb::none(),
+         nb::arg("normalize_twiss_set") = nb::none(),
+         nb::arg("sad_eps_scale_set") = nb::none(),
+         nb::arg("sad_amp_max_set") = nb::none(),
+         nb::arg("sad_n_div_max_set") = nb::none(),
+         nb::arg("max_num_runge_kutta_step_set") = nb::none(),
+         nb::arg("spin_n0_direction_user_set_set") = nb::none(),
+         nb::arg("debug_set") = nb::none(),
+         nb::arg("ds_track_step_set") = nb::none(),
+         nb::arg("dt_track_step_set") = nb::none(),
+         nb::arg("cathode_strength_cutoff_set") = nb::none(),
+         nb::arg("sc_rel_tol_tracking_set") = nb::none(),
+         nb::arg("sc_abs_tol_tracking_set") = nb::none(),
+         nb::arg("beam_chamber_height_set") = nb::none(),
+         nb::arg("lsc_sigma_cutoff_set") = nb::none(),
+         nb::arg("particle_sigma_cutoff_set") = nb::none(),
+         nb::arg("space_charge_mesh_size_set") = nb::none(),
+         nb::arg("csr3d_mesh_size_set") = nb::none(),
+         nb::arg("n_bin_set") = nb::none(),
+         nb::arg("particle_bin_span_set") = nb::none(),
+         nb::arg("n_shield_images_set") = nb::none(),
+         nb::arg("sc_min_in_bin_set") = nb::none(),
+         nb::arg("lsc_kick_transverse_dependence_set") = nb::none(),
+         nb::arg("sc_debug_set") = nb::none(),
+         nb::arg("diagnostic_output_file_set") = nb::none(),
+         nb::arg("old_integrator_set") = nb::none(),
+         nb::arg("use_orientation_patches_set") = nb::none(),
+         nb::arg("print_info_messages_set") = nb::none(),
+         nb::arg("max_fringe_order_set") = nb::none(),
+         nb::arg("exact_model_set") = nb::none(),
+         nb::arg("exact_misalign_set") = nb::none(),
+         nb::arg("vertical_kick_set") = nb::none(),
+         nb::arg("cut_factor_set") = nb::none(),
+         nb::arg("translate_patch_drift_time_set") = nb::none()
+  )
+      .def_prop_rw(
+          "ran_state",
+          &ExtraParsingInfoStruct::ran_state,
+          &ExtraParsingInfoStruct::set_ran_state,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "ran_seed",
+          &ExtraParsingInfoStruct::ran_seed,
+          &ExtraParsingInfoStruct::set_ran_seed
+      )
+      .def_prop_rw(
+          "undeterministic_ran_function_called",
+          &ExtraParsingInfoStruct::undeterministic_ran_function_called,
+          &ExtraParsingInfoStruct::set_undeterministic_ran_function_called,
+          "Used with bmad_com"
+      )
+      .def_prop_rw(
+          "d_orb_set",
+          &ExtraParsingInfoStruct::d_orb_set,
+          &ExtraParsingInfoStruct::set_d_orb_set
+      )
+      .def_prop_rw(
+          "max_aperture_limit_set",
+          &ExtraParsingInfoStruct::max_aperture_limit_set,
+          &ExtraParsingInfoStruct::set_max_aperture_limit_set
+      )
+      .def_prop_rw(
+          "default_ds_step_set",
+          &ExtraParsingInfoStruct::default_ds_step_set,
+          &ExtraParsingInfoStruct::set_default_ds_step_set
+      )
+      .def_prop_rw(
+          "significant_length_set",
+          &ExtraParsingInfoStruct::significant_length_set,
+          &ExtraParsingInfoStruct::set_significant_length_set
+      )
+      .def_prop_rw(
+          "rel_tol_tracking_set",
+          &ExtraParsingInfoStruct::rel_tol_tracking_set,
+          &ExtraParsingInfoStruct::set_rel_tol_tracking_set
+      )
+      .def_prop_rw(
+          "abs_tol_tracking_set",
+          &ExtraParsingInfoStruct::abs_tol_tracking_set,
+          &ExtraParsingInfoStruct::set_abs_tol_tracking_set
+      )
+      .def_prop_rw(
+          "rel_tol_adaptive_tracking_set",
+          &ExtraParsingInfoStruct::rel_tol_adaptive_tracking_set,
+          &ExtraParsingInfoStruct::set_rel_tol_adaptive_tracking_set
+      )
+      .def_prop_rw(
+          "abs_tol_adaptive_tracking_set",
+          &ExtraParsingInfoStruct::abs_tol_adaptive_tracking_set,
+          &ExtraParsingInfoStruct::set_abs_tol_adaptive_tracking_set
+      )
+      .def_prop_rw(
+          "init_ds_adaptive_tracking_set",
+          &ExtraParsingInfoStruct::init_ds_adaptive_tracking_set,
+          &ExtraParsingInfoStruct::set_init_ds_adaptive_tracking_set
+      )
+      .def_prop_rw(
+          "min_ds_adaptive_tracking_set",
+          &ExtraParsingInfoStruct::min_ds_adaptive_tracking_set,
+          &ExtraParsingInfoStruct::set_min_ds_adaptive_tracking_set
+      )
+      .def_prop_rw(
+          "fatal_ds_adaptive_tracking_set",
+          &ExtraParsingInfoStruct::fatal_ds_adaptive_tracking_set,
+          &ExtraParsingInfoStruct::set_fatal_ds_adaptive_tracking_set
+      )
+      .def_prop_rw(
+          "synch_rad_scale_set",
+          &ExtraParsingInfoStruct::synch_rad_scale_set,
+          &ExtraParsingInfoStruct::set_synch_rad_scale_set
+      )
+      .def_prop_rw(
+          "autoscale_amp_abs_tol_set",
+          &ExtraParsingInfoStruct::autoscale_amp_abs_tol_set,
+          &ExtraParsingInfoStruct::set_autoscale_amp_abs_tol_set
+      )
+      .def_prop_rw(
+          "autoscale_amp_rel_tol_set",
+          &ExtraParsingInfoStruct::autoscale_amp_rel_tol_set,
+          &ExtraParsingInfoStruct::set_autoscale_amp_rel_tol_set
+      )
+      .def_prop_rw(
+          "autoscale_phase_tol_set",
+          &ExtraParsingInfoStruct::autoscale_phase_tol_set,
+          &ExtraParsingInfoStruct::set_autoscale_phase_tol_set
+      )
+      .def_prop_rw(
+          "rf_phase_below_transition_ref_set",
+          &ExtraParsingInfoStruct::rf_phase_below_transition_ref_set,
+          &ExtraParsingInfoStruct::set_rf_phase_below_transition_ref_set
+      )
+      .def_prop_rw(
+          "electric_dipole_moment_set",
+          &ExtraParsingInfoStruct::electric_dipole_moment_set,
+          &ExtraParsingInfoStruct::set_electric_dipole_moment_set
+      )
+      .def_prop_rw(
+          "taylor_order_set",
+          &ExtraParsingInfoStruct::taylor_order_set,
+          &ExtraParsingInfoStruct::set_taylor_order_set
+      )
+      .def_prop_rw(
+          "runge_kutta_order_set",
+          &ExtraParsingInfoStruct::runge_kutta_order_set,
+          &ExtraParsingInfoStruct::set_runge_kutta_order_set
+      )
+      .def_prop_rw(
+          "default_integ_order_set",
+          &ExtraParsingInfoStruct::default_integ_order_set,
+          &ExtraParsingInfoStruct::set_default_integ_order_set
+      )
+      .def_prop_rw(
+          "sr_wakes_on_set",
+          &ExtraParsingInfoStruct::sr_wakes_on_set,
+          &ExtraParsingInfoStruct::set_sr_wakes_on_set
+      )
+      .def_prop_rw(
+          "lr_wakes_on_set",
+          &ExtraParsingInfoStruct::lr_wakes_on_set,
+          &ExtraParsingInfoStruct::set_lr_wakes_on_set
+      )
+      .def_prop_rw(
+          "high_energy_space_charge_on_set",
+          &ExtraParsingInfoStruct::high_energy_space_charge_on_set,
+          &ExtraParsingInfoStruct::set_high_energy_space_charge_on_set
+      )
+      .def_prop_rw(
+          "high_energy_space_charge_linear_set",
+          &ExtraParsingInfoStruct::high_energy_space_charge_linear_set,
+          &ExtraParsingInfoStruct::set_high_energy_space_charge_linear_set
+      )
+      .def_prop_rw(
+          "csr_and_space_charge_on_set",
+          &ExtraParsingInfoStruct::csr_and_space_charge_on_set,
+          &ExtraParsingInfoStruct::set_csr_and_space_charge_on_set
+      )
+      .def_prop_rw(
+          "spin_tracking_on_set",
+          &ExtraParsingInfoStruct::spin_tracking_on_set,
+          &ExtraParsingInfoStruct::set_spin_tracking_on_set
+      )
+      .def_prop_rw(
+          "spin_sokolov_ternov_flipping_on_set",
+          &ExtraParsingInfoStruct::spin_sokolov_ternov_flipping_on_set,
+          &ExtraParsingInfoStruct::set_spin_sokolov_ternov_flipping_on_set
+      )
+      .def_prop_rw(
+          "radiation_damping_on_set",
+          &ExtraParsingInfoStruct::radiation_damping_on_set,
+          &ExtraParsingInfoStruct::set_radiation_damping_on_set
+      )
+      .def_prop_rw(
+          "radiation_zero_average_set",
+          &ExtraParsingInfoStruct::radiation_zero_average_set,
+          &ExtraParsingInfoStruct::set_radiation_zero_average_set
+      )
+      .def_prop_rw(
+          "radiation_fluctuations_on_set",
+          &ExtraParsingInfoStruct::radiation_fluctuations_on_set,
+          &ExtraParsingInfoStruct::set_radiation_fluctuations_on_set
+      )
+      .def_prop_rw(
+          "conserve_taylor_maps_set",
+          &ExtraParsingInfoStruct::conserve_taylor_maps_set,
+          &ExtraParsingInfoStruct::set_conserve_taylor_maps_set
+      )
+      .def_prop_rw(
+          "absolute_time_tracking_set",
+          &ExtraParsingInfoStruct::absolute_time_tracking_set,
+          &ExtraParsingInfoStruct::set_absolute_time_tracking_set
+      )
+      .def_prop_rw(
+          "absolute_time_ref_shift_set",
+          &ExtraParsingInfoStruct::absolute_time_ref_shift_set,
+          &ExtraParsingInfoStruct::set_absolute_time_ref_shift_set
+      )
+      .def_prop_rw(
+          "convert_to_kinetic_momentum_set",
+          &ExtraParsingInfoStruct::convert_to_kinetic_momentum_set,
+          &ExtraParsingInfoStruct::set_convert_to_kinetic_momentum_set
+      )
+      .def_prop_rw(
+          "aperture_limit_on_set",
+          &ExtraParsingInfoStruct::aperture_limit_on_set,
+          &ExtraParsingInfoStruct::set_aperture_limit_on_set
+      )
+      .def_prop_rw(
+          "normalize_twiss_set",
+          &ExtraParsingInfoStruct::normalize_twiss_set,
+          &ExtraParsingInfoStruct::set_normalize_twiss_set
+      )
+      .def_prop_rw(
+          "sad_eps_scale_set",
+          &ExtraParsingInfoStruct::sad_eps_scale_set,
+          &ExtraParsingInfoStruct::set_sad_eps_scale_set
+      )
+      .def_prop_rw(
+          "sad_amp_max_set",
+          &ExtraParsingInfoStruct::sad_amp_max_set,
+          &ExtraParsingInfoStruct::set_sad_amp_max_set
+      )
+      .def_prop_rw(
+          "sad_n_div_max_set",
+          &ExtraParsingInfoStruct::sad_n_div_max_set,
+          &ExtraParsingInfoStruct::set_sad_n_div_max_set
+      )
+      .def_prop_rw(
+          "max_num_runge_kutta_step_set",
+          &ExtraParsingInfoStruct::max_num_runge_kutta_step_set,
+          &ExtraParsingInfoStruct::set_max_num_runge_kutta_step_set
+      )
+      .def_prop_rw(
+          "spin_n0_direction_user_set_set",
+          &ExtraParsingInfoStruct::spin_n0_direction_user_set_set,
+          &ExtraParsingInfoStruct::set_spin_n0_direction_user_set_set
+      )
+      .def_prop_rw(
+          "debug_set",
+          &ExtraParsingInfoStruct::debug_set,
+          &ExtraParsingInfoStruct::set_debug_set,
+          "Used with space_charge_com"
+      )
+      .def_prop_rw(
+          "ds_track_step_set",
+          &ExtraParsingInfoStruct::ds_track_step_set,
+          &ExtraParsingInfoStruct::set_ds_track_step_set
+      )
+      .def_prop_rw(
+          "dt_track_step_set",
+          &ExtraParsingInfoStruct::dt_track_step_set,
+          &ExtraParsingInfoStruct::set_dt_track_step_set
+      )
+      .def_prop_rw(
+          "cathode_strength_cutoff_set",
+          &ExtraParsingInfoStruct::cathode_strength_cutoff_set,
+          &ExtraParsingInfoStruct::set_cathode_strength_cutoff_set
+      )
+      .def_prop_rw(
+          "sc_rel_tol_tracking_set",
+          &ExtraParsingInfoStruct::sc_rel_tol_tracking_set,
+          &ExtraParsingInfoStruct::set_sc_rel_tol_tracking_set,
+          "For: space_charge_com%rel_tol_tracking"
+      )
+      .def_prop_rw(
+          "sc_abs_tol_tracking_set",
+          &ExtraParsingInfoStruct::sc_abs_tol_tracking_set,
+          &ExtraParsingInfoStruct::set_sc_abs_tol_tracking_set,
+          "For: space_charge_com%abs_tol_tracking"
+      )
+      .def_prop_rw(
+          "beam_chamber_height_set",
+          &ExtraParsingInfoStruct::beam_chamber_height_set,
+          &ExtraParsingInfoStruct::set_beam_chamber_height_set
+      )
+      .def_prop_rw(
+          "lsc_sigma_cutoff_set",
+          &ExtraParsingInfoStruct::lsc_sigma_cutoff_set,
+          &ExtraParsingInfoStruct::set_lsc_sigma_cutoff_set
+      )
+      .def_prop_rw(
+          "particle_sigma_cutoff_set",
+          &ExtraParsingInfoStruct::particle_sigma_cutoff_set,
+          &ExtraParsingInfoStruct::set_particle_sigma_cutoff_set
+      )
+      .def_prop_rw(
+          "space_charge_mesh_size_set",
+          &ExtraParsingInfoStruct::space_charge_mesh_size_set,
+          &ExtraParsingInfoStruct::set_space_charge_mesh_size_set
+      )
+      .def_prop_rw(
+          "csr3d_mesh_size_set",
+          &ExtraParsingInfoStruct::csr3d_mesh_size_set,
+          &ExtraParsingInfoStruct::set_csr3d_mesh_size_set
+      )
+      .def_prop_rw(
+          "n_bin_set",
+          &ExtraParsingInfoStruct::n_bin_set,
+          &ExtraParsingInfoStruct::set_n_bin_set
+      )
+      .def_prop_rw(
+          "particle_bin_span_set",
+          &ExtraParsingInfoStruct::particle_bin_span_set,
+          &ExtraParsingInfoStruct::set_particle_bin_span_set
+      )
+      .def_prop_rw(
+          "n_shield_images_set",
+          &ExtraParsingInfoStruct::n_shield_images_set,
+          &ExtraParsingInfoStruct::set_n_shield_images_set
+      )
+      .def_prop_rw(
+          "sc_min_in_bin_set",
+          &ExtraParsingInfoStruct::sc_min_in_bin_set,
+          &ExtraParsingInfoStruct::set_sc_min_in_bin_set
+      )
+      .def_prop_rw(
+          "lsc_kick_transverse_dependence_set",
+          &ExtraParsingInfoStruct::lsc_kick_transverse_dependence_set,
+          &ExtraParsingInfoStruct::set_lsc_kick_transverse_dependence_set
+      )
+      .def_prop_rw(
+          "sc_debug_set",
+          &ExtraParsingInfoStruct::sc_debug_set,
+          &ExtraParsingInfoStruct::set_sc_debug_set
+      )
+      .def_prop_rw(
+          "diagnostic_output_file_set",
+          &ExtraParsingInfoStruct::diagnostic_output_file_set,
+          &ExtraParsingInfoStruct::set_diagnostic_output_file_set,
+          "Used with ptc_com"
+      )
+      .def_prop_rw(
+          "old_integrator_set",
+          &ExtraParsingInfoStruct::old_integrator_set,
+          &ExtraParsingInfoStruct::set_old_integrator_set
+      )
+      .def_prop_rw(
+          "use_orientation_patches_set",
+          &ExtraParsingInfoStruct::use_orientation_patches_set,
+          &ExtraParsingInfoStruct::set_use_orientation_patches_set
+      )
+      .def_prop_rw(
+          "print_info_messages_set",
+          &ExtraParsingInfoStruct::print_info_messages_set,
+          &ExtraParsingInfoStruct::set_print_info_messages_set
+      )
+      .def_prop_rw(
+          "max_fringe_order_set",
+          &ExtraParsingInfoStruct::max_fringe_order_set,
+          &ExtraParsingInfoStruct::set_max_fringe_order_set
+      )
+      .def_prop_rw(
+          "exact_model_set",
+          &ExtraParsingInfoStruct::exact_model_set,
+          &ExtraParsingInfoStruct::set_exact_model_set
+      )
+      .def_prop_rw(
+          "exact_misalign_set",
+          &ExtraParsingInfoStruct::exact_misalign_set,
+          &ExtraParsingInfoStruct::set_exact_misalign_set
+      )
+      .def_prop_rw(
+          "vertical_kick_set",
+          &ExtraParsingInfoStruct::vertical_kick_set,
+          &ExtraParsingInfoStruct::set_vertical_kick_set
+      )
+      .def_prop_rw(
+          "cut_factor_set",
+          &ExtraParsingInfoStruct::cut_factor_set,
+          &ExtraParsingInfoStruct::set_cut_factor_set
+      )
+      .def_prop_rw(
+          "translate_patch_drift_time_set",
+          &ExtraParsingInfoStruct::translate_patch_drift_time_set,
+          &ExtraParsingInfoStruct::set_translate_patch_drift_time_set
+      )
+
+      .def("__repr__", [](const ExtraParsingInfoStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const ExtraParsingInfoStruct &self) {
+            return ExtraParsingInfoStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const ExtraParsingInfoStruct &self, nb::dict &memo) {
+            return ExtraParsingInfoStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const ExtraParsingInfoStruct &self, const ExtraParsingInfoStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const ExtraParsingInfoStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D ExtraParsingInfoStruct arrays are not used in structs/routines
+  // 2D ExtraParsingInfoStruct arrays are not used in structs/routines
+  // 3D ExtraParsingInfoStruct arrays are not used in structs/routines
 }

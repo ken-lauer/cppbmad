@@ -13,6 +13,53 @@ using namespace Pybmad;
 namespace nb = nanobind;
 
 // =============================================================================
+// astra_lattice_param_struct
+void init_astra_lattice_param_struct(nb::module_ &m, nb::class_<AstraLatticeParamStruct> &cls) {
+  cls.def(nb::init<std::optional<int>>(), nb::arg("fieldmap_dimension") = nb::none())
+      .def_prop_rw(
+          "fieldmap_dimension",
+          &AstraLatticeParamStruct::fieldmap_dimension,
+          &AstraLatticeParamStruct::set_fieldmap_dimension,
+          "Dimensions for field map. 1 or 3"
+      )
+
+      .def("__repr__", [](const AstraLatticeParamStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const AstraLatticeParamStruct &self) {
+            return AstraLatticeParamStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const AstraLatticeParamStruct &self, nb::dict &memo) {
+            return AstraLatticeParamStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const AstraLatticeParamStruct &self, const AstraLatticeParamStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const AstraLatticeParamStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D AstraLatticeParamStruct arrays are not used in structs/routines
+  // 2D AstraLatticeParamStruct arrays are not used in structs/routines
+  // 3D AstraLatticeParamStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // ac_kicker_freq_struct
 void init_ac_kicker_freq_struct(nb::module_ &m, nb::class_<AcKickerFreqStruct> &cls) {
   cls.def(

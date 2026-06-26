@@ -354,4 +354,58 @@ r_num : float
 insert_tag_line : bool, optional
 )"""
   );
+  m.def(
+      "output_direct",
+      [](std::optional<int> file_unit,
+         std::optional<bool> print_and_capture,
+         std::optional<int> min_level,
+         std::optional<int> max_level,
+         OutIoOutputDirectStruct *set) {
+        auto fn = static_cast<
+            OutIoOutputDirectStruct (*)(std::optional<int>, std::optional<bool>, std::optional<int>, std::optional<int>, optional_ref<OutIoOutputDirectStruct>)>(
+            &SimUtils::output_direct
+        );
+        return fn(file_unit, print_and_capture, min_level, max_level, ptr_to_opt_ref(set));
+      },
+      nb::arg("file_unit") = nb::none(),
+      nb::arg("print_and_capture") = nb::none(),
+      nb::arg("min_level") = nb::none(),
+      nb::arg("max_level") = nb::none(),
+      nb::arg("set") = nb::none(),
+      R"""(Subroutine to set where the output goes when out_io is called.
+Output may be sent to the terminal screen, written to a file, and/or captured for program use.
+
+Settings can be made on a message status level by level basis.
+See the top of this file for the list of the message status levels.
+
+Once set for a given status level, the settings remain until the next call to
+output_direct that cover the same status level.
+
+Parameters
+----------
+file_unit : int, optional
+    Unit number for writing to a file. -1 => No writing (initial default setting).
+
+print_and_capture : bool, optional
+    If present then this sets whether output is printed to the terminal and/or captured for program use. Note:
+    How output capture works is also set by the out_io_print_and_caputure_setup routine. See the
+    out_io_print_and_caputure_setup routine documentation for more details.
+
+min_level : int, optional
+    Minimum message status level to apply to. Default is s_blank$
+
+max_level : int, optional
+    Maximum message status level to apply to. Default is s_important$
+
+set : OutIoOutputDirectStruct, optional
+    If present, use this structure to set where output goes. This structure can be used in place of specifying
+    file_unit, etc. One way to use "set" is to first call this routine with the "get" argument to get the
+    output direction state.
+
+Returns
+-------
+get : OutIoOutputDirectStruct, optional
+    If present, capture the output direction state before any setting is done.
+)"""
+  );
 }

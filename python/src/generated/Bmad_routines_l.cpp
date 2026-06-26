@@ -459,4 +459,22 @@ dz : float
     Change in z.
 )"""
   );
+  m.def(
+      "lsc_kick_params_calc",
+      &Bmad::lsc_kick_params_calc,
+      nb::arg("ele"),
+      nb::arg("csr"),
+      R"""(Routine to cache intermediate values needed for the lsc calculation.
+This routine is not for image currents.
+
+Parameters
+----------
+ele : EleStruct
+    Element to set up cache for.
+
+csr : CsrStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, csr: Binned particle averages.
+)"""
+  );
 }

@@ -8,8 +8,12 @@ namespace nb = nanobind;
 using namespace Bmad;
 
 // Per-struct init functions
+void init_seq_ele_struct(nb::module_ &m, nb::class_<SeqEleStruct> &class_);
+void init_seq_struct(nb::module_ &m, nb::class_<SeqStruct> &class_);
 void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommonStruct> &class_);
 void init_spin_axis_struct(nb::module_ &m, nb::class_<SpinAxisStruct> &class_);
+void init_spin_eigen_struct(nb::module_ &m, nb::class_<SpinEigenStruct> &class_);
+void init_spin_matching_struct(nb::module_ &m, nb::class_<SpinMatchingStruct> &class_);
 void init_spin_orbit_map1_struct(nb::module_ &m, nb::class_<SpinOrbitMap1Struct> &class_);
 void init_spin_polar_struct(nb::module_ &m, nb::class_<SpinPolarStruct> &class_);
 void init_strong_beam_struct(nb::module_ &m, nb::class_<StrongBeamStruct> &class_);
@@ -29,5 +33,6 @@ void init_surface_h_misalign_pt_struct(
 void init_surface_h_misalign_struct(nb::module_ &m, nb::class_<SurfaceHMisalignStruct> &class_);
 void init_surface_segmented_pt_struct(nb::module_ &m, nb::class_<SurfaceSegmentedPtStruct> &class_);
 void init_surface_segmented_struct(nb::module_ &m, nb::class_<SurfaceSegmentedStruct> &class_);
+void init_str_index_struct(nb::module_ &m, nb::class_<StrIndexStruct> &class_);
 void init_spline_struct(nb::module_ &m, nb::class_<SplineStruct> &class_);
 void init_summation_rdt_struct(nb::module_ &m, nb::class_<SummationRdtStruct> &class_);

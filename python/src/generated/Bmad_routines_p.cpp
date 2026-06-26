@@ -179,6 +179,18 @@ is_ok : bool
     Set True if everything is ok.
 )"""
   );
+  m.def(
+      "parse_line_or_list",
+      &Bmad::parse_line_or_list,
+      nb::arg("sequence"),
+      nb::arg("iseq_tot"),
+      nb::arg("lat"),
+      nb::arg("top_level"),
+      R"""(Subroutine to parse a sequence.
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
   nb::class_<Bmad::ParseRealList>(m, "ParseRealList", "parse_real_list return type")
       .def_ro("delim", &Bmad::ParseRealList::delim)
       .def_ro("delim_found", &Bmad::ParseRealList::delim_found)
@@ -353,6 +365,27 @@ in_lat : LatStruct, optional
 )"""
   );
   m.def(
+      "parser_add_branch",
+      &Bmad::parser_add_branch,
+      nb::arg("fork_ele"),
+      nb::arg("lat"),
+      nb::arg("sequence"),
+      nb::arg("seq_name"),
+      nb::arg("seq_indexx"),
+      nb::arg("no_end_marker"),
+      nb::arg("in_lat"),
+      nb::arg("plat"),
+      nb::arg("created_new_branch"),
+      nb::arg("new_branch_name") = nb::none(),
+      R"""(                                 seq_name, seq_indexx, no_end_marker, in_lat, plat, created_new_branch)
+
+Subroutine to do line expansion.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  m.def(
       "parser_add_constant",
       &Bmad::parser_add_constant,
       nb::arg("word"),
@@ -369,6 +402,76 @@ lat : LatStruct
 redef_is_error : bool
 )"""
   );
+  nb::class_<Bmad::ParserAddLords>(m, "ParserAddLords", "parser_add_lords return type")
+      .def_ro("lat", &Bmad::ParserAddLords::lat)
+      .def_ro("check_lat", &Bmad::ParserAddLords::check_lat)
+      .def("__len__", [](const Bmad::ParserAddLords &) { return 2; })
+      .def("__getitem__", [](const Bmad::ParserAddLords &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.lat);
+        if (i == 1)
+          return nb::cast(s.check_lat);
+        throw nb::index_error();
+      });
+  m.def(
+      "parser_add_lords",
+      &Bmad::parser_add_lords,
+      nb::arg("lord_lat"),
+      nb::arg("n_ele_max"),
+      nb::arg("plat"),
+      R"""(Subroutine to add overlay, group, and girder lords to the lattice.
+For overlays and groups: If multiple elements have the same name then
+use all of them.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Parameters
+----------
+lord_lat : LatStruct
+    List of lord elements to add to lat.
+
+n_ele_max : int
+    lord elements in lord_lat are in range [1:n_ele_max].
+
+plat : ParserLatStruct
+    Extra info needed to place the lord elements
+
+Returns
+-------
+lat : LatStruct
+    Lattice to add lord elements to.
+
+check_lat : LatStruct, optional
+    If slave elements of a lord are not in lat but are in check_lat, do not issue error message about slave
+    elements not found.
+)"""
+  );
+  m.def(
+      "parser_add_superimpose",
+      &Bmad::parser_add_superimpose,
+      nb::arg("branch"),
+      nb::arg("super_ele_in"),
+      nb::arg("pele"),
+      nb::arg("in_lat"),
+      nb::arg("plat"),
+      R"""(Wrapper for Fortran routine parser_add_superimpose
+
+Parameters
+----------
+branch : BranchStruct
+
+super_ele_in : EleStruct
+
+pele : ParserEleStruct
+
+in_lat : LatStruct
+
+plat : ParserLatStruct
+)"""
+  );
   m.def(
       "parser_call_check",
       &Bmad::parser_call_check,
@@ -379,6 +482,190 @@ redef_is_error : bool
       nb::arg("call_found"),
       nb::arg("err_flag") = nb::none(),
       R"""(Routine to check if there is a "call::XXX" construct in the input stream.
+)"""
+  );
+  m.def(
+      "parser_debug_print_info",
+      &Bmad::parser_debug_print_info,
+      nb::arg("lat"),
+      nb::arg("debug_line"),
+      nb::arg("sequence") = nb::none(),
+      R"""(Subroutine to remove all null_ele elements.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  m
+      .def(
+          "parser_error",
+          [](std::string what1,
+             std::optional<std::string> what2,
+             std::optional<std::string> what3,
+             std::optional<std::string> what4,
+             SeqStruct *seq,
+             ParserEleStruct *pele,
+             std::optional<bool> stop_here,
+             std::optional<int> level,
+             std::optional<FArray1D<Real>> r_array,
+             std::optional<FArray1D<Int>> i_array) {
+            auto fn =
+                static_cast<void (*)(std::string, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, optional_ref<SeqStruct>, optional_ref<ParserEleStruct>, std::optional<bool>, std::optional<int>, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>)>(
+                    &Bmad::parser_error
+                );
+            return fn(
+                what1,
+                what2,
+                what3,
+                what4,
+                ptr_to_opt_ref(seq),
+                ptr_to_opt_ref(pele),
+                stop_here,
+                level,
+                r_array,
+                i_array
+            );
+          },
+          nb::arg("what1"),
+          nb::arg("what2") = nb::none(),
+          nb::arg("what3") = nb::none(),
+          nb::arg("what4") = nb::none(),
+          nb::arg("seq") = nb::none(),
+          nb::arg("pele") = nb::none(),
+          nb::arg("stop_here") = nb::none(),
+          nb::arg("level") = nb::none(),
+          nb::arg("r_array") = nb::none(),
+          nb::arg("i_array") = nb::none(),
+          R"""(Routine to print an error message generated when parsing a lattice.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Parameters
+----------
+what1 : str
+    First line in error message.
+
+what2 : str, optional
+    Second line in error message.
+
+what3 : str, optional
+    Third line in error message.
+
+what4 : str, optional
+    Fourth line in error message.
+
+seq : SeqStruct, optional
+    Used when error is generated during reading of a lattice file. Contains information such as file name, and
+    line number where error was detected.
+
+pele : ParserEleStruct, optional
+    Used when error is associated with a lattice element. Contains information on the lattice element.
+
+stop_here : bool, optional
+    If present and True then immediately stop. Used with severe errors.
+
+level : int, optional
+    Possibilities are:
+
+r_array : 1D array of float, optional
+    Real numbers to be encoded in error message. See out_io doc.
+
+i_array : 1D array of int, optional
+    Integer numbers to be encoded in error message. See out_io doc.
+)"""
+      );
+  nb::class_<Bmad::ParserExpandLine>(m, "ParserExpandLine", "parser_expand_line return type")
+      .def_ro("n_ele_expand", &Bmad::ParserExpandLine::n_ele_expand)
+      .def_ro("expanded_line", &Bmad::ParserExpandLine::expanded_line)
+      .def("__len__", [](const Bmad::ParserExpandLine &) { return 2; })
+      .def("__getitem__", [](const Bmad::ParserExpandLine &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.n_ele_expand);
+        if (i == 1)
+          return nb::cast(s.expanded_line);
+        throw nb::index_error();
+      });
+  m.def(
+      "parser_expand_line",
+      [](int i_lev,
+         std::string line_name,
+         SeqStructAlloc1D sequence,
+         CharacterAlloc1D &seq_name,
+         IntAlloc1D &seq_indexx,
+         bool no_end_marker,
+         LatStruct *lat,
+         LatStruct *in_lat) {
+        auto fn = static_cast<
+            Bmad::
+                ParserExpandLine (*)(int, std::string, SeqStructAlloc1D, CharacterAlloc1D &, IntAlloc1D &, bool, optional_ref<LatStruct>, optional_ref<LatStruct>)>(
+            &Bmad::parser_expand_line
+        );
+        return fn(
+            i_lev,
+            line_name,
+            sequence,
+            seq_name,
+            seq_indexx,
+            no_end_marker,
+            ptr_to_opt_ref(lat),
+            ptr_to_opt_ref(in_lat)
+        );
+      },
+      nb::arg("i_lev"),
+      nb::arg("line_name"),
+      nb::arg("sequence"),
+      nb::arg("seq_name"),
+      nb::arg("seq_indexx"),
+      nb::arg("no_end_marker"),
+      nb::arg("lat") = nb::none(),
+      nb::arg("in_lat") = nb::none(),
+      R"""(              seq_name, seq_indexx, no_end_marker, n_ele_expand, lat, in_lat, expanded_line)
+
+Subroutine to do line expansion.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Note: Either lat and in_lat must be present or expanded_line must be present.
+
+Parameters
+----------
+i_lev : int
+    Subsequence level. 1 => Root level.
+
+line_name : str
+    Root line to expand.
+
+sequence : 1D array of SeqStruct
+    Array of sequencies.
+
+seq_name : 1D array of str
+    Array of sequence names.
+
+seq_indexx : 1D array of int
+    Index array for the sequence names.
+
+no_end_marker : bool
+    Put a marker named "end" at the end of the branch?
+
+lat : LatStruct, optional
+    Lattice to put the expanded line
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with new line. Except if expanded_line is present.
+
+in_lat : LatStruct, optional
+    Lattice with array of defined elements.
+
+Returns
+-------
+n_ele_expand : int
+    Number of elements in the finished line.
+
+expanded_line : 1D array of BaseLineEleStruct, optional
+    If present, lat argument will be ignored and the expanded line will be put into expanded_line.
 )"""
   );
   nb::class_<Bmad::ParserFastComplexRead>(
@@ -1035,6 +1322,79 @@ ix_pt : int, optional
 iy_pt : int, optional
     Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
     argument is present.
+)"""
+  );
+  nb::class_<Bmad::PhotonDiffuseScattering>(
+      m,
+      "PhotonDiffuseScattering",
+      "photon_diffuse_scattering return type"
+  )
+      .def_ro("graze_angle_out", &Bmad::PhotonDiffuseScattering::graze_angle_out)
+      .def_ro("phi_out", &Bmad::PhotonDiffuseScattering::phi_out)
+      .def_ro("diffuse_param", &Bmad::PhotonDiffuseScattering::diffuse_param)
+      .def("__len__", [](const Bmad::PhotonDiffuseScattering &) { return 3; })
+      .def("__getitem__", [](const Bmad::PhotonDiffuseScattering &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.graze_angle_out);
+        if (i == 1)
+          return nb::cast(s.phi_out);
+        if (i == 2)
+          return nb::cast(s.diffuse_param);
+        throw nb::index_error();
+      });
+  m.def(
+      "photon_diffuse_scattering",
+      &Bmad::photon_diffuse_scattering,
+      nb::arg("graze_angle_in"),
+      nb::arg("energy"),
+      nb::arg("surface"),
+      R"""(Routine to simulate the diffuse scattering of photons. The outgoing angles are
+choosen using the Dugan distribution.
+
+Also see: photon_reflection.
+Use photon_reflection_std_surface_init or read_surface_reflection_file to get surface info.
+
+Parameters
+----------
+graze_angle_in : float
+    Incident grazing (not polar) angle in radians.
+
+energy : float
+    Photon energy in eV.
+
+surface : PhotonReflectSurfaceStruct
+    surface info
+
+Returns
+-------
+graze_angle_out : float
+    graze_angle in radians.
+
+phi_out : float
+    Azimuthal angle in radians.
+
+diffuse_param : DiffuseParamStruct, optional
+    Internal parameters used in the calculation. This is used for diagnostics and is not used in standard
+    simulations.
+)"""
+  );
+  m.def(
+      "photon_read_spline",
+      &Bmad::photon_read_spline,
+      nb::arg("spline_dir"),
+      R"""(Routine to initialize a photon using a set of spline fits.
+
+Parameters
+----------
+spline_dir : str
+    Root directory for the spline fits.
+
+Returns
+-------
+splines : PhotonInitSplinesStruct
+    Spline structure
 )"""
   );
   nb::class_<Bmad::PhotonReflection>(m, "PhotonReflection", "photon_reflection return type")
@@ -2385,6 +2745,31 @@ vec : 1D array of float (shape: 3)
     Real(3)
 )"""
   );
+  m.def(
+      "print_mesh3d",
+      &Bmad::print_mesh3d,
+      nb::arg("mesh3d"),
+      R"""(Wrapper for Fortran routine print_mesh3d
+
+Parameters
+----------
+mesh3d : Mesh3dStruct
+)"""
+  );
+  m.def(
+      "prob_x_diffuse",
+      &Bmad::prob_x_diffuse,
+      nb::arg("x"),
+      nb::arg("d_param"),
+      nb::arg("surface"),
+      R"""(Contained routine to calculate integrated probability distribution in x = sin(graze_angle_out).
+
+Parameters
+----------
+x : float
+    sin(graze_angle_out)
+)"""
+  );
   nb::class_<Bmad::ProjectEmitToXyz>(m, "ProjectEmitToXyz", "project_emit_to_xyz return type")
       .def_ro("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
       .def_ro("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
@@ -2441,6 +2826,32 @@ sigma_y : float
 
 sigma_z : float
     projected longitudinal beamsize
+)"""
+  );
+  m.def(
+      "propagate_part_way",
+      &Bmad::propagate_part_way,
+      nb::arg("orb_start"),
+      nb::arg("param"),
+      nb::arg("pt"),
+      nb::arg("info"),
+      nb::arg("z_here"),
+      nb::arg("runt"),
+      R"""(Wrapper for Fortran routine propagate_part_way
+
+Parameters
+----------
+orb_start : CoordStruct
+
+param : LatParamStruct
+
+pt : RadIntTrackPointStruct
+
+info : RadIntInfoStruct
+
+z_here : float
+
+runt : EleStruct
 )"""
   );
   m.def(
@@ -2654,6 +3065,20 @@ closed_orb : CoordStruct
 )"""
   );
   m.def(
+      "ptc_kill_map_with_radiation",
+      &Bmad::ptc_kill_map_with_radiation,
+      nb::arg("rad_map"),
+      R"""(Routine to kill a binary file containing a ptc_rad_map_struct map
+
+Parameters
+----------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+    This parameter is an input/output and is modified in-place.
+    As an output, rad_map: Deallocated map.
+)"""
+  );
+  m.def(
       "ptc_layouts_resplit",
       &Bmad::ptc_layouts_resplit,
       nb::arg("dKL_max"),
@@ -2706,6 +3131,23 @@ crossover : 1D array of int (shape: 2), optional
 
 crossover_wiggler : 1D array of int (shape: 2), optional
     crossover for wiggler elements.
+)"""
+  );
+  m.def(
+      "ptc_linear_isf_calc",
+      &Bmad::ptc_linear_isf_calc,
+      nb::arg("branch"),
+      R"""(Wrapper for Fortran routine ptc_linear_isf_calc
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch to analyze.
+
+Returns
+-------
+ele_isf : 1D array of LinearEleIsfStruct
+    ISF at every element.
 )"""
   );
   m.def(
@@ -2783,6 +3225,52 @@ lat : LatStruct, optional
     If present then setup a Bmad lattice.
 )"""
   );
+  nb::class_<Bmad::PtcReadMapWithRadiation>(
+      m,
+      "PtcReadMapWithRadiation",
+      "ptc_read_map_with_radiation return type"
+  )
+      .def_ro("rad_map", &Bmad::PtcReadMapWithRadiation::rad_map)
+      .def_ro("err_flag", &Bmad::PtcReadMapWithRadiation::err_flag)
+      .def("__len__", [](const Bmad::PtcReadMapWithRadiation &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcReadMapWithRadiation &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.rad_map);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
+  m.def(
+      "ptc_read_map_with_radiation",
+      &Bmad::ptc_read_map_with_radiation,
+      nb::arg("file_name") = nb::none(),
+      nb::arg("file_unit") = nb::none(),
+      R"""(Routine to read a binary file containing a ptc_rad_map_struct map
+
+Either file_name or file_unit must be present but not both.
+File_unit is used when there are multiple maps in a file.
+If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+and to close the file afterwards.
+
+Parameters
+----------
+file_name : str, optional
+    Name of binary file.
+
+file_unit : int, optional
+    File unit number read from.
+
+Returns
+-------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+err_flag : bool
+    Set True if there is a read error.
+)"""
+  );
   m.def(
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
@@ -2800,6 +3288,96 @@ nocavity : bool
       &Bmad::ptc_set_taylor_order_if_needed,
       R"""(Routine to see if the taylor_order for PTC needs to be set/changed.
 For example, for a change in bmad_com%taylor_order.
+)"""
+  );
+  nb::class_<Bmad::PtcSetupMapWithRadiation>(
+      m,
+      "PtcSetupMapWithRadiation",
+      "ptc_setup_map_with_radiation return type"
+  )
+      .def_ro("rad_map", &Bmad::PtcSetupMapWithRadiation::rad_map)
+      .def_ro("err_flag", &Bmad::PtcSetupMapWithRadiation::err_flag)
+      .def("__len__", [](const Bmad::PtcSetupMapWithRadiation &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcSetupMapWithRadiation &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.rad_map);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
+  m.def(
+      "ptc_setup_map_with_radiation",
+      [](EleStruct &ele1,
+         EleStruct *ele2,
+         std::optional<int> map_order,
+         std::optional<bool> include_damping,
+         std::optional<bool> create_symplectic_map,
+         CoordStruct *orbit1) {
+        auto fn = static_cast<
+            Bmad::
+                PtcSetupMapWithRadiation (*)(EleStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, optional_ref<CoordStruct>)>(
+            &Bmad::ptc_setup_map_with_radiation
+        );
+        return fn(
+            ele1,
+            ptr_to_opt_ref(ele2),
+            map_order,
+            include_damping,
+            create_symplectic_map,
+            ptr_to_opt_ref(orbit1)
+        );
+      },
+      nb::arg("ele1"),
+      nb::arg("ele2") = nb::none(),
+      nb::arg("map_order") = nb::none(),
+      nb::arg("include_damping") = nb::none(),
+      nb::arg("create_symplectic_map") = nb::none(),
+      nb::arg("orbit1") = nb::none(),
+      R"""(                                                                         create_symplectic_map, orbit1, err_flag)
+
+Routine to construct a map including radiation damping and excitation.
+Note: The setting of bmad_com%radiation_damping_on will determine if damping is included in the map.
+
+ele1/ele2 must have an associated PTC layout (which can be constructed by calling lat_to_ptc_layout).
+
+To track after calling this routine track by calling ptc_track_with_radiation.
+To cleanup memory after using, call ptc_kill_map_with_radiation.
+To save a map call ptc_write_map_with_radiation.
+To read a saved map call ptc_read_map_with_radiation.
+To set the random number seed call: ptc_ran_seed_put.
+
+Parameters
+----------
+ele1 : EleStruct
+    The map starts at the exit end of ele1.
+
+ele2 : EleStruct, optional
+    The map ends at the exit end of ele2. If not present, the 1-turn map will be constructed.
+
+map_order : int, optional
+    Order of the map. If not present or less than 1, the currently set order is used.
+
+include_damping : bool, optional
+    If True (default), the map will be constructed with radiation damping included. If False, the map will not
+    be constructed with radiation dampling included.
+
+create_symplectic_map : bool, optional
+    If False (default), create a Taylor map. If True, create a partially inverted map which can be
+    symplecitally tracked.
+
+orbit1 : CoordStruct, optional
+    Orbit at ele1 about which the map is constructed. If not present then the orbit will be computed using PTC
+    tracking.
+
+Returns
+-------
+rad_map : PtcRadMapStruct
+    Transport map.
+
+err_flag : bool, optional
+    Set True if there is an error such as not associated PTC layout.
 )"""
   );
   nb::class_<Bmad::PtcSpinCalc>(m, "PtcSpinCalc", "ptc_spin_calc return type")
@@ -2834,6 +3412,23 @@ norm_mode : NormalModesStruct
 
 closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
+)"""
+  );
+  m.def(
+      "ptc_spin_matching_calc",
+      &Bmad::ptc_spin_matching_calc,
+      nb::arg("branch"),
+      R"""(Wrapper for Fortran routine ptc_spin_matching_calc
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch to analyze.
+
+Returns
+-------
+match_info : 1D array of SpinMatchingStruct
+    G-matrix and other stuff. The array will be allocated by this routine.
 )"""
   );
   nb::class_<Bmad::PtcTrackAll>(m, "PtcTrackAll", "ptc_track_all return type")
@@ -2873,6 +3468,41 @@ track_state : int, optional
 
 err_flag : bool, optional
     Set true if particle lost or error. False otherwise
+)"""
+  );
+  m.def(
+      "ptc_track_map_with_radiation",
+      &Bmad::ptc_track_map_with_radiation,
+      nb::arg("orbit"),
+      nb::arg("rad_map"),
+      nb::arg("rad_damp") = nb::none(),
+      nb::arg("rad_fluct") = nb::none(),
+      R"""(Routine to track through a map that includes radiation.
+
+NOTE! Tracking without damping when the map was made with radiation (and vice versa)
+will not give good results. So avoid this situation unless testing.
+
+To construct the map, use the routine ptc_setup_map_with_radiation.
+To cleanup memory after using, call ptc_kill_map_with_radiation.
+To save a map call ptc_write_map_with_radiation.
+To read a saved map call ptc_read_map_with_radiation.
+To set the random number seed call: ptc_ran_seed_put.
+
+Parameters
+----------
+orbit : CoordStruct
+    Starting orbit.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending orbit after tracking through the map.
+
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+rad_damp : bool, optional
+    Override the setting of bmad_com.radiation_damping_on.
+
+rad_fluct : bool, optional
+    Override the setting of bmad_com.radiation_fluctuations_on
 )"""
   );
   m.def(
@@ -2923,6 +3553,45 @@ Returns
 -------
 err_flag : bool
     Set True if problem like number overflow, etc.
+)"""
+  );
+  m.def(
+      "ptc_write_map_with_radiation",
+      &Bmad::ptc_write_map_with_radiation,
+      nb::arg("rad_map"),
+      nb::arg("file_name") = nb::none(),
+      nb::arg("file_unit") = nb::none(),
+      R"""(Routine to create or append to a binary file containing a ptc_rad_map_struct map.
+
+Either file_name or file_unit must be present but not both.
+If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+and to close the file afterwards.
+
+Parameters
+----------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+file_name : str, optional
+    Name of binary file to create.
+
+file_unit : int, optional
+    File unit number to append to.
+)"""
+  );
+  m.def(
+      "ptwo",
+      &Bmad::ptwo,
+      nb::arg("sigma"),
+      nb::arg("t"),
+      nb::arg("phi"),
+      nb::arg("d_param"),
+      R"""(unnormalized two-dimensional probability distribution in x and phi
+polar angles relative to surface normal
+azimuthal angle relative to plane of incidence (plane of incoming ray and surface normal)
+1/y suppressed
+
+Private routine.
 )"""
   );
   m.def(

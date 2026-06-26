@@ -107,6 +107,51 @@ species : int
 )"""
   );
   m.def(
+      "deposit_particles",
+      &Bmad::deposit_particles,
+      nb::arg("xa"),
+      nb::arg("ya"),
+      nb::arg("za"),
+      nb::arg("qa") = nb::none(),
+      nb::arg("total_charge") = nb::none(),
+      nb::arg("resize_mesh") = nb::none(),
+      nb::arg("mesh_growth_factor") = nb::none(),
+      nb::arg("mesh_shrink_factor") = nb::none(),
+      R"""(Deposits particle arrays onto mesh
+
+Parameters
+----------
+xa : 1D array of float
+    x coordinate array
+
+ya : 1D array of float
+    y coordinate array
+
+za : 1D array of float
+    z coordinate array
+
+qa : 1D array of float, optional
+    charge coordinate array
+
+total_charge : float, optional
+    total charge of particles, used only if qa is not present
+
+resize_mesh : bool, optional
+    Set mesh bounds to fit bunch. default  : .true.
+
+mesh_growth_factor : float, optional
+    Fractional padding when growing mesh (default: 0 = tight fit).
+
+mesh_shrink_factor : float, optional
+    Fractional threshold for shrinking mesh (default: 0 = tight fit).
+
+Returns
+-------
+mesh3d : Mesh3dStruct
+    .rho(:,:,:) .charge routine for charge deposition
+)"""
+  );
+  m.def(
       "detector_pixel_pt",
       &Bmad::detector_pixel_pt,
       nb::arg("orbit"),

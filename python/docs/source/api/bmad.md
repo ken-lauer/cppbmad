@@ -162,6 +162,49 @@ All attributes may be passed to the initializer as arguments:
 | `ref_orb` | [CoordStruct](bmad.md#coordstruct) | Ref orbit around which the scan is made. |
 | `pz_start` | float | Starting pz. |
 
+::: pybmad.AstraLatticeParamStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### AstraLatticeParamStruct
+
+Fortran struct: `astra_lattice_param_struct` ([`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L7))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `fieldmap_dimension` | int | Dimensions for field map. 1 or 3 |
+
+::: pybmad.BaseLineEleStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### BaseLineEleStruct
+
+Fortran struct: `base_line_ele_struct` ([`bmad/parsing/bmad_parser_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_struct.f90#L29))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str | Name of sequence or element |
+| `tag` | str | Tag name. |
+| `ix_multi` | int | Multipass indentifier |
+| `orientation` | int | Element reversed? |
+| `ix_ele_in_in_lat` | int |  |
+| `ele_order_reflect` | bool | Part of reflection or reversed line? |
+
 ::: pybmad.BeamInitStruct
     options:
       heading_level: 0
@@ -376,6 +419,25 @@ All attributes may be passed to the initializer as arguments:
 | `phi_a` | float | a-mode betatron phase. |
 | `phi_b` | float | b-mode betatron phase. |
 
+::: pybmad.BranchPointerStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### BranchPointerStruct
+
+Fortran struct: `branch_pointer_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L917))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `branch` | [BranchStruct](bmad.md#branchstruct) |  |
+
 ::: pybmad.BranchStruct
     options:
       heading_level: 0
@@ -409,6 +471,7 @@ All attributes may be passed to the initializer as arguments:
 | `param` | [LatParamStruct](bmad.md#latparamstruct) |  |
 | `particle_start` | [CoordStruct](bmad.md#coordstruct) |  |
 | `wall3d` | 1D array of Wall3dStruct |  |
+| `ptc` | [PtcBranch1Struct](bmad.md#ptcbranch1struct) | Pointer to layout. Note: ptc info not transferred with "branch1 = branch2" set. |
 
 ::: pybmad.BunchParamsStruct
     options:
@@ -708,6 +771,185 @@ All attributes may be passed to the initializer as arguments:
 | `ramper_lord` | [1D array of RamperLordStruct](bmad.md#ramperlordstruct) | Ramper lord info for this slave |
 | `x_knot` | 1D array of float |  |
 
+::: pybmad.ConverterDir1DStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterDir1DStruct
+
+Fortran struct: `converter_dir_1D_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1252))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pc_out` | float | pc_out value at fit |
+| `poly` | 1D array of float (shape: 0:4) | param(r) = Sum: poly(i) * r^i |
+
+::: pybmad.ConverterDir2DStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterDir2DStruct
+
+Fortran struct: `converter_dir_2D_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1257))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `k` | float |  |
+| `poly` | 1D array of float (shape: 0:3) |  |
+
+::: pybmad.ConverterDirCoefStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterDirCoefStruct
+
+Fortran struct: `converter_dir_coef_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1262))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `fit_1d_r` | 1D array of ConverterDir1dStruct |  |
+| `fit_2d_r` | ConverterDir2dStruct |  |
+| `fit_2d_pc` | ConverterDir2dStruct |  |
+| `c0` | float |  |
+
+::: pybmad.ConverterDirectionOutStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterDirectionOutStruct
+
+Fortran struct: `converter_direction_out_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1269))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `beta` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `alpha_x` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `alpha_y` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `dxds_min` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `dxds_max` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `dyds_max` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+| `c_x` | [ConverterDirCoefStruct](bmad.md#converterdircoefstruct) |  |
+
+::: pybmad.ConverterDistributionStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterDistributionStruct
+
+Fortran struct: `converter_distribution_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1330))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `thickness` | float |  |
+| `sub_dist` | [1D array of ConverterSubDistributionStruct](bmad.md#convertersubdistributionstruct) | Distribution at various pc_in values. |
+
+::: pybmad.ConverterProbPcRStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterProbPcRStruct
+
+Fortran struct: `converter_prob_pc_r_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1235))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pc_out` | 1D array of float | Grid pc_out values. |
+| `r` | 1D array of float | Grid r_out values. |
+| `prob` | 2D array of float | Probability grid. |
+| `spin_z` | 2D array of float | Z polarization grid. Stuff below is calculated rather than read in from the lattice file. |
+| `pc_out_min` | float |  |
+| `pc_out_max` | float |  |
+| `integrated_prob` | float | Integrated probability over (pc_out, r) with restrictions factered in. |
+| `p_norm` | 2D array of float | Normalized probability taking into account. angle_out_max, pc_out_min, and pc_out_max restrictions. |
+| `integ_pc_out` | 1D array of float | Normalized probability integrated from min pc_out up. |
+| `integ_r` | 2D array of float |  |
+| `integ_r_ave` | 1D array of float |  |
+
+::: pybmad.ConverterStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterStruct
+
+Fortran struct: `converter_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1338))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `species_out` | int | Output species |
+| `material_type` | str |  |
+| `dist` | [1D array of ConverterDistributionStruct](bmad.md#converterdistributionstruct) | Distribution at various thicknesses |
+
+::: pybmad.ConverterSubDistributionStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ConverterSubDistributionStruct
+
+Fortran struct: `converter_sub_distribution_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1278))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pc_in` | float |  |
+| `spin_in` | 1D array of float (shape: 3) |  |
+| `prob_pc_r` | [ConverterProbPcRStruct](bmad.md#converterprobpcrstruct) |  |
+| `dir_out` | [ConverterDirectionOutStruct](bmad.md#converterdirectionoutstruct) |  |
+
 ::: pybmad.CoordArrayStruct
     options:
       heading_level: 0
@@ -765,6 +1007,183 @@ All attributes may be passed to the initializer as arguments:
 | `time_dir` | int | +1 or -1. Time direction. -1 => Traveling backwards in time. |
 | `species` | int | positron$, proton$, etc. |
 | `location` | int | upstream_end$, inside$, or downstream_end$ |
+
+::: pybmad.CrystalParamStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CrystalParamStruct
+
+Fortran struct: `crystal_param_struct` ([`bmad/photon/photon_utils_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_utils_mod.f90#L9))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `cap_gamma` | float |  |
+| `dtheta_sin_2theta` | float |  |
+| `b_eff` | float |  |
+| `wavelength` | float |  |
+| `old_vvec` | 1D array of float (shape: 3) |  |
+| `new_vvec` | 1D array of float (shape: 3) |  |
+
+::: pybmad.CsrBunchSliceStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CsrBunchSliceStruct
+
+Fortran struct: `csr_bunch_slice_struct` ([`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L34))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `x0` | float | Transverse center of the particle distrubution |
+| `y0` | float | Transverse center of the particle distrubution |
+| `z0_edge` | float | Left (min z) edge of bin |
+| `z1_edge` | float | Right (max z) edge of bin |
+| `z_center` | float | z at center of bin. |
+| `sig_x` | float | particle's RMS width |
+| `sig_y` | float | particle's RMS width |
+| `charge` | float | charge of the particles |
+| `dcharge_density_dz` | float | Charge density gradient |
+| `edge_dcharge_density_dz` | float | gradient between this and preceeding bin. [Evaluated at bin edge.] |
+| `kick_csr` | float | CSR kick |
+| `coef_lsc_plus` | 2D array of float (shape: 0:2,0:2) | LSC Kick coefs. |
+| `coef_lsc_minus` | 2D array of float (shape: 0:2,0:2) | LSC Kick coefs. |
+| `kick_lsc` | float |  |
+| `n_particle` | float | Number of particles in slice can be a fraction since particles span multiple bins. |
+
+::: pybmad.CsrEleInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CsrEleInfoStruct
+
+Fortran struct: `csr_ele_info_struct` ([`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L22))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ele` | [EleStruct](bmad.md#elestruct) | lattice element |
+| `orbit0` | [CoordStruct](bmad.md#coordstruct) | centroid orbit at entrance/exit ends |
+| `orbit1` | [CoordStruct](bmad.md#coordstruct) | centroid orbit at entrance/exit ends |
+| `floor0` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor position of centroid at entrance/exit ends |
+| `floor1` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor position of centroid at entrance/exit ends |
+| `ref_floor0` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor position of element ref coords at entrance/exit ends |
+| `ref_floor1` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor position of element ref coords at entrance/exit ends |
+| `spline` | [SplineStruct](sim_utils.md#splinestruct) | Spline for centroid orbit. spline%x = distance along chord. The spline is zero at the ends by construction. |
+| `theta_chord` | float | Reference angle of chord in z-x plane |
+| `L_chord` | float | Chord Length. Negative if bunch moves backwards in element. |
+| `dL_s` | float | L_s(of element) - L_chord |
+
+::: pybmad.CsrKick1Struct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CsrKick1Struct
+
+Fortran struct: `csr_kick1_struct` ([`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L57))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `I_csr` | float | Kick integral. |
+| `I_int_csr` | float | Integrated Kick integral. |
+| `image_kick_csr` | float | kick. |
+| `L_vec` | 1D array of float (shape: 3) | L vector in global coordinates. |
+| `L` | float | Distance between source and kick points. |
+| `dL` | float | = epsilon_L = Ls - L |
+| `dz_particles` | float | Kicked particle - source particle position at constant time. |
+| `s_chord_source` | float | Source point coordinate along chord. |
+| `theta_L` | float | Angle of L vector |
+| `theta_sl` | float | Angle between velocity of particle at source pt and L |
+| `theta_lk` | float | Angle between L and velocity of kicked particle |
+| `ix_ele_source` | int | Source element index. |
+| `floor_s` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor position of source pt |
+
+::: pybmad.CsrParticlePositionStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CsrParticlePositionStruct
+
+Fortran struct: `csr_particle_position_struct` ([`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L73))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `r` | 1D array of float (shape: 3) | particle position |
+| `charge` | float | particle charge |
+
+::: pybmad.CsrStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### CsrStruct
+
+Fortran struct: `csr_struct` ([`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L78))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `gamma` | float | Relativistic gamma factor. |
+| `gamma2` | float | Relativistic gamma factor. |
+| `rel_mass` | float | m_particle / m_electron |
+| `beta` | float | Relativistic beta factor. |
+| `dz_slice` | float | Bin width |
+| `ds_track_step` | float | True step size |
+| `s_kick` | float | Kick point longitudinal location (element ref coords) from entrance end |
+| `s_chord_kick` | float | Kick point along beam centroid line |
+| `y_source` | float | Height of source particle. |
+| `kick_factor` | float | Coefficient to scale the kick |
+| `actual_track_step` | float | ds_track_step scalled by Length_centroid_chord / Length_element ratio |
+| `x0_bunch` | float | Bunch centroid |
+| `y0_bunch` | float | Bunch centroid |
+| `floor_k` | [FloorPositionStruct](bmad.md#floorpositionstruct) | Floor coords at kick point |
+| `species` | int | Particle type |
+| `ix_ele_kick` | int | Same as element being tracked through. |
+| `slice` | [1D array of CsrBunchSliceStruct](bmad.md#csrbunchslicestruct) | slice(i) refers to the i^th bunch slice. |
+| `kick1` | [1D array of CsrKick1Struct](bmad.md#csrkick1struct) | kick1(i) referes to the kick between two slices i bins apart. |
+| `eleinfo` | [1D array of CsrEleInfoStruct](bmad.md#csreleinfostruct) | Element-by-element information. |
+| `kick_ele` | [EleStruct](bmad.md#elestruct) | Element where the kick pt is == ele tracked through. |
+| `mesh3d` | Mesh3dStruct |  |
+| `position` | [1D array of CsrParticlePositionStruct](bmad.md#csrparticlepositionstruct) |  |
 
 ::: pybmad.CylindricalMapStruct
     options:
@@ -835,6 +1254,55 @@ All attributes may be passed to the initializer as arguments:
 | `n_link` | int | For memory management of this structure |
 | `term` | [1D array of CylindricalMapTerm1Struct](bmad.md#cylindricalmapterm1struct) |  |
 
+::: pybmad.DiffuseParamStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### DiffuseParamStruct
+
+Fortran struct: `diffuse_param_struct` ([`bmad/photon/photon_reflection_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_reflection_mod.f90#L13))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `x` | float |  |
+| `y` | float |  |
+| `lambda_` | float |  |
+| `c_norm` | float |  |
+| `chx_norm` | float |  |
+| `prob_spline` | [1D array of SplineStruct (shape: 0:50)](sim_utils.md#splinestruct) |  |
+| `n_pt_spline` | int |  |
+
+::: pybmad.EleAttributeStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### EleAttributeStruct
+
+Fortran struct: `ele_attribute_struct` ([`bmad/modules/attribute_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/attribute_mod.f90#L25))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str |  |
+| `state` | int | See above. |
+| `kind` | int | Is_switch$, is_real$, etc. See attribute_type routine. |
+| `units` | str | EG: 'T*m'. |
+| `ix_attrib` | int | Attribute index. Frequently will be where in the ele%value(:) array the attribute is. |
+| `value` | float | Used by type_ele. |
+
 ::: pybmad.ElePointerStruct
     options:
       heading_level: 0
@@ -887,13 +1355,15 @@ All attributes may be passed to the initializer as arguments:
 | `bookkeeping_state` | [BookkeepingStateStruct](bmad.md#bookkeepingstatestruct) | Attribute bookkeeping |
 | `branch` | [BranchStruct](bmad.md#branchstruct) | Pointer to branch containing element. |
 | `control` | [ControllerStruct](bmad.md#controllerstruct) | group & overlay variables. |
+| `converter` | [ConverterStruct](bmad.md#converterstruct) | EG: Positron converter in linac. |
 | `rf` | [RfEleStruct](bmad.md#rfelestruct) | RF parameters. |
+| `foil` | [FoilStruct](bmad.md#foilstruct) |  |
 | `lord` | [EleStruct](bmad.md#elestruct) | Pointer to a slice lord. |
-| `ptc_fibre` | [Fibre](forest.md#fibre) | PTC track corresponding to this ele. %floor is floor coord of lab coordinates at the downstream end. Notice that if ele%direction = -1, the lab coords have the z-axis antiparallel to the +s-direction. |
 | `floor` | [FloorPositionStruct](bmad.md#floorpositionstruct) |  |
 | `high_energy_space_charge` | [HighEnergySpaceChargeStruct](bmad.md#highenergyspacechargestruct) |  |
 | `mode3` | [Mode3Struct](bmad.md#mode3struct) | 6D normal mode structure. |
 | `photon` | [PhotonElementStruct](bmad.md#photonelementstruct) |  |
+| `multipole_cache` | [MultipoleCacheStruct](bmad.md#multipolecachestruct) |  |
 | `rad_map` | [RadMapEleStruct](bmad.md#radmapelestruct) | Radiation kick parameters Note: The reference orbits for spin and orbit Taylor maps are not necessarily the same. For example, Sprint spin Taylor maps can be with respect to the zero orbit independent of the orbital map. |
 | `taylor` | [1D array of TaylorStruct (shape: 6)](bmad.md#taylorstruct) | Phase space Taylor map. |
 | `spin_taylor_ref_orb_in` | 1D array of float (shape: 6) |  |
@@ -1054,6 +1524,95 @@ All attributes may be passed to the initializer as arguments:
 | `value` | float |  |
 | `node` | [1D array of ExpressionTreeStruct](bmad.md#expressiontreestruct) | Child nodes. Note: Pointer used here since Ifort does not support allocatable. |
 
+::: pybmad.ExtraParsingInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ExtraParsingInfoStruct
+
+Fortran struct: `extra_parsing_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2210))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ran_state` | [RandomStateStruct](sim_utils.md#randomstatestruct) |  |
+| `ran_seed` | int |  |
+| `undeterministic_ran_function_called` | bool | Used with bmad_com |
+| `d_orb_set` | bool |  |
+| `max_aperture_limit_set` | bool |  |
+| `default_ds_step_set` | bool |  |
+| `significant_length_set` | bool |  |
+| `rel_tol_tracking_set` | bool |  |
+| `abs_tol_tracking_set` | bool |  |
+| `rel_tol_adaptive_tracking_set` | bool |  |
+| `abs_tol_adaptive_tracking_set` | bool |  |
+| `init_ds_adaptive_tracking_set` | bool |  |
+| `min_ds_adaptive_tracking_set` | bool |  |
+| `fatal_ds_adaptive_tracking_set` | bool |  |
+| `synch_rad_scale_set` | bool |  |
+| `autoscale_amp_abs_tol_set` | bool |  |
+| `autoscale_amp_rel_tol_set` | bool |  |
+| `autoscale_phase_tol_set` | bool |  |
+| `rf_phase_below_transition_ref_set` | bool |  |
+| `electric_dipole_moment_set` | bool |  |
+| `taylor_order_set` | bool |  |
+| `runge_kutta_order_set` | bool |  |
+| `default_integ_order_set` | bool |  |
+| `sr_wakes_on_set` | bool |  |
+| `lr_wakes_on_set` | bool |  |
+| `high_energy_space_charge_on_set` | bool |  |
+| `high_energy_space_charge_linear_set` | bool |  |
+| `csr_and_space_charge_on_set` | bool |  |
+| `spin_tracking_on_set` | bool |  |
+| `spin_sokolov_ternov_flipping_on_set` | bool |  |
+| `radiation_damping_on_set` | bool |  |
+| `radiation_zero_average_set` | bool |  |
+| `radiation_fluctuations_on_set` | bool |  |
+| `conserve_taylor_maps_set` | bool |  |
+| `absolute_time_tracking_set` | bool |  |
+| `absolute_time_ref_shift_set` | bool |  |
+| `convert_to_kinetic_momentum_set` | bool |  |
+| `aperture_limit_on_set` | bool |  |
+| `normalize_twiss_set` | bool |  |
+| `sad_eps_scale_set` | bool |  |
+| `sad_amp_max_set` | bool |  |
+| `sad_n_div_max_set` | bool |  |
+| `max_num_runge_kutta_step_set` | bool |  |
+| `spin_n0_direction_user_set_set` | bool |  |
+| `debug_set` | bool | Used with space_charge_com |
+| `ds_track_step_set` | bool |  |
+| `dt_track_step_set` | bool |  |
+| `cathode_strength_cutoff_set` | bool |  |
+| `sc_rel_tol_tracking_set` | bool | For: space_charge_com%rel_tol_tracking |
+| `sc_abs_tol_tracking_set` | bool | For: space_charge_com%abs_tol_tracking |
+| `beam_chamber_height_set` | bool |  |
+| `lsc_sigma_cutoff_set` | bool |  |
+| `particle_sigma_cutoff_set` | bool |  |
+| `space_charge_mesh_size_set` | bool |  |
+| `csr3d_mesh_size_set` | bool |  |
+| `n_bin_set` | bool |  |
+| `particle_bin_span_set` | bool |  |
+| `n_shield_images_set` | bool |  |
+| `sc_min_in_bin_set` | bool |  |
+| `lsc_kick_transverse_dependence_set` | bool |  |
+| `sc_debug_set` | bool |  |
+| `diagnostic_output_file_set` | bool | Used with ptc_com |
+| `old_integrator_set` | bool |  |
+| `use_orientation_patches_set` | bool |  |
+| `print_info_messages_set` | bool |  |
+| `max_fringe_order_set` | bool |  |
+| `exact_model_set` | bool |  |
+| `exact_misalign_set` | bool |  |
+| `vertical_kick_set` | bool |  |
+| `cut_factor_set` | bool |  |
+| `translate_patch_drift_time_set` | bool |  |
+
 ::: pybmad.FloorPositionStruct
     options:
       heading_level: 0
@@ -1076,6 +1635,50 @@ All attributes may be passed to the initializer as arguments:
 | `theta` | float | angular orientation consistent with W matrix |
 | `phi` | float | angular orientation consistent with W matrix |
 | `psi` | float | angular orientation consistent with W matrix |
+
+::: pybmad.FoilStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### FoilStruct
+
+Fortran struct: `foil_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1295))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `material` | [1D array of MaterialStruct](bmad.md#materialstruct) |  |
+
+::: pybmad.FringeFieldInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### FringeFieldInfoStruct
+
+Fortran struct: `fringe_field_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L35))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `hard_ele` | [EleStruct](bmad.md#elestruct) |  |
+| `s_edge_hard` | float |  |
+| `ds_edge` | float | Distance from particle to edge in hard_ele frame. |
+| `particle_at` | int | first_track_edge$, second_track_edge$, or none$ |
+| `hard_location` | int | Particle location wrt hard_ele. Points to element in location(:). |
+| `location` | 1D array of int | Particle location in an element. entrance_end$, inside$, or exit_end$ Elements in list are the tracking element or its lords. |
+| `has_fringe` | bool | Has a fringe to worry about? |
 
 ::: pybmad.GenGrad1Struct
     options:
@@ -1167,6 +1770,29 @@ All attributes may be passed to the initializer as arguments:
 |-----------|------|-------------|
 | `coef` | float |  |
 | `expn` | 1D array of int (shape: 2) |  |
+
+::: pybmad.GptLatParamStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### GptLatParamStruct
+
+Fortran struct: `gpt_lat_param_struct` ([`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L7))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `fieldmap_dimension` | int | Dimensions for field map. 1 or 3 |
+| `only_write_autophase_parameters` | bool | Option to only write phasing info |
+| `gpt_filename` | str | Blank => Append '.gpt' to Bmad lattice file name. |
+| `header_file_name` | str | Header file to include in gpt file. |
+| `tracking_end_element` | str | Bmad lattice element name or index. |
 
 ::: pybmad.GridBeamInitStruct
     options:
@@ -1290,6 +1916,95 @@ All attributes may be passed to the initializer as arguments:
 | `sin_phi` | float |  |
 | `cos_phi` | float |  |
 | `sig_z` | float |  |
+
+::: pybmad.IbsLifetimeStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### IbsLifetimeStruct
+
+Fortran struct: `ibs_lifetime_struct` ([`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L23))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `Tlx` | float |  |
+| `Tly` | float |  |
+| `Tlp` | float |  |
+
+::: pybmad.IbsMaxratioStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### IbsMaxratioStruct
+
+Fortran struct: `ibs_maxratio_struct` ([`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L30))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `rx` | float |  |
+| `ry` | float |  |
+| `r_p` | float |  |
+
+::: pybmad.IbsSimParamStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### IbsSimParamStruct
+
+Fortran struct: `ibs_sim_param_struct` ([`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L10))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `tau_a` | float | horizontal damping rate (needed for coulomb log tail cut) |
+| `clog_to_use` | int | see multi_coulomb_log subroutine for valid settings.  Set to 1 to disable tail-cut.  Set to 1 for linacs. |
+| `set_dispersion` | bool | True: add vertical dispersion to transfer matrix.  Valid for kubo method. |
+| `eta_set` | float | If set_dispersion, then this value is used to add y-z coupling to the transfer matrix. |
+| `etap_set` | float | If set_dispersion, then this value is used to add y-z coupling to the transfer matrix. |
+| `do_pwd` | bool | If true, then use potential well distortion to calculate bunch lengths.  If false, bunch length is proportional to energy spread. |
+| `inductance` | float | Inductive part of impedance for pwd calc. |
+| `formula` | str | Which IBS formulation to use.  See subroutine ibs1 for a list. real(rp) :: fake_3HC = -1   ! If greater than zero, divide growth rates by this factor. |
+
+::: pybmad.IbsStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### IbsStruct
+
+Fortran struct: `ibs_struct` ([`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L7))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `inv_Ta` | float |  |
+| `inv_Tb` | float |  |
+| `inv_Tz` | float |  |
 
 ::: pybmad.Interval1CoefStruct
     options:
@@ -1446,6 +2161,25 @@ All attributes may be passed to the initializer as arguments:
 | `bookkeeping_state` | [BookkeepingStateStruct](bmad.md#bookkeepingstatestruct) | Overall status for the branch. |
 | `beam_init` | [BeamInitStruct](bmad.md#beaminitstruct) | For beam initialization. |
 
+::: pybmad.LatPointerStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### LatPointerStruct
+
+Fortran struct: `lat_pointer_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L923))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `lat` | [LatStruct](bmad.md#latstruct) |  |
+
 ::: pybmad.LatStruct
     options:
       heading_level: 0
@@ -1482,6 +2216,7 @@ All attributes may be passed to the initializer as arguments:
 | `particle_start` | [CoordStruct](bmad.md#coordstruct) | Starting particle_coords. |
 | `beam_init` | [BeamInitStruct](bmad.md#beaminitstruct) | Beam initialization. |
 | `pre_tracker` | [PreTrackerStruct](bmad.md#pretrackerstruct) | For OPAL/IMPACT-T |
+| `nametable` | [NametableStruct](sim_utils.md#nametablestruct) | For quick searching by element name. |
 | `custom` | 1D array of float | Custom attributes. |
 | `version` | int | Version number |
 | `n_ele_track` | int | Number of lat elements to track through. |
@@ -1519,6 +2254,46 @@ All attributes may be passed to the initializer as arguments:
 | `sig_E1` | float | Energy spread after 1 pass (eV) |
 | `a_emittance_end` | float | a mode emittance at end of linac |
 | `b_emittance_end` | float | b mode emittance at end of linac |
+
+::: pybmad.LinearEleIsfStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### LinearEleIsfStruct
+
+Fortran struct: `linear_ele_isf_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L338))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `node` | [1D array of LinearIsf1Struct](bmad.md#linearisf1struct) | Array per PTC integration node. |
+
+::: pybmad.LinearIsf1Struct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### LinearIsf1Struct
+
+Fortran struct: `linear_isf1_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L329))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `orb0` | 1D array of float (shape: 6) | Closed orbit. |
+| `isf` | 2D array of float (shape: 0:3, 0:6) | Linear ISF map at a given point. |
+| `s` | float | Offset from beginning of element. !! real(rp) :: m_1turn(6,6) = 0   ! Orbital 1-turn matrix. |
 
 ::: pybmad.MadEnergyStruct
     options:
@@ -1564,6 +2339,62 @@ All attributes may be passed to the initializer as arguments:
 | `k` | 1D array of float (shape: 6) | 0th order map. |
 | `r` | 2D array of float (shape: 6,6) | 1st order map. |
 | `t` | 3D array of float (shape: 6,6,6) | 2nd order map. |
+
+::: pybmad.MaterialStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MaterialStruct
+
+Fortran struct: `material_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1287))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `species` | int |  |
+| `number` | int | Relative number |
+| `density` | float |  |
+| `density_used` | float |  |
+| `area_density` | float |  |
+| `area_density_used` | float |  |
+| `radiation_length` | float |  |
+| `radiation_length_used` | float |  |
+
+::: pybmad.Mesh3DStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### Mesh3DStruct
+
+Fortran struct: `mesh3d_struct` ([`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L14))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `nlo` | 1D array of int (shape: 3) | Lowest  grid index in x, y, z (m) of rho and the quantity being computed (phi or E) |
+| `nhi` | 1D array of int (shape: 3) | Highest grid index in x, y, z (m) of rho and the quantity being computed (phi or E) |
+| `npad` | 1D array of int (shape: 3) | Array padding for cyclic convolution |
+| `min` | 1D array of float (shape: 3) | Minimim in each dimension |
+| `max` | 1D array of float (shape: 3) | Maximum in each dimension |
+| `delta` | 1D array of float (shape: 3) | Grid spacing |
+| `gamma` | float | Relativistic gamma |
+| `charge` | float | Total charge on mesh |
+| `rho` | 3D array of float | Charge density grid |
+| `phi` | 3D array of float | electric potential grid |
+| `efield` | 4D array of float | electric field grid |
+| `bfield` | 4D array of float | magnetic field grid |
 
 ::: pybmad.Mode3Struct
     options:
@@ -1612,6 +2443,202 @@ All attributes may be passed to the initializer as arguments:
 | `chrom` | float | Chromaticity. |
 | `sigma` | float | Beam size. |
 | `sigmap` | float | Beam divergence. |
+
+::: pybmad.MomentumApertureStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MomentumApertureStruct
+
+Fortran struct: `momentum_aperture_struct` ([`bmad/multiparticle/touschek_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/touschek_mod.f90#L23))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `s` | float |  |
+| `pos` | float |  |
+| `neg` | float |  |
+
+::: pybmad.MultipassAllInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassAllInfoStruct
+
+Fortran struct: `multipass_all_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2120))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `lord` | [1D array of MultipassLordInfoStruct](bmad.md#multipasslordinfostruct) | Array of lords |
+| `branch` | [1D array of MultipassBranchInfoStruct](bmad.md#multipassbranchinfostruct) |  |
+
+::: pybmad.MultipassBranchInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassBranchInfoStruct
+
+Fortran struct: `multipass_branch_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2113))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ele` | [1D array of MultipassEleInfoStruct](bmad.md#multipasseleinfostruct) |  |
+
+::: pybmad.MultipassEleInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassEleInfoStruct
+
+Fortran struct: `multipass_ele_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2106))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `multipass` | bool | True if involved in multipass. False otherwise |
+| `ix_pass` | int | Pass number |
+| `ix_lord` | 1D array of int | Pointers to lord(:) array |
+| `ix_super` | 1D array of int | Indexes to slave(ix_pass, super_slave%ix_ele) matrix |
+
+::: pybmad.MultipassLordInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassLordInfoStruct
+
+Fortran struct: `multipass_lord_info_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2095))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `lord` | [EleStruct](bmad.md#elestruct) | Lord element |
+| `n_pass` | int | Number of passes (= number of slaves) |
+| `n_super_slave` | int | Number of super_slaves per super_lord. |
+| `super_lord` | [1D array of ElePointerStruct](bmad.md#elepointerstruct) | Super_lord list if they exist. |
+| `slave` | [2D array of ElePointerStruct](bmad.md#elepointerstruct) | Slaves list in tracking part. |
+
+::: pybmad.MultipassRegionBranchStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassRegionBranchStruct
+
+Fortran struct: `multipass_region_branch_struct` ([`bmad/output/write_lattice_file_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/output/write_lattice_file_mod.f90#L12))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ele` | [1D array of MultipassRegionEleStruct](bmad.md#multipassregionelestruct) |  |
+
+::: pybmad.MultipassRegionEleStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassRegionEleStruct
+
+Fortran struct: `multipass_region_ele_struct` ([`bmad/output/write_lattice_file_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/output/write_lattice_file_mod.f90#L6))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ix_region` | int |  |
+| `region_start_pt` | bool |  |
+| `region_stop_pt` | bool |  |
+
+::: pybmad.MultipassRegionLatStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipassRegionLatStruct
+
+Fortran struct: `multipass_region_lat_struct` ([`bmad/output/write_lattice_file_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/output/write_lattice_file_mod.f90#L16))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `branch` | [1D array of MultipassRegionBranchStruct](bmad.md#multipassregionbranchstruct) |  |
+
+::: pybmad.MultipoleCacheStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### MultipoleCacheStruct
+
+Fortran struct: `multipole_cache_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L959))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `a_pole_mag` | 1D array of float |  |
+| `b_pole_mag` | 1D array of float |  |
+| `a_kick_mag` | 1D array of float |  |
+| `b_kick_mag` | 1D array of float |  |
+| `ix_pole_mag_max` | int |  |
+| `ix_kick_mag_max` | int |  |
+| `mag_valid` | bool | From elseparator hkick and vkick. |
+| `a_pole_elec` | 1D array of float |  |
+| `b_pole_elec` | 1D array of float |  |
+| `a_kick_elec` | 1D array of float |  |
+| `b_kick_elec` | 1D array of float |  |
+| `ix_pole_elec_max` | int |  |
+| `ix_kick_elec_max` | int |  |
+| `elec_valid` | bool |  |
 
 ::: pybmad.NormalModesStruct
     options:
@@ -1705,6 +2732,46 @@ All attributes may be passed to the initializer as arguments:
 | `is_range` | bool | For girders |
 | `default_attrib` | str | For group/overlay elements: slave attribute |
 
+::: pybmad.ParserLatStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### ParserLatStruct
+
+Fortran struct: `parser_lat_struct` ([`bmad/parsing/bmad_parser_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_struct.f90#L108))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `ele` | [1D array of ParserEleStruct](bmad.md#parserelestruct) |  |
+
+::: pybmad.PhotonCoordStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PhotonCoordStruct
+
+Fortran struct: `photon_coord_struct` ([`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L5))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `orb` | [CoordStruct](bmad.md#coordstruct) | Phase space: orb%vec = (x, vx/c, y, vy/c, s, vs/c) |
+| `track_len` | float | Total track length from the start of the element. |
+| `ix_section` | int | Cross section index |
+
 ::: pybmad.PhotonElementStruct
     options:
       heading_level: 0
@@ -1734,6 +2801,73 @@ All attributes may be passed to the initializer as arguments:
 | `reflectivity_table_pi` | [PhotonReflectTableStruct](bmad.md#photonreflecttablestruct) |  |
 | `init_energy_prob` | [1D array of SplineStruct](sim_utils.md#splinestruct) | Initial energy probability density |
 | `integrated_init_energy_prob` | 1D array of float |  |
+
+::: pybmad.PhotonInitSplinesStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PhotonInitSplinesStruct
+
+Fortran struct: `photon_init_splines_struct` ([`bmad/photon/photon_init_spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_init_spline_mod.f90#L24))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `source_type` | str | 'bend', 'wiggler', 'undulator' |
+| `spline_space_dimensions` | int | Dimensions: [energy, y_angle, x_angle, x, y] |
+| `energy_prob` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `y_angle` | [1D array of PhotonInitYAngleSplineStruct](bmad.md#photoninityanglesplinestruct) |  |
+
+::: pybmad.PhotonInitXAngleSplineStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PhotonInitXAngleSplineStruct
+
+Fortran struct: `photon_init_x_angle_spline_struct` ([`bmad/photon/photon_init_spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_init_spline_mod.f90#L15))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `prob` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pl` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pc` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pl45` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+
+::: pybmad.PhotonInitYAngleSplineStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PhotonInitYAngleSplineStruct
+
+Fortran struct: `photon_init_y_angle_spline_struct` ([`bmad/photon/photon_init_spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_init_spline_mod.f90#L19))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `prob` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pl` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pc` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `pl45` | [1D array of SplineStruct](sim_utils.md#splinestruct) |  |
+| `x_angle` | [1D array of PhotonInitXAngleSplineStruct](bmad.md#photoninitxanglesplinestruct) |  |
 
 ::: pybmad.PhotonMaterialStruct
     options:
@@ -1834,6 +2968,26 @@ All attributes may be passed to the initializer as arguments:
 | `corner` | [1D array of TargetPointStruct (shape: 8)](bmad.md#targetpointstruct) |  |
 | `center` | [TargetPointStruct](bmad.md#targetpointstruct) |  |
 
+::: pybmad.PhotonTrackStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PhotonTrackStruct
+
+Fortran struct: `photon_track_struct` ([`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L11))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `old` | [PhotonCoordStruct](bmad.md#photoncoordstruct) |  |
+| `now` | [PhotonCoordStruct](bmad.md#photoncoordstruct) |  |
+
 ::: pybmad.PixelDetecStruct
     options:
       heading_level: 0
@@ -1886,6 +3040,35 @@ All attributes may be passed to the initializer as arguments:
 | `init_orbit` | 1D array of float (shape: 6) | Initial orbit at start of lattice statistics. |
 | `init_orbit_rms` | 1D array of float (shape: 6) | Initial orbit at start of lattice RMS statistics. |
 
+::: pybmad.PmdHeaderStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PmdHeaderStruct
+
+Fortran struct: `pmd_header_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L2434))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `openPMD` | str |  |
+| `openPMDextension` | str |  |
+| `basePath` | str |  |
+| `particlesPath` | str |  |
+| `meshesPath` | str |  |
+| `author` | str |  |
+| `software` | str |  |
+| `softwareVersion` | str |  |
+| `date` | str |  |
+| `latticeFile` | str |  |
+| `latticeName` | str |  |
+
 ::: pybmad.PreTrackerStruct
     options:
       heading_level: 0
@@ -1908,6 +3091,40 @@ All attributes may be passed to the initializer as arguments:
 | `ix_ele_end` | int |  |
 | `input_file` | str |  |
 
+::: pybmad.PtcBranch1Struct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PtcBranch1Struct
+
+Fortran struct: `ptc_branch1_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1547))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `m_u_layout` | [1D array of PtcLayoutPointerStruct](bmad.md#ptclayoutpointerstruct) |  |
+
+::: pybmad.PtcLayoutPointerStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PtcLayoutPointerStruct
+
+Fortran struct: `ptc_layout_pointer_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L1543))
+
+All attributes may be passed to the initializer as arguments:
+
 ::: pybmad.PtcNormalFormStruct
     options:
       heading_level: 0
@@ -1928,6 +3145,39 @@ All attributes may be passed to the initializer as arguments:
 | `ele_origin` | [EleStruct](bmad.md#elestruct) | Element at which the on-turn map was created. |
 | `orb0` | 1D array of float (shape: 6) | Closed orbit at element. |
 | `valid_map` | bool |  |
+
+::: pybmad.PtcRadMapStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### PtcRadMapStruct
+
+Fortran struct: `ptc_rad_map_struct` ([`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L9))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `lattice_file` | str | Name of the lattice file |
+| `dref_time` | float | Time ref particle takes. |
+| `p0c_start` | float | ref momentum at start |
+| `p0c_end` | float | ref momentum at end |
+| `s_end` | float | Ending s-position |
+| `map_order` | int |  |
+| `radiation_damping_on` | bool |  |
+| `ix_branch` | int |  |
+| `ix_ele_start` | int | Start point for making the map |
+| `ix_ele_end` | int | End point for making the map |
+| `nodamp_mat` | 2D array of float (shape: 6,6) | Nondamped orbital matrix. M_orbit = M_damp * M_nodamp |
+| `damp_mat` | 2D array of float (shape: 6,6) | Damping "correction" to orbital matrix. Stoc_mat is referenced to the start of the map. That is, it is applied before the transport matrix. |
+| `stoc_mat` | 2D array of float (shape: 6,6) | Stochatic matrix for the orbit. |
+| `ref0` | 1D array of float (shape: 6) | Reference orbit at start. |
+| `ref1` | 1D array of float (shape: 6) | Reference orbit at end. |
 
 ::: pybmad.RadInt1Struct
     options:
@@ -2002,6 +3252,88 @@ All attributes may be passed to the initializer as arguments:
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `ele` | [1D array of RadInt1Struct](bmad.md#radint1struct) | Array is indexed from 0 |
+
+::: pybmad.RadIntCache1Struct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### RadIntCache1Struct
+
+Fortran struct: `rad_int_cache1_struct` ([`bmad/modules/rad_int_common.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/rad_int_common.f90#L28))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `pt` | [1D array of RadIntTrackPointStruct](bmad.md#radinttrackpointstruct) | pt(0:n_pt) |
+| `n_pt` | int | Upper bound of pt(0:n_pt) |
+| `cache_type` | int |  |
+
+::: pybmad.RadIntInfoStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### RadIntInfoStruct
+
+Fortran struct: `rad_int_info_struct` ([`bmad/modules/rad_int_common.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/rad_int_common.f90#L43))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `branch` | [BranchStruct](bmad.md#branchstruct) |  |
+| `ele` | [EleStruct](bmad.md#elestruct) |  |
+| `orbit` | [1D array of CoordStruct](bmad.md#coordstruct) |  |
+| `a` | [TwissStruct](bmad.md#twissstruct) |  |
+| `b` | [TwissStruct](bmad.md#twissstruct) |  |
+| `cache_ele` | [RadIntCache1Struct](bmad.md#radintcache1struct) | pointer to cache in use |
+| `eta_a` | 1D array of float (shape: 4) |  |
+| `eta_b` | 1D array of float (shape: 4) |  |
+| `g` | float | bending strength (1/bending_radius) |
+| `g2` | float | bending strength (1/bending_radius) |
+| `g_x` | float | components in x-y plane |
+| `g_y` | float | components in x-y plane |
+| `dg2_x` | float |  |
+| `dg2_y` | float |  |
+
+::: pybmad.RadIntTrackPointStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### RadIntTrackPointStruct
+
+Fortran struct: `rad_int_track_point_struct` ([`bmad/modules/rad_int_common.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/rad_int_common.f90#L15))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `s_body` | float |  |
+| `mat6` | 2D array of float (shape: 6,6) |  |
+| `vec0` | 1D array of float (shape: 6) |  |
+| `ref_orb_in` | [CoordStruct](bmad.md#coordstruct) |  |
+| `ref_orb_out` | [CoordStruct](bmad.md#coordstruct) |  |
+| `g_x0` | float | Additional g factors for bends. |
+| `g_y0` | float | Additional g factors for bends. |
+| `dgx_dx` | float | bending strength gradient |
+| `dgx_dy` | float | bending strength gradient |
+| `dgy_dx` | float | bending strength gradient |
+| `dgy_dy` | float | bending strength gradient |
 
 ::: pybmad.RadMapEleStruct
     options:
@@ -2135,6 +3467,66 @@ All attributes may be passed to the initializer as arguments:
 | `s` | float | S-position at the kick point relative to the beginning of the element. |
 | `ix_step` | int | Step index in ele%rf%steps(:) array |
 
+::: pybmad.SeqEleStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### SeqEleStruct
+
+Fortran struct: `seq_ele_struct` ([`bmad/parsing/bmad_parser_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_struct.f90#L14))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str | name of element, subline, or sublist |
+| `actual_arg` | 1D array of str |  |
+| `tag` | str | tag name. |
+| `slice_start` | str | For "my_line[start:end]" slice constructs. |
+| `slice_end` | str | For "my_line[start:end]" slice constructs. |
+| `type` | int | LINE$, REPLACEMENT_LINE$, LIST$, ELEMENT$ |
+| `ix_ele` | int | if an element: pointer to ELE array if a line or list: pointer to SEQ array |
+| `ix_arg` | int | index in arg list (for replacement lines) |
+| `rep_count` | int | how many copies of an element |
+| `ele_order_reflect` | bool | Travel through ele sequence in reverse order |
+| `ele_orientation` | int | element has reverse orientation. |
+
+::: pybmad.SeqStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### SeqStruct
+
+Fortran struct: `seq_struct` ([`bmad/parsing/bmad_parser_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_struct.f90#L38))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `name` | str | name of sequence |
+| `ele` | [1D array of SeqEleStruct](bmad.md#seqelestruct) | Elements in the sequence |
+| `dummy_arg` | 1D array of str |  |
+| `corresponding_actual_arg` | 1D array of str |  |
+| `type` | int | LINE$, REPLACEMENT_LINE$ or LIST$ |
+| `ix_list` | int | Current index for lists |
+| `list_upcount` | int |  |
+| `index` | int | Alphabetical order sorted index |
+| `file_name` | str | File where sequence is defined |
+| `ix_file_line` | int | Line number in file where sequence is defined |
+| `multipass` | bool |  |
+| `ptc_layout` | bool | Put in separate PTC layout |
+| `active` | bool | Used to prevent infinite loops. |
+
 ::: pybmad.SpaceChargeCommonStruct
     options:
       heading_level: 0
@@ -2192,6 +3584,55 @@ All attributes may be passed to the initializer as arguments:
 | `l` | 1D array of float (shape: 3) | Transverse axis. |
 | `n0` | 1D array of float (shape: 3) | Invariant spin axis on closed orbit. |
 | `m` | 1D array of float (shape: 3) | Transverse axis. |
+
+::: pybmad.SpinEigenStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### SpinEigenStruct
+
+Fortran struct: `spin_eigen_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L285))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `vec` | 1D array of complex (shape: 8) |  |
+| `val` | complex |  |
+
+::: pybmad.SpinMatchingStruct
+    options:
+      heading_level: 0
+      show_root_heading: false
+      members: false
+      show_signature: false
+      show_bases: false
+      show_docstring_description: false
+
+### SpinMatchingStruct
+
+Fortran struct: `spin_matching_struct` ([`bmad/modules/bmad_struct.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_struct.f90#L296))
+
+All attributes may be passed to the initializer as arguments:
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `axis` | [SpinAxisStruct](bmad.md#spinaxisstruct) |  |
+| `eigen` | [1D array of SpinEigenStruct (shape: 8)](bmad.md#spineigenstruct) |  |
+| `dn_dpz` | 1D array of float (shape: 3) | Invariant spin derivative |
+| `alpha` | 1D array of float (shape: 6) | Alpha vector |
+| `beta` | 1D array of float (shape: 6) | Beta vector |
+| `orb0` | 1D array of float (shape: 6) | Closed orbit |
+| `M_1turn` | 2D array of float (shape: 8,8) | 1-turn matrix |
+| `M_ele` | 2D array of float (shape: 8,8) | Transfer matrix through element. |
+| `sq_ele` | 1D array of float (shape: 0:3) |  |
+| `sq_1turn` | 1D array of float (shape: 0:3) |  |
+| `valid` | bool |  |
 
 ::: pybmad.SpinOrbitMap1Struct
     options:
@@ -2941,6 +4382,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### add_ptc_layout_to_list
+
+Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_layout_mod.f90#L195)
+
+::: pybmad.bmad.add_ptc_layout_to_list
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### add_superimpose
 
 Fortran source: [`bmad/modules/superimpose_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/superimpose_mod.f90#L59)
@@ -3013,6 +4463,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### allocate_plat
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L4282)
+
+::: pybmad.bmad.allocate_plat
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### angle_between_polars
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L437)
@@ -3049,11 +4508,29 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### apply_element_edge_kick
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L458)
+
+::: pybmad.bmad.apply_element_edge_kick
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### apply_energy_kick
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L470)
 
 ::: pybmad.bmad.apply_energy_kick
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### apply_fft_3d_kicks
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1647)
+
+::: pybmad.bmad.apply_fft_3d_kicks
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3137,6 +4614,15 @@ Fortran sources (overloaded):
       show_root_heading: false
       show_root_toc_entry: false
 
+### attribute_info
+
+Fortran source: [`bmad/modules/attribute_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/attribute_mod.f90#L510)
+
+::: pybmad.bmad.attribute_info
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### attribute_name
 
 Fortran sources (overloaded):
@@ -3190,6 +4676,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L518)
 
 ::: pybmad.bmad.average_twiss
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bane1
+
+Fortran source: [`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L226)
+
+::: pybmad.bmad.bane1
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3356,6 +4851,24 @@ Fortran source: [`bmad/photon/photon_init_mod.f90`](https://github.com/bmad-sim/
       show_root_heading: false
       show_root_toc_entry: false
 
+### bjmt1
+
+Fortran source: [`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L43)
+
+::: pybmad.bmad.bjmt1
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### bl_via_mat
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L875)
+
+::: pybmad.bmad.bl_via_mat
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### bl_via_vlassov
 
 Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L837)
@@ -3500,6 +5013,15 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`](https://github.com/bmad-si
       show_root_heading: false
       show_root_toc_entry: false
 
+### calc_next_fringe_edge
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L652)
+
+::: pybmad.bmad.calc_next_fringe_edge
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### calc_spin_params
 
 Fortran source: [`bmad/multiparticle/beam_utils.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/beam_utils.f90#L1696)
@@ -3527,6 +5049,15 @@ Fortran source: [`bmad/modules/wall3d_mod.f90`](https://github.com/bmad-sim/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### calc_wiggler_g_params
+
+Fortran source: [`bmad/modules/rad_int_common.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/rad_int_common.f90#L469)
+
+::: pybmad.bmad.calc_wiggler_g_params
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### calc_z_tune
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L668)
@@ -3541,6 +5072,42 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L674)
 
 ::: pybmad.bmad.canonical_to_angle_coords
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### capillary_photon_hit_spot_calc
+
+Fortran source: [`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L247)
+
+::: pybmad.bmad.capillary_photon_hit_spot_calc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### capillary_propagate_photon_a_step
+
+Fortran source: [`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L172)
+
+::: pybmad.bmad.capillary_propagate_photon_a_step
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### capillary_reflect_photon
+
+Fortran source: [`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L357)
+
+::: pybmad.bmad.capillary_reflect_photon
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### capillary_track_photon_to_wall
+
+Fortran source: [`bmad/photon/capillary_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/capillary_mod.f90#L86)
+
+::: pybmad.bmad.capillary_track_photon_to_wall
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3613,6 +5180,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L832)
 
 ::: pybmad.bmad.chrom_tune
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### cimp1
+
+Fortran source: [`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L633)
+
+::: pybmad.bmad.cimp1
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -3989,6 +5565,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### cos_phi
+
+Fortran source: [`bmad/photon/photon_reflection_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_reflection_mod.f90#L1370)
+
+::: pybmad.bmad.cos_phi
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### coulombfun
 
 Fortran source: [`bmad/space_charge/open_spacecharge_core_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_core_mod.f90#L189)
@@ -4124,6 +5709,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### crystal_diffraction_field_calc
+
+Fortran source: [`bmad/photon/photon_utils_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_utils_mod.f90#L256)
+
+::: pybmad.bmad.crystal_diffraction_field_calc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### crystal_h_misalign
 
 Fortran source: [`bmad/photon/track1_photon_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/track1_photon_mod.f90#L1054)
@@ -4138,6 +5732,33 @@ Fortran source: [`bmad/photon/track1_photon_mod.f90`](https://github.com/bmad-si
 Fortran source: [`bmad/interface/xraylib_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/xraylib_interface.f90#L314)
 
 ::: pybmad.bmad.crystal_type_to_crystal_params
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### csr_and_sc_apply_kicks
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1485)
+
+::: pybmad.bmad.csr_and_sc_apply_kicks
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### csr_bin_kicks
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L684)
+
+::: pybmad.bmad.csr_bin_kicks
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### csr_bin_particles
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L417)
+
+::: pybmad.bmad.csr_bin_particles
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -4201,6 +5822,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1053)
 
 ::: pybmad.bmad.default_tracking_species
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### deposit_particles
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L159)
+
+::: pybmad.bmad.deposit_particles
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -5846,6 +7476,15 @@ Fortran source: [`bmad/modules/em_field_mod.f90`](https://github.com/bmad-sim/bm
       show_root_heading: false
       show_root_toc_entry: false
 
+### get_astra_fieldgrid_name_and_scaling
+
+Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L400)
+
+::: pybmad.bmad.get_astra_fieldgrid_name_and_scaling
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### get_bl_from_fwhm
 
 Fortran source: [`bmad/multiparticle/longitudinal_profile_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/longitudinal_profile_mod.f90#L518)
@@ -5873,6 +7512,15 @@ Fortran source: [`bmad/modules/mode3_mod.f90`](https://github.com/bmad-sim/bmad-
       show_root_heading: false
       show_root_toc_entry: false
 
+### get_gpt_fieldgrid_name_and_scaling
+
+Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L661)
+
+::: pybmad.bmad.get_gpt_fieldgrid_name_and_scaling
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### get_list_of_names
 
 Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L2257)
@@ -5887,6 +7535,15 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim
 Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L257)
 
 ::: pybmad.bmad.get_next_word
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### get_opal_fieldgrid_name_and_scaling
+
+Fortran source: [`bmad/interface/opal_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/opal_interface_mod.f90#L359)
+
+::: pybmad.bmad.get_opal_fieldgrid_name_and_scaling
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -6026,6 +7683,24 @@ Fortran source: [`bmad/modules/attribute_mod.f90`](https://github.com/bmad-sim/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### hdf5_read_beam
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1411)
+
+::: pybmad.bmad.hdf5_read_beam
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### hdf5_read_grid_field
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1422)
+
+::: pybmad.bmad.hdf5_read_grid_field
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### hdf5_write_beam
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1433)
@@ -6053,11 +7728,83 @@ Fortran source: [`bmad/modules/fringe_mod.f90`](https://github.com/bmad-sim/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### i_csr
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1340)
+
+::: pybmad.bmad.i_csr
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs1
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L600)
+
+::: pybmad.bmad.ibs1
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_blowup1turn
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L529)
+
+::: pybmad.bmad.ibs_blowup1turn
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_delta_calc
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L403)
+
+::: pybmad.bmad.ibs_delta_calc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_equib_der
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L239)
+
+::: pybmad.bmad.ibs_equib_der
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_equib_rlx
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L66)
+
+::: pybmad.bmad.ibs_equib_rlx
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_lifetime
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L357)
+
+::: pybmad.bmad.ibs_lifetime
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### ibs_matrix_c
 
 Fortran source: [`bmad/multiparticle/envelope_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/envelope_mod.f90#L733)
 
 ::: pybmad.bmad.ibs_matrix_c
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ibs_rates1turn
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L446)
+
+::: pybmad.bmad.ibs_rates1turn
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -6094,6 +7841,15 @@ Fortran source: [`bmad/space_charge/open_spacecharge_core_mod.f90`](https://gith
 Fortran source: [`bmad/space_charge/open_spacecharge_core_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_core_mod.f90#L333)
 
 ::: pybmad.bmad.igfezfun
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### image_charge_kick_calc
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1423)
+
+::: pybmad.bmad.image_charge_kick_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -6188,6 +7944,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1484)
 
 ::: pybmad.bmad.init_ele
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### init_fringe_info
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1493)
+
+::: pybmad.bmad.init_fringe_info
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -6317,6 +8082,15 @@ Fortran sources (overloaded):
 - `integration_timer_fibre`: [`bmad/modules/integration_timer_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/integration_timer_mod.f90#L74)
 
 ::: pybmad.bmad.integration_timer
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### interpolate_field
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L417)
+
+::: pybmad.bmad.interpolate_field
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -6560,6 +8334,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1659)
 
 ::: pybmad.bmad.low_energy_z_correction
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### lsc_kick_params_calc
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1079)
+
+::: pybmad.bmad.lsc_kick_params_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -7068,6 +8851,33 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### mpxx1
+
+Fortran source: [`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L337)
+
+::: pybmad.bmad.mpxx1
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### mpzt1
+
+Fortran source: [`bmad/multiparticle/ibs_rates_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_rates_mod.f90#L475)
+
+::: pybmad.bmad.mpzt1
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### multi_coulomb_log
+
+Fortran source: [`bmad/multiparticle/ibs_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/ibs_mod.f90#L687)
+
+::: pybmad.bmad.multi_coulomb_log
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### multi_turn_tracking_analysis
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1837)
@@ -7086,11 +8896,29 @@ Fortran source: [`bmad/interface/xraylib_interface.f90`](https://github.com/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### multipass_all_info
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1858)
+
+::: pybmad.bmad.multipass_all_info
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### multipass_chain
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L1865)
 
 ::: pybmad.bmad.multipass_chain
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### multipass_region_info
+
+Fortran source: [`bmad/output/write_lattice_file_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/output/write_lattice_file_mod.f90#L34)
+
+::: pybmad.bmad.multipass_region_info
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -7545,6 +9373,15 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim
       show_root_heading: false
       show_root_toc_entry: false
 
+### parse_line_or_list
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L4059)
+
+::: pybmad.bmad.parse_line_or_list
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### parse_real_list
 
 Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L7439)
@@ -7581,6 +9418,15 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim
       show_root_heading: false
       show_root_toc_entry: false
 
+### parser_add_branch
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L5448)
+
+::: pybmad.bmad.parser_add_branch
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### parser_add_constant
 
 Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L1284)
@@ -7590,11 +9436,56 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim
       show_root_heading: false
       show_root_toc_entry: false
 
+### parser_add_lords
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L4342)
+
+::: pybmad.bmad.parser_add_lords
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### parser_add_superimpose
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L3137)
+
+::: pybmad.bmad.parser_add_superimpose
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### parser_call_check
 
 Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L182)
 
 ::: pybmad.bmad.parser_call_check
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### parser_debug_print_info
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L6037)
+
+::: pybmad.bmad.parser_debug_print_info
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### parser_error
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L2748)
+
+::: pybmad.bmad.parser_error
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### parser_expand_line
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L5627)
+
+::: pybmad.bmad.parser_expand_line
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -7802,6 +9693,24 @@ Fortran source: [`bmad/interface/xraylib_interface.f90`](https://github.com/bmad
 Fortran source: [`bmad/photon/photon_target_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_target_mod.f90#L239)
 
 ::: pybmad.bmad.photon_add_to_detector_statistics
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### photon_diffuse_scattering
+
+Fortran source: [`bmad/photon/photon_reflection_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_reflection_mod.f90#L817)
+
+::: pybmad.bmad.photon_diffuse_scattering
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### photon_read_spline
+
+Fortran source: [`bmad/photon/photon_init_spline_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_init_spline_mod.f90#L48)
+
+::: pybmad.bmad.photon_read_spline
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -8066,11 +9975,38 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### print_mesh3d
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L37)
+
+::: pybmad.bmad.print_mesh3d
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### prob_x_diffuse
+
+Fortran source: [`bmad/photon/photon_reflection_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_reflection_mod.f90#L1129)
+
+::: pybmad.bmad.prob_x_diffuse
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### project_emit_to_xyz
 
 Fortran source: [`bmad/modules/mode3_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/mode3_mod.f90#L1191)
 
 ::: pybmad.bmad.project_emit_to_xyz
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### propagate_part_way
+
+Fortran source: [`bmad/modules/rad_int_common.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/rad_int_common.f90#L259)
+
+::: pybmad.bmad.propagate_part_way
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -8129,11 +10065,29 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### ptc_kill_map_with_radiation
+
+Fortran source: [`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L570)
+
+::: pybmad.bmad.ptc_kill_map_with_radiation
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### ptc_layouts_resplit
 
 Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_layout_mod.f90#L1507)
 
 ::: pybmad.bmad.ptc_layouts_resplit
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ptc_linear_isf_calc
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2252)
+
+::: pybmad.bmad.ptc_linear_isf_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -8165,6 +10119,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### ptc_read_map_with_radiation
+
+Fortran source: [`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L430)
+
+::: pybmad.bmad.ptc_read_map_with_radiation
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### ptc_set_rf_state_for_c_normal
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2273)
@@ -8183,11 +10146,29 @@ Fortran source: [`bmad/ptc/ptc_interface_mod.f90`](https://github.com/bmad-sim/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### ptc_setup_map_with_radiation
+
+Fortran source: [`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L68)
+
+::: pybmad.bmad.ptc_setup_map_with_radiation
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### ptc_spin_calc
 
 Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_layout_mod.f90#L457)
 
 ::: pybmad.bmad.ptc_spin_calc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ptc_spin_matching_calc
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2278)
+
+::: pybmad.bmad.ptc_spin_matching_calc
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -8201,11 +10182,38 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`](https://github.com/bmad-sim/bmad
       show_root_heading: false
       show_root_toc_entry: false
 
+### ptc_track_map_with_radiation
+
+Fortran source: [`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L253)
+
+::: pybmad.bmad.ptc_track_map_with_radiation
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### ptc_transfer_map_with_spin
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2285)
 
 ::: pybmad.bmad.ptc_transfer_map_with_spin
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ptc_write_map_with_radiation
+
+Fortran source: [`bmad/ptc/ptc_map_with_radiation_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/ptc/ptc_map_with_radiation_mod.f90#L320)
+
+::: pybmad.bmad.ptc_write_map_with_radiation
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### ptwo
+
+Fortran source: [`bmad/photon/photon_reflection_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/photon/photon_reflection_mod.f90#L1241)
+
+::: pybmad.bmad.ptwo
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -8463,6 +10471,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### reallocate_sequence
+
+Fortran source: [`bmad/parsing/bmad_parser_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/parsing/bmad_parser_mod.f90#L8097)
+
+::: pybmad.bmad.reallocate_sequence
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### rel_tracking_charge_to_mass
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2337)
@@ -8670,6 +10687,24 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### s_ref_to_s_chord
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L1793)
+
+::: pybmad.bmad.s_ref_to_s_chord
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### s_source_calc
+
+Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/csr_and_space_charge_mod.f90#L840)
+
+::: pybmad.bmad.s_source_calc
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### sad_mult_hard_bend_edge_kick
 
 Fortran source: [`bmad/modules/fringe_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/fringe_mod.f90#L447)
@@ -8747,6 +10782,15 @@ Fortran source: [`bmad/space_charge/space_charge_mod.f90`](https://github.com/bm
 Fortran source: [`bmad/modules/fixer_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/fixer_mod.f90#L32)
 
 ::: pybmad.bmad.set_active_fixer
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### set_branch_and_ele_for_omp
+
+Fortran source: [`bmad/modules/dynamic_aperture_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/dynamic_aperture_mod.f90#L232)
+
+::: pybmad.bmad.set_branch_and_ele_for_omp
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -9052,6 +11096,42 @@ Fortran source: [`bmad/multiparticle/longitudinal_profile_mod.f90`](https://gith
 Fortran source: [`bmad/modules/complex_taylor_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/complex_taylor_mod.f90#L604)
 
 ::: pybmad.bmad.sort_complex_taylor_terms
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### space_charge_cathodeimages
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L84)
+
+::: pybmad.bmad.space_charge_cathodeimages
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### space_charge_freespace
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L61)
+
+::: pybmad.bmad.space_charge_freespace
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### space_charge_rectpipe
+
+Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/space_charge/open_spacecharge_mod.f90#L111)
+
+::: pybmad.bmad.space_charge_rectpipe
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### spin_depolarization_rate
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L2723)
+
+::: pybmad.bmad.spin_depolarization_rate
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -9466,6 +11546,24 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
 Fortran source: [`bmad/multiparticle/touschek_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/touschek_mod.f90#L82)
 
 ::: pybmad.bmad.touschek_lifetime
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### touschek_lifetime_ele_by_ele
+
+Fortran source: [`bmad/multiparticle/touschek_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/touschek_mod.f90#L148)
+
+::: pybmad.bmad.touschek_lifetime_ele_by_ele
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### touschek_lifetime_with_aperture
+
+Fortran source: [`bmad/multiparticle/touschek_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/multiparticle/touschek_mod.f90#L226)
+
+::: pybmad.bmad.touschek_lifetime_with_aperture
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -10688,6 +12786,15 @@ Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bm
       show_root_heading: false
       show_root_toc_entry: false
 
+### write_astra_ele
+
+Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L146)
+
+::: pybmad.bmad.write_astra_ele
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### write_astra_field_grid_file
 
 Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L504)
@@ -10702,6 +12809,15 @@ Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bm
 Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L718)
 
 ::: pybmad.bmad.write_astra_field_grid_file_3d
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### write_astra_lattice_file
+
+Fortran source: [`bmad/interface/astra_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/astra_interface_mod.f90#L29)
+
+::: pybmad.bmad.write_astra_lattice_file
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -10778,6 +12894,24 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### write_digested_bmad_file
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/modules/bmad_routine_interface.f90#L3706)
+
+::: pybmad.bmad.write_digested_bmad_file
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### write_gpt_ele
+
+Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L338)
+
+::: pybmad.bmad.write_gpt_ele
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### write_gpt_field_grid_file_1d
 
 Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L797)
@@ -10801,6 +12935,15 @@ Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad
 Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L1264)
 
 ::: pybmad.bmad.write_gpt_field_grid_file_3d
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### write_gpt_lattice_file
+
+Fortran source: [`bmad/interface/gpt_interface_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/4e3330c0a436e793938d2510a585f4f322235bac/bmad/interface/gpt_interface_mod.f90#L163)
+
+::: pybmad.bmad.write_gpt_lattice_file
     options:
       show_root_heading: false
       show_root_toc_entry: false

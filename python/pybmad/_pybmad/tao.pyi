@@ -1220,6 +1220,34 @@ def tao_ele_shape_info(ix_uni: int, ele: _pybmad.EleStruct, ele_shapes: _pybmad.
         As an output, ix_shape_min: Ele_shape(
     """
 
+def tao_ele_shape_input_to_struct(shape_input: _pybmad.TaoEleShapeInput, namelist_name: str | None = None) -> _pybmad.TaoEleShapeStruct:
+    """
+    Wrapper for Fortran routine tao_ele_shape_input_to_struct
+
+    Parameters
+    ----------
+    shape_input : TaoEleShapeInput
+
+    namelist_name : str, optional
+
+    Returns
+    -------
+    shape_struct : TaoEleShapeStruct
+    """
+
+def tao_ele_shape_struct_to_input(shape_struct: _pybmad.TaoEleShapeStruct) -> _pybmad.TaoEleShapeInput:
+    """
+    Wrapper for Fortran routine tao_ele_shape_struct_to_input
+
+    Parameters
+    ----------
+    shape_struct : TaoEleShapeStruct
+
+    Returns
+    -------
+    shape_input : TaoEleShapeInput
+    """
+
 class TaoEvalFloorOrbit:
     """tao_eval_floor_orbit return type"""
 
@@ -1912,6 +1940,90 @@ def tao_expression_tree_to_string(tree: _pybmad.TaoEvalNodeStruct, include_root:
         Expression string.
     """
 
+class TaoFindData:
+    """tao_find_data return type"""
+
+    @property
+    def err(self) -> bool: ...
+
+    @property
+    def d2_array(self) -> _pybmad.TaoD2DataArrayStructAlloc1D: ...
+
+    @property
+    def d1_array(self) -> _pybmad.TaoD1DataArrayStructAlloc1D: ...
+
+    @property
+    def d_array(self) -> _pybmad.TaoDataArrayStructAlloc1D: ...
+
+    @property
+    def re_array(self) -> _pybmad.TaoRealPointerStructAlloc1D: ...
+
+    @property
+    def log_array(self) -> _pybmad.TaoLogicalArrayStructAlloc1D: ...
+
+    @property
+    def str_array(self) -> _pybmad.TaoStringArrayStructAlloc1D: ...
+
+    @property
+    def int_array(self) -> _pybmad.TaoIntegerArrayStructAlloc1D: ...
+
+    @property
+    def component(self) -> str: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def tao_find_data(data_name: str, ix_uni: int | None = None, dflt_index: str | None = None, print_err: bool | None = None) -> TaoFindData:
+    """
+    Wrapper for Fortran routine tao_find_data
+
+    Parameters
+    ----------
+    data_name : str
+        The data name type. Eg: "3@orbit.x[2:5,10]|meas"
+
+    ix_uni : int, optional
+        Index of default universe to use. If ix_uni = 0 then "viewed" universe will be used. Also, if not present
+        then the "viewed" universe will be used.
+
+    dflt_index : str, optional
+        If present and non-negative, and if no index is specified by the data_name argument, this index is used in
+        the evaluation.
+
+    print_err : bool, optional
+        Print error message if data is not found? Default is True.
+
+    Returns
+    -------
+    err : bool
+        Err condition
+
+    d2_array : 1D array of TaoD2DataArrayStruct, optional
+        Array of pointers to all the matching d2_data structure. Size(d2_array) = 0 if no structures found.
+
+    d1_array : 1D array of TaoD1DataArrayStruct, optional
+        Array of pointers to all the matching d1_data structures. Size(d1_array) = 0 if no structures found.
+
+    d_array : 1D array of TaoDataArrayStruct, optional
+        Array of pointers to all the matching tao_data_structs.  Size(d_array) = 0 if no structures found.
+
+    re_array : 1D array of TaoRealPointerStruct, optional
+        Array of pointers to real component values.  Size(re_array) = 0 if no structures found.
+
+    log_array : 1D array of TaoLogicalArrayStruct, optional
+        Array of pointers to logical component values.  Size(log_array) = 0 if no structures found.
+
+    str_array : 1D array of TaoStringArrayStruct, optional
+        Array of pointers to character component values.  Size(str_array) = 0 if no structures found.
+
+    int_array : 1D array of TaoIntegerArrayStruct, optional
+        Array of pointers to integer component values.  Size(int_array) = 0 if no structures found.
+
+    component : str, optional
+        Name of the component. E.G: 'good_user' set to ' ' if no component present.
+    """
+
 class TaoFindPlotRegion:
     """tao_find_plot_region return type"""
 
@@ -1944,6 +2056,131 @@ def tao_find_plot_region(where: str, print_flag: bool | None = None) -> TaoFindP
 
     region : TaoPlotRegionStruct, optional
         Region found.
+    """
+
+class TaoFindPlots:
+    """tao_find_plots return type"""
+
+    @property
+    def err(self) -> bool: ...
+
+    @property
+    def plot(self) -> _pybmad.TaoPlotArrayStructAlloc1D: ...
+
+    @property
+    def graph(self) -> _pybmad.TaoGraphArrayStructAlloc1D: ...
+
+    @property
+    def curve(self) -> _pybmad.TaoCurveArrayStructAlloc1D: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def tao_find_plots(name: str, where: str, print_flag: bool | None = None, blank_means_all: bool | None = None, only_visible: bool | None = None) -> TaoFindPlots:
+    """
+    Wrapper for Fortran routine tao_find_plots
+
+    Parameters
+    ----------
+    name : str
+        Name of plot or region.
+
+    where : str
+        Where to look: 'TEMPLATE', 'REGION', 'BOTH' For where = 'BOTH', if something is found in a plot region,
+        then the templates will not be searched
+
+    print_flag : bool, optional
+        If present and False then surpress error messages. Default is True.
+
+    blank_means_all : bool, optional
+        If present and True then blank graph or curve fields get  interpreted as "*".
+
+    only_visible : bool, optional
+        Default is True. If True and s.global.plot_on = True then only include visible plots. If False then plot
+        visible setting is ignored.
+
+    Returns
+    -------
+    err : bool
+        Set True on error. False otherwise.
+
+    plot : 1D array of TaoPlotArrayStruct, optional
+        Array of plots. If error => size set to 0.
+
+    graph : 1D array of TaoGraphArrayStruct, optional
+        Array of graphs. If error => size set to 0.
+
+    curve : 1D array of TaoCurveArrayStruct, optional
+        Array of curves. If error => size set to 0.
+    """
+
+class TaoFindVar:
+    """tao_find_var return type"""
+
+    @property
+    def err(self) -> bool: ...
+
+    @property
+    def v1_array(self) -> _pybmad.TaoV1VarArrayStructAlloc1D: ...
+
+    @property
+    def v_array(self) -> _pybmad.TaoVarArrayStructAlloc1D: ...
+
+    @property
+    def re_array(self) -> _pybmad.TaoRealPointerStructAlloc1D: ...
+
+    @property
+    def log_array(self) -> _pybmad.TaoLogicalArrayStructAlloc1D: ...
+
+    @property
+    def str_array(self) -> _pybmad.TaoStringArrayStructAlloc1D: ...
+
+    @property
+    def component(self) -> str: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def tao_find_var(var_name: str, print_err: bool | None = None, dflt_var_index: str | None = None) -> TaoFindVar:
+    """
+    Wrapper for Fortran routine tao_find_var
+
+    Parameters
+    ----------
+    var_name : str
+        Name of the variable.
+
+    print_err : bool, optional
+        Print error message if data is not found? Default is True.
+
+    dflt_var_index : str, optional
+        If present and "[...]" var selection substring is not present, then dflt_var_index will be used. [Do not
+        include the brackets in this string.]
+
+    Returns
+    -------
+    err : bool
+        err condition
+
+    v1_array : 1D array of TaoV1VarArrayStruct, optional
+        Array of pointers to all the v1_var structures.
+
+    v_array : 1D array of TaoVarArrayStruct, optional
+        Array of pointers to the variable data point.
+
+    re_array : 1D array of TaoRealPointerStruct, optional
+        Array of pointers to the real component values.
+
+    log_array : 1D array of TaoLogicalArrayStruct, optional
+        Array of pointers to logical component values.
+
+    str_array : 1D array of TaoStringArrayStruct, optional
+        Array of pointers to character component values.
+
+    component : str, optional
+        Name of the component. E.G: 'good_user' set to ' ' if no component present.
     """
 
 def tao_fixer(switch_: str, word1: str, word2: str) -> None:
@@ -3493,6 +3730,43 @@ def tao_plot_wave(plot: _pybmad.TaoPlotStruct, graph: _pybmad.TaoGraphStruct) ->
         Graph to plot.
     """
 
+class TaoPointerToBranches:
+    """tao_pointer_to_branches return type"""
+
+    @property
+    def branches(self) -> _pybmad.BranchPointerStructAlloc1D: ...
+
+    @property
+    def unis(self) -> _pybmad.TaoUniversePointerStructAlloc1D: ...
+
+    @property
+    def err(self) -> bool: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def tao_pointer_to_branches(branch_str: str) -> TaoPointerToBranches:
+    """
+    Wrapper for Fortran routine tao_pointer_to_branches
+
+    Parameters
+    ----------
+    branch_str : str
+        String specifying what branches to use.
+
+    Returns
+    -------
+    branches : 1D array of BranchPointerStruct
+        Array of pointers to branches.
+
+    unis : 1D array of TaoUniversePointerStruct
+        Array of corresponding universes.
+
+    err : bool
+        Set True if there is an error.
+    """
+
 def tao_pointer_to_building_wall_shape(wall_name: str) -> _pybmad.TaoEleShapeStruct | None:
     """
     Wrapper for Fortran routine tao_pointer_to_building_wall_shape
@@ -3812,6 +4086,34 @@ def tao_pointer_to_var_in_lattice2(var: _pybmad.TaoVarStruct, ix_uni: int) -> bo
 
 def tao_print_command_line_info() -> None:
     """Wrapper for Fortran routine tao_print_command_line_info"""
+
+def tao_print_vars(iu: int, ix_uni: int, show_good_opt_only: bool | None = None, tao_format: bool | None = None, v_array: _pybmad.TaoVarArrayStructArray1D | None = None) -> None:
+    """
+    Routine to print a list of set statements for the Bmad parameters controlled by the Tao variables.
+    The set statements are Bmad lattice format compatible.
+
+    When tao_format = True, the output is in the form "set variable <name> = <value>"
+    so the file can be used as a Tao command file. If tao_format = False, the format
+    is suitable for inclusion in a Bmad lattice file.
+
+    Parameters
+    ----------
+    iu : int
+        File unit number. 0 => print to the terminal.
+
+    ix_uni : int
+        Universe index. If zero print slave parameters for all universes. If non-zero, only print set statements
+        for slave parameters of this universe. Ignored if tao_format = True.
+
+    show_good_opt_only : bool, optional
+        If True, only show slave parameters of variables used in optimization.
+
+    tao_format : bool, optional
+        Output format. Default False. See above.
+
+    v_array : 1D array of TaoVarArrayStruct, optional
+        Variable array. If present, restrict printing to parameters of these variables.
+    """
 
 def tao_ptc_normal_form(do_calc: bool, tao_lat: _pybmad.TaoLatticeStruct, ix_branch: int, rf_on: int | None = None) -> None:
     """
@@ -4616,6 +4918,21 @@ def tao_set_plot_page_cmd(component: str, value_str: str, value_str2: str | None
         2nd value if component is an array.
     """
 
+def tao_set_plotting(plot_input: _pybmad.TaoPlotPageInput, plot_page: _pybmad.TaoPlotPageStruct, use_cmd_line_geom: bool, reverse: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine tao_set_plotting
+
+    Parameters
+    ----------
+    plot_input : TaoPlotPageInput
+
+    plot_page : TaoPlotPageStruct
+
+    use_cmd_line_geom : bool
+
+    reverse : bool, optional
+    """
+
 def tao_set_ptc_com_cmd(who: str, value_str: str) -> None:
     """
     Routine to set ptc_com variables
@@ -5289,6 +5606,32 @@ def tao_to_real(expression: str) -> TaoToReal:
 
     err_flag : bool
         TRUE on error.
+    """
+
+def tao_to_top10(top10: _pybmad.TaoTop10StructArray1D, value: float, name: str, c_index: int, order: str) -> None:
+    """
+    Routine to order the largest contributors to the merit function in
+    a list. Call this routine for each contributor.
+
+    Note: Before first calling this routine set:
+      top10(:)%valid = .false.
+
+    Parameters
+    ----------
+    top10 : 1D array of TaoTop10Struct
+        List of top contributors. Note that the list is not limited to 10 entries.
+
+    value : float
+        value of the contributor.
+
+    name : str
+        Name of the contributor..
+
+    c_index : int
+        Index of the contributor.
+
+    order : str
+        Ordering of the list. Possibilities are:
     """
 
 def tao_too_many_particles_lost(beam: _pybmad.BeamStruct) -> bool:

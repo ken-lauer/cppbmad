@@ -337,6 +337,39 @@ d3 : 1D array of float (shape: 2)
 d4 : 1D array of float (shape: 2)
 )"""
   );
+  m.def(
+      "write_astra_ele",
+      [](int iu,
+         EleStruct &ele,
+         int id,
+         StrIndexStruct *fieldgrid_names,
+         std::optional<int> dimensions) {
+        auto fn = static_cast<
+            void (*)(int, EleStruct &, int, optional_ref<StrIndexStruct>, std::optional<int>)>(
+            &Bmad::write_astra_ele
+        );
+        return fn(iu, ele, id, ptr_to_opt_ref(fieldgrid_names), dimensions);
+      },
+      nb::arg("iu"),
+      nb::arg("ele"),
+      nb::arg("id"),
+      nb::arg("fieldgrid_names") = nb::none(),
+      nb::arg("dimensions") = nb::none(),
+      R"""(Wrapper for Fortran routine write_astra_ele
+
+Parameters
+----------
+iu : int
+
+ele : EleStruct
+
+id : int
+
+fieldgrid_names : StrIndexStruct, optional
+
+dimensions : int, optional
+)"""
+  );
   nb::class_<Bmad::WriteAstraFieldGridFile>(
       m,
       "WriteAstraFieldGridFile",
@@ -439,6 +472,28 @@ maxfield : float
     absolute maximum on-axis field found for element field scaling
 
 err : bool, optional
+    Set True if, say a file could not be opened.
+)"""
+  );
+  m.def(
+      "write_astra_lattice_file",
+      &Bmad::write_astra_lattice_file,
+      nb::arg("astra_file_unit"),
+      nb::arg("lat"),
+      nb::arg("astra_lattice_param"),
+      R"""(Subroutine to write an Astra lattice file using the information in a lat_struct.
+
+Parameters
+----------
+astra_file_unit : int
+    unit number to write to
+
+lat : LatStruct
+    Holds the lattice information.
+
+Returns
+-------
+err : bool
     Set True if, say a file could not be opened.
 )"""
   );
@@ -659,6 +714,86 @@ err : bool, optional
     Set True if, say a file could not be opened.
 )"""
   );
+  m.def(
+      "write_digested_bmad_file",
+      [](std::string digested_name,
+         LatStruct &lat,
+         std::optional<int> n_files,
+         CharacterAlloc1D *file_names,
+         ExtraParsingInfoStruct *extra) {
+        auto fn = static_cast<
+            bool (*)(std::string, LatStruct &, std::optional<int>, optional_ref<CharacterAlloc1D>, optional_ref<ExtraParsingInfoStruct>)>(
+            &Bmad::write_digested_bmad_file
+        );
+        return fn(digested_name, lat, n_files, ptr_to_opt_ref(file_names), ptr_to_opt_ref(extra));
+      },
+      nb::arg("digested_name"),
+      nb::arg("lat"),
+      nb::arg("n_files") = nb::none(),
+      nb::arg("file_names") = nb::none(),
+      nb::arg("extra") = nb::none(),
+      R"""(Wrapper for Fortran routine write_digested_bmad_file
+
+Parameters
+----------
+digested_name : str
+    Name for the digested file.
+
+lat : LatStruct
+    Input lat structure.
+
+n_files : int, optional
+    Number of original files
+
+file_names : 1D array of str, optional
+    Names of the original files used to create the lat structure.
+
+extra : ExtraParsingInfoStruct, optional
+    Extra info that can be stored in the digested file.
+
+Returns
+-------
+err_flag : bool, optional
+    Set True if there is a problem. EG: No write permission. Set False if everything is OK.
+)"""
+  );
+  m.def(
+      "write_gpt_ele",
+      [](int iu,
+         EleStruct &ele,
+         std::string name,
+         int dimensions,
+         StrIndexStruct *fieldgrid_names,
+         std::optional<bool> only_phasing) {
+        auto fn = static_cast<
+            void (*)(int, EleStruct &, std::string, int, optional_ref<StrIndexStruct>, std::optional<bool>)>(
+            &Bmad::write_gpt_ele
+        );
+        return fn(iu, ele, name, dimensions, ptr_to_opt_ref(fieldgrid_names), only_phasing);
+      },
+      nb::arg("iu"),
+      nb::arg("ele"),
+      nb::arg("name"),
+      nb::arg("dimensions"),
+      nb::arg("fieldgrid_names") = nb::none(),
+      nb::arg("only_phasing") = nb::none(),
+      R"""(Wrapper for Fortran routine write_gpt_ele
+
+Parameters
+----------
+iu : int
+
+ele : EleStruct
+
+name : str
+
+dimensions : int
+
+fieldgrid_names : StrIndexStruct, optional
+
+only_phasing : bool, optional
+)"""
+  );
   nb::class_<Bmad::WriteGptFieldGridFile1d>(
       m,
       "WriteGptFieldGridFile1d",
@@ -833,6 +968,27 @@ ref_time : float
 
 err : bool, optional
     Set True if, say a file could not be opened.
+)"""
+  );
+  m.def(
+      "write_gpt_lattice_file",
+      &Bmad::write_gpt_lattice_file,
+      nb::arg("lat"),
+      nb::arg("gpt_lat_param"),
+      R"""(Subroutine to write a gpt lattice file using the information in a Bmad lattice.
+
+Parameters
+----------
+lat : LatStruct
+    Holds the lattice information.
+
+gpt_lat_param : GptLatParamStruct
+    Parameters for constructing the lattice
+
+Returns
+-------
+err : bool
+    Set True if there is an error
 )"""
   );
   nb::class_<PyWriteLatLine>(m, "WriteLatLine", "write_lat_line return type")

@@ -273,6 +273,24 @@ add_at_end : bool, optional
     array. If False then new space is added at the front of the array. Default is True.
 )"""
   );
+  m.def(
+      "add_ptc_layout_to_list",
+      &Bmad::add_ptc_layout_to_list,
+      nb::arg("branch_ptc_info"),
+      nb::arg("layout_end"),
+      R"""(Routine to add a layout the a list of layouts.
+
+Parameters
+----------
+branch_ptc_info : PtcBranch1Struct
+    List of layouts
+    This parameter is an input/output and is modified in-place.
+    As an output, branch_ptc_info: Updated list.
+
+layout_end : Layout
+    ptc layout
+)"""
+  );
   nb::class_<Bmad::AddSuperimpose>(m, "AddSuperimpose", "add_superimpose return type")
       .def_ro("err_flag", &Bmad::AddSuperimpose::err_flag)
       .def_ro("super_ele_out", &Bmad::AddSuperimpose::super_ele_out)
@@ -487,6 +505,16 @@ do_ramper_slave_setup : bool, optional
 )"""
   );
   m.def(
+      "allocate_plat",
+      &Bmad::allocate_plat,
+      nb::arg("plat"),
+      nb::arg("n_ele_max"),
+      R"""(Subroutine to allocate allocatable array sizes.
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  m.def(
       "angle_between_polars",
       &Bmad::angle_between_polars,
       nb::arg("polar1"),
@@ -560,6 +588,55 @@ err_flag : bool
 )"""
   );
   m.def(
+      "apply_element_edge_kick",
+      &Bmad::apply_element_edge_kick,
+      nb::arg("orb"),
+      nb::arg("fringe_info"),
+      nb::arg("track_ele"),
+      nb::arg("param"),
+      nb::arg("track_spin"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      nb::arg("rf_time") = nb::none(),
+      nb::arg("apply_sol_fringe") = nb::none(),
+      R"""(Wrapper for Fortran routine apply_element_edge_kick
+
+Parameters
+----------
+orb : CoordStruct
+    Starting coords in element reference frame.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after application of the edge fringe field.
+
+fringe_info : FringeFieldInfoStruct
+    Fringe information.
+
+track_ele : EleStruct
+    Element being tracked through. Is different from fringe_info.hard_ele when there are superpositions and
+    track_ele can be a super_slave of fringe_info.hard_ele.
+
+param : LatParamStruct
+    lattice parameters.
+
+track_spin : bool
+    Track the spin?
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix before fringe.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix transfer matrix including fringe.
+
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is false.
+
+rf_time : float, optional
+    RF clock time. If not present then the time will be calculated using the standard algorithm.
+
+apply_sol_fringe : bool, optional
+    Apply the solenoid fringe kick? Default is True.
+)"""
+  );
+  m.def(
       "apply_energy_kick",
       &Bmad::apply_energy_kick,
       nb::arg("dE"),
@@ -589,6 +666,25 @@ mat6 : 2D array of float (shape: 6,6), optional
 
 make_matrix : bool, optional
     Propagate the transfer matrix? Default is false.
+)"""
+  );
+  m.def(
+      "apply_fft_3d_kicks",
+      &Bmad::apply_fft_3d_kicks,
+      nb::arg("csr"),
+      nb::arg("particle"),
+      R"""(Routine to apply FFT-based 3D space charge kicks to particles.
+Deposits charge on a mesh, solves for the field, interpolates back, and applies kicks.
+
+Parameters
+----------
+csr : CsrStruct
+    Contains mesh, position arrays, and tracking parameters.
+
+particle : 1D array of CoordStruct
+    Particles to kick.
+    This parameter is an input/output and is modified in-place.
+    As an output, particle: Particles with kicks applied.
 )"""
   );
   m.def(
@@ -1063,6 +1159,28 @@ See also:
 has_attribute
 attribute_info
 attribute_name
+)"""
+  );
+  m.def(
+      "attribute_info",
+      &Bmad::attribute_info,
+      nb::arg("ele"),
+      nb::arg("ix_att"),
+      R"""(Function to return the info structure associated with an attribute for
+a particular type of BMAD element.
+
+Parameters
+----------
+ele : EleStruct
+
+ix_att : int
+    Index of attribute (e.g. k1$)
+
+Returns
+-------
+attrib_info : EleAttributeStruct
+    Info on this attribute. Note: .value is not set since this info is contained in the ele argument. Use
+    pointer_to_attribute to access the attribute.
 )"""
   );
   m.def(

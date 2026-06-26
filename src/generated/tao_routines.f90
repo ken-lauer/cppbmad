@@ -22,17 +22,18 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_data_sanity_check, tao_data_show_use, tao_datum_has_associated_ele, tao_datum_name, &
     tao_de_optimizer, tao_ele_shape_info, tao_evaluate_a_datum, &
     tao_evaluate_element_parameters, tao_evaluate_expression, tao_evaluate_expression_new, &
-    tao_evaluate_expression_old, tao_evaluate_tree, tao_evaluate_tune, tao_find_plot_region, &
-    tao_fixer, tao_floor_to_screen, tao_floor_to_screen_coords, tao_get_opt_vars, &
-    tao_graph_name, tao_help, tao_init, tao_init_find_elements, tao_init_lattice, &
-    tao_init_plotting, tao_is_valid_name, tao_json_cmd, tao_key_info_to_str, &
-    tao_lat_bookkeeper, tao_lat_emit_calc, tao_lat_sigma_calc_needed, tao_lattice_calc, &
-    tao_limit_calc, tao_lmdif_optimizer, tao_locate_all_elements, tao_locate_elements, &
-    tao_mark_lattice_ele, tao_merit, tao_one_turn_map_calc_needed, tao_open_file, &
-    tao_open_scratch_file, tao_optimization_status, tao_oreint_building_wall_pt, &
-    tao_param_value_at_s, tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, &
-    tao_pick_universe, tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, &
-    tao_plot_struct_transfer, tao_pointer_to_building_wall_shape, tao_pointer_to_datum, &
+    tao_evaluate_expression_old, tao_evaluate_tree, tao_evaluate_tune, tao_find_data, &
+    tao_find_plot_region, tao_find_plots, tao_find_var, tao_fixer, tao_floor_to_screen, &
+    tao_floor_to_screen_coords, tao_get_opt_vars, tao_graph_name, tao_help, tao_init, &
+    tao_init_find_elements, tao_init_lattice, tao_init_plotting, tao_is_valid_name, &
+    tao_json_cmd, tao_key_info_to_str, tao_lat_bookkeeper, tao_lat_emit_calc, &
+    tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, tao_lmdif_optimizer, &
+    tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, tao_merit, &
+    tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
+    tao_optimization_status, tao_oreint_building_wall_pt, tao_param_value_at_s, &
+    tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, &
+    tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, &
+    tao_pointer_to_branches, tao_pointer_to_building_wall_shape, tao_pointer_to_datum, &
     tao_pointer_to_ele_shape, tao_pointer_to_tao_lat, tao_pointer_to_universe, &
     tao_pointer_to_universes, tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, &
     tao_quiet_set, tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
@@ -88,6 +89,9 @@ use tao_plot_mod, only: tao_draw_beam_chamber_wall, tao_draw_curve_data, &
     tao_draw_histogram_data, tao_draw_lat_layout, tao_draw_plots, tao_plot_data, &
     tao_plot_histogram, tao_plot_key_table, tao_plot_wave, tao_set_floor_plan_axis_label
 
+use tao_input_struct, only: tao_ele_shape_input_to_struct, tao_ele_shape_struct_to_input, &
+    tao_set_plotting
+
 use tao_geodesic_lm_optimizer_mod, only: tao_geodesic_lm_optimizer
 
 use tao_get_user_input_mod, only: tao_get_user_input
@@ -96,6 +100,10 @@ use tao_init_mod, only: tao_init_beam_in_universe, tao_init_beams, tao_init_dyna
     tao_init_global
 
 use tao_lm_optimizer_mod, only: tao_lm_optimizer
+
+use tao_top10_mod, only: tao_print_vars, tao_show_constraints, tao_to_top10, &
+    tao_top10_derivative_print, tao_top10_merit_categories_print, tao_var_write, &
+    tao_write_lines
 
 use tao_scale_mod, only: tao_scale_cmd, tao_scale_graph, tao_scale_plot
 
@@ -110,9 +118,6 @@ use tao_set_mod, only: tao_set_beam_cmd, tao_set_beam_init_cmd, tao_set_bmad_com
     tao_set_region_cmd, tao_set_space_charge_com_cmd, tao_set_symbolic_number_cmd, &
     tao_set_tune_cmd, tao_set_universe_cmd, tao_set_var_cmd, tao_set_wave_cmd, &
     tao_set_z_tune_cmd
-
-use tao_top10_mod, only: tao_show_constraints, tao_top10_derivative_print, &
-    tao_top10_merit_categories_print, tao_var_write, tao_write_lines
 
 use tao_svd_optimizer_mod, only: tao_svd_optimizer
 
@@ -2130,6 +2135,68 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   ! inout: f_ix_shape_min 0D_NOT_integer
   ! no output conversion for f_ix_shape_min
 end subroutine
+subroutine fortran_tao_ele_shape_input_to_struct (shape_input, namelist_name, shape_struct) &
+    bind(c)
+
+  use array_desc_mod
+  use tao_input_struct, only: tao_ele_shape_input
+  use tao_struct, only: tao_ele_shape_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: namelist_name
+  character(len=4096), target :: f_namelist_name
+  character(kind=c_char), pointer :: f_namelist_name_ptr(:)
+  character(len=4096), pointer :: f_namelist_name_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), value :: shape_struct  ! 0D_NOT_type
+  type(tao_ele_shape_struct), pointer :: f_shape_struct
+  ! ** Inout parameters **
+  type(c_ptr), value :: shape_input  ! 0D_NOT_type
+  type(tao_ele_shape_input), pointer :: f_shape_input
+  ! ** End of parameters **
+  ! inout: f_shape_input 0D_NOT_type
+  if (.not. c_associated(shape_input)) return
+  call c_f_pointer(shape_input, f_shape_input)
+  ! in: f_namelist_name 0D_NOT_character
+  if (c_associated(namelist_name)) then
+    call c_f_pointer(namelist_name, f_namelist_name_ptr, [huge(0)])
+    call to_f_str(f_namelist_name_ptr, f_namelist_name)
+    f_namelist_name_call_ptr => f_namelist_name
+  else
+    f_namelist_name_call_ptr => null()
+  endif
+  ! out: f_shape_struct 0D_NOT_type
+  if (.not. c_associated(shape_struct)) return
+  call c_f_pointer(shape_struct, f_shape_struct)
+  f_shape_struct = tao_ele_shape_input_to_struct(f_shape_input, f_namelist_name_call_ptr)
+
+  ! out: f_shape_struct 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_tao_ele_shape_struct_to_input (shape_struct, shape_input) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_ele_shape_struct
+  use tao_input_struct, only: tao_ele_shape_input
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: shape_struct  ! 0D_NOT_type
+  type(tao_ele_shape_struct), pointer :: f_shape_struct
+  ! ** Out parameters **
+  type(c_ptr), value :: shape_input  ! 0D_NOT_type
+  type(tao_ele_shape_input), pointer :: f_shape_input
+  ! ** End of parameters **
+  ! in: f_shape_struct 0D_NOT_type
+  if (.not. c_associated(shape_struct)) return
+  call c_f_pointer(shape_struct, f_shape_struct)
+  ! out: f_shape_input 0D_NOT_type
+  if (.not. c_associated(shape_input)) return
+  call c_f_pointer(shape_input, f_shape_input)
+  f_shape_input = tao_ele_shape_struct_to_input(f_shape_struct)
+
+  ! out: f_shape_input 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
+end subroutine
 subroutine fortran_tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, &
     why_invalid, value) bind(c)
 
@@ -3183,6 +3250,111 @@ subroutine fortran_tao_expression_tree_to_string (tree, include_root, n_node, pa
   call c_f_pointer(str_out, f_str_out_ptr, [len_trim(f_str_out) + 1])
   call to_c_str(f_str_out, f_str_out_ptr)
 end subroutine
+subroutine fortran_tao_find_data (err, data_name, d2_array, d1_array, d_array, re_array, &
+    log_array, str_array, int_array, ix_uni, dflt_index, print_err, component) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_d1_data_array_struct, tao_d2_data_array_struct, tao_data_array_struct, tao_integer_array_struct, tao_logical_array_struct, tao_real_pointer_struct, tao_string_array_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: data_name
+  character(len=4096), target :: f_data_name
+  character(kind=c_char), pointer :: f_data_name_ptr(:)
+  type(c_ptr), intent(in), value :: ix_uni  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_uni
+  integer(c_int), pointer :: f_ix_uni_ptr
+  type(c_ptr), intent(in), value :: dflt_index
+  character(len=4096), target :: f_dflt_index
+  character(kind=c_char), pointer :: f_dflt_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_index_call_ptr
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  type(c_ptr), intent(in), value :: d2_array
+  type(tao_d2_data_array_struct_container_alloc), pointer :: f_d2_array
+  type(c_ptr), intent(in), value :: d1_array
+  type(tao_d1_data_array_struct_container_alloc), pointer :: f_d1_array
+  type(c_ptr), intent(in), value :: d_array
+  type(tao_data_array_struct_container_alloc), pointer :: f_d_array
+  type(c_ptr), intent(in), value :: re_array
+  type(tao_real_pointer_struct_container_alloc), pointer :: f_re_array
+  type(c_ptr), intent(in), value :: log_array
+  type(tao_logical_array_struct_container_alloc), pointer :: f_log_array
+  type(c_ptr), intent(in), value :: str_array
+  type(tao_string_array_struct_container_alloc), pointer :: f_str_array
+  type(c_ptr), intent(in), value :: int_array
+  type(tao_integer_array_struct_container_alloc), pointer :: f_int_array
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  character(len=4096), pointer :: f_component_call_ptr
+  ! ** End of parameters **
+  ! in: f_data_name 0D_NOT_character
+  if (.not. c_associated(data_name)) return
+  call c_f_pointer(data_name, f_data_name_ptr, [huge(0)])
+  call to_f_str(f_data_name_ptr, f_data_name)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(d2_array))   call c_f_pointer(d2_array, f_d2_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(d1_array))   call c_f_pointer(d1_array, f_d1_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(d_array))   call c_f_pointer(d_array, f_d_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(re_array))   call c_f_pointer(re_array, f_re_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(log_array))   call c_f_pointer(log_array, f_log_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(str_array))   call c_f_pointer(str_array, f_str_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(int_array))   call c_f_pointer(int_array, f_int_array)
+  ! in: f_ix_uni 0D_NOT_integer
+  if (c_associated(ix_uni)) then
+    call c_f_pointer(ix_uni, f_ix_uni_ptr)
+  else
+    f_ix_uni_ptr => null()
+  endif
+  ! in: f_dflt_index 0D_NOT_character
+  if (c_associated(dflt_index)) then
+    call c_f_pointer(dflt_index, f_dflt_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_index_ptr, f_dflt_index)
+    f_dflt_index_call_ptr => f_dflt_index
+  else
+    f_dflt_index_call_ptr => null()
+  endif
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  ! out: f_component 0D_NOT_character
+  if (c_associated(component)) then
+    call c_f_pointer(component, f_component_ptr, [huge(0)])
+    f_component_call_ptr => f_component
+  else
+    f_component_call_ptr => null()
+  endif
+  call tao_find_data(f_err, f_data_name, f_d2_array%data, f_d1_array%data, f_d_array%data, &
+      f_re_array%data, f_log_array%data, f_str_array%data, f_int_array%data, f_ix_uni_ptr, &
+      f_dflt_index_call_ptr, f_print_err_native_ptr, f_component_call_ptr)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+  ! out: f_component 0D_NOT_character
+  if (c_associated(component)) then
+    call c_f_pointer(component, f_component_ptr, [len_trim(f_component) + 1])
+    call to_c_str(f_component, f_component_ptr)
+  endif
+end subroutine
 subroutine fortran_tao_find_plot_region (err, where, region, print_flag) bind(c)
 
   use array_desc_mod
@@ -3225,6 +3397,178 @@ subroutine fortran_tao_find_plot_region (err, where, region, print_flag) bind(c)
   f_err_ptr = f_err
   ! out: f_region 0D_PTR_type
   region = c_loc(f_region)
+end subroutine
+subroutine fortran_tao_find_plots (err, name, where, plot, graph, curve, print_flag, &
+    blank_means_all, only_visible) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_curve_array_struct, tao_graph_array_struct, tao_plot_array_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: name
+  character(len=4096), target :: f_name
+  character(kind=c_char), pointer :: f_name_ptr(:)
+  type(c_ptr), intent(in), value :: where
+  character(len=4096), target :: f_where
+  character(kind=c_char), pointer :: f_where_ptr(:)
+  type(c_ptr), intent(in), value :: print_flag  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_flag
+  logical, target :: f_print_flag_native
+  logical, pointer :: f_print_flag_native_ptr
+  logical(c_bool), pointer :: f_print_flag_ptr
+  type(c_ptr), intent(in), value :: blank_means_all  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_blank_means_all
+  logical, target :: f_blank_means_all_native
+  logical, pointer :: f_blank_means_all_native_ptr
+  logical(c_bool), pointer :: f_blank_means_all_ptr
+  type(c_ptr), intent(in), value :: only_visible  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_only_visible
+  logical, target :: f_only_visible_native
+  logical, pointer :: f_only_visible_native_ptr
+  logical(c_bool), pointer :: f_only_visible_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  type(c_ptr), intent(in), value :: plot
+  type(tao_plot_array_struct_container_alloc), pointer :: f_plot
+  type(c_ptr), intent(in), value :: graph
+  type(tao_graph_array_struct_container_alloc), pointer :: f_graph
+  type(c_ptr), intent(in), value :: curve
+  type(tao_curve_array_struct_container_alloc), pointer :: f_curve
+  ! ** End of parameters **
+  ! in: f_name 0D_NOT_character
+  if (.not. c_associated(name)) return
+  call c_f_pointer(name, f_name_ptr, [huge(0)])
+  call to_f_str(f_name_ptr, f_name)
+  ! in: f_where 0D_NOT_character
+  if (.not. c_associated(where)) return
+  call c_f_pointer(where, f_where_ptr, [huge(0)])
+  call to_f_str(f_where_ptr, f_where)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(plot))   call c_f_pointer(plot, f_plot)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(graph))   call c_f_pointer(graph, f_graph)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(curve))   call c_f_pointer(curve, f_curve)
+  ! in: f_print_flag 0D_NOT_logical
+  if (c_associated(print_flag)) then
+    call c_f_pointer(print_flag, f_print_flag_ptr)
+    f_print_flag_native = f_print_flag_ptr
+    f_print_flag_native_ptr => f_print_flag_native
+  else
+    f_print_flag_native_ptr => null()
+  endif
+  ! in: f_blank_means_all 0D_NOT_logical
+  if (c_associated(blank_means_all)) then
+    call c_f_pointer(blank_means_all, f_blank_means_all_ptr)
+    f_blank_means_all_native = f_blank_means_all_ptr
+    f_blank_means_all_native_ptr => f_blank_means_all_native
+  else
+    f_blank_means_all_native_ptr => null()
+  endif
+  ! in: f_only_visible 0D_NOT_logical
+  if (c_associated(only_visible)) then
+    call c_f_pointer(only_visible, f_only_visible_ptr)
+    f_only_visible_native = f_only_visible_ptr
+    f_only_visible_native_ptr => f_only_visible_native
+  else
+    f_only_visible_native_ptr => null()
+  endif
+  call tao_find_plots(f_err, f_name, f_where, f_plot%data, f_graph%data, f_curve%data, &
+      f_print_flag_native_ptr, f_blank_means_all_native_ptr, f_only_visible_native_ptr)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+end subroutine
+subroutine fortran_tao_find_var (err, var_name, v1_array, v_array, re_array, log_array, &
+    str_array, print_err, component, dflt_var_index) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_logical_array_struct, tao_real_pointer_struct, tao_string_array_struct, tao_v1_var_array_struct, tao_var_array_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: var_name
+  character(len=4096), target :: f_var_name
+  character(kind=c_char), pointer :: f_var_name_ptr(:)
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  type(c_ptr), intent(in), value :: dflt_var_index
+  character(len=4096), target :: f_dflt_var_index
+  character(kind=c_char), pointer :: f_dflt_var_index_ptr(:)
+  character(len=4096), pointer :: f_dflt_var_index_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  type(c_ptr), intent(in), value :: v1_array
+  type(tao_v1_var_array_struct_container_alloc), pointer :: f_v1_array
+  type(c_ptr), intent(in), value :: v_array
+  type(tao_var_array_struct_container_alloc), pointer :: f_v_array
+  type(c_ptr), intent(in), value :: re_array
+  type(tao_real_pointer_struct_container_alloc), pointer :: f_re_array
+  type(c_ptr), intent(in), value :: log_array
+  type(tao_logical_array_struct_container_alloc), pointer :: f_log_array
+  type(c_ptr), intent(in), value :: str_array
+  type(tao_string_array_struct_container_alloc), pointer :: f_str_array
+  type(c_ptr), intent(in), value :: component
+  character(len=4096), target :: f_component
+  character(kind=c_char), pointer :: f_component_ptr(:)
+  character(len=4096), pointer :: f_component_call_ptr
+  ! ** End of parameters **
+  ! in: f_var_name 0D_NOT_character
+  if (.not. c_associated(var_name)) return
+  call c_f_pointer(var_name, f_var_name_ptr, [huge(0)])
+  call to_f_str(f_var_name_ptr, f_var_name)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(v1_array))   call c_f_pointer(v1_array, f_v1_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(v_array))   call c_f_pointer(v_array, f_v_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(re_array))   call c_f_pointer(re_array, f_re_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(log_array))   call c_f_pointer(log_array, f_log_array)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(str_array))   call c_f_pointer(str_array, f_str_array)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  ! out: f_component 0D_NOT_character
+  if (c_associated(component)) then
+    call c_f_pointer(component, f_component_ptr, [huge(0)])
+    f_component_call_ptr => f_component
+  else
+    f_component_call_ptr => null()
+  endif
+  ! in: f_dflt_var_index 0D_NOT_character
+  if (c_associated(dflt_var_index)) then
+    call c_f_pointer(dflt_var_index, f_dflt_var_index_ptr, [huge(0)])
+    call to_f_str(f_dflt_var_index_ptr, f_dflt_var_index)
+    f_dflt_var_index_call_ptr => f_dflt_var_index
+  else
+    f_dflt_var_index_call_ptr => null()
+  endif
+  call tao_find_var(f_err, f_var_name, f_v1_array%data, f_v_array%data, f_re_array%data, &
+      f_log_array%data, f_str_array%data, f_print_err_native_ptr, f_component_call_ptr, &
+      f_dflt_var_index_call_ptr)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+  ! out: f_component 0D_NOT_character
+  if (c_associated(component)) then
+    call c_f_pointer(component, f_component_ptr, [len_trim(f_component) + 1])
+    call to_c_str(f_component, f_component_ptr)
+  endif
 end subroutine
 subroutine fortran_tao_fixer (switch_, word1, word2) bind(c)
 
@@ -5622,6 +5966,39 @@ subroutine fortran_tao_plot_wave (plot, graph) bind(c)
   call tao_plot_wave(f_plot, f_graph)
 
 end subroutine
+subroutine fortran_tao_pointer_to_branches (branch_str, branches, unis, err) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: branch_pointer_struct
+  use tao_struct, only: tao_universe_pointer_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: branch_str
+  character(len=4096), target :: f_branch_str
+  character(kind=c_char), pointer :: f_branch_str_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: branches
+  type(branch_pointer_struct_container_alloc), pointer :: f_branches
+  type(c_ptr), intent(in), value :: unis
+  type(tao_universe_pointer_struct_container_alloc), pointer :: f_unis
+  type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
+  logical :: f_err
+  logical(c_bool), pointer :: f_err_ptr
+  ! ** End of parameters **
+  ! in: f_branch_str 0D_NOT_character
+  if (.not. c_associated(branch_str)) return
+  call c_f_pointer(branch_str, f_branch_str_ptr, [huge(0)])
+  call to_f_str(f_branch_str_ptr, f_branch_str)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(branches))   call c_f_pointer(branches, f_branches)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(unis))   call c_f_pointer(unis, f_unis)
+  call tao_pointer_to_branches(f_branch_str, f_branches%data, f_unis%data, f_err)
+
+  ! out: f_err 0D_NOT_logical
+  call c_f_pointer(err, f_err_ptr)
+  f_err_ptr = f_err
+end subroutine
 subroutine fortran_tao_pointer_to_building_wall_shape (wall_name, e_shape) bind(c)
 
   use array_desc_mod
@@ -6068,6 +6445,61 @@ subroutine fortran_tao_print_command_line_info () bind(c)
   implicit none
   ! ** End of parameters **
   call tao_print_command_line_info()
+
+end subroutine
+subroutine fortran_tao_print_vars (iu, ix_uni, show_good_opt_only, tao_format, v_array) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_var_array_struct
+  implicit none
+  ! ** In parameters **
+  integer(c_int) :: iu  ! 0D_NOT_integer
+  integer :: f_iu
+  integer(c_int) :: ix_uni  ! 0D_NOT_integer
+  integer :: f_ix_uni
+  type(c_ptr), intent(in), value :: show_good_opt_only  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_show_good_opt_only
+  logical, target :: f_show_good_opt_only_native
+  logical, pointer :: f_show_good_opt_only_native_ptr
+  logical(c_bool), pointer :: f_show_good_opt_only_ptr
+  type(c_ptr), intent(in), value :: tao_format  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_tao_format
+  logical, target :: f_tao_format_native
+  logical, pointer :: f_tao_format_native_ptr
+  logical(c_bool), pointer :: f_tao_format_ptr
+  type(array_descriptor_t), intent(in) :: v_array
+  type(tao_var_array_struct), pointer :: f_v_array(:)
+  type(tao_var_array_struct), pointer :: f_v_array_ptr(:)
+  ! ** End of parameters **
+  ! in: f_iu 0D_NOT_integer
+  f_iu = iu
+  ! in: f_ix_uni 0D_NOT_integer
+  f_ix_uni = ix_uni
+  ! in: f_show_good_opt_only 0D_NOT_logical
+  if (c_associated(show_good_opt_only)) then
+    call c_f_pointer(show_good_opt_only, f_show_good_opt_only_ptr)
+    f_show_good_opt_only_native = f_show_good_opt_only_ptr
+    f_show_good_opt_only_native_ptr => f_show_good_opt_only_native
+  else
+    f_show_good_opt_only_native_ptr => null()
+  endif
+  ! in: f_tao_format 0D_NOT_logical
+  if (c_associated(tao_format)) then
+    call c_f_pointer(tao_format, f_tao_format_ptr)
+    f_tao_format_native = f_tao_format_ptr
+    f_tao_format_native_ptr => f_tao_format_native
+  else
+    f_tao_format_native_ptr => null()
+  endif
+  !! type array (1D_NOT_type)
+  if (c_associated(v_array%data_ptr)) then
+    call c_f_pointer(v_array%data_ptr, f_v_array_ptr, [v_array%dims(1)])
+    f_v_array => f_v_array_ptr
+  else
+    f_v_array => null()
+  endif
+  call tao_print_vars(f_iu, f_ix_uni, f_show_good_opt_only_native_ptr, f_tao_format_native_ptr, &
+      f_v_array)
 
 end subroutine
 subroutine fortran_tao_ptc_normal_form (do_calc, tao_lat, ix_branch, rf_on) bind(c)
@@ -7595,6 +8027,45 @@ subroutine fortran_tao_set_plot_page_cmd (component, value_str, value_str2) bind
   call tao_set_plot_page_cmd(f_component, f_value_str, f_value_str2_call_ptr)
 
 end subroutine
+subroutine fortran_tao_set_plotting (plot_input, plot_page, use_cmd_line_geom, reverse) bind(c)
+
+  use array_desc_mod
+  use tao_input_struct, only: tao_plot_page_input
+  use tao_struct, only: tao_plot_page_struct
+  implicit none
+  ! ** In parameters **
+  logical(c_bool) :: use_cmd_line_geom  ! 0D_NOT_logical
+  logical :: f_use_cmd_line_geom
+  type(c_ptr), intent(in), value :: reverse  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_reverse
+  logical, target :: f_reverse_native
+  logical, pointer :: f_reverse_native_ptr
+  logical(c_bool), pointer :: f_reverse_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: plot_input  ! 0D_NOT_type
+  type(tao_plot_page_input), pointer :: f_plot_input
+  type(c_ptr), value :: plot_page  ! 0D_NOT_type
+  type(tao_plot_page_struct), pointer :: f_plot_page
+  ! ** End of parameters **
+  ! inout: f_plot_input 0D_NOT_type
+  if (.not. c_associated(plot_input)) return
+  call c_f_pointer(plot_input, f_plot_input)
+  ! inout: f_plot_page 0D_NOT_type
+  if (.not. c_associated(plot_page)) return
+  call c_f_pointer(plot_page, f_plot_page)
+  ! in: f_use_cmd_line_geom 0D_NOT_logical
+  f_use_cmd_line_geom = use_cmd_line_geom
+  ! in: f_reverse 0D_NOT_logical
+  if (c_associated(reverse)) then
+    call c_f_pointer(reverse, f_reverse_ptr)
+    f_reverse_native = f_reverse_ptr
+    f_reverse_native_ptr => f_reverse_native
+  else
+    f_reverse_native_ptr => null()
+  endif
+  call tao_set_plotting(f_plot_input, f_plot_page, f_use_cmd_line_geom, f_reverse_native_ptr)
+
+end subroutine
 subroutine fortran_tao_set_ptc_com_cmd (who, value_str) bind(c)
 
   use array_desc_mod
@@ -8654,6 +9125,49 @@ subroutine fortran_tao_to_real (expression, value, err_flag) bind(c)
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
+end subroutine
+subroutine fortran_tao_to_top10 (top10, value, name, c_index, order) bind(c)
+
+  use array_desc_mod
+  use tao_top10_mod, only: tao_top10_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: value  ! 0D_NOT_real
+  real(rp) :: f_value
+  type(c_ptr), intent(in), value :: name
+  character(len=4096), target :: f_name
+  character(kind=c_char), pointer :: f_name_ptr(:)
+  integer(c_int) :: c_index  ! 0D_NOT_integer
+  integer :: f_c_index
+  type(c_ptr), intent(in), value :: order
+  character(len=4096), target :: f_order
+  character(kind=c_char), pointer :: f_order_ptr(:)
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: top10
+  type(tao_top10_struct), pointer :: f_top10(:)
+  type(tao_top10_struct), pointer :: f_top10_ptr(:)
+  ! ** End of parameters **
+  !! type array (1D_NOT_type)
+  if (c_associated(top10%data_ptr)) then
+    call c_f_pointer(top10%data_ptr, f_top10_ptr, [top10%dims(1)])
+    f_top10 => f_top10_ptr
+  else
+    f_top10 => null()
+  endif
+  ! in: f_value 0D_NOT_real
+  f_value = value
+  ! in: f_name 0D_NOT_character
+  if (.not. c_associated(name)) return
+  call c_f_pointer(name, f_name_ptr, [huge(0)])
+  call to_f_str(f_name_ptr, f_name)
+  ! in: f_c_index 0D_NOT_integer
+  f_c_index = c_index
+  ! in: f_order 0D_NOT_character
+  if (.not. c_associated(order)) return
+  call c_f_pointer(order, f_order_ptr, [huge(0)])
+  call to_f_str(f_order_ptr, f_order)
+  call tao_to_top10(f_top10, f_value, f_name, f_c_index, f_order)
+
 end subroutine
 subroutine fortran_tao_too_many_particles_lost (beam, no_beam) bind(c)
 

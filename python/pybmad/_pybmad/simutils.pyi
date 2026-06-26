@@ -281,6 +281,210 @@ def bicubic_cmplx_eval(x_norm: float, y_norm: float, bi_coef: _pybmad.BicubicCmp
         Normalized first derivative: True df/dy = df_dy * dy
     """
 
+class BicubicEval:
+    """bicubic_eval return type"""
+
+    @property
+    def df_dx(self) -> float: ...
+
+    @property
+    def df_dy(self) -> float: ...
+
+    @property
+    def f_val(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def bicubic_eval(x_norm: float, y_norm: float, bi_coef: _pybmad.BicubicCoefStruct) -> BicubicEval:
+    """
+    Routine to evaluate a bicubic interpolating function.
+
+    Use the routine bicubic_interpolation_coefs to generate bi_coef.
+
+    Note: In the equations below, the four points of the grid box being interpolated range
+    from (x0, y0) to (x0+dx, y0+dy).
+
+    Parameters
+    ----------
+    x_norm : float
+        x_norm = (x - x0) / dx
+
+    y_norm : float
+        y_norm = (y - y0) / dy
+
+    bi_coef : BicubicCoefStruct
+        Coefficients.
+
+    Returns
+    -------
+    f_val : float
+        Value of f.
+
+    df_dx : float, optional
+        Normalized first derivative: True df/dx = df_dx * dx
+
+    df_dy : float, optional
+        Normalized first derivative: True df/dy = df_dy * dy
+    """
+
+def bicubic_interpolation_cmplx_coefs(field_at_box: _pybmad.CmplxFieldAt2DBoxStruct) -> _pybmad.BicubicCmplxCoefStruct:
+    """
+    Routine to compute the complex coefficients for bicubic interpolation.
+
+    Use the routine bicubic_cmplx_eval to evaluate the interpolation function.
+
+    Note: The derivatives in field_at_box are normalized by the distance between grid points dx, dy.
+    For example: %d2f_dxdy (structure component) = d^2f/dxdz * dx * dy
+
+    Parameters
+    ----------
+    field_at_box : CmplxFieldAt2dBoxStruct
+        Field and normalized derivatives at the 4 grid points.
+
+    Returns
+    -------
+    bi_coef : BicubicCmplxCoefStruct
+        Coefficients.
+    """
+
+def bicubic_interpolation_coefs(field_at_box: _pybmad.FieldAt2DBoxStruct) -> _pybmad.BicubicCoefStruct:
+    """
+    Routine to compute the coefficients for bicubic interpolation.
+
+    Use the routine bicubic_eval to evaluate the interpolation function.
+
+    Note: The derivatives in field_at_box are normalized by the distance between grid points dx, dy.
+    For example: %d2f_dxdy (structure component) = d^2f/dxdz * dx * dy
+
+    Parameters
+    ----------
+    field_at_box : FieldAt2dBoxStruct
+        Field and normalized derivatives at the 4 grid points.
+
+    Returns
+    -------
+    bi_coef : BicubicCoefStruct
+        Coefficients.
+    """
+
+def bin_2d(data1: _pybmad.RealArray1D, data2: _pybmad.RealArray1D, weight: _pybmad.RealArray1D | None = None, min1: float | None = None, max1: float | None = None, min2: float | None = None, max2: float | None = None, n_bins1: int | None = None, n_bins2: int | None = None) -> _pybmad.GeneralBinStruct:
+    """
+    result (bin_data)
+
+    Similiar to bin(...), but for two dimensions.
+
+    Parameters
+    ----------
+    data1 : 1D array of float
+        data to bin in dimension 1
+
+    data2 : 1D array of float
+        data to bin in dimension 2
+
+    weight : 1D array of float, optional
+        1D weights for each data. Default: 1
+
+    min1 : float, optional
+        minimum considered for data1. Default: minval(data1)
+
+    max1 : float, optional
+        maximum considered for data1. Default: maxval(data1)
+
+    min2 : float, optional
+        minimum considered for data2. Default: minval(data2)
+
+    max2 : float, optional
+        maximum considered for data2. Default: maxva2(data1)
+
+    n_bins1 : int, optional
+        number of bins for dimension 1. Default: 2*size(data1)^(1/6)
+
+    n_bins2 : int, optional
+        number of bins for dimension 2. Default: 2*size(data2)^(1/6)
+
+    Returns
+    -------
+    bin_data : GeneralBinStruct
+        binned data, with .dim==2
+    """
+
+def bin_data(data: _pybmad.RealArray1D, weight: _pybmad.RealArray1D | None = None, min: float | None = None, max: float | None = None, n_bins: int | None = None) -> _pybmad.BinStruct:
+    """
+    Bin centers are at [ x_min + 1/2*delta, x_min + 3/2*delta, ..., x_max - 1/2*delta ]
+    with delta  = (max-min)/n_bins
+
+    Parameters
+    ----------
+    data : 1D array of float
+        1D data to bin
+
+    weight : 1D array of float, optional
+        1D weights for each data. Default: 1
+
+    min : float, optional
+        minimum considered. Default: minval(data)
+
+    max : float, optional
+        maximum considered. Default: maxval(data)
+
+    n_bins : int, optional
+        number of bins. Default: 2*size(data)^(1/3) (Rice's rule)
+
+    Returns
+    -------
+    binned_data : BinStruct
+        binned data.
+    """
+
+def bin_data_density(bin_data: _pybmad.BinStruct, x: float, order: int | None = None) -> float:
+    """
+    Calculate the density of binned data at an arbitrary location x.
+    Zero is returned if x is out of bounds of the binned data.
+
+    Parameters
+    ----------
+    bin_data : BinStruct
+        binned data
+
+    x : float
+        position to query
+
+    order : int, optional
+        interpolation order: 0 or 1 only. Default: 1
+
+    Returns
+    -------
+    r : float
+        density at x
+    """
+
+def bin_data_density_2d(bin_data: _pybmad.GeneralBinStruct, x: float, y: float, order: int | None = None) -> float:
+    """
+    Calculate the density of 2D binned data at an arbitrary location (x, y)
+    Zero is returned if x or y is out of bounds of the binned data
+
+    Parameters
+    ----------
+    bin_data : GeneralBinStruct
+        binned data. Must have .dim == 2
+
+    x : float
+        x position to query
+
+    y : float
+        y position to query
+
+    order : int, optional
+        interpolation order: 0 or 1 only Default: 1
+
+    Returns
+    -------
+    r0 : float
+        density at (x,y)
+    """
+
 def bin_index(x: float, bin1_x_min: float, bin_delta: float) -> int:
     """
     Helper function to locate the appropriate histogram bin index.
@@ -593,6 +797,21 @@ def cosc(x: float, nd: int | None = None) -> float:
     -------
     y : float
         nd^th derivative of (1 - cos(x)) / x^2
+    """
+
+def count_at_index(bin_data: _pybmad.BinStruct, index: int) -> float:
+    """
+    Wrapper for Fortran routine count_at_index
+
+    Parameters
+    ----------
+    bin_data : BinStruct
+
+    index : int
+
+    Returns
+    -------
+    c : float
     """
 
 def create_a_spline(r0: _pybmad.RealArray1D, r1: _pybmad.RealArray1D, slope0: float, slope1: float) -> _pybmad.SplineStruct:
@@ -1193,6 +1412,17 @@ def gen_complete_elliptic(kc: float, p: float, c: float, s: float, err_tol: floa
     value : float
         Output value.
     """
+
+def general_bin_count(bin_data: _pybmad.GeneralBinStruct, ix1: int, ix2: int | None = None, ix3: int | None = None) -> float:
+    """
+    Function for getting the count at a general index. Count will be 0 if out of bounds
+    """
+
+def general_bin_index(bin_data: _pybmad.GeneralBinStruct, ix1: int, ix2: int | None = None, ix3: int | None = None) -> int:
+    """Function for looking up an index in the 1D count array"""
+
+def general_bin_index_in_bounds(bin_data: _pybmad.GeneralBinStruct, ix1: int, ix2: int | None = None, ix3: int | None = None) -> bool:
+    """Function for checking bounds"""
 
 def get_a_char(wait: bool, ignore_this: _pybmad.CharacterAlloc1D | None = None) -> str:
     """
@@ -1806,6 +2036,22 @@ def modulo2_sp(x: float, amp: float) -> float:
         Result
     """
 
+def molecular_components(molecule: str) -> _pybmad.MolecularComponentStructAlloc1D:
+    """
+    Routine to decompose a molecule into its components.
+    For example: molecule = 'H2O' => component(1) = ('H', 2), component(2) = ('O', 1)
+
+    Parameters
+    ----------
+    molecule : str
+        Molecular name.
+
+    Returns
+    -------
+    component : 1D array of MolecularComponentStruct
+        Array of components.
+    """
+
 def n_bins_automatic(n_data: int) -> int:
     """Function to automatically select the number of bins"""
 
@@ -2181,6 +2427,44 @@ def out_io_print_and_capture_setup(print_on: bool | None = None, capture_state: 
 
     capture_add_null : bool, optional
         Is captured output null terminated (for interfacing with C/C++)?
+    """
+
+def output_direct(file_unit: int | None = None, print_and_capture: bool | None = None, min_level: int | None = None, max_level: int | None = None, set: _pybmad.OutIoOutputDirectStruct | None = None) -> _pybmad.OutIoOutputDirectStruct:
+    """
+    Subroutine to set where the output goes when out_io is called.
+    Output may be sent to the terminal screen, written to a file, and/or captured for program use.
+
+    Settings can be made on a message status level by level basis.
+    See the top of this file for the list of the message status levels.
+
+    Once set for a given status level, the settings remain until the next call to
+    output_direct that cover the same status level.
+
+    Parameters
+    ----------
+    file_unit : int, optional
+        Unit number for writing to a file. -1 => No writing (initial default setting).
+
+    print_and_capture : bool, optional
+        If present then this sets whether output is printed to the terminal and/or captured for program use. Note:
+        How output capture works is also set by the out_io_print_and_caputure_setup routine. See the
+        out_io_print_and_caputure_setup routine documentation for more details.
+
+    min_level : int, optional
+        Minimum message status level to apply to. Default is s_blank$
+
+    max_level : int, optional
+        Maximum message status level to apply to. Default is s_important$
+
+    set : OutIoOutputDirectStruct, optional
+        If present, use this structure to set where output goes. This structure can be used in place of specifying
+        file_unit, etc. One way to use "set" is to first call this routine with the "get" argument to get the
+        output direction state.
+
+    Returns
+    -------
+    get : OutIoOutputDirectStruct, optional
+        If present, capture the output direction state before any setting is done.
     """
 
 def parse_fortran_format(format_str: str, n_repeat: int, power: int, descrip: str, width: int, digits: int) -> None:
@@ -4187,6 +4471,103 @@ def tricubic_cmplx_eval(x_norm: float, y_norm: float, z_norm: float, tri_coef: _
 
     df_dz : complex, optional
         Normalized first derivative: True df/dz = df_dz * dz
+    """
+
+class TricubicEval:
+    """tricubic_eval return type"""
+
+    @property
+    def df_dx(self) -> float: ...
+
+    @property
+    def df_dy(self) -> float: ...
+
+    @property
+    def df_dz(self) -> float: ...
+
+    @property
+    def f_val(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def tricubic_eval(x_norm: float, y_norm: float, z_norm: float, tri_coef: _pybmad.TricubicCoefStruct) -> TricubicEval:
+    """
+    Routine to evaluate a tricubic interpolating function.
+
+    Use the routine tricubic_interpolation_coefs to generate tri_coef.
+
+    Note: In the equations below, the eight points of the grid box being interpolated range
+    from (x0, y0, z0) to (x0+dx, y0+dy, z0+dz).
+
+    Parameters
+    ----------
+    x_norm : float
+        x_norm = (x - x0) / dx
+
+    y_norm : float
+        y_norm = (y - y0) / dy
+
+    z_norm : float
+        z_norm = (z - z0) / dz
+
+    tri_coef : TricubicCoefStruct
+        Coefficients.
+
+    Returns
+    -------
+    f_val : float
+        Value of f.
+
+    df_dx : float, optional
+        Normalized first derivative: True df/dx = df_dx * dx
+
+    df_dy : float, optional
+        Normalized first derivative: True df/dy = df_dy * dy
+
+    df_dz : float, optional
+        Normalized first derivative: True df/dz = df_dz * dz
+    """
+
+def tricubic_interpolation_cmplx_coefs(field_at_box: _pybmad.CmplxFieldAt3DBoxStruct) -> _pybmad.TricubicCmplxCoefStruct:
+    """
+    Routine to compute the complex coefficients for tricubic interpolation.
+
+    Use the routine tricubic_cmplx_eval to evaluate the interpolation function.
+
+    Note: The derivatives in field_at_box are normalized by the distance between grid points dx, dy.
+    For example: %d2f_dxdy (structure component) = d^2f/dxdz * dx * dy
+
+    Parameters
+    ----------
+    field_at_box : CmplxFieldAt3dBoxStruct
+        Field and normalized derivatives at the 4 grid points.
+
+    Returns
+    -------
+    tri_coef : TricubicCmplxCoefStruct
+        Coefficients.
+    """
+
+def tricubic_interpolation_coefs(field_at_box: _pybmad.FieldAt3DBoxStruct) -> _pybmad.TricubicCoefStruct:
+    """
+    Routine to compute the coefficients for tricubic interpolation.
+
+    Use the routine tricubic_eval to evaluate the interpolation function.
+
+    Note: The derivatives in field_at_box are normalized by the distance between grid points dx, dy.
+    For example: %d2f_dxdy (structure component) = d^2f/dxdz * dx * dy
+
+    Parameters
+    ----------
+    field_at_box : FieldAt3dBoxStruct
+        Field and normalized derivatives at the 4 grid points.
+
+    Returns
+    -------
+    tri_coef : TricubicCoefStruct
+        Coefficients.
     """
 
 def type_this_file(filename: str) -> None:

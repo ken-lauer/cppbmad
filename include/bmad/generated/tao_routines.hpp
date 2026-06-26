@@ -524,12 +524,20 @@ Tao::TaoEleShapeInfo tao_ele_shape_info(
     TaoEleShapeStructArray1D ele_shapes,
     optional_ref<int> ix_shape_min = std::nullopt
 );
-
-// Skipped unusable routine tao_ele_shape_input_to_struct:
-// - Untranslated type: tao_ele_shape_input (0D)
-
-// Skipped unusable routine tao_ele_shape_struct_to_input:
-// - Untranslated type: tao_ele_shape_input (0D)
+extern "C" bool fortran_tao_ele_shape_input_to_struct(
+    void *shape_input /* 0D_NOT_type inout */,
+    const char *namelist_name /* 0D_NOT_character in */,
+    void *shape_struct /* 0D_NOT_type out */
+);
+TaoEleShapeStruct tao_ele_shape_input_to_struct(
+    TaoEleShapeInput &shape_input,
+    std::optional<std::string> namelist_name = std::nullopt
+);
+extern "C" bool fortran_tao_ele_shape_struct_to_input(
+    void *shape_struct /* 0D_NOT_type in */,
+    void *shape_input /* 0D_NOT_type out */
+);
+TaoEleShapeInput tao_ele_shape_struct_to_input(TaoEleShapeStruct &shape_struct);
 extern "C" bool fortran_tao_eval_floor_orbit(
     void *datum /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
@@ -855,15 +863,38 @@ std::string tao_expression_tree_to_string(
     std::optional<int> n_node = std::nullopt,
     optional_ref<TaoEvalNodeStruct> parent = std::nullopt
 );
-
-// Skipped unusable routine tao_find_data:
-// - Untranslated type: tao_d2_data_array_struct (1D)
-// - Untranslated type: tao_d1_data_array_struct (1D)
-// - Untranslated type: tao_data_array_struct (1D)
-// - Untranslated type: tao_real_pointer_struct (1D)
-// - Untranslated type: tao_logical_array_struct (1D)
-// - Untranslated type: tao_string_array_struct (1D)
-// - Untranslated type: tao_integer_array_struct (1D)
+extern "C" void fortran_tao_find_data(
+    bool &err /* 0D_NOT_logical out */,
+    const char *data_name /* 0D_NOT_character in */,
+    void *d2_array /* 1D_ALLOC_type out */,
+    void *d1_array /* 1D_ALLOC_type out */,
+    void *d_array /* 1D_ALLOC_type out */,
+    void *re_array /* 1D_ALLOC_type out */,
+    void *log_array /* 1D_ALLOC_type out */,
+    void *str_array /* 1D_ALLOC_type out */,
+    void *int_array /* 1D_ALLOC_type out */,
+    int *ix_uni /* 0D_NOT_integer in */,
+    const char *dflt_index /* 0D_NOT_character in */,
+    bool *print_err /* 0D_NOT_logical in */,
+    const char *component /* 0D_NOT_character out */
+);
+struct TaoFindData {
+  bool err;
+  TaoD2DataArrayStructAlloc1D d2_array;
+  TaoD1DataArrayStructAlloc1D d1_array;
+  TaoDataArrayStructAlloc1D d_array;
+  TaoRealPointerStructAlloc1D re_array;
+  TaoLogicalArrayStructAlloc1D log_array;
+  TaoStringArrayStructAlloc1D str_array;
+  TaoIntegerArrayStructAlloc1D int_array;
+  std::string component;
+};
+Tao::TaoFindData tao_find_data(
+    std::string data_name,
+    std::optional<int> ix_uni = std::nullopt,
+    std::optional<std::string> dflt_index = std::nullopt,
+    std::optional<bool> print_err = std::nullopt
+);
 extern "C" void fortran_tao_find_plot_region(
     bool &err /* 0D_NOT_logical out */,
     const char *where /* 0D_NOT_character in */,
@@ -876,18 +907,56 @@ struct TaoFindPlotRegion {
 };
 Tao::TaoFindPlotRegion
 tao_find_plot_region(std::string where, std::optional<bool> print_flag = std::nullopt);
-
-// Skipped unusable routine tao_find_plots:
-// - Untranslated type: tao_plot_array_struct (1D)
-// - Untranslated type: tao_graph_array_struct (1D)
-// - Untranslated type: tao_curve_array_struct (1D)
-
-// Skipped unusable routine tao_find_var:
-// - Untranslated type: tao_v1_var_array_struct (1D)
-// - Untranslated type: tao_var_array_struct (1D)
-// - Untranslated type: tao_real_pointer_struct (1D)
-// - Untranslated type: tao_logical_array_struct (1D)
-// - Untranslated type: tao_string_array_struct (1D)
+extern "C" void fortran_tao_find_plots(
+    bool &err /* 0D_NOT_logical out */,
+    const char *name /* 0D_NOT_character in */,
+    const char *where /* 0D_NOT_character in */,
+    void *plot /* 1D_ALLOC_type out */,
+    void *graph /* 1D_ALLOC_type out */,
+    void *curve /* 1D_ALLOC_type out */,
+    bool *print_flag /* 0D_NOT_logical in */,
+    bool *blank_means_all /* 0D_NOT_logical in */,
+    bool *only_visible /* 0D_NOT_logical in */
+);
+struct TaoFindPlots {
+  bool err;
+  TaoPlotArrayStructAlloc1D plot;
+  TaoGraphArrayStructAlloc1D graph;
+  TaoCurveArrayStructAlloc1D curve;
+};
+Tao::TaoFindPlots tao_find_plots(
+    std::string name,
+    std::string where,
+    std::optional<bool> print_flag = std::nullopt,
+    std::optional<bool> blank_means_all = std::nullopt,
+    std::optional<bool> only_visible = std::nullopt
+);
+extern "C" void fortran_tao_find_var(
+    bool &err /* 0D_NOT_logical out */,
+    const char *var_name /* 0D_NOT_character in */,
+    void *v1_array /* 1D_ALLOC_type out */,
+    void *v_array /* 1D_ALLOC_type out */,
+    void *re_array /* 1D_ALLOC_type out */,
+    void *log_array /* 1D_ALLOC_type out */,
+    void *str_array /* 1D_ALLOC_type out */,
+    bool *print_err /* 0D_NOT_logical in */,
+    const char *component /* 0D_NOT_character out */,
+    const char *dflt_var_index /* 0D_NOT_character in */
+);
+struct TaoFindVar {
+  bool err;
+  TaoV1VarArrayStructAlloc1D v1_array;
+  TaoVarArrayStructAlloc1D v_array;
+  TaoRealPointerStructAlloc1D re_array;
+  TaoLogicalArrayStructAlloc1D log_array;
+  TaoStringArrayStructAlloc1D str_array;
+  std::string component;
+};
+Tao::TaoFindVar tao_find_var(
+    std::string var_name,
+    std::optional<bool> print_err = std::nullopt,
+    std::optional<std::string> dflt_var_index = std::nullopt
+);
 extern "C" void fortran_tao_fixer(
     const char *switch_ /* 0D_NOT_character in */,
     const char *word1 /* 0D_NOT_character in */,
@@ -1579,9 +1648,18 @@ void tao_plot_wave(TaoPlotStruct &plot, TaoGraphStruct &graph);
 // Skipped unusable routine tao_point_v1_to_var:
 // - Array bounds handling: "Enum 'N' found in bounds 'n' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine tao_pointer_to_branches:
-// - Untranslated type: branch_pointer_struct (1D)
+extern "C" void fortran_tao_pointer_to_branches(
+    const char *branch_str /* 0D_NOT_character in */,
+    void *branches /* 1D_ALLOC_type out */,
+    void *unis /* 1D_ALLOC_type out */,
+    bool &err /* 0D_NOT_logical out */
+);
+struct TaoPointerToBranches {
+  BranchPointerStructAlloc1D branches;
+  TaoUniversePointerStructAlloc1D unis;
+  bool err;
+};
+Tao::TaoPointerToBranches tao_pointer_to_branches(std::string branch_str);
 extern "C" bool fortran_tao_pointer_to_building_wall_shape(
     const char *wall_name /* 0D_NOT_character in */,
     void *e_shape /* 0D_PTR_type out */
@@ -1687,9 +1765,20 @@ extern "C" void fortran_tao_pointer_to_var_in_lattice2(
 bool tao_pointer_to_var_in_lattice2(TaoVarStruct &var, int ix_uni);
 extern "C" void fortran_tao_print_command_line_info();
 void tao_print_command_line_info();
-
-// Skipped unusable routine tao_print_vars:
-// - Untranslated type: tao_var_array_struct (1D)
+extern "C" void fortran_tao_print_vars(
+    int &iu /* 0D_NOT_integer in */,
+    int &ix_uni /* 0D_NOT_integer in */,
+    bool *show_good_opt_only /* 0D_NOT_logical in */,
+    bool *tao_format /* 0D_NOT_logical in */,
+    Bmad::array_descriptor_t &v_array /* 1D_NOT_type in */
+);
+void tao_print_vars(
+    int iu,
+    int ix_uni,
+    std::optional<bool> show_good_opt_only = std::nullopt,
+    std::optional<bool> tao_format = std::nullopt,
+    std::optional<TaoVarArrayStructArray1D> v_array = std::nullopt
+);
 
 // Skipped unusable routine tao_ptc_cmd:
 // - Module name unset
@@ -2061,9 +2150,18 @@ void tao_set_plot_page_cmd(
     std::string value_str,
     std::optional<std::string> value_str2 = std::nullopt
 );
-
-// Skipped unusable routine tao_set_plotting:
-// - Untranslated type: tao_plot_page_input (0D)
+extern "C" void fortran_tao_set_plotting(
+    void *plot_input /* 0D_NOT_type inout */,
+    void *plot_page /* 0D_NOT_type inout */,
+    bool &use_cmd_line_geom /* 0D_NOT_logical in */,
+    bool *reverse /* 0D_NOT_logical in */
+);
+void tao_set_plotting(
+    TaoPlotPageInput &plot_input,
+    TaoPlotPageStruct &plot_page,
+    bool use_cmd_line_geom,
+    std::optional<bool> reverse = std::nullopt
+);
 extern "C" void fortran_tao_set_ptc_com_cmd(
     const char *who /* 0D_NOT_character in */,
     const char *value_str /* 0D_NOT_character in */
@@ -2360,9 +2458,20 @@ struct TaoToReal {
   bool err_flag;
 };
 Tao::TaoToReal tao_to_real(std::string expression);
-
-// Skipped unusable routine tao_to_top10:
-// - Untranslated type: tao_top10_struct (1D)
+extern "C" void fortran_tao_to_top10(
+    Bmad::array_descriptor_t &top10 /* 1D_NOT_type inout */,
+    double &value /* 0D_NOT_real in */,
+    const char *name /* 0D_NOT_character in */,
+    int &c_index /* 0D_NOT_integer in */,
+    const char *order /* 0D_NOT_character in */
+);
+void tao_to_top10(
+    TaoTop10StructArray1D top10,
+    double value,
+    std::string name,
+    int c_index,
+    std::string order
+);
 extern "C" bool fortran_tao_too_many_particles_lost(
     void *beam /* 0D_NOT_type inout */,
     bool &no_beam /* 0D_NOT_logical out */

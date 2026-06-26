@@ -1545,6 +1545,46 @@ mom_comp : float
     Momentum compaction.
 )"""
   );
+  m.def(
+      "mpxx1",
+      &Bmad::mpxx1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(Modified Piwinski, further modified to treat Coulomb Log
+in the same manner as Bjorken-Mtingwa, CIMP, Bane, Kubo & Oide, etc.
+This formula is derived in Section 2.8.4 of Michael Ehrlichman's Graduate Thesis.
+)"""
+  );
+  m.def(
+      "mpzt1",
+      &Bmad::mpzt1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(Modified Piwinski with Zotter's integral.  This is Piwinski's original derivation,
+generalized to take the derivatives of the optics functions.  Also, Piwinski's
+original cumbersome triple integral is reaplaced by Zotter's single integral.  Zotter's
+integral is exact, and not an approximation.
+
+rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
+)"""
+  );
+  m.def(
+      "multi_coulomb_log",
+      &Bmad::multi_coulomb_log,
+      nb::arg("ibs_sim_params"),
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(Calculates the value of the Coulomb log using various methods.
+
+ibs_sim_params%clog_to_use == 1   Classic coulomb log (pi/2 max scattering angle)
+ibs_sim_params%clog_to_use == 2   Integral based tail-cut prescribed by Raubenheimer.
+ibs_sim_params%clog_to_use == 3   Bane tail cut. 1 event/part/damping period.
+ibs_sim_params%clog_to_use == 4   Kubo and Oide tail cut. Used by CesrTA publications.
+)"""
+  );
   nb::class_<Bmad::MultiTurnTrackingAnalysis>(
       m,
       "MultiTurnTrackingAnalysis",
@@ -1632,6 +1672,23 @@ err_flag : bool
     Set True if multilayer type is unrecognized. False otherwise.
 )"""
   );
+  m.def(
+      "multipass_all_info",
+      &Bmad::multipass_all_info,
+      nb::arg("lat"),
+      R"""(Wrapper for Fortran routine multipass_all_info
+
+Parameters
+----------
+lat : LatStruct
+    Lattice
+
+Returns
+-------
+info : MultipassAllInfoStruct
+    Multipass information.
+)"""
+  );
   nb::class_<Bmad::MultipassChain>(m, "MultipassChain", "multipass_chain return type")
       .def_ro("ix_pass", &Bmad::MultipassChain::ix_pass)
       .def_ro("n_links", &Bmad::MultipassChain::n_links)
@@ -1674,6 +1731,23 @@ n_links : int
 
 chain_ele : 1D array of ElePointerStruct, optional
     pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
+)"""
+  );
+  m.def(
+      "multipass_region_info",
+      &Bmad::multipass_region_info,
+      nb::arg("lat"),
+      nb::arg("mult_lat"),
+      nb::arg("m_info"),
+      R"""(Wrapper for Fortran routine multipass_region_info
+
+Parameters
+----------
+lat : LatStruct
+
+mult_lat : MultipassRegionLatStruct
+
+m_info : MultipassAllInfoStruct
 )"""
   );
   nb::class_<Bmad::Multipole1AbToKt>(m, "Multipole1AbToKt", "multipole1_ab_to_kt return type")

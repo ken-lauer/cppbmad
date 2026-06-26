@@ -216,6 +216,24 @@ y : float
 )"""
   );
   m.def(
+      "count_at_index",
+      &SimUtils::count_at_index,
+      nb::arg("bin_data"),
+      nb::arg("index"),
+      R"""(Wrapper for Fortran routine count_at_index
+
+Parameters
+----------
+bin_data : BinStruct
+
+index : int
+
+Returns
+-------
+c : float
+)"""
+  );
+  m.def(
       "create_a_spline",
       &SimUtils::create_a_spline,
       nb::arg("r0"),

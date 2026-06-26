@@ -587,6 +587,167 @@ void init_bbu_stage_struct(nb::module_ &m, nb::class_<BbuStageStruct> &cls) {
 }
 
 // =============================================================================
+// bin_struct
+void init_bin_struct(nb::module_ &m, nb::class_<BinStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::vector<double>>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<double>,
+             std::optional<int>>(),
+         nb::arg("count") = nb::none(),
+         nb::arg("min") = nb::none(),
+         nb::arg("max") = nb::none(),
+         nb::arg("delta") = nb::none(),
+         nb::arg("n") = nb::none()
+  )
+      .def_prop_rw(
+          "count",
+          &BinStruct::count,
+          &BinStruct::set_count,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Counts (or weight) in each bin"
+      )
+      .def_prop_rw("min", &BinStruct::min, &BinStruct::set_min, "Bounds for the bins")
+      .def_prop_rw("max", &BinStruct::max, &BinStruct::set_max)
+      .def_prop_rw("delta", &BinStruct::delta, &BinStruct::set_delta, "Size of a bin")
+      .def_prop_rw("n", &BinStruct::n, &BinStruct::set_n, "Number of bins")
+
+      .def("__repr__", [](const BinStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BinStruct &self) {
+            return BinStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def("__deepcopy__", [](const BinStruct &self, nb::dict &memo) { return BinStruct(self); })
+      .def(
+          "__eq__",
+          [](const BinStruct &self, const BinStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BinStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D BinStruct arrays are not used in structs/routines
+  // 2D BinStruct arrays are not used in structs/routines
+  // 3D BinStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// base_line_ele_struct
+void init_base_line_ele_struct(nb::module_ &m, nb::class_<BaseLineEleStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("tag") = nb::none(),
+         nb::arg("ix_multi") = nb::none(),
+         nb::arg("orientation") = nb::none(),
+         nb::arg("ix_ele_in_in_lat") = nb::none(),
+         nb::arg("ele_order_reflect") = nb::none()
+  )
+      .def_prop_rw(
+          "name",
+          &BaseLineEleStruct::name,
+          &BaseLineEleStruct::set_name,
+          "Name of sequence or element"
+      )
+      .def_prop_rw("tag", &BaseLineEleStruct::tag, &BaseLineEleStruct::set_tag, "Tag name.")
+      .def_prop_rw(
+          "ix_multi",
+          &BaseLineEleStruct::ix_multi,
+          &BaseLineEleStruct::set_ix_multi,
+          "Multipass indentifier"
+      )
+      .def_prop_rw(
+          "orientation",
+          &BaseLineEleStruct::orientation,
+          &BaseLineEleStruct::set_orientation,
+          "Element reversed?"
+      )
+      .def_prop_rw(
+          "ix_ele_in_in_lat",
+          &BaseLineEleStruct::ix_ele_in_in_lat,
+          &BaseLineEleStruct::set_ix_ele_in_in_lat
+      )
+      .def_prop_rw(
+          "ele_order_reflect",
+          &BaseLineEleStruct::ele_order_reflect,
+          &BaseLineEleStruct::set_ele_order_reflect,
+          "Part of reflection or reversed line?"
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return BaseLineEleStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BaseLineEleStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const BaseLineEleStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BaseLineEleStruct &self) {
+            return BaseLineEleStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const BaseLineEleStruct &self, nb::dict &memo) { return BaseLineEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BaseLineEleStruct &self, const BaseLineEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BaseLineEleStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<BaseLineEleStructArray1D, BaseLineEleStructAlloc1D>(
+      m,
+      "BaseLineEleStructArray1D",
+      "BaseLineEleStructAlloc1D"
+  );
+  // 2D BaseLineEleStruct arrays are not used in structs/routines
+  // 3D BaseLineEleStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // beam_init_struct
 void init_beam_init_struct(nb::module_ &m, nb::class_<BeamInitStruct> &cls) {
   cls.def(
@@ -1678,6 +1839,76 @@ void init_bpm_phase_coupling_struct(nb::module_ &m, nb::class_<BpmPhaseCouplingS
 }
 
 // =============================================================================
+// branch_pointer_struct
+void init_branch_pointer_struct(nb::module_ &m, nb::class_<BranchPointerStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](BranchPointerStruct *self, const BranchStruct *branch) {
+           new (self) BranchPointerStruct(ptr_to_opt_ref(branch));
+         },
+         nb::arg("branch") = nb::none()
+  )
+      .def_prop_rw(
+          "branch",
+          &BranchPointerStruct::branch,
+          &BranchPointerStruct::set_branch,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return BranchPointerStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = BranchPointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const BranchPointerStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BranchPointerStruct &self) {
+            return BranchPointerStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const BranchPointerStruct &self, nb::dict &memo) { return BranchPointerStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BranchPointerStruct &self, const BranchPointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BranchPointerStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<BranchPointerStructArray1D, BranchPointerStructAlloc1D>(
+      m,
+      "BranchPointerStructArray1D",
+      "BranchPointerStructAlloc1D"
+  );
+  // 2D BranchPointerStruct arrays are not used in structs/routines
+  // 3D BranchPointerStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // branch_struct
 void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
   cls.def(
@@ -1696,7 +1927,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
             const ModeInfoStruct *b,
             const ModeInfoStruct *z,
             const LatParamStruct *param,
-            const CoordStruct *particle_start) {
+            const CoordStruct *particle_start,
+            const PtcBranch1Struct *ptc) {
            new (self) BranchStruct(
                name,
                ix_branch,
@@ -1711,7 +1943,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
                ptr_to_opt_ref(b),
                ptr_to_opt_ref(z),
                ptr_to_opt_ref(param),
-               ptr_to_opt_ref(particle_start)
+               ptr_to_opt_ref(particle_start),
+               ptr_to_opt_ref(ptc)
            );
          },
          nb::arg("name") = nb::none(),
@@ -1727,7 +1960,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
          nb::arg("b") = nb::none(),
          nb::arg("z") = nb::none(),
          nb::arg("param") = nb::none(),
-         nb::arg("particle_start") = nb::none()
+         nb::arg("particle_start") = nb::none(),
+         nb::arg("ptc") = nb::none()
   )
       .def_prop_rw(
           "name",
@@ -1808,6 +2042,13 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
           nb::for_getter(nb::keep_alive<0, 1>())
       )
       .def_prop_ro("wall3d", &BranchStruct::wall3d, nb::keep_alive<0, 1>())
+      .def_prop_rw(
+          "ptc",
+          &BranchStruct::ptc,
+          &BranchStruct::set_ptc,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Pointer to layout. Note: ptc info not transferred with 'branch1 = branch2' set."
+      )
       .def_static(
           "new_array1d",
           [](int sz) { return BranchStructAlloc1D(sz); },
@@ -2431,4 +2672,62 @@ void init_bicubic_cmplx_coef_struct(nb::module_ &m, nb::class_<BicubicCmplxCoefS
   // 1D BicubicCmplxCoefStruct arrays are not used in structs/routines
   // 2D BicubicCmplxCoefStruct arrays are not used in structs/routines
   bind_FTypeArrayND<BicubicCmplxCoefStructArray3D>(m, "BicubicCmplxCoefStructArray3D");
+}
+
+// =============================================================================
+// bicubic_coef_struct
+void init_bicubic_coef_struct(nb::module_ &m, nb::class_<BicubicCoefStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<std::vector<std::vector<double>>>, std::optional<std::vector<int>>>(
+         ),
+         nb::arg("coef") = nb::none(),
+         nb::arg("i_box") = nb::none()
+  )
+      .def_prop_rw(
+          "coef",
+          &BicubicCoefStruct::coef,
+          &BicubicCoefStruct::set_coef,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Coefs"
+      )
+      .def_prop_rw(
+          "i_box",
+          &BicubicCoefStruct::i_box,
+          &BicubicCoefStruct::set_i_box,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "index at lower box corner."
+      )
+
+      .def("__repr__", [](const BicubicCoefStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const BicubicCoefStruct &self) {
+            return BicubicCoefStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const BicubicCoefStruct &self, nb::dict &memo) { return BicubicCoefStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const BicubicCoefStruct &self, const BicubicCoefStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const BicubicCoefStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D BicubicCoefStruct arrays are not used in structs/routines
+  // 2D BicubicCoefStruct arrays are not used in structs/routines
+  // 3D BicubicCoefStruct arrays are not used in structs/routines
 }

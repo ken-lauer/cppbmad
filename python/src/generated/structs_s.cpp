@@ -13,6 +13,271 @@ using namespace Pybmad;
 namespace nb = nanobind;
 
 // =============================================================================
+// seq_ele_struct
+void init_seq_ele_struct(nb::module_ &m, nb::class_<SeqEleStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<int>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("tag") = nb::none(),
+         nb::arg("slice_start") = nb::none(),
+         nb::arg("slice_end") = nb::none(),
+         nb::arg("type") = nb::none(),
+         nb::arg("ix_ele") = nb::none(),
+         nb::arg("ix_arg") = nb::none(),
+         nb::arg("rep_count") = nb::none(),
+         nb::arg("ele_order_reflect") = nb::none(),
+         nb::arg("ele_orientation") = nb::none()
+  )
+      .def_prop_rw(
+          "name",
+          &SeqEleStruct::name,
+          &SeqEleStruct::set_name,
+          "name of element, subline, or sublist"
+      )
+      .def_prop_ro("actual_arg", &SeqEleStruct::actual_arg, nb::keep_alive<0, 1>())
+      .def_prop_rw("tag", &SeqEleStruct::tag, &SeqEleStruct::set_tag, "tag name.")
+      .def_prop_rw(
+          "slice_start",
+          &SeqEleStruct::slice_start,
+          &SeqEleStruct::set_slice_start,
+          "For 'my_line[start:end]' slice constructs."
+      )
+      .def_prop_rw(
+          "slice_end",
+          &SeqEleStruct::slice_end,
+          &SeqEleStruct::set_slice_end,
+          "For 'my_line[start:end]' slice constructs."
+      )
+      .def_prop_rw(
+          "type",
+          &SeqEleStruct::type,
+          &SeqEleStruct::set_type,
+          "LINE$, REPLACEMENT_LINE$, LIST$, ELEMENT$"
+      )
+      .def_prop_rw(
+          "ix_ele",
+          &SeqEleStruct::ix_ele,
+          &SeqEleStruct::set_ix_ele,
+          "if an element: pointer to ELE array if a line or list: pointer to SEQ array"
+      )
+      .def_prop_rw(
+          "ix_arg",
+          &SeqEleStruct::ix_arg,
+          &SeqEleStruct::set_ix_arg,
+          "index in arg list (for replacement lines)"
+      )
+      .def_prop_rw(
+          "rep_count",
+          &SeqEleStruct::rep_count,
+          &SeqEleStruct::set_rep_count,
+          "how many copies of an element"
+      )
+      .def_prop_rw(
+          "ele_order_reflect",
+          &SeqEleStruct::ele_order_reflect,
+          &SeqEleStruct::set_ele_order_reflect,
+          "Travel through ele sequence in reverse order"
+      )
+      .def_prop_rw(
+          "ele_orientation",
+          &SeqEleStruct::ele_orientation,
+          &SeqEleStruct::set_ele_orientation,
+          "element has reverse orientation."
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return SeqEleStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SeqEleStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const SeqEleStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SeqEleStruct &self) {
+            return SeqEleStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const SeqEleStruct &self, nb::dict &memo) { return SeqEleStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SeqEleStruct &self, const SeqEleStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SeqEleStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<SeqEleStructArray1D, SeqEleStructAlloc1D>(
+      m,
+      "SeqEleStructArray1D",
+      "SeqEleStructAlloc1D"
+  );
+  // 2D SeqEleStruct arrays are not used in structs/routines
+  // 3D SeqEleStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// seq_struct
+void init_seq_struct(nb::module_ &m, nb::class_<SeqStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<int>,
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("type") = nb::none(),
+         nb::arg("ix_list") = nb::none(),
+         nb::arg("list_upcount") = nb::none(),
+         nb::arg("index") = nb::none(),
+         nb::arg("file_name") = nb::none(),
+         nb::arg("ix_file_line") = nb::none(),
+         nb::arg("multipass") = nb::none(),
+         nb::arg("ptc_layout") = nb::none(),
+         nb::arg("active") = nb::none()
+  )
+      .def_prop_rw("name", &SeqStruct::name, &SeqStruct::set_name, "name of sequence")
+      .def_prop_ro("ele", &SeqStruct::ele, nb::keep_alive<0, 1>(), "Elements in the sequence")
+      .def_prop_ro("dummy_arg", &SeqStruct::dummy_arg, nb::keep_alive<0, 1>())
+      .def_prop_ro(
+          "corresponding_actual_arg",
+          &SeqStruct::corresponding_actual_arg,
+          nb::keep_alive<0, 1>()
+      )
+      .def_prop_rw(
+          "type",
+          &SeqStruct::type,
+          &SeqStruct::set_type,
+          "LINE$, REPLACEMENT_LINE$ or LIST$"
+      )
+      .def_prop_rw(
+          "ix_list",
+          &SeqStruct::ix_list,
+          &SeqStruct::set_ix_list,
+          "Current index for lists"
+      )
+      .def_prop_rw("list_upcount", &SeqStruct::list_upcount, &SeqStruct::set_list_upcount)
+      .def_prop_rw(
+          "index",
+          &SeqStruct::index,
+          &SeqStruct::set_index,
+          "Alphabetical order sorted index"
+      )
+      .def_prop_rw(
+          "file_name",
+          &SeqStruct::file_name,
+          &SeqStruct::set_file_name,
+          "File where sequence is defined"
+      )
+      .def_prop_rw(
+          "ix_file_line",
+          &SeqStruct::ix_file_line,
+          &SeqStruct::set_ix_file_line,
+          "Line number in file where sequence is defined"
+      )
+      .def_prop_rw("multipass", &SeqStruct::multipass, &SeqStruct::set_multipass)
+      .def_prop_rw(
+          "ptc_layout",
+          &SeqStruct::ptc_layout,
+          &SeqStruct::set_ptc_layout,
+          "Put in separate PTC layout"
+      )
+      .def_prop_rw(
+          "active",
+          &SeqStruct::active,
+          &SeqStruct::set_active,
+          "Used to prevent infinite loops."
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return SeqStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SeqStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const SeqStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SeqStruct &self) {
+            return SeqStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def("__deepcopy__", [](const SeqStruct &self, nb::dict &memo) { return SeqStruct(self); })
+      .def(
+          "__eq__",
+          [](const SeqStruct &self, const SeqStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SeqStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<SeqStructArray1D, SeqStructAlloc1D>(
+      m,
+      "SeqStructArray1D",
+      "SeqStructAlloc1D"
+  );
+  // 2D SeqStruct arrays are not used in structs/routines
+  // 3D SeqStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // space_charge_common_struct
 void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommonStruct> &cls) {
   cls.def(
@@ -273,6 +538,233 @@ void init_spin_axis_struct(nb::module_ &m, nb::class_<SpinAxisStruct> &cls) {
   // 1D SpinAxisStruct arrays are not used in structs/routines
   // 2D SpinAxisStruct arrays are not used in structs/routines
   // 3D SpinAxisStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// spin_eigen_struct
+void init_spin_eigen_struct(nb::module_ &m, nb::class_<SpinEigenStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::vector<std::complex<double>>>,
+             std::optional<std::complex<double>>>(),
+         nb::arg("vec") = nb::none(),
+         nb::arg("val") = nb::none()
+  )
+      .def_prop_rw(
+          "vec",
+          &SpinEigenStruct::vec,
+          &SpinEigenStruct::set_vec,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw("val", &SpinEigenStruct::val, &SpinEigenStruct::set_val)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return SpinEigenStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SpinEigenStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const SpinEigenStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SpinEigenStruct &self) {
+            return SpinEigenStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const SpinEigenStruct &self, nb::dict &memo) { return SpinEigenStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SpinEigenStruct &self, const SpinEigenStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpinEigenStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<SpinEigenStructArray1D, SpinEigenStructAlloc1D>(
+      m,
+      "SpinEigenStructArray1D",
+      "SpinEigenStructAlloc1D"
+  );
+  // 2D SpinEigenStruct arrays are not used in structs/routines
+  // 3D SpinEigenStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// spin_matching_struct
+void init_spin_matching_struct(nb::module_ &m, nb::class_<SpinMatchingStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](SpinMatchingStruct *self,
+            const SpinAxisStruct *axis,
+            std::optional<std::vector<double>> dn_dpz,
+            std::optional<std::vector<double>> alpha,
+            std::optional<std::vector<double>> beta,
+            std::optional<std::vector<double>> orb0,
+            std::optional<std::vector<std::vector<double>>> M_1turn,
+            std::optional<std::vector<std::vector<double>>> M_ele,
+            std::optional<std::vector<double>> sq_ele,
+            std::optional<std::vector<double>> sq_1turn,
+            std::optional<bool> valid) {
+           new (self) SpinMatchingStruct(
+               ptr_to_opt_ref(axis),
+               dn_dpz,
+               alpha,
+               beta,
+               orb0,
+               M_1turn,
+               M_ele,
+               sq_ele,
+               sq_1turn,
+               valid
+           );
+         },
+         nb::arg("axis") = nb::none(),
+         nb::arg("dn_dpz") = nb::none(),
+         nb::arg("alpha") = nb::none(),
+         nb::arg("beta") = nb::none(),
+         nb::arg("orb0") = nb::none(),
+         nb::arg("M_1turn") = nb::none(),
+         nb::arg("M_ele") = nb::none(),
+         nb::arg("sq_ele") = nb::none(),
+         nb::arg("sq_1turn") = nb::none(),
+         nb::arg("valid") = nb::none()
+  )
+      .def_prop_rw(
+          "axis",
+          &SpinMatchingStruct::axis,
+          &SpinMatchingStruct::set_axis,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_ro("eigen", &SpinMatchingStruct::eigen, nb::keep_alive<0, 1>())
+      .def_prop_rw(
+          "dn_dpz",
+          &SpinMatchingStruct::dn_dpz,
+          &SpinMatchingStruct::set_dn_dpz,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Invariant spin derivative"
+      )
+      .def_prop_rw(
+          "alpha",
+          &SpinMatchingStruct::alpha,
+          &SpinMatchingStruct::set_alpha,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Alpha vector"
+      )
+      .def_prop_rw(
+          "beta",
+          &SpinMatchingStruct::beta,
+          &SpinMatchingStruct::set_beta,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Beta vector"
+      )
+      .def_prop_rw(
+          "orb0",
+          &SpinMatchingStruct::orb0,
+          &SpinMatchingStruct::set_orb0,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Closed orbit"
+      )
+      .def_prop_rw(
+          "M_1turn",
+          &SpinMatchingStruct::M_1turn,
+          &SpinMatchingStruct::set_M_1turn,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "1-turn matrix"
+      )
+      .def_prop_rw(
+          "M_ele",
+          &SpinMatchingStruct::M_ele,
+          &SpinMatchingStruct::set_M_ele,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Transfer matrix through element."
+      )
+      .def_prop_rw(
+          "sq_ele",
+          &SpinMatchingStruct::sq_ele,
+          &SpinMatchingStruct::set_sq_ele,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw(
+          "sq_1turn",
+          &SpinMatchingStruct::sq_1turn,
+          &SpinMatchingStruct::set_sq_1turn,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_prop_rw("valid", &SpinMatchingStruct::valid, &SpinMatchingStruct::set_valid)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return SpinMatchingStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = SpinMatchingStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const SpinMatchingStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const SpinMatchingStruct &self) {
+            return SpinMatchingStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const SpinMatchingStruct &self, nb::dict &memo) { return SpinMatchingStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const SpinMatchingStruct &self, const SpinMatchingStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const SpinMatchingStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<SpinMatchingStructArray1D, SpinMatchingStructAlloc1D>(
+      m,
+      "SpinMatchingStructArray1D",
+      "SpinMatchingStructAlloc1D"
+  );
+  // 2D SpinMatchingStruct arrays are not used in structs/routines
+  // 3D SpinMatchingStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -1057,6 +1549,65 @@ void init_surface_segmented_struct(nb::module_ &m, nb::class_<SurfaceSegmentedSt
   // 1D SurfaceSegmentedStruct arrays are not used in structs/routines
   // 2D SurfaceSegmentedStruct arrays are not used in structs/routines
   // 3D SurfaceSegmentedStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// str_index_struct
+void init_str_index_struct(nb::module_ &m, nb::class_<StrIndexStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<int>>(),
+         nb::arg("index") = nb::none(),
+         nb::arg("n_min") = nb::none(),
+         nb::arg("n_max") = nb::none()
+  )
+      .def_prop_ro("name", &StrIndexStruct::name, nb::keep_alive<0, 1>(), "Array of names.")
+      .def_prop_rw(
+          "index",
+          &StrIndexStruct::index,
+          &StrIndexStruct::set_index,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Sorted index for names(:) array. names(an_index(i)) is in alphabetical order."
+      )
+      .def_prop_rw("n_min", &StrIndexStruct::n_min, &StrIndexStruct::set_n_min)
+      .def_prop_rw(
+          "n_max",
+          &StrIndexStruct::n_max,
+          &StrIndexStruct::set_n_max,
+          "Use only names(n_min:n_max) part of array."
+      )
+
+      .def("__repr__", [](const StrIndexStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const StrIndexStruct &self) {
+            return StrIndexStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const StrIndexStruct &self, nb::dict &memo) { return StrIndexStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const StrIndexStruct &self, const StrIndexStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const StrIndexStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D StrIndexStruct arrays are not used in structs/routines
+  // 2D StrIndexStruct arrays are not used in structs/routines
+  // 3D StrIndexStruct arrays are not used in structs/routines
 }
 
 // =============================================================================

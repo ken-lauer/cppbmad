@@ -235,6 +235,21 @@ def add_lattice_control_structs(ele: _pybmad.EleStruct, n_add_slave: int | None 
         array. If False then new space is added at the front of the array. Default is True.
     """
 
+def add_ptc_layout_to_list(branch_ptc_info: _pybmad.PtcBranch1Struct, layout_end: _pybmad.Layout) -> None:
+    """
+    Routine to add a layout the a list of layouts.
+
+    Parameters
+    ----------
+    branch_ptc_info : PtcBranch1Struct
+        List of layouts
+        This parameter is an input/output and is modified in-place.
+        As an output, branch_ptc_info: Updated list.
+
+    layout_end : Layout
+        ptc layout
+    """
+
 class AddSuperimpose:
     """add_superimpose return type"""
 
@@ -400,6 +415,13 @@ def allocate_lat_ele_array(lat: _pybmad.LatStruct, upper_bound: int | None = Non
         formed lattice.
     """
 
+def allocate_plat(plat: _pybmad.ParserLatStruct, n_ele_max: int) -> None:
+    """
+    Subroutine to allocate allocatable array sizes.
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+    """
+
 def angle_between_polars(polar1: _pybmad.SpinPolarStruct, polar2: _pybmad.SpinPolarStruct) -> float:
     """
     Wrapper for Fortran routine angle_between_polars
@@ -463,6 +485,45 @@ def apply_all_rampers(lat: _pybmad.LatStruct) -> bool:
         Set True if there is an error. False otherwise.
     """
 
+def apply_element_edge_kick(orb: _pybmad.CoordStruct, fringe_info: _pybmad.FringeFieldInfoStruct, track_ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, track_spin: bool, mat6: Sequence[Sequence[float]] | None = None, make_matrix: bool | None = None, rf_time: float | None = None, apply_sol_fringe: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine apply_element_edge_kick
+
+    Parameters
+    ----------
+    orb : CoordStruct
+        Starting coords in element reference frame.
+        This parameter is an input/output and is modified in-place.
+        As an output, orb: Coords after application of the edge fringe field.
+
+    fringe_info : FringeFieldInfoStruct
+        Fringe information.
+
+    track_ele : EleStruct
+        Element being tracked through. Is different from fringe_info.hard_ele when there are superpositions and
+        track_ele can be a super_slave of fringe_info.hard_ele.
+
+    param : LatParamStruct
+        lattice parameters.
+
+    track_spin : bool
+        Track the spin?
+
+    mat6 : 2D array of float (shape: 6,6), optional
+        Transfer matrix before fringe.
+        This parameter is an input/output and is modified in-place.
+        As an output, mat6: Transfer matrix transfer matrix including fringe.
+
+    make_matrix : bool, optional
+        Propagate the transfer matrix? Default is false.
+
+    rf_time : float, optional
+        RF clock time. If not present then the time will be calculated using the standard algorithm.
+
+    apply_sol_fringe : bool, optional
+        Apply the solenoid fringe kick? Default is True.
+    """
+
 def apply_energy_kick(dE: float, orbit: _pybmad.CoordStruct, ddE_dr: Sequence[float], mat6: Sequence[Sequence[float]] | None = None, make_matrix: bool | None = None) -> None:
     """
     Wrapper for Fortran routine apply_energy_kick
@@ -487,6 +548,22 @@ def apply_energy_kick(dE: float, orbit: _pybmad.CoordStruct, ddE_dr: Sequence[fl
 
     make_matrix : bool, optional
         Propagate the transfer matrix? Default is false.
+    """
+
+def apply_fft_3d_kicks(csr: _pybmad.CsrStruct, particle: _pybmad.CoordStructArray1D) -> None:
+    """
+    Routine to apply FFT-based 3D space charge kicks to particles.
+    Deposits charge on a mesh, solves for the field, interpolates back, and applies kicks.
+
+    Parameters
+    ----------
+    csr : CsrStruct
+        Contains mesh, position arrays, and tracking parameters.
+
+    particle : 1D array of CoordStruct
+        Particles to kick.
+        This parameter is an input/output and is modified in-place.
+        As an output, particle: Particles with kicks applied.
     """
 
 def apply_patch_to_ptc_fibre(ele: _pybmad.EleStruct) -> None:
@@ -899,6 +976,25 @@ class AttributeIndex2:
 
     def __getitem__(self, arg: int, /) -> object: ...
 
+def attribute_info(ele: _pybmad.EleStruct, ix_att: int) -> _pybmad.EleAttributeStruct:
+    """
+    Function to return the info structure associated with an attribute for
+    a particular type of BMAD element.
+
+    Parameters
+    ----------
+    ele : EleStruct
+
+    ix_att : int
+        Index of attribute (e.g. k1$)
+
+    Returns
+    -------
+    attrib_info : EleAttributeStruct
+        Info on this attribute. Note: .value is not set since this info is contained in the ele argument. Use
+        pointer_to_attribute to access the attribute.
+    """
+
 @overload
 def attribute_name(key: int, ix_att: int, show_private: bool | None = None) -> str:
     """
@@ -1082,6 +1178,14 @@ def average_twiss(frac1: float, twiss1: _pybmad.TwissStruct, twiss2: _pybmad.Twi
     -------
     ave_twiss : TwissStruct
         Average twiss.
+    """
+
+def bane1(ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> _pybmad.IbsStruct:
+    """
+    This is an implementation of equations 10-15 from "Intrabeam
+    scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+    It is a high energy approximation of the Bjorken-Mtingwa IBS
+    formulation.
     """
 
 class BbiKick:
@@ -1643,6 +1747,22 @@ def bend_vert_angle_integ_prob(vert_angle: float, E_rel: float, gamma: float) ->
         Integrated probability. Will be in the range [0, 1].
     """
 
+def bjmt1(ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> _pybmad.IbsStruct:
+    """
+    This is an implementation of equations 1-9 from "Intrabeam
+    scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+
+    This formulation is one of the slowest methods for calculating IBS rates.
+
+    rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
+    """
+
+def bl_via_mat(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, mode: _pybmad.NormalModesStruct, sig_z: float) -> None:
+    """
+    Calculates bunch length while taking PWD effects into account.
+    PWD is approximated as a defocusing rf voltage.
+    """
+
 def bl_via_vlassov(current: float, alpha: float, Energy: float, sigma_p: float, Vrf: float, omega: float, U0: float, circ: float, R: float, L: float) -> float:
     """
     This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
@@ -2059,6 +2179,48 @@ def calc_emittances_and_twiss_from_sigma_matrix(sigma_mat: Sequence[Sequence[flo
         51.).
     """
 
+class CalcNextFringeEdge:
+    """calc_next_fringe_edge return type"""
+
+    @property
+    def s_edge_body(self) -> float: ...
+
+    @property
+    def fringe_info(self) -> _pybmad.FringeFieldInfoStruct: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def calc_next_fringe_edge(track_ele: _pybmad.EleStruct, orbit: _pybmad.CoordStruct, init_needed: bool | None = None, time_tracking: bool | None = None) -> CalcNextFringeEdge:
+    """
+    Wrapper for Fortran routine calc_next_fringe_edge
+
+    Parameters
+    ----------
+    track_ele : EleStruct
+        Element being tracked through.
+
+    orbit : CoordStruct
+        Particle position
+
+    init_needed : bool, optional
+        If present and True then initialize.
+
+    time_tracking : bool, optional
+        If present and True then this routine is being called by the time Runge-Kutta tracker. Default is False.
+
+    Returns
+    -------
+    s_edge_body : float
+        S position of next hard edge in track_ele body frame. If there are no more hard edges then s_edge_body
+        will be set to ele.value(l$) if orbit.direction*orbit.time_dir*ele.orientation = 1, and set to 0
+        otherwise.
+
+    fringe_info : FringeFieldInfoStruct
+        Information on the next fringe to track through.
+    """
+
 def calc_spin_params(bunch: _pybmad.BunchStruct) -> _pybmad.BunchParamsStruct:
     """
     Rotine to calculate spin averages
@@ -2143,6 +2305,25 @@ def calc_wall_radius(v: _pybmad.Wall3DVertexStructArray1D, cos_ang: float, sin_a
         is between v(N) and v(1) where N = size(v).
     """
 
+def calc_wiggler_g_params(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, s_rel: float, orb: _pybmad.CoordStruct, pt: _pybmad.RadIntTrackPointStruct, info: _pybmad.RadIntInfoStruct | None = None) -> None:
+    """
+    Wrapper for Fortran routine calc_wiggler_g_params
+
+    Parameters
+    ----------
+    ele : EleStruct
+
+    param : LatParamStruct
+
+    s_rel : float
+
+    orb : CoordStruct
+
+    pt : RadIntTrackPointStruct
+
+    info : RadIntInfoStruct, optional
+    """
+
 def calc_z_tune(branch: _pybmad.BranchStruct) -> None:
     """
     Wrapper for Fortran routine calc_z_tune
@@ -2173,6 +2354,74 @@ def canonical_to_angle_coords(orbit: _pybmad.CoordStruct, coord_type: str | None
     coord_type : str, optional
         Angular coordinates type \'\' (default): (x, x' = dx/ds, y, y' = dy/ds, z, pz) 'ZGOUBI':     (x, x' = dx/ds,
         y, y' = dy/ds, dt = -z / (beta * c), pz)
+    """
+
+def capillary_photon_hit_spot_calc(photon: _pybmad.PhotonTrackStruct, ele: _pybmad.EleStruct) -> None:
+    """
+    Routine to interpolate to where the photon has hit the capillary.
+
+    Parameters
+    ----------
+    photon : PhotonTrackStruct
+        Input coordinates.
+        This parameter is an input/output and is modified in-place.
+        As an output, photon: Photon at capillary wall
+
+    ele : EleStruct
+        Capillary element
+    """
+
+def capillary_propagate_photon_a_step(photon: _pybmad.PhotonTrackStruct, ele: _pybmad.EleStruct, dlen: float) -> bool:
+    """
+    Routine to track a photon a step of a given length
+
+    Parameters
+    ----------
+    photon : PhotonTrackStruct
+        Input coordinates.
+        This parameter is an input/output and is modified in-place.
+        As an output, photon: Output coordinates.
+
+    ele : EleStruct
+        Capillary element
+
+    dlen : float
+        Length to propagate a photon. The actual propagation length may be less if stop_at_boundary is True.
+
+    Returns
+    -------
+    stop_at_boundary : bool
+        If True then stop at cross-section boundary.
+    """
+
+def capillary_reflect_photon(photon: _pybmad.PhotonTrackStruct, ele: _pybmad.EleStruct) -> None:
+    """
+    Routine to reflect a photon from the capillary wall.
+
+    Parameters
+    ----------
+    photon : PhotonTrackStruct
+        Input coordinates.
+        This parameter is an input/output and is modified in-place.
+        As an output, photon: Output coordinates.
+
+    ele : EleStruct
+        Capillary element
+    """
+
+def capillary_track_photon_to_wall(photon: _pybmad.PhotonTrackStruct, ele: _pybmad.EleStruct) -> None:
+    """
+    Routine to track through a capillary.
+
+    Parameters
+    ----------
+    photon : PhotonTrackStruct
+        Input coordinates.
+        This parameter is an input/output and is modified in-place.
+        As an output, photon: Output coordinates.
+
+    ele : EleStruct
+        Capillary element
     """
 
 def cbar_to_c(cbar_mat: Sequence[Sequence[float]], a: _pybmad.TwissStruct, b: _pybmad.TwissStruct) -> list[list[float]]:
@@ -2471,6 +2720,20 @@ def chrom_tune(lat: _pybmad.LatStruct, delta_e: float, target_x: float, target_y
         .false. if match successful, .true. if failed Fails if takes longer than 100 iterations. If it fails the
         sextupoles are set to the last value calculated. Note: This subroutine assumes the Twiss parameters have
         been computed.
+    """
+
+def cimp1(ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> _pybmad.IbsStruct:
+    """
+    This is an implementation of equations 34,38-40 from "Intrabeam
+    scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+    It is a modified version of the Piwinski IBS formulation.
+    The integral (34) is handled with a piecewise interpolation generated
+    in mathematica.  The interpolation is accurate beyond 1% through it's
+    effective range (.0001 - 3000).
+
+    This is the quickest of the three IBS formuations in this module.
+
+    rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
     """
 
 def classical_radius(species: int) -> float:
@@ -3608,6 +3871,16 @@ def coords_relative_to_floor(floor0: _pybmad.FloorPositionStruct, dr: Sequence[f
         Shifted reference frame.
     """
 
+def cos_phi(sigma: float, t: float, phi: float, d_param: _pybmad.DiffuseParamStruct) -> float:
+    """
+    computes  unnormalized cumulative distribution function in phi for a given x
+     polar angles relative to surface normal
+     azimuthal angle relative to plane of incidence (plane of incoming ray and surface normal)
+     1/y suppressed
+
+    Private routine to calculate integrated probability distribution in x = sin(graze_angle_out).
+    """
+
 def coulombfun(u: float, v: float, w: float, gam: float) -> float:
     """
     Wrapper for Fortran routine coulombfun
@@ -3936,6 +4209,66 @@ def crystal_attribute_bookkeeper(ele: _pybmad.EleStruct) -> None:
         Crystal element.
     """
 
+class CrystalDiffractionFieldCalc:
+    """crystal_diffraction_field_calc return type"""
+
+    @property
+    def e_field(self) -> float: ...
+
+    @property
+    def e_phase(self) -> float: ...
+
+    @property
+    def orbit_state(self) -> int: ...
+
+    @property
+    def dr(self) -> list[float]: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def crystal_diffraction_field_calc(cp: _pybmad.CrystalParamStruct, ele: _pybmad.EleStruct, thickness: float, param: _pybmad.LatParamStruct, p_factor: float, do_branch_calc: bool, follow_undiffracted: bool | None = None) -> CrystalDiffractionFieldCalc:
+    """
+    Routine to compute the photon field after reflection.
+
+    Parameters
+    ----------
+    cp : CrystalParamStruct
+        Crystal parameters.
+
+    ele : EleStruct
+        Crystal element.
+
+    thickness : float
+        Crystal thickness
+
+    param : LatParamStruct
+
+    p_factor : float
+        Polarization factor.
+
+    do_branch_calc : bool
+        Calculate probability of branching to alpha or beta branches?
+
+    follow_undiffracted : bool, optional
+        Used with mosaic crystals to calcuate undefracted channel. Default is False.
+
+    Returns
+    -------
+    e_field : float
+        Output field amplitude assuming initial field is 1.
+
+    e_phase : float
+        Field phase advance.
+
+    orbit_state : int
+        Set to lost$ if crystal is to thick to transmit a photon.
+
+    dr : 1D array of float (shape: 3)
+        (x,y,z) orbit change.
+    """
+
 def crystal_h_misalign(ele: _pybmad.EleStruct, orbit: _pybmad.CoordStruct, h_vec: Sequence[float]) -> None:
     """
     Routine reorient the crystal H vector due to local imperfections in the crystal lattice.
@@ -3974,6 +4307,67 @@ def crystal_type_to_crystal_params(ele: _pybmad.EleStruct) -> bool:
     -------
     err_flag : bool
         Set True if crystal type is unrecognized. False otherwise.
+    """
+
+def csr_and_sc_apply_kicks(ele: _pybmad.EleStruct, csr: _pybmad.CsrStruct, particle: _pybmad.CoordStructArray1D) -> None:
+    """
+    Routine to calculate the longitudinal coherent synchrotron radiation kick.
+
+    Parameters
+    ----------
+    ele : EleStruct
+        Element being tracked through.
+
+    csr : CsrStruct
+
+    particle : 1D array of CoordStruct
+        Particles to kick.
+        This parameter is an input/output and is modified in-place.
+        As an output, particle: Particles with kick applied.
+    """
+
+def csr_bin_kicks(ele: _pybmad.EleStruct, ds_kick_pt: float, csr: _pybmad.CsrStruct) -> bool:
+    """
+    Routine to cache intermediate values needed for the csr calculations.
+
+    Parameters
+    ----------
+    ele : EleStruct
+        Element being tracked through.
+
+    ds_kick_pt : float
+        Distance between the beginning of the element we are tracking through and the kick point (which is within
+        this element).
+
+    csr : CsrStruct
+
+    Returns
+    -------
+    err_flag : bool
+        Set True if there is an error. False otherwise
+    """
+
+def csr_bin_particles(ele: _pybmad.EleStruct, particle: _pybmad.CoordStructArray1D, err_flag: bool) -> _pybmad.CsrStruct:
+    """
+    Routine to bin the particles longitudinally in s.
+
+    To avoid noise in the calculation, every particle is considered to have a
+    triangular distribution with a base length  given by
+      space_charge_com%particle_bin_span * csr%dz_slice.
+    That is, particles will, in general, overlap multiple bins.
+
+    Parameters
+    ----------
+    ele : EleStruct
+        Element being tracked through.
+
+    particle : 1D array of CoordStruct
+        Array of particles Other:
+
+    Returns
+    -------
+    csr : CsrStruct
+        The bin structure.
     """
 
 def custom_attribute_ubound_index(ele_class: int) -> int:
@@ -4104,6 +4498,42 @@ def default_tracking_species(param: _pybmad.LatParamStruct) -> int:
     -------
     species : int
         Default species to be used for tracking.
+    """
+
+def deposit_particles(xa: _pybmad.RealArray1D, ya: _pybmad.RealArray1D, za: _pybmad.RealArray1D, qa: _pybmad.RealArray1D | None = None, total_charge: float | None = None, resize_mesh: bool | None = None, mesh_growth_factor: float | None = None, mesh_shrink_factor: float | None = None) -> _pybmad.Mesh3DStruct:
+    """
+    Deposits particle arrays onto mesh
+
+    Parameters
+    ----------
+    xa : 1D array of float
+        x coordinate array
+
+    ya : 1D array of float
+        y coordinate array
+
+    za : 1D array of float
+        z coordinate array
+
+    qa : 1D array of float, optional
+        charge coordinate array
+
+    total_charge : float, optional
+        total charge of particles, used only if qa is not present
+
+    resize_mesh : bool, optional
+        Set mesh bounds to fit bunch. default  : .true.
+
+    mesh_growth_factor : float, optional
+        Fractional padding when growing mesh (default: 0 = tight fit).
+
+    mesh_shrink_factor : float, optional
+        Fractional threshold for shrinking mesh (default: 0 = tight fit).
+
+    Returns
+    -------
+    mesh3d : Mesh3dStruct
+        .rho(:,:,:) .charge routine for charge deposition
     """
 
 def detector_pixel_pt(orbit: _pybmad.CoordStruct, ele: _pybmad.EleStruct) -> list[int]:
@@ -8026,6 +8456,48 @@ def gen_grad_field(deriv: _pybmad.RealArray1D, gg: _pybmad.GenGrad1Struct, rho: 
     field : 1D array of float (shape: 3)
     """
 
+class GetAstraFieldgridNameAndScaling:
+    """get_astra_fieldgrid_name_and_scaling return type"""
+
+    @property
+    def output_name(self) -> str: ...
+
+    @property
+    def field_scale(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def get_astra_fieldgrid_name_and_scaling(ele: _pybmad.EleStruct, name_indexx: _pybmad.StrIndexStruct, dimensions: int | None = None) -> GetAstraFieldgridNameAndScaling:
+    """
+    Subroutine to get a field grid filename and its scaling. Calls write_astra_field_grid_file.
+      If the field grid file does not exist, it is written.
+
+      Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+    Parameters
+    ----------
+    ele : EleStruct
+        element to make map
+
+    name_indexx : StrIndexStruct
+        contains field grid filenames
+        This parameter is an input/output and is modified in-place.
+        As an output, name_indexx: updated if new name is added
+
+    dimensions : int, optional
+        1 or 3 dimensions. Default: 1
+
+    Returns
+    -------
+    output_name : str
+        output filename.
+
+    field_scale : float
+        the scaling of the field grid
+    """
+
 def get_bl_from_fwhm(bound: float, args: Sequence[float]) -> float:
     """
     Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
@@ -8107,6 +8579,54 @@ def get_emit_from_sigma_mat(sigma_mat: Sequence[Sequence[float]], Nmat: Sequence
         Set to true if something went wrong.  Otherwise set to false.
     """
 
+class GetGptFieldgridNameAndScaling:
+    """get_gpt_fieldgrid_name_and_scaling return type"""
+
+    @property
+    def output_name(self) -> str: ...
+
+    @property
+    def field_scale(self) -> float: ...
+
+    @property
+    def ref_time(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def get_gpt_fieldgrid_name_and_scaling(ele: _pybmad.EleStruct, name_indexx: _pybmad.StrIndexStruct, dimensions: int | None = None) -> GetGptFieldgridNameAndScaling:
+    """
+    Subroutine to get a field grid filename and its scaling. Calls write_gpt_field_grid_file.
+      If the field grid file does not exist, it is written.
+
+      Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+    Parameters
+    ----------
+    ele : EleStruct
+        element to make map
+
+    name_indexx : StrIndexStruct
+        contains field grid filenames
+        This parameter is an input/output and is modified in-place.
+        As an output, name_indexx: updated if new name is added
+
+    dimensions : int, optional
+        1, 2, or 3 dimensions.
+
+    Returns
+    -------
+    output_name : str
+        output filename.
+
+    field_scale : float
+        the scaling of the field grid
+
+    ref_time : float
+        time that the field was evaluated at
+    """
+
 def get_list_of_names(ele: _pybmad.EleStruct, err_str: str, name_list: _pybmad.CharacterAlloc1D, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
     This subroutine is used by bmad_parser and bmad_parser2.
@@ -8165,6 +8685,46 @@ def get_next_word(word: str, delim_list: str, upper_case_word: bool | None = Non
 
     err_flag : bool, optional
         Set True if there is an error. False otherwise.
+    """
+
+class GetOpalFieldgridNameAndScaling:
+    """get_opal_fieldgrid_name_and_scaling return type"""
+
+    @property
+    def output_name(self) -> str: ...
+
+    @property
+    def field_scale(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def get_opal_fieldgrid_name_and_scaling(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, name_indexx: _pybmad.StrIndexStruct) -> GetOpalFieldgridNameAndScaling:
+    """
+    Subroutine to get a field grid filename and its scaling. Calls write_opal_field_grid_file.
+      If the field grid file does not exist, it is written
+
+    Parameters
+    ----------
+    ele : EleStruct
+        element to make map
+
+    param : LatParamStruct
+        Contains lattice information
+
+    name_indexx : StrIndexStruct
+        contains field grid filenames
+        This parameter is an input/output and is modified in-place.
+        As an output, name_indexx: updated if new name is added
+
+    Returns
+    -------
+    output_name : str
+        output filename.
+
+    field_scale : float
+        the scaling of the field grid
     """
 
 def get_overlay_group_names(ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, pele: _pybmad.ParserEleStruct, delim: str, delim_found: bool, is_control_var_list: bool, err_flag: bool, names_out: _pybmad.CharacterAlloc1D | None = None) -> None:
@@ -8459,6 +9019,46 @@ def has_orientation_attributes(ele: _pybmad.EleStruct) -> bool:
         True if ele has orientation attributes. False otherwise.
     """
 
+def hdf5_read_beam(file_name: str, beam: _pybmad.BeamStruct, error: bool, ele: _pybmad.EleStruct | None = None, pmd_header: _pybmad.PmdHeaderStruct | None = None, print_mom_shift_warning: bool | None = None, conserve_momentum: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine hdf5_read_beam
+
+    Parameters
+    ----------
+    file_name : str
+
+    beam : BeamStruct
+
+    error : bool
+
+    ele : EleStruct, optional
+
+    pmd_header : PmdHeaderStruct, optional
+
+    print_mom_shift_warning : bool, optional
+
+    conserve_momentum : bool, optional
+    """
+
+def hdf5_read_grid_field(file_name: str, ele: _pybmad.EleStruct, g_field: _pybmad.GridFieldStructArray1D, err_flag: bool, pmd_header: _pybmad.PmdHeaderStruct | None = None, combine: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine hdf5_read_grid_field
+
+    Parameters
+    ----------
+    file_name : str
+
+    ele : EleStruct
+
+    g_field : 1D array of GridFieldStruct
+
+    err_flag : bool
+
+    pmd_header : PmdHeaderStruct, optional
+
+    combine : bool, optional
+    """
+
 def hdf5_write_beam(file_name: str, bunches: _pybmad.BunchStructArray1D, append: bool, error: bool, lat: _pybmad.LatStruct | None = None, alive_only: bool | None = None) -> None:
     """
     Wrapper for Fortran routine hdf5_write_beam
@@ -8527,6 +9127,190 @@ def hwang_bend_edge_kick(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, 
         Propagate the transfer matrix? Default is False.
     """
 
+def i_csr(kick1: _pybmad.CsrKick1Struct, i_bin: int, csr: _pybmad.CsrStruct) -> None:
+    """
+    Routine to calculate the CSR kick integral (at y = 0)
+
+    Parameters
+    ----------
+    kick1 : CsrKick1Struct
+
+    i_bin : int
+        Bin index.
+
+    csr : CsrStruct
+    """
+
+def ibs1(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, rates: _pybmad.IbsStruct, i: int | None = None, s: float | None = None) -> None:
+    """
+    Calculates IBS growth rates at some location in a lattice.
+    The IBS rates are betatron growth rates.  That is, they are the rate of
+    change in sigma_x, sigma_y, and sigma_p.  The emittance growth
+    rate is twice the betatron growth rate.
+    1/T_emit = 2/T_betatron.
+    eg  emit(t) = emit_0 * exp(-2*t/T_betatron) because emit = sigma^2/beta
+
+     Available IBS formulas (ibs_sim_params%formula):
+       cimp - Completely Integrated Modified Piwinski
+       bjmt - Bjorken-Mtingwa formulation general to bunched beams (time consuming)
+       bane - Bane approximation of Bjorken-Mtingwa formulation
+       mpzt - Modified Piwinski with Zotter's Integral
+       mpxx - Modified Piwinski with a constant Coulomb log.
+       kubo - Kubo and Oide's sigma matrix-based
+
+    Either i or s, but not both, must be specified.
+    """
+
+def ibs_blowup1turn(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct) -> None:
+    """
+    Updates beam emittances with effect of IBS for
+    one turn on the lattice.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice
+
+    ibs_sim_params : IbsSimParamStruct
+        Parameters for calculation of IBS rates
+    """
+
+class IbsDeltaCalc:
+    """ibs_delta_calc return type"""
+
+    @property
+    def delta_sigma_energy(self) -> float: ...
+
+    @property
+    def delta_emit_a(self) -> float: ...
+
+    @property
+    def delta_emit_b(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def ibs_delta_calc(lat: _pybmad.LatStruct, ix: int, ibs_sim_params: _pybmad.IbsSimParamStruct, sigma_mat: Sequence[Sequence[float]] | None = None) -> IbsDeltaCalc:
+    """
+    Calculates change in energy spread and emittances due to IBS for a single element.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice for tracking
+
+    ix : int
+        index of element to use: lat.ele(ix)
+
+    ibs_sim_params : IbsSimParamStruct
+        parameters for calculation of IBS rates.
+
+    sigma_mat : 2D array of float (shape: 6,6), optional
+        Beam's sigma matrix. Required for 'kubo' method.
+
+    Returns
+    -------
+    delta_sigma_energy : float, optional
+        change in energy spread in eV
+
+    delta_emit_a : float, optional
+        change in a-mode emittance (geometric)
+
+    delta_emit_b : float, optional
+        change in b-mode emittance (geometric)
+    """
+
+def ibs_equib_der(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, inmode: _pybmad.NormalModesStruct, granularity: float) -> _pybmad.NormalModesStruct:
+    """
+    Computes equilibrium beam sizes by calculating emittance growth rates from IBS growth rates.
+    Steps beam size through time till equilibrium is reached.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice for tracking
+
+    ibs_sim_params : IbsSimParamStruct
+        parameters for IBS calculation
+
+    inmode : NormalModesStruct
+        natural beam parameters
+
+    granularity : float
+        Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter. Set to -1 to calculate
+        element-by-element.
+
+    Returns
+    -------
+    ibsmode : NormalModesStruct
+        beam parameters after IBS effects
+    """
+
+def ibs_equib_rlx(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, inmode: _pybmad.NormalModesStruct, ratio: float, initial_blow_up: Sequence[float], granularity: float) -> _pybmad.NormalModesStruct:
+    """
+    Iterates to equilibrium beam conditions using relaxation method
+
+    This method requires that the initial beam size be larger than the equilibrium beam size.
+    An initial_blow_up of 3 to 5 is a good place to start.
+
+    See ibs_rates subroutine for available IBS rate formulas.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice for tracking
+
+    ibs_sim_params : IbsSimParamStruct
+        parameters for IBS calculation
+
+    inmode : NormalModesStruct
+        natural beam parameters
+
+    ratio : float
+        Ratio of vert_emit_coupling / vert_emit_total
+
+    initial_blow_up : 1D array of float (shape: 3)
+        Factor multiplied to all thre bunch dimensions prior to starting iteration.
+
+    granularity : float
+        Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter.
+
+    Returns
+    -------
+    ibsmode : NormalModesStruct
+        beam parameters after IBS effects
+    """
+
+def ibs_lifetime(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, maxratio: _pybmad.IbsMaxratioStruct, granularity: float) -> _pybmad.IbsLifetimeStruct:
+    """
+    This module computes the beam lifetime due to
+    the diffusion process according to equation 12
+    from page 129 of The Handbook for Accelerator
+    Physics and Engineering 2nd edition.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice for tracking.
+
+    ibs_sim_params : IbsSimParamStruct
+        parameters for calculation of IBS rates.
+
+    maxratio : IbsMaxratioStruct
+        Ax,y,p/sigma_x,y,p where Ax,y,p is the maximum sigma.  Note that this quantity is just the ratio, not the
+        ratio squared.  For example, maxratio%Rx = 1.1 says that the maximum acceptable beamsize is 10% larger
+        than the beamsize before IBS effects.
+
+    granularity : float
+        Step size when slicing lattice.  -1 for element-by-element.
+
+    Returns
+    -------
+    lifetime : IbsLifetimeStruct
+        structure returning IBS lifetimes
+    """
+
 def ibs_matrix_c(sigma_mat: Sequence[Sequence[float]], tail_cut: bool, tau: float, energy: float, n_part: float, species: int) -> list[list[float]]:
     """
     Wrapper for Fortran routine ibs_matrix_c
@@ -8548,6 +9332,29 @@ def ibs_matrix_c(sigma_mat: Sequence[Sequence[float]], tail_cut: bool, tau: floa
     Returns
     -------
     ibs_mat : 2D array of float (shape: 6,6)
+    """
+
+def ibs_rates1turn(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, granularity: float) -> _pybmad.IbsStruct:
+    """
+    Calculates IBS risetimes for given lat
+    This is basically a front-end for the various formulas
+    available in this module of calculating IBS rates.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        lattice for tracking.
+
+    ibs_sim_params : IbsSimParamStruct
+        parameters for IBS calculation.
+
+    granularity : float
+        slice length.  -1 for element-by-element.
+
+    Returns
+    -------
+    rates1turn : IbsStruct
+        ibs rates for onr turn on the lattice.
     """
 
 def igfcoulombfun(u: float, v: float, w: float, gam: float, dx: float, dy: float, dz: float) -> float:
@@ -8648,6 +9455,17 @@ def igfezfun(u: float, v: float, w: float, gam: float, dx: float, dy: float, dz:
     Returns
     -------
     res : float
+    """
+
+def image_charge_kick_calc(kick1: _pybmad.CsrKick1Struct, csr: _pybmad.CsrStruct) -> None:
+    """
+    Routine to calculate the image charge kick.
+
+    Parameters
+    ----------
+    kick1 : CsrKick1Struct
+
+    csr : CsrStruct
     """
 
 class InitAttributeName1:
@@ -9110,6 +9928,28 @@ def init_ele(key: int | None = None, sub_key: int | None = None, ix_ele: int | N
         Initialized element.
     """
 
+def init_fringe_info(ele: _pybmad.EleStruct, orbit: _pybmad.CoordStruct | None = None, leng_sign: int | None = None) -> _pybmad.FringeFieldInfoStruct:
+    """
+    Wrapper for Fortran routine init_fringe_info
+
+    Parameters
+    ----------
+    ele : EleStruct
+        Lattice element associated with fringe_info.
+
+    orbit : CoordStruct, optional
+        Particle position. Must be present for a full init. If not full init only fringe_info.has_fringe will be
+        set.
+
+    leng_sign : int, optional
+        Is element length positive (+1) or negative (-1)? Must be present if orbit is present.
+
+    Returns
+    -------
+    fringe_info : FringeFieldInfoStruct
+        Fringe information.
+    """
+
 def init_gg_taylor_series(gg_taylor: _pybmad.GgTaylorStruct, n_term: int, save_old: bool | None = None) -> None:
     """
     Subroutine to initialize a Bmad gg_taylor series (6 of these series make
@@ -9416,6 +10256,46 @@ def integration_timer(a_fibre: _pybmad.Fibre, orbit: Sequence[float], orbit_max:
     orbit_max : 1D array of float (shape: 6)
 
     tol_dp : float
+    """
+
+class InterpolateField:
+    """interpolate_field return type"""
+
+    @property
+    def E(self) -> list[float]: ...
+
+    @property
+    def B(self) -> list[float]: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def interpolate_field(x: float, y: float, z: float, mesh3d: _pybmad.Mesh3DStruct) -> InterpolateField:
+    """
+    Interpolate field on mesh
+
+    Parameters
+    ----------
+    x : float
+        coordinates to interpolate
+
+    y : float
+        coordinates to interpolate
+
+    z : float
+        coordinates to interpolate
+
+    mesh3d : Mesh3dStruct
+        contains efield, bfield
+
+    Returns
+    -------
+    E : 1D array of float (shape: 3), optional
+        interpolated electric field at x, y, z
+
+    B : 1D array of float (shape: 3), optional
+        interpolated magnetic field at x, y, z
     """
 
 def ion_kick(orbit: _pybmad.CoordStruct, r_beam: Sequence[float], n_beam_part: float, a_twiss: _pybmad.TwissStruct, b_twiss: _pybmad.TwissStruct, sig_ee: float) -> list[float]:
@@ -10034,6 +10914,21 @@ def low_energy_z_correction(orbit: _pybmad.CoordStruct, ele: _pybmad.EleStruct, 
     -------
     dz : float
         Change in z.
+    """
+
+def lsc_kick_params_calc(ele: _pybmad.EleStruct, csr: _pybmad.CsrStruct) -> None:
+    """
+    Routine to cache intermediate values needed for the lsc calculation.
+    This routine is not for image currents.
+
+    Parameters
+    ----------
+    ele : EleStruct
+        Element to set up cache for.
+
+    csr : CsrStruct
+        This parameter is an input/output and is modified in-place.
+        As an output, csr: Binned particle averages.
     """
 
 def mad_add_offsets_and_multipoles(ele: _pybmad.EleStruct) -> _pybmad.MadMapStruct:
@@ -11382,6 +12277,33 @@ def momentum_compaction(branch: _pybmad.BranchStruct) -> float:
         Momentum compaction.
     """
 
+def mpxx1(ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> _pybmad.IbsStruct:
+    """
+    Modified Piwinski, further modified to treat Coulomb Log
+    in the same manner as Bjorken-Mtingwa, CIMP, Bane, Kubo & Oide, etc.
+    This formula is derived in Section 2.8.4 of Michael Ehrlichman's Graduate Thesis.
+    """
+
+def mpzt1(ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> _pybmad.IbsStruct:
+    """
+    Modified Piwinski with Zotter's integral.  This is Piwinski's original derivation,
+    generalized to take the derivatives of the optics functions.  Also, Piwinski's
+    original cumbersome triple integral is reaplaced by Zotter's single integral.  Zotter's
+    integral is exact, and not an approximation.
+
+    rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
+    """
+
+def multi_coulomb_log(ibs_sim_params: _pybmad.IbsSimParamStruct, ele: _pybmad.EleStruct, coulomb_log: float, n_part: float) -> None:
+    """
+    Calculates the value of the Coulomb log using various methods.
+
+    ibs_sim_params%clog_to_use == 1   Classic coulomb log (pi/2 max scattering angle)
+    ibs_sim_params%clog_to_use == 2   Integral based tail-cut prescribed by Raubenheimer.
+    ibs_sim_params%clog_to_use == 3   Bane tail cut. 1 event/part/damping period.
+    ibs_sim_params%clog_to_use == 4   Kubo and Oide tail cut. Used by CesrTA publications.
+    """
+
 class MultiTurnTrackingAnalysis:
     """multi_turn_tracking_analysis return type"""
 
@@ -11460,6 +12382,21 @@ def multilayer_type_to_multilayer_params(ele: _pybmad.EleStruct) -> bool:
         Set True if multilayer type is unrecognized. False otherwise.
     """
 
+def multipass_all_info(lat: _pybmad.LatStruct) -> _pybmad.MultipassAllInfoStruct:
+    """
+    Wrapper for Fortran routine multipass_all_info
+
+    Parameters
+    ----------
+    lat : LatStruct
+        Lattice
+
+    Returns
+    -------
+    info : MultipassAllInfoStruct
+        Multipass information.
+    """
+
 class MultipassChain:
     """multipass_chain return type"""
 
@@ -11499,6 +12436,19 @@ def multipass_chain(ele: _pybmad.EleStruct, use_super_lord: bool | None = None) 
 
     chain_ele : 1D array of ElePointerStruct, optional
         pointers to the elements of the chain. Note: chain_ele(ix_pass).ele => ele
+    """
+
+def multipass_region_info(lat: _pybmad.LatStruct, mult_lat: _pybmad.MultipassRegionLatStruct, m_info: _pybmad.MultipassAllInfoStruct) -> None:
+    """
+    Wrapper for Fortran routine multipass_region_info
+
+    Parameters
+    ----------
+    lat : LatStruct
+
+    mult_lat : MultipassRegionLatStruct
+
+    m_info : MultipassAllInfoStruct
     """
 
 class Multipole1AbToKt:
@@ -12855,6 +13805,13 @@ def parse_integer_list2(err_str: str, lat: _pybmad.LatStruct, int_array: _pybmad
         Set True if everything is ok.
     """
 
+def parse_line_or_list(sequence: _pybmad.SeqStructAlloc1D, iseq_tot: int, lat: _pybmad.LatStruct, top_level: bool) -> None:
+    """
+    Subroutine to parse a sequence.
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+    """
+
 class ParseRealList:
     """parse_real_list return type"""
 
@@ -12991,6 +13948,16 @@ def parser2_add_superimpose(lat: _pybmad.LatStruct, super_ele_in: _pybmad.EleStr
     in_lat : LatStruct, optional
     """
 
+def parser_add_branch(fork_ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, sequence: _pybmad.SeqStructAlloc1D, seq_name: _pybmad.CharacterAlloc1D, seq_indexx: _pybmad.IntAlloc1D, no_end_marker: bool, in_lat: _pybmad.LatStruct, plat: _pybmad.ParserLatStruct, created_new_branch: bool, new_branch_name: str | None = None) -> None:
+    """
+    seq_name, seq_indexx, no_end_marker, in_lat, plat, created_new_branch)
+
+    Subroutine to do line expansion.
+
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+    """
+
 def parser_add_constant(word: str, lat: _pybmad.LatStruct, redef_is_error: bool) -> None:
     """
     Wrapper for Fortran routine parser_add_constant
@@ -13004,9 +13971,179 @@ def parser_add_constant(word: str, lat: _pybmad.LatStruct, redef_is_error: bool)
     redef_is_error : bool
     """
 
+class ParserAddLords:
+    """parser_add_lords return type"""
+
+    @property
+    def lat(self) -> _pybmad.LatStruct: ...
+
+    @property
+    def check_lat(self) -> _pybmad.LatStruct: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def parser_add_lords(lord_lat: _pybmad.LatStruct, n_ele_max: int, plat: _pybmad.ParserLatStruct) -> ParserAddLords:
+    """
+    Subroutine to add overlay, group, and girder lords to the lattice.
+    For overlays and groups: If multiple elements have the same name then
+    use all of them.
+
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+
+    Parameters
+    ----------
+    lord_lat : LatStruct
+        List of lord elements to add to lat.
+
+    n_ele_max : int
+        lord elements in lord_lat are in range [1:n_ele_max].
+
+    plat : ParserLatStruct
+        Extra info needed to place the lord elements
+
+    Returns
+    -------
+    lat : LatStruct
+        Lattice to add lord elements to.
+
+    check_lat : LatStruct, optional
+        If slave elements of a lord are not in lat but are in check_lat, do not issue error message about slave
+        elements not found.
+    """
+
+def parser_add_superimpose(branch: _pybmad.BranchStruct, super_ele_in: _pybmad.EleStruct, pele: _pybmad.ParserEleStruct, in_lat: _pybmad.LatStruct, plat: _pybmad.ParserLatStruct) -> None:
+    """
+    Wrapper for Fortran routine parser_add_superimpose
+
+    Parameters
+    ----------
+    branch : BranchStruct
+
+    super_ele_in : EleStruct
+
+    pele : ParserEleStruct
+
+    in_lat : LatStruct
+
+    plat : ParserLatStruct
+    """
+
 def parser_call_check(word: str, ix_word: int, delim: str, delim_found: bool, call_found: bool, err_flag: bool | None = None) -> None:
     """
     Routine to check if there is a "call::XXX" construct in the input stream.
+    """
+
+def parser_debug_print_info(lat: _pybmad.LatStruct, debug_line: str, sequence: _pybmad.SeqStructArray1D | None = None) -> None:
+    """
+    Subroutine to remove all null_ele elements.
+
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+    """
+
+def parser_error(what1: str, what2: str | None = None, what3: str | None = None, what4: str | None = None, seq: _pybmad.SeqStruct | None = None, pele: _pybmad.ParserEleStruct | None = None, stop_here: bool | None = None, level: int | None = None, r_array: _pybmad.RealArray1D | None = None, i_array: _pybmad.IntArray1D | None = None) -> None:
+    """
+    Routine to print an error message generated when parsing a lattice.
+
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+
+    Parameters
+    ----------
+    what1 : str
+        First line in error message.
+
+    what2 : str, optional
+        Second line in error message.
+
+    what3 : str, optional
+        Third line in error message.
+
+    what4 : str, optional
+        Fourth line in error message.
+
+    seq : SeqStruct, optional
+        Used when error is generated during reading of a lattice file. Contains information such as file name, and
+        line number where error was detected.
+
+    pele : ParserEleStruct, optional
+        Used when error is associated with a lattice element. Contains information on the lattice element.
+
+    stop_here : bool, optional
+        If present and True then immediately stop. Used with severe errors.
+
+    level : int, optional
+        Possibilities are:
+
+    r_array : 1D array of float, optional
+        Real numbers to be encoded in error message. See out_io doc.
+
+    i_array : 1D array of int, optional
+        Integer numbers to be encoded in error message. See out_io doc.
+    """
+
+class ParserExpandLine:
+    """parser_expand_line return type"""
+
+    @property
+    def n_ele_expand(self) -> int: ...
+
+    @property
+    def expanded_line(self) -> _pybmad.BaseLineEleStructAlloc1D: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def parser_expand_line(i_lev: int, line_name: str, sequence: _pybmad.SeqStructAlloc1D, seq_name: _pybmad.CharacterAlloc1D, seq_indexx: _pybmad.IntAlloc1D, no_end_marker: bool, lat: _pybmad.LatStruct | None = None, in_lat: _pybmad.LatStruct | None = None) -> ParserExpandLine:
+    """
+    seq_name, seq_indexx, no_end_marker, n_ele_expand, lat, in_lat, expanded_line)
+
+    Subroutine to do line expansion.
+
+    This subroutine is used by bmad_parser and bmad_parser2.
+    This subroutine is not intended for general use.
+
+    Note: Either lat and in_lat must be present or expanded_line must be present.
+
+    Parameters
+    ----------
+    i_lev : int
+        Subsequence level. 1 => Root level.
+
+    line_name : str
+        Root line to expand.
+
+    sequence : 1D array of SeqStruct
+        Array of sequencies.
+
+    seq_name : 1D array of str
+        Array of sequence names.
+
+    seq_indexx : 1D array of int
+        Index array for the sequence names.
+
+    no_end_marker : bool
+        Put a marker named "end" at the end of the branch?
+
+    lat : LatStruct, optional
+        Lattice to put the expanded line
+        This parameter is an input/output and is modified in-place.
+        As an output, lat: Lattice with new line. Except if expanded_line is present.
+
+    in_lat : LatStruct, optional
+        Lattice with array of defined elements.
+
+    Returns
+    -------
+    n_ele_expand : int
+        Number of elements in the finished line.
+
+    expanded_line : 1D array of BaseLineEleStruct, optional
+        If present, lat argument will be ignored and the expanded line will be put into expanded_line.
     """
 
 class ParserFastComplexRead:
@@ -13536,6 +14673,69 @@ def photon_add_to_detector_statistics(orbit0: _pybmad.CoordStruct, orbit: _pybma
     iy_pt : int, optional
         Index of upgraded ele.photon.surface.grid.pt(:,:) point. These arguments are not set if the pixel_pt
         argument is present.
+    """
+
+class PhotonDiffuseScattering:
+    """photon_diffuse_scattering return type"""
+
+    @property
+    def graze_angle_out(self) -> float: ...
+
+    @property
+    def phi_out(self) -> float: ...
+
+    @property
+    def diffuse_param(self) -> _pybmad.DiffuseParamStruct: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def photon_diffuse_scattering(graze_angle_in: float, energy: float, surface: _pybmad.PhotonReflectSurfaceStruct) -> PhotonDiffuseScattering:
+    """
+    Routine to simulate the diffuse scattering of photons. The outgoing angles are
+    choosen using the Dugan distribution.
+
+    Also see: photon_reflection.
+    Use photon_reflection_std_surface_init or read_surface_reflection_file to get surface info.
+
+    Parameters
+    ----------
+    graze_angle_in : float
+        Incident grazing (not polar) angle in radians.
+
+    energy : float
+        Photon energy in eV.
+
+    surface : PhotonReflectSurfaceStruct
+        surface info
+
+    Returns
+    -------
+    graze_angle_out : float
+        graze_angle in radians.
+
+    phi_out : float
+        Azimuthal angle in radians.
+
+    diffuse_param : DiffuseParamStruct, optional
+        Internal parameters used in the calculation. This is used for diagnostics and is not used in standard
+        simulations.
+    """
+
+def photon_read_spline(spline_dir: str) -> _pybmad.PhotonInitSplinesStruct:
+    """
+    Routine to initialize a photon using a set of spline fits.
+
+    Parameters
+    ----------
+    spline_dir : str
+        Root directory for the spline fits.
+
+    Returns
+    -------
+    splines : PhotonInitSplinesStruct
+        Spline structure
     """
 
 class PhotonReflection:
@@ -14745,6 +15945,25 @@ def polar_to_vec(polar: _pybmad.SpinPolarStruct) -> list[float]:
         Real(3)
     """
 
+def print_mesh3d(mesh3d: _pybmad.Mesh3DStruct) -> None:
+    """
+    Wrapper for Fortran routine print_mesh3d
+
+    Parameters
+    ----------
+    mesh3d : Mesh3dStruct
+    """
+
+def prob_x_diffuse(x: float, d_param: _pybmad.DiffuseParamStruct, surface: _pybmad.PhotonReflectSurfaceStruct) -> float:
+    """
+    Contained routine to calculate integrated probability distribution in x = sin(graze_angle_out).
+
+    Parameters
+    ----------
+    x : float
+        sin(graze_angle_out)
+    """
+
 class ProjectEmitToXyz:
     """project_emit_to_xyz return type"""
 
@@ -14797,6 +16016,25 @@ def project_emit_to_xyz(ring: _pybmad.LatStruct, ix: int, mode: _pybmad.NormalMo
 
     sigma_z : float
         projected longitudinal beamsize
+    """
+
+def propagate_part_way(orb_start: _pybmad.CoordStruct, param: _pybmad.LatParamStruct, pt: _pybmad.RadIntTrackPointStruct, info: _pybmad.RadIntInfoStruct, z_here: float, runt: _pybmad.EleStruct) -> None:
+    """
+    Wrapper for Fortran routine propagate_part_way
+
+    Parameters
+    ----------
+    orb_start : CoordStruct
+
+    param : LatParamStruct
+
+    pt : RadIntTrackPointStruct
+
+    info : RadIntInfoStruct
+
+    z_here : float
+
+    runt : EleStruct
     """
 
 def psi_prime_sca(t: float, p: float, args: Sequence[float]) -> float:
@@ -14957,6 +16195,18 @@ def ptc_emit_calc(ele: _pybmad.EleStruct, sigma_mat: Sequence[Sequence[float]]) 
         Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
     """
 
+def ptc_kill_map_with_radiation(rad_map: _pybmad.PtcRadMapStruct) -> None:
+    """
+    Routine to kill a binary file containing a ptc_rad_map_struct map
+
+    Parameters
+    ----------
+    rad_map : PtcRadMapStruct
+        Map with radiation included.
+        This parameter is an input/output and is modified in-place.
+        As an output, rad_map: Deallocated map.
+    """
+
 def ptc_layouts_resplit(dKL_max: float, l_max: float, l_max_drift_only: bool, bend_dorb: float, sex_dx: float, even: bool | None = None, crossover: Sequence[int] | None = None, crossover_wiggler: Sequence[int] | None = None) -> None:
     """
     even, crossover, crossover_wiggler)
@@ -15001,6 +16251,21 @@ def ptc_layouts_resplit(dKL_max: float, l_max: float, l_max_drift_only: bool, be
 
     crossover_wiggler : 1D array of int (shape: 2), optional
         crossover for wiggler elements.
+    """
+
+def ptc_linear_isf_calc(branch: _pybmad.BranchStruct) -> _pybmad.LinearEleIsfStructAlloc1D:
+    """
+    Wrapper for Fortran routine ptc_linear_isf_calc
+
+    Parameters
+    ----------
+    branch : BranchStruct
+        Lattice branch to analyze.
+
+    Returns
+    -------
+    ele_isf : 1D array of LinearEleIsfStruct
+        ISF at every element.
     """
 
 def ptc_one_turn_mat_and_closed_orbit_calc(branch: _pybmad.BranchStruct, pz: float | None = None) -> None:
@@ -15069,6 +16334,45 @@ def ptc_read_flat_file(flat_file: _pybmad.CharacterAlloc1D, create_end_marker: b
         If present then setup a Bmad lattice.
     """
 
+class PtcReadMapWithRadiation:
+    """ptc_read_map_with_radiation return type"""
+
+    @property
+    def rad_map(self) -> _pybmad.PtcRadMapStruct: ...
+
+    @property
+    def err_flag(self) -> bool: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def ptc_read_map_with_radiation(file_name: str | None = None, file_unit: int | None = None) -> PtcReadMapWithRadiation:
+    """
+    Routine to read a binary file containing a ptc_rad_map_struct map
+
+    Either file_name or file_unit must be present but not both.
+    File_unit is used when there are multiple maps in a file.
+    If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+    and to close the file afterwards.
+
+    Parameters
+    ----------
+    file_name : str, optional
+        Name of binary file.
+
+    file_unit : int, optional
+        File unit number read from.
+
+    Returns
+    -------
+    rad_map : PtcRadMapStruct
+        Map with radiation included.
+
+    err_flag : bool
+        Set True if there is a read error.
+    """
+
 def ptc_set_rf_state_for_c_normal(nocavity: bool) -> None:
     """
     Wrapper for Fortran routine ptc_set_rf_state_for_c_normal
@@ -15083,6 +16387,66 @@ def ptc_set_taylor_order_if_needed() -> None:
     """
     Routine to see if the taylor_order for PTC needs to be set/changed.
     For example, for a change in bmad_com%taylor_order.
+    """
+
+class PtcSetupMapWithRadiation:
+    """ptc_setup_map_with_radiation return type"""
+
+    @property
+    def rad_map(self) -> _pybmad.PtcRadMapStruct: ...
+
+    @property
+    def err_flag(self) -> bool: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def ptc_setup_map_with_radiation(ele1: _pybmad.EleStruct, ele2: _pybmad.EleStruct | None = None, map_order: int | None = None, include_damping: bool | None = None, create_symplectic_map: bool | None = None, orbit1: _pybmad.CoordStruct | None = None) -> PtcSetupMapWithRadiation:
+    """
+    create_symplectic_map, orbit1, err_flag)
+
+    Routine to construct a map including radiation damping and excitation.
+    Note: The setting of bmad_com%radiation_damping_on will determine if damping is included in the map.
+
+    ele1/ele2 must have an associated PTC layout (which can be constructed by calling lat_to_ptc_layout).
+
+    To track after calling this routine track by calling ptc_track_with_radiation.
+    To cleanup memory after using, call ptc_kill_map_with_radiation.
+    To save a map call ptc_write_map_with_radiation.
+    To read a saved map call ptc_read_map_with_radiation.
+    To set the random number seed call: ptc_ran_seed_put.
+
+    Parameters
+    ----------
+    ele1 : EleStruct
+        The map starts at the exit end of ele1.
+
+    ele2 : EleStruct, optional
+        The map ends at the exit end of ele2. If not present, the 1-turn map will be constructed.
+
+    map_order : int, optional
+        Order of the map. If not present or less than 1, the currently set order is used.
+
+    include_damping : bool, optional
+        If True (default), the map will be constructed with radiation damping included. If False, the map will not
+        be constructed with radiation dampling included.
+
+    create_symplectic_map : bool, optional
+        If False (default), create a Taylor map. If True, create a partially inverted map which can be
+        symplecitally tracked.
+
+    orbit1 : CoordStruct, optional
+        Orbit at ele1 about which the map is constructed. If not present then the orbit will be computed using PTC
+        tracking.
+
+    Returns
+    -------
+    rad_map : PtcRadMapStruct
+        Transport map.
+
+    err_flag : bool, optional
+        Set True if there is an error such as not associated PTC layout.
     """
 
 class PtcSpinCalc:
@@ -15114,6 +16478,21 @@ def ptc_spin_calc(ele: _pybmad.EleStruct, sigma_mat: Sequence[Sequence[float]]) 
 
     closed_orb : CoordStruct
         Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
+    """
+
+def ptc_spin_matching_calc(branch: _pybmad.BranchStruct) -> _pybmad.SpinMatchingStructAlloc1D:
+    """
+    Wrapper for Fortran routine ptc_spin_matching_calc
+
+    Parameters
+    ----------
+    branch : BranchStruct
+        Lattice branch to analyze.
+
+    Returns
+    -------
+    match_info : 1D array of SpinMatchingStruct
+        G-matrix and other stuff. The array will be allocated by this routine.
     """
 
 class PtcTrackAll:
@@ -15150,6 +16529,36 @@ def ptc_track_all(branch: _pybmad.BranchStruct, orbit: _pybmad.CoordStructAlloc1
 
     err_flag : bool, optional
         Set true if particle lost or error. False otherwise
+    """
+
+def ptc_track_map_with_radiation(orbit: _pybmad.CoordStruct, rad_map: _pybmad.PtcRadMapStruct, rad_damp: bool | None = None, rad_fluct: bool | None = None) -> None:
+    """
+    Routine to track through a map that includes radiation.
+
+    NOTE! Tracking without damping when the map was made with radiation (and vice versa)
+    will not give good results. So avoid this situation unless testing.
+
+    To construct the map, use the routine ptc_setup_map_with_radiation.
+    To cleanup memory after using, call ptc_kill_map_with_radiation.
+    To save a map call ptc_write_map_with_radiation.
+    To read a saved map call ptc_read_map_with_radiation.
+    To set the random number seed call: ptc_ran_seed_put.
+
+    Parameters
+    ----------
+    orbit : CoordStruct
+        Starting orbit.
+        This parameter is an input/output and is modified in-place.
+        As an output, orbit: Ending orbit after tracking through the map.
+
+    rad_map : PtcRadMapStruct
+        Map with radiation included.
+
+    rad_damp : bool, optional
+        Override the setting of bmad_com.radiation_damping_on.
+
+    rad_fluct : bool, optional
+        Override the setting of bmad_com.radiation_fluctuations_on
     """
 
 def ptc_transfer_map_with_spin(branch: _pybmad.BranchStruct, t_map: _pybmad.TaylorStructArray1D, s_map: _pybmad.TaylorStructArray1D, orb0: _pybmad.CoordStruct, ix1: int | None = None, ix2: int | None = None, one_turn: bool | None = None, unit_start: bool | None = None) -> bool:
@@ -15191,6 +16600,36 @@ def ptc_transfer_map_with_spin(branch: _pybmad.BranchStruct, t_map: _pybmad.Tayl
     -------
     err_flag : bool
         Set True if problem like number overflow, etc.
+    """
+
+def ptc_write_map_with_radiation(rad_map: _pybmad.PtcRadMapStruct, file_name: str | None = None, file_unit: int | None = None) -> None:
+    """
+    Routine to create or append to a binary file containing a ptc_rad_map_struct map.
+
+    Either file_name or file_unit must be present but not both.
+    If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+    and to close the file afterwards.
+
+    Parameters
+    ----------
+    rad_map : PtcRadMapStruct
+        Map with radiation included.
+
+    file_name : str, optional
+        Name of binary file to create.
+
+    file_unit : int, optional
+        File unit number to append to.
+    """
+
+def ptwo(sigma: float, t: float, phi: float, d_param: _pybmad.DiffuseParamStruct) -> float:
+    """
+    unnormalized two-dimensional probability distribution in x and phi
+    polar angles relative to surface normal
+    azimuthal angle relative to plane of incidence (plane of incoming ray and surface normal)
+    1/y suppressed
+
+    Private routine.
     """
 
 def pwd_mat(lat: _pybmad.LatStruct, t6: Sequence[Sequence[float]], inductance: float, sig_z: float) -> list[list[float]]:
@@ -16051,6 +17490,9 @@ def reallocate_expression_stack(stack: _pybmad.ExpressionAtomStructAlloc1D, n: i
         If present and False then the size of the output array is permitted to be larger than n. Default is True.
     """
 
+def reallocate_sequence(sequence: _pybmad.SeqStructAlloc1D, n_seq: int) -> None:
+    """No docstring available."""
+
 def rel_tracking_charge_to_mass(orbit: _pybmad.CoordStruct, ref_species: int) -> float:
     """
     Wrapper for Fortran routine rel_tracking_charge_to_mass
@@ -16532,6 +17974,59 @@ def s_calc(lat: _pybmad.LatStruct) -> None:
     lat : LatStruct
     """
 
+def s_ref_to_s_chord(s_ref: float, eleinfo: _pybmad.CsrEleInfoStruct) -> float:
+    """
+    Routine to calculate s_chord given s_ref.
+
+    Parameters
+    ----------
+    s_ref : float
+        s-position along element ref coords.
+
+    eleinfo : CsrEleInfoStruct
+        Element info
+
+    Returns
+    -------
+    s_chord : float
+        s-position along centroid chord.
+    """
+
+class SSourceCalc:
+    """s_source_calc return type"""
+
+    @property
+    def err_flag(self) -> bool: ...
+
+    @property
+    def s_source(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def s_source_calc(kick1: _pybmad.CsrKick1Struct, csr: _pybmad.CsrStruct, dr_match: Sequence[float]) -> SSourceCalc:
+    """
+    Routine to calculate the distance between source and kick points.
+
+    Parameters
+    ----------
+    kick1 : CsrKick1Struct
+
+    csr : CsrStruct
+
+    dr_match : 1D array of float (shape: 3)
+        Discontinuity factor if there is a match element between source and kick elements.
+
+    Returns
+    -------
+    err_flag : bool
+        Set True if there is an error. Untouched otherwise.
+
+    s_source : float
+        source s-position.
+    """
+
 def sad_mult_hard_bend_edge_kick(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, particle_at: int, orbit: _pybmad.CoordStruct, mat6: Sequence[Sequence[float]] | None = None, make_matrix: bool | None = None) -> None:
     """
     Routine to track through the hard edge bend fringe field for a bend or sad_mult element.
@@ -16859,6 +18354,51 @@ def set_active_fixer(fixer: _pybmad.EleStruct, turn_on: bool | None = None) -> _
     -------
     orbit : CoordStruct, optional
         Load with stored fixer phase space and spin values.
+    """
+
+class SetBranchAndEleForOmp:
+    """set_branch_and_ele_for_omp return type"""
+
+    @property
+    def branch(self) -> _pybmad.BranchStruct | None: ...
+
+    @property
+    def ele0(self) -> _pybmad.EleStruct | None: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def set_branch_and_ele_for_omp(ix_lat: int, ele0_loc: _pybmad.LatEleLocStruct, lats: _pybmad.LatPointerStructArray1D, lat: _pybmad.LatStruct) -> SetBranchAndEleForOmp:
+    """
+    Routine to set branch and ele for the lattice to be used to track through.
+
+    Different lattices are used to avoid problems when there is ramping since ramping
+    will modify lattice element parameters.
+
+    Parameters
+    ----------
+    ix_lat : int
+        Lattice index.
+
+    ele0_loc : LatEleLocStruct
+        ele0 location in lattice.
+
+    lats : 1D array of LatPointerStruct
+        Pointers to lattices to track through.
+        This parameter is an input/output and is modified in-place.
+        As an output, lats: Properly initialized if needed.
+
+    lat : LatStruct
+        Original lattice.
+
+    Returns
+    -------
+    branch : BranchStruct, optional
+        Branch to track through
+
+    ele0 : EleStruct, optional
+        starting element for tracking.
     """
 
 def set_custom_attribute_name(custom_name: str, custom_index: int | None = None) -> bool:
@@ -17717,6 +19257,71 @@ def sort_complex_taylor_terms(complex_taylor_in: _pybmad.ComplexTaylorStruct) ->
     -------
     complex_taylor_sorted : ComplexTaylorStruct
         Sorted complex_taylor series.
+    """
+
+def space_charge_cathodeimages(mesh3d: _pybmad.Mesh3DStruct, direct_field_calc: bool | None = None, integrated_green_function: bool | None = None, image_method: int | None = None) -> None:
+    """
+    Wrapper for Fortran routine space_charge_cathodeimages
+
+    Parameters
+    ----------
+    mesh3d : Mesh3dStruct
+
+    direct_field_calc : bool, optional
+
+    integrated_green_function : bool, optional
+
+    image_method : int, optional
+    """
+
+def space_charge_freespace(mesh3d: _pybmad.Mesh3DStruct, direct_field_calc: bool | None = None, integrated_green_function: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine space_charge_freespace
+
+    Parameters
+    ----------
+    mesh3d : Mesh3dStruct
+
+    direct_field_calc : bool, optional
+
+    integrated_green_function : bool, optional
+    """
+
+def space_charge_rectpipe(mesh3d: _pybmad.Mesh3DStruct, apipe: float, bpipe: float, direct_field_calc: bool | None = None, integrated_green_function: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine space_charge_rectpipe
+
+    Parameters
+    ----------
+    mesh3d : Mesh3dStruct
+
+    apipe : float
+
+    bpipe : float
+
+    direct_field_calc : bool, optional
+
+    integrated_green_function : bool, optional
+    """
+
+def spin_depolarization_rate(branch: _pybmad.BranchStruct, match_info: _pybmad.SpinMatchingStructArray1D, rad_int_by_ele: _pybmad.RadIntAllEleStruct) -> float:
+    """
+    Wrapper for Fortran routine spin_depolarization_rate
+
+    Parameters
+    ----------
+    branch : BranchStruct
+        Lattice branch the beam is going through.
+
+    match_info : 1D array of SpinMatchingStruct
+
+    rad_int_by_ele : RadIntAllEleStruct
+        Element-by-element radiation integrals.
+
+    Returns
+    -------
+    depol_rate : float
+        Depolarization rate (1/sec). Will be positive.
     """
 
 class SpinDnDpzFromMat8:
@@ -19095,6 +20700,84 @@ def touschek_lifetime(mode: _pybmad.NormalModesStruct, lat: _pybmad.LatStruct) -
 
     lat : LatStruct
         Accelerator Lattice
+
+    Returns
+    -------
+    Tl : float
+        Touschek lifetime in seconds
+    """
+
+def touschek_lifetime_ele_by_ele(mode: _pybmad.NormalModesStruct, lat: _pybmad.LatStruct, momentum_aperture: _pybmad.MomentumApertureStructArray1D) -> float:
+    """
+    Calculates the touschek lifetime for a lattice by calling touschek_rate1
+    for each element the momentum_aperture array of momentum_aperture_structs.
+    This calculation is based on Piwinski 1998 "The Touschek Effect In
+    Strong Focusing Storage Rings".  This is the most general case, equation 31.
+    42.
+
+    A common way to call this function is to first populate mode using
+    radiation integrals.  If an ideal lattice is used, the vertical
+    emittance must also be set to a reasonable value.  If the vertical
+    emittance is due only to quantum excitation, then it will likely be
+    several orders of magnitude smaller than any real physical situation, in which
+    case the integral in this function will have problems converging.
+
+    In addition to setting mode, also set lat%param%n_part to the number of particles
+    per bunch.
+
+    This function assumes that the twiss parameters
+    been calculated, and that mode has been populated with emittance and bunch length.
+
+    Parameters
+    ----------
+    mode : NormalModesStruct
+        beam properties
+
+    lat : LatStruct
+        Lattice
+
+    momentum_aperture : 1D array of MomentumApertureStruct
+        ele-by-ele unsymmatric apertures
+
+    Returns
+    -------
+    Tl : float
+        Touschek lifetime in seconds
+    """
+
+def touschek_lifetime_with_aperture(mode: _pybmad.NormalModesStruct, lat: _pybmad.LatStruct, momentum_aperture: _pybmad.MomentumApertureStructArray1D) -> float:
+    """
+    Calculates the touschek lifetime for a lattice by calling touschek_rate1
+    for each s-coordinate in the momentum_aperture array of momentum_aperture_structs.
+    This calculation is based on Piwinski 1998 "The Touschek Effect In
+    Strong Focusing Storage Rings".  This is the most general case, equation 31.
+    42.
+
+    A common way to call this function is to first populate mode using
+    radiation integrals.  If an ideal lattice is used, the vertical
+    emittance must also be set to a reasonable value.  If the vertical
+    emittance is due only to quantum excitation, then it will likely be
+    several orders of magnitude smaller than any real physical situation, in which
+    case the integral in this function will have problems converging.
+
+    In addition to setting mode, also set lat%param%n_part to the number of particles
+    per bunch.
+
+    This function assumes that the twiss parameters
+    been calculated, and that mode has been populated with emittance and bunch length.
+
+    This function assumes that momentum_aperture(0)%s==0 and momentum_aperture(last)%s==lat%param%total_length.
+
+    Parameters
+    ----------
+    mode : NormalModesStruct
+        beam properties
+
+    lat : LatStruct
+        Lattice
+
+    momentum_aperture : 1D array of MomentumApertureStruct
+        loc-by-loc unsymmatric apertures
 
     Returns
     -------
@@ -22876,6 +24559,23 @@ def write_astra_bend(iu: int, strength: float, id: int, d1: Sequence[float], d2:
     d4 : 1D array of float (shape: 2)
     """
 
+def write_astra_ele(iu: int, ele: _pybmad.EleStruct, id: int, fieldgrid_names: _pybmad.StrIndexStruct | None = None, dimensions: int | None = None) -> None:
+    """
+    Wrapper for Fortran routine write_astra_ele
+
+    Parameters
+    ----------
+    iu : int
+
+    ele : EleStruct
+
+    id : int
+
+    fieldgrid_names : StrIndexStruct, optional
+
+    dimensions : int, optional
+    """
+
 class WriteAstraFieldGridFile:
     """write_astra_field_grid_file return type"""
 
@@ -22962,6 +24662,24 @@ def write_astra_field_grid_file_3d(base_filename: str, ele: _pybmad.EleStruct, d
         absolute maximum on-axis field found for element field scaling
 
     err : bool, optional
+        Set True if, say a file could not be opened.
+    """
+
+def write_astra_lattice_file(astra_file_unit: int, lat: _pybmad.LatStruct, astra_lattice_param: _pybmad.AstraLatticeParamStruct) -> bool:
+    """
+    Subroutine to write an Astra lattice file using the information in a lat_struct.
+
+    Parameters
+    ----------
+    astra_file_unit : int
+        unit number to write to
+
+    lat : LatStruct
+        Holds the lattice information.
+
+    Returns
+    -------
+    err : bool
         Set True if, say a file could not be opened.
     """
 
@@ -23128,6 +24846,52 @@ def write_bmad_lattice_file(bmad_file: str, lat: _pybmad.LatStruct, output_form:
         Set True if, say a file could not be opened.
     """
 
+def write_digested_bmad_file(digested_name: str, lat: _pybmad.LatStruct, n_files: int | None = None, file_names: _pybmad.CharacterAlloc1D | None = None, extra: _pybmad.ExtraParsingInfoStruct | None = None) -> bool:
+    """
+    Wrapper for Fortran routine write_digested_bmad_file
+
+    Parameters
+    ----------
+    digested_name : str
+        Name for the digested file.
+
+    lat : LatStruct
+        Input lat structure.
+
+    n_files : int, optional
+        Number of original files
+
+    file_names : 1D array of str, optional
+        Names of the original files used to create the lat structure.
+
+    extra : ExtraParsingInfoStruct, optional
+        Extra info that can be stored in the digested file.
+
+    Returns
+    -------
+    err_flag : bool, optional
+        Set True if there is a problem. EG: No write permission. Set False if everything is OK.
+    """
+
+def write_gpt_ele(iu: int, ele: _pybmad.EleStruct, name: str, dimensions: int, fieldgrid_names: _pybmad.StrIndexStruct | None = None, only_phasing: bool | None = None) -> None:
+    """
+    Wrapper for Fortran routine write_gpt_ele
+
+    Parameters
+    ----------
+    iu : int
+
+    ele : EleStruct
+
+    name : str
+
+    dimensions : int
+
+    fieldgrid_names : StrIndexStruct, optional
+
+    only_phasing : bool, optional
+    """
+
 class WriteGptFieldGridFile1d:
     """write_gpt_field_grid_file_1d return type"""
 
@@ -23276,6 +25040,24 @@ def write_gpt_field_grid_file_3d(base_filename: str, ele: _pybmad.EleStruct, dz:
 
     err : bool, optional
         Set True if, say a file could not be opened.
+    """
+
+def write_gpt_lattice_file(lat: _pybmad.LatStruct, gpt_lat_param: _pybmad.GptLatParamStruct) -> bool:
+    """
+    Subroutine to write a gpt lattice file using the information in a Bmad lattice.
+
+    Parameters
+    ----------
+    lat : LatStruct
+        Holds the lattice information.
+
+    gpt_lat_param : GptLatParamStruct
+        Parameters for constructing the lattice
+
+    Returns
+    -------
+    err : bool
+        Set True if there is an error
     """
 
 class WriteLatLine:

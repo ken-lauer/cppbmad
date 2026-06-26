@@ -569,6 +569,466 @@ void init_tricubic_cmplx_coef_struct(nb::module_ &m, nb::class_<TricubicCmplxCoe
 }
 
 // =============================================================================
+// tricubic_coef_struct
+void init_tricubic_coef_struct(nb::module_ &m, nb::class_<TricubicCoefStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::vector<std::vector<std::vector<double>>>>,
+             std::optional<std::vector<int>>>(),
+         nb::arg("coef") = nb::none(),
+         nb::arg("i_box") = nb::none()
+  )
+      .def_prop_rw(
+          "coef",
+          &TricubicCoefStruct::coef,
+          &TricubicCoefStruct::set_coef,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Coefs"
+      )
+      .def_prop_rw(
+          "i_box",
+          &TricubicCoefStruct::i_box,
+          &TricubicCoefStruct::set_i_box,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "index at lower box corner."
+      )
+
+      .def("__repr__", [](const TricubicCoefStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TricubicCoefStruct &self) {
+            return TricubicCoefStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TricubicCoefStruct &self, nb::dict &memo) { return TricubicCoefStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TricubicCoefStruct &self, const TricubicCoefStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TricubicCoefStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D TricubicCoefStruct arrays are not used in structs/routines
+  // 2D TricubicCoefStruct arrays are not used in structs/routines
+  // 3D TricubicCoefStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_ele_shape_input
+void init_tao_ele_shape_input(nb::module_ &m, nb::class_<TaoEleShapeInput> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<double>,
+             std::optional<std::string>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<double>>(),
+         nb::arg("ele_id") = nb::none(),
+         nb::arg("shape") = nb::none(),
+         nb::arg("color") = nb::none(),
+         nb::arg("size") = nb::none(),
+         nb::arg("label") = nb::none(),
+         nb::arg("draw") = nb::none(),
+         nb::arg("multi") = nb::none(),
+         nb::arg("line_width") = nb::none(),
+         nb::arg("offset") = nb::none()
+  )
+      .def_prop_rw(
+          "ele_id",
+          &TaoEleShapeInput::ele_id,
+          &TaoEleShapeInput::set_ele_id,
+          "element 'key::name' to match to."
+      )
+      .def_prop_rw("shape", &TaoEleShapeInput::shape, &TaoEleShapeInput::set_shape, "Shape to draw")
+      .def_prop_rw(
+          "color",
+          &TaoEleShapeInput::color,
+          &TaoEleShapeInput::set_color,
+          "Color of shape"
+      )
+      .def_prop_rw(
+          "size",
+          &TaoEleShapeInput::size,
+          &TaoEleShapeInput::set_size,
+          "plot vertical height"
+      )
+      .def_prop_rw(
+          "label",
+          &TaoEleShapeInput::label,
+          &TaoEleShapeInput::set_label,
+          "Can be: 'name', 's', 'none'"
+      )
+      .def_prop_rw("draw", &TaoEleShapeInput::draw, &TaoEleShapeInput::set_draw, "Draw the shape?")
+      .def_prop_rw(
+          "multi",
+          &TaoEleShapeInput::multi,
+          &TaoEleShapeInput::set_multi,
+          "Can be part of a multi-shape."
+      )
+      .def_prop_rw(
+          "line_width",
+          &TaoEleShapeInput::line_width,
+          &TaoEleShapeInput::set_line_width,
+          "Width of lines used to draw the shape."
+      )
+      .def_prop_rw(
+          "offset",
+          &TaoEleShapeInput::offset,
+          &TaoEleShapeInput::set_offset,
+          "Vertical offset."
+      )
+
+      .def("__repr__", [](const TaoEleShapeInput &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoEleShapeInput &self) {
+            return TaoEleShapeInput(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoEleShapeInput &self, nb::dict &memo) { return TaoEleShapeInput(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoEleShapeInput &self, const TaoEleShapeInput &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoEleShapeInput &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D TaoEleShapeInput arrays are not used in structs/routines
+  // 2D TaoEleShapeInput arrays are not used in structs/routines
+  // 3D TaoEleShapeInput arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_plot_page_input
+void init_tao_plot_page_input(nb::module_ &m, nb::class_<TaoPlotPageInput> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoPlotPageInput *self,
+            const TaoTitleStruct *title,
+            const TaoTitleStruct *subtitle,
+            const QpRectStruct *border,
+            std::optional<std::string> plot_display_type,
+            std::optional<std::vector<double>> size,
+            std::optional<double> text_height,
+            std::optional<double> main_title_text_scale,
+            std::optional<double> graph_title_text_scale,
+            std::optional<double> axis_number_text_scale,
+            std::optional<double> axis_label_text_scale,
+            std::optional<double> legend_text_scale,
+            std::optional<double> key_table_text_scale,
+            std::optional<double> floor_plan_shape_scale,
+            std::optional<double> floor_plan_text_scale,
+            std::optional<double> lat_layout_shape_scale,
+            std::optional<double> lat_layout_text_scale,
+            std::optional<double> curve_legend_line_len,
+            std::optional<double> curve_legend_text_offset,
+            std::optional<int> n_curve_pts,
+            std::optional<bool> delete_overlapping_plots,
+            std::optional<bool> draw_graph_title_suffix) {
+           new (self) TaoPlotPageInput(
+               ptr_to_opt_ref(title),
+               ptr_to_opt_ref(subtitle),
+               ptr_to_opt_ref(border),
+               plot_display_type,
+               size,
+               text_height,
+               main_title_text_scale,
+               graph_title_text_scale,
+               axis_number_text_scale,
+               axis_label_text_scale,
+               legend_text_scale,
+               key_table_text_scale,
+               floor_plan_shape_scale,
+               floor_plan_text_scale,
+               lat_layout_shape_scale,
+               lat_layout_text_scale,
+               curve_legend_line_len,
+               curve_legend_text_offset,
+               n_curve_pts,
+               delete_overlapping_plots,
+               draw_graph_title_suffix
+           );
+         },
+         nb::arg("title") = nb::none(),
+         nb::arg("subtitle") = nb::none(),
+         nb::arg("border") = nb::none(),
+         nb::arg("plot_display_type") = nb::none(),
+         nb::arg("size") = nb::none(),
+         nb::arg("text_height") = nb::none(),
+         nb::arg("main_title_text_scale") = nb::none(),
+         nb::arg("graph_title_text_scale") = nb::none(),
+         nb::arg("axis_number_text_scale") = nb::none(),
+         nb::arg("axis_label_text_scale") = nb::none(),
+         nb::arg("legend_text_scale") = nb::none(),
+         nb::arg("key_table_text_scale") = nb::none(),
+         nb::arg("floor_plan_shape_scale") = nb::none(),
+         nb::arg("floor_plan_text_scale") = nb::none(),
+         nb::arg("lat_layout_shape_scale") = nb::none(),
+         nb::arg("lat_layout_text_scale") = nb::none(),
+         nb::arg("curve_legend_line_len") = nb::none(),
+         nb::arg("curve_legend_text_offset") = nb::none(),
+         nb::arg("n_curve_pts") = nb::none(),
+         nb::arg("delete_overlapping_plots") = nb::none(),
+         nb::arg("draw_graph_title_suffix") = nb::none()
+  )
+      .def_prop_rw(
+          "title",
+          &TaoPlotPageInput::title,
+          &TaoPlotPageInput::set_title,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Title  at top of page."
+      )
+      .def_prop_rw(
+          "subtitle",
+          &TaoPlotPageInput::subtitle,
+          &TaoPlotPageInput::set_subtitle,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Subtitle at top of page."
+      )
+      .def_prop_rw(
+          "border",
+          &TaoPlotPageInput::border,
+          &TaoPlotPageInput::set_border,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Border around plots edge of page."
+      )
+      .def_prop_rw(
+          "plot_display_type",
+          &TaoPlotPageInput::plot_display_type,
+          &TaoPlotPageInput::set_plot_display_type
+      )
+      .def_prop_rw(
+          "size",
+          &TaoPlotPageInput::size,
+          &TaoPlotPageInput::set_size,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "width and height of window in pixels."
+      )
+      .def_prop_rw(
+          "text_height",
+          &TaoPlotPageInput::text_height,
+          &TaoPlotPageInput::set_text_height,
+          "In points. Scales the height of all text"
+      )
+      .def_prop_rw(
+          "main_title_text_scale",
+          &TaoPlotPageInput::main_title_text_scale,
+          &TaoPlotPageInput::set_main_title_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "graph_title_text_scale",
+          &TaoPlotPageInput::graph_title_text_scale,
+          &TaoPlotPageInput::set_graph_title_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "axis_number_text_scale",
+          &TaoPlotPageInput::axis_number_text_scale,
+          &TaoPlotPageInput::set_axis_number_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "axis_label_text_scale",
+          &TaoPlotPageInput::axis_label_text_scale,
+          &TaoPlotPageInput::set_axis_label_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "legend_text_scale",
+          &TaoPlotPageInput::legend_text_scale,
+          &TaoPlotPageInput::set_legend_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "key_table_text_scale",
+          &TaoPlotPageInput::key_table_text_scale,
+          &TaoPlotPageInput::set_key_table_text_scale,
+          "Relative to text_height"
+      )
+      .def_prop_rw(
+          "floor_plan_shape_scale",
+          &TaoPlotPageInput::floor_plan_shape_scale,
+          &TaoPlotPageInput::set_floor_plan_shape_scale
+      )
+      .def_prop_rw(
+          "floor_plan_text_scale",
+          &TaoPlotPageInput::floor_plan_text_scale,
+          &TaoPlotPageInput::set_floor_plan_text_scale,
+          "Scale used = floor_plan_text_scale * legend_text_scale"
+      )
+      .def_prop_rw(
+          "lat_layout_shape_scale",
+          &TaoPlotPageInput::lat_layout_shape_scale,
+          &TaoPlotPageInput::set_lat_layout_shape_scale
+      )
+      .def_prop_rw(
+          "lat_layout_text_scale",
+          &TaoPlotPageInput::lat_layout_text_scale,
+          &TaoPlotPageInput::set_lat_layout_text_scale,
+          "Scale used = lat_layout_text_scale * legend_text_scale"
+      )
+      .def_prop_rw(
+          "curve_legend_line_len",
+          &TaoPlotPageInput::curve_legend_line_len,
+          &TaoPlotPageInput::set_curve_legend_line_len,
+          "OLD STYLE. Points."
+      )
+      .def_prop_rw(
+          "curve_legend_text_offset",
+          &TaoPlotPageInput::curve_legend_text_offset,
+          &TaoPlotPageInput::set_curve_legend_text_offset,
+          "OLD STYLE. Points."
+      )
+      .def_prop_rw(
+          "n_curve_pts",
+          &TaoPlotPageInput::n_curve_pts,
+          &TaoPlotPageInput::set_n_curve_pts,
+          "Number of points for plotting a smooth curve"
+      )
+      .def_prop_rw(
+          "delete_overlapping_plots",
+          &TaoPlotPageInput::delete_overlapping_plots,
+          &TaoPlotPageInput::set_delete_overlapping_plots,
+          "Delete overlapping plots when a plot is placed?"
+      )
+      .def_prop_rw(
+          "draw_graph_title_suffix",
+          &TaoPlotPageInput::draw_graph_title_suffix,
+          &TaoPlotPageInput::set_draw_graph_title_suffix
+      )
+
+      .def("__repr__", [](const TaoPlotPageInput &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoPlotPageInput &self) {
+            return TaoPlotPageInput(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotPageInput &self, nb::dict &memo) { return TaoPlotPageInput(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoPlotPageInput &self, const TaoPlotPageInput &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotPageInput &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  // 1D TaoPlotPageInput arrays are not used in structs/routines
+  // 2D TaoPlotPageInput arrays are not used in structs/routines
+  // 3D TaoPlotPageInput arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_alias_struct
+void init_tao_alias_struct(nb::module_ &m, nb::class_<TaoAliasStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<std::string>, std::optional<std::string>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("expanded_str") = nb::none()
+  )
+      .def_prop_rw("name", &TaoAliasStruct::name, &TaoAliasStruct::set_name)
+      .def_prop_rw("expanded_str", &TaoAliasStruct::expanded_str, &TaoAliasStruct::set_expanded_str)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoAliasStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoAliasStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoAliasStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoAliasStruct &self) {
+            return TaoAliasStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoAliasStruct &self, nb::dict &memo) { return TaoAliasStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoAliasStruct &self, const TaoAliasStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoAliasStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoAliasStructArray1D, TaoAliasStructAlloc1D>(
+      m,
+      "TaoAliasStructArray1D",
+      "TaoAliasStructAlloc1D"
+  );
+  // 2D TaoAliasStruct arrays are not used in structs/routines
+  // 3D TaoAliasStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_beam_branch_struct
 void init_tao_beam_branch_struct(nb::module_ &m, nb::class_<TaoBeamBranchStruct> &cls) {
   cls.def(
@@ -1136,6 +1596,136 @@ void init_tao_cmd_history_struct(nb::module_ &m, nb::class_<TaoCmdHistoryStruct>
 }
 
 // =============================================================================
+// tao_command_file_struct
+void init_tao_command_file_struct(nb::module_ &m, nb::class_<TaoCommandFileStruct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<std::string>,
+             std::optional<bool>,
+             std::optional<int>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<bool>,
+             std::optional<std::string>>(),
+         nb::arg("full_name") = nb::none(),
+         nb::arg("dir") = nb::none(),
+         nb::arg("ix_unit") = nb::none(),
+         nb::arg("quiet") = nb::none(),
+         nb::arg("paused") = nb::none(),
+         nb::arg("n_line") = nb::none(),
+         nb::arg("reset_at_end") = nb::none(),
+         nb::arg("lattice_calc_save") = nb::none(),
+         nb::arg("plot_save") = nb::none(),
+         nb::arg("multi_cmd") = nb::none()
+  )
+      .def_prop_rw(
+          "full_name",
+          &TaoCommandFileStruct::full_name,
+          &TaoCommandFileStruct::set_full_name
+      )
+      .def_prop_rw("dir", &TaoCommandFileStruct::dir, &TaoCommandFileStruct::set_dir)
+      .def_prop_rw("ix_unit", &TaoCommandFileStruct::ix_unit, &TaoCommandFileStruct::set_ix_unit)
+      .def_prop_ro(
+          "cmd_arg",
+          &TaoCommandFileStruct::cmd_arg,
+          nb::keep_alive<0, 1>(),
+          "Command file arguments."
+      )
+      .def_prop_rw("quiet", &TaoCommandFileStruct::quiet, &TaoCommandFileStruct::set_quiet)
+      .def_prop_rw(
+          "paused",
+          &TaoCommandFileStruct::paused,
+          &TaoCommandFileStruct::set_paused,
+          "Is the command file paused?"
+      )
+      .def_prop_rw(
+          "n_line",
+          &TaoCommandFileStruct::n_line,
+          &TaoCommandFileStruct::set_n_line,
+          "Current line number"
+      )
+      .def_prop_rw(
+          "reset_at_end",
+          &TaoCommandFileStruct::reset_at_end,
+          &TaoCommandFileStruct::set_reset_at_end,
+          "Reset lattice_calc_on and plot_on at end of file?"
+      )
+      .def_prop_rw(
+          "lattice_calc_save",
+          &TaoCommandFileStruct::lattice_calc_save,
+          &TaoCommandFileStruct::set_lattice_calc_save
+      )
+      .def_prop_rw(
+          "plot_save",
+          &TaoCommandFileStruct::plot_save,
+          &TaoCommandFileStruct::set_plot_save
+      )
+      .def_prop_rw(
+          "multi_cmd",
+          &TaoCommandFileStruct::multi_cmd,
+          &TaoCommandFileStruct::set_multi_cmd,
+          "Commands not yet executed when there are mulitple commands on a line"
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoCommandFileStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoCommandFileStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoCommandFileStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoCommandFileStruct &self) {
+            return TaoCommandFileStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoCommandFileStruct &self, nb::dict &memo) {
+            return TaoCommandFileStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoCommandFileStruct &self, const TaoCommandFileStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCommandFileStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoCommandFileStructArray1D, TaoCommandFileStructAlloc1D>(
+      m,
+      "TaoCommandFileStructArray1D",
+      "TaoCommandFileStructAlloc1D"
+  );
+  // 2D TaoCommandFileStruct arrays are not used in structs/routines
+  // 3D TaoCommandFileStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_common_struct
 void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
   cls.def(
@@ -1217,12 +1807,22 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
          nb::arg("single_mode_buffer") = nb::none(),
          nb::arg("cmd") = nb::none()
   )
+      .def_prop_ro("alias", &TaoCommonStruct::alias, nb::keep_alive<0, 1>())
+      .def_prop_ro("key", &TaoCommonStruct::key, nb::keep_alive<0, 1>())
+      .def_prop_ro("cmd_file", &TaoCommonStruct::cmd_file, nb::keep_alive<0, 1>())
+      .def_prop_ro(
+          "symbolic_num",
+          &TaoCommonStruct::symbolic_num,
+          nb::keep_alive<0, 1>(),
+          "Named numbers"
+      )
       .def_prop_ro(
           "plot_place_buffer",
           &TaoCommonStruct::plot_place_buffer,
           nb::keep_alive<0, 1>(),
           "Used when %external_plotting is on."
       )
+      .def_prop_ro("do_loop", &TaoCommonStruct::do_loop, nb::keep_alive<0, 1>())
       .def_prop_rw(
           "covar",
           &TaoCommonStruct::covar,
@@ -1469,6 +2069,76 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
   // 1D TaoCommonStruct arrays are not used in structs/routines
   // 2D TaoCommonStruct arrays are not used in structs/routines
   // 3D TaoCommonStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_curve_array_struct
+void init_tao_curve_array_struct(nb::module_ &m, nb::class_<TaoCurveArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoCurveArrayStruct *self, const TaoCurveStruct *c) {
+           new (self) TaoCurveArrayStruct(ptr_to_opt_ref(c));
+         },
+         nb::arg("c") = nb::none()
+  )
+      .def_prop_rw(
+          "c",
+          &TaoCurveArrayStruct::c,
+          &TaoCurveArrayStruct::set_c,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoCurveArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoCurveArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoCurveArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoCurveArrayStruct &self) {
+            return TaoCurveArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoCurveArrayStruct &self, nb::dict &memo) { return TaoCurveArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoCurveArrayStruct &self, const TaoCurveArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoCurveArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoCurveArrayStructArray1D, TaoCurveArrayStructAlloc1D>(
+      m,
+      "TaoCurveArrayStructArray1D",
+      "TaoCurveArrayStructAlloc1D"
+  );
+  // 2D TaoCurveArrayStruct arrays are not used in structs/routines
+  // 3D TaoCurveArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2008,6 +2678,78 @@ void init_tao_curve_struct(nb::module_ &m, nb::class_<TaoCurveStruct> &cls) {
 }
 
 // =============================================================================
+// tao_d1_data_array_struct
+void init_tao_d1_data_array_struct(nb::module_ &m, nb::class_<TaoD1DataArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoD1DataArrayStruct *self, const TaoD1DataStruct *d1) {
+           new (self) TaoD1DataArrayStruct(ptr_to_opt_ref(d1));
+         },
+         nb::arg("d1") = nb::none()
+  )
+      .def_prop_rw(
+          "d1",
+          &TaoD1DataArrayStruct::d1,
+          &TaoD1DataArrayStruct::set_d1,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoD1DataArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoD1DataArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoD1DataArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoD1DataArrayStruct &self) {
+            return TaoD1DataArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoD1DataArrayStruct &self, nb::dict &memo) {
+            return TaoD1DataArrayStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoD1DataArrayStruct &self, const TaoD1DataArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoD1DataArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoD1DataArrayStructArray1D, TaoD1DataArrayStructAlloc1D>(
+      m,
+      "TaoD1DataArrayStructArray1D",
+      "TaoD1DataArrayStructAlloc1D"
+  );
+  // 2D TaoD1DataArrayStruct arrays are not used in structs/routines
+  // 3D TaoD1DataArrayStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_d1_data_struct
 void init_tao_d1_data_struct(nb::module_ &m, nb::class_<TaoD1DataStruct> &cls) {
   cls.def(
@@ -2084,6 +2826,78 @@ void init_tao_d1_data_struct(nb::module_ &m, nb::class_<TaoD1DataStruct> &cls) {
   );
   // 2D TaoD1DataStruct arrays are not used in structs/routines
   // 3D TaoD1DataStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_d2_data_array_struct
+void init_tao_d2_data_array_struct(nb::module_ &m, nb::class_<TaoD2DataArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoD2DataArrayStruct *self, const TaoD2DataStruct *d2) {
+           new (self) TaoD2DataArrayStruct(ptr_to_opt_ref(d2));
+         },
+         nb::arg("d2") = nb::none()
+  )
+      .def_prop_rw(
+          "d2",
+          &TaoD2DataArrayStruct::d2,
+          &TaoD2DataArrayStruct::set_d2,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoD2DataArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoD2DataArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoD2DataArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoD2DataArrayStruct &self) {
+            return TaoD2DataArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoD2DataArrayStruct &self, nb::dict &memo) {
+            return TaoD2DataArrayStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoD2DataArrayStruct &self, const TaoD2DataArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoD2DataArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoD2DataArrayStructArray1D, TaoD2DataArrayStructAlloc1D>(
+      m,
+      "TaoD2DataArrayStructArray1D",
+      "TaoD2DataArrayStructAlloc1D"
+  );
+  // 2D TaoD2DataArrayStruct arrays are not used in structs/routines
+  // 3D TaoD2DataArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -2231,6 +3045,76 @@ void init_tao_d2_data_struct(nb::module_ &m, nb::class_<TaoD2DataStruct> &cls) {
   );
   // 2D TaoD2DataStruct arrays are not used in structs/routines
   // 3D TaoD2DataStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_data_array_struct
+void init_tao_data_array_struct(nb::module_ &m, nb::class_<TaoDataArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoDataArrayStruct *self, const TaoDataStruct *d) {
+           new (self) TaoDataArrayStruct(ptr_to_opt_ref(d));
+         },
+         nb::arg("d") = nb::none()
+  )
+      .def_prop_rw(
+          "d",
+          &TaoDataArrayStruct::d,
+          &TaoDataArrayStruct::set_d,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoDataArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoDataArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoDataArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoDataArrayStruct &self) {
+            return TaoDataArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoDataArrayStruct &self, nb::dict &memo) { return TaoDataArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoDataArrayStruct &self, const TaoDataArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoDataArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoDataArrayStructArray1D, TaoDataArrayStructAlloc1D>(
+      m,
+      "TaoDataArrayStructArray1D",
+      "TaoDataArrayStructAlloc1D"
+  );
+  // 2D TaoDataArrayStruct arrays are not used in structs/routines
+  // 3D TaoDataArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -3149,6 +4033,12 @@ void init_tao_eval_node_struct(nb::module_ &m, nb::class_<TaoEvalNodeStruct> &cl
       )
       .def_prop_ro("info", &TaoEvalNodeStruct::info, nb::keep_alive<0, 1>())
       .def_prop_ro(
+          "value_ptr",
+          &TaoEvalNodeStruct::value_ptr,
+          nb::keep_alive<0, 1>(),
+          "Used to point to data, lattice parameters, etc"
+      )
+      .def_prop_ro(
           "node",
           &TaoEvalNodeStruct::node,
           nb::keep_alive<0, 1>(),
@@ -4016,6 +4906,76 @@ void init_tao_global_struct(nb::module_ &m, nb::class_<TaoGlobalStruct> &cls) {
 }
 
 // =============================================================================
+// tao_graph_array_struct
+void init_tao_graph_array_struct(nb::module_ &m, nb::class_<TaoGraphArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoGraphArrayStruct *self, const TaoGraphStruct *g) {
+           new (self) TaoGraphArrayStruct(ptr_to_opt_ref(g));
+         },
+         nb::arg("g") = nb::none()
+  )
+      .def_prop_rw(
+          "g",
+          &TaoGraphArrayStruct::g,
+          &TaoGraphArrayStruct::set_g,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoGraphArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoGraphArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoGraphArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoGraphArrayStruct &self) {
+            return TaoGraphArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoGraphArrayStruct &self, nb::dict &memo) { return TaoGraphArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoGraphArrayStruct &self, const TaoGraphArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoGraphArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoGraphArrayStructArray1D, TaoGraphArrayStructAlloc1D>(
+      m,
+      "TaoGraphArrayStructArray1D",
+      "TaoGraphArrayStructAlloc1D"
+  );
+  // 2D TaoGraphArrayStruct arrays are not used in structs/routines
+  // 3D TaoGraphArrayStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_graph_struct
 void init_tao_graph_struct(nb::module_ &m, nb::class_<TaoGraphStruct> &cls) {
   cls.def(
@@ -4811,6 +5771,67 @@ void init_tao_init_struct(nb::module_ &m, nb::class_<TaoInitStruct> &cls) {
 }
 
 // =============================================================================
+// tao_integer_array_struct
+void init_tao_integer_array_struct(nb::module_ &m, nb::class_<TaoIntegerArrayStruct> &cls) {
+  cls.def(nb::init<std::optional<int>>(), nb::arg("i") = nb::none())
+      .def_prop_rw("i", &TaoIntegerArrayStruct::i, &TaoIntegerArrayStruct::set_i)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoIntegerArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoIntegerArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoIntegerArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoIntegerArrayStruct &self) {
+            return TaoIntegerArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoIntegerArrayStruct &self, nb::dict &memo) {
+            return TaoIntegerArrayStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoIntegerArrayStruct &self, const TaoIntegerArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoIntegerArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoIntegerArrayStructArray1D, TaoIntegerArrayStructAlloc1D>(
+      m,
+      "TaoIntegerArrayStructArray1D",
+      "TaoIntegerArrayStructAlloc1D"
+  );
+  // 2D TaoIntegerArrayStruct arrays are not used in structs/routines
+  // 3D TaoIntegerArrayStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_lat_sigma_struct
 void init_tao_lat_sigma_struct(nb::module_ &m, nb::class_<TaoLatSigmaStruct> &cls) {
   cls.def(nb::init<std::optional<std::vector<std::vector<double>>>>(), nb::arg("mat") = nb::none())
@@ -5210,6 +6231,7 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
             const LatStruct *lat,
             const LatStruct *high_E_lat,
             const LatStruct *low_E_lat,
+            const TaoUniverseStruct *u,
             const RadIntAllEleStruct *rad_int_by_ele_ri,
             const RadIntAllEleStruct *rad_int_by_ele_6d) {
            new (self) TaoLatticeStruct(
@@ -5217,6 +6239,7 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
                ptr_to_opt_ref(lat),
                ptr_to_opt_ref(high_E_lat),
                ptr_to_opt_ref(low_E_lat),
+               ptr_to_opt_ref(u),
                ptr_to_opt_ref(rad_int_by_ele_ri),
                ptr_to_opt_ref(rad_int_by_ele_6d)
            );
@@ -5225,6 +6248,7 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
          nb::arg("lat") = nb::none(),
          nb::arg("high_E_lat") = nb::none(),
          nb::arg("low_E_lat") = nb::none(),
+         nb::arg("u") = nb::none(),
          nb::arg("rad_int_by_ele_ri") = nb::none(),
          nb::arg("rad_int_by_ele_6d") = nb::none()
   )
@@ -5254,6 +6278,13 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
           &TaoLatticeStruct::set_low_E_lat,
           nb::for_getter(nb::keep_alive<0, 1>()),
           "For chrom calc."
+      )
+      .def_prop_rw(
+          "u",
+          &TaoLatticeStruct::u,
+          &TaoLatticeStruct::set_u,
+          nb::for_getter(nb::keep_alive<0, 1>()),
+          "Parent universe"
       )
       .def_prop_rw(
           "rad_int_by_ele_ri",
@@ -5301,6 +6332,67 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
   // 1D TaoLatticeStruct arrays are not used in structs/routines
   // 2D TaoLatticeStruct arrays are not used in structs/routines
   // 3D TaoLatticeStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_logical_array_struct
+void init_tao_logical_array_struct(nb::module_ &m, nb::class_<TaoLogicalArrayStruct> &cls) {
+  cls.def(nb::init<std::optional<bool>>(), nb::arg("l") = nb::none())
+      .def_prop_rw("l", &TaoLogicalArrayStruct::l, &TaoLogicalArrayStruct::set_l)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoLogicalArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoLogicalArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoLogicalArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoLogicalArrayStruct &self) {
+            return TaoLogicalArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoLogicalArrayStruct &self, nb::dict &memo) {
+            return TaoLogicalArrayStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoLogicalArrayStruct &self, const TaoLogicalArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoLogicalArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoLogicalArrayStructArray1D, TaoLogicalArrayStructAlloc1D>(
+      m,
+      "TaoLogicalArrayStructArray1D",
+      "TaoLogicalArrayStructAlloc1D"
+  );
+  // 2D TaoLogicalArrayStruct arrays are not used in structs/routines
+  // 3D TaoLogicalArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -5539,6 +6631,76 @@ void init_tao_ping_scale_struct(nb::module_ &m, nb::class_<TaoPingScaleStruct> &
   // 1D TaoPingScaleStruct arrays are not used in structs/routines
   // 2D TaoPingScaleStruct arrays are not used in structs/routines
   // 3D TaoPingScaleStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_plot_array_struct
+void init_tao_plot_array_struct(nb::module_ &m, nb::class_<TaoPlotArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoPlotArrayStruct *self, const TaoPlotStruct *p) {
+           new (self) TaoPlotArrayStruct(ptr_to_opt_ref(p));
+         },
+         nb::arg("p") = nb::none()
+  )
+      .def_prop_rw(
+          "p",
+          &TaoPlotArrayStruct::p,
+          &TaoPlotArrayStruct::set_p,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoPlotArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoPlotArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoPlotArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoPlotArrayStruct &self) {
+            return TaoPlotArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoPlotArrayStruct &self, nb::dict &memo) { return TaoPlotArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoPlotArrayStruct &self, const TaoPlotArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoPlotArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoPlotArrayStructArray1D, TaoPlotArrayStructAlloc1D>(
+      m,
+      "TaoPlotArrayStructArray1D",
+      "TaoPlotArrayStructAlloc1D"
+  );
+  // 2D TaoPlotArrayStruct arrays are not used in structs/routines
+  // 3D TaoPlotArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -6190,6 +7352,82 @@ void init_tao_plot_struct(nb::module_ &m, nb::class_<TaoPlotStruct> &cls) {
 }
 
 // =============================================================================
+// tao_real_pointer_struct
+void init_tao_real_pointer_struct(nb::module_ &m, nb::class_<TaoRealPointerStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<double>, std::optional<bool>, std::optional<bool>>(),
+         nb::arg("r") = nb::none(),
+         nb::arg("good_value") = nb::none(),
+         nb::arg("good_user") = nb::none()
+  )
+      .def_prop_rw("r", &TaoRealPointerStruct::r, &TaoRealPointerStruct::set_r)
+      .def_prop_rw(
+          "good_value",
+          &TaoRealPointerStruct::good_value,
+          &TaoRealPointerStruct::set_good_value
+      )
+      .def_prop_rw(
+          "good_user",
+          &TaoRealPointerStruct::good_user,
+          &TaoRealPointerStruct::set_good_user
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoRealPointerStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoRealPointerStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoRealPointerStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoRealPointerStruct &self) {
+            return TaoRealPointerStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoRealPointerStruct &self, nb::dict &memo) {
+            return TaoRealPointerStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoRealPointerStruct &self, const TaoRealPointerStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoRealPointerStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoRealPointerStructArray1D, TaoRealPointerStructAlloc1D>(
+      m,
+      "TaoRealPointerStructArray1D",
+      "TaoRealPointerStructAlloc1D"
+  );
+  // 2D TaoRealPointerStruct arrays are not used in structs/routines
+  // 3D TaoRealPointerStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_shape_pattern_point_struct
 void init_tao_shape_pattern_point_struct(
     nb::module_ &m,
@@ -6812,6 +8050,67 @@ void init_tao_spin_polarization_struct(nb::module_ &m, nb::class_<TaoSpinPolariz
   // 1D TaoSpinPolarizationStruct arrays are not used in structs/routines
   // 2D TaoSpinPolarizationStruct arrays are not used in structs/routines
   // 3D TaoSpinPolarizationStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_string_array_struct
+void init_tao_string_array_struct(nb::module_ &m, nb::class_<TaoStringArrayStruct> &cls) {
+  cls.def(nb::init<std::optional<std::string>>(), nb::arg("s") = nb::none())
+      .def_prop_rw("s", &TaoStringArrayStruct::s, &TaoStringArrayStruct::set_s)
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoStringArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoStringArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoStringArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoStringArrayStruct &self) {
+            return TaoStringArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoStringArrayStruct &self, nb::dict &memo) {
+            return TaoStringArrayStruct(self);
+          }
+      )
+      .def(
+          "__eq__",
+          [](const TaoStringArrayStruct &self, const TaoStringArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoStringArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoStringArrayStructArray1D, TaoStringArrayStructAlloc1D>(
+      m,
+      "TaoStringArrayStructArray1D",
+      "TaoStringArrayStructAlloc1D"
+  );
+  // 2D TaoStringArrayStruct arrays are not used in structs/routines
+  // 3D TaoStringArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -7500,6 +8799,76 @@ void init_tao_universe_struct(nb::module_ &m, nb::class_<TaoUniverseStruct> &cls
 }
 
 // =============================================================================
+// tao_v1_var_array_struct
+void init_tao_v1_var_array_struct(nb::module_ &m, nb::class_<TaoV1VarArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoV1VarArrayStruct *self, const TaoV1VarStruct *v1) {
+           new (self) TaoV1VarArrayStruct(ptr_to_opt_ref(v1));
+         },
+         nb::arg("v1") = nb::none()
+  )
+      .def_prop_rw(
+          "v1",
+          &TaoV1VarArrayStruct::v1,
+          &TaoV1VarArrayStruct::set_v1,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoV1VarArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoV1VarArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoV1VarArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoV1VarArrayStruct &self) {
+            return TaoV1VarArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoV1VarArrayStruct &self, nb::dict &memo) { return TaoV1VarArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoV1VarArrayStruct &self, const TaoV1VarArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoV1VarArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoV1VarArrayStructArray1D, TaoV1VarArrayStructAlloc1D>(
+      m,
+      "TaoV1VarArrayStructArray1D",
+      "TaoV1VarArrayStructAlloc1D"
+  );
+  // 2D TaoV1VarArrayStruct arrays are not used in structs/routines
+  // 3D TaoV1VarArrayStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // tao_v1_var_struct
 void init_tao_v1_var_struct(nb::module_ &m, nb::class_<TaoV1VarStruct> &cls) {
   cls.def(
@@ -7577,6 +8946,76 @@ void init_tao_v1_var_struct(nb::module_ &m, nb::class_<TaoV1VarStruct> &cls) {
   );
   // 2D TaoV1VarStruct arrays are not used in structs/routines
   // 3D TaoV1VarStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_var_array_struct
+void init_tao_var_array_struct(nb::module_ &m, nb::class_<TaoVarArrayStruct> &cls) {
+  cls.def(
+         "__init__",
+         [](TaoVarArrayStruct *self, const TaoVarStruct *v) {
+           new (self) TaoVarArrayStruct(ptr_to_opt_ref(v));
+         },
+         nb::arg("v") = nb::none()
+  )
+      .def_prop_rw(
+          "v",
+          &TaoVarArrayStruct::v,
+          &TaoVarArrayStruct::set_v,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoVarArrayStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoVarArrayStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoVarArrayStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoVarArrayStruct &self) {
+            return TaoVarArrayStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoVarArrayStruct &self, nb::dict &memo) { return TaoVarArrayStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoVarArrayStruct &self, const TaoVarArrayStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoVarArrayStruct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoVarArrayStructArray1D, TaoVarArrayStructAlloc1D>(
+      m,
+      "TaoVarArrayStructArray1D",
+      "TaoVarArrayStructAlloc1D"
+  );
+  // 2D TaoVarArrayStruct arrays are not used in structs/routines
+  // 3D TaoVarArrayStruct arrays are not used in structs/routines
 }
 
 // =============================================================================
@@ -8413,6 +9852,88 @@ void init_tao_wave_struct(nb::module_ &m, nb::class_<TaoWaveStruct> &cls) {
   // 1D TaoWaveStruct arrays are not used in structs/routines
   // 2D TaoWaveStruct arrays are not used in structs/routines
   // 3D TaoWaveStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// tao_top10_struct
+void init_tao_top10_struct(nb::module_ &m, nb::class_<TaoTop10Struct> &cls) {
+  cls.def(
+         nb::init<
+             std::optional<std::string>,
+             std::optional<double>,
+             std::optional<int>,
+             std::optional<bool>>(),
+         nb::arg("name") = nb::none(),
+         nb::arg("value") = nb::none(),
+         nb::arg("index") = nb::none(),
+         nb::arg("valid") = nb::none()
+  )
+      .def_prop_rw("name", &TaoTop10Struct::name, &TaoTop10Struct::set_name, "name of contributor")
+      .def_prop_rw(
+          "value",
+          &TaoTop10Struct::value,
+          &TaoTop10Struct::set_value,
+          "contribution to the merit function"
+      )
+      .def_prop_rw(
+          "index",
+          &TaoTop10Struct::index,
+          &TaoTop10Struct::set_index,
+          "index of contributor."
+      )
+      .def_prop_rw("valid", &TaoTop10Struct::valid, &TaoTop10Struct::set_valid, "valid entry?")
+      .def_static(
+          "new_array1d",
+          [](int sz) { return TaoTop10StructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = TaoTop10StructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const TaoTop10Struct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const TaoTop10Struct &self) {
+            return TaoTop10Struct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const TaoTop10Struct &self, nb::dict &memo) { return TaoTop10Struct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const TaoTop10Struct &self, const TaoTop10Struct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const TaoTop10Struct &self) {
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<TaoTop10StructArray1D, TaoTop10StructAlloc1D>(
+      m,
+      "TaoTop10StructArray1D",
+      "TaoTop10StructAlloc1D"
+  );
+  // 2D TaoTop10Struct arrays are not used in structs/routines
+  // 3D TaoTop10Struct arrays are not used in structs/routines
 }
 
 // =============================================================================

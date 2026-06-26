@@ -8,6 +8,7 @@ namespace nb = nanobind;
 using namespace Bmad;
 
 // Per-struct init functions
+void init_astra_lattice_param_struct(nb::module_ &m, nb::class_<AstraLatticeParamStruct> &class_);
 void init_ac_kicker_freq_struct(nb::module_ &m, nb::class_<AcKickerFreqStruct> &class_);
 void init_ac_kicker_struct(nb::module_ &m, nb::class_<AcKickerStruct> &class_);
 void init_ac_kicker_time_struct(nb::module_ &m, nb::class_<AcKickerTimeStruct> &class_);

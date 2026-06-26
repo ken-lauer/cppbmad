@@ -72,6 +72,66 @@ lat : LatStruct
 )"""
   );
   m.def(
+      "s_ref_to_s_chord",
+      &Bmad::s_ref_to_s_chord,
+      nb::arg("s_ref"),
+      nb::arg("eleinfo"),
+      R"""(Routine to calculate s_chord given s_ref.
+
+Parameters
+----------
+s_ref : float
+    s-position along element ref coords.
+
+eleinfo : CsrEleInfoStruct
+    Element info
+
+Returns
+-------
+s_chord : float
+    s-position along centroid chord.
+)"""
+  );
+  nb::class_<Bmad::SSourceCalc>(m, "SSourceCalc", "s_source_calc return type")
+      .def_ro("err_flag", &Bmad::SSourceCalc::err_flag)
+      .def_ro("s_source", &Bmad::SSourceCalc::s_source)
+      .def("__len__", [](const Bmad::SSourceCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::SSourceCalc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.err_flag);
+        if (i == 1)
+          return nb::cast(s.s_source);
+        throw nb::index_error();
+      });
+  m.def(
+      "s_source_calc",
+      &Bmad::s_source_calc,
+      nb::arg("kick1"),
+      nb::arg("csr"),
+      nb::arg("dr_match"),
+      R"""(Routine to calculate the distance between source and kick points.
+
+Parameters
+----------
+kick1 : CsrKick1Struct
+
+csr : CsrStruct
+
+dr_match : 1D array of float (shape: 3)
+    Discontinuity factor if there is a match element between source and kick elements.
+
+Returns
+-------
+err_flag : bool
+    Set True if there is an error. Untouched otherwise.
+
+s_source : float
+    source s-position.
+)"""
+  );
+  m.def(
       "sad_mult_hard_bend_edge_kick",
       &Bmad::sad_mult_hard_bend_edge_kick,
       nb::arg("ele"),
@@ -499,6 +559,60 @@ Returns
 -------
 orbit : CoordStruct, optional
     Load with stored fixer phase space and spin values.
+)"""
+  );
+  nb::class_<Bmad::SetBranchAndEleForOmp>(
+      m,
+      "SetBranchAndEleForOmp",
+      "set_branch_and_ele_for_omp return type"
+  )
+      .def_ro("branch", &Bmad::SetBranchAndEleForOmp::branch)
+      .def_ro("ele0", &Bmad::SetBranchAndEleForOmp::ele0)
+      .def("__len__", [](const Bmad::SetBranchAndEleForOmp &) { return 2; })
+      .def("__getitem__", [](const Bmad::SetBranchAndEleForOmp &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.branch);
+        if (i == 1)
+          return nb::cast(s.ele0);
+        throw nb::index_error();
+      });
+  m.def(
+      "set_branch_and_ele_for_omp",
+      &Bmad::set_branch_and_ele_for_omp,
+      nb::arg("ix_lat"),
+      nb::arg("ele0_loc"),
+      nb::arg("lats"),
+      nb::arg("lat"),
+      R"""(Routine to set branch and ele for the lattice to be used to track through.
+
+Different lattices are used to avoid problems when there is ramping since ramping
+will modify lattice element parameters.
+
+Parameters
+----------
+ix_lat : int
+    Lattice index.
+
+ele0_loc : LatEleLocStruct
+    ele0 location in lattice.
+
+lats : 1D array of LatPointerStruct
+    Pointers to lattices to track through.
+    This parameter is an input/output and is modified in-place.
+    As an output, lats: Properly initialized if needed.
+
+lat : LatStruct
+    Original lattice.
+
+Returns
+-------
+branch : BranchStruct, optional
+    Branch to track through
+
+ele0 : EleStruct, optional
+    starting element for tracking.
 )"""
   );
   m.def(
@@ -1627,6 +1741,90 @@ Returns
 -------
 complex_taylor_sorted : ComplexTaylorStruct
     Sorted complex_taylor series.
+)"""
+  );
+  m.def(
+      "space_charge_cathodeimages",
+      &Bmad::space_charge_cathodeimages,
+      nb::arg("mesh3d"),
+      nb::arg("direct_field_calc") = nb::none(),
+      nb::arg("integrated_green_function") = nb::none(),
+      nb::arg("image_method") = nb::none(),
+      R"""(Wrapper for Fortran routine space_charge_cathodeimages
+
+Parameters
+----------
+mesh3d : Mesh3dStruct
+
+direct_field_calc : bool, optional
+
+integrated_green_function : bool, optional
+
+image_method : int, optional
+)"""
+  );
+  m.def(
+      "space_charge_freespace",
+      &Bmad::space_charge_freespace,
+      nb::arg("mesh3d"),
+      nb::arg("direct_field_calc") = nb::none(),
+      nb::arg("integrated_green_function") = nb::none(),
+      R"""(Wrapper for Fortran routine space_charge_freespace
+
+Parameters
+----------
+mesh3d : Mesh3dStruct
+
+direct_field_calc : bool, optional
+
+integrated_green_function : bool, optional
+)"""
+  );
+  m.def(
+      "space_charge_rectpipe",
+      &Bmad::space_charge_rectpipe,
+      nb::arg("mesh3d"),
+      nb::arg("apipe"),
+      nb::arg("bpipe"),
+      nb::arg("direct_field_calc") = nb::none(),
+      nb::arg("integrated_green_function") = nb::none(),
+      R"""(Wrapper for Fortran routine space_charge_rectpipe
+
+Parameters
+----------
+mesh3d : Mesh3dStruct
+
+apipe : float
+
+bpipe : float
+
+direct_field_calc : bool, optional
+
+integrated_green_function : bool, optional
+)"""
+  );
+  m.def(
+      "spin_depolarization_rate",
+      &Bmad::spin_depolarization_rate,
+      nb::arg("branch"),
+      nb::arg("match_info"),
+      nb::arg("rad_int_by_ele"),
+      R"""(Wrapper for Fortran routine spin_depolarization_rate
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch the beam is going through.
+
+match_info : 1D array of SpinMatchingStruct
+
+rad_int_by_ele : RadIntAllEleStruct
+    Element-by-element radiation integrals.
+
+Returns
+-------
+depol_rate : float
+    Depolarization rate (1/sec). Will be positive.
 )"""
   );
   nb::class_<Bmad::SpinDnDpzFromMat8>(m, "SpinDnDpzFromMat8", "spin_dn_dpz_from_mat8 return type")
