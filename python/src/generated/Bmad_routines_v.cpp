@@ -1,16 +1,15 @@
 #include "pybmad/generated/Bmad_routines_v.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_v(py::module &m) {
+void init_Bmad_routines_v(nb::module_ &m) {
   m.def(
       "valid_field_calc",
       &Bmad::valid_field_calc,
-      py::arg("ele"),
-      py::arg("field_calc"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("field_calc"),
       R"""(Wrapper for Fortran routine valid_field_calc
 
 Parameters
@@ -30,9 +29,8 @@ is_valid : bool
   m.def(
       "valid_fringe_type",
       &Bmad::valid_fringe_type,
-      py::arg("ele"),
-      py::arg("fringe_type"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("fringe_type"),
       R"""(Wrapper for Fortran routine valid_fringe_type
 
 Parameters
@@ -52,10 +50,9 @@ is_valid : bool
   m.def(
       "valid_mat6_calc_method",
       &Bmad::valid_mat6_calc_method,
-      py::arg("ele"),
-      py::arg("species"),
-      py::arg("mat6_calc_method"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("species"),
+      nb::arg("mat6_calc_method"),
       R"""(Wrapper for Fortran routine valid_mat6_calc_method
 
 Parameters
@@ -78,9 +75,8 @@ is_valid : bool
   m.def(
       "valid_spin_tracking_method",
       &Bmad::valid_spin_tracking_method,
-      py::arg("ele"),
-      py::arg("spin_tracking_method"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("spin_tracking_method"),
       R"""(Wrapper for Fortran routine valid_spin_tracking_method
 
 Parameters
@@ -100,10 +96,9 @@ is_valid : bool
   m.def(
       "valid_tracking_method",
       &Bmad::valid_tracking_method,
-      py::arg("ele"),
-      py::arg("species"),
-      py::arg("tracking_method"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("species"),
+      nb::arg("tracking_method"),
       R"""(Wrapper for Fortran routine valid_tracking_method
 
 Parameters
@@ -123,31 +118,26 @@ is_valid : bool
     True if a valid method. False otherwise.
 )"""
   );
-  py::class_<Bmad::ValueOfAttribute, std::unique_ptr<Bmad::ValueOfAttribute>>(
-      m,
-      "ValueOfAttribute",
-      "value_of_attribute return type"
-  )
-      .def_readonly("err_flag", &Bmad::ValueOfAttribute::err_flag)
-      .def_readonly("value", &Bmad::ValueOfAttribute::value)
+  nb::class_<Bmad::ValueOfAttribute>(m, "ValueOfAttribute", "value_of_attribute return type")
+      .def_ro("err_flag", &Bmad::ValueOfAttribute::err_flag)
+      .def_ro("value", &Bmad::ValueOfAttribute::value)
       .def("__len__", [](const Bmad::ValueOfAttribute &) { return 2; })
-      .def("__getitem__", [](const Bmad::ValueOfAttribute &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ValueOfAttribute &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.value);
-        throw py::index_error();
+          return nb::cast(s.value);
+        throw nb::index_error();
       });
   m.def(
       "value_of_attribute",
       &Bmad::value_of_attribute,
-      py::arg("ele"),
-      py::arg("attrib_name"),
-      py::arg("err_print_flag") = py::none(),
-      py::arg("err_value") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("err_value") = nb::none(),
       R"""(Wrapper for Fortran routine value_of_attribute
 
 Parameters
@@ -176,13 +166,12 @@ err_flag : bool, optional
   m.def(
       "value_to_line",
       &Bmad::value_to_line,
-      py::arg("line"),
-      py::arg("value"),
-      py::arg("str"),
-      py::arg("typ"),
-      py::arg("ignore_if_zero") = py::none(),
-      py::arg("use_comma") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("value"),
+      nb::arg("str"),
+      nb::arg("typ"),
+      nb::arg("ignore_if_zero") = nb::none(),
+      nb::arg("use_comma") = nb::none(),
       R"""(Wrapper for Fortran routine value_to_line
 
 Parameters
@@ -203,9 +192,8 @@ use_comma : bool, optional
   m.def(
       "vec_to_polar",
       &Bmad::vec_to_polar,
-      py::arg("vec"),
-      py::arg("phase") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("vec"),
+      nb::arg("phase") = nb::none(),
       R"""(Wrapper for Fortran routine vec_to_polar
 
 Parameters
@@ -224,9 +212,8 @@ polar : SpinPolarStruct
   m.def(
       "vec_to_spinor",
       &Bmad::vec_to_spinor,
-      py::arg("vec"),
-      py::arg("phase") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("vec"),
+      nb::arg("phase") = nb::none(),
       R"""(Wrapper for Fortran routine vec_to_spinor
 
 Parameters
@@ -246,14 +233,11 @@ spinor : 1D array of complex (shape: 2)
   m.def(
       "verify_valid_name",
       &Bmad::verify_valid_name,
-      py::arg("name"),
-      py::arg("ix_name"),
-      py::arg("pure_name") = py::none(),
-      py::arg("include_wild") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function verify_valid_name (name, ix_name, pure_name, include_wild) result (is_valid)
-
-Routine to check if a name is well formed. Examples:
+      nb::arg("name"),
+      nb::arg("ix_name"),
+      nb::arg("pure_name") = nb::none(),
+      nb::arg("include_wild") = nb::none(),
+      R"""(Routine to check if a name is well formed. Examples:
   "0>>Q0"                           -- Invalid (will only be valid after lattice expansion).
   "Q1##1"                           -- Invalid (double hash not accepted).
   "Q2A_C.\7#"                       -- Pure name (no "[", "]", "(", ")", "%" characters present).

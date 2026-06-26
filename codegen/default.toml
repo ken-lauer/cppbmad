@@ -115,6 +115,11 @@ struct_list = [
   "expression_tree_struct",
   "nametable_struct",
 
+  # Parsing / attribute setting helpers:
+  "all_pointer_struct",
+  "parser_ele_struct",
+  "parser_controller_struct",
+
   # sim_utils
   # "qp_axis_struct",
   # "qp_plot_struct",
@@ -174,6 +179,11 @@ struct_list = [
 
   "tao_expression_info_struct",
   "tao_eval_node_struct",
+
+  "tao_alias_struct",
+  "tao_command_file_struct",
+  "named_number_struct",
+  "do_loop_struct",
 
   # plot page
   "tao_title_struct",
@@ -238,56 +248,98 @@ struct_list = [
 #   <struct>%<component_name>
 
 component_no_translate_list = [
-  # NOTE: 'ptc' may be required for taylor map info (polymorphic tracking)
-  "ptc_branch1_info_struct",
-  "branch_struct%ptc",
-  # end PTC
   # forest
-  "probe_8",
+  "abell",
+  "abellp",
+  "affine_frame",
+  "beam_beam_node",
+  "c_universal_taylor",
+  "c_lattice_function",
   "c_normal_form",
-  "c_taylor",
   "c_quaternion",
+  "c_taylor",
+  "cav4",
+  "cav4p",
+  "cav_trav",
+  "cav_travp",
+  "chart",
+  "damap",
+  "dkd2",
+  "dkd2p",
+  "drift1",
+  "drift1p",
+  "ecol",
+  "ecolp",
+  "element",
+  "elementp",
+  "enge",
+  "engep",
+  "eseptum",
+  "eseptump",
+  "fibre",
+  "fibre_appearance",
+  "genfield",
+  "girder",
+  "girder_info",
+  "helical_dipole",
+  "helical_dipolep",
+  "info",
+  "integration_node",
   "internal_state",
+  "kickt3",
+  "kickt3p",
+  "ktk",
+  "ktkp",
+  "layout",
+  "layout_array",
+  "mad_universe",
+  "madx_aperture",
+  "magnet_chart",
+  "magnet_frame",
+  "mon",
+  "monp",
+  "node_layout",
+  "nsmi",
+  "nsmip",
+  "orbit_lattice",
+  "orbit_node",
+  "pancake",
+  "pancakep",
+  "patch",
+  "probe_8",
+  "ramping",
+  "rcol",
+  "rcolp",
+  "real_8",
+  "s_aperture",
+  "sagan",
+  "saganp",
+  "sol5",
+  "sol5p",
+  "ssmi",
+  "ssmip",
+  "strex",
+  "strexp",
+  "superdrift",
+  "superdriftp",
+  "taylor",
+  "teapot",
+  "teapotp",
+  "time_energy",
+  "tktf",
+  "tktfp",
+  "undu_r",
+  "undu_p",
+  "universal_taylor",
   # end forest
-  "exact_bend_multipole_struct",
-  "ele_struct%converter",        # Should be simple data? Check this
-  "ele_struct%multipole_cache",
-  "ele_struct%foil",
-  "lat_struct%nametable",
-  "normal_form_struct",
-  # This is merely a reference to lat_struct%branch(0). Avoid copying unnecessarily.
-  # "lat_struct%ele",
-  # TODO: this copies information unnecessarily; we need a reference type
-  # "branch_struct%lat",
-  # "ele_struct%lord",
-  # "ele_struct%branch",
-  # TODO: we need some sort workaround for grid field data:
-  # "grid_field_pt_struct%pt",
-  # tao
-  # "tao_data_struct%data_type",  # TODO: 0D_ALLOC_character
-  # TODO parent ref
-  # "tao_lattice_branch_struct%tao_lat",
-  # "tao_d1_data_struct%d2",
-  "tao_lattice_struct%u",
-  # TODO test pattern debugging
-  # "tao_d1_data_struct%d",
-  # end tao
 ]
 
 # List of structure components links:
 # Structure components that are just links to other structures are handled differently.
 #   1) Ignore in Fortran and C++ equality tests (could go around in circles).
 #   2) Do not create a test pattern in interface test code.
-
-interface_ignore_list = [
-  # "ele_struct%branch",
-  # "branch_struct%lat",
-  # TODO pointers in the test suite
-  # "tao_universe_struct%base",
-  # "tao_universe_struct%model",
-  # "tao_universe_struct%design",
-  # "tao_universe_struct%model_branch",
-]
+# TODO: this is no longer part of cppbmad, it's from about 3 attempts prior
+interface_ignore_list = []
 
 # List of structure components that are structures and are defined externally.
 # There are no such structures for the cpp_bmad_interface library but there
@@ -304,11 +356,6 @@ skips = [
 
   # Optionally compiled in
   "fft_interface_mod",
-  # JSON-related
-  "tao_json",
-  "bmad_json",
-  "forest_json",
-  "sim_utils_json",
 
   # Abstract hooks
   "check_aperture_limit_custom_def",
@@ -480,6 +527,7 @@ cpp_namespace = ""
 fortran_output_filename = "bmad_routines.f90"
 cpp_output_filename = "bmad_routines.cpp"
 cpp_namespace = "Bmad"
+python_submodule = "bmad"
 # interface_path = "$ACC_ROOT_DIR/bmad/modules/bmad_routine_interface.f90"
 source_paths = [
   "$ACC_ROOT_DIR/bmad/code",
@@ -507,6 +555,7 @@ skip_procedures = [
 fortran_output_filename = "sim_utils_routines.f90"
 cpp_output_filename = "sim_utils_routines.cpp"
 cpp_namespace = "SimUtils"
+python_submodule = "simutils"
 # interface_path = "$ACC_ROOT_DIR/sim_utils/interfaces/sim_utils_interface.f90"
 source_paths = [
   "$ACC_ROOT_DIR/sim_utils/interfaces",
@@ -524,6 +573,8 @@ do_not_overload = ["ran_gauss", "modulo2"]
 fortran_output_filename = "tao_routines.f90"
 cpp_output_filename = "tao_routines.cpp"
 cpp_namespace = "Tao"
+python_submodule = "tao"
+python_top_level = false
 # interface_path = "$ACC_ROOT_DIR/tao/code/tao_interface.f90"
 source_paths = ["$ACC_ROOT_DIR/tao/code"]
 skip_files = ["tao_c_interface_mod.f90"]
@@ -533,6 +584,7 @@ skip_procedures = []
 fortran_output_filename = "bsim_routines.f90"
 cpp_output_filename = "bsim_routines.cpp"
 cpp_namespace = "bsim"
+python_submodule = "bsim"
 # interface_path = "$ACC_ROOT_DIR/bsim/"
 source_paths = [
   "$ACC_ROOT_DIR/bsim/code",
@@ -545,7 +597,19 @@ skip_procedures = []
 fortran_output_filename = "cppbmad_test_routines.f90"
 cpp_output_filename = "cppbmad_test_routines.cpp"
 cpp_namespace = "CppBmadTest"
+python_submodule = "test"
+python_top_level = false
 # interface_path = "src/tests/routines/cppbmad_tests.f90"
 source_paths = ["src/tests/routines"]
+skip_files = []
+skip_procedures = []
+
+[[routines]]
+fortran_output_filename = "cppbmad_extra_routines.f90"
+cpp_output_filename = "cppbmad_extra_routines.cpp"
+cpp_namespace = "CppBmadExtra"
+python_submodule = "extra"
+python_top_level = false
+source_paths = ["src/extra"]
 skip_files = []
 skip_procedures = []

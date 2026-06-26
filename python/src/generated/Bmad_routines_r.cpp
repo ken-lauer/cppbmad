@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_r.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyRadiationIntegrals python_radiation_integrals(
@@ -20,41 +20,59 @@ PyReleaseRadIntCache python_release_rad_int_cache(int ix_cache) {
   return py_result;
 }
 
-void init_Bmad_routines_r(py::module &m) {
-  py::class_<Bmad::Rad1DampAndStocMats, std::unique_ptr<Bmad::Rad1DampAndStocMats>>(
+void init_Bmad_routines_r(nb::module_ &m) {
+  nb::class_<Bmad::Rad1DampAndStocMats>(
       m,
       "Rad1DampAndStocMats",
       "rad1_damp_and_stoc_mats return type"
   )
-      .def_readonly("rad_map", &Bmad::Rad1DampAndStocMats::rad_map)
-      .def_readonly("err_flag", &Bmad::Rad1DampAndStocMats::err_flag)
-      .def_readonly("rad_int1", &Bmad::Rad1DampAndStocMats::rad_int1)
+      .def_ro("rad_map", &Bmad::Rad1DampAndStocMats::rad_map)
+      .def_ro("err_flag", &Bmad::Rad1DampAndStocMats::err_flag)
+      .def_ro("rad_int1", &Bmad::Rad1DampAndStocMats::rad_int1)
       .def("__len__", [](const Bmad::Rad1DampAndStocMats &) { return 3; })
-      .def("__getitem__", [](const Bmad::Rad1DampAndStocMats &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Rad1DampAndStocMats &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.rad_map);
+          return nb::cast(s.rad_map);
         if (i == 1)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 2)
-          return py::cast(s.rad_int1);
-        throw py::index_error();
+          return nb::cast(s.rad_int1);
+        throw nb::index_error();
       });
   m.def(
       "rad1_damp_and_stoc_mats",
-      &Bmad::rad1_damp_and_stoc_mats,
-      py::arg("ele"),
-      py::arg("include_opening_angle"),
-      py::arg("orb_in"),
-      py::arg("orb_out"),
-      py::arg("g2_tol"),
-      py::arg("g3_tol"),
-      py::arg("ele0") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine rad1_damp_and_stoc_mats (ele, include_opening_angle, orb_in, orb_out, rad_map, g2_tol, g3_tol, err_flag, ele0, rad_int1)
-
-Routine to calculate the damping and stochastic matrices for a given lattice element.
+      [](EleStruct &ele,
+         bool include_opening_angle,
+         CoordStruct &orb_in,
+         CoordStruct &orb_out,
+         double g2_tol,
+         double g3_tol,
+         EleStruct *ele0) {
+        auto fn = static_cast<
+            Bmad::
+                Rad1DampAndStocMats (*)(EleStruct &, bool, CoordStruct &, CoordStruct &, double, double, optional_ref<EleStruct>)>(
+            &Bmad::rad1_damp_and_stoc_mats
+        );
+        return fn(
+            ele,
+            include_opening_angle,
+            orb_in,
+            orb_out,
+            g2_tol,
+            g3_tol,
+            ptr_to_opt_ref(ele0)
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("include_opening_angle"),
+      nb::arg("orb_in"),
+      nb::arg("orb_out"),
+      nb::arg("g2_tol"),
+      nb::arg("g3_tol"),
+      nb::arg("ele0") = nb::none(),
+      R"""(Routine to calculate the damping and stochastic matrices for a given lattice element.
 
 Parameters
 ----------
@@ -92,43 +110,40 @@ rad_int1 : RadInt1Struct, optional
     Radiation integrals
 )"""
   );
-  py::class_<Bmad::RadDampAndStocMats, std::unique_ptr<Bmad::RadDampAndStocMats>>(
+  nb::class_<Bmad::RadDampAndStocMats>(
       m,
       "RadDampAndStocMats",
       "rad_damp_and_stoc_mats return type"
   )
-      .def_readonly("rmap", &Bmad::RadDampAndStocMats::rmap)
-      .def_readonly("mode", &Bmad::RadDampAndStocMats::mode)
-      .def_readonly("xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
-      .def_readonly("err_flag", &Bmad::RadDampAndStocMats::err_flag)
-      .def_readonly("rad_int_branch", &Bmad::RadDampAndStocMats::rad_int_branch)
+      .def_ro("rmap", &Bmad::RadDampAndStocMats::rmap)
+      .def_ro("mode", &Bmad::RadDampAndStocMats::mode)
+      .def_ro("xfer_nodamp_mat", &Bmad::RadDampAndStocMats::xfer_nodamp_mat)
+      .def_ro("err_flag", &Bmad::RadDampAndStocMats::err_flag)
+      .def_ro("rad_int_branch", &Bmad::RadDampAndStocMats::rad_int_branch)
       .def("__len__", [](const Bmad::RadDampAndStocMats &) { return 5; })
-      .def("__getitem__", [](const Bmad::RadDampAndStocMats &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::RadDampAndStocMats &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.rmap);
+          return nb::cast(s.rmap);
         if (i == 1)
-          return py::cast(s.mode);
+          return nb::cast(s.mode);
         if (i == 2)
-          return py::cast(s.xfer_nodamp_mat);
+          return nb::cast(s.xfer_nodamp_mat);
         if (i == 3)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 4)
-          return py::cast(s.rad_int_branch);
-        throw py::index_error();
+          return nb::cast(s.rad_int_branch);
+        throw nb::index_error();
       });
   m.def(
       "rad_damp_and_stoc_mats",
       &Bmad::rad_damp_and_stoc_mats,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("include_opening_angle"),
-      py::arg("closed_orbit") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine rad_damp_and_stoc_mats (ele1, ele2, include_opening_angle, rmap, mode, xfer_nodamp_mat, err_flag, closed_orbit, rad_int_branch)
-
-Routine to calculate the damping and stochastic variance matrices from exit end of ele1
+      nb::arg("ele1"),
+      nb::arg("ele2"),
+      nb::arg("include_opening_angle"),
+      nb::arg("closed_orbit") = nb::none(),
+      R"""(Routine to calculate the damping and stochastic variance matrices from exit end of ele1
 to the exit end of ele2. Use ele1 = ele2 to get 1-turn matrices.
 
 If ele2 is before ele1 the integration range if from ele1 to the branch end plus
@@ -169,38 +184,31 @@ rad_int_branch : RadIntBranchStruct, optional
     Array of element-by-element radiation integrals.
 )"""
   );
-  py::class_<Bmad::RadGIntegrals, std::unique_ptr<Bmad::RadGIntegrals>>(
-      m,
-      "RadGIntegrals",
-      "rad_g_integrals return type"
-  )
-      .def_readonly("int_g", &Bmad::RadGIntegrals::int_g)
-      .def_readonly("int_g3", &Bmad::RadGIntegrals::int_g3)
+  nb::class_<Bmad::RadGIntegrals>(m, "RadGIntegrals", "rad_g_integrals return type")
+      .def_ro("int_g", &Bmad::RadGIntegrals::int_g)
+      .def_ro("int_g3", &Bmad::RadGIntegrals::int_g3)
       .def("__len__", [](const Bmad::RadGIntegrals &) { return 2; })
-      .def("__getitem__", [](const Bmad::RadGIntegrals &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::RadGIntegrals &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.int_g);
+          return nb::cast(s.int_g);
         if (i == 1)
-          return py::cast(s.int_g3);
-        throw py::index_error();
+          return nb::cast(s.int_g3);
+        throw nb::index_error();
       });
   m.def(
       "rad_g_integrals",
       &Bmad::rad_g_integrals,
-      py::arg("ele"),
-      py::arg("where"),
-      py::arg("orb_in"),
-      py::arg("orb_out"),
-      py::arg("int_g2"),
-      py::arg("g_tol"),
-      py::arg("g2_tol"),
-      py::arg("g3_tol"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine rad_g_integrals (ele, where, orb_in, orb_out, int_g, int_g2, int_g3, g_tol, g2_tol, g3_tol)
-
-Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
+      nb::arg("ele"),
+      nb::arg("where"),
+      nb::arg("orb_in"),
+      nb::arg("orb_out"),
+      nb::arg("int_g2"),
+      nb::arg("g_tol"),
+      nb::arg("g2_tol"),
+      nb::arg("g3_tol"),
+      R"""(Routine to calculate bending strength integrals (g(s) = 1/trajectory_bending_radius(s)) in
 laboratory coords.
 
 Parameters
@@ -236,34 +244,29 @@ int_g3 : float
     integrals of |g|^2 and |g|^3.
 )"""
   );
-  py::class_<PyRadiationIntegrals, std::unique_ptr<PyRadiationIntegrals>>(
-      m,
-      "RadiationIntegrals",
-      "radiation_integrals return type"
-  )
-      .def_readonly("mode", &PyRadiationIntegrals::mode)
-      .def_readonly("rad_int_by_ele", &PyRadiationIntegrals::rad_int_by_ele)
-      .def_readonly("ix_cache", &PyRadiationIntegrals::ix_cache)
+  nb::class_<PyRadiationIntegrals>(m, "RadiationIntegrals", "radiation_integrals return type")
+      .def_ro("mode", &PyRadiationIntegrals::mode)
+      .def_ro("rad_int_by_ele", &PyRadiationIntegrals::rad_int_by_ele)
+      .def_ro("ix_cache", &PyRadiationIntegrals::ix_cache)
       .def("__len__", [](const PyRadiationIntegrals &) { return 3; })
-      .def("__getitem__", [](const PyRadiationIntegrals &s, int i) -> py::object {
+      .def("__getitem__", [](const PyRadiationIntegrals &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.mode);
+          return nb::cast(s.mode);
         if (i == 1)
-          return py::cast(s.rad_int_by_ele);
+          return nb::cast(s.rad_int_by_ele);
         if (i == 2)
-          return py::cast(s.ix_cache);
-        throw py::index_error();
+          return nb::cast(s.ix_cache);
+        throw nb::index_error();
       });
   m.def(
       "radiation_integrals",
       &python_radiation_integrals,
-      py::arg("lat"),
-      py::arg("orbit"),
-      py::arg("ix_cache") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("orbit"),
+      nb::arg("ix_cache") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
       R"""(Wrapper for Fortran routine radiation_integrals
 
 Parameters
@@ -298,13 +301,15 @@ rad_int_by_ele : RadIntAllEleStruct, optional
   );
   m.def(
       "radiation_map_setup",
-      &Bmad::radiation_map_setup,
-      py::arg("ele"),
-      py::arg("ref_orbit_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine radiation_map_setup (ele, err_flag, ref_orbit_in)
-
-Routine to calculate the radiation kick for a lattice element.
+      [](EleStruct &ele, CoordStruct *ref_orbit_in) {
+        auto fn =
+            static_cast<bool (*)(EleStruct &, optional_ref<CoordStruct>)>(&Bmad::radiation_map_setup
+            );
+        return fn(ele, ptr_to_opt_ref(ref_orbit_in));
+      },
+      nb::arg("ele"),
+      nb::arg("ref_orbit_in") = nb::none(),
+      R"""(Routine to calculate the radiation kick for a lattice element.
 
 Parameters
 ----------
@@ -322,9 +327,8 @@ err_flag : bool
   m.def(
       "ramper_slave_setup",
       &Bmad::ramper_slave_setup,
-      py::arg("lat"),
-      py::arg("force_setup") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("force_setup") = nb::none(),
       R"""(Wrapper for Fortran routine ramper_slave_setup
 
 Parameters
@@ -339,29 +343,24 @@ force_setup : bool, optional
     be done if lat.ramper_slave_bookkeeping = super_ok$.
 )"""
   );
-  py::class_<Bmad::RamperValue, std::unique_ptr<Bmad::RamperValue>>(
-      m,
-      "RamperValue",
-      "ramper_value return type"
-  )
-      .def_readonly("err_flag", &Bmad::RamperValue::err_flag)
-      .def_readonly("value", &Bmad::RamperValue::value)
+  nb::class_<Bmad::RamperValue>(m, "RamperValue", "ramper_value return type")
+      .def_ro("err_flag", &Bmad::RamperValue::err_flag)
+      .def_ro("value", &Bmad::RamperValue::value)
       .def("__len__", [](const Bmad::RamperValue &) { return 2; })
-      .def("__getitem__", [](const Bmad::RamperValue &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::RamperValue &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.value);
-        throw py::index_error();
+          return nb::cast(s.value);
+        throw nb::index_error();
       });
   m.def(
       "ramper_value",
       &Bmad::ramper_value,
-      py::arg("ramper"),
-      py::arg("r1"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ramper"),
+      nb::arg("r1"),
       R"""(Wrapper for Fortran routine ramper_value
 
 Parameters
@@ -384,11 +383,8 @@ value : float
   m.def(
       "randomize_lr_wake_frequencies",
       &Bmad::randomize_lr_wake_frequencies,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine randomize_lr_wake_frequencies (ele, set_done)
-
-Routine to randomize the frequencies of the lr wake HOMs according to:
+      nb::arg("ele"),
+      R"""(Routine to randomize the frequencies of the lr wake HOMs according to:
   freq = freq_in * (1 + lr_freq_spread) * rr)
 where rr is a Gaussian distributed random number with unit variance.
 
@@ -408,9 +404,8 @@ set_done : bool, optional
   m.def(
       "rchomp",
       &Bmad::rchomp,
-      py::arg("rel"),
-      py::arg("plc"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("rel"),
+      nb::arg("plc"),
       R"""(Wrapper for Fortran routine rchomp
 
 Parameters
@@ -427,11 +422,10 @@ out : str
   m.def(
       "re_allocate_eles",
       &Bmad::re_allocate_eles,
-      py::arg("eles"),
-      py::arg("n"),
-      py::arg("save_old") = py::none(),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("eles"),
+      nb::arg("n"),
+      nb::arg("save_old") = nb::none(),
+      nb::arg("exact") = nb::none(),
       R"""(Wrapper for Fortran routine re_allocate_eles
 
 Parameters
@@ -454,11 +448,10 @@ exact : bool, optional
   );
   m.def(
       "re_allocate",
-      py::overload_cast<Wall3dSectionStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
-      py::arg("section"),
-      py::arg("n"),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<Wall3dSectionStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
+      nb::arg("section"),
+      nb::arg("n"),
+      nb::arg("exact") = nb::none(),
       R"""(Wrapper for Fortran routine re_allocate_wall3d_section_array
 
 Parameters
@@ -472,11 +465,10 @@ exact : bool, optional
   );
   m.def(
       "re_allocate",
-      py::overload_cast<Wall3dVertexStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
-      py::arg("v"),
-      py::arg("n"),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<Wall3dVertexStructAlloc1D, int, std::optional<bool>>(&Bmad::re_allocate),
+      nb::arg("v"),
+      nb::arg("n"),
+      nb::arg("exact") = nb::none(),
       R"""(Wrapper for Fortran routine re_allocate_wall3d_vertex_array
 
 Parameters
@@ -491,13 +483,10 @@ exact : bool, optional
   m.def(
       "re_associate_node_array",
       &Bmad::re_associate_node_array,
-      py::arg("tree"),
-      py::arg("n"),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine re_associate_node_array(tree, n, exact)
-
-Routine to resize the tree%node(:) array.
+      nb::arg("tree"),
+      nb::arg("n"),
+      nb::arg("exact") = nb::none(),
+      R"""(Routine to resize the tree%node(:) array.
 
 Note: The data of the array is preserved but data at the end of the
 array will be lost if n is less than the original size of the array
@@ -515,9 +504,8 @@ exact : bool, optional
   );
   m.def(
       "re_str",
-      py::overload_cast<long double>(&Bmad::re_str),
-      py::arg("rel"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<long double>(&Bmad::re_str),
+      nb::arg("rel"),
       R"""(Wrapper for Fortran routine re_str_qp
 
 Parameters
@@ -531,9 +519,8 @@ str_out : str
   );
   m.def(
       "re_str",
-      py::overload_cast<double>(&Bmad::re_str),
-      py::arg("rel"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<double>(&Bmad::re_str),
+      nb::arg("rel"),
       R"""(Wrapper for Fortran routine re_str_rp
 
 Parameters
@@ -545,32 +532,25 @@ Returns
 str_out : str
 )"""
   );
-  py::class_<Bmad::ReadBeamAscii, std::unique_ptr<Bmad::ReadBeamAscii>>(
-      m,
-      "ReadBeamAscii",
-      "read_beam_ascii return type"
-  )
-      .def_readonly("beam", &Bmad::ReadBeamAscii::beam)
-      .def_readonly("err_flag", &Bmad::ReadBeamAscii::err_flag)
+  nb::class_<Bmad::ReadBeamAscii>(m, "ReadBeamAscii", "read_beam_ascii return type")
+      .def_ro("beam", &Bmad::ReadBeamAscii::beam)
+      .def_ro("err_flag", &Bmad::ReadBeamAscii::err_flag)
       .def("__len__", [](const Bmad::ReadBeamAscii &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBeamAscii &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadBeamAscii &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.beam);
+          return nb::cast(s.beam);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "read_beam_ascii",
       &Bmad::read_beam_ascii,
-      py::arg("file_name"),
-      py::arg("beam_init"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_beam_ascii (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
-
-Subroutine to read in a beam definition file.
+      nb::arg("file_name"),
+      nb::arg("beam_init"),
+      R"""(Subroutine to read in a beam definition file.
 If non_zero, the following components of beam_init are used to rescale the beam:
     %n_bunch
     %n_particle
@@ -596,35 +576,45 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ReadBeamFile, std::unique_ptr<Bmad::ReadBeamFile>>(
-      m,
-      "ReadBeamFile",
-      "read_beam_file return type"
-  )
-      .def_readonly("beam", &Bmad::ReadBeamFile::beam)
-      .def_readonly("err_flag", &Bmad::ReadBeamFile::err_flag)
+  nb::class_<Bmad::ReadBeamFile>(m, "ReadBeamFile", "read_beam_file return type")
+      .def_ro("beam", &Bmad::ReadBeamFile::beam)
+      .def_ro("err_flag", &Bmad::ReadBeamFile::err_flag)
       .def("__len__", [](const Bmad::ReadBeamFile &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBeamFile &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadBeamFile &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.beam);
+          return nb::cast(s.beam);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "read_beam_file",
-      &Bmad::read_beam_file,
-      py::arg("file_name"),
-      py::arg("beam_init"),
-      py::arg("ele") = py::none(),
-      py::arg("print_mom_shift_warning") = py::none(),
-      py::arg("conserve_momentum") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_beam_file (file_name, beam, beam_init, err_flag, ele, print_mom_shift_warning, conserve_momentum)
-
-Subroutine to read in a beam definition file.
+      [](std::string file_name,
+         BeamInitStruct &beam_init,
+         EleStruct *ele,
+         std::optional<bool> print_mom_shift_warning,
+         std::optional<bool> conserve_momentum) {
+        auto fn = static_cast<
+            Bmad::
+                ReadBeamFile (*)(std::string, BeamInitStruct &, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::read_beam_file
+        );
+        return fn(
+            file_name,
+            beam_init,
+            ptr_to_opt_ref(ele),
+            print_mom_shift_warning,
+            conserve_momentum
+        );
+      },
+      nb::arg("file_name"),
+      nb::arg("beam_init"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("print_mom_shift_warning") = nb::none(),
+      nb::arg("conserve_momentum") = nb::none(),
+      R"""(Subroutine to read in a beam definition file.
 If non_zero, the following components of beam_init are used to rescale the beam:
     %n_bunch
     %n_particle
@@ -657,32 +647,29 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ReadBinaryCartesianMap, std::unique_ptr<Bmad::ReadBinaryCartesianMap>>(
+  nb::class_<Bmad::ReadBinaryCartesianMap>(
       m,
       "ReadBinaryCartesianMap",
       "read_binary_cartesian_map return type"
   )
-      .def_readonly("cart_map", &Bmad::ReadBinaryCartesianMap::cart_map)
-      .def_readonly("err_flag", &Bmad::ReadBinaryCartesianMap::err_flag)
+      .def_ro("cart_map", &Bmad::ReadBinaryCartesianMap::cart_map)
+      .def_ro("err_flag", &Bmad::ReadBinaryCartesianMap::err_flag)
       .def("__len__", [](const Bmad::ReadBinaryCartesianMap &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryCartesianMap &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadBinaryCartesianMap &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.cart_map);
+          return nb::cast(s.cart_map);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "read_binary_cartesian_map",
       &Bmad::read_binary_cartesian_map,
-      py::arg("file_name"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_binary_cartesian_map (file_name, ele, cart_map, err_flag)
-
-Routine to read a binary cartesian_map structure.
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      R"""(Routine to read a binary cartesian_map structure.
 
 Parameters
 ----------
@@ -701,32 +688,29 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ReadBinaryCylindricalMap, std::unique_ptr<Bmad::ReadBinaryCylindricalMap>>(
+  nb::class_<Bmad::ReadBinaryCylindricalMap>(
       m,
       "ReadBinaryCylindricalMap",
       "read_binary_cylindrical_map return type"
   )
-      .def_readonly("cl_map", &Bmad::ReadBinaryCylindricalMap::cl_map)
-      .def_readonly("err_flag", &Bmad::ReadBinaryCylindricalMap::err_flag)
+      .def_ro("cl_map", &Bmad::ReadBinaryCylindricalMap::cl_map)
+      .def_ro("err_flag", &Bmad::ReadBinaryCylindricalMap::err_flag)
       .def("__len__", [](const Bmad::ReadBinaryCylindricalMap &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryCylindricalMap &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadBinaryCylindricalMap &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.cl_map);
+          return nb::cast(s.cl_map);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "read_binary_cylindrical_map",
       &Bmad::read_binary_cylindrical_map,
-      py::arg("file_name"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_binary_cylindrical_map (file_name, ele, cl_map, err_flag)
-
-Routine to read a binary cylindrical_map structure.
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      R"""(Routine to read a binary cylindrical_map structure.
 
 Parameters
 ----------
@@ -745,32 +729,29 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ReadBinaryGridField, std::unique_ptr<Bmad::ReadBinaryGridField>>(
+  nb::class_<Bmad::ReadBinaryGridField>(
       m,
       "ReadBinaryGridField",
       "read_binary_grid_field return type"
   )
-      .def_readonly("g_field", &Bmad::ReadBinaryGridField::g_field)
-      .def_readonly("err_flag", &Bmad::ReadBinaryGridField::err_flag)
+      .def_ro("g_field", &Bmad::ReadBinaryGridField::g_field)
+      .def_ro("err_flag", &Bmad::ReadBinaryGridField::err_flag)
       .def("__len__", [](const Bmad::ReadBinaryGridField &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryGridField &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadBinaryGridField &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.g_field);
+          return nb::cast(s.g_field);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "read_binary_grid_field",
       &Bmad::read_binary_grid_field,
-      py::arg("file_name"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_binary_grid_field (file_name, ele, g_field, err_flag)
-
-Routine to read a binary grid_field structure.
+      nb::arg("file_name"),
+      nb::arg("ele"),
+      R"""(Routine to read a binary grid_field structure.
 
 Parameters
 ----------
@@ -789,37 +770,36 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ReadDigestedBmadFile, std::unique_ptr<Bmad::ReadDigestedBmadFile>>(
+  nb::class_<Bmad::ReadDigestedBmadFile>(
       m,
       "ReadDigestedBmadFile",
       "read_digested_bmad_file return type"
   )
-      .def_readonly("lat", &Bmad::ReadDigestedBmadFile::lat)
-      .def_readonly("inc_version", &Bmad::ReadDigestedBmadFile::inc_version)
-      .def_readonly("err_flag", &Bmad::ReadDigestedBmadFile::err_flag)
-      .def_readonly("parser_calling", &Bmad::ReadDigestedBmadFile::parser_calling)
-      .def_readonly("lat_files", &Bmad::ReadDigestedBmadFile::lat_files)
+      .def_ro("lat", &Bmad::ReadDigestedBmadFile::lat)
+      .def_ro("inc_version", &Bmad::ReadDigestedBmadFile::inc_version)
+      .def_ro("err_flag", &Bmad::ReadDigestedBmadFile::err_flag)
+      .def_ro("parser_calling", &Bmad::ReadDigestedBmadFile::parser_calling)
+      .def_ro("lat_files", &Bmad::ReadDigestedBmadFile::lat_files)
       .def("__len__", [](const Bmad::ReadDigestedBmadFile &) { return 5; })
-      .def("__getitem__", [](const Bmad::ReadDigestedBmadFile &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ReadDigestedBmadFile &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.lat);
+          return nb::cast(s.lat);
         if (i == 1)
-          return py::cast(s.inc_version);
+          return nb::cast(s.inc_version);
         if (i == 2)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 3)
-          return py::cast(s.parser_calling);
+          return nb::cast(s.parser_calling);
         if (i == 4)
-          return py::cast(s.lat_files);
-        throw py::index_error();
+          return nb::cast(s.lat_files);
+        throw nb::index_error();
       });
   m.def(
       "read_digested_bmad_file",
       &Bmad::read_digested_bmad_file,
-      py::arg("digested_file"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("digested_file"),
       R"""(Wrapper for Fortran routine read_digested_bmad_file
 
 Parameters
@@ -852,11 +832,8 @@ lat_files : 1D array of str, optional
   m.def(
       "read_surface_reflection_file",
       &Bmad::read_surface_reflection_file,
-      py::arg("file_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_surface_reflection_file (file_name, surface)
-
-Routine to read the reflection probability data for a given type of surface from a file.
+      nb::arg("file_name"),
+      R"""(Routine to read the reflection probability data for a given type of surface from a file.
 
 Parameters
 ----------
@@ -872,11 +849,10 @@ surface : PhotonReflectSurfaceStruct
   m.def(
       "reallocate_beam",
       &Bmad::reallocate_beam,
-      py::arg("beam"),
-      py::arg("n_bunch"),
-      py::arg("n_particle") = py::none(),
-      py::arg("extend") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("beam"),
+      nb::arg("n_bunch"),
+      nb::arg("n_particle") = nb::none(),
+      nb::arg("extend") = nb::none(),
       R"""(Wrapper for Fortran routine reallocate_beam
 
 Parameters
@@ -899,16 +875,14 @@ extend : bool, optional
   m.def(
       "reallocate_bp_com_const",
       &Bmad::reallocate_bp_com_const,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine reallocate_bp_com_const
 )"""
   );
   m.def(
       "reallocate_bunch",
       &Bmad::reallocate_bunch,
-      py::arg("n_particle"),
-      py::arg("save") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n_particle"),
+      nb::arg("save") = nb::none(),
       R"""(Wrapper for Fortran routine reallocate_bunch
 
 Parameters
@@ -928,9 +902,8 @@ bunch : BunchStruct
   m.def(
       "reallocate_control",
       &Bmad::reallocate_control,
-      py::arg("lat"),
-      py::arg("n"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("n"),
       R"""(Wrapper for Fortran routine reallocate_control
 
 Parameters
@@ -944,13 +917,10 @@ n : int
   );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordArrayStructAlloc1D, LatStruct &>(&Bmad::reallocate_coord),
-      py::arg("coord_array"),
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine reallocate_coord (...)
-
-Routine to allocate or reallocate at allocatable coord_struct array.
+      nb::overload_cast<CoordArrayStructAlloc1D, LatStruct &>(&Bmad::reallocate_coord),
+      nb::arg("coord_array"),
+      nb::arg("lat"),
+      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
 reallocate_coord is an overloaded name for:
   reallocate_coord_n (coord, n_coord)
   reallocate_coord_lat (coord, lat, ix_branch)
@@ -971,16 +941,12 @@ lat : LatStruct
   );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(
-          &Bmad::reallocate_coord
+      nb::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(&Bmad::reallocate_coord
       ),
-      py::arg("coord"),
-      py::arg("lat"),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine reallocate_coord (...)
-
-Routine to allocate or reallocate at allocatable coord_struct array.
+      nb::arg("coord"),
+      nb::arg("lat"),
+      nb::arg("ix_branch") = nb::none(),
+      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
 reallocate_coord is an overloaded name for:
   reallocate_coord_n (coord, n_coord)
   reallocate_coord_lat (coord, lat, ix_branch)
@@ -1009,13 +975,10 @@ ix_branch : int, optional
   );
   m.def(
       "reallocate_coord",
-      py::overload_cast<CoordStructAlloc1D, int>(&Bmad::reallocate_coord),
-      py::arg("coord"),
-      py::arg("n_coord"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine reallocate_coord (...)
-
-Routine to allocate or reallocate at allocatable coord_struct array.
+      nb::overload_cast<CoordStructAlloc1D, int>(&Bmad::reallocate_coord),
+      nb::arg("coord"),
+      nb::arg("n_coord"),
+      R"""(Routine to allocate or reallocate at allocatable coord_struct array.
 reallocate_coord is an overloaded name for:
   reallocate_coord_n (coord, n_coord)
   reallocate_coord_lat (coord, lat, ix_branch)
@@ -1042,10 +1005,9 @@ n_coord : int
   m.def(
       "reallocate_expression_stack",
       &Bmad::reallocate_expression_stack,
-      py::arg("stack"),
-      py::arg("n"),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("stack"),
+      nb::arg("n"),
+      nb::arg("exact") = nb::none(),
       R"""(Wrapper for Fortran routine reallocate_expression_stack
 
 Parameters
@@ -1063,11 +1025,18 @@ exact : bool, optional
 )"""
   );
   m.def(
+      "reallocate_sequence",
+      &Bmad::reallocate_sequence,
+      nb::arg("sequence"),
+      nb::arg("n_seq"),
+      R"""(No docstring available.
+)"""
+  );
+  m.def(
       "rel_tracking_charge_to_mass",
       &Bmad::rel_tracking_charge_to_mass,
-      py::arg("orbit"),
-      py::arg("ref_species"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ref_species"),
       R"""(Wrapper for Fortran routine rel_tracking_charge_to_mass
 
 Parameters
@@ -1087,9 +1056,8 @@ rel_charge : float
   m.def(
       "relative_mode_flip",
       &Bmad::relative_mode_flip,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
       R"""(Wrapper for Fortran routine relative_mode_flip
 
 Parameters
@@ -1101,28 +1069,21 @@ ele2 : EleStruct
     Elements to compare.
 )"""
   );
-  py::class_<PyReleaseRadIntCache, std::unique_ptr<PyReleaseRadIntCache>>(
-      m,
-      "ReleaseRadIntCache",
-      "release_rad_int_cache return type"
-  )
-      .def_readonly("ix_cache", &PyReleaseRadIntCache::ix_cache)
+  nb::class_<PyReleaseRadIntCache>(m, "ReleaseRadIntCache", "release_rad_int_cache return type")
+      .def_ro("ix_cache", &PyReleaseRadIntCache::ix_cache)
       .def("__len__", [](const PyReleaseRadIntCache &) { return 1; })
-      .def("__getitem__", [](const PyReleaseRadIntCache &s, int i) -> py::object {
+      .def("__getitem__", [](const PyReleaseRadIntCache &s, int i) -> nb::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.ix_cache);
-        throw py::index_error();
+          return nb::cast(s.ix_cache);
+        throw nb::index_error();
       });
   m.def(
       "release_rad_int_cache",
       &python_release_rad_int_cache,
-      py::arg("ix_cache"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine release_rad_int_cache (ix_cache)
-
-Subroutine to release the memory associated with caching wiggler values.
+      nb::arg("ix_cache"),
+      R"""(Subroutine to release the memory associated with caching wiggler values.
 See the radiation_integrals routine for further details.
 
 Parameters
@@ -1143,14 +1104,11 @@ ix_cache : int
   m.def(
       "remove_constant_taylor",
       &Bmad::remove_constant_taylor,
-      py::arg("taylor_in"),
-      py::arg("taylor_out"),
-      py::arg("c0"),
-      py::arg("remove_higher_order_terms"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine remove_constant_taylor (taylor_in, taylor_out, c0, remove_higher_order_terms)
-
-Subroutine to remove the constant part of a taylor map.
+      nb::arg("taylor_in"),
+      nb::arg("taylor_out"),
+      nb::arg("c0"),
+      nb::arg("remove_higher_order_terms"),
+      R"""(Subroutine to remove the constant part of a taylor map.
 Optionally terms that are higher order than bmad_com%taylor_order can
 be removed.
 
@@ -1176,8 +1134,7 @@ remove_higher_order_terms : bool
   m.def(
       "remove_dead_from_bunch",
       &Bmad::remove_dead_from_bunch,
-      py::arg("bunch_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bunch_in"),
       R"""(Wrapper for Fortran routine remove_dead_from_bunch
 
 Parameters
@@ -1195,9 +1152,8 @@ bunch_out : BunchStruct
   m.def(
       "remove_eles_from_lat",
       &Bmad::remove_eles_from_lat,
-      py::arg("lat"),
-      py::arg("check_sanity") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("check_sanity") = nb::none(),
       R"""(Wrapper for Fortran routine remove_eles_from_lat
 
 Parameters
@@ -1214,9 +1170,8 @@ check_sanity : bool, optional
   m.def(
       "remove_lord_slave_link",
       &Bmad::remove_lord_slave_link,
-      py::arg("lord"),
-      py::arg("slave"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
+      nb::arg("slave"),
       R"""(Wrapper for Fortran routine remove_lord_slave_link
 
 Parameters
@@ -1235,9 +1190,8 @@ slave : EleStruct
   m.def(
       "reverse_lat",
       &Bmad::reverse_lat,
-      py::arg("lat_in"),
-      py::arg("track_antiparticle") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat_in"),
+      nb::arg("track_antiparticle") = nb::none(),
       R"""(Wrapper for Fortran routine reverse_lat
 
 Parameters
@@ -1257,14 +1211,13 @@ lat_rev : LatStruct
   m.def(
       "rf_coupler_kick",
       &Bmad::rf_coupler_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("phase"),
-      py::arg("orbit"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("phase"),
+      nb::arg("orbit"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(No longer in the codebase
 function rf_clock_setup (branch, n_rf_included, n_rf_excluded) result (ok)
   import
@@ -1305,10 +1258,9 @@ make_matrix : bool, optional
   m.def(
       "rf_is_on",
       &Bmad::rf_is_on,
-      py::arg("branch"),
-      py::arg("ix_ele1") = py::none(),
-      py::arg("ix_ele2") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
+      nb::arg("ix_ele1") = nb::none(),
+      nb::arg("ix_ele2") = nb::none(),
       R"""(Wrapper for Fortran routine rf_is_on
 
 Parameters
@@ -1331,9 +1283,8 @@ is_on : bool
   m.def(
       "rf_ref_time_offset",
       &Bmad::rf_ref_time_offset,
-      py::arg("ele"),
-      py::arg("ds") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("ds") = nb::none(),
       R"""(Wrapper for Fortran routine rf_ref_time_offset
 
 Parameters
@@ -1353,16 +1304,15 @@ time : float
   m.def(
       "rfun",
       &Bmad::rfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("hz"),
-      py::arg("i"),
-      py::arg("j"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("hz"),
+      nb::arg("i"),
+      nb::arg("j"),
       R"""(Wrapper for Fortran routine rfun
 
 Parameters
@@ -1392,18 +1342,43 @@ res : float
   );
   m.def(
       "rk_adaptive_time_step",
-      &Bmad::rk_adaptive_time_step,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orb"),
-      py::arg("t_dir"),
-      py::arg("rf_time"),
-      py::arg("dt_try"),
-      py::arg("dt_did"),
-      py::arg("dt_next"),
-      py::arg("err_flag"),
-      py::arg("extra_field") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         CoordStruct &orb,
+         int t_dir,
+         double rf_time,
+         double dt_try,
+         double dt_did,
+         double dt_next,
+         bool err_flag,
+         EmFieldStruct *extra_field) {
+        auto fn = static_cast<
+            void (*)(EleStruct &, LatParamStruct &, CoordStruct &, int, double, double, double, double, bool, optional_ref<EmFieldStruct>)>(
+            &Bmad::rk_adaptive_time_step
+        );
+        return fn(
+            ele,
+            param,
+            orb,
+            t_dir,
+            rf_time,
+            dt_try,
+            dt_did,
+            dt_next,
+            err_flag,
+            ptr_to_opt_ref(extra_field)
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orb"),
+      nb::arg("t_dir"),
+      nb::arg("rf_time"),
+      nb::arg("dt_try"),
+      nb::arg("dt_did"),
+      nb::arg("dt_next"),
+      nb::arg("err_flag"),
+      nb::arg("extra_field") = nb::none(),
       R"""(Wrapper for Fortran routine rk_adaptive_time_step
 
 Parameters
@@ -1431,18 +1406,44 @@ extra_field : EmFieldStruct, optional
   );
   m.def(
       "rk_time_step1",
-      &Bmad::rk_time_step1,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("rf_time"),
-      py::arg("orb"),
-      py::arg("dt"),
-      py::arg("new_orb"),
-      py::arg("err_flag"),
-      py::arg("dr_dt") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::arg("extra_field") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         double rf_time,
+         CoordStruct &orb,
+         double dt,
+         CoordStruct &new_orb,
+         bool err_flag,
+         std::optional<FixedArray1D<Real, 10>> dr_dt,
+         std::optional<bool> print_err,
+         EmFieldStruct *extra_field) {
+        auto fn = static_cast<FixedArray1D<
+            Real,
+            10> (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, double, CoordStruct &, bool, std::optional<FixedArray1D<Real, 10>>, std::optional<bool>, optional_ref<EmFieldStruct>)>(
+            &Bmad::rk_time_step1
+        );
+        return fn(
+            ele,
+            param,
+            rf_time,
+            orb,
+            dt,
+            new_orb,
+            err_flag,
+            dr_dt,
+            print_err,
+            ptr_to_opt_ref(extra_field)
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("rf_time"),
+      nb::arg("orb"),
+      nb::arg("dt"),
+      nb::arg("new_orb"),
+      nb::arg("err_flag"),
+      nb::arg("dr_dt") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("extra_field") = nb::none(),
       R"""(Wrapper for Fortran routine rk_time_step1
 
 Parameters
@@ -1475,9 +1476,8 @@ r_err : 1D array of float (shape: 10)
   m.def(
       "rotate3",
       &Bmad::rotate3,
-      py::arg("vec"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("vec"),
+      nb::arg("angle"),
       R"""(Wrapper for Fortran routine rotate3
 
 Parameters
@@ -1494,15 +1494,12 @@ rvec : 1D array of float (shape: 3)
   m.def(
       "rotate_em_field",
       &Bmad::rotate_em_field,
-      py::arg("field"),
-      py::arg("w_mat"),
-      py::arg("w_inv"),
-      py::arg("calc_dfield") = py::none(),
-      py::arg("calc_potential") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine rotate_em_field (field, w_mat, w_inv, calc_dfield, calc_potential)
-
-Routine to transform the fields using the given rotation matrices.
+      nb::arg("field"),
+      nb::arg("w_mat"),
+      nb::arg("w_inv"),
+      nb::arg("calc_dfield") = nb::none(),
+      nb::arg("calc_potential") = nb::none(),
+      R"""(Routine to transform the fields using the given rotation matrices.
 
 Parameters
 ----------
@@ -1525,9 +1522,8 @@ calc_potential : bool, optional
   m.def(
       "rotate_field_zx",
       &Bmad::rotate_field_zx,
-      py::arg("field"),
-      py::arg("theta"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("field"),
+      nb::arg("theta"),
       R"""(Wrapper for Fortran routine rotate_field_zx
 
 Parameters
@@ -1540,11 +1536,10 @@ theta : float
   m.def(
       "rotate_for_curved_surface",
       &Bmad::rotate_for_curved_surface,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("set"),
-      py::arg("rot_mat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("set"),
+      nb::arg("rot_mat"),
       R"""(Wrapper for Fortran routine rotate_for_curved_surface
 
 Parameters
@@ -1568,9 +1563,8 @@ rot_mat : 2D array of float (shape: 3,3)
   m.def(
       "rotate_spin",
       &Bmad::rotate_spin,
-      py::arg("rot_vec"),
-      py::arg("spin"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("rot_vec"),
+      nb::arg("spin"),
       R"""(Wrapper for Fortran routine rotate_spin
 
 Parameters
@@ -1592,11 +1586,10 @@ qrot : 1D array of float (shape: 0:3), optional
   m.def(
       "rotate_spin_a_step",
       &Bmad::rotate_spin_a_step,
-      py::arg("orbit"),
-      py::arg("field"),
-      py::arg("ele"),
-      py::arg("ds"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("field"),
+      nb::arg("ele"),
+      nb::arg("ds"),
       R"""(Wrapper for Fortran routine rotate_spin_a_step
 
 Parameters
@@ -1619,12 +1612,11 @@ ds : float
   m.def(
       "rotate_spin_given_field",
       &Bmad::rotate_spin_given_field,
-      py::arg("orbit"),
-      py::arg("sign_z_vel"),
-      py::arg("BL") = py::none(),
-      py::arg("EL") = py::none(),
-      py::arg("qrot") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("sign_z_vel"),
+      nb::arg("BL") = nb::none(),
+      nb::arg("EL") = nb::none(),
+      nb::arg("qrot") = nb::none(),
       R"""(Wrapper for Fortran routine rotate_spin_given_field
 
 Parameters

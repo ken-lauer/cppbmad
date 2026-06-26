@@ -1,29 +1,28 @@
 #include "pybmad/generated/SimUtils_routines_g.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_g(py::module &m) {
-  py::class_<SimUtils::Gelbd, std::unique_ptr<SimUtils::Gelbd>>(m, "Gelbd", "gelbd return type")
-      .def_readonly("elb", &SimUtils::Gelbd::elb)
-      .def_readonly("eld", &SimUtils::Gelbd::eld)
+void init_SimUtils_routines_g(nb::module_ &m) {
+  nb::class_<SimUtils::Gelbd>(m, "Gelbd", "gelbd return type")
+      .def_ro("elb", &SimUtils::Gelbd::elb)
+      .def_ro("eld", &SimUtils::Gelbd::eld)
       .def("__len__", [](const SimUtils::Gelbd &) { return 2; })
-      .def("__getitem__", [](const SimUtils::Gelbd &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::Gelbd &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.elb);
+          return nb::cast(s.elb);
         if (i == 1)
-          return py::cast(s.eld);
-        throw py::index_error();
+          return nb::cast(s.eld);
+        throw nb::index_error();
       });
   m.def(
       "gelbd",
       &SimUtils::gelbd,
-      py::arg("phi"),
-      py::arg("mc"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("phi"),
+      nb::arg("mc"),
       R"""(Wrapper for Fortran routine gelbd
 
 Parameters
@@ -42,12 +41,11 @@ eld : float
   m.def(
       "gen_complete_elliptic",
       &SimUtils::gen_complete_elliptic,
-      py::arg("kc"),
-      py::arg("p"),
-      py::arg("c"),
-      py::arg("s"),
-      py::arg("err_tol") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("kc"),
+      nb::arg("p"),
+      nb::arg("c"),
+      nb::arg("s"),
+      nb::arg("err_tol") = nb::none(),
       R"""(Wrapper for Fortran routine gen_complete_elliptic
 
 Parameters
@@ -74,14 +72,46 @@ value : float
 )"""
   );
   m.def(
+      "general_bin_count",
+      &SimUtils::general_bin_count,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for getting the count at a general index. Count will be 0 if out of bounds
+)"""
+  );
+  m.def(
+      "general_bin_index",
+      &SimUtils::general_bin_index,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for looking up an index in the 1D count array
+)"""
+  );
+  m.def(
+      "general_bin_index_in_bounds",
+      &SimUtils::general_bin_index_in_bounds,
+      nb::arg("bin_data"),
+      nb::arg("ix1"),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix3") = nb::none(),
+      R"""(Function for checking bounds
+)"""
+  );
+  m.def(
       "get_a_char",
-      &SimUtils::get_a_char,
-      py::arg("wait"),
-      py::arg("ignore_this") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_a_char (this_char, wait, ignore_this)
-
-Subroutine for getting a single character from the terminal.
+      [](bool wait, CharacterAlloc1D *ignore_this) {
+        auto fn =
+            static_cast<std::string (*)(bool, optional_ref<CharacterAlloc1D>)>(&SimUtils::get_a_char
+            );
+        return fn(wait, ptr_to_opt_ref(ignore_this));
+      },
+      nb::arg("wait"),
+      nb::arg("ignore_this") = nb::none(),
+      R"""(Subroutine for getting a single character from the terminal.
 Also see: get_tty_char
 
 System Libraries that need to be linked to:
@@ -105,11 +135,10 @@ this_char : str
   m.def(
       "get_file_number",
       &SimUtils::get_file_number,
-      py::arg("file_name"),
-      py::arg("cnum_in"),
-      py::arg("num_out"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
+      nb::arg("cnum_in"),
+      nb::arg("num_out"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine get_file_number
 
 Parameters
@@ -126,9 +155,8 @@ err_flag : bool
   m.def(
       "get_file_time_stamp",
       &SimUtils::get_file_time_stamp,
-      py::arg("file"),
-      py::arg("time_stamp"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file"),
+      nb::arg("time_stamp"),
       R"""(no longer exists
 subroutine get_next_number (filein, cnum, digits)
   implicit none
@@ -141,12 +169,9 @@ end subroutine
   m.def(
       "get_tty_char",
       &SimUtils::get_tty_char,
-      py::arg("wait"),
-      py::arg("flush"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_tty_char (this_char, wait, flush)
-
-Subroutine for getting a single character from the terminal.
+      nb::arg("wait"),
+      nb::arg("flush"),
+      R"""(Subroutine for getting a single character from the terminal.
 Also see: get_a_char
 
 System Libraries that need to be linked to:

@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_i.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyInitAttributeName1 python_init_attribute_name1(
@@ -17,17 +17,235 @@ PyInitAttributeName1 python_init_attribute_name1(
   return py_result;
 }
 
-void init_Bmad_routines_i(py::module &m) {
+void init_Bmad_routines_i(nb::module_ &m) {
+  m.def(
+      "i_csr",
+      &Bmad::i_csr,
+      nb::arg("kick1"),
+      nb::arg("i_bin"),
+      nb::arg("csr"),
+      R"""(Routine to calculate the CSR kick integral (at y = 0)
+
+Parameters
+----------
+kick1 : CsrKick1Struct
+
+i_bin : int
+    Bin index.
+
+csr : CsrStruct
+)"""
+  );
+  m.def(
+      "ibs1",
+      &Bmad::ibs1,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("rates"),
+      nb::arg("i") = nb::none(),
+      nb::arg("s") = nb::none(),
+      R"""(Calculates IBS growth rates at some location in a lattice.
+The IBS rates are betatron growth rates.  That is, they are the rate of
+change in sigma_x, sigma_y, and sigma_p.  The emittance growth
+rate is twice the betatron growth rate.
+1/T_emit = 2/T_betatron.
+eg  emit(t) = emit_0 * exp(-2*t/T_betatron) because emit = sigma^2/beta
+
+ Available IBS formulas (ibs_sim_params%formula):
+   cimp - Completely Integrated Modified Piwinski
+   bjmt - Bjorken-Mtingwa formulation general to bunched beams (time consuming)
+   bane - Bane approximation of Bjorken-Mtingwa formulation
+   mpzt - Modified Piwinski with Zotter's Integral
+   mpxx - Modified Piwinski with a constant Coulomb log.
+   kubo - Kubo and Oide's sigma matrix-based
+
+Either i or s, but not both, must be specified.
+)"""
+  );
+  m.def(
+      "ibs_blowup1turn",
+      &Bmad::ibs_blowup1turn,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      R"""(Updates beam emittances with effect of IBS for
+one turn on the lattice.
+
+Parameters
+----------
+lat : LatStruct
+    lattice
+
+ibs_sim_params : IbsSimParamStruct
+    Parameters for calculation of IBS rates
+)"""
+  );
+  nb::class_<Bmad::IbsDeltaCalc>(m, "IbsDeltaCalc", "ibs_delta_calc return type")
+      .def_ro("delta_sigma_energy", &Bmad::IbsDeltaCalc::delta_sigma_energy)
+      .def_ro("delta_emit_a", &Bmad::IbsDeltaCalc::delta_emit_a)
+      .def_ro("delta_emit_b", &Bmad::IbsDeltaCalc::delta_emit_b)
+      .def("__len__", [](const Bmad::IbsDeltaCalc &) { return 3; })
+      .def("__getitem__", [](const Bmad::IbsDeltaCalc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.delta_sigma_energy);
+        if (i == 1)
+          return nb::cast(s.delta_emit_a);
+        if (i == 2)
+          return nb::cast(s.delta_emit_b);
+        throw nb::index_error();
+      });
+  m.def(
+      "ibs_delta_calc",
+      &Bmad::ibs_delta_calc,
+      nb::arg("lat"),
+      nb::arg("ix"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("sigma_mat") = nb::none(),
+      R"""(Calculates change in energy spread and emittances due to IBS for a single element.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ix : int
+    index of element to use: lat.ele(ix)
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for calculation of IBS rates.
+
+sigma_mat : 2D array of float (shape: 6,6), optional
+    Beam's sigma matrix. Required for 'kubo' method.
+
+Returns
+-------
+delta_sigma_energy : float, optional
+    change in energy spread in eV
+
+delta_emit_a : float, optional
+    change in a-mode emittance (geometric)
+
+delta_emit_b : float, optional
+    change in b-mode emittance (geometric)
+)"""
+  );
+  m.def(
+      "ibs_equib_der",
+      &Bmad::ibs_equib_der,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("inmode"),
+      nb::arg("granularity"),
+      R"""(Computes equilibrium beam sizes by calculating emittance growth rates from IBS growth rates.
+Steps beam size through time till equilibrium is reached.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation
+
+inmode : NormalModesStruct
+    natural beam parameters
+
+granularity : float
+    Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter. Set to -1 to calculate
+    element-by-element.
+
+Returns
+-------
+ibsmode : NormalModesStruct
+    beam parameters after IBS effects
+)"""
+  );
+  m.def(
+      "ibs_equib_rlx",
+      &Bmad::ibs_equib_rlx,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("inmode"),
+      nb::arg("ratio"),
+      nb::arg("initial_blow_up"),
+      nb::arg("granularity"),
+      R"""(Iterates to equilibrium beam conditions using relaxation method
+
+This method requires that the initial beam size be larger than the equilibrium beam size.
+An initial_blow_up of 3 to 5 is a good place to start.
+
+See ibs_rates subroutine for available IBS rate formulas.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation
+
+inmode : NormalModesStruct
+    natural beam parameters
+
+ratio : float
+    Ratio of vert_emit_coupling / vert_emit_total
+
+initial_blow_up : 1D array of float (shape: 3)
+    Factor multiplied to all thre bunch dimensions prior to starting iteration.
+
+granularity : float
+    Step size for slicing lattice.  i.e. set to 1 to calculate IBS rates every 1 meter.
+
+Returns
+-------
+ibsmode : NormalModesStruct
+    beam parameters after IBS effects
+)"""
+  );
+  m.def(
+      "ibs_lifetime",
+      &Bmad::ibs_lifetime,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("maxratio"),
+      nb::arg("granularity"),
+      R"""(This module computes the beam lifetime due to
+the diffusion process according to equation 12
+from page 129 of The Handbook for Accelerator
+Physics and Engineering 2nd edition.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking.
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for calculation of IBS rates.
+
+maxratio : IbsMaxratioStruct
+    Ax,y,p/sigma_x,y,p where Ax,y,p is the maximum sigma.  Note that this quantity is just the ratio, not the
+    ratio squared.  For example, maxratio%Rx = 1.1 says that the maximum acceptable beamsize is 10% larger
+    than the beamsize before IBS effects.
+
+granularity : float
+    Step size when slicing lattice.  -1 for element-by-element.
+
+Returns
+-------
+lifetime : IbsLifetimeStruct
+    structure returning IBS lifetimes
+)"""
+  );
   m.def(
       "ibs_matrix_c",
       &Bmad::ibs_matrix_c,
-      py::arg("sigma_mat"),
-      py::arg("tail_cut"),
-      py::arg("tau"),
-      py::arg("energy"),
-      py::arg("n_part"),
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("sigma_mat"),
+      nb::arg("tail_cut"),
+      nb::arg("tau"),
+      nb::arg("energy"),
+      nb::arg("n_part"),
+      nb::arg("species"),
       R"""(Wrapper for Fortran routine ibs_matrix_c
 
 Parameters
@@ -50,16 +268,42 @@ ibs_mat : 2D array of float (shape: 6,6)
 )"""
   );
   m.def(
+      "ibs_rates1turn",
+      &Bmad::ibs_rates1turn,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("granularity"),
+      R"""(Calculates IBS risetimes for given lat
+This is basically a front-end for the various formulas
+available in this module of calculating IBS rates.
+
+Parameters
+----------
+lat : LatStruct
+    lattice for tracking.
+
+ibs_sim_params : IbsSimParamStruct
+    parameters for IBS calculation.
+
+granularity : float
+    slice length.  -1 for element-by-element.
+
+Returns
+-------
+rates1turn : IbsStruct
+    ibs rates for onr turn on the lattice.
+)"""
+  );
+  m.def(
       "igfcoulombfun",
       &Bmad::igfcoulombfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("dx"),
-      py::arg("dy"),
-      py::arg("dz"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
+      nb::arg("dx"),
+      nb::arg("dy"),
+      nb::arg("dz"),
       R"""(Wrapper for Fortran routine igfcoulombfun
 
 Parameters
@@ -86,14 +330,13 @@ res : float
   m.def(
       "igfexfun",
       &Bmad::igfexfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("dx"),
-      py::arg("dy"),
-      py::arg("dz"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
+      nb::arg("dx"),
+      nb::arg("dy"),
+      nb::arg("dz"),
       R"""(Wrapper for Fortran routine igfexfun
 
 Parameters
@@ -120,14 +363,13 @@ res : float
   m.def(
       "igfeyfun",
       &Bmad::igfeyfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("dx"),
-      py::arg("dy"),
-      py::arg("dz"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
+      nb::arg("dx"),
+      nb::arg("dy"),
+      nb::arg("dz"),
       R"""(Wrapper for Fortran routine igfeyfun
 
 Parameters
@@ -154,14 +396,13 @@ res : float
   m.def(
       "igfezfun",
       &Bmad::igfezfun,
-      py::arg("u"),
-      py::arg("v"),
-      py::arg("w"),
-      py::arg("gam"),
-      py::arg("dx"),
-      py::arg("dy"),
-      py::arg("dz"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("u"),
+      nb::arg("v"),
+      nb::arg("w"),
+      nb::arg("gam"),
+      nb::arg("dx"),
+      nb::arg("dy"),
+      nb::arg("dz"),
       R"""(Wrapper for Fortran routine igfezfun
 
 Parameters
@@ -185,33 +426,40 @@ Returns
 res : float
 )"""
   );
-  py::class_<PyInitAttributeName1, std::unique_ptr<PyInitAttributeName1>>(
-      m,
-      "InitAttributeName1",
-      "init_attribute_name1 return type"
-  )
-      .def_readonly("is_ok", &PyInitAttributeName1::is_ok)
+  m.def(
+      "image_charge_kick_calc",
+      &Bmad::image_charge_kick_calc,
+      nb::arg("kick1"),
+      nb::arg("csr"),
+      R"""(Routine to calculate the image charge kick.
+
+Parameters
+----------
+kick1 : CsrKick1Struct
+
+csr : CsrStruct
+)"""
+  );
+  nb::class_<PyInitAttributeName1>(m, "InitAttributeName1", "init_attribute_name1 return type")
+      .def_ro("is_ok", &PyInitAttributeName1::is_ok)
       .def("__len__", [](const PyInitAttributeName1 &) { return 1; })
-      .def("__getitem__", [](const PyInitAttributeName1 &s, int i) -> py::object {
+      .def("__getitem__", [](const PyInitAttributeName1 &s, int i) -> nb::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "init_attribute_name1",
       &python_init_attribute_name1,
-      py::arg("is_ok"),
-      py::arg("ix_key"),
-      py::arg("ix_attrib"),
-      py::arg("name"),
-      py::arg("attrib_state") = py::none(),
-      py::arg("override") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine init_attribute_name1 (is_ok, ix_key, ix_attrib, name, attrib_state, override)
-
-Routine to initialize a single name in the element attribute name table.
+      nb::arg("is_ok"),
+      nb::arg("ix_key"),
+      nb::arg("ix_attrib"),
+      nb::arg("name"),
+      nb::arg("attrib_state") = nb::none(),
+      nb::arg("override") = nb::none(),
+      R"""(Routine to initialize a single name in the element attribute name table.
 
 Parameters
 ----------
@@ -248,45 +496,59 @@ is_ok : bool
   m.def(
       "init_attribute_name_array",
       &Bmad::init_attribute_name_array,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_attribute_name_array ()
-
-Private routine to initialize the attribute name array used by routines
+      R"""(Private routine to initialize the attribute name array used by routines
 in attribute_mod. Not meant for general use.
 )"""
   );
-  py::class_<Bmad::InitBeamDistribution, std::unique_ptr<Bmad::InitBeamDistribution>>(
+  nb::class_<Bmad::InitBeamDistribution>(
       m,
       "InitBeamDistribution",
       "init_beam_distribution return type"
   )
-      .def_readonly("beam", &Bmad::InitBeamDistribution::beam)
-      .def_readonly("err_flag", &Bmad::InitBeamDistribution::err_flag)
-      .def_readonly("beam_init_set", &Bmad::InitBeamDistribution::beam_init_set)
+      .def_ro("beam", &Bmad::InitBeamDistribution::beam)
+      .def_ro("err_flag", &Bmad::InitBeamDistribution::err_flag)
+      .def_ro("beam_init_set", &Bmad::InitBeamDistribution::beam_init_set)
       .def("__len__", [](const Bmad::InitBeamDistribution &) { return 3; })
-      .def("__getitem__", [](const Bmad::InitBeamDistribution &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::InitBeamDistribution &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.beam);
+          return nb::cast(s.beam);
         if (i == 1)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 2)
-          return py::cast(s.beam_init_set);
-        throw py::index_error();
+          return nb::cast(s.beam_init_set);
+        throw nb::index_error();
       });
   m.def(
       "init_beam_distribution",
-      &Bmad::init_beam_distribution,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("beam_init"),
-      py::arg("modes") = py::none(),
-      py::arg("print_p0c_shift_warning") = py::none(),
-      py::arg("conserve_momentum") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_beam_distribution (ele, param, beam_init, beam, err_flag, modes, beam_init_set,
-                                                                    print_p0c_shift_warning, conserve_momentum)
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         BeamInitStruct &beam_init,
+         NormalModesStruct *modes,
+         std::optional<bool> print_p0c_shift_warning,
+         std::optional<bool> conserve_momentum) {
+        auto fn = static_cast<
+            Bmad::
+                InitBeamDistribution (*)(EleStruct &, LatParamStruct &, BeamInitStruct &, optional_ref<NormalModesStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::init_beam_distribution
+        );
+        return fn(
+            ele,
+            param,
+            beam_init,
+            ptr_to_opt_ref(modes),
+            print_p0c_shift_warning,
+            conserve_momentum
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("beam_init"),
+      nb::arg("modes") = nb::none(),
+      nb::arg("print_p0c_shift_warning") = nb::none(),
+      nb::arg("conserve_momentum") = nb::none(),
+      R"""(                                                                    print_p0c_shift_warning, conserve_momentum)
 
 Subroutine to initialize a beam of particles.
 Initialization uses the downstream parameters of ele.
@@ -336,15 +598,16 @@ beam_init_set : BeamInitStruct, optional
   m.def(
       "init_bmad",
       &Bmad::init_bmad,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine init_bmad
 )"""
   );
   m.def(
       "init_bmad_parser_common",
-      &Bmad::init_bmad_parser_common,
-      py::arg("lat") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct *lat) {
+        auto fn = static_cast<void (*)(optional_ref<LatStruct>)>(&Bmad::init_bmad_parser_common);
+        return fn(ptr_to_opt_ref(lat));
+      },
+      nb::arg("lat") = nb::none(),
       R"""(Wrapper for Fortran routine init_bmad_parser_common
 
 Parameters
@@ -352,39 +615,58 @@ Parameters
 lat : LatStruct, optional
 )"""
   );
-  py::class_<Bmad::InitBunchDistribution, std::unique_ptr<Bmad::InitBunchDistribution>>(
+  nb::class_<Bmad::InitBunchDistribution>(
       m,
       "InitBunchDistribution",
       "init_bunch_distribution return type"
   )
-      .def_readonly("bunch", &Bmad::InitBunchDistribution::bunch)
-      .def_readonly("err_flag", &Bmad::InitBunchDistribution::err_flag)
-      .def_readonly("beam_init_used", &Bmad::InitBunchDistribution::beam_init_used)
+      .def_ro("bunch", &Bmad::InitBunchDistribution::bunch)
+      .def_ro("err_flag", &Bmad::InitBunchDistribution::err_flag)
+      .def_ro("beam_init_used", &Bmad::InitBunchDistribution::beam_init_used)
       .def("__len__", [](const Bmad::InitBunchDistribution &) { return 3; })
-      .def("__getitem__", [](const Bmad::InitBunchDistribution &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::InitBunchDistribution &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.bunch);
+          return nb::cast(s.bunch);
         if (i == 1)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 2)
-          return py::cast(s.beam_init_used);
-        throw py::index_error();
+          return nb::cast(s.beam_init_used);
+        throw nb::index_error();
       });
   m.def(
       "init_bunch_distribution",
-      &Bmad::init_bunch_distribution,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("beam_init"),
-      py::arg("ix_bunch"),
-      py::arg("modes") = py::none(),
-      py::arg("print_p0c_shift_warning") = py::none(),
-      py::arg("conserve_momentum") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_bunch_distribution (ele, param, beam_init, ix_bunch, bunch, err_flag, modes, beam_init_used,
-                                                                         print_p0c_shift_warning, conserve_momentum)
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         BeamInitStruct &beam_init,
+         int ix_bunch,
+         NormalModesStruct *modes,
+         std::optional<bool> print_p0c_shift_warning,
+         std::optional<bool> conserve_momentum) {
+        auto fn = static_cast<
+            Bmad::
+                InitBunchDistribution (*)(EleStruct &, LatParamStruct &, BeamInitStruct &, int, optional_ref<NormalModesStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::init_bunch_distribution
+        );
+        return fn(
+            ele,
+            param,
+            beam_init,
+            ix_bunch,
+            ptr_to_opt_ref(modes),
+            print_p0c_shift_warning,
+            conserve_momentum
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("beam_init"),
+      nb::arg("ix_bunch"),
+      nb::arg("modes") = nb::none(),
+      nb::arg("print_p0c_shift_warning") = nb::none(),
+      nb::arg("conserve_momentum") = nb::none(),
+      R"""(                                                                         print_p0c_shift_warning, conserve_momentum)
 
 Subroutine to initialize a distribution of particles of a bunch.
 Initialization uses the downstream parameters of ele.
@@ -452,13 +734,10 @@ beam_init_used : BeamInitStruct, optional
   m.def(
       "init_complex_taylor_series",
       &Bmad::init_complex_taylor_series,
-      py::arg("complex_taylor"),
-      py::arg("n_term"),
-      py::arg("save") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_complex_taylor_series (complex_taylor, n_term, save)
-
-Subroutine to initialize a Bmad complex_taylor series (6 of these series make
+      nb::arg("complex_taylor"),
+      nb::arg("n_term"),
+      nb::arg("save") = nb::none(),
+      R"""(Subroutine to initialize a Bmad complex_taylor series (6 of these series make
 a complex_taylor map). Note: This routine does not zero the structure. The calling
 routine is responsible for setting all values.
 
@@ -478,35 +757,49 @@ save : bool, optional
   );
   m.def(
       "init_coord",
-      py::overload_cast<
-          CoordStruct &,
-          FixedArray1D<Real, 6>,
-          optional_ref<EleStruct>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<double>,
-          std::optional<double>,
-          std::optional<bool>,
-          std::optional<FixedArray1D<Real, 3>>,
-          std::optional<double>,
-          std::optional<bool>>(&Bmad::init_coord),
-      py::arg("orb"),
-      py::arg("vec"),
-      py::arg("ele") = py::none(),
-      py::arg("element_end") = py::none(),
-      py::arg("particle") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("E_photon") = py::none(),
-      py::arg("t_offset") = py::none(),
-      py::arg("shift_vec6") = py::none(),
-      py::arg("spin") = py::none(),
-      py::arg("s_pos") = py::none(),
-      py::arg("random_on") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_coord (...)
-
-Routine to initialize a coord_struct.
+      [](CoordStruct &orb,
+         FixedArray1D<Real, 6> vec,
+         EleStruct *ele,
+         std::optional<int> element_end,
+         std::optional<int> particle,
+         std::optional<int> direction,
+         std::optional<double> E_photon,
+         std::optional<double> t_offset,
+         std::optional<bool> shift_vec6,
+         std::optional<FixedArray1D<Real, 3>> spin,
+         std::optional<double> s_pos,
+         std::optional<bool> random_on) {
+        auto fn = static_cast<void (*)(CoordStruct &, FixedArray1D<Real, 6>, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>, std::optional<double>, std::optional<bool>)>(
+            &Bmad::init_coord
+        );
+        return fn(
+            orb,
+            vec,
+            ptr_to_opt_ref(ele),
+            element_end,
+            particle,
+            direction,
+            E_photon,
+            t_offset,
+            shift_vec6,
+            spin,
+            s_pos,
+            random_on
+        );
+      },
+      nb::arg("orb"),
+      nb::arg("vec"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("element_end") = nb::none(),
+      nb::arg("particle") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("E_photon") = nb::none(),
+      nb::arg("t_offset") = nb::none(),
+      nb::arg("shift_vec6") = nb::none(),
+      nb::arg("spin") = nb::none(),
+      nb::arg("s_pos") = nb::none(),
+      nb::arg("random_on") = nb::none(),
+      R"""(Routine to initialize a coord_struct.
 
 This routine is an overloaded name for:
   Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
@@ -573,33 +866,47 @@ random_on : bool, optional
   );
   m.def(
       "init_coord",
-      py::overload_cast<
-          CoordStruct &,
-          optional_ref<EleStruct>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<double>,
-          std::optional<double>,
-          std::optional<bool>,
-          std::optional<FixedArray1D<Real, 3>>,
-          std::optional<double>,
-          std::optional<bool>>(&Bmad::init_coord),
-      py::arg("orb_in"),
-      py::arg("ele") = py::none(),
-      py::arg("element_end") = py::none(),
-      py::arg("particle") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("E_photon") = py::none(),
-      py::arg("t_offset") = py::none(),
-      py::arg("shift_vec6") = py::none(),
-      py::arg("spin") = py::none(),
-      py::arg("s_pos") = py::none(),
-      py::arg("random_on") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_coord (...)
-
-Routine to initialize a coord_struct.
+      [](CoordStruct &orb_in,
+         EleStruct *ele,
+         std::optional<int> element_end,
+         std::optional<int> particle,
+         std::optional<int> direction,
+         std::optional<double> E_photon,
+         std::optional<double> t_offset,
+         std::optional<bool> shift_vec6,
+         std::optional<FixedArray1D<Real, 3>> spin,
+         std::optional<double> s_pos,
+         std::optional<bool> random_on) {
+        auto fn = static_cast<
+            CoordStruct (*)(CoordStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>, std::optional<double>, std::optional<bool>)>(
+            &Bmad::init_coord
+        );
+        return fn(
+            orb_in,
+            ptr_to_opt_ref(ele),
+            element_end,
+            particle,
+            direction,
+            E_photon,
+            t_offset,
+            shift_vec6,
+            spin,
+            s_pos,
+            random_on
+        );
+      },
+      nb::arg("orb_in"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("element_end") = nb::none(),
+      nb::arg("particle") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("E_photon") = nb::none(),
+      nb::arg("t_offset") = nb::none(),
+      nb::arg("shift_vec6") = nb::none(),
+      nb::arg("spin") = nb::none(),
+      nb::arg("s_pos") = nb::none(),
+      nb::arg("random_on") = nb::none(),
+      R"""(Routine to initialize a coord_struct.
 
 This routine is an overloaded name for:
   Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
@@ -668,29 +975,41 @@ orb_out : CoordStruct
   );
   m.def(
       "init_coord",
-      py::overload_cast<
-          CoordStruct &,
-          optional_ref<EleStruct>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<int>,
-          std::optional<double>,
-          std::optional<double>,
-          std::optional<bool>,
-          std::optional<FixedArray1D<Real, 3>>>(&Bmad::init_coord),
-      py::arg("orb"),
-      py::arg("ele") = py::none(),
-      py::arg("element_end") = py::none(),
-      py::arg("particle") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("E_photon") = py::none(),
-      py::arg("t_offset") = py::none(),
-      py::arg("shift_vec6") = py::none(),
-      py::arg("spin") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_coord (...)
-
-Routine to initialize a coord_struct.
+      [](CoordStruct &orb,
+         EleStruct *ele,
+         std::optional<int> element_end,
+         std::optional<int> particle,
+         std::optional<int> direction,
+         std::optional<double> E_photon,
+         std::optional<double> t_offset,
+         std::optional<bool> shift_vec6,
+         std::optional<FixedArray1D<Real, 3>> spin) {
+        auto fn = static_cast<
+            void (*)(CoordStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>)>(
+            &Bmad::init_coord
+        );
+        return fn(
+            orb,
+            ptr_to_opt_ref(ele),
+            element_end,
+            particle,
+            direction,
+            E_photon,
+            t_offset,
+            shift_vec6,
+            spin
+        );
+      },
+      nb::arg("orb"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("element_end") = nb::none(),
+      nb::arg("particle") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("E_photon") = nb::none(),
+      nb::arg("t_offset") = nb::none(),
+      nb::arg("shift_vec6") = nb::none(),
+      nb::arg("spin") = nb::none(),
+      R"""(Routine to initialize a coord_struct.
 
 This routine is an overloaded name for:
   Subroutine init_coord1 (orb, vec, ele, element_end, particle, direction, E_photon, t_offset, shift_vec6, spin, s_pos, random_on)
@@ -747,8 +1066,7 @@ spin : 1D array of float (shape: 3), optional
   m.def(
       "init_custom",
       &Bmad::init_custom,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine init_custom
 
 Parameters
@@ -758,12 +1076,20 @@ lat : LatStruct
   );
   m.def(
       "init_ele",
-      &Bmad::init_ele,
-      py::arg("key") = py::none(),
-      py::arg("sub_key") = py::none(),
-      py::arg("ix_ele") = py::none(),
-      py::arg("branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](std::optional<int> key,
+         std::optional<int> sub_key,
+         std::optional<int> ix_ele,
+         BranchStruct *branch) {
+        auto fn = static_cast<
+            EleStruct (*)(std::optional<int>, std::optional<int>, std::optional<int>, optional_ref<BranchStruct>)>(
+            &Bmad::init_ele
+        );
+        return fn(key, sub_key, ix_ele, ptr_to_opt_ref(branch));
+      },
+      nb::arg("key") = nb::none(),
+      nb::arg("sub_key") = nb::none(),
+      nb::arg("ix_ele") = nb::none(),
+      nb::arg("branch") = nb::none(),
       R"""(Wrapper for Fortran routine init_ele
 
 Parameters
@@ -787,15 +1113,44 @@ ele : EleStruct
 )"""
   );
   m.def(
+      "init_fringe_info",
+      [](EleStruct &ele, CoordStruct *orbit, std::optional<int> leng_sign) {
+        auto fn = static_cast<
+            FringeFieldInfoStruct (*)(EleStruct &, optional_ref<CoordStruct>, std::optional<int>)>(
+            &Bmad::init_fringe_info
+        );
+        return fn(ele, ptr_to_opt_ref(orbit), leng_sign);
+      },
+      nb::arg("ele"),
+      nb::arg("orbit") = nb::none(),
+      nb::arg("leng_sign") = nb::none(),
+      R"""(Wrapper for Fortran routine init_fringe_info
+
+Parameters
+----------
+ele : EleStruct
+    Lattice element associated with fringe_info.
+
+orbit : CoordStruct, optional
+    Particle position. Must be present for a full init. If not full init only fringe_info.has_fringe will be
+    set.
+
+leng_sign : int, optional
+    Is element length positive (+1) or negative (-1)? Must be present if orbit is present.
+
+Returns
+-------
+fringe_info : FringeFieldInfoStruct
+    Fringe information.
+)"""
+  );
+  m.def(
       "init_gg_taylor_series",
       &Bmad::init_gg_taylor_series,
-      py::arg("gg_taylor"),
-      py::arg("n_term"),
-      py::arg("save_old") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_gg_taylor_series (gg_taylor, n_term, save_old)
-
-Subroutine to initialize a Bmad gg_taylor series (6 of these series make
+      nb::arg("gg_taylor"),
+      nb::arg("n_term"),
+      nb::arg("save_old") = nb::none(),
+      R"""(Subroutine to initialize a Bmad gg_taylor series (6 of these series make
 a gg_taylor map). Note: This routine does not zero the structure. The calling
 routine is responsible for setting all values.
 
@@ -816,9 +1171,8 @@ save_old : bool, optional
   m.def(
       "init_lat",
       &Bmad::init_lat,
-      py::arg("n") = py::none(),
-      py::arg("init_beginning_ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n") = nb::none(),
+      nb::arg("init_beginning_ele") = nb::none(),
       R"""(Wrapper for Fortran routine init_lat
 
 Parameters
@@ -838,8 +1192,7 @@ lat : LatStruct
   m.def(
       "init_multipole_cache",
       &Bmad::init_multipole_cache,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine init_multipole_cache
 
 Parameters
@@ -853,10 +1206,9 @@ ele : EleStruct
   m.def(
       "init_photon_from_a_photon_init_ele",
       &Bmad::init_photon_from_a_photon_init_ele,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("random_on") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("random_on") = nb::none(),
       R"""(Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
 Parameters
@@ -876,37 +1228,35 @@ orbit : CoordStruct
     Output photon coords.
 )"""
   );
-  py::class_<Bmad::InitPhotonIntegProb, std::unique_ptr<Bmad::InitPhotonIntegProb>>(
+  nb::class_<Bmad::InitPhotonIntegProb>(
       m,
       "InitPhotonIntegProb",
       "init_photon_integ_prob return type"
   )
-      .def_readonly("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
-      .def_readonly("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
+      .def_ro("E_photon", &Bmad::InitPhotonIntegProb::E_photon)
+      .def_ro("integ_prob", &Bmad::InitPhotonIntegProb::integ_prob)
       .def("__len__", [](const Bmad::InitPhotonIntegProb &) { return 2; })
-      .def("__getitem__", [](const Bmad::InitPhotonIntegProb &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::InitPhotonIntegProb &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.E_photon);
+          return nb::cast(s.E_photon);
         if (i == 1)
-          return py::cast(s.integ_prob);
-        throw py::index_error();
+          return nb::cast(s.integ_prob);
+        throw nb::index_error();
       });
   m.def(
       "init_photon_integ_prob",
       &Bmad::init_photon_integ_prob,
-      py::arg("gamma"),
-      py::arg("g"),
-      py::arg("E_min"),
-      py::arg("E_max"),
-      py::arg("vert_angle_min") = py::none(),
-      py::arg("vert_angle_max") = py::none(),
-      py::arg("vert_angle_symmetric") = py::none(),
-      py::arg("energy_integ_prob") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function init_photon_integ_prob(gamma, g, E_min, E_max, vert_angle_min,
-             vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
+      nb::arg("gamma"),
+      nb::arg("g"),
+      nb::arg("E_min"),
+      nb::arg("E_max"),
+      nb::arg("vert_angle_min") = nb::none(),
+      nb::arg("vert_angle_max") = nb::none(),
+      nb::arg("vert_angle_symmetric") = nb::none(),
+      nb::arg("energy_integ_prob") = nb::none(),
+      R"""(             vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon) result (integ_prob)
 
 Routine to calcuate the integrated probability of emitting a photon in a given vertical angle range
 and in a given energy range
@@ -952,12 +1302,9 @@ E_photon : float, optional
   m.def(
       "init_spin_distribution",
       &Bmad::init_spin_distribution,
-      py::arg("beam_init"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_spin_distribution (beam_init, bunch, ele)
-
-Initializes a spin distribution according to beam_init%spin.
+      nb::arg("beam_init"),
+      nb::arg("ele"),
+      R"""(Initializes a spin distribution according to beam_init%spin.
 
 Parameters
 ----------
@@ -973,13 +1320,10 @@ bunch : BunchStruct
   m.def(
       "init_surface_segment",
       &Bmad::init_surface_segment,
-      py::arg("phot"),
-      py::arg("ix_pt"),
-      py::arg("iy_pt"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine init_surface_segment (phot, ix_pt, iy_pt)
-
-Routine to init the componentes in ele%photon%segmented%pt(ix_pt,iy_pt) for use with segmented surface calculations.
+      nb::arg("phot"),
+      nb::arg("ix_pt"),
+      nb::arg("iy_pt"),
+      R"""(Routine to init the componentes in ele%photon%segmented%pt(ix_pt,iy_pt) for use with segmented surface calculations.
 
 Parameters
 ----------
@@ -996,10 +1340,9 @@ iy_pt : int
   m.def(
       "init_taylor_series",
       &Bmad::init_taylor_series,
-      py::arg("bmad_taylor"),
-      py::arg("n_term"),
-      py::arg("save_old") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bmad_taylor"),
+      nb::arg("n_term"),
+      nb::arg("save_old") = nb::none(),
       R"""(Wrapper for Fortran routine init_taylor_series
 
 Parameters
@@ -1020,12 +1363,11 @@ save_old : bool, optional
   m.def(
       "init_wake",
       &Bmad::init_wake,
-      py::arg("n_sr_long"),
-      py::arg("n_sr_trans"),
-      py::arg("n_sr_z"),
-      py::arg("n_lr_mode"),
-      py::arg("always_allocate") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n_sr_long"),
+      nb::arg("n_sr_trans"),
+      nb::arg("n_sr_z"),
+      nb::arg("n_lr_mode"),
+      nb::arg("always_allocate") = nb::none(),
       R"""(Wrapper for Fortran routine init_wake
 
 Parameters
@@ -1054,12 +1396,11 @@ wake : WakeStruct, optional
   m.def(
       "insert_element",
       &Bmad::insert_element,
-      py::arg("lat"),
-      py::arg("insert_ele"),
-      py::arg("ix_ele"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("orbit") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("insert_ele"),
+      nb::arg("ix_ele"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("orbit") = nb::none(),
       R"""(Wrapper for Fortran routine insert_element
 
 Parameters
@@ -1087,12 +1428,9 @@ orbit : 1D array of CoordStruct, optional
   m.def(
       "integrand_base",
       &Bmad::integrand_base,
-      py::arg("t"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function integrand_base(t)
-
-This vectorized private function is the integrand in equation 31 of Piwinski's paper.
+      nb::arg("t"),
+      nb::arg("args"),
+      R"""(This vectorized private function is the integrand in equation 31 of Piwinski's paper.
 
 This intetegrand has a sharp exponential decay, and so a change of variables from t to y where t=exp(y)
 is applied.  This COV makes the integrand more evenly distributed over the domain of integration,
@@ -1110,13 +1448,10 @@ t : float
   m.def(
       "integrate_psi",
       &Bmad::integrate_psi,
-      py::arg("bound"),
-      py::arg("p0"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine integrate_psi(bound,p0,args,result)
-
-Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
+      nb::arg("bound"),
+      nb::arg("p0"),
+      nb::arg("args"),
+      R"""(Integrate psi(t) from -bound to +bound.  The integration is done in two parts.  First from 0 to -bound, then from
 0 to +bound.
 
 Parameters
@@ -1139,27 +1474,25 @@ result : float
   m.def(
       "integrated_mats",
       &Bmad::integrated_mats,
-      py::arg("eles"),
-      py::arg("coos"),
-      py::arg("Lambda"),
-      py::arg("Theta"),
-      py::arg("Iota"),
-      py::arg("mode"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine integrated_mats(eles,coos,Lambda,Theta,Iota,mode)
+      nb::arg("eles"),
+      nb::arg("coos"),
+      nb::arg("Lambda"),
+      nb::arg("Theta"),
+      nb::arg("Iota"),
+      nb::arg("mode"),
+      R"""(No docstring available.
 )"""
   );
   m.def(
       "integration_timer",
-      py::overload_cast<EleStruct &, LatParamStruct &, CoordStruct &, CoordStruct &, double>(
+      nb::overload_cast<EleStruct &, LatParamStruct &, CoordStruct &, CoordStruct &, double>(
           &Bmad::integration_timer
       ),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("start"),
-      py::arg("orb_max"),
-      py::arg("tol"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("start"),
+      nb::arg("orb_max"),
+      nb::arg("tol"),
       R"""(Wrapper for Fortran routine integration_timer_ele
 
 Parameters
@@ -1177,14 +1510,13 @@ tol : float
   );
   m.def(
       "integration_timer",
-      py::overload_cast<Fibre &, FixedArray1D<Real, 6>, FixedArray1D<Real, 6>, double>(
+      nb::overload_cast<Fibre &, FixedArray1D<Real, 6>, FixedArray1D<Real, 6>, double>(
           &Bmad::integration_timer
       ),
-      py::arg("a_fibre"),
-      py::arg("orbit"),
-      py::arg("orbit_max"),
-      py::arg("tol_dp"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("a_fibre"),
+      nb::arg("orbit"),
+      nb::arg("orbit_max"),
+      nb::arg("tol_dp"),
       R"""(Wrapper for Fortran routine integration_timer_fibre
 
 Parameters
@@ -1198,16 +1530,60 @@ orbit_max : 1D array of float (shape: 6)
 tol_dp : float
 )"""
   );
+  nb::class_<Bmad::InterpolateField>(m, "InterpolateField", "interpolate_field return type")
+      .def_ro("E", &Bmad::InterpolateField::E)
+      .def_ro("B", &Bmad::InterpolateField::B)
+      .def("__len__", [](const Bmad::InterpolateField &) { return 2; })
+      .def("__getitem__", [](const Bmad::InterpolateField &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.E);
+        if (i == 1)
+          return nb::cast(s.B);
+        throw nb::index_error();
+      });
+  m.def(
+      "interpolate_field",
+      &Bmad::interpolate_field,
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
+      nb::arg("mesh3d"),
+      R"""(Interpolate field on mesh
+
+Parameters
+----------
+x : float
+    coordinates to interpolate
+
+y : float
+    coordinates to interpolate
+
+z : float
+    coordinates to interpolate
+
+mesh3d : Mesh3dStruct
+    contains efield, bfield
+
+Returns
+-------
+E : 1D array of float (shape: 3), optional
+    interpolated electric field at x, y, z
+
+B : 1D array of float (shape: 3), optional
+    interpolated magnetic field at x, y, z
+)"""
+  );
   m.def(
       "ion_kick",
       &Bmad::ion_kick,
-      py::arg("orbit"),
-      py::arg("r_beam"),
-      py::arg("n_beam_part"),
-      py::arg("a_twiss"),
-      py::arg("b_twiss"),
-      py::arg("sig_ee"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("r_beam"),
+      nb::arg("n_beam_part"),
+      nb::arg("a_twiss"),
+      nb::arg("b_twiss"),
+      nb::arg("sig_ee"),
       R"""(Wrapper for Fortran routine ion_kick
 
 Parameters
@@ -1239,12 +1615,9 @@ kick : 1D array of float (shape: 3)
   m.def(
       "is_attribute",
       &Bmad::is_attribute,
-      py::arg("ix_attrib"),
-      py::arg("which"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function is_attribute (ix_attrib, which) result (is_attrib)
-
-Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
+      nb::arg("ix_attrib"),
+      nb::arg("which"),
+      R"""(Routine to determine if an attribute index corresponds to a control variable for overlys/groups.
 
 Parameters
 ----------

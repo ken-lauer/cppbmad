@@ -32,8 +32,9 @@ from .paths import (
     PYBMAD_INCLUDE,
     PYBMAD_ROOT,
     PYBMAD_SRC,
+    REPO_ROOT,
 )
-from .py import generate_pybmad
+from .py import expected_stub_files, generate_pybmad
 from .routines import generate_routines, load_routines
 from .structs import ParsedStructure, load_bmad_parser_structures
 from .util import write_contents_if_differs
@@ -212,9 +213,7 @@ def load_context(
 
     settings_and_routines, routine_structs = load_routines(params, parsed_structs, params)
 
-    # TODO: considering opening up the struct list completely
-    # params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
-    params.struct_list = params.struct_list
+    params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
@@ -289,10 +288,29 @@ def generate(
 
     file_and_contents.extend(list(ctx.docs_files.items()))
 
+    manifest_paths = [fn for fn, _ in file_and_contents]
+    if pybmad:
+        manifest_paths.extend(expected_stub_files(ctx.params, ctx.routines_by_name))
+    manifest_paths.append(MANIFEST_PATH)
+    file_and_contents.append((MANIFEST_PATH, get_manifest(manifest_paths)))
+
     for fn, contents in file_and_contents:
         write_contents_if_differs(target_path=fn, contents=contents)
 
     return ctx
+
+
+MANIFEST_PATH = REPO_ROOT / "generated-manifest.txt"
+MANIFEST_HEADER = (
+    "# Complete list of generated files, one per line, repo root-relative.\n"
+    "# Do not edit by hand -- regenerate with `python -m codegen`.\n"
+)
+
+
+def get_manifest(paths: list[pathlib.Path]) -> str:
+    """Get the manifest of generated files as repo-relative, sorted paths."""
+    rel = sorted(str(pathlib.Path(p).resolve().relative_to(REPO_ROOT)) for p in paths)
+    return "\n".join((MANIFEST_HEADER, "\n".join(rel)))
 
 
 def main():

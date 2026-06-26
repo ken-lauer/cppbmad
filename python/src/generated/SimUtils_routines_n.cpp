@@ -1,24 +1,22 @@
 #include "pybmad/generated/SimUtils_routines_n.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_n(py::module &m) {
+void init_SimUtils_routines_n(nb::module_ &m) {
   m.def(
       "n_bins_automatic",
       &SimUtils::n_bins_automatic,
-      py::arg("n_data"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n_data"),
       R"""(Function to automatically select the number of bins
 )"""
   );
   m.def(
       "n_choose_k",
       &SimUtils::n_choose_k,
-      py::arg("n"),
-      py::arg("k"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n"),
+      nb::arg("k"),
       R"""(Wrapper for Fortran routine n_choose_k
 
 Parameters
@@ -38,11 +36,10 @@ nck : float
   m.def(
       "n_spline_create",
       &SimUtils::n_spline_create,
-      py::arg("deriv0"),
-      py::arg("deriv1"),
-      py::arg("x1"),
-      py::arg("n_spline"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("deriv0"),
+      nb::arg("deriv1"),
+      nb::arg("x1"),
+      nb::arg("n_spline"),
       R"""(Wrapper for Fortran routine n_spline_create
 
 Parameters
@@ -63,15 +60,12 @@ n_spline : 1D array of float
   m.def(
       "naff",
       &SimUtils::naff,
-      py::arg("cdata"),
-      py::arg("freqs"),
-      py::arg("amps"),
-      py::arg("opt_dump_spectra") = py::none(),
-      py::arg("opt_zero_first") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine naff(cdata,freqs,amps,opt_dump_spectra,opt_zero_first)
-
-This subroutine implements the NAFF algorithm for calculating the spectra
+      nb::arg("cdata"),
+      nb::arg("freqs"),
+      nb::arg("amps"),
+      nb::arg("opt_dump_spectra") = nb::none(),
+      nb::arg("opt_zero_first") = nb::none(),
+      R"""(This subroutine implements the NAFF algorithm for calculating the spectra
 of periodic data.
 
 See naff_mod documentation for details.
@@ -85,10 +79,9 @@ decomposition loop until all elements of freqs and amps are populated.
   m.def(
       "nametable_add",
       &SimUtils::nametable_add,
-      py::arg("nametable"),
-      py::arg("name"),
-      py::arg("ix_name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nametable"),
+      nb::arg("name"),
+      nb::arg("ix_name"),
       R"""(Wrapper for Fortran routine nametable_add
 
 Parameters
@@ -103,10 +96,9 @@ ix_name : int
   m.def(
       "nametable_bracket_indexx",
       &SimUtils::nametable_bracket_indexx,
-      py::arg("nametable"),
-      py::arg("name"),
-      py::arg("n_match") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nametable"),
+      nb::arg("name"),
+      nb::arg("n_match") = nb::none(),
       R"""(Wrapper for Fortran routine nametable_bracket_indexx
 
 Parameters
@@ -125,10 +117,9 @@ ix_max : int
   m.def(
       "nametable_change1",
       &SimUtils::nametable_change1,
-      py::arg("nametable"),
-      py::arg("name"),
-      py::arg("ix_name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nametable"),
+      nb::arg("name"),
+      nb::arg("ix_name"),
       R"""(Wrapper for Fortran routine nametable_change1
 
 Parameters
@@ -143,10 +134,9 @@ ix_name : int
   m.def(
       "nametable_init",
       &SimUtils::nametable_init,
-      py::arg("nametable"),
-      py::arg("n_min") = py::none(),
-      py::arg("n_max") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nametable"),
+      nb::arg("n_min") = nb::none(),
+      nb::arg("n_max") = nb::none(),
       R"""(Wrapper for Fortran routine nametable_init
 
 Parameters
@@ -161,9 +151,8 @@ n_max : int, optional
   m.def(
       "nametable_remove",
       &SimUtils::nametable_remove,
-      py::arg("nametable"),
-      py::arg("ix_name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nametable"),
+      nb::arg("ix_name"),
       R"""(Wrapper for Fortran routine nametable_remove
 
 Parameters
@@ -176,9 +165,8 @@ ix_name : int
   m.def(
       "negative_ampsquared",
       &SimUtils::negative_ampsquared,
-      py::arg("frequency"),
-      py::arg("status") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("frequency"),
+      nb::arg("status") = nb::none(),
       R"""(Wrapper for Fortran routine negative_ampsquared
 
 Parameters
@@ -195,9 +183,8 @@ amp : float
   m.def(
       "negative_dampsquared",
       &SimUtils::negative_dampsquared,
-      py::arg("frequency"),
-      py::arg("status") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("frequency"),
+      nb::arg("status") = nb::none(),
       R"""(Wrapper for Fortran routine negative_dampsquared
 
 Parameters

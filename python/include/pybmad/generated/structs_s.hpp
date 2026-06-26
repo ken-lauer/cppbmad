@@ -1,27 +1,38 @@
 #pragma once
-#include <pybind11/pybind11.h>
+#include <nanobind/nanobind.h>
 
 #include "bmad/generated/proxy.hpp"
 #include "pybmad/generated/structs.hpp"
-namespace py = pybind11;
+namespace nb = nanobind;
 
 using namespace Bmad;
 
 // Per-struct init functions
-void init_space_charge_common_struct(py::module &m, py::class_<SpaceChargeCommonStruct> &class_);
-void init_spin_axis_struct(py::module &m, py::class_<SpinAxisStruct> &class_);
-void init_spin_orbit_map1_struct(py::module &m, py::class_<SpinOrbitMap1Struct> &class_);
-void init_spin_polar_struct(py::module &m, py::class_<SpinPolarStruct> &class_);
-void init_strong_beam_struct(py::module &m, py::class_<StrongBeamStruct> &class_);
-void init_surface_curvature_struct(py::module &m, py::class_<SurfaceCurvatureStruct> &class_);
+void init_seq_ele_struct(nb::module_ &m, nb::class_<SeqEleStruct> &class_);
+void init_seq_struct(nb::module_ &m, nb::class_<SeqStruct> &class_);
+void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommonStruct> &class_);
+void init_spin_axis_struct(nb::module_ &m, nb::class_<SpinAxisStruct> &class_);
+void init_spin_eigen_struct(nb::module_ &m, nb::class_<SpinEigenStruct> &class_);
+void init_spin_matching_struct(nb::module_ &m, nb::class_<SpinMatchingStruct> &class_);
+void init_spin_orbit_map1_struct(nb::module_ &m, nb::class_<SpinOrbitMap1Struct> &class_);
+void init_spin_polar_struct(nb::module_ &m, nb::class_<SpinPolarStruct> &class_);
+void init_strong_beam_struct(nb::module_ &m, nb::class_<StrongBeamStruct> &class_);
+void init_surface_curvature_struct(nb::module_ &m, nb::class_<SurfaceCurvatureStruct> &class_);
 void init_surface_displacement_pt_struct(
-    py::module &m,
-    py::class_<SurfaceDisplacementPtStruct> &class_
+    nb::module_ &m,
+    nb::class_<SurfaceDisplacementPtStruct> &class_
 );
-void init_surface_displacement_struct(py::module &m, py::class_<SurfaceDisplacementStruct> &class_);
-void init_surface_h_misalign_pt_struct(py::module &m, py::class_<SurfaceHMisalignPtStruct> &class_);
-void init_surface_h_misalign_struct(py::module &m, py::class_<SurfaceHMisalignStruct> &class_);
-void init_surface_segmented_pt_struct(py::module &m, py::class_<SurfaceSegmentedPtStruct> &class_);
-void init_surface_segmented_struct(py::module &m, py::class_<SurfaceSegmentedStruct> &class_);
-void init_spline_struct(py::module &m, py::class_<SplineStruct> &class_);
-void init_summation_rdt_struct(py::module &m, py::class_<SummationRdtStruct> &class_);
+void init_surface_displacement_struct(
+    nb::module_ &m,
+    nb::class_<SurfaceDisplacementStruct> &class_
+);
+void init_surface_h_misalign_pt_struct(
+    nb::module_ &m,
+    nb::class_<SurfaceHMisalignPtStruct> &class_
+);
+void init_surface_h_misalign_struct(nb::module_ &m, nb::class_<SurfaceHMisalignStruct> &class_);
+void init_surface_segmented_pt_struct(nb::module_ &m, nb::class_<SurfaceSegmentedPtStruct> &class_);
+void init_surface_segmented_struct(nb::module_ &m, nb::class_<SurfaceSegmentedStruct> &class_);
+void init_str_index_struct(nb::module_ &m, nb::class_<StrIndexStruct> &class_);
+void init_spline_struct(nb::module_ &m, nb::class_<SplineStruct> &class_);
+void init_summation_rdt_struct(nb::module_ &m, nb::class_<SummationRdtStruct> &class_);

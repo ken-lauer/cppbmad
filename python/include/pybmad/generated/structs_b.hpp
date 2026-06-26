@@ -1,24 +1,28 @@
 #pragma once
-#include <pybind11/pybind11.h>
+#include <nanobind/nanobind.h>
 
 #include "bmad/generated/proxy.hpp"
 #include "pybmad/generated/structs.hpp"
-namespace py = pybind11;
+namespace nb = nanobind;
 
 using namespace Bmad;
 
 // Per-struct init functions
-void init_bbu_beam_struct(py::module &m, py::class_<BbuBeamStruct> &class_);
-void init_bbu_param_struct(py::module &m, py::class_<BbuParamStruct> &class_);
-void init_bbu_stage_struct(py::module &m, py::class_<BbuStageStruct> &class_);
-void init_beam_init_struct(py::module &m, py::class_<BeamInitStruct> &class_);
-void init_beam_struct(py::module &m, py::class_<BeamStruct> &class_);
-void init_bmad_common_struct(py::module &m, py::class_<BmadCommonStruct> &class_);
-void init_bmad_normal_form_struct(py::module &m, py::class_<BmadNormalFormStruct> &class_);
-void init_bookkeeping_state_struct(py::module &m, py::class_<BookkeepingStateStruct> &class_);
-void init_bpm_phase_coupling_struct(py::module &m, py::class_<BpmPhaseCouplingStruct> &class_);
-void init_branch_struct(py::module &m, py::class_<BranchStruct> &class_);
-void init_bunch_params_struct(py::module &m, py::class_<BunchParamsStruct> &class_);
-void init_bunch_struct(py::module &m, py::class_<BunchStruct> &class_);
-void init_bunch_track_struct(py::module &m, py::class_<BunchTrackStruct> &class_);
-void init_bicubic_cmplx_coef_struct(py::module &m, py::class_<BicubicCmplxCoefStruct> &class_);
+void init_bbu_beam_struct(nb::module_ &m, nb::class_<BbuBeamStruct> &class_);
+void init_bbu_param_struct(nb::module_ &m, nb::class_<BbuParamStruct> &class_);
+void init_bbu_stage_struct(nb::module_ &m, nb::class_<BbuStageStruct> &class_);
+void init_bin_struct(nb::module_ &m, nb::class_<BinStruct> &class_);
+void init_base_line_ele_struct(nb::module_ &m, nb::class_<BaseLineEleStruct> &class_);
+void init_beam_init_struct(nb::module_ &m, nb::class_<BeamInitStruct> &class_);
+void init_beam_struct(nb::module_ &m, nb::class_<BeamStruct> &class_);
+void init_bmad_common_struct(nb::module_ &m, nb::class_<BmadCommonStruct> &class_);
+void init_bmad_normal_form_struct(nb::module_ &m, nb::class_<BmadNormalFormStruct> &class_);
+void init_bookkeeping_state_struct(nb::module_ &m, nb::class_<BookkeepingStateStruct> &class_);
+void init_bpm_phase_coupling_struct(nb::module_ &m, nb::class_<BpmPhaseCouplingStruct> &class_);
+void init_branch_pointer_struct(nb::module_ &m, nb::class_<BranchPointerStruct> &class_);
+void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &class_);
+void init_bunch_params_struct(nb::module_ &m, nb::class_<BunchParamsStruct> &class_);
+void init_bunch_struct(nb::module_ &m, nb::class_<BunchStruct> &class_);
+void init_bunch_track_struct(nb::module_ &m, nb::class_<BunchTrackStruct> &class_);
+void init_bicubic_cmplx_coef_struct(nb::module_ &m, nb::class_<BicubicCmplxCoefStruct> &class_);
+void init_bicubic_coef_struct(nb::module_ &m, nb::class_<BicubicCoefStruct> &class_);

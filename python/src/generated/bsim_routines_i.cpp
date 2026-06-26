@@ -1,15 +1,14 @@
 #include "pybmad/generated/bsim_routines_i.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_i(py::module &m) {
+void init_bsim_routines_i(nb::module_ &m) {
   m.def(
       "insert_phase_trombone",
       &bsim::insert_phase_trombone,
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
       R"""(Wrapper for Fortran routine insert_phase_trombone
 
 Parameters

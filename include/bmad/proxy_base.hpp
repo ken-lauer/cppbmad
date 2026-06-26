@@ -3,6 +3,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "bmad/exceptions.hpp"
+
 namespace Bmad {
 
 // Forward declaration for traits

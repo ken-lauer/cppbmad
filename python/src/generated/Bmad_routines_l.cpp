@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_l.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyLatEleLocator python_lat_ele_locator(
@@ -28,14 +28,13 @@ PyLatEleLocator python_lat_ele_locator(
   return py_result;
 }
 
-void init_Bmad_routines_l(py::module &m) {
+void init_Bmad_routines_l(nb::module_ &m) {
   m.def(
       "lafun",
       &Bmad::lafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
       R"""(Wrapper for Fortran routine lafun
 
 Parameters
@@ -54,8 +53,7 @@ res : float
   m.def(
       "lat_compute_ref_energy_and_time",
       &Bmad::lat_compute_ref_energy_and_time,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine lat_compute_ref_energy_and_time
 
 Parameters
@@ -69,35 +67,30 @@ err_flag : bool
     Set true if there is an error. False otherwise.
 )"""
   );
-  py::class_<PyLatEleLocator, std::unique_ptr<PyLatEleLocator>>(
-      m,
-      "LatEleLocator",
-      "lat_ele_locator return type"
-  )
-      .def_readonly("err", &PyLatEleLocator::err)
-      .def_readonly("n_loc", &PyLatEleLocator::n_loc)
+  nb::class_<PyLatEleLocator>(m, "LatEleLocator", "lat_ele_locator return type")
+      .def_ro("err", &PyLatEleLocator::err)
+      .def_ro("n_loc", &PyLatEleLocator::n_loc)
       .def("__len__", [](const PyLatEleLocator &) { return 2; })
-      .def("__getitem__", [](const PyLatEleLocator &s, int i) -> py::object {
+      .def("__getitem__", [](const PyLatEleLocator &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err);
+          return nb::cast(s.err);
         if (i == 1)
-          return py::cast(s.n_loc);
-        throw py::index_error();
+          return nb::cast(s.n_loc);
+        throw nb::index_error();
       });
   m.def(
       "lat_ele_locator",
       &python_lat_ele_locator,
-      py::arg("loc_str"),
-      py::arg("lat"),
-      py::arg("eles"),
-      py::arg("n_loc"),
-      py::arg("above_ubound_is_err") = py::none(),
-      py::arg("ix_dflt_branch") = py::none(),
-      py::arg("order_by_index") = py::none(),
-      py::arg("append_eles") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("loc_str"),
+      nb::arg("lat"),
+      nb::arg("eles"),
+      nb::arg("n_loc"),
+      nb::arg("above_ubound_is_err") = nb::none(),
+      nb::arg("ix_dflt_branch") = nb::none(),
+      nb::arg("order_by_index") = nb::none(),
+      nb::arg("append_eles") = nb::none(),
       R"""(Wrapper for Fortran routine lat_ele_locator
 
 Parameters
@@ -149,9 +142,8 @@ err : bool, optional
   m.def(
       "lat_equal_lat",
       &Bmad::lat_equal_lat,
-      py::arg("lat_out"),
-      py::arg("lat_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat_out"),
+      nb::arg("lat_in"),
       R"""(Wrapper for Fortran routine lat_equal_lat
 
 Parameters
@@ -164,8 +156,7 @@ lat_in : LatStruct
   m.def(
       "lat_geometry",
       &Bmad::lat_geometry,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine lat_geometry
 
 Parameters
@@ -177,11 +168,10 @@ lat : LatStruct
   m.def(
       "lat_make_mat6",
       &Bmad::lat_make_mat6,
-      py::arg("lat"),
-      py::arg("ix_ele") = py::none(),
-      py::arg("ref_orb") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ix_ele") = nb::none(),
+      nb::arg("ref_orb") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
       R"""(Wrapper for Fortran routine lat_make_mat6
 
 Parameters
@@ -209,8 +199,7 @@ err_flag : bool, optional
   m.def(
       "lat_sanity_check",
       &Bmad::lat_sanity_check,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine lat_sanity_check
 
 Parameters
@@ -227,8 +216,7 @@ err_flag : bool
   m.def(
       "lat_to_ptc_layout",
       &Bmad::lat_to_ptc_layout,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine lat_to_ptc_layout
 
 Parameters
@@ -240,9 +228,8 @@ lat : LatStruct
   m.def(
       "lat_vec_equal_lat_vec",
       &Bmad::lat_vec_equal_lat_vec,
-      py::arg("lat1"),
-      py::arg("lat2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat1"),
+      nb::arg("lat2"),
       R"""(Wrapper for Fortran routine lat_vec_equal_lat_vec
 
 Parameters
@@ -255,8 +242,7 @@ lat2 : 1D array of LatStruct
   m.def(
       "lattice_bookkeeper",
       &Bmad::lattice_bookkeeper,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine lattice_bookkeeper
 
 Parameters
@@ -275,8 +261,7 @@ err_flag : bool, optional
   m.def(
       "lcavity_rf_step_setup",
       &Bmad::lcavity_rf_step_setup,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine lcavity_rf_step_setup
 
 Parameters
@@ -290,16 +275,13 @@ ele : EleStruct
   m.def(
       "linear_bend_edge_kick",
       &Bmad::linear_bend_edge_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("orb"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine linear_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
-
-Subroutine to track through the edge field of an sbend.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orb"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Subroutine to track through the edge field of an sbend.
 Apply only the first order kick, which is edge focusing.
 
 Parameters
@@ -327,31 +309,24 @@ make_matrix : bool, optional
     Propagate the transfer matrix? Default is False.
 )"""
   );
-  py::class_<Bmad::LinearCoef, std::unique_ptr<Bmad::LinearCoef>>(
-      m,
-      "LinearCoef",
-      "linear_coef return type"
-  )
-      .def_readonly("err_flag", &Bmad::LinearCoef::err_flag)
-      .def_readonly("coef", &Bmad::LinearCoef::coef)
+  nb::class_<Bmad::LinearCoef>(m, "LinearCoef", "linear_coef return type")
+      .def_ro("err_flag", &Bmad::LinearCoef::err_flag)
+      .def_ro("coef", &Bmad::LinearCoef::coef)
       .def("__len__", [](const Bmad::LinearCoef &) { return 2; })
-      .def("__getitem__", [](const Bmad::LinearCoef &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::LinearCoef &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.coef);
-        throw py::index_error();
+          return nb::cast(s.coef);
+        throw nb::index_error();
       });
   m.def(
       "linear_coef",
       &Bmad::linear_coef,
-      py::arg("stack"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function linear_coef (stack, err_flag) result (coef)
-
-Routine to return the linear coefficient of a linear expression.
+      nb::arg("stack"),
+      R"""(Routine to return the linear coefficient of a linear expression.
 
 Parameters
 ----------
@@ -370,8 +345,7 @@ coef : float
   m.def(
       "linear_to_spin_taylor",
       &Bmad::linear_to_spin_taylor,
-      py::arg("q_map"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("q_map"),
       R"""(Wrapper for Fortran routine linear_to_spin_taylor
 
 Parameters
@@ -385,32 +359,25 @@ spin_taylor : 1D array of TaylorStruct (shape: 0:3)
     Taylor map
 )"""
   );
-  py::class_<Bmad::LoadParseLine, std::unique_ptr<Bmad::LoadParseLine>>(
-      m,
-      "LoadParseLine",
-      "load_parse_line return type"
-  )
-      .def_readonly("end_of_file", &Bmad::LoadParseLine::end_of_file)
-      .def_readonly("err_flag", &Bmad::LoadParseLine::err_flag)
+  nb::class_<Bmad::LoadParseLine>(m, "LoadParseLine", "load_parse_line return type")
+      .def_ro("end_of_file", &Bmad::LoadParseLine::end_of_file)
+      .def_ro("err_flag", &Bmad::LoadParseLine::err_flag)
       .def("__len__", [](const Bmad::LoadParseLine &) { return 2; })
-      .def("__getitem__", [](const Bmad::LoadParseLine &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::LoadParseLine &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.end_of_file);
+          return nb::cast(s.end_of_file);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "load_parse_line",
       &Bmad::load_parse_line,
-      py::arg("action"),
-      py::arg("ix_start"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine load_parse_line (action, ix_start, end_of_file, err_flag)
-
-Subroutine to load characters from the input file.
+      nb::arg("action"),
+      nb::arg("ix_start"),
+      R"""(Subroutine to load characters from the input file.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -434,10 +401,9 @@ err_flag : bool, optional
   m.def(
       "lord_edge_aligned",
       &Bmad::lord_edge_aligned,
-      py::arg("slave"),
-      py::arg("slave_edge"),
-      py::arg("lord"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("slave"),
+      nb::arg("slave_edge"),
+      nb::arg("lord"),
       R"""(Wrapper for Fortran routine lord_edge_aligned
 
 Parameters
@@ -461,12 +427,11 @@ is_aligned : bool
   m.def(
       "low_energy_z_correction",
       &Bmad::low_energy_z_correction,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("ds"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("ds"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine low_energy_z_correction
 
 Parameters
@@ -492,6 +457,24 @@ Returns
 -------
 dz : float
     Change in z.
+)"""
+  );
+  m.def(
+      "lsc_kick_params_calc",
+      &Bmad::lsc_kick_params_calc,
+      nb::arg("ele"),
+      nb::arg("csr"),
+      R"""(Routine to cache intermediate values needed for the lsc calculation.
+This routine is not for image currents.
+
+Parameters
+----------
+ele : EleStruct
+    Element to set up cache for.
+
+csr : CsrStruct
+    This parameter is an input/output and is modified in-place.
+    As an output, csr: Binned particle averages.
 )"""
   );
 }

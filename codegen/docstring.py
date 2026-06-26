@@ -327,6 +327,15 @@ def type_information_to_python_type(dt: TypeInformation) -> str:
 
 separator_regex = re.compile(r"^!\-+$")
 
+# A line that restates a routine signature, e.g.
+#   Subroutine beambeam_fibre_setup(ele, ptc_fibre)
+#   Function attribute_free1 (ix_ele, attrib_name, ...
+#   Function pointer_to_branch
+signature_line_regex = re.compile(
+    r"^(?:Subroutine|Function)\s+\w+\s*(?:\(|result\b|$)",
+    re.IGNORECASE,
+)
+
 
 # def _extract_related_routines(line: str) -> list[str]:
 #     """Extract related routine names from a line."""
@@ -466,6 +475,13 @@ def parse_routine_comment_block(
             break
         if line or description:
             description.append(line)
+
+    # Drop leading lines that merely restate the routine signature (and any
+    # blank line they left behind) so they don't pollute the description.
+    while description and signature_line_regex.match(description[0].strip()):
+        description.pop(0)
+    while description and not description[0].strip():
+        description.pop(0)
 
     docstring = RoutineDocstring(
         filename=filename,

@@ -7,10 +7,8 @@ from collections.abc import Iterable
 
 import matplotlib.axes
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, Polygon
-from pytao import Tao
-
 import pybmad as pb
+from matplotlib.patches import Circle, Polygon
 from pybmad import (
     GIRDER,
     GROUP,
@@ -28,6 +26,7 @@ from pybmad import (
     TaoGraphStruct,
     TaoPlotStruct,
 )
+from pytao import Tao
 
 TAO_INIT = os.environ.get("TAO_INIT", "$ACC_ROOT_DIR/bmad-doc/tao_examples/optics_matching/tao.init")
 ACC_DPI_RESOLUTION = int(os.environ.get("ACC_DPI_RESOLUTION", "72"))
@@ -90,7 +89,7 @@ def floor_to_screen(graph, r_floor):
     else:
         f = r_floor
 
-    scr = pb.tao_floor_to_screen_coords(graph, f)
+    scr = pb.tao.tao_floor_to_screen_coords(graph, f)
     x, y = list(scr.r)[:2]
     return (x, y)
 
@@ -445,7 +444,7 @@ def tao_draw_building_wall(graph: TaoGraphStruct, ax: matplotlib.axes.Axes):
 
     for sec in s.building_wall.section:
         # Wall shape
-        wall_shape = pb.tao_pointer_to_building_wall_shape(sec.name)
+        wall_shape = pb.tao.tao_pointer_to_building_wall_shape(sec.name)
         if not wall_shape:
             continue
 
@@ -462,8 +461,8 @@ def tao_draw_building_wall(graph: TaoGraphStruct, ax: matplotlib.axes.Axes):
             pt1_raw = sec.point[i]
 
             # Orient points (handle Global vs Local)
-            w_pt0 = pb.tao_oreint_building_wall_pt(pt0_raw)
-            w_pt1 = pb.tao_oreint_building_wall_pt(pt1_raw)
+            w_pt0 = pb.tao.tao_oreint_building_wall_pt(pt0_raw)
+            w_pt1 = pb.tao.tao_oreint_building_wall_pt(pt1_raw)
 
             f0 = FloorPositionStruct()
             f0.r = [w_pt0.x, 0.0, w_pt0.z]
@@ -567,7 +566,7 @@ def draw_this_floor_plan(
             ix_shape_min = 1
 
             while True:
-                shape_info = pb.tao_ele_shape_info(
+                shape_info = pb.tao.tao_ele_shape_info(
                     uni.ix_uni, ele, s.plot_page.floor_plan.ele_shape.view(), ix_shape_min
                 )
 
@@ -596,7 +595,9 @@ def draw_this_floor_plan(
                         if graph.floor_plan.draw_only_first_pass and j > 0:
                             break
 
-                        s_info2 = pb.tao_ele_shape_info(uni.ix_uni, slave, s.plot_page.floor_plan.ele_shape)
+                        s_info2 = pb.tao.tao_ele_shape_info(
+                            uni.ix_uni, slave, s.plot_page.floor_plan.ele_shape
+                        )
                         if s_info2 and s_info2.e_shape:
                             continue  # Slave handles it
 
@@ -649,7 +650,7 @@ def tao_draw_floor_plan():
                 # Python 0-based, Fortran 1-based universe array idx
                 universes = list(s.u)
             else:
-                universes = [s.u[pb.tao_universe_index(ix_univ) - 1]]
+                universes = [s.u[pb.tao.tao_universe_index(ix_univ) - 1]]
 
             for uni in universes:
                 draw_this_floor_plan(uni, plot, graph, ax)

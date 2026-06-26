@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_t.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyTargetMinMaxCalc python_target_min_max_calc(
@@ -52,7 +52,7 @@ PyTrackADrift python_track_a_drift(
 PyTypeTaylors python_type_taylors(
     TaylorStructArray1D bmad_taylor,
     std::optional<int> max_order = std::nullopt,
-    optional_ref<CharacterAlloc1D> lines = std::nullopt,
+    CharacterAlloc1D *lines = nullptr,
     std::optional<int> n_lines = std::nullopt,
     std::optional<int> file_id = std::nullopt,
     std::optional<std::string> out_style = std::nullopt,
@@ -63,7 +63,7 @@ PyTypeTaylors python_type_taylors(
   Bmad::type_taylors(
       bmad_taylor,
       max_order,
-      lines,
+      ptr_to_opt_ref(lines),
       make_opt_ref(n_lines),
       file_id,
       out_style,
@@ -75,39 +75,32 @@ PyTypeTaylors python_type_taylors(
   return py_result;
 }
 
-void init_Bmad_routines_t(py::module &m) {
-  py::class_<Bmad::T6ToB123, std::unique_ptr<Bmad::T6ToB123>>(
-      m,
-      "T6ToB123",
-      "t6_to_b123 return type"
-  )
-      .def_readonly("B1", &Bmad::T6ToB123::B1)
-      .def_readonly("B2", &Bmad::T6ToB123::B2)
-      .def_readonly("B3", &Bmad::T6ToB123::B3)
-      .def_readonly("err_flag", &Bmad::T6ToB123::err_flag)
+void init_Bmad_routines_t(nb::module_ &m) {
+  nb::class_<Bmad::T6ToB123>(m, "T6ToB123", "t6_to_b123 return type")
+      .def_ro("B1", &Bmad::T6ToB123::B1)
+      .def_ro("B2", &Bmad::T6ToB123::B2)
+      .def_ro("B3", &Bmad::T6ToB123::B3)
+      .def_ro("err_flag", &Bmad::T6ToB123::err_flag)
       .def("__len__", [](const Bmad::T6ToB123 &) { return 4; })
-      .def("__getitem__", [](const Bmad::T6ToB123 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::T6ToB123 &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.B1);
+          return nb::cast(s.B1);
         if (i == 1)
-          return py::cast(s.B2);
+          return nb::cast(s.B2);
         if (i == 2)
-          return py::cast(s.B3);
+          return nb::cast(s.B3);
         if (i == 3)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "t6_to_b123",
       &Bmad::t6_to_b123,
-      py::arg("t6"),
-      py::arg("abz_tunes"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine t6_to_B123(N, abz_tunes, B1, B2, B3, err_flag)
-
-This decomposes the one-turn matrix according to Equation 56 from
+      nb::arg("t6"),
+      nb::arg("abz_tunes"),
+      R"""(This decomposes the one-turn matrix according to Equation 56 from
 "Alternative approach to general coupled linear optics" by A. Wolski. PRSTAB.
 
 Note that a sigma matrix can be assembeled from:  sigma = B1*emit_a + B2*emit_b + B3*emit_c
@@ -137,12 +130,20 @@ err_flag : bool
   );
   m.def(
       "taper_mag_strengths",
-      &Bmad::taper_mag_strengths,
-      py::arg("lat"),
-      py::arg("ref_lat") = py::none(),
-      py::arg("except_") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct &lat,
+         LatStruct *ref_lat,
+         std::optional<std::string> except,
+         std::optional<bool> err_flag) {
+        auto fn = static_cast<
+            void (*)(LatStruct &, optional_ref<LatStruct>, std::optional<std::string>, std::optional<bool>)>(
+            &Bmad::taper_mag_strengths
+        );
+        return fn(lat, ptr_to_opt_ref(ref_lat), except, err_flag);
+      },
+      nb::arg("lat"),
+      nb::arg("ref_lat") = nb::none(),
+      nb::arg("except_") = nb::none(),
+      nb::arg("err_flag") = nb::none(),
       R"""(Wrapper for Fortran routine taper_mag_strengths
 
 Parameters
@@ -161,43 +162,36 @@ except : str, optional
 err_flag : bool, optional
 )"""
   );
-  py::class_<PyTargetMinMaxCalc, std::unique_ptr<PyTargetMinMaxCalc>>(
-      m,
-      "TargetMinMaxCalc",
-      "target_min_max_calc return type"
-  )
-      .def_readonly("y_min", &PyTargetMinMaxCalc::y_min)
-      .def_readonly("y_max", &PyTargetMinMaxCalc::y_max)
-      .def_readonly("phi_min", &PyTargetMinMaxCalc::phi_min)
-      .def_readonly("phi_max", &PyTargetMinMaxCalc::phi_max)
+  nb::class_<PyTargetMinMaxCalc>(m, "TargetMinMaxCalc", "target_min_max_calc return type")
+      .def_ro("y_min", &PyTargetMinMaxCalc::y_min)
+      .def_ro("y_max", &PyTargetMinMaxCalc::y_max)
+      .def_ro("phi_min", &PyTargetMinMaxCalc::phi_min)
+      .def_ro("phi_max", &PyTargetMinMaxCalc::phi_max)
       .def("__len__", [](const PyTargetMinMaxCalc &) { return 4; })
-      .def("__getitem__", [](const PyTargetMinMaxCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTargetMinMaxCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.y_min);
+          return nb::cast(s.y_min);
         if (i == 1)
-          return py::cast(s.y_max);
+          return nb::cast(s.y_max);
         if (i == 2)
-          return py::cast(s.phi_min);
+          return nb::cast(s.phi_min);
         if (i == 3)
-          return py::cast(s.phi_max);
-        throw py::index_error();
+          return nb::cast(s.phi_max);
+        throw nb::index_error();
       });
   m.def(
       "target_min_max_calc",
       &python_target_min_max_calc,
-      py::arg("r_corner1"),
-      py::arg("r_corner2"),
-      py::arg("y_min"),
-      py::arg("y_max"),
-      py::arg("phi_min"),
-      py::arg("phi_max"),
-      py::arg("initial") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine target_min_max_calc (r_corner1, r_corner2, y_min, y_max, phi_min, phi_max, initial)
-
-Routine to calculate the min/max values for (y, phi).
+      nb::arg("r_corner1"),
+      nb::arg("r_corner2"),
+      nb::arg("y_min"),
+      nb::arg("y_max"),
+      nb::arg("phi_min"),
+      nb::arg("phi_max"),
+      nb::arg("initial") = nb::none(),
+      R"""(Routine to calculate the min/max values for (y, phi).
 min/max values are cumulative.
 
 Parameters
@@ -238,31 +232,24 @@ phi_max : float
     min/max values. Only needed if initial = False.
 )"""
   );
-  py::class_<Bmad::TargetRotMats, std::unique_ptr<Bmad::TargetRotMats>>(
-      m,
-      "TargetRotMats",
-      "target_rot_mats return type"
-  )
-      .def_readonly("w_to_target", &Bmad::TargetRotMats::w_to_target)
-      .def_readonly("w_to_ele", &Bmad::TargetRotMats::w_to_ele)
+  nb::class_<Bmad::TargetRotMats>(m, "TargetRotMats", "target_rot_mats return type")
+      .def_ro("w_to_target", &Bmad::TargetRotMats::w_to_target)
+      .def_ro("w_to_ele", &Bmad::TargetRotMats::w_to_ele)
       .def("__len__", [](const Bmad::TargetRotMats &) { return 2; })
-      .def("__getitem__", [](const Bmad::TargetRotMats &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TargetRotMats &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_to_target);
+          return nb::cast(s.w_to_target);
         if (i == 1)
-          return py::cast(s.w_to_ele);
-        throw py::index_error();
+          return nb::cast(s.w_to_ele);
+        throw nb::index_error();
       });
   m.def(
       "target_rot_mats",
       &Bmad::target_rot_mats,
-      py::arg("r_center"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine target_rot_mats (r_center, w_to_target, w_to_ele)
-
-Routine to calculate the rotation matrices between ele coords and "target" coords.
+      nb::arg("r_center"),
+      R"""(Routine to calculate the rotation matrices between ele coords and "target" coords.
 By definition, in target coords r_center = [0, 0, 1].
 
 Parameters
@@ -282,9 +269,8 @@ w_to_ele : 2D array of float (shape: 3,3)
   m.def(
       "taylor_equal_taylor",
       &Bmad::taylor_equal_taylor,
-      py::arg("taylor1"),
-      py::arg("taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("taylor1"),
+      nb::arg("taylor2"),
       R"""(Wrapper for Fortran routine taylor_equal_taylor
 
 Parameters
@@ -297,12 +283,9 @@ taylor2 : TaylorStruct
   m.def(
       "taylor_inverse",
       &Bmad::taylor_inverse,
-      py::arg("taylor_in"),
-      py::arg("taylor_inv"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine taylor_inverse (taylor_in, taylor_inv, err)
-
-Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
+      nb::arg("taylor_in"),
+      nb::arg("taylor_inv"),
+      R"""(Subroutine to invert a taylor map. Since the inverse map is truncated, it is not exact.
 
 Parameters
 ----------
@@ -320,16 +303,23 @@ err : bool, optional
   );
   m.def(
       "taylor_propagate1",
-      &Bmad::taylor_propagate1,
-      py::arg("orb_taylor"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("ref_in") = py::none(),
-      py::arg("spin_taylor") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine taylor_propagate1 (orb_taylor, ele, param, err_flag, ref_in, spin_taylor)
-
-Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
+      [](TaylorStructArray1D orb_taylor,
+         EleStruct &ele,
+         LatParamStruct &param,
+         CoordStruct *ref_in,
+         std::optional<TaylorStructArray1D> spin_taylor) {
+        auto fn = static_cast<
+            bool (*)(TaylorStructArray1D, EleStruct &, LatParamStruct &, optional_ref<CoordStruct>, std::optional<TaylorStructArray1D>)>(
+            &Bmad::taylor_propagate1
+        );
+        return fn(orb_taylor, ele, param, ptr_to_opt_ref(ref_in), spin_taylor);
+      },
+      nb::arg("orb_taylor"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("ref_in") = nb::none(),
+      nb::arg("spin_taylor") = nb::none(),
+      R"""(Subroutine to track (symplectic integration) a orbital map, and optionally a spin map, through an element.
 The spin tracking is only done if spin_taylor is present and bmad_com%spin_tracking_on = T.
 The alternative routine, if ele has a taylor map, is concat_taylor.
 
@@ -366,12 +356,9 @@ err_flag : bool
   m.def(
       "taylor_to_mad_map",
       &Bmad::taylor_to_mad_map,
-      py::arg("taylor"),
-      py::arg("energy"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine taylor_to_mad_map (taylor, energy, map)
-
-Subroutine to convert a Taylor map to a mad order 2 map.
+      nb::arg("taylor"),
+      nb::arg("energy"),
+      R"""(Subroutine to convert a Taylor map to a mad order 2 map.
 If any of the Taylor terms have order greater than 2 they are ignored.
 
 Parameters
@@ -391,9 +378,8 @@ map : MadMapStruct
   m.def(
       "taylors_equal_taylors",
       &Bmad::taylors_equal_taylors,
-      py::arg("taylor1"),
-      py::arg("taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("taylor1"),
+      nb::arg("taylor2"),
       R"""(Wrapper for Fortran routine taylors_equal_taylors
 
 Parameters
@@ -406,11 +392,10 @@ taylor2 : 1D array of TaylorStruct
   m.def(
       "tilt_coords",
       &Bmad::tilt_coords,
-      py::arg("tilt_val"),
-      py::arg("coord"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("tilt_val"),
+      nb::arg("coord"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine tilt_coords
 
 Parameters
@@ -435,10 +420,9 @@ make_matrix : bool, optional
   m.def(
       "tilt_coords_photon",
       &Bmad::tilt_coords_photon,
-      py::arg("tilt_val"),
-      py::arg("coord"),
-      py::arg("w_mat") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("tilt_val"),
+      nb::arg("coord"),
+      nb::arg("w_mat") = nb::none(),
       R"""(Wrapper for Fortran routine tilt_coords_photon
 
 Parameters
@@ -460,9 +444,8 @@ w_mat : 2D array of float (shape: 3,3), optional
   m.def(
       "tilt_mat6",
       &Bmad::tilt_mat6,
-      py::arg("mat6"),
-      py::arg("tilt"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("mat6"),
+      nb::arg("tilt"),
       R"""(Wrapper for Fortran routine tilt_mat6
 
 Parameters
@@ -476,34 +459,27 @@ tilt : float
     Tilt angle.
 )"""
   );
-  py::class_<Bmad::ToEtaReading, std::unique_ptr<Bmad::ToEtaReading>>(
-      m,
-      "ToEtaReading",
-      "to_eta_reading return type"
-  )
-      .def_readonly("reading", &Bmad::ToEtaReading::reading)
-      .def_readonly("err", &Bmad::ToEtaReading::err)
+  nb::class_<Bmad::ToEtaReading>(m, "ToEtaReading", "to_eta_reading return type")
+      .def_ro("reading", &Bmad::ToEtaReading::reading)
+      .def_ro("err", &Bmad::ToEtaReading::err)
       .def("__len__", [](const Bmad::ToEtaReading &) { return 2; })
-      .def("__getitem__", [](const Bmad::ToEtaReading &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ToEtaReading &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.reading);
+          return nb::cast(s.reading);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "to_eta_reading",
       &Bmad::to_eta_reading,
-      py::arg("eta_actual"),
-      py::arg("ele"),
-      py::arg("axis"),
-      py::arg("add_noise"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine to_eta_reading (eta, ele, axis, add_noise, reading, err)
-
-Compute the measured dispersion reading given the true dispersion and the
+      nb::arg("eta_actual"),
+      nb::arg("ele"),
+      nb::arg("axis"),
+      nb::arg("add_noise"),
+      R"""(Compute the measured dispersion reading given the true dispersion and the
 monitor offsets, noise, etc.
 
 This routine will only give a nonzero reading for Bmad markers,
@@ -532,47 +508,41 @@ err : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ToFieldmapCoords, std::unique_ptr<Bmad::ToFieldmapCoords>>(
-      m,
-      "ToFieldmapCoords",
-      "to_fieldmap_coords return type"
-  )
-      .def_readonly("x", &Bmad::ToFieldmapCoords::x)
-      .def_readonly("y", &Bmad::ToFieldmapCoords::y)
-      .def_readonly("z", &Bmad::ToFieldmapCoords::z)
-      .def_readonly("cos_ang", &Bmad::ToFieldmapCoords::cos_ang)
-      .def_readonly("sin_ang", &Bmad::ToFieldmapCoords::sin_ang)
-      .def_readonly("err_flag", &Bmad::ToFieldmapCoords::err_flag)
+  nb::class_<Bmad::ToFieldmapCoords>(m, "ToFieldmapCoords", "to_fieldmap_coords return type")
+      .def_ro("x", &Bmad::ToFieldmapCoords::x)
+      .def_ro("y", &Bmad::ToFieldmapCoords::y)
+      .def_ro("z", &Bmad::ToFieldmapCoords::z)
+      .def_ro("cos_ang", &Bmad::ToFieldmapCoords::cos_ang)
+      .def_ro("sin_ang", &Bmad::ToFieldmapCoords::sin_ang)
+      .def_ro("err_flag", &Bmad::ToFieldmapCoords::err_flag)
       .def("__len__", [](const Bmad::ToFieldmapCoords &) { return 6; })
-      .def("__getitem__", [](const Bmad::ToFieldmapCoords &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ToFieldmapCoords &s, int i) -> nb::object {
         if (i < 0)
           i += 6;
         if (i == 0)
-          return py::cast(s.x);
+          return nb::cast(s.x);
         if (i == 1)
-          return py::cast(s.y);
+          return nb::cast(s.y);
         if (i == 2)
-          return py::cast(s.z);
+          return nb::cast(s.z);
         if (i == 3)
-          return py::cast(s.cos_ang);
+          return nb::cast(s.cos_ang);
         if (i == 4)
-          return py::cast(s.sin_ang);
+          return nb::cast(s.sin_ang);
         if (i == 5)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "to_fieldmap_coords",
       &Bmad::to_fieldmap_coords,
-      py::arg("ele"),
-      py::arg("local_orb"),
-      py::arg("s_body"),
-      py::arg("ele_anchor_pt"),
-      py::arg("r0"),
-      py::arg("curved_ref_frame"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine to_fieldmap_coords (ele, local_orb, s_body, ele_anchor_pt, r0, curved_ref_frame,
-                                                              x, y, z, cos_ang, sin_ang, err_flag)
+      nb::arg("ele"),
+      nb::arg("local_orb"),
+      nb::arg("s_body"),
+      nb::arg("ele_anchor_pt"),
+      nb::arg("r0"),
+      nb::arg("curved_ref_frame"),
+      R"""(                                                              x, y, z, cos_ang, sin_ang, err_flag)
 
 Routine to return the (x,y,s) position relative to a field map.
 
@@ -617,34 +587,27 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::ToOrbitReading, std::unique_ptr<Bmad::ToOrbitReading>>(
-      m,
-      "ToOrbitReading",
-      "to_orbit_reading return type"
-  )
-      .def_readonly("reading", &Bmad::ToOrbitReading::reading)
-      .def_readonly("err", &Bmad::ToOrbitReading::err)
+  nb::class_<Bmad::ToOrbitReading>(m, "ToOrbitReading", "to_orbit_reading return type")
+      .def_ro("reading", &Bmad::ToOrbitReading::reading)
+      .def_ro("err", &Bmad::ToOrbitReading::err)
       .def("__len__", [](const Bmad::ToOrbitReading &) { return 2; })
-      .def("__getitem__", [](const Bmad::ToOrbitReading &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ToOrbitReading &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.reading);
+          return nb::cast(s.reading);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "to_orbit_reading",
       &Bmad::to_orbit_reading,
-      py::arg("orb"),
-      py::arg("ele"),
-      py::arg("axis"),
-      py::arg("add_noise"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine to_orbit_reading (orb, ele, axis, add_noise, reading, err)
-
-Calculate the measured reading on a bpm given the actual orbit and the
+      nb::arg("orb"),
+      nb::arg("ele"),
+      nb::arg("axis"),
+      nb::arg("add_noise"),
+      R"""(Calculate the measured reading on a bpm given the actual orbit and the
 BPM's offsets, noise, etc.
 
 This routine will only give a nonzero reading for Bmad markers,
@@ -673,32 +636,29 @@ err : bool
     Set True if there is no valid reading. For example, if ele.is_on = False.
 )"""
   );
-  py::class_<Bmad::ToPhaseAndCouplingReading, std::unique_ptr<Bmad::ToPhaseAndCouplingReading>>(
+  nb::class_<Bmad::ToPhaseAndCouplingReading>(
       m,
       "ToPhaseAndCouplingReading",
       "to_phase_and_coupling_reading return type"
   )
-      .def_readonly("reading", &Bmad::ToPhaseAndCouplingReading::reading)
-      .def_readonly("err", &Bmad::ToPhaseAndCouplingReading::err)
+      .def_ro("reading", &Bmad::ToPhaseAndCouplingReading::reading)
+      .def_ro("err", &Bmad::ToPhaseAndCouplingReading::err)
       .def("__len__", [](const Bmad::ToPhaseAndCouplingReading &) { return 2; })
-      .def("__getitem__", [](const Bmad::ToPhaseAndCouplingReading &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ToPhaseAndCouplingReading &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.reading);
+          return nb::cast(s.reading);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "to_phase_and_coupling_reading",
       &Bmad::to_phase_and_coupling_reading,
-      py::arg("ele"),
-      py::arg("add_noise"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine to_phase_and_coupling_reading (ele, add_noise, reading, err)
-
-Find the measured coupling values given the actual ones
+      nb::arg("ele"),
+      nb::arg("add_noise"),
+      R"""(Find the measured coupling values given the actual ones
 
 This routine will only give a nonzero reading for Bmad markers,
 monitors, and instruments.
@@ -723,12 +683,9 @@ err : bool
   m.def(
       "to_photon_angle_coords",
       &Bmad::to_photon_angle_coords,
-      py::arg("orb_in"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function to_photon_angle_coords (orb_in, ele) result (orb_out)
-
-Routine to convert from standard photon coords to "angle" coords defined as:
+      nb::arg("orb_in"),
+      nb::arg("ele"),
+      R"""(Routine to convert from standard photon coords to "angle" coords defined as:
       x, angle_x, y, angle_y, z, E-E_ref
 
 Parameters
@@ -748,9 +705,8 @@ orb_out : CoordStruct
   m.def(
       "to_surface_coords",
       &Bmad::to_surface_coords,
-      py::arg("lab_orbit"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lab_orbit"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine to_surface_coords
 
 Parameters
@@ -770,12 +726,9 @@ surface_orbit : CoordStruct
   m.def(
       "touschek_lifetime",
       &Bmad::touschek_lifetime,
-      py::arg("mode"),
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine touschek_lifetime(mode, Tl, lat)
-
-Calculates the touschek lifetime for a lattice by calling touschek_rate1
+      nb::arg("mode"),
+      nb::arg("lat"),
+      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
 for each element.
 The loss rate at each element is averaged over one turn to obtain the lifetime.
 
@@ -810,16 +763,99 @@ Tl : float
 )"""
   );
   m.def(
+      "touschek_lifetime_ele_by_ele",
+      &Bmad::touschek_lifetime_ele_by_ele,
+      nb::arg("mode"),
+      nb::arg("lat"),
+      nb::arg("momentum_aperture"),
+      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
+for each element the momentum_aperture array of momentum_aperture_structs.
+This calculation is based on Piwinski 1998 "The Touschek Effect In
+Strong Focusing Storage Rings".  This is the most general case, equation 31.
+42.
+
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
+
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
+
+This function assumes that the twiss parameters
+been calculated, and that mode has been populated with emittance and bunch length.
+
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
+
+lat : LatStruct
+    Lattice
+
+momentum_aperture : 1D array of MomentumApertureStruct
+    ele-by-ele unsymmatric apertures
+
+Returns
+-------
+Tl : float
+    Touschek lifetime in seconds
+)"""
+  );
+  m.def(
+      "touschek_lifetime_with_aperture",
+      &Bmad::touschek_lifetime_with_aperture,
+      nb::arg("mode"),
+      nb::arg("lat"),
+      nb::arg("momentum_aperture"),
+      R"""(Calculates the touschek lifetime for a lattice by calling touschek_rate1
+for each s-coordinate in the momentum_aperture array of momentum_aperture_structs.
+This calculation is based on Piwinski 1998 "The Touschek Effect In
+Strong Focusing Storage Rings".  This is the most general case, equation 31.
+42.
+
+A common way to call this function is to first populate mode using
+radiation integrals.  If an ideal lattice is used, the vertical
+emittance must also be set to a reasonable value.  If the vertical
+emittance is due only to quantum excitation, then it will likely be
+several orders of magnitude smaller than any real physical situation, in which
+case the integral in this function will have problems converging.
+
+In addition to setting mode, also set lat%param%n_part to the number of particles
+per bunch.
+
+This function assumes that the twiss parameters
+been calculated, and that mode has been populated with emittance and bunch length.
+
+This function assumes that momentum_aperture(0)%s==0 and momentum_aperture(last)%s==lat%param%total_length.
+
+Parameters
+----------
+mode : NormalModesStruct
+    beam properties
+
+lat : LatStruct
+    Lattice
+
+momentum_aperture : 1D array of MomentumApertureStruct
+    loc-by-loc unsymmatric apertures
+
+Returns
+-------
+Tl : float
+    Touschek lifetime in seconds
+)"""
+  );
+  m.def(
       "touschek_rate1",
       &Bmad::touschek_rate1,
-      py::arg("mode"),
-      py::arg("lat"),
-      py::arg("ix") = py::none(),
-      py::arg("s") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine touschek_rate1(mode, rate, lat, ix, s)
-
-Calculates the touschek rate at the location specified by s or ix
+      nb::arg("mode"),
+      nb::arg("lat"),
+      nb::arg("ix") = nb::none(),
+      nb::arg("s") = nb::none(),
+      R"""(Calculates the touschek rate at the location specified by s or ix
 This calculation is based on Piwinski 1998 "The Touschek Effect In
 Strong Focusing Storage Rings".  This is the most general case, equation
 31.
@@ -878,12 +914,11 @@ rate : float
   m.def(
       "touschek_rate1_zap",
       &Bmad::touschek_rate1_zap,
-      py::arg("mode"),
-      py::arg("rate"),
-      py::arg("lat"),
-      py::arg("ix") = py::none(),
-      py::arg("s") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("mode"),
+      nb::arg("rate"),
+      nb::arg("lat"),
+      nb::arg("ix") = nb::none(),
+      nb::arg("s") = nb::none(),
       R"""(Wrapper for Fortran routine touschek_rate1_zap
 
 Parameters
@@ -899,30 +934,50 @@ ix : int, optional
 s : float, optional
 )"""
   );
-  py::class_<Bmad::Track1, std::unique_ptr<Bmad::Track1>>(m, "Track1", "track1 return type")
-      .def_readonly("end_orb", &Bmad::Track1::end_orb)
-      .def_readonly("err_flag", &Bmad::Track1::err_flag)
+  nb::class_<Bmad::Track1>(m, "Track1", "track1 return type")
+      .def_ro("end_orb", &Bmad::Track1::end_orb)
+      .def_ro("err_flag", &Bmad::Track1::err_flag)
       .def("__len__", [](const Bmad::Track1 &) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Track1 &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.end_orb);
+          return nb::cast(s.end_orb);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "track1",
-      &Bmad::track1,
-      py::arg("start_orb"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("track") = py::none(),
-      py::arg("ignore_radiation") = py::none(),
-      py::arg("make_map1") = py::none(),
-      py::arg("init_to_edge") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](CoordStruct &start_orb,
+         EleStruct &ele,
+         LatParamStruct &param,
+         TrackStruct *track,
+         std::optional<bool> ignore_radiation,
+         std::optional<bool> make_map1,
+         std::optional<bool> init_to_edge) {
+        auto fn = static_cast<
+            Bmad::
+                Track1 (*)(CoordStruct &, EleStruct &, LatParamStruct &, optional_ref<TrackStruct>, std::optional<bool>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::track1
+        );
+        return fn(
+            start_orb,
+            ele,
+            param,
+            ptr_to_opt_ref(track),
+            ignore_radiation,
+            make_map1,
+            init_to_edge
+        );
+      },
+      nb::arg("start_orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("track") = nb::none(),
+      nb::arg("ignore_radiation") = nb::none(),
+      nb::arg("make_map1") = nb::none(),
+      nb::arg("init_to_edge") = nb::none(),
       R"""(Wrapper for Fortran routine track1
 
 Parameters
@@ -966,14 +1021,11 @@ err_flag : bool, optional
   m.def(
       "track1_beam",
       &Bmad::track1_beam,
-      py::arg("beam"),
-      py::arg("ele"),
-      py::arg("centroid") = py::none(),
-      py::arg("direction") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_beam (beam, ele, err, centroid, direction)
-
-Subroutine to track a beam of particles through an element.
+      nb::arg("beam"),
+      nb::arg("ele"),
+      nb::arg("centroid") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      R"""(Subroutine to track a beam of particles through an element.
 
 Parameters
 ----------
@@ -998,32 +1050,27 @@ err : bool
     Set true if there is an error. EG: Too many particles lost for a CSR calc.
 )"""
   );
-  py::class_<Bmad::Track1Bmad, std::unique_ptr<Bmad::Track1Bmad>>(
-      m,
-      "Track1Bmad",
-      "track1_bmad return type"
-  )
-      .def_readonly("err_flag", &Bmad::Track1Bmad::err_flag)
-      .def_readonly("track", &Bmad::Track1Bmad::track)
+  nb::class_<Bmad::Track1Bmad>(m, "Track1Bmad", "track1_bmad return type")
+      .def_ro("err_flag", &Bmad::Track1Bmad::err_flag)
+      .def_ro("track", &Bmad::Track1Bmad::track)
       .def("__len__", [](const Bmad::Track1Bmad &) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1Bmad &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Track1Bmad &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
-        throw py::index_error();
+          return nb::cast(s.track);
+        throw nb::index_error();
       });
   m.def(
       "track1_bmad",
       &Bmad::track1_bmad,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track1_bmad
 
 Parameters
@@ -1059,10 +1106,9 @@ track : TrackStruct, optional
   m.def(
       "track1_bmad_photon",
       &Bmad::track1_bmad_photon,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track1_bmad_photon
 
 Parameters
@@ -1085,16 +1131,23 @@ err_flag : bool, optional
   );
   m.def(
       "track1_bunch",
-      &Bmad::track1_bunch,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::arg("centroid") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_bunch (bunch, ele, err, centroid, direction, bunch_track)
-
-Subroutine to track a bunch of particles through an element.
+      [](BunchStruct &bunch,
+         EleStruct &ele,
+         std::optional<CoordStructArray1D> centroid,
+         std::optional<int> direction,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, EleStruct &, std::optional<CoordStructArray1D>, std::optional<int>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track1_bunch
+        );
+        return fn(bunch, ele, centroid, direction, ptr_to_opt_ref(bunch_track));
+      },
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      nb::arg("centroid") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
+      R"""(Subroutine to track a bunch of particles through an element.
 
 Parameters
 ----------
@@ -1126,17 +1179,25 @@ err : bool
   );
   m.def(
       "track1_bunch_csr",
-      &Bmad::track1_bunch_csr,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::arg("centroid"),
-      py::arg("s_start") = py::none(),
-      py::arg("s_end") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
-
-Routine to track a bunch of particles through an element with csr radiation effects.
+      [](BunchStruct &bunch,
+         EleStruct &ele,
+         CoordStructArray1D centroid,
+         std::optional<double> s_start,
+         std::optional<double> s_end,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, EleStruct &, CoordStructArray1D, std::optional<double>, std::optional<double>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track1_bunch_csr
+        );
+        return fn(bunch, ele, centroid, s_start, s_end, ptr_to_opt_ref(bunch_track));
+      },
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      nb::arg("centroid"),
+      nb::arg("s_start") = nb::none(),
+      nb::arg("s_end") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
+      R"""(Routine to track a bunch of particles through an element with csr radiation effects.
 
 Parameters
 ----------
@@ -1171,17 +1232,25 @@ err : bool
   );
   m.def(
       "track1_bunch_csr3d",
-      &Bmad::track1_bunch_csr3d,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::arg("centroid"),
-      py::arg("s_start") = py::none(),
-      py::arg("s_end") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_bunch_csr3d (bunch, ele, centroid, err, bunch_track)
-
-EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
+      [](BunchStruct &bunch,
+         EleStruct &ele,
+         CoordStructArray1D centroid,
+         std::optional<double> s_start,
+         std::optional<double> s_end,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, EleStruct &, CoordStructArray1D, std::optional<double>, std::optional<double>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track1_bunch_csr3d
+        );
+        return fn(bunch, ele, centroid, s_start, s_end, ptr_to_opt_ref(bunch_track));
+      },
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      nb::arg("centroid"),
+      nb::arg("s_start") = nb::none(),
+      nb::arg("s_end") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
+      R"""(EXPERIMENTAL. NOT CURRENTLY OPERATIONAL!
 
 Routine to track a bunch of particles through an element using
 steady-state 3D CSR.
@@ -1224,15 +1293,21 @@ https://github.com/ChristopherMayes/OpenCSR
   );
   m.def(
       "track1_bunch_hom",
-      &Bmad::track1_bunch_hom,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::arg("direction") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_bunch_hom (bunch, ele, direction, bunch_track)
-
-Subroutine to track a bunch of particles through an element including wakefields.
+      [](BunchStruct &bunch,
+         EleStruct &ele,
+         std::optional<int> direction,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            void (*)(BunchStruct &, EleStruct &, std::optional<int>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track1_bunch_hom
+        );
+        return fn(bunch, ele, direction, ptr_to_opt_ref(bunch_track));
+      },
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      nb::arg("direction") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
+      R"""(Subroutine to track a bunch of particles through an element including wakefields.
 
 Parameters
 ----------
@@ -1255,12 +1330,20 @@ bunch_track : BunchTrackStruct, optional
   );
   m.def(
       "track1_bunch_space_charge",
-      &Bmad::track1_bunch_space_charge,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::arg("track_to_same_s") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](BunchStruct &bunch,
+         EleStruct &ele,
+         std::optional<bool> track_to_same_s,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            bool (*)(BunchStruct &, EleStruct &, std::optional<bool>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track1_bunch_space_charge
+        );
+        return fn(bunch, ele, track_to_same_s, ptr_to_opt_ref(bunch_track));
+      },
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      nb::arg("track_to_same_s") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
       R"""(Wrapper for Fortran routine track1_bunch_space_charge
 
 Parameters
@@ -1290,13 +1373,10 @@ err : bool
   m.def(
       "track1_crystal",
       &Bmad::track1_crystal,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_crystal (ele, param, orbit)
-
-Routine to track diffraction from a crystal.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track diffraction from a crystal.
 
 Parameters
 ----------
@@ -1315,13 +1395,10 @@ orbit : CoordStruct
   m.def(
       "track1_diffraction_plate_or_mask",
       &Bmad::track1_diffraction_plate_or_mask,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_diffraction_plate_or_mask (ele, param, orbit)
-
-Routine to track through diffraction plate and mask elements.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track through diffraction plate and mask elements.
 
 Parameters
 ----------
@@ -1340,13 +1417,10 @@ orbit : CoordStruct
   m.def(
       "track1_high_energy_space_charge",
       &Bmad::track1_high_energy_space_charge,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_high_energy_space_charge (ele, param, orbit)
-
-Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to apply the ultra-relative space charge kick to a particle at the end of an element.
 The routine setup_high_energy_space_charge_calc must be called initially before any tracking is done.
 This routine assumes a Gaussian bunch and is only valid with relativistic particles where the
 effect of the space charge is small.
@@ -1367,13 +1441,10 @@ orbit : CoordStruct
   m.def(
       "track1_lens",
       &Bmad::track1_lens,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_lens (ele, param, orbit)
-
-Routine to track through a lens.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track through a lens.
 
 Parameters
 ----------
@@ -1392,10 +1463,9 @@ orbit : CoordStruct
   m.def(
       "track1_linear",
       &Bmad::track1_linear,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track1_linear
 
 Parameters
@@ -1414,12 +1484,9 @@ param : LatParamStruct
   m.def(
       "track1_lr_wake",
       &Bmad::track1_lr_wake,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_lr_wake (bunch, ele)
-
-Subroutine to put in the long-range wakes for particle tracking.
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      R"""(Subroutine to put in the long-range wakes for particle tracking.
 
 Parameters
 ----------
@@ -1437,13 +1504,10 @@ ele : EleStruct
   m.def(
       "track1_mad",
       &Bmad::track1_mad,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_mad (orbit, ele, param)
-
-Subroutine to track through an element using a 2nd order transfer map.
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      R"""(Subroutine to track through an element using a 2nd order transfer map.
 Note: If map does not exist then one will be created.
 
 Parameters
@@ -1463,13 +1527,10 @@ param : LatParamStruct
   m.def(
       "track1_mirror",
       &Bmad::track1_mirror,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_mirror (ele, param, orbit)
-
-Routine to track reflection from a mirror.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track reflection from a mirror.
 
 Parameters
 ----------
@@ -1488,13 +1549,10 @@ orbit : CoordStruct
   m.def(
       "track1_mosaic_crystal",
       &Bmad::track1_mosaic_crystal,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_mosaic_crystal (ele, param, orbit)
-
-Routine to track diffraction from a crystal.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track diffraction from a crystal.
 
 Parameters
 ----------
@@ -1513,13 +1571,10 @@ orbit : CoordStruct
   m.def(
       "track1_multilayer_mirror",
       &Bmad::track1_multilayer_mirror,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_multilayer_mirror (ele, param, orbit)
-
-Routine to track reflection from a multilayer_mirror.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track reflection from a multilayer_mirror.
 Basic equations are from Kohn, "On the Theory of Reflectivity of an X-Ray Multilayer Mirror".
 
 Parameters
@@ -1539,13 +1594,10 @@ orbit : CoordStruct
   m.def(
       "track1_radiation",
       &Bmad::track1_radiation,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("edge"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_radiation (orbit, ele, edge)
-
-Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("edge"),
+      R"""(Subroutine to apply a kick to a particle to account for radiation dampling and/or fluctuations.
 
 For tracking through a given element, this routine should be called initially when
 the particle is at the entrance end and at the end when the particle is at the exit end, when
@@ -1571,15 +1623,12 @@ edge : int
   m.def(
       "track1_radiation_center",
       &Bmad::track1_radiation_center,
-      py::arg("orbit"),
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("rad_damp") = py::none(),
-      py::arg("rad_fluct") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_radiation_center (orbit, ele1, ele2, rad_damp, rad_fluct)
-
-Used for elements that have been split in half: This routine applies a kick to a particle
+      nb::arg("orbit"),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
+      nb::arg("rad_damp") = nb::none(),
+      nb::arg("rad_fluct") = nb::none(),
+      R"""(Used for elements that have been split in half: This routine applies a kick to a particle
 to account for radiation dampling and/or fluctuations.
 
 Also see: track1_radiation.
@@ -1604,32 +1653,27 @@ rad_fluct : bool, optional
     If present, override setting of bmad_com.radiation_fluctuations_on.
 )"""
   );
-  py::class_<Bmad::Track1RungeKutta, std::unique_ptr<Bmad::Track1RungeKutta>>(
-      m,
-      "Track1RungeKutta",
-      "track1_runge_kutta return type"
-  )
-      .def_readonly("err_flag", &Bmad::Track1RungeKutta::err_flag)
-      .def_readonly("track", &Bmad::Track1RungeKutta::track)
+  nb::class_<Bmad::Track1RungeKutta>(m, "Track1RungeKutta", "track1_runge_kutta return type")
+      .def_ro("err_flag", &Bmad::Track1RungeKutta::err_flag)
+      .def_ro("track", &Bmad::Track1RungeKutta::track)
       .def("__len__", [](const Bmad::Track1RungeKutta &) { return 2; })
-      .def("__getitem__", [](const Bmad::Track1RungeKutta &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Track1RungeKutta &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
-        throw py::index_error();
+          return nb::cast(s.track);
+        throw nb::index_error();
       });
   m.def(
       "track1_runge_kutta",
       &Bmad::track1_runge_kutta,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track1_runge_kutta
 
 Parameters
@@ -1665,13 +1709,10 @@ track : TrackStruct, optional
   m.def(
       "track1_sample",
       &Bmad::track1_sample,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_sample (ele, param, orbit)
-
-Routine to track reflection from a sample element.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      R"""(Routine to track reflection from a sample element.
 
 Parameters
 ----------
@@ -1690,12 +1731,11 @@ orbit : CoordStruct
   m.def(
       "track1_spin",
       &Bmad::track1_spin,
-      py::arg("start_orb"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("end_orb"),
-      py::arg("make_quaternion") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("start_orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("end_orb"),
+      nb::arg("make_quaternion") = nb::none(),
       R"""(Wrapper for Fortran routine track1_spin
 
 Parameters
@@ -1719,11 +1759,10 @@ make_quaternion : bool, optional
   m.def(
       "track1_spin_integration",
       &Bmad::track1_spin_integration,
-      py::arg("start_orb"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("end_orb"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("start_orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("end_orb"),
       R"""(Wrapper for Fortran routine track1_spin_integration
 
 Parameters
@@ -1744,10 +1783,9 @@ end_orb : CoordStruct
   m.def(
       "track1_spin_taylor",
       &Bmad::track1_spin_taylor,
-      py::arg("start_orb"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("start_orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track1_spin_taylor
 
 Parameters
@@ -1769,12 +1807,9 @@ end_orb : CoordStruct
   m.def(
       "track1_sr_wake",
       &Bmad::track1_sr_wake,
-      py::arg("bunch"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track1_sr_wake (bunch, ele)
-
-Subroutine to apply the short range wake fields to a bunch.
+      nb::arg("bunch"),
+      nb::arg("ele"),
+      R"""(Subroutine to apply the short range wake fields to a bunch.
 
 Parameters
 ----------
@@ -1790,10 +1825,9 @@ ele : EleStruct
   m.def(
       "track1_symp_lie_ptc",
       &Bmad::track1_symp_lie_ptc,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track1_symp_lie_ptc
 
 Parameters
@@ -1817,11 +1851,10 @@ track : TrackStruct, optional
   m.def(
       "track1_taylor",
       &Bmad::track1_taylor,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("taylor") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("taylor") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track1_taylor
 
 Parameters
@@ -1846,35 +1879,34 @@ mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
   );
-  py::class_<PyTrack1TimeRungeKutta, std::unique_ptr<PyTrack1TimeRungeKutta>>(
+  nb::class_<PyTrack1TimeRungeKutta>(
       m,
       "Track1TimeRungeKutta",
       "track1_time_runge_kutta return type"
   )
-      .def_readonly("err_flag", &PyTrack1TimeRungeKutta::err_flag)
-      .def_readonly("track", &PyTrack1TimeRungeKutta::track)
-      .def_readonly("dt_step", &PyTrack1TimeRungeKutta::dt_step)
+      .def_ro("err_flag", &PyTrack1TimeRungeKutta::err_flag)
+      .def_ro("track", &PyTrack1TimeRungeKutta::track)
+      .def_ro("dt_step", &PyTrack1TimeRungeKutta::dt_step)
       .def("__len__", [](const PyTrack1TimeRungeKutta &) { return 3; })
-      .def("__getitem__", [](const PyTrack1TimeRungeKutta &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTrack1TimeRungeKutta &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
+          return nb::cast(s.track);
         if (i == 2)
-          return py::cast(s.dt_step);
-        throw py::index_error();
+          return nb::cast(s.dt_step);
+        throw nb::index_error();
       });
   m.def(
       "track1_time_runge_kutta",
       &python_track1_time_runge_kutta,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("t_end") = py::none(),
-      py::arg("dt_step") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("t_end") = nb::none(),
+      nb::arg("dt_step") = nb::none(),
       R"""(Wrapper for Fortran routine track1_time_runge_kutta
 
 Parameters
@@ -1918,31 +1950,26 @@ dt_step : float, optional
     As an output, dt_step: Next RK time step that this tracker would take based on the error tolerance.
 )"""
   );
-  py::class_<Bmad::TrackABeambeam, std::unique_ptr<Bmad::TrackABeambeam>>(
-      m,
-      "TrackABeambeam",
-      "track_a_beambeam return type"
-  )
-      .def_readonly("track", &Bmad::TrackABeambeam::track)
-      .def_readonly("mat6", &Bmad::TrackABeambeam::mat6)
+  nb::class_<Bmad::TrackABeambeam>(m, "TrackABeambeam", "track_a_beambeam return type")
+      .def_ro("track", &Bmad::TrackABeambeam::track)
+      .def_ro("mat6", &Bmad::TrackABeambeam::mat6)
       .def("__len__", [](const Bmad::TrackABeambeam &) { return 2; })
-      .def("__getitem__", [](const Bmad::TrackABeambeam &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackABeambeam &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.track);
+          return nb::cast(s.track);
         if (i == 1)
-          return py::cast(s.mat6);
-        throw py::index_error();
+          return nb::cast(s.mat6);
+        throw nb::index_error();
       });
   m.def(
       "track_a_beambeam",
       &Bmad::track_a_beambeam,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_beambeam
 
 Parameters
@@ -1974,12 +2001,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_bend",
       &Bmad::track_a_bend,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_bend
 
 Parameters
@@ -2007,13 +2033,10 @@ make_matrix : bool, optional
   m.def(
       "track_a_bend_photon",
       &Bmad::track_a_bend_photon,
-      py::arg("orb"),
-      py::arg("ele"),
-      py::arg("length"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_a_bend_photon (orb, ele, length)
-
-Routine to track a photon through a dipole bend.
+      nb::arg("orb"),
+      nb::arg("ele"),
+      nb::arg("length"),
+      R"""(Routine to track a photon through a dipole bend.
 The photon is traveling in a straight line but the reference frame
 is curved in a circular shape.
 
@@ -2034,12 +2057,9 @@ length : float
   m.def(
       "track_a_capillary",
       &Bmad::track_a_capillary,
-      py::arg("orb"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_a_capillary (orb, ele)
-
-Routine to track through a capillary.
+      nb::arg("orb"),
+      nb::arg("ele"),
+      R"""(Routine to track through a capillary.
 
 Parameters
 ----------
@@ -2055,11 +2075,10 @@ ele : EleStruct
   m.def(
       "track_a_converter",
       &Bmad::track_a_converter,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_converter
 
 Parameters
@@ -2087,11 +2106,10 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_crab_cavity",
       &Bmad::track_a_crab_cavity,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_crab_cavity
 
 Parameters
@@ -2116,31 +2134,26 @@ mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
   );
-  py::class_<PyTrackADrift, std::unique_ptr<PyTrackADrift>>(
-      m,
-      "TrackADrift",
-      "track_a_drift return type"
-  )
-      .def_readonly("time", &PyTrackADrift::time)
+  nb::class_<PyTrackADrift>(m, "TrackADrift", "track_a_drift return type")
+      .def_ro("time", &PyTrackADrift::time)
       .def("__len__", [](const PyTrackADrift &) { return 1; })
-      .def("__getitem__", [](const PyTrackADrift &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTrackADrift &s, int i) -> nb::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.time);
-        throw py::index_error();
+          return nb::cast(s.time);
+        throw nb::index_error();
       });
   m.def(
       "track_a_drift",
       &python_track_a_drift,
-      py::arg("orb"),
-      py::arg("length"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::arg("ele_orientation") = py::none(),
-      py::arg("include_ref_motion") = py::none(),
-      py::arg("time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orb"),
+      nb::arg("length"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      nb::arg("ele_orientation") = nb::none(),
+      nb::arg("include_ref_motion") = nb::none(),
+      nb::arg("time") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_drift
 
 Parameters
@@ -2185,10 +2198,9 @@ time : float, optional
   m.def(
       "track_a_drift_photon",
       &Bmad::track_a_drift_photon,
-      py::arg("orb"),
-      py::arg("length"),
-      py::arg("phase_relative_to_ref"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orb"),
+      nb::arg("length"),
+      nb::arg("phase_relative_to_ref"),
       R"""(Wrapper for Fortran routine track_a_drift_photon
 
 Parameters
@@ -2208,11 +2220,10 @@ phase_relative_to_ref : bool
   m.def(
       "track_a_foil",
       &Bmad::track_a_foil,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_foil
 
 Parameters
@@ -2240,12 +2251,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_gkicker",
       &Bmad::track_a_gkicker,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_gkicker
 
 Parameters
@@ -2273,12 +2283,11 @@ make_matrix : bool, optional
   m.def(
       "track_a_lcavity",
       &Bmad::track_a_lcavity,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_lcavity
 
 Parameters
@@ -2306,12 +2315,11 @@ make_matrix : bool, optional
   m.def(
       "track_a_lcavity_old",
       &Bmad::track_a_lcavity_old,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_lcavity_old
 
 Parameters
@@ -2339,11 +2347,10 @@ make_matrix : bool, optional
   m.def(
       "track_a_mask",
       &Bmad::track_a_mask,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_mask
 
 Parameters
@@ -2371,12 +2378,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_match",
       &Bmad::track_a_match,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("err_flag") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("err_flag") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_match
 
 Parameters
@@ -2403,35 +2409,30 @@ mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
   );
-  py::class_<Bmad::TrackAPatch, std::unique_ptr<Bmad::TrackAPatch>>(
-      m,
-      "TrackAPatch",
-      "track_a_patch return type"
-  )
-      .def_readonly("s_ent", &Bmad::TrackAPatch::s_ent)
-      .def_readonly("ds_ref", &Bmad::TrackAPatch::ds_ref)
-      .def_readonly("mat6", &Bmad::TrackAPatch::mat6)
+  nb::class_<Bmad::TrackAPatch>(m, "TrackAPatch", "track_a_patch return type")
+      .def_ro("s_ent", &Bmad::TrackAPatch::s_ent)
+      .def_ro("ds_ref", &Bmad::TrackAPatch::ds_ref)
+      .def_ro("mat6", &Bmad::TrackAPatch::mat6)
       .def("__len__", [](const Bmad::TrackAPatch &) { return 3; })
-      .def("__getitem__", [](const Bmad::TrackAPatch &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackAPatch &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.s_ent);
+          return nb::cast(s.s_ent);
         if (i == 1)
-          return py::cast(s.ds_ref);
+          return nb::cast(s.ds_ref);
         if (i == 2)
-          return py::cast(s.mat6);
-        throw py::index_error();
+          return nb::cast(s.mat6);
+        throw nb::index_error();
       });
   m.def(
       "track_a_patch",
       &Bmad::track_a_patch,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("drift_to_exit") = py::none(),
-      py::arg("track_spin") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("drift_to_exit") = nb::none(),
+      nb::arg("track_spin") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_patch
 
 Parameters
@@ -2471,14 +2472,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_patch_photon",
       &Bmad::track_a_patch_photon,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("drift_to_exit") = py::none(),
-      py::arg("use_z_pos") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_a_patch_photon (ele, orbit, drift_to_exit, use_z_pos)
-
-Routine to track through a patch element with a photon.
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("drift_to_exit") = nb::none(),
+      nb::arg("use_z_pos") = nb::none(),
+      R"""(Routine to track through a patch element with a photon.
 The steps for tracking are:
   1) Transform from entrance to exit coordinates.
   2) Drift particle from the entrance to the exit coordinants.
@@ -2504,12 +2502,11 @@ use_z_pos : bool, optional
   m.def(
       "track_a_pickup",
       &Bmad::track_a_pickup,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("err_flag") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("err_flag") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_pickup
 
 Parameters
@@ -2539,11 +2536,10 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_quadrupole",
       &Bmad::track_a_quadrupole,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_quadrupole
 
 Parameters
@@ -2571,11 +2567,10 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_rfcavity",
       &Bmad::track_a_rfcavity,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_rfcavity
 
 Parameters
@@ -2603,12 +2598,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_sad_mult",
       &Bmad::track_a_sad_mult,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_sad_mult
 
 Parameters
@@ -2636,11 +2630,10 @@ make_matrix : bool, optional
   m.def(
       "track_a_sol_quad",
       &Bmad::track_a_sol_quad,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_sol_quad
 
 Parameters
@@ -2668,12 +2661,11 @@ mat6 : 2D array of float (shape: 6,6), optional
   m.def(
       "track_a_thick_multipole",
       &Bmad::track_a_thick_multipole,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_thick_multipole
 
 Parameters
@@ -2701,11 +2693,10 @@ make_matrix : bool, optional
   m.def(
       "track_a_wiggler",
       &Bmad::track_a_wiggler,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine track_a_wiggler
 
 Parameters
@@ -2730,30 +2721,29 @@ mat6 : 2D array of float (shape: 6,6), optional
     Transfer matrix through the element.
 )"""
   );
-  py::class_<Bmad::TrackAZeroLengthElement, std::unique_ptr<Bmad::TrackAZeroLengthElement>>(
+  nb::class_<Bmad::TrackAZeroLengthElement>(
       m,
       "TrackAZeroLengthElement",
       "track_a_zero_length_element return type"
   )
-      .def_readonly("err_flag", &Bmad::TrackAZeroLengthElement::err_flag)
-      .def_readonly("track", &Bmad::TrackAZeroLengthElement::track)
+      .def_ro("err_flag", &Bmad::TrackAZeroLengthElement::err_flag)
+      .def_ro("track", &Bmad::TrackAZeroLengthElement::track)
       .def("__len__", [](const Bmad::TrackAZeroLengthElement &) { return 2; })
-      .def("__getitem__", [](const Bmad::TrackAZeroLengthElement &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackAZeroLengthElement &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.track);
-        throw py::index_error();
+          return nb::cast(s.track);
+        throw nb::index_error();
       });
   m.def(
       "track_a_zero_length_element",
       &Bmad::track_a_zero_length_element,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track_a_zero_length_element
 
 Parameters
@@ -2778,34 +2768,29 @@ track : TrackStruct, optional
     Structure holding the track information.
 )"""
   );
-  py::class_<Bmad::TrackAll, std::unique_ptr<Bmad::TrackAll>>(
-      m,
-      "TrackAll",
-      "track_all return type"
-  )
-      .def_readonly("track_state", &Bmad::TrackAll::track_state)
-      .def_readonly("err_flag", &Bmad::TrackAll::err_flag)
-      .def_readonly("orbit0", &Bmad::TrackAll::orbit0)
+  nb::class_<Bmad::TrackAll>(m, "TrackAll", "track_all return type")
+      .def_ro("track_state", &Bmad::TrackAll::track_state)
+      .def_ro("err_flag", &Bmad::TrackAll::err_flag)
+      .def_ro("orbit0", &Bmad::TrackAll::orbit0)
       .def("__len__", [](const Bmad::TrackAll &) { return 3; })
-      .def("__getitem__", [](const Bmad::TrackAll &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackAll &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.track_state);
+          return nb::cast(s.track_state);
         if (i == 1)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 2)
-          return py::cast(s.orbit0);
-        throw py::index_error();
+          return nb::cast(s.orbit0);
+        throw nb::index_error();
       });
   m.def(
       "track_all",
       &Bmad::track_all,
-      py::arg("lat"),
-      py::arg("orbit"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("init_lost") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("orbit"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("init_lost") = nb::none(),
       R"""(Wrapper for Fortran routine track_all
 
 Parameters
@@ -2839,18 +2824,35 @@ orbit0 : 1D array of CoordStruct, optional
   );
   m.def(
       "track_beam",
-      &Bmad::track_beam,
-      py::arg("lat"),
-      py::arg("beam"),
-      py::arg("ele1") = py::none(),
-      py::arg("ele2") = py::none(),
-      py::arg("centroid") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("bunch_tracks") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_beam (lat, beam, ele1, ele2, err, centroid, direction, bunch_tracks)
-
-Subroutine to track a beam of particles from the end of
+      [](LatStruct &lat,
+         BeamStruct &beam,
+         EleStruct *ele1,
+         EleStruct *ele2,
+         std::optional<CoordStructArray1D> centroid,
+         std::optional<int> direction,
+         std::optional<BunchTrackStructArray1D> bunch_tracks) {
+        auto fn = static_cast<
+            bool (*)(LatStruct &, BeamStruct &, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, std::optional<int>, std::optional<BunchTrackStructArray1D>)>(
+            &Bmad::track_beam
+        );
+        return fn(
+            lat,
+            beam,
+            ptr_to_opt_ref(ele1),
+            ptr_to_opt_ref(ele2),
+            centroid,
+            direction,
+            bunch_tracks
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("beam"),
+      nb::arg("ele1") = nb::none(),
+      nb::arg("ele2") = nb::none(),
+      nb::arg("centroid") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("bunch_tracks") = nb::none(),
+      R"""(Subroutine to track a beam of particles from the end of
 ele1 Through to the end of ele2. Both must be in the same lattice branch.
 
 Note: To zero wakes between runs, zero_lr_wakes_in_lat needs to be called.
@@ -2891,18 +2893,35 @@ err : bool
   );
   m.def(
       "track_bunch",
-      &Bmad::track_bunch,
-      py::arg("lat"),
-      py::arg("bunch"),
-      py::arg("ele1") = py::none(),
-      py::arg("ele2") = py::none(),
-      py::arg("centroid") = py::none(),
-      py::arg("direction") = py::none(),
-      py::arg("bunch_track") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_bunch (lat, bunch, ele1, ele2, err, centroid, direction, bunch_track)
-
-Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
+      [](LatStruct &lat,
+         BunchStruct &bunch,
+         EleStruct *ele1,
+         EleStruct *ele2,
+         std::optional<CoordStructArray1D> centroid,
+         std::optional<int> direction,
+         BunchTrackStruct *bunch_track) {
+        auto fn = static_cast<
+            bool (*)(LatStruct &, BunchStruct &, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, std::optional<int>, optional_ref<BunchTrackStruct>)>(
+            &Bmad::track_bunch
+        );
+        return fn(
+            lat,
+            bunch,
+            ptr_to_opt_ref(ele1),
+            ptr_to_opt_ref(ele2),
+            centroid,
+            direction,
+            ptr_to_opt_ref(bunch_track)
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("bunch"),
+      nb::arg("ele1") = nb::none(),
+      nb::arg("ele2") = nb::none(),
+      nb::arg("centroid") = nb::none(),
+      nb::arg("direction") = nb::none(),
+      nb::arg("bunch_track") = nb::none(),
+      R"""(Subroutine to track a particle bunch from the end of ele1 Through to the end of ele2.
 Both must be in the same lattice branch.
 With forward tracking, if ele2 is at or before ele1, the tracking will "wrap" around
 the ends of the lattice.
@@ -2946,13 +2965,12 @@ err : bool
   m.def(
       "track_bunch_time",
       &Bmad::track_bunch_time,
-      py::arg("bunch"),
-      py::arg("branch"),
-      py::arg("t_end"),
-      py::arg("s_end"),
-      py::arg("dt_step") = py::none(),
-      py::arg("extra_field") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bunch"),
+      nb::arg("branch"),
+      nb::arg("t_end"),
+      nb::arg("s_end"),
+      nb::arg("dt_step") = nb::none(),
+      nb::arg("extra_field") = nb::none(),
       R"""(Wrapper for Fortran routine track_bunch_time
 
 Parameters
@@ -2983,13 +3001,10 @@ extra_field : 1D array of EmFieldStruct, optional
   m.def(
       "track_bunch_to_s",
       &Bmad::track_bunch_to_s,
-      py::arg("bunch"),
-      py::arg("s"),
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_bunch_to_s (bunch, s, branch)
-
-Drift a bunch of particles to the same s coordinate
+      nb::arg("bunch"),
+      nb::arg("s"),
+      nb::arg("branch"),
+      R"""(Drift a bunch of particles to the same s coordinate
 
 Parameters
 ----------
@@ -3009,13 +3024,10 @@ branch : BranchStruct
   m.def(
       "track_bunch_to_t",
       &Bmad::track_bunch_to_t,
-      py::arg("bunch"),
-      py::arg("t_target"),
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_bunch_to_t (bunch, t_target, branch)
-
-Drift a bunch of particles to the same t coordinate
+      nb::arg("bunch"),
+      nb::arg("t_target"),
+      nb::arg("branch"),
+      R"""(Drift a bunch of particles to the same t coordinate
 
 Parameters
 ----------
@@ -3035,13 +3047,10 @@ branch : BranchStruct
   m.def(
       "track_complex_taylor",
       &Bmad::track_complex_taylor,
-      py::arg("start_orb"),
-      py::arg("complex_taylor"),
-      py::arg("end_orb"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine track_complex_taylor (start_orb, complex_taylor, end_orb)
-
-Subroutine to track using a complex_taylor map.
+      nb::arg("start_orb"),
+      nb::arg("complex_taylor"),
+      nb::arg("end_orb"),
+      R"""(Subroutine to track using a complex_taylor map.
 
 Parameters
 ----------
@@ -3055,36 +3064,31 @@ end_orb : 1D array of complex
     Ending coords.
 )"""
   );
-  py::class_<Bmad::TrackFromSToS, std::unique_ptr<Bmad::TrackFromSToS>>(
-      m,
-      "TrackFromSToS",
-      "track_from_s_to_s return type"
-  )
-      .def_readonly("orbit_end", &Bmad::TrackFromSToS::orbit_end)
-      .def_readonly("all_orb", &Bmad::TrackFromSToS::all_orb)
-      .def_readonly("track_state", &Bmad::TrackFromSToS::track_state)
+  nb::class_<Bmad::TrackFromSToS>(m, "TrackFromSToS", "track_from_s_to_s return type")
+      .def_ro("orbit_end", &Bmad::TrackFromSToS::orbit_end)
+      .def_ro("all_orb", &Bmad::TrackFromSToS::all_orb)
+      .def_ro("track_state", &Bmad::TrackFromSToS::track_state)
       .def("__len__", [](const Bmad::TrackFromSToS &) { return 3; })
-      .def("__getitem__", [](const Bmad::TrackFromSToS &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackFromSToS &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.orbit_end);
+          return nb::cast(s.orbit_end);
         if (i == 1)
-          return py::cast(s.all_orb);
+          return nb::cast(s.all_orb);
         if (i == 2)
-          return py::cast(s.track_state);
-        throw py::index_error();
+          return nb::cast(s.track_state);
+        throw nb::index_error();
       });
   m.def(
       "track_from_s_to_s",
       &Bmad::track_from_s_to_s,
-      py::arg("lat"),
-      py::arg("s_start"),
-      py::arg("s_end"),
-      py::arg("orbit_start"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("ix_ele_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("s_start"),
+      nb::arg("s_end"),
+      nb::arg("orbit_start"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("ix_ele_end") = nb::none(),
       R"""(Wrapper for Fortran routine track_from_s_to_s
 
 Parameters
@@ -3123,13 +3127,12 @@ track_state : int, optional
   m.def(
       "track_many",
       &Bmad::track_many,
-      py::arg("lat"),
-      py::arg("orbit"),
-      py::arg("ix_start"),
-      py::arg("ix_end"),
-      py::arg("direction"),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("orbit"),
+      nb::arg("ix_start"),
+      nb::arg("ix_end"),
+      nb::arg("direction"),
+      nb::arg("ix_branch") = nb::none(),
       R"""(Wrapper for Fortran routine track_many
 
 Parameters
@@ -3163,10 +3166,9 @@ track_state : int, optional
   m.def(
       "track_to_surface",
       &Bmad::track_to_surface,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine track_to_surface
 
 Parameters
@@ -3188,32 +3190,25 @@ w_surface : 2D array of float (shape: 3,3)
     real(rp), rotation matrix to transform to surface coords.
 )"""
   );
-  py::class_<Bmad::TrackUntilDead, std::unique_ptr<Bmad::TrackUntilDead>>(
-      m,
-      "TrackUntilDead",
-      "track_until_dead return type"
-  )
-      .def_readonly("end_orb", &Bmad::TrackUntilDead::end_orb)
-      .def_readonly("track", &Bmad::TrackUntilDead::track)
+  nb::class_<Bmad::TrackUntilDead>(m, "TrackUntilDead", "track_until_dead return type")
+      .def_ro("end_orb", &Bmad::TrackUntilDead::end_orb)
+      .def_ro("track", &Bmad::TrackUntilDead::track)
       .def("__len__", [](const Bmad::TrackUntilDead &) { return 2; })
-      .def("__getitem__", [](const Bmad::TrackUntilDead &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackUntilDead &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.end_orb);
+          return nb::cast(s.end_orb);
         if (i == 1)
-          return py::cast(s.track);
-        throw py::index_error();
+          return nb::cast(s.track);
+        throw nb::index_error();
       });
   m.def(
       "track_until_dead",
       &Bmad::track_until_dead,
-      py::arg("start_orb"),
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine track_until_dead (start_orb, lat, end_orb, track)
-
-Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
+      nb::arg("start_orb"),
+      nb::arg("lat"),
+      R"""(Subroutine to track a particle arbitrarily through a lattice, forwards or backwards,
   until it is lost or exits the lattice.
 
   The starting element is located using start_orb%s.
@@ -3235,30 +3230,29 @@ track : TrackStruct, optional
     (optional)
 )"""
   );
-  py::class_<Bmad::TrackingRadMapSetup, std::unique_ptr<Bmad::TrackingRadMapSetup>>(
+  nb::class_<Bmad::TrackingRadMapSetup>(
       m,
       "TrackingRadMapSetup",
       "tracking_rad_map_setup return type"
   )
-      .def_readonly("rad_map", &Bmad::TrackingRadMapSetup::rad_map)
-      .def_readonly("err_flag", &Bmad::TrackingRadMapSetup::err_flag)
+      .def_ro("rad_map", &Bmad::TrackingRadMapSetup::rad_map)
+      .def_ro("err_flag", &Bmad::TrackingRadMapSetup::err_flag)
       .def("__len__", [](const Bmad::TrackingRadMapSetup &) { return 2; })
-      .def("__getitem__", [](const Bmad::TrackingRadMapSetup &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TrackingRadMapSetup &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.rad_map);
+          return nb::cast(s.rad_map);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "tracking_rad_map_setup",
       &Bmad::tracking_rad_map_setup,
-      py::arg("ele"),
-      py::arg("tollerance"),
-      py::arg("ref_edge"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("tollerance"),
+      nb::arg("ref_edge"),
       R"""(Wrapper for Fortran routine tracking_rad_map_setup
 
 Parameters
@@ -3284,8 +3278,7 @@ err_flag : bool
   m.def(
       "transfer_ac_kick",
       &Bmad::transfer_ac_kick,
-      py::arg("ac_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ac_in"),
       R"""(Wrapper for Fortran routine transfer_ac_kick
 
 Parameters
@@ -3302,8 +3295,7 @@ ac_out : AcKickerStruct, optional
   m.def(
       "transfer_branch",
       &Bmad::transfer_branch,
-      py::arg("branch1"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch1"),
       R"""(Wrapper for Fortran routine transfer_branch
 
 Parameters
@@ -3318,8 +3310,7 @@ branch2 : BranchStruct
   m.def(
       "transfer_branch_parameters",
       &Bmad::transfer_branch_parameters,
-      py::arg("branch_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch_in"),
       R"""(Wrapper for Fortran routine transfer_branch_parameters
 
 Parameters
@@ -3336,9 +3327,8 @@ branch_out : BranchStruct
   m.def(
       "transfer_branches",
       &Bmad::transfer_branches,
-      py::arg("branch1"),
-      py::arg("branch2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch1"),
+      nb::arg("branch2"),
       R"""(Wrapper for Fortran routine transfer_branches
 
 Parameters
@@ -3351,9 +3341,8 @@ branch2 : 1D array of BranchStruct
   m.def(
       "transfer_ele",
       &Bmad::transfer_ele,
-      py::arg("ele1"),
-      py::arg("nullify_pointers") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("nullify_pointers") = nb::none(),
       R"""(Wrapper for Fortran routine transfer_ele
 
 Parameters
@@ -3373,9 +3362,8 @@ ele2 : EleStruct
   m.def(
       "transfer_ele_taylor",
       &Bmad::transfer_ele_taylor,
-      py::arg("ele_in"),
-      py::arg("taylor_order") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_in"),
+      nb::arg("taylor_order") = nb::none(),
       R"""(Wrapper for Fortran routine transfer_ele_taylor
 
 Parameters
@@ -3395,9 +3383,8 @@ ele_out : EleStruct
   m.def(
       "transfer_eles",
       &Bmad::transfer_eles,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
       R"""(Wrapper for Fortran routine transfer_eles
 
 Parameters
@@ -3410,9 +3397,8 @@ ele2 : 1D array of EleStruct
   m.def(
       "transfer_fieldmap",
       &Bmad::transfer_fieldmap,
-      py::arg("ele_in"),
-      py::arg("who"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_in"),
+      nb::arg("who"),
       R"""(Wrapper for Fortran routine transfer_fieldmap
 
 Parameters
@@ -3431,15 +3417,18 @@ ele_out : EleStruct
   );
   m.def(
       "transfer_fixer_params",
-      &Bmad::transfer_fixer_params,
-      py::arg("fixer"),
-      py::arg("to_stored"),
-      py::arg("orbit") = py::none(),
-      py::arg("who") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function transfer_fixer_params(fixer, to_stored, orbit, who) result (is_ok)
-
-Set parameters of fixer.
+      [](EleStruct &fixer, bool to_stored, CoordStruct *orbit, std::optional<std::string> who) {
+        auto fn = static_cast<
+            bool (*)(EleStruct &, bool, optional_ref<CoordStruct>, std::optional<std::string>)>(
+            &Bmad::transfer_fixer_params
+        );
+        return fn(fixer, to_stored, ptr_to_opt_ref(orbit), who);
+      },
+      nb::arg("fixer"),
+      nb::arg("to_stored"),
+      nb::arg("orbit") = nb::none(),
+      nb::arg("who") = nb::none(),
+      R"""(Set parameters of fixer.
 
 Parameters
 ----------
@@ -3469,8 +3458,7 @@ is_ok : bool
   m.def(
       "transfer_lat",
       &Bmad::transfer_lat,
-      py::arg("lat1"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat1"),
       R"""(Wrapper for Fortran routine transfer_lat
 
 Parameters
@@ -3485,8 +3473,7 @@ lat2 : LatStruct
   m.def(
       "transfer_lat_parameters",
       &Bmad::transfer_lat_parameters,
-      py::arg("lat_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat_in"),
       R"""(Wrapper for Fortran routine transfer_lat_parameters
 
 Parameters
@@ -3502,18 +3489,43 @@ lat_out : LatStruct
   );
   m.def(
       "transfer_map_calc",
-      &Bmad::transfer_map_calc,
-      py::arg("lat"),
-      py::arg("orb_map"),
-      py::arg("ix1") = py::none(),
-      py::arg("ix2") = py::none(),
-      py::arg("ref_orb") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("one_turn") = py::none(),
-      py::arg("unit_start") = py::none(),
-      py::arg("concat_if_possible") = py::none(),
-      py::arg("spin_map") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](LatStruct &lat,
+         TaylorStructArray1D orb_map,
+         std::optional<int> ix1,
+         std::optional<int> ix2,
+         CoordStruct *ref_orb,
+         std::optional<int> ix_branch,
+         std::optional<bool> one_turn,
+         std::optional<bool> unit_start,
+         std::optional<bool> concat_if_possible,
+         std::optional<TaylorStructArray1D> spin_map) {
+        auto fn = static_cast<
+            bool (*)(LatStruct &, TaylorStructArray1D, std::optional<int>, std::optional<int>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<TaylorStructArray1D>)>(
+            &Bmad::transfer_map_calc
+        );
+        return fn(
+            lat,
+            orb_map,
+            ix1,
+            ix2,
+            ptr_to_opt_ref(ref_orb),
+            ix_branch,
+            one_turn,
+            unit_start,
+            concat_if_possible,
+            spin_map
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("orb_map"),
+      nb::arg("ix1") = nb::none(),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ref_orb") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("one_turn") = nb::none(),
+      nb::arg("unit_start") = nb::none(),
+      nb::arg("concat_if_possible") = nb::none(),
+      nb::arg("spin_map") = nb::none(),
       R"""(Wrapper for Fortran routine transfer_map_calc
 
 Parameters
@@ -3561,39 +3573,65 @@ err_flag : bool
     Set True if problem like number overflow, etc.
 )"""
   );
-  py::class_<Bmad::TransferMapFromSToS, std::unique_ptr<Bmad::TransferMapFromSToS>>(
+  nb::class_<Bmad::TransferMapFromSToS>(
       m,
       "TransferMapFromSToS",
       "transfer_map_from_s_to_s return type"
   )
-      .def_readonly("ref_orb_out", &Bmad::TransferMapFromSToS::ref_orb_out)
-      .def_readonly("err_flag", &Bmad::TransferMapFromSToS::err_flag)
+      .def_ro("ref_orb_out", &Bmad::TransferMapFromSToS::ref_orb_out)
+      .def_ro("err_flag", &Bmad::TransferMapFromSToS::err_flag)
       .def("__len__", [](const Bmad::TransferMapFromSToS &) { return 2; })
-      .def("__getitem__", [](const Bmad::TransferMapFromSToS &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TransferMapFromSToS &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ref_orb_out);
+          return nb::cast(s.ref_orb_out);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "transfer_map_from_s_to_s",
-      &Bmad::transfer_map_from_s_to_s,
-      py::arg("lat"),
-      py::arg("t_map"),
-      py::arg("s1") = py::none(),
-      py::arg("s2") = py::none(),
-      py::arg("ref_orb_in") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("one_turn") = py::none(),
-      py::arg("unit_start") = py::none(),
-      py::arg("concat_if_possible") = py::none(),
-      py::arg("spin_map") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine transfer_map_from_s_to_s (lat, t_map, s1, s2, ref_orb_in, ref_orb_out, ix_branch,
-                                         one_turn, unit_start, err_flag, concat_if_possible, spin_map)
+      [](LatStruct &lat,
+         TaylorStructArray1D t_map,
+         std::optional<double> s1,
+         std::optional<double> s2,
+         CoordStruct *ref_orb_in,
+         std::optional<int> ix_branch,
+         std::optional<bool> one_turn,
+         std::optional<bool> unit_start,
+         std::optional<bool> concat_if_possible,
+         std::optional<TaylorStructArray1D> spin_map) {
+        auto
+            fn =
+                static_cast<Bmad::
+                                TransferMapFromSToS (*)(LatStruct &, TaylorStructArray1D, std::optional<double>, std::optional<double>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<TaylorStructArray1D>)>(
+                    &Bmad::transfer_map_from_s_to_s
+                );
+        return fn(
+            lat,
+            t_map,
+            s1,
+            s2,
+            ptr_to_opt_ref(ref_orb_in),
+            ix_branch,
+            one_turn,
+            unit_start,
+            concat_if_possible,
+            spin_map
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("t_map"),
+      nb::arg("s1") = nb::none(),
+      nb::arg("s2") = nb::none(),
+      nb::arg("ref_orb_in") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("one_turn") = nb::none(),
+      nb::arg("unit_start") = nb::none(),
+      nb::arg("concat_if_possible") = nb::none(),
+      nb::arg("spin_map") = nb::none(),
+      R"""(                                         one_turn, unit_start, err_flag, concat_if_possible, spin_map)
 
 Subroutine to calculate the transfer map between longitudinal positions s1 to s2.
 
@@ -3657,9 +3695,8 @@ err_flag : bool, optional
   m.def(
       "transfer_mat2_from_twiss",
       &Bmad::transfer_mat2_from_twiss,
-      py::arg("twiss1"),
-      py::arg("twiss2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("twiss1"),
+      nb::arg("twiss2"),
       R"""(Wrapper for Fortran routine transfer_mat2_from_twiss
 
 Parameters
@@ -3679,11 +3716,10 @@ mat : 2D array of float (shape: 2,2)
   m.def(
       "transfer_mat_from_twiss",
       &Bmad::transfer_mat_from_twiss,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("orb1"),
-      py::arg("orb2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
+      nb::arg("orb1"),
+      nb::arg("orb2"),
       R"""(Wrapper for Fortran routine transfer_mat_from_twiss
 
 Parameters
@@ -3709,14 +3745,13 @@ m : 2D array of float (shape: 6,6)
   m.def(
       "transfer_matrix_calc",
       &Bmad::transfer_matrix_calc,
-      py::arg("lat"),
-      py::arg("xfer_mat"),
-      py::arg("xfer_vec") = py::none(),
-      py::arg("ix1") = py::none(),
-      py::arg("ix2") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("one_turn") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("xfer_mat"),
+      nb::arg("xfer_vec") = nb::none(),
+      nb::arg("ix1") = nb::none(),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("one_turn") = nb::none(),
       R"""(Wrapper for Fortran routine transfer_matrix_calc
 
 Parameters
@@ -3746,9 +3781,8 @@ one_turn : bool, optional
   m.def(
       "transfer_twiss",
       &Bmad::transfer_twiss,
-      py::arg("ele_in"),
-      py::arg("reverse") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_in"),
+      nb::arg("reverse") = nb::none(),
       R"""(Wrapper for Fortran routine transfer_twiss
 
 Parameters
@@ -3768,8 +3802,7 @@ ele_out : EleStruct
   m.def(
       "transfer_wake",
       &Bmad::transfer_wake,
-      py::arg("wake_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("wake_in"),
       R"""(Wrapper for Fortran routine transfer_wake
 
 Parameters
@@ -3786,13 +3819,10 @@ wake_out : WakeStruct, optional
   m.def(
       "truncate_complex_taylor_to_order",
       &Bmad::truncate_complex_taylor_to_order,
-      py::arg("complex_taylor_in"),
-      py::arg("order"),
-      py::arg("complex_taylor_out"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine truncate_complex_taylor_to_order (complex_taylor_in, order, complex_taylor_out)
-
-Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
+      nb::arg("complex_taylor_in"),
+      nb::arg("order"),
+      nb::arg("complex_taylor_out"),
+      R"""(Subroutine to throw out all terms in a complex_taylor map that are above a certain order.
 
 Parameters
 ----------
@@ -3806,31 +3836,26 @@ complex_taylor_out : 1D array of ComplexTaylorStruct
     Truncated complex_taylor map.
 )"""
   );
-  py::class_<Bmad::Twiss1Propagate, std::unique_ptr<Bmad::Twiss1Propagate>>(
-      m,
-      "Twiss1Propagate",
-      "twiss1_propagate return type"
-  )
-      .def_readonly("twiss2", &Bmad::Twiss1Propagate::twiss2)
-      .def_readonly("err", &Bmad::Twiss1Propagate::err)
+  nb::class_<Bmad::Twiss1Propagate>(m, "Twiss1Propagate", "twiss1_propagate return type")
+      .def_ro("twiss2", &Bmad::Twiss1Propagate::twiss2)
+      .def_ro("err", &Bmad::Twiss1Propagate::err)
       .def("__len__", [](const Bmad::Twiss1Propagate &) { return 2; })
-      .def("__getitem__", [](const Bmad::Twiss1Propagate &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Twiss1Propagate &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.twiss2);
+          return nb::cast(s.twiss2);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "twiss1_propagate",
       &Bmad::twiss1_propagate,
-      py::arg("twiss1"),
-      py::arg("mat2"),
-      py::arg("ele_key"),
-      py::arg("length"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("twiss1"),
+      nb::arg("mat2"),
+      nb::arg("ele_key"),
+      nb::arg("length"),
       R"""(Wrapper for Fortran routine twiss1_propagate
 
 Parameters
@@ -3859,13 +3884,10 @@ err : bool
   m.def(
       "twiss3_at_start",
       &Bmad::twiss3_at_start,
-      py::arg("lat"),
-      py::arg("err_flag"),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss3_at_start (lat, error, ix_branch, tune3)
-
-Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
+      nb::arg("lat"),
+      nb::arg("err_flag"),
+      nb::arg("ix_branch") = nb::none(),
+      R"""(Subroutine to calculate the 3D twiss parameters of the three modes of the full 6D 1-turn transfer matrix.
 This routine is for lattices with closed geometries. For open lattices see: twiss3_from_twiss2.
 
 Note: The rf must be on for this calculation.
@@ -3887,11 +3909,8 @@ tune3 : 1D array of float (shape: 3), optional
   m.def(
       "twiss3_from_twiss2",
       &Bmad::twiss3_from_twiss2,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss3_from_twiss2 (ele)
-
-Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
+      nb::arg("ele"),
+      R"""(Routine to calculate the 3D Twiss parameters given the 2D transverse Twiss parameters and some
 longitudinal parameters.
 Also see: twiss3_at_start
 
@@ -3906,25 +3925,19 @@ ele : EleStruct
   m.def(
       "twiss3_propagate1",
       &Bmad::twiss3_propagate1,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss3_propagate1 (ele1, ele2, err_flag)
-
-Subroutine to propagate the twiss parameters using all three normal modes.
+      nb::arg("ele1"),
+      nb::arg("ele2"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to propagate the twiss parameters using all three normal modes.
 Subroutine from original mode3_mod.
 )"""
   );
   m.def(
       "twiss3_propagate_all",
       &Bmad::twiss3_propagate_all,
-      py::arg("lat"),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss3_propagate_all (lat, ix_branch)
-
-Subroutine to propagate the twiss parameters using all three normal modes.
+      nb::arg("lat"),
+      nb::arg("ix_branch") = nb::none(),
+      R"""(Subroutine to propagate the twiss parameters using all three normal modes.
 Subroutine from original mode3_mod.
 
 Parameters
@@ -3938,21 +3951,18 @@ ix_branch : int, optional
   );
   m.def(
       "twiss_and_track",
-      py::overload_cast<
+      nb::overload_cast<
           LatStruct &,
           CoordArrayStructAlloc1D,
           std::optional<bool>,
           std::optional<bool>,
           std::optional<bool>>(&Bmad::twiss_and_track),
-      py::arg("lat"),
-      py::arg("orb_array"),
-      py::arg("print_err") = py::none(),
-      py::arg("calc_chrom") = py::none(),
-      py::arg("use_particle_start") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss_and_track
-
-This routine is an overloaded name for:
+      nb::arg("lat"),
+      nb::arg("orb_array"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("calc_chrom") = nb::none(),
+      nb::arg("use_particle_start") = nb::none(),
+      R"""(This routine is an overloaded name for:
   Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
   Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
 
@@ -4012,19 +4022,38 @@ status : int, optional
   );
   m.def(
       "twiss_and_track_at_s",
-      &Bmad::twiss_and_track_at_s,
-      py::arg("lat"),
-      py::arg("s"),
-      py::arg("ele_at_s") = py::none(),
-      py::arg("orb") = py::none(),
-      py::arg("orb_at_s") = py::none(),
-      py::arg("ix_branch") = py::none(),
-      py::arg("use_last") = py::none(),
-      py::arg("compute_floor_coords") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss_and_track_at_s (lat, s, ele_at_s, orb, orb_at_s, ix_branch, err, use_last, compute_floor_coords)
-
-Subroutine to return the twiss parameters and particle orbit at a
+      [](LatStruct &lat,
+         double s,
+         EleStruct *ele_at_s,
+         std::optional<CoordStructArray1D> orb,
+         CoordStruct *orb_at_s,
+         std::optional<int> ix_branch,
+         std::optional<bool> use_last,
+         std::optional<bool> compute_floor_coords) {
+        auto fn = static_cast<
+            bool (*)(LatStruct &, double, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::twiss_and_track_at_s
+        );
+        return fn(
+            lat,
+            s,
+            ptr_to_opt_ref(ele_at_s),
+            orb,
+            ptr_to_opt_ref(orb_at_s),
+            ix_branch,
+            use_last,
+            compute_floor_coords
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("s"),
+      nb::arg("ele_at_s") = nb::none(),
+      nb::arg("orb") = nb::none(),
+      nb::arg("orb_at_s") = nb::none(),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("use_last") = nb::none(),
+      nb::arg("compute_floor_coords") = nb::none(),
+      R"""(Subroutine to return the twiss parameters and particle orbit at a
 given longitudinal position.
 
 When calculating the Twiss parameters, this routine assumes
@@ -4083,25 +4112,35 @@ err : bool, optional
   );
   m.def(
       "twiss_and_track",
-      py::overload_cast<
-          LatStruct &,
-          CoordStructAlloc1D,
-          std::optional<int>,
-          std::optional<bool>,
-          std::optional<bool>,
-          optional_ref<CoordStruct>,
-          std::optional<bool>>(&Bmad::twiss_and_track),
-      py::arg("lat"),
-      py::arg("orb"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::arg("calc_chrom") = py::none(),
-      py::arg("orb_start") = py::none(),
-      py::arg("use_particle_start") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine twiss_and_track
-
-This routine is an overloaded name for:
+      [](LatStruct &lat,
+         CoordStructAlloc1D orb,
+         std::optional<int> ix_branch,
+         std::optional<bool> print_err,
+         std::optional<bool> calc_chrom,
+         CoordStruct *orb_start,
+         std::optional<bool> use_particle_start) {
+        auto fn = static_cast<
+            int (*)(LatStruct &, CoordStructAlloc1D, std::optional<int>, std::optional<bool>, std::optional<bool>, optional_ref<CoordStruct>, std::optional<bool>)>(
+            &Bmad::twiss_and_track
+        );
+        return fn(
+            lat,
+            orb,
+            ix_branch,
+            print_err,
+            calc_chrom,
+            ptr_to_opt_ref(orb_start),
+            use_particle_start
+        );
+      },
+      nb::arg("lat"),
+      nb::arg("orb"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("calc_chrom") = nb::none(),
+      nb::arg("orb_start") = nb::none(),
+      nb::arg("use_particle_start") = nb::none(),
+      R"""(This routine is an overloaded name for:
   Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
   Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
 
@@ -4168,36 +4207,54 @@ status : int, optional
     Set ok$ if everything is OK and set to something else otherwise. See above for more details.
 )"""
   );
-  py::class_<Bmad::TwissAndTrackFromSToS, std::unique_ptr<Bmad::TwissAndTrackFromSToS>>(
+  nb::class_<Bmad::TwissAndTrackFromSToS>(
       m,
       "TwissAndTrackFromSToS",
       "twiss_and_track_from_s_to_s return type"
   )
-      .def_readonly("orbit_end", &Bmad::TwissAndTrackFromSToS::orbit_end)
-      .def_readonly("ele_end", &Bmad::TwissAndTrackFromSToS::ele_end)
-      .def_readonly("err", &Bmad::TwissAndTrackFromSToS::err)
+      .def_ro("orbit_end", &Bmad::TwissAndTrackFromSToS::orbit_end)
+      .def_ro("ele_end", &Bmad::TwissAndTrackFromSToS::ele_end)
+      .def_ro("err", &Bmad::TwissAndTrackFromSToS::err)
       .def("__len__", [](const Bmad::TwissAndTrackFromSToS &) { return 3; })
-      .def("__getitem__", [](const Bmad::TwissAndTrackFromSToS &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TwissAndTrackFromSToS &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.orbit_end);
+          return nb::cast(s.orbit_end);
         if (i == 1)
-          return py::cast(s.ele_end);
+          return nb::cast(s.ele_end);
         if (i == 2)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "twiss_and_track_from_s_to_s",
-      &Bmad::twiss_and_track_from_s_to_s,
-      py::arg("branch"),
-      py::arg("orbit_start"),
-      py::arg("s_end"),
-      py::arg("ele_start") = py::none(),
-      py::arg("compute_floor_coords") = py::none(),
-      py::arg("compute_twiss") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](BranchStruct &branch,
+         CoordStruct &orbit_start,
+         double s_end,
+         EleStruct *ele_start,
+         std::optional<bool> compute_floor_coords,
+         std::optional<bool> compute_twiss) {
+        auto fn = static_cast<
+            Bmad::
+                TwissAndTrackFromSToS (*)(BranchStruct &, CoordStruct &, double, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::twiss_and_track_from_s_to_s
+        );
+        return fn(
+            branch,
+            orbit_start,
+            s_end,
+            ptr_to_opt_ref(ele_start),
+            compute_floor_coords,
+            compute_twiss
+        );
+      },
+      nb::arg("branch"),
+      nb::arg("orbit_start"),
+      nb::arg("s_end"),
+      nb::arg("ele_start") = nb::none(),
+      nb::arg("compute_floor_coords") = nb::none(),
+      nb::arg("compute_twiss") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_and_track_from_s_to_s
 
 Parameters
@@ -4233,39 +4290,69 @@ err : bool, optional
     Set True if there is a problem like the particle gets lost in tracking
 )"""
   );
-  py::class_<Bmad::TwissAndTrackIntraEle, std::unique_ptr<Bmad::TwissAndTrackIntraEle>>(
+  nb::class_<Bmad::TwissAndTrackIntraEle>(
       m,
       "TwissAndTrackIntraEle",
       "twiss_and_track_intra_ele return type"
   )
-      .def_readonly("orbit_end", &Bmad::TwissAndTrackIntraEle::orbit_end)
-      .def_readonly("err", &Bmad::TwissAndTrackIntraEle::err)
+      .def_ro("orbit_end", &Bmad::TwissAndTrackIntraEle::orbit_end)
+      .def_ro("err", &Bmad::TwissAndTrackIntraEle::err)
       .def("__len__", [](const Bmad::TwissAndTrackIntraEle &) { return 2; })
-      .def("__getitem__", [](const Bmad::TwissAndTrackIntraEle &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TwissAndTrackIntraEle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.orbit_end);
+          return nb::cast(s.orbit_end);
         if (i == 1)
-          return py::cast(s.err);
-        throw py::index_error();
+          return nb::cast(s.err);
+        throw nb::index_error();
       });
   m.def(
       "twiss_and_track_intra_ele",
-      &Bmad::twiss_and_track_intra_ele,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("l_start"),
-      py::arg("l_end"),
-      py::arg("track_upstream_end"),
-      py::arg("track_downstream_end"),
-      py::arg("orbit_start") = py::none(),
-      py::arg("ele_start") = py::none(),
-      py::arg("ele_end") = py::none(),
-      py::arg("compute_floor_coords") = py::none(),
-      py::arg("compute_twiss") = py::none(),
-      py::arg("reuse_ele_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         double l_start,
+         double l_end,
+         bool track_upstream_end,
+         bool track_downstream_end,
+         CoordStruct *orbit_start,
+         EleStruct *ele_start,
+         EleStruct *ele_end,
+         std::optional<bool> compute_floor_coords,
+         std::optional<bool> compute_twiss,
+         std::optional<bool> reuse_ele_end) {
+        auto fn = static_cast<
+            Bmad::
+                TwissAndTrackIntraEle (*)(EleStruct &, LatParamStruct &, double, double, bool, bool, optional_ref<CoordStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::twiss_and_track_intra_ele
+        );
+        return fn(
+            ele,
+            param,
+            l_start,
+            l_end,
+            track_upstream_end,
+            track_downstream_end,
+            ptr_to_opt_ref(orbit_start),
+            ptr_to_opt_ref(ele_start),
+            ptr_to_opt_ref(ele_end),
+            compute_floor_coords,
+            compute_twiss,
+            reuse_ele_end
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("l_start"),
+      nb::arg("l_end"),
+      nb::arg("track_upstream_end"),
+      nb::arg("track_downstream_end"),
+      nb::arg("orbit_start") = nb::none(),
+      nb::arg("ele_start") = nb::none(),
+      nb::arg("ele_end") = nb::none(),
+      nb::arg("compute_floor_coords") = nb::none(),
+      nb::arg("compute_twiss") = nb::none(),
+      nb::arg("reuse_ele_end") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_and_track_intra_ele
 
 Parameters
@@ -4322,31 +4409,26 @@ err : bool, optional
     Set True if there is a problem like the particle gets lost in tracking
 )"""
   );
-  py::class_<Bmad::TwissAtElement, std::unique_ptr<Bmad::TwissAtElement>>(
-      m,
-      "TwissAtElement",
-      "twiss_at_element return type"
-  )
-      .def_readonly("start", &Bmad::TwissAtElement::start)
-      .def_readonly("end", &Bmad::TwissAtElement::end)
-      .def_readonly("average", &Bmad::TwissAtElement::average)
+  nb::class_<Bmad::TwissAtElement>(m, "TwissAtElement", "twiss_at_element return type")
+      .def_ro("start", &Bmad::TwissAtElement::start)
+      .def_ro("end", &Bmad::TwissAtElement::end)
+      .def_ro("average", &Bmad::TwissAtElement::average)
       .def("__len__", [](const Bmad::TwissAtElement &) { return 3; })
-      .def("__getitem__", [](const Bmad::TwissAtElement &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TwissAtElement &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.start);
+          return nb::cast(s.start);
         if (i == 1)
-          return py::cast(s.end);
+          return nb::cast(s.end);
         if (i == 2)
-          return py::cast(s.average);
-        throw py::index_error();
+          return nb::cast(s.average);
+        throw nb::index_error();
       });
   m.def(
       "twiss_at_element",
       &Bmad::twiss_at_element,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine twiss_at_element
 
 Parameters
@@ -4369,10 +4451,9 @@ average : EleStruct, optional
   m.def(
       "twiss_at_start",
       &Bmad::twiss_at_start,
-      py::arg("lat"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("type_out") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("type_out") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_at_start
 
 Parameters
@@ -4394,30 +4475,25 @@ status : int, optional
     Calculation status: ok$, in_stop_band$, unstable$, or non_symplectic$
 )"""
   );
-  py::class_<Bmad::TwissFromTracking, std::unique_ptr<Bmad::TwissFromTracking>>(
-      m,
-      "TwissFromTracking",
-      "twiss_from_tracking return type"
-  )
-      .def_readonly("symp_err", &Bmad::TwissFromTracking::symp_err)
-      .def_readonly("err_flag", &Bmad::TwissFromTracking::err_flag)
+  nb::class_<Bmad::TwissFromTracking>(m, "TwissFromTracking", "twiss_from_tracking return type")
+      .def_ro("symp_err", &Bmad::TwissFromTracking::symp_err)
+      .def_ro("err_flag", &Bmad::TwissFromTracking::err_flag)
       .def("__len__", [](const Bmad::TwissFromTracking &) { return 2; })
-      .def("__getitem__", [](const Bmad::TwissFromTracking &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TwissFromTracking &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.symp_err);
+          return nb::cast(s.symp_err);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "twiss_from_tracking",
       &Bmad::twiss_from_tracking,
-      py::arg("lat"),
-      py::arg("ref_orb0"),
-      py::arg("d_orb") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ref_orb0"),
+      nb::arg("d_orb") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_from_tracking
 
 Parameters
@@ -4446,10 +4522,9 @@ err_flag : bool
   m.def(
       "twiss_propagate1",
       &Bmad::twiss_propagate1,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::arg("forward") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
+      nb::arg("forward") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_propagate1
 
 Parameters
@@ -4476,11 +4551,10 @@ err_flag : bool, optional
   m.def(
       "twiss_propagate_all",
       &Bmad::twiss_propagate_all,
-      py::arg("lat"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("ie_start") = py::none(),
-      py::arg("ie_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("ie_start") = nb::none(),
+      nb::arg("ie_end") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_propagate_all
 
 Parameters
@@ -4509,9 +4583,8 @@ err_flag : bool, optional
   m.def(
       "twiss_to_1_turn_mat",
       &Bmad::twiss_to_1_turn_mat,
-      py::arg("twiss"),
-      py::arg("phi"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("twiss"),
+      nb::arg("phi"),
       R"""(Wrapper for Fortran routine twiss_to_1_turn_mat
 
 Parameters
@@ -4528,35 +4601,28 @@ mat2 : 2D array of float (shape: 2,2)
     1-turn matrix.
 )"""
   );
-  py::class_<Bmad::TypeComplexTaylors, std::unique_ptr<Bmad::TypeComplexTaylors>>(
-      m,
-      "TypeComplexTaylors",
-      "type_complex_taylors return type"
-  )
-      .def_readonly("lines", &Bmad::TypeComplexTaylors::lines)
-      .def_readonly("n_lines", &Bmad::TypeComplexTaylors::n_lines)
+  nb::class_<Bmad::TypeComplexTaylors>(m, "TypeComplexTaylors", "type_complex_taylors return type")
+      .def_ro("lines", &Bmad::TypeComplexTaylors::lines)
+      .def_ro("n_lines", &Bmad::TypeComplexTaylors::n_lines)
       .def("__len__", [](const Bmad::TypeComplexTaylors &) { return 2; })
-      .def("__getitem__", [](const Bmad::TypeComplexTaylors &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TypeComplexTaylors &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.lines);
+          return nb::cast(s.lines);
         if (i == 1)
-          return py::cast(s.n_lines);
-        throw py::index_error();
+          return nb::cast(s.n_lines);
+        throw nb::index_error();
       });
   m.def(
       "type_complex_taylors",
       &Bmad::type_complex_taylors,
-      py::arg("complex_taylor"),
-      py::arg("max_order") = py::none(),
-      py::arg("file_id") = py::none(),
-      py::arg("out_type") = py::none(),
-      py::arg("clean") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine type_complex_taylors (complex_taylor, max_order, lines, n_lines, file_id, out_type, clean)
-
-Subroutine to print or put in a string array a Bmad taylor map.
+      nb::arg("complex_taylor"),
+      nb::arg("max_order") = nb::none(),
+      nb::arg("file_id") = nb::none(),
+      nb::arg("out_type") = nb::none(),
+      nb::arg("clean") = nb::none(),
+      R"""(Subroutine to print or put in a string array a Bmad taylor map.
 If the lines(:) argument is not present, the element information is printed to the terminal.
 
 Parameters
@@ -4592,8 +4658,7 @@ n_lines : int, optional
   m.def(
       "type_coord",
       &Bmad::type_coord,
-      py::arg("coord"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("coord"),
       R"""(Wrapper for Fortran routine type_coord
 
 Parameters
@@ -4602,35 +4667,34 @@ coord : CoordStruct
     Coordinate
 )"""
   );
-  py::class_<Bmad::TypeEle, std::unique_ptr<Bmad::TypeEle>>(m, "TypeEle", "type_ele return type")
-      .def_readonly("lines", &Bmad::TypeEle::lines)
-      .def_readonly("n_lines", &Bmad::TypeEle::n_lines)
+  nb::class_<Bmad::TypeEle>(m, "TypeEle", "type_ele return type")
+      .def_ro("lines", &Bmad::TypeEle::lines)
+      .def_ro("n_lines", &Bmad::TypeEle::n_lines)
       .def("__len__", [](const Bmad::TypeEle &) { return 2; })
-      .def("__getitem__", [](const Bmad::TypeEle &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TypeEle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.lines);
+          return nb::cast(s.lines);
         if (i == 1)
-          return py::cast(s.n_lines);
-        throw py::index_error();
+          return nb::cast(s.n_lines);
+        throw nb::index_error();
       });
   m.def(
       "type_ele",
       &Bmad::type_ele,
-      py::arg("ele"),
-      py::arg("type_zero_attrib") = py::none(),
-      py::arg("type_mat6") = py::none(),
-      py::arg("type_taylor") = py::none(),
-      py::arg("twiss_out") = py::none(),
-      py::arg("type_control") = py::none(),
-      py::arg("type_wake") = py::none(),
-      py::arg("type_floor_coords") = py::none(),
-      py::arg("type_field") = py::none(),
-      py::arg("type_wall") = py::none(),
-      py::arg("type_rad_kick") = py::none(),
-      py::arg("type_internal") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("type_zero_attrib") = nb::none(),
+      nb::arg("type_mat6") = nb::none(),
+      nb::arg("type_taylor") = nb::none(),
+      nb::arg("twiss_out") = nb::none(),
+      nb::arg("type_control") = nb::none(),
+      nb::arg("type_wake") = nb::none(),
+      nb::arg("type_floor_coords") = nb::none(),
+      nb::arg("type_field") = nb::none(),
+      nb::arg("type_wall") = nb::none(),
+      nb::arg("type_rad_kick") = nb::none(),
+      nb::arg("type_internal") = nb::none(),
       R"""(Wrapper for Fortran routine type_ele
 
 Parameters
@@ -4689,12 +4753,17 @@ n_lines : int, optional
   );
   m.def(
       "type_end_stuff",
-      &Bmad::type_end_stuff,
-      py::arg("li"),
-      py::arg("nl"),
-      py::arg("lines") = py::none(),
-      py::arg("n_lines") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](CharacterAlloc1D &li, int nl, CharacterAlloc1D *lines, std::optional<int> n_lines) {
+        auto fn = static_cast<
+            void (*)(CharacterAlloc1D &, int, optional_ref<CharacterAlloc1D>, std::optional<int>)>(
+            &Bmad::type_end_stuff
+        );
+        return fn(li, nl, ptr_to_opt_ref(lines), n_lines);
+      },
+      nb::arg("li"),
+      nb::arg("nl"),
+      nb::arg("lines") = nb::none(),
+      nb::arg("n_lines") = nb::none(),
       R"""(Wrapper for Fortran routine type_end_stuff
 
 Parameters
@@ -4711,12 +4780,9 @@ n_lines : int, optional
   m.def(
       "type_expression_tree",
       &Bmad::type_expression_tree,
-      py::arg("tree"),
-      py::arg("indent") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine type_expression_tree (tree, indent)
-
-Routine to print an expression tree in tree form.
+      nb::arg("tree"),
+      nb::arg("indent") = nb::none(),
+      R"""(Routine to print an expression tree in tree form.
 Good for debugging.
 
 Parameters
@@ -4728,32 +4794,25 @@ indent : int, optional
     Initial indent. Default is zero.
 )"""
   );
-  py::class_<Bmad::TypePtcFibre, std::unique_ptr<Bmad::TypePtcFibre>>(
-      m,
-      "TypePtcFibre",
-      "type_ptc_fibre return type"
-  )
-      .def_readonly("lines", &Bmad::TypePtcFibre::lines)
-      .def_readonly("n_lines", &Bmad::TypePtcFibre::n_lines)
+  nb::class_<Bmad::TypePtcFibre>(m, "TypePtcFibre", "type_ptc_fibre return type")
+      .def_ro("lines", &Bmad::TypePtcFibre::lines)
+      .def_ro("n_lines", &Bmad::TypePtcFibre::n_lines)
       .def("__len__", [](const Bmad::TypePtcFibre &) { return 2; })
-      .def("__getitem__", [](const Bmad::TypePtcFibre &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::TypePtcFibre &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.lines);
+          return nb::cast(s.lines);
         if (i == 1)
-          return py::cast(s.n_lines);
-        throw py::index_error();
+          return nb::cast(s.n_lines);
+        throw nb::index_error();
       });
   m.def(
       "type_ptc_fibre",
       &Bmad::type_ptc_fibre,
-      py::arg("ptc_fibre"),
-      py::arg("print_coords") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine type_ptc_fibre (ptc_fibre, print_coords, lines, n_lines)
-
-Routine to put information on a PTC fibre element into a string array.
+      nb::arg("ptc_fibre"),
+      nb::arg("print_coords") = nb::none(),
+      R"""(Routine to put information on a PTC fibre element into a string array.
 If "lines" is not present, the information will be printed to the screen.
 
 Parameters
@@ -4776,40 +4835,32 @@ n_lines : int, optional
   m.def(
       "type_ptc_layout",
       &Bmad::type_ptc_layout,
-      py::arg("lay"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine type_ptc_layout (lay)
-
-Subroutine to print the global information in a layout
+      nb::arg("lay"),
+      R"""(Subroutine to print the global information in a layout
 )"""
   );
-  py::class_<PyTypeTaylors, std::unique_ptr<PyTypeTaylors>>(
-      m,
-      "TypeTaylors",
-      "type_taylors return type"
-  )
-      .def_readonly("n_lines", &PyTypeTaylors::n_lines)
+  nb::class_<PyTypeTaylors>(m, "TypeTaylors", "type_taylors return type")
+      .def_ro("n_lines", &PyTypeTaylors::n_lines)
       .def("__len__", [](const PyTypeTaylors &) { return 1; })
-      .def("__getitem__", [](const PyTypeTaylors &s, int i) -> py::object {
+      .def("__getitem__", [](const PyTypeTaylors &s, int i) -> nb::object {
         if (i < 0)
           i += 1;
         if (i == 0)
-          return py::cast(s.n_lines);
-        throw py::index_error();
+          return nb::cast(s.n_lines);
+        throw nb::index_error();
       });
   m.def(
       "type_taylors",
       &python_type_taylors,
-      py::arg("bmad_taylor"),
-      py::arg("max_order") = py::none(),
-      py::arg("lines") = py::none(),
-      py::arg("n_lines") = py::none(),
-      py::arg("file_id") = py::none(),
-      py::arg("out_style") = py::none(),
-      py::arg("clean") = py::none(),
-      py::arg("out_var_suffix") = py::none(),
-      py::arg("append") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bmad_taylor"),
+      nb::arg("max_order") = nb::none(),
+      nb::arg("lines") = nb::none(),
+      nb::arg("n_lines") = nb::none(),
+      nb::arg("file_id") = nb::none(),
+      nb::arg("out_style") = nb::none(),
+      nb::arg("clean") = nb::none(),
+      nb::arg("out_var_suffix") = nb::none(),
+      nb::arg("append") = nb::none(),
       R"""(Wrapper for Fortran routine type_taylors
 
 Parameters
@@ -4859,12 +4910,20 @@ n_lines : int, optional
   );
   m.def(
       "type_twiss",
-      &Bmad::type_twiss,
-      py::arg("ele"),
-      py::arg("frequency_units") = py::none(),
-      py::arg("compact_format") = py::none(),
-      py::arg("lines") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         std::optional<int> frequency_units,
+         std::optional<bool> compact_format,
+         CharacterAlloc1D *lines) {
+        auto fn = static_cast<
+            int (*)(EleStruct &, std::optional<int>, std::optional<bool>, optional_ref<CharacterAlloc1D>)>(
+            &Bmad::type_twiss
+        );
+        return fn(ele, frequency_units, compact_format, ptr_to_opt_ref(lines));
+      },
+      nb::arg("ele"),
+      nb::arg("frequency_units") = nb::none(),
+      nb::arg("compact_format") = nb::none(),
+      nb::arg("lines") = nb::none(),
       R"""(Wrapper for Fortran routine type_twiss
 
 Parameters

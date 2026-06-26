@@ -1,27 +1,39 @@
 #include "pybmad/generated/SimUtils_routines_a.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_a(py::module &m) {
+void init_SimUtils_routines_a(nb::module_ &m) {
+  m.def(
+      "all_pointer_to_string",
+      &SimUtils::all_pointer_to_string,
+      nb::arg("a_ptr"),
+      nb::arg("err") = nb::none(),
+      R"""(Wrapper for Fortran routine all_pointer_to_string
+
+Parameters
+----------
+a_ptr : AllPointerStruct
+
+err : bool, optional
+
+Returns
+-------
+str : str
+)"""
+  );
   m.def(
       "allocate_thread_states",
       &SimUtils::allocate_thread_states,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine allocate_thread_states()
-
-Routine to allocate random number state structures when openMP is used.
+      R"""(Routine to allocate random number state structures when openMP is used.
 )"""
   );
   m.def(
       "anomalous_moment_of",
       &SimUtils::anomalous_moment_of,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function anomalous_moment_of (species) result (moment)
-
-Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
+      nb::arg("species"),
+      R"""(Routine to return the anomolous moment for subatomic species type. Otherwise returns 0.
 
 Parameters
 ----------
@@ -37,11 +49,8 @@ moment : float
   m.def(
       "antiparticle",
       &SimUtils::antiparticle,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function antiparticle (species) result (anti_species)
-
-Routine to return the antiparticle ID given the particle ID.
+      nb::arg("species"),
+      R"""(Routine to return the antiparticle ID given the particle ID.
 For a molecule the anti-species is just the molecude with the charge reversed.
 
 Parameters
@@ -58,50 +67,40 @@ anti_species : int
   m.def(
       "apfft",
       &SimUtils::apfft,
-      py::arg("rdata_in"),
-      py::arg("bounds"),
-      py::arg("window"),
-      py::arg("phase"),
-      py::arg("diag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine apfft(rdata_in, bounds, window, phase, diag)
-
-Implements the All Phase FFT method for obtaining accurate phase from signal data.
+      nb::arg("rdata_in"),
+      nb::arg("bounds"),
+      nb::arg("window"),
+      nb::arg("phase"),
+      nb::arg("diag") = nb::none(),
+      R"""(Implements the All Phase FFT method for obtaining accurate phase from signal data.
 
 The signal data is truncated to an odd length, and the phase is relative to the central point.
 )"""
   );
-  py::class_<SimUtils::ApfftCorr, std::unique_ptr<SimUtils::ApfftCorr>>(
-      m,
-      "ApfftCorr",
-      "apfft_corr return type"
-  )
-      .def_readonly("phase", &SimUtils::ApfftCorr::phase)
-      .def_readonly("amp", &SimUtils::ApfftCorr::amp)
-      .def_readonly("freq", &SimUtils::ApfftCorr::freq)
+  nb::class_<SimUtils::ApfftCorr>(m, "ApfftCorr", "apfft_corr return type")
+      .def_ro("phase", &SimUtils::ApfftCorr::phase)
+      .def_ro("amp", &SimUtils::ApfftCorr::amp)
+      .def_ro("freq", &SimUtils::ApfftCorr::freq)
       .def("__len__", [](const SimUtils::ApfftCorr &) { return 3; })
-      .def("__getitem__", [](const SimUtils::ApfftCorr &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::ApfftCorr &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.phase);
+          return nb::cast(s.phase);
         if (i == 1)
-          return py::cast(s.amp);
+          return nb::cast(s.amp);
         if (i == 2)
-          return py::cast(s.freq);
-        throw py::index_error();
+          return nb::cast(s.freq);
+        throw nb::index_error();
       });
   m.def(
       "apfft_corr",
       &SimUtils::apfft_corr,
-      py::arg("rdata_in"),
-      py::arg("window"),
-      py::arg("bounds") = py::none(),
-      py::arg("diag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine apfft_corr(rdata_in, bounds, window, phase, amp, freq, diag)
-
-For real signal rdata_in, computes phase, frequency, and amplitude
+      nb::arg("rdata_in"),
+      nb::arg("window"),
+      nb::arg("bounds") = nb::none(),
+      nb::arg("diag") = nb::none(),
+      R"""(For real signal rdata_in, computes phase, frequency, and amplitude
 of peak found within bounds.  Algorithm is corrected all-phase FFT and should.
 
 This routine finds only one peak:  the largest amplitude within the bound.  Signals with multiple
@@ -136,17 +135,14 @@ freq : float
   m.def(
       "apfft_ext",
       &SimUtils::apfft_ext,
-      py::arg("rdata"),
-      py::arg("bounds"),
-      py::arg("window"),
-      py::arg("phase"),
-      py::arg("amp"),
-      py::arg("freq"),
-      py::arg("diag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine apfft_ext(rdata,bounds, window, phase, amp, freq, diag)
-
-Implements the All Phase FFT method for obtaining accurate phase from signal data.
+      nb::arg("rdata"),
+      nb::arg("bounds"),
+      nb::arg("window"),
+      nb::arg("phase"),
+      nb::arg("amp"),
+      nb::arg("freq"),
+      nb::arg("diag") = nb::none(),
+      R"""(Implements the All Phase FFT method for obtaining accurate phase from signal data.
 
 This "extended" apfft subroutine returns the amplitudes and frequency as well, for use
 by the corrected apfft subroutine in this module.
@@ -155,9 +151,8 @@ by the corrected apfft subroutine in this module.
   m.def(
       "asinc",
       &SimUtils::asinc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine asinc
 
 Parameters
@@ -177,9 +172,8 @@ y : float
   m.def(
       "assert_equal",
       &SimUtils::assert_equal,
-      py::arg("int_arr"),
-      py::arg("err_str"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("int_arr"),
+      nb::arg("err_str"),
       R"""(Wrapper for Fortran routine assert_equal
 
 Parameters
@@ -196,11 +190,8 @@ ival : int
   m.def(
       "atomic_number",
       &SimUtils::atomic_number,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function atomic_number(species) result (atomic_num)
-
-Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
+      nb::arg("species"),
+      R"""(Routine to return the atomic number Z if species argument corresponds to an atomic particle  or is a proton.
 Set to the charge for atomic particles.
 Set to zero for molecules.
 
@@ -218,14 +209,11 @@ atomic_num : int
   m.def(
       "atomic_species_id",
       &SimUtils::atomic_species_id,
-      py::arg("charge"),
-      py::arg("is_anti"),
-      py::arg("atomic_num"),
-      py::arg("n_nuc"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function atomic_species_id(charge, is_anti, atomic_num, n_nuc) result (species_id)
-
-Routine to return the species ID for an atom
+      nb::arg("charge"),
+      nb::arg("is_anti"),
+      nb::arg("atomic_num"),
+      nb::arg("n_nuc"),
+      R"""(Routine to return the species ID for an atom
 
 Parameters
 ----------
@@ -250,12 +238,9 @@ species_id : int
   m.def(
       "axis_angle_to_quat",
       &SimUtils::axis_angle_to_quat,
-      py::arg("axis"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function axis_angle_to_quat (axis, angle) result (quat)
-
-Routine to convert from axis + angle representation to a quaternion.
+      nb::arg("axis"),
+      nb::arg("angle"),
+      R"""(Routine to convert from axis + angle representation to a quaternion.
 
 Parameters
 ----------
@@ -274,12 +259,9 @@ quat : 1D array of float (shape: 0:3)
   m.def(
       "axis_angle_to_w_mat",
       &SimUtils::axis_angle_to_w_mat,
-      py::arg("axis"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine axis_angle_to_w_mat (axis, angle, w_mat)
-
-Routine to construct the 3D rotation matrix w_mat given an axis of rotation
+      nb::arg("axis"),
+      nb::arg("angle"),
+      R"""(Routine to construct the 3D rotation matrix w_mat given an axis of rotation
 and a rotation angle.
 
 Parameters

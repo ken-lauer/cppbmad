@@ -4,8 +4,7 @@ import sys
 
 import numpy.testing
 import pytest
-
-from pybmad import AllEncompassingStruct
+from pybmad import AllEncompassingStruct, TestSubStruct
 
 
 @pytest.fixture
@@ -257,6 +256,38 @@ def test_struct_alloc_access(aes: AllEncompassingStruct):
     assert len(aes.int8_1d_alloc) == 0
     aes.int8_1d_alloc.resize(10)
     assert len(aes.int8_1d_alloc) == 10
+
+
+def test_derived_type_scalar_setter():
+    aes = AllEncompassingStruct()
+    sub = TestSubStruct()
+    sub.sr.bbb = 77
+    aes.type_0d = sub
+    assert aes.type_0d.sr.bbb == 77
+
+
+def test_derived_type_scalar_setter_is_deep_copy():
+    aes = AllEncompassingStruct()
+    sub = TestSubStruct()
+    sub.sr.bbb = 77
+    aes.type_0d = sub
+    sub.sr.bbb = 99
+    assert aes.type_0d.sr.bbb == 77  # copied, not aliased
+
+
+def test_optional_scalar_pointer_reads_none_when_null():
+    aes = AllEncompassingStruct()
+    assert aes.real_rp_0d_ptr is None
+    assert aes.int_0d_ptr is None
+    assert aes.type_0d_ptr is None
+
+
+def test_setting_null_optional_scalar_pointer_is_noop():
+    # The Fortran setter only writes when the pointer is associated, so
+    # assigning to a null pointer member is silently ignored.
+    aes = AllEncompassingStruct()
+    aes.real_rp_0d_ptr = 3.5
+    assert aes.real_rp_0d_ptr is None
 
 
 if __name__ == "__main__":

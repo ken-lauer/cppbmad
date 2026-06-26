@@ -1,29 +1,28 @@
 #include "pybmad/generated/SimUtils_routines_s.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_s(py::module &m) {
-  py::class_<SimUtils::Serbd, std::unique_ptr<SimUtils::Serbd>>(m, "Serbd", "serbd return type")
-      .def_readonly("b", &SimUtils::Serbd::b)
-      .def_readonly("d", &SimUtils::Serbd::d)
+void init_SimUtils_routines_s(nb::module_ &m) {
+  nb::class_<SimUtils::Serbd>(m, "Serbd", "serbd return type")
+      .def_ro("b", &SimUtils::Serbd::b)
+      .def_ro("d", &SimUtils::Serbd::d)
       .def("__len__", [](const SimUtils::Serbd &) { return 2; })
-      .def("__getitem__", [](const SimUtils::Serbd &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::Serbd &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.b);
+          return nb::cast(s.b);
         if (i == 1)
-          return py::cast(s.d);
-        throw py::index_error();
+          return nb::cast(s.d);
+        throw nb::index_error();
       });
   m.def(
       "serbd",
       &SimUtils::serbd,
-      py::arg("y"),
-      py::arg("m"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("y"),
+      nb::arg("m"),
       R"""(Wrapper for Fortran routine serbd
 
 Parameters
@@ -40,12 +39,31 @@ d : float
 )"""
   );
   m.def(
+      "set_all_ptr",
+      &SimUtils::set_all_ptr,
+      nb::arg("a_ptr"),
+      nb::arg("value"),
+      nb::arg("delta") = nb::none(),
+      nb::arg("value_set") = nb::none(),
+      R"""(Wrapper for Fortran routine set_all_ptr
+
+Parameters
+----------
+a_ptr : AllPointerStruct
+
+value : float
+
+delta : bool, optional
+
+value_set : float, optional
+)"""
+  );
+  m.def(
       "set_env",
       &SimUtils::set_env,
-      py::arg("env_name"),
-      py::arg("env_value"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("env_name"),
+      nb::arg("env_value"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine set_env
 
 Parameters
@@ -59,10 +77,9 @@ err_flag : bool
   );
   m.def(
       "set_parameter",
-      py::overload_cast<int, int>(&SimUtils::set_parameter),
-      py::arg("param_val"),
-      py::arg("set_val"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<int, int>(&SimUtils::set_parameter),
+      nb::arg("param_val"),
+      nb::arg("set_val"),
       R"""(Wrapper for Fortran routine set_parameter_int
 
 Parameters
@@ -78,10 +95,9 @@ save_val : int
   );
   m.def(
       "set_parameter",
-      py::overload_cast<bool, bool>(&SimUtils::set_parameter),
-      py::arg("param_val"),
-      py::arg("set_val"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<bool, bool>(&SimUtils::set_parameter),
+      nb::arg("param_val"),
+      nb::arg("set_val"),
       R"""(Wrapper for Fortran routine set_parameter_logic
 
 Parameters
@@ -97,10 +113,9 @@ save_val : bool
   );
   m.def(
       "set_parameter",
-      py::overload_cast<double, double>(&SimUtils::set_parameter),
-      py::arg("param_val"),
-      py::arg("set_val"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<double, double>(&SimUtils::set_parameter),
+      nb::arg("param_val"),
+      nb::arg("set_val"),
       R"""(Wrapper for Fortran routine set_parameter_real
 
 Parameters
@@ -117,12 +132,9 @@ save_val : float
   m.def(
       "set_species_charge",
       &SimUtils::set_species_charge,
-      py::arg("species_in"),
-      py::arg("charge"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function set_species_charge(species_in, charge) result(species_charged)
-
-Routine to return the ID for a particle of the same type as species_in but with a different charge.
+      nb::arg("species_in"),
+      nb::arg("charge"),
+      R"""(Routine to return the ID for a particle of the same type as species_in but with a different charge.
 Exception: If species_in corresponds to a subatomic particle, the charge argument is ignored and
 species_charged will be set equal to species_in.
 
@@ -142,13 +154,10 @@ species_charged : int
   );
   m.def(
       "sign_of",
-      py::overload_cast<int, std::optional<bool>>(&SimUtils::sign_of),
-      py::arg("num"),
-      py::arg("zero_is_zero") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function sign_of (num, zero_is_zero) result (num_sign)
-
-Routine to return the sign of a number.
+      nb::overload_cast<int, std::optional<bool>>(&SimUtils::sign_of),
+      nb::arg("num"),
+      nb::arg("zero_is_zero") = nb::none(),
+      R"""(Routine to return the sign of a number.
 Note: Fortran instrinsic sign function is similar to sign_of with zero_is_zero = False.
 
 Parameters
@@ -168,13 +177,10 @@ num_sign : int
   );
   m.def(
       "sign_of",
-      py::overload_cast<double, std::optional<bool>>(&SimUtils::sign_of),
-      py::arg("num"),
-      py::arg("zero_is_zero") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function sign_of (num, zero_is_zero) result (num_sign)
-
-Routine to return the sign of a number.
+      nb::overload_cast<double, std::optional<bool>>(&SimUtils::sign_of),
+      nb::arg("num"),
+      nb::arg("zero_is_zero") = nb::none(),
+      R"""(Routine to return the sign of a number.
 Note: Fortran instrinsic sign function is similar to sign_of with zero_is_zero = False.
 
 Parameters
@@ -195,9 +201,8 @@ num_sign : int
   m.def(
       "sinc",
       &SimUtils::sinc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine sinc
 
 Parameters
@@ -218,9 +223,8 @@ y : float
   m.def(
       "sincc",
       &SimUtils::sincc,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine sincc
 
 Parameters
@@ -241,9 +245,8 @@ y : float
   m.def(
       "sinhx_x",
       &SimUtils::sinhx_x,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine sinhx_x
 
 Parameters
@@ -264,9 +267,8 @@ y : float
   m.def(
       "skip_header",
       &SimUtils::skip_header,
-      py::arg("ix_unit"),
-      py::arg("error_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ix_unit"),
+      nb::arg("error_flag"),
       R"""(Wrapper for Fortran routine skip_header
 
 Parameters
@@ -279,12 +281,9 @@ error_flag : bool
   m.def(
       "special_projection",
       &SimUtils::special_projection,
-      py::arg("f"),
-      py::arg("status") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(function special_projection
-
-Calculates <cdata | exp(i theta)>
+      nb::arg("f"),
+      nb::arg("status") = nb::none(),
+      R"""(Calculates <cdata | exp(i theta)>
 
 Used only by maximize projection. Uses data global to the function to accomodate stock NR routine.
 )"""
@@ -292,13 +291,10 @@ Used only by maximize projection. Uses data global to the function to accomodate
   m.def(
       "species_id",
       &SimUtils::species_id,
-      py::arg("name"),
-      py::arg("default_") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function species_id (name, default, print_err) result(species)
-
-Routine to return the integer ID index of a particle species given the name.
+      nb::arg("name"),
+      nb::arg("default_") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      R"""(Routine to return the integer ID index of a particle species given the name.
 
 For subatomic particles, the case does not matter.
 For all other types of particles, the case does matter.
@@ -320,12 +316,9 @@ species : int
   m.def(
       "species_id_from_openpmd",
       &SimUtils::species_id_from_openpmd,
-      py::arg("pmd_name"),
-      py::arg("charge"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function species_id_from_openpmd (pmd_name, charge) result(species)
-
-Routine to return the Bmad species ID given the openPMD species name and given particle charge.
+      nb::arg("pmd_name"),
+      nb::arg("charge"),
+      R"""(Routine to return the Bmad species ID given the openPMD species name and given particle charge.
 Note: If pmd_name corresponds to a subatomic particle, the charge argument is ignored.
 
 Parameters
@@ -345,11 +338,8 @@ species : int
   m.def(
       "species_name",
       &SimUtils::species_name,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function species_name (species) result(name)
-
-Routine to return the name of a particle species given the integer index.
+      nb::arg("species"),
+      R"""(Routine to return the name of a particle species given the integer index.
 
 Parameters
 ----------
@@ -365,12 +355,9 @@ name : str
   m.def(
       "species_of",
       &SimUtils::species_of,
-      py::arg("mass"),
-      py::arg("charge"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function species_of (mass, charge) result (species)
-
-Routine to return the integer ID index of a particle species given the mass and charge.
+      nb::arg("mass"),
+      nb::arg("charge"),
+      R"""(Routine to return the integer ID index of a particle species given the mass and charge.
 Note: Currently this routine only works for subatomic particles and is used for decoding PTC flat files.
 
 Parameters
@@ -390,12 +377,9 @@ species : int
   m.def(
       "spin_of",
       &SimUtils::spin_of,
-      py::arg("species"),
-      py::arg("non_subatomic_default") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function spin_of (species, non_subatomic_default) result (spin)
-
-Routine to return the spin, in units of hbar, of a particle.
+      nb::arg("species"),
+      nb::arg("non_subatomic_default") = nb::none(),
+      R"""(Routine to return the spin, in units of hbar, of a particle.
 This routine is only valid for subatomic particles.
 For all other particles, the returned spin value will be the value of non_subatomic_default.
 
@@ -416,13 +400,10 @@ spin : float
   m.def(
       "spline1",
       &SimUtils::spline1,
-      py::arg("a_spline"),
-      py::arg("x"),
-      py::arg("n") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function spline1 (a_spline, x, n) result (y)
-
-Function for spline evaluation using a single spline (instead of a spline array).
+      nb::arg("a_spline"),
+      nb::arg("x"),
+      nb::arg("n") = nb::none(),
+      R"""(Function for spline evaluation using a single spline (instead of a spline array).
 Also see:
   spline_evaluate
   spline_akima_interpolate
@@ -451,11 +432,8 @@ y : float
   m.def(
       "spline_akima",
       &SimUtils::spline_akima,
-      py::arg("spline"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine spline_akima (spline, ok)
-
-Given a set of (x,y) points we want to interpolate between the points.
+      nb::arg("spline"),
+      R"""(Given a set of (x,y) points we want to interpolate between the points.
 This subroutine computes the semi-hermite cubic spline developed by
 Hiroshi Akima. The spline goes thorugh all the points (that is, it is
 not a smoothing spline). For interpolation use:
@@ -479,36 +457,33 @@ ok : bool
     Set .false. if something is wrong (like less than 2 points used).
 )"""
   );
-  py::class_<SimUtils::SplineAkimaInterpolate, std::unique_ptr<SimUtils::SplineAkimaInterpolate>>(
+  nb::class_<SimUtils::SplineAkimaInterpolate>(
       m,
       "SplineAkimaInterpolate",
       "spline_akima_interpolate return type"
   )
-      .def_readonly("ok", &SimUtils::SplineAkimaInterpolate::ok)
-      .def_readonly("y", &SimUtils::SplineAkimaInterpolate::y)
-      .def_readonly("dy", &SimUtils::SplineAkimaInterpolate::dy)
+      .def_ro("ok", &SimUtils::SplineAkimaInterpolate::ok)
+      .def_ro("y", &SimUtils::SplineAkimaInterpolate::y)
+      .def_ro("dy", &SimUtils::SplineAkimaInterpolate::dy)
       .def("__len__", [](const SimUtils::SplineAkimaInterpolate &) { return 3; })
-      .def("__getitem__", [](const SimUtils::SplineAkimaInterpolate &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::SplineAkimaInterpolate &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.ok);
+          return nb::cast(s.ok);
         if (i == 1)
-          return py::cast(s.y);
+          return nb::cast(s.y);
         if (i == 2)
-          return py::cast(s.dy);
-        throw py::index_error();
+          return nb::cast(s.dy);
+        throw nb::index_error();
       });
   m.def(
       "spline_akima_interpolate",
       &SimUtils::spline_akima_interpolate,
-      py::arg("x_knot"),
-      py::arg("y_knot"),
-      py::arg("x"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine spline_akima_interpolate (x_knot, y_knot, x, ok, y, dy)
-
-Routine to interpolate using an akima spline.
+      nb::arg("x_knot"),
+      nb::arg("y_knot"),
+      nb::arg("x"),
+      R"""(Routine to interpolate using an akima spline.
 
 When evaluating at enough points, this routine is slower than calling spline_akima to
 first evaluate the spline coefficients and then repeatedly calling spline_evaluate.
@@ -542,35 +517,28 @@ dy : float, optional
     Spline derivative interpolation.
 )"""
   );
-  py::class_<SimUtils::SplineEvaluate, std::unique_ptr<SimUtils::SplineEvaluate>>(
-      m,
-      "SplineEvaluate",
-      "spline_evaluate return type"
-  )
-      .def_readonly("ok", &SimUtils::SplineEvaluate::ok)
-      .def_readonly("y", &SimUtils::SplineEvaluate::y)
-      .def_readonly("dy", &SimUtils::SplineEvaluate::dy)
+  nb::class_<SimUtils::SplineEvaluate>(m, "SplineEvaluate", "spline_evaluate return type")
+      .def_ro("ok", &SimUtils::SplineEvaluate::ok)
+      .def_ro("y", &SimUtils::SplineEvaluate::y)
+      .def_ro("dy", &SimUtils::SplineEvaluate::dy)
       .def("__len__", [](const SimUtils::SplineEvaluate &) { return 3; })
-      .def("__getitem__", [](const SimUtils::SplineEvaluate &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::SplineEvaluate &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.ok);
+          return nb::cast(s.ok);
         if (i == 1)
-          return py::cast(s.y);
+          return nb::cast(s.y);
         if (i == 2)
-          return py::cast(s.dy);
-        throw py::index_error();
+          return nb::cast(s.dy);
+        throw nb::index_error();
       });
   m.def(
       "spline_evaluate",
       &SimUtils::spline_evaluate,
-      py::arg("spline"),
-      py::arg("x"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine spline_evaluate (spline, x, ok, y, dy)
-
-Subroutine to evalueate a spline at a set of points.
+      nb::arg("spline"),
+      nb::arg("x"),
+      R"""(Subroutine to evalueate a spline at a set of points.
 
 A point outside of the range of knot points is an error.
 Also see:
@@ -605,9 +573,8 @@ dy : float, optional
   m.def(
       "sqrt_alpha",
       &SimUtils::sqrt_alpha,
-      py::arg("alpha"),
-      py::arg("x"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("alpha"),
+      nb::arg("x"),
       R"""(Wrapper for Fortran routine sqrt_alpha
 
 Parameters
@@ -627,9 +594,8 @@ y : float
   m.def(
       "sqrt_one",
       &SimUtils::sqrt_one,
-      py::arg("x"),
-      py::arg("nd") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("nd") = nb::none(),
       R"""(Wrapper for Fortran routine sqrt_one
 
 Parameters
@@ -649,9 +615,8 @@ ds1 : float
   m.def(
       "str_count",
       &SimUtils::str_count,
-      py::arg("str"),
-      py::arg("match_"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("str"),
+      nb::arg("match_"),
       R"""(Wrapper for Fortran routine str_count
 
 Parameters
@@ -668,8 +633,7 @@ num : int
   m.def(
       "str_downcase",
       &SimUtils::str_downcase,
-      py::arg("src"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("src"),
       R"""(Wrapper for Fortran routine str_downcase
 
 Parameters
@@ -684,10 +648,9 @@ dst : str
   m.def(
       "str_first_in_set",
       &SimUtils::str_first_in_set,
-      py::arg("line"),
-      py::arg("set"),
-      py::arg("ignore_clauses") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("set"),
+      nb::arg("ignore_clauses") = nb::none(),
       R"""(Wrapper for Fortran routine str_first_in_set
 
 Parameters
@@ -706,9 +669,8 @@ ix_match : int
   m.def(
       "str_first_not_in_set",
       &SimUtils::str_first_not_in_set,
-      py::arg("line"),
-      py::arg("set"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("set"),
       R"""(Wrapper for Fortran routine str_first_not_in_set
 
 Parameters
@@ -725,9 +687,8 @@ ix_match : int
   m.def(
       "str_last_in_set",
       &SimUtils::str_last_in_set,
-      py::arg("line"),
-      py::arg("set"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("set"),
       R"""(Wrapper for Fortran routine str_last_in_set
 
 Parameters
@@ -744,9 +705,8 @@ ix_match : int
   m.def(
       "str_last_not_in_set",
       &SimUtils::str_last_not_in_set,
-      py::arg("line"),
-      py::arg("set"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("set"),
       R"""(Wrapper for Fortran routine str_last_not_in_set
 
 Parameters
@@ -763,9 +723,8 @@ ix_match : int
   m.def(
       "str_match_wild",
       &SimUtils::str_match_wild,
-      py::arg("str"),
-      py::arg("pat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("str"),
+      nb::arg("pat"),
       R"""(Wrapper for Fortran routine str_match_wild
 
 Parameters
@@ -782,12 +741,11 @@ a_match : bool
   m.def(
       "str_substitute",
       &SimUtils::str_substitute,
-      py::arg("string"),
-      py::arg("str_match") = py::none(),
-      py::arg("str_replace") = py::none(),
-      py::arg("do_trim") = py::none(),
-      py::arg("ignore_escaped") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("string"),
+      nb::arg("str_match") = nb::none(),
+      nb::arg("str_replace") = nb::none(),
+      nb::arg("do_trim") = nb::none(),
+      nb::arg("ignore_escaped") = nb::none(),
       R"""(Wrapper for Fortran routine str_substitute
 
 Parameters
@@ -806,8 +764,7 @@ ignore_escaped : bool, optional
   m.def(
       "str_upcase",
       &SimUtils::str_upcase,
-      py::arg("src"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("src"),
       R"""(Wrapper for Fortran routine str_upcase
 
 Parameters
@@ -822,11 +779,10 @@ dst : str
   m.def(
       "string_to_int",
       &SimUtils::string_to_int,
-      py::arg("line"),
-      py::arg("default_"),
-      py::arg("err_flag"),
-      py::arg("err_print_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("default_"),
+      nb::arg("err_flag"),
+      nb::arg("err_print_flag") = nb::none(),
       R"""(Wrapper for Fortran routine string_to_int
 
 Parameters
@@ -845,11 +801,10 @@ value : int
   m.def(
       "string_to_real",
       &SimUtils::string_to_real,
-      py::arg("line"),
-      py::arg("default_"),
-      py::arg("err_flag"),
-      py::arg("err_print_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
+      nb::arg("default_"),
+      nb::arg("err_flag"),
+      nb::arg("err_print_flag") = nb::none(),
       R"""(Wrapper for Fortran routine string_to_real
 
 Parameters
@@ -868,10 +823,9 @@ value : float
   m.def(
       "string_trim",
       &SimUtils::string_trim,
-      py::arg("in_string"),
-      py::arg("out_string"),
-      py::arg("word_len"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("in_string"),
+      nb::arg("out_string"),
+      nb::arg("word_len"),
       R"""(Wrapper for Fortran routine string_trim
 
 Parameters
@@ -886,13 +840,12 @@ word_len : int
   m.def(
       "string_trim2",
       &SimUtils::string_trim2,
-      py::arg("in_str"),
-      py::arg("delimitors"),
-      py::arg("out_str"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("ix_next"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("in_str"),
+      nb::arg("delimitors"),
+      nb::arg("out_str"),
+      nb::arg("ix_word"),
+      nb::arg("delim"),
+      nb::arg("ix_next"),
       R"""(Wrapper for Fortran routine string_trim2
 
 Parameters
@@ -913,15 +866,12 @@ ix_next : int
   m.def(
       "suggest_lmdif",
       &SimUtils::suggest_lmdif,
-      py::arg("XV"),
-      py::arg("FV"),
-      py::arg("eps"),
-      py::arg("itermx"),
-      py::arg("reset_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine suggest_lmdif (xv, fv, eps, itermx, at_end, reset_flag)
-
-Reverse communication subroutine.
+      nb::arg("XV"),
+      nb::arg("FV"),
+      nb::arg("eps"),
+      nb::arg("itermx"),
+      nb::arg("reset_flag") = nb::none(),
+      R"""(Reverse communication subroutine.
 It suggests values for your input variables based on
 the previous value of your merit function.
 
@@ -957,16 +907,13 @@ at_end : bool
   m.def(
       "super_bicubic_coef",
       &SimUtils::super_bicubic_coef,
-      py::arg("y"),
-      py::arg("y1"),
-      py::arg("y2"),
-      py::arg("y12"),
-      py::arg("d1"),
-      py::arg("d2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine super_bicubic_coef(y, y1, y2, y12, d1, d2, c)
-
-Routine to compute coefficients for bicubic interpolation.
+      nb::arg("y"),
+      nb::arg("y1"),
+      nb::arg("y2"),
+      nb::arg("y12"),
+      nb::arg("d1"),
+      nb::arg("d2"),
+      R"""(Routine to compute coefficients for bicubic interpolation.
 This is from NR bcucof.
 
 Parameters
@@ -995,45 +942,40 @@ c : 2D array of float (shape: 4,4)
     Coefficients.
 )"""
   );
-  py::class_<
-      SimUtils::SuperBicubicInterpolation,
-      std::unique_ptr<SimUtils::SuperBicubicInterpolation>>(
+  nb::class_<SimUtils::SuperBicubicInterpolation>(
       m,
       "SuperBicubicInterpolation",
       "super_bicubic_interpolation return type"
   )
-      .def_readonly("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
-      .def_readonly("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
-      .def_readonly("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
+      .def_ro("ansy", &SimUtils::SuperBicubicInterpolation::ansy)
+      .def_ro("ansy1", &SimUtils::SuperBicubicInterpolation::ansy1)
+      .def_ro("ansy2", &SimUtils::SuperBicubicInterpolation::ansy2)
       .def("__len__", [](const SimUtils::SuperBicubicInterpolation &) { return 3; })
-      .def("__getitem__", [](const SimUtils::SuperBicubicInterpolation &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::SuperBicubicInterpolation &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.ansy);
+          return nb::cast(s.ansy);
         if (i == 1)
-          return py::cast(s.ansy1);
+          return nb::cast(s.ansy1);
         if (i == 2)
-          return py::cast(s.ansy2);
-        throw py::index_error();
+          return nb::cast(s.ansy2);
+        throw nb::index_error();
       });
   m.def(
       "super_bicubic_interpolation",
       &SimUtils::super_bicubic_interpolation,
-      py::arg("y"),
-      py::arg("y1"),
-      py::arg("y2"),
-      py::arg("y12"),
-      py::arg("x1l"),
-      py::arg("x1u"),
-      py::arg("x2l"),
-      py::arg("x2u"),
-      py::arg("x1"),
-      py::arg("x2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine super_bicubic_interpolation(y, y1, y2, y12, x1l, x1u, x2l, x2u, x1, x2, ansy, ansy1, ansy2)
-
-Routine to do bicubic interpolation.
+      nb::arg("y"),
+      nb::arg("y1"),
+      nb::arg("y2"),
+      nb::arg("y12"),
+      nb::arg("x1l"),
+      nb::arg("x1u"),
+      nb::arg("x2l"),
+      nb::arg("x2u"),
+      nb::arg("x1"),
+      nb::arg("x2"),
+      R"""(Routine to do bicubic interpolation.
 This is from NR bcuint.
 
 Note! The four grid points are arrayed in counter-clockwise order beginning from the lower left.
@@ -1083,33 +1025,26 @@ ansy2 : float
     2-direction derivative at interpolation point.
 )"""
   );
-  py::class_<SimUtils::SuperPolint, std::unique_ptr<SimUtils::SuperPolint>>(
-      m,
-      "SuperPolint",
-      "super_polint return type"
-  )
-      .def_readonly("y", &SimUtils::SuperPolint::y)
-      .def_readonly("dy", &SimUtils::SuperPolint::dy)
+  nb::class_<SimUtils::SuperPolint>(m, "SuperPolint", "super_polint return type")
+      .def_ro("y", &SimUtils::SuperPolint::y)
+      .def_ro("dy", &SimUtils::SuperPolint::dy)
       .def("__len__", [](const SimUtils::SuperPolint &) { return 2; })
-      .def("__getitem__", [](const SimUtils::SuperPolint &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::SuperPolint &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.y);
+          return nb::cast(s.y);
         if (i == 1)
-          return py::cast(s.dy);
-        throw py::index_error();
+          return nb::cast(s.dy);
+        throw nb::index_error();
       });
   m.def(
       "super_polint",
       &SimUtils::super_polint,
-      py::arg("xa"),
-      py::arg("ya"),
-      py::arg("x"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function super_polint (xa, ya, x, y, dy)
-
-This is essentially polint from Numerical Recipes.
+      nb::arg("xa"),
+      nb::arg("ya"),
+      nb::arg("x"),
+      R"""(This is essentially polint from Numerical Recipes.
 
 Parameters
 ----------
@@ -1129,12 +1064,9 @@ dy : float
   m.def(
       "super_poly",
       &SimUtils::super_poly,
-      py::arg("x"),
-      py::arg("coeffs"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function super_poly (x, coef) result (value)
-
-Routine to compute Sum: coef(i)*x^i
+      nb::arg("x"),
+      nb::arg("coeffs"),
+      R"""(Routine to compute Sum: coef(i)*x^i
 
 Parameters
 ----------
@@ -1149,13 +1081,15 @@ value : float
   );
   m.def(
       "super_sobseq",
-      &SimUtils::super_sobseq,
-      py::arg("x"),
-      py::arg("ran_state") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine super_sobseq (x, ran_state)
-
-Routine patterened after sobseq in Numerical Recipes.
+      [](FArray1D<Real> &x, RandomStateStruct *ran_state) {
+        auto fn = static_cast<void (*)(FArray1D<Real> &, optional_ref<RandomStateStruct>)>(
+            &SimUtils::super_sobseq
+        );
+        return fn(x, ptr_to_opt_ref(ran_state));
+      },
+      nb::arg("x"),
+      nb::arg("ran_state") = nb::none(),
+      R"""(Routine patterened after sobseq in Numerical Recipes.
 Difference is that this version has an argument for the internal state.
 
 Parameters
@@ -1170,11 +1104,8 @@ ran_state : RandomStateStruct, optional
   m.def(
       "super_sort",
       &SimUtils::super_sort,
-      py::arg("arr"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine super_sort(arr)
-
-Routine to sort an integer array in place.
+      nb::arg("arr"),
+      R"""(Routine to sort an integer array in place.
 This is the NR routine sort modified to sort integers.
 
 Parameters
@@ -1188,8 +1119,7 @@ arr : 1D array of int
   m.def(
       "system_command",
       &SimUtils::system_command,
-      py::arg("line"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("line"),
       R"""(Wrapper for Fortran routine system_command
 
 Parameters

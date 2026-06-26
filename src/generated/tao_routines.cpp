@@ -95,9 +95,11 @@ void Tao::tao_allocate_data_array(TaoUniverseStruct &u, int n_data, std::optiona
   } else {
     _exact = nullptr;
   }
-  fortran_tao_allocate_data_array(/* void* */ u.get_fortran_ptr(),
-                                  /* int& */ n_data,
-                                  /* bool* */ _exact);
+  fortran_tao_allocate_data_array(
+      /* void* */ u.get_fortran_ptr(),
+      /* int& */ n_data,
+      /* bool* */ _exact
+  );
 }
 void Tao::tao_allocate_v1_var(int n_v1, bool save_old) {
   fortran_tao_allocate_v1_var(/* int& */ n_v1, /* bool& */ save_old);
@@ -124,11 +126,13 @@ bool Tao::tao_beam_track(
     BeamStruct &beam
 ) {
   bool _calc_ok{};
-  fortran_tao_beam_track(/* void* */ u.get_fortran_ptr(),
-                         /* void* */ tao_lat.get_fortran_ptr(),
-                         /* int& */ ix_branch,
-                         /* void* */ beam.get_fortran_ptr(),
-                         /* bool& */ _calc_ok);
+  fortran_tao_beam_track(
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* int& */ ix_branch,
+      /* void* */ beam.get_fortran_ptr(),
+      /* bool& */ _calc_ok
+  );
   return _calc_ok;
 }
 std::optional<EleStruct> Tao::tao_beam_track_endpoint(
@@ -164,10 +168,12 @@ void Tao::tao_calc_data_at_s_pts(
     BoolAlloc1D &good
 ) {
   // intent=inout allocatable general array
-  fortran_tao_calc_data_at_s_pts(/* void* */ tao_lat.get_fortran_ptr(),
-                                 /* void* */ curve.get_fortran_ptr(),
-                                 /* double& */ comp_sign,
-                                 /* void* */ good.get_fortran_ptr());
+  fortran_tao_calc_data_at_s_pts(
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr(),
+      /* double& */ comp_sign,
+      /* void* */ good.get_fortran_ptr()
+  );
 }
 void Tao::tao_call_cmd(std::string file_name, optional_ref<CharacterAlloc1D> cmd_arg) {
   auto _file_name = file_name.c_str();
@@ -301,15 +307,19 @@ bool Tao::tao_command(std::string command_line, bool err) {
 }
 std::string Tao::tao_constraint_type_name(TaoDataStruct &datum) {
   char _datum_name[4096];
-  fortran_tao_constraint_type_name(/* void* */ datum.get_fortran_ptr(),
-                                   /* const char* */ _datum_name);
+  fortran_tao_constraint_type_name(
+      /* void* */ datum.get_fortran_ptr(),
+      /* const char* */ _datum_name
+  );
   return _datum_name;
 }
 ElePointerStructAlloc1D Tao::tao_control_tree_list(EleStruct &ele) {
   // intent=out allocatable type array
   auto tree{ElePointerStructAlloc1D()};
-  fortran_tao_control_tree_list(/* void* */ ele.get_fortran_ptr(),
-                                /* void* */ tree.get_fortran_ptr());
+  fortran_tao_control_tree_list(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ tree.get_fortran_ptr()
+  );
   return std::move(tree);
 }
 int Tao::tao_count_strings(std::string string, std::string pattern) {
@@ -326,15 +336,19 @@ void Tao::tao_curve_beam_ellipse_setup(TaoCurveStruct &curve) {
 bool Tao::tao_curve_check_universe(TaoCurveStruct &curve, TaoUniverseStruct &uni) {
   auto _uni = &uni; // input, required, pointer
   bool _is_ok{};
-  fortran_tao_curve_check_universe(/* void* */ curve.get_fortran_ptr(),
-                                   /* void* */ &uni,
-                                   /* bool& */ _is_ok);
+  fortran_tao_curve_check_universe(
+      /* void* */ curve.get_fortran_ptr(),
+      /* void* */ &uni,
+      /* bool& */ _is_ok
+  );
   return _is_ok;
 }
 void Tao::tao_curve_data_setup(TaoPlotStruct &plot, TaoGraphStruct &graph, TaoCurveStruct &curve) {
-  fortran_tao_curve_data_setup(/* void* */ plot.get_fortran_ptr(),
-                               /* void* */ graph.get_fortran_ptr(),
-                               /* void* */ curve.get_fortran_ptr());
+  fortran_tao_curve_data_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr()
+  );
 }
 void Tao::tao_curve_datum_calc(
     ElePointerStructAlloc1D eles,
@@ -344,16 +358,20 @@ void Tao::tao_curve_datum_calc(
 ) {
   // intent=in allocatable type array
   auto _who = who.c_str();
-  fortran_tao_curve_datum_calc(/* void* */ eles.get_fortran_ptr(),
-                               /* void* */ plot.get_fortran_ptr(),
-                               /* void* */ curve.get_fortran_ptr(),
-                               /* const char* */ _who);
+  fortran_tao_curve_datum_calc(
+      /* void* */ eles.get_fortran_ptr(),
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr(),
+      /* const char* */ _who
+  );
 }
 std::optional<EleStruct> Tao::tao_curve_ele_ref(TaoCurveStruct &curve, bool point_to_ele_ref) {
   void *_ele_track;
-  fortran_tao_curve_ele_ref(/* void* */ curve.get_fortran_ptr(),
-                            /* bool& */ point_to_ele_ref,
-                            /* void* */ &_ele_track);
+  fortran_tao_curve_ele_ref(
+      /* void* */ curve.get_fortran_ptr(),
+      /* bool& */ point_to_ele_ref,
+      /* void* */ &_ele_track
+  );
   return std::move((_ele_track ? std::make_optional<EleStruct>(_ele_track) : std::nullopt));
 }
 int Tao::tao_curve_ix_uni(TaoCurveStruct &curve) {
@@ -370,19 +388,23 @@ std::string Tao::tao_curve_name(TaoCurveStruct &curve, std::optional<bool> use_r
     _use_region = nullptr;
   }
   char _curve_name[4096];
-  fortran_tao_curve_name(/* void* */ curve.get_fortran_ptr(),
-                         /* bool* */ _use_region,
-                         /* const char* */ _curve_name);
+  fortran_tao_curve_name(
+      /* void* */ curve.get_fortran_ptr(),
+      /* bool* */ _use_region,
+      /* const char* */ _curve_name
+  );
   return _curve_name;
 }
 Tao::TaoCurveRmsCalc Tao::tao_curve_rms_calc(TaoCurveStruct &curve, std::string who) {
   auto _who = who.c_str();
   double _rms{};
   double _mean{};
-  fortran_tao_curve_rms_calc(/* void* */ curve.get_fortran_ptr(),
-                             /* const char* */ _who,
-                             /* double& */ _rms,
-                             /* double& */ _mean);
+  fortran_tao_curve_rms_calc(
+      /* void* */ curve.get_fortran_ptr(),
+      /* const char* */ _who,
+      /* double& */ _rms,
+      /* double& */ _mean
+  );
   return TaoCurveRmsCalc{_rms, _mean};
 }
 std::string Tao::tao_d2_d1_name(TaoD1DataStruct &d1, std::optional<bool> show_universe) {
@@ -394,16 +416,20 @@ std::string Tao::tao_d2_d1_name(TaoD1DataStruct &d1, std::optional<bool> show_un
     _show_universe = nullptr;
   }
   char _d2_d1_name[4096];
-  fortran_tao_d2_d1_name(/* void* */ d1.get_fortran_ptr(),
-                         /* bool* */ _show_universe,
-                         /* const char* */ _d2_d1_name);
+  fortran_tao_d2_d1_name(
+      /* void* */ d1.get_fortran_ptr(),
+      /* bool* */ _show_universe,
+      /* const char* */ _d2_d1_name
+  );
   return _d2_d1_name;
 }
 void Tao::tao_d2_data_stuffit(TaoUniverseStruct &u, std::string d2_name, int n_d1_data) {
   auto _d2_name = d2_name.c_str();
-  fortran_tao_d2_data_stuffit(/* void* */ u.get_fortran_ptr(),
-                              /* const char* */ _d2_name,
-                              /* int& */ n_d1_data);
+  fortran_tao_d2_data_stuffit(
+      /* void* */ u.get_fortran_ptr(),
+      /* const char* */ _d2_name,
+      /* int& */ n_d1_data
+  );
 }
 void Tao::tao_data_check(bool err) { fortran_tao_data_check(/* bool& */ err); }
 void Tao::tao_data_coupling_init(BranchStruct &branch) {
@@ -418,11 +444,13 @@ bool Tao::tao_data_sanity_check(
   auto _default_data_type = default_data_type.c_str();
   auto *_uni = uni.has_value() ? uni->get().get_fortran_ptr() : nullptr; // input, optional
   bool _is_valid{};
-  fortran_tao_data_sanity_check(/* void* */ datum.get_fortran_ptr(),
-                                /* bool& */ print_err,
-                                /* const char* */ _default_data_type,
-                                /* void* */ _uni,
-                                /* bool& */ _is_valid);
+  fortran_tao_data_sanity_check(
+      /* void* */ datum.get_fortran_ptr(),
+      /* bool& */ print_err,
+      /* const char* */ _default_data_type,
+      /* void* */ _uni,
+      /* bool& */ _is_valid
+  );
   return _is_valid;
 }
 void Tao::tao_data_show_use(
@@ -439,9 +467,11 @@ void Tao::tao_data_show_use(
   } else {
     _nl = nullptr;
   }
-  fortran_tao_data_show_use(/* void* */ d2_data.get_fortran_ptr(),
-                            /* void* */ _lines,
-                            /* int* */ _nl);
+  fortran_tao_data_show_use(
+      /* void* */ d2_data.get_fortran_ptr(),
+      /* void* */ _lines,
+      /* int* */ _nl
+  );
 }
 std::string
 Tao::tao_data_type_substitute(std::string template_, TaoCurveStruct &curve, TaoGraphStruct &graph) {
@@ -468,11 +498,13 @@ std::string Tao::tao_data_useit_plot_calc(
   _data_desc.dims[0] = data.size();
   _data_desc.strides[0] = 1;
   char _most_invalid[4096];
-  fortran_tao_data_useit_plot_calc(/* void* */ curve.get_fortran_ptr(),
-                                   /* void* */ graph.get_fortran_ptr(),
-                                   /* Bmad::array_descriptor_t& */ _data_desc,
-                                   /* bool& */ check_s_position,
-                                   /* const char* */ _most_invalid);
+  fortran_tao_data_useit_plot_calc(
+      /* void* */ curve.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _data_desc,
+      /* bool& */ check_s_position,
+      /* const char* */ _most_invalid
+  );
   return _most_invalid;
 }
 int Tao::tao_datum_has_associated_ele(std::string data_type, std::optional<int> branch_geometry) {
@@ -511,13 +543,15 @@ Tao::TaoDatumIntegrate Tao::tao_datum_integrate(
   bool _valid_value{};
   char _why_invalid[4096];
   double _result{};
-  fortran_tao_datum_integrate(/* void* */ datum.get_fortran_ptr(),
-                              /* void* */ branch.get_fortran_ptr(),
-                              /* Bmad::array_descriptor_t& */ _s_pos_desc,
-                              /* Bmad::array_descriptor_t& */ _values_desc,
-                              /* bool& */ _valid_value,
-                              /* const char* */ _why_invalid,
-                              /* double& */ _result);
+  fortran_tao_datum_integrate(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ branch.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _s_pos_desc,
+      /* Bmad::array_descriptor_t& */ _values_desc,
+      /* bool& */ _valid_value,
+      /* const char* */ _why_invalid,
+      /* double& */ _result
+  );
   return TaoDatumIntegrate{_valid_value, _why_invalid, _result};
 }
 std::string Tao::tao_datum_name(TaoDataStruct &datum, std::optional<bool> show_universe) {
@@ -529,16 +563,20 @@ std::string Tao::tao_datum_name(TaoDataStruct &datum, std::optional<bool> show_u
     _show_universe = nullptr;
   }
   char _datum_name[4096];
-  fortran_tao_datum_name(/* void* */ datum.get_fortran_ptr(),
-                         /* bool* */ _show_universe,
-                         /* const char* */ _datum_name);
+  fortran_tao_datum_name(
+      /* void* */ datum.get_fortran_ptr(),
+      /* bool* */ _show_universe,
+      /* const char* */ _datum_name
+  );
   return _datum_name;
 }
 double Tao::tao_datum_s_position(TaoDataStruct &datum, EleStruct &ele) {
   double _s_pos{};
-  fortran_tao_datum_s_position(/* void* */ datum.get_fortran_ptr(),
-                               /* void* */ ele.get_fortran_ptr(),
-                               /* double& */ _s_pos);
+  fortran_tao_datum_s_position(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ _s_pos
+  );
   return _s_pos;
 }
 bool Tao::tao_de_optimizer() {
@@ -562,15 +600,19 @@ bool Tao::tao_dmodel_dvar_calc(bool force_calc) {
 }
 double Tao::tao_do_wire_scan(EleStruct &ele, double theta, BeamStruct &beam) {
   double _moment{};
-  fortran_tao_do_wire_scan(/* void* */ ele.get_fortran_ptr(),
-                           /* double& */ theta,
-                           /* void* */ beam.get_fortran_ptr(),
-                           /* double& */ _moment);
+  fortran_tao_do_wire_scan(
+      /* void* */ ele.get_fortran_ptr(),
+      /* double& */ theta,
+      /* void* */ beam.get_fortran_ptr(),
+      /* double& */ _moment
+  );
   return _moment;
 }
 void Tao::tao_draw_beam_chamber_wall(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_draw_beam_chamber_wall(/* void* */ plot.get_fortran_ptr(),
-                                     /* void* */ graph.get_fortran_ptr());
+  fortran_tao_draw_beam_chamber_wall(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_draw_curve_data(
     TaoPlotStruct &plot,
@@ -578,10 +620,12 @@ void Tao::tao_draw_curve_data(
     TaoCurveStruct &curve,
     bool &have_data
 ) {
-  fortran_tao_draw_curve_data(/* void* */ plot.get_fortran_ptr(),
-                              /* void* */ graph.get_fortran_ptr(),
-                              /* void* */ curve.get_fortran_ptr(),
-                              /* bool& */ have_data);
+  fortran_tao_draw_curve_data(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr(),
+      /* bool& */ have_data
+  );
 }
 void Tao::tao_draw_ele_for_floor_plan(
     TaoPlotStruct &plot,
@@ -595,22 +639,28 @@ void Tao::tao_draw_ele_for_floor_plan(
 ) {
   auto _ele_shape = &ele_shape; // input, required, pointer
   auto _label_name = label_name.c_str();
-  fortran_tao_draw_ele_for_floor_plan(/* void* */ plot.get_fortran_ptr(),
-                                      /* void* */ graph.get_fortran_ptr(),
-                                      /* void* */ tao_lat.get_fortran_ptr(),
-                                      /* void* */ ele.get_fortran_ptr(),
-                                      /* void* */ &ele_shape,
-                                      /* const char* */ _label_name,
-                                      /* double& */ offset1,
-                                      /* double& */ offset2);
+  fortran_tao_draw_ele_for_floor_plan(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ &ele_shape,
+      /* const char* */ _label_name,
+      /* double& */ offset1,
+      /* double& */ offset2
+  );
 }
 void Tao::tao_draw_floor_plan(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_draw_floor_plan(/* void* */ plot.get_fortran_ptr(),
-                              /* void* */ graph.get_fortran_ptr());
+  fortran_tao_draw_floor_plan(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_draw_graph_axes(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_draw_graph_axes(/* void* */ plot.get_fortran_ptr(),
-                              /* void* */ graph.get_fortran_ptr());
+  fortran_tao_draw_graph_axes(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_draw_histogram_data(
     TaoPlotStruct &plot,
@@ -618,14 +668,18 @@ void Tao::tao_draw_histogram_data(
     TaoCurveStruct &curve,
     bool &have_data
 ) {
-  fortran_tao_draw_histogram_data(/* void* */ plot.get_fortran_ptr(),
-                                  /* void* */ graph.get_fortran_ptr(),
-                                  /* void* */ curve.get_fortran_ptr(),
-                                  /* bool& */ have_data);
+  fortran_tao_draw_histogram_data(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr(),
+      /* bool& */ have_data
+  );
 }
 void Tao::tao_draw_lat_layout(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_draw_lat_layout(/* void* */ plot.get_fortran_ptr(),
-                              /* void* */ graph.get_fortran_ptr());
+  fortran_tao_draw_lat_layout(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_draw_plots(std::optional<bool> do_clear) {
   bool do_clear_lvalue;
@@ -642,11 +696,13 @@ Tao::tao_ele_geometry_with_misalignments(TaoDataStruct &datum, EleStruct &ele) {
   bool _valid_value{};
   char _why_invalid[4096];
   double _value{};
-  fortran_tao_ele_geometry_with_misalignments(/* void* */ datum.get_fortran_ptr(),
-                                              /* void* */ ele.get_fortran_ptr(),
-                                              /* bool& */ _valid_value,
-                                              /* const char* */ _why_invalid,
-                                              /* double& */ _value);
+  fortran_tao_ele_geometry_with_misalignments(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* bool& */ _valid_value,
+      /* const char* */ _why_invalid,
+      /* double& */ _value
+  );
   return TaoEleGeometryWithMisalignments{_valid_value, _why_invalid, _value};
 }
 Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
@@ -684,6 +740,27 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
       _y2
   };
 }
+TaoEleShapeStruct Tao::tao_ele_shape_input_to_struct(
+    TaoEleShapeInput &shape_input,
+    std::optional<std::string> namelist_name
+) {
+  const char *_namelist_name = namelist_name.has_value() ? namelist_name->c_str() : nullptr;
+  TaoEleShapeStruct _shape_struct;
+  fortran_tao_ele_shape_input_to_struct(
+      /* void* */ shape_input.get_fortran_ptr(),
+      /* const char* */ _namelist_name,
+      /* void* */ _shape_struct.get_fortran_ptr()
+  );
+  return std::move(_shape_struct);
+}
+TaoEleShapeInput Tao::tao_ele_shape_struct_to_input(TaoEleShapeStruct &shape_struct) {
+  TaoEleShapeInput _shape_input;
+  fortran_tao_ele_shape_struct_to_input(
+      /* void* */ shape_struct.get_fortran_ptr(),
+      /* void* */ _shape_input.get_fortran_ptr()
+  );
+  return std::move(_shape_input);
+}
 Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(
     TaoDataStruct &datum,
     EleStruct &ele,
@@ -693,13 +770,15 @@ Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(
   bool _valid_value{};
   char _why_invalid[4096];
   double _value{};
-  fortran_tao_eval_floor_orbit(/* void* */ datum.get_fortran_ptr(),
-                               /* void* */ ele.get_fortran_ptr(),
-                               /* void* */ orbit.get_fortran_ptr(),
-                               /* void* */ bunch_params.get_fortran_ptr(),
-                               /* bool& */ _valid_value,
-                               /* const char* */ _why_invalid,
-                               /* double& */ _value);
+  fortran_tao_eval_floor_orbit(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ orbit.get_fortran_ptr(),
+      /* void* */ bunch_params.get_fortran_ptr(),
+      /* bool& */ _valid_value,
+      /* const char* */ _why_invalid,
+      /* double& */ _value
+  );
   return TaoEvalFloorOrbit{_valid_value, _why_invalid, _value};
 }
 Tao::TaoEvaluateADatum Tao::tao_evaluate_a_datum(
@@ -726,14 +805,16 @@ Tao::TaoEvaluateADatum Tao::tao_evaluate_a_datum(
   } else {
     _print_err = nullptr;
   }
-  fortran_tao_evaluate_a_datum(/* void* */ datum.get_fortran_ptr(),
-                               /* void* */ u.get_fortran_ptr(),
-                               /* void* */ tao_lat.get_fortran_ptr(),
-                               /* double& */ _datum_value,
-                               /* bool& */ _valid_value,
-                               /* const char* */ _why_invalid,
-                               /* bool* */ _called_from_lat_calc,
-                               /* bool* */ _print_err);
+  fortran_tao_evaluate_a_datum(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* double& */ _datum_value,
+      /* bool& */ _valid_value,
+      /* const char* */ _why_invalid,
+      /* bool* */ _called_from_lat_calc,
+      /* bool* */ _print_err
+  );
   return TaoEvaluateADatum{_datum_value, _valid_value, _why_invalid};
 }
 Tao::TaoEvaluateDatumAtS Tao::tao_evaluate_datum_at_s(
@@ -748,14 +829,16 @@ Tao::TaoEvaluateDatumAtS Tao::tao_evaluate_datum_at_s(
   char _err_str[4096];
   bool _bad_datum{};
   double _value{};
-  fortran_tao_evaluate_datum_at_s(/* void* */ datum.get_fortran_ptr(),
-                                  /* void* */ tao_lat.get_fortran_ptr(),
-                                  /* void* */ &ele,
-                                  /* void* */ &ele_ref,
-                                  /* bool& */ valid_value,
-                                  /* const char* */ _err_str,
-                                  /* bool& */ _bad_datum,
-                                  /* double& */ _value);
+  fortran_tao_evaluate_datum_at_s(
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* void* */ &ele,
+      /* void* */ &ele_ref,
+      /* bool& */ valid_value,
+      /* const char* */ _err_str,
+      /* bool& */ _bad_datum,
+      /* double& */ _value
+  );
   return TaoEvaluateDatumAtS{_err_str, _bad_datum, _value};
 }
 Tao::TaoEvaluateElementParameters Tao::tao_evaluate_element_parameters(
@@ -1179,14 +1262,16 @@ Tao::TaoEvaluateTree Tao::tao_evaluate_tree(
   auto _expression = expression.c_str();
   // intent=inout allocatable type array
   auto *_info_in = info_in.has_value() ? info_in->get_fortran_ptr() : nullptr; // input, optional
-  fortran_tao_evaluate_tree(/* void* */ tao_tree.get_fortran_ptr(),
-                            /* int& */ n_size,
-                            /* bool& */ use_good_user,
-                            /* void* */ value.get_fortran_ptr(),
-                            /* bool& */ _err_flag,
-                            /* bool& */ print_err,
-                            /* const char* */ _expression,
-                            /* void* */ _info_in);
+  fortran_tao_evaluate_tree(
+      /* void* */ tao_tree.get_fortran_ptr(),
+      /* int& */ n_size,
+      /* bool& */ use_good_user,
+      /* void* */ value.get_fortran_ptr(),
+      /* bool& */ _err_flag,
+      /* bool& */ print_err,
+      /* const char* */ _expression,
+      /* void* */ _info_in
+  );
   return TaoEvaluateTree{std::move(value), _err_flag};
 }
 double Tao::tao_evaluate_tune(std::string q_str, double q0, bool delta_input) {
@@ -1235,12 +1320,79 @@ std::string Tao::tao_expression_tree_to_string(
   }
   auto *_parent = parent.has_value() ? parent->get().get_fortran_ptr() : nullptr; // input, optional
   char _str_out[4096];
-  fortran_tao_expression_tree_to_string(/* void* */ tree.get_fortran_ptr(),
-                                        /* bool* */ _include_root,
-                                        /* int* */ _n_node,
-                                        /* void* */ _parent,
-                                        /* const char* */ _str_out);
+  fortran_tao_expression_tree_to_string(
+      /* void* */ tree.get_fortran_ptr(),
+      /* bool* */ _include_root,
+      /* int* */ _n_node,
+      /* void* */ _parent,
+      /* const char* */ _str_out
+  );
   return _str_out;
+}
+Tao::TaoFindData Tao::tao_find_data(
+    std::string data_name,
+    std::optional<int> ix_uni,
+    std::optional<std::string> dflt_index,
+    std::optional<bool> print_err
+) {
+  bool _err{};
+  auto _data_name = data_name.c_str();
+  // intent=out allocatable type array
+  auto d2_array{TaoD2DataArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto d1_array{TaoD1DataArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto d_array{TaoDataArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto re_array{TaoRealPointerStructAlloc1D()};
+  // intent=out allocatable type array
+  auto log_array{TaoLogicalArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto str_array{TaoStringArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto int_array{TaoIntegerArrayStructAlloc1D()};
+  int ix_uni_lvalue;
+  auto *_ix_uni{&ix_uni_lvalue};
+  if (ix_uni.has_value()) {
+    ix_uni_lvalue = ix_uni.value();
+  } else {
+    _ix_uni = nullptr;
+  }
+  const char *_dflt_index = dflt_index.has_value() ? dflt_index->c_str() : nullptr;
+  bool print_err_lvalue;
+  auto *_print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  char _component[4096];
+  fortran_tao_find_data(
+      /* bool& */ _err,
+      /* const char* */ _data_name,
+      /* void* */ d2_array.get_fortran_ptr(),
+      /* void* */ d1_array.get_fortran_ptr(),
+      /* void* */ d_array.get_fortran_ptr(),
+      /* void* */ re_array.get_fortran_ptr(),
+      /* void* */ log_array.get_fortran_ptr(),
+      /* void* */ str_array.get_fortran_ptr(),
+      /* void* */ int_array.get_fortran_ptr(),
+      /* int* */ _ix_uni,
+      /* const char* */ _dflt_index,
+      /* bool* */ _print_err,
+      /* const char* */ _component
+  );
+  return TaoFindData{
+      _err,
+      std::move(d2_array),
+      std::move(d1_array),
+      std::move(d_array),
+      std::move(re_array),
+      std::move(log_array),
+      std::move(str_array),
+      std::move(int_array),
+      _component
+  };
 }
 Tao::TaoFindPlotRegion
 Tao::tao_find_plot_region(std::string where, std::optional<bool> print_flag) {
@@ -1265,6 +1417,104 @@ Tao::tao_find_plot_region(std::string where, std::optional<bool> print_flag) {
       std::move((_region ? std::make_optional<TaoPlotRegionStruct>(_region) : std::nullopt))
   };
 }
+Tao::TaoFindPlots Tao::tao_find_plots(
+    std::string name,
+    std::string where,
+    std::optional<bool> print_flag,
+    std::optional<bool> blank_means_all,
+    std::optional<bool> only_visible
+) {
+  bool _err{};
+  auto _name = name.c_str();
+  auto _where = where.c_str();
+  // intent=out allocatable type array
+  auto plot{TaoPlotArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto graph{TaoGraphArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto curve{TaoCurveArrayStructAlloc1D()};
+  bool print_flag_lvalue;
+  auto *_print_flag{&print_flag_lvalue};
+  if (print_flag.has_value()) {
+    print_flag_lvalue = print_flag.value();
+  } else {
+    _print_flag = nullptr;
+  }
+  bool blank_means_all_lvalue;
+  auto *_blank_means_all{&blank_means_all_lvalue};
+  if (blank_means_all.has_value()) {
+    blank_means_all_lvalue = blank_means_all.value();
+  } else {
+    _blank_means_all = nullptr;
+  }
+  bool only_visible_lvalue;
+  auto *_only_visible{&only_visible_lvalue};
+  if (only_visible.has_value()) {
+    only_visible_lvalue = only_visible.value();
+  } else {
+    _only_visible = nullptr;
+  }
+  fortran_tao_find_plots(
+      /* bool& */ _err,
+      /* const char* */ _name,
+      /* const char* */ _where,
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ curve.get_fortran_ptr(),
+      /* bool* */ _print_flag,
+      /* bool* */ _blank_means_all,
+      /* bool* */ _only_visible
+  );
+  return TaoFindPlots{_err, std::move(plot), std::move(graph), std::move(curve)};
+}
+Tao::TaoFindVar Tao::tao_find_var(
+    std::string var_name,
+    std::optional<bool> print_err,
+    std::optional<std::string> dflt_var_index
+) {
+  bool _err{};
+  auto _var_name = var_name.c_str();
+  // intent=out allocatable type array
+  auto v1_array{TaoV1VarArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto v_array{TaoVarArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto re_array{TaoRealPointerStructAlloc1D()};
+  // intent=out allocatable type array
+  auto log_array{TaoLogicalArrayStructAlloc1D()};
+  // intent=out allocatable type array
+  auto str_array{TaoStringArrayStructAlloc1D()};
+  bool print_err_lvalue;
+  auto *_print_err{&print_err_lvalue};
+  if (print_err.has_value()) {
+    print_err_lvalue = print_err.value();
+  } else {
+    _print_err = nullptr;
+  }
+  char _component[4096];
+  const char *_dflt_var_index = dflt_var_index.has_value() ? dflt_var_index->c_str() : nullptr;
+  fortran_tao_find_var(
+      /* bool& */ _err,
+      /* const char* */ _var_name,
+      /* void* */ v1_array.get_fortran_ptr(),
+      /* void* */ v_array.get_fortran_ptr(),
+      /* void* */ re_array.get_fortran_ptr(),
+      /* void* */ log_array.get_fortran_ptr(),
+      /* void* */ str_array.get_fortran_ptr(),
+      /* bool* */ _print_err,
+      /* const char* */ _component,
+      /* const char* */ _dflt_var_index
+  );
+  return TaoFindVar{
+      _err,
+      std::move(v1_array),
+      std::move(v_array),
+      std::move(re_array),
+      std::move(log_array),
+      std::move(str_array),
+      _component
+  };
+}
 void Tao::tao_fixer(std::string switch_, std::string word1, std::string word2) {
   auto _switch_ = switch_.c_str();
   auto _word1 = word1.c_str();
@@ -1280,18 +1530,22 @@ Tao::tao_floor_to_screen(TaoGraphStruct &graph, FixedArray1D<Real, 3> r_floor) {
   _r_floor_desc.dims[0] = r_floor.size();
   double _x_screen{};
   double _y_screen{};
-  fortran_tao_floor_to_screen(/* void* */ graph.get_fortran_ptr(),
-                              /* Bmad::array_descriptor_t& */ _r_floor_desc,
-                              /* double& */ _x_screen,
-                              /* double& */ _y_screen);
+  fortran_tao_floor_to_screen(
+      /* void* */ graph.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _r_floor_desc,
+      /* double& */ _x_screen,
+      /* double& */ _y_screen
+  );
   return TaoFloorToScreen{_x_screen, _y_screen};
 }
 FloorPositionStruct
 Tao::tao_floor_to_screen_coords(TaoGraphStruct &graph, FloorPositionStruct &floor) {
   FloorPositionStruct _screen;
-  fortran_tao_floor_to_screen_coords(/* void* */ graph.get_fortran_ptr(),
-                                     /* void* */ floor.get_fortran_ptr(),
-                                     /* void* */ _screen.get_fortran_ptr());
+  fortran_tao_floor_to_screen_coords(
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ floor.get_fortran_ptr(),
+      /* void* */ _screen.get_fortran_ptr()
+  );
   return std::move(_screen);
 }
 bool Tao::tao_geodesic_lm_optimizer() {
@@ -1308,10 +1562,12 @@ Tao::TaoGetData Tao::tao_get_data() {
   auto data_meas_value{RealAlloc1D()};
   // intent=out allocatable general array
   auto data_ix_dModel{IntAlloc1D()};
-  fortran_tao_get_data(/* void* */ data_value.get_fortran_ptr(),
-                       /* void* */ data_weight.get_fortran_ptr(),
-                       /* void* */ data_meas_value.get_fortran_ptr(),
-                       /* void* */ data_ix_dModel.get_fortran_ptr());
+  fortran_tao_get_data(
+      /* void* */ data_value.get_fortran_ptr(),
+      /* void* */ data_weight.get_fortran_ptr(),
+      /* void* */ data_meas_value.get_fortran_ptr(),
+      /* void* */ data_ix_dModel.get_fortran_ptr()
+  );
   return TaoGetData{
       std::move(data_value),
       std::move(data_weight),
@@ -1332,13 +1588,15 @@ Tao::TaoGetOptVars Tao::tao_get_opt_vars() {
   auto var_ix{IntAlloc1D()};
   bool _ignore_if_weight_is_zero{};
   bool _ignore_if_not_limited{};
-  fortran_tao_get_opt_vars(/* void* */ var_value.get_fortran_ptr(),
-                           /* void* */ var_step.get_fortran_ptr(),
-                           /* void* */ var_delta.get_fortran_ptr(),
-                           /* void* */ var_weight.get_fortran_ptr(),
-                           /* void* */ var_ix.get_fortran_ptr(),
-                           /* bool& */ _ignore_if_weight_is_zero,
-                           /* bool& */ _ignore_if_not_limited);
+  fortran_tao_get_opt_vars(
+      /* void* */ var_value.get_fortran_ptr(),
+      /* void* */ var_step.get_fortran_ptr(),
+      /* void* */ var_delta.get_fortran_ptr(),
+      /* void* */ var_weight.get_fortran_ptr(),
+      /* void* */ var_ix.get_fortran_ptr(),
+      /* bool& */ _ignore_if_weight_is_zero,
+      /* bool& */ _ignore_if_not_limited
+  );
   return TaoGetOptVars{
       std::move(var_value),
       std::move(var_step),
@@ -1376,20 +1634,28 @@ void Tao::tao_graph_controller_setup(TaoGraphStruct &graph) {
   fortran_tao_graph_controller_setup(/* void* */ graph.get_fortran_ptr());
 }
 void Tao::tao_graph_data_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_graph_data_setup(/* void* */ plot.get_fortran_ptr(),
-                               /* void* */ graph.get_fortran_ptr());
+  fortran_tao_graph_data_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_graph_data_slice_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_graph_data_slice_setup(/* void* */ plot.get_fortran_ptr(),
-                                     /* void* */ graph.get_fortran_ptr());
+  fortran_tao_graph_data_slice_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_graph_dynamic_aperture_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_graph_dynamic_aperture_setup(/* void* */ plot.get_fortran_ptr(),
-                                           /* void* */ graph.get_fortran_ptr());
+  fortran_tao_graph_dynamic_aperture_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_graph_histogram_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_graph_histogram_setup(/* void* */ plot.get_fortran_ptr(),
-                                    /* void* */ graph.get_fortran_ptr());
+  fortran_tao_graph_histogram_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 std::string Tao::tao_graph_name(TaoGraphStruct &graph, std::optional<bool> use_region) {
   bool use_region_lvalue;
@@ -1400,23 +1666,29 @@ std::string Tao::tao_graph_name(TaoGraphStruct &graph, std::optional<bool> use_r
     _use_region = nullptr;
   }
   char _graph_name[4096];
-  fortran_tao_graph_name(/* void* */ graph.get_fortran_ptr(),
-                         /* bool* */ _use_region,
-                         /* const char* */ _graph_name);
+  fortran_tao_graph_name(
+      /* void* */ graph.get_fortran_ptr(),
+      /* bool* */ _use_region,
+      /* const char* */ _graph_name
+  );
   return _graph_name;
 }
 void Tao::tao_graph_phase_space_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_graph_phase_space_setup(/* void* */ plot.get_fortran_ptr(),
-                                      /* void* */ graph.get_fortran_ptr());
+  fortran_tao_graph_phase_space_setup(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 Tao::TaoGraphSMinMaxCalc
 Tao::tao_graph_s_min_max_calc(TaoGraphStruct &graph, BranchStruct &branch) {
   double _s_min{};
   double _s_max{};
-  fortran_tao_graph_s_min_max_calc(/* void* */ graph.get_fortran_ptr(),
-                                   /* void* */ branch.get_fortran_ptr(),
-                                   /* double& */ _s_min,
-                                   /* double& */ _s_max);
+  fortran_tao_graph_s_min_max_calc(
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ branch.get_fortran_ptr(),
+      /* double& */ _s_min,
+      /* double& */ _s_max
+  );
   return TaoGraphSMinMaxCalc{_s_min, _s_max};
 }
 void Tao::tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph) {
@@ -1450,11 +1722,13 @@ void Tao::tao_init_beam_in_universe(
 ) {
   auto _track_start = track_start.c_str();
   auto _track_end = track_end.c_str();
-  fortran_tao_init_beam_in_universe(/* void* */ u.get_fortran_ptr(),
-                                    /* void* */ beam_init.get_fortran_ptr(),
-                                    /* const char* */ _track_start,
-                                    /* const char* */ _track_end,
-                                    /* double& */ comb_ds_save);
+  fortran_tao_init_beam_in_universe(
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ beam_init.get_fortran_ptr(),
+      /* const char* */ _track_start,
+      /* const char* */ _track_end,
+      /* double& */ comb_ds_save
+  );
 }
 void Tao::tao_init_beams(std::string init_file) {
   auto _init_file = init_file.c_str();
@@ -1477,9 +1751,11 @@ void Tao::tao_init_data_in_universe(
   } else {
     _keep_existing_data = nullptr;
   }
-  fortran_tao_init_data_in_universe(/* void* */ u.get_fortran_ptr(),
-                                    /* int& */ n_d2_add,
-                                    /* bool* */ _keep_existing_data);
+  fortran_tao_init_data_in_universe(
+      /* void* */ u.get_fortran_ptr(),
+      /* int& */ n_d2_add,
+      /* bool* */ _keep_existing_data
+  );
 }
 void Tao::tao_init_dynamic_aperture(std::string init_file) {
   auto _init_file = init_file.c_str();
@@ -1495,11 +1771,13 @@ Tao::TaoInitFindElements Tao::tao_init_find_elements(
   auto eles{ElePointerStructAlloc1D()};
   const char *_attribute = attribute.has_value() ? attribute->c_str() : nullptr;
   bool _found_one{};
-  fortran_tao_init_find_elements(/* void* */ u.get_fortran_ptr(),
-                                 /* const char* */ _search_string,
-                                 /* void* */ eles.get_fortran_ptr(),
-                                 /* const char* */ _attribute,
-                                 /* bool& */ _found_one);
+  fortran_tao_init_find_elements(
+      /* void* */ u.get_fortran_ptr(),
+      /* const char* */ _search_string,
+      /* void* */ eles.get_fortran_ptr(),
+      /* const char* */ _attribute,
+      /* bool& */ _found_one
+  );
   return TaoInitFindElements{std::move(eles), _found_one};
 }
 void Tao::tao_init_global(std::string init_file) {
@@ -1522,17 +1800,21 @@ Tao::TaoInjectBeam
 Tao::tao_inject_beam(TaoUniverseStruct &u, TaoLatticeStruct &model, int ix_branch) {
   BeamStruct _beam;
   bool _init_ok{};
-  fortran_tao_inject_beam(/* void* */ u.get_fortran_ptr(),
-                          /* void* */ model.get_fortran_ptr(),
-                          /* int& */ ix_branch,
-                          /* void* */ _beam.get_fortran_ptr(),
-                          /* bool& */ _init_ok);
+  fortran_tao_inject_beam(
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ model.get_fortran_ptr(),
+      /* int& */ ix_branch,
+      /* void* */ _beam.get_fortran_ptr(),
+      /* bool& */ _init_ok
+  );
   return TaoInjectBeam{std::move(_beam), _init_ok};
 }
 void Tao::tao_inject_particle(TaoUniverseStruct &u, TaoLatticeStruct &model, int ix_branch) {
-  fortran_tao_inject_particle(/* void* */ u.get_fortran_ptr(),
-                              /* void* */ model.get_fortran_ptr(),
-                              /* int& */ ix_branch);
+  fortran_tao_inject_particle(
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ model.get_fortran_ptr(),
+      /* int& */ ix_branch
+  );
 }
 Tao::TaoIsValidName Tao::tao_is_valid_name(std::string name) {
   auto _name = name.c_str();
@@ -1568,9 +1850,11 @@ void Tao::tao_key_info_to_str(
 }
 bool Tao::tao_lat_bookkeeper(TaoUniverseStruct &u, TaoLatticeStruct &tao_lat) {
   bool _err_flag{};
-  fortran_tao_lat_bookkeeper(/* void* */ u.get_fortran_ptr(),
-                             /* void* */ tao_lat.get_fortran_ptr(),
-                             /* bool& */ _err_flag);
+  fortran_tao_lat_bookkeeper(
+      /* void* */ u.get_fortran_ptr(),
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* bool& */ _err_flag
+  );
   return _err_flag;
 }
 double Tao::tao_lat_emit_calc(int plane, int emit_type, EleStruct &ele, NormalModesStruct &modes) {
@@ -1616,11 +1900,13 @@ bool Tao::tao_lat_sigma_track(
   } else {
     _force_calc = nullptr;
   }
-  fortran_tao_lat_sigma_track(/* void* */ tao_lat.get_fortran_ptr(),
-                              /* bool& */ _calc_ok,
-                              /* int& */ ix_branch,
-                              /* bool* */ _print_err,
-                              /* bool* */ _force_calc);
+  fortran_tao_lat_sigma_track(
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* bool& */ _calc_ok,
+      /* int& */ ix_branch,
+      /* bool* */ _print_err,
+      /* bool* */ _force_calc
+  );
   return _calc_ok;
 }
 void Tao::tao_lattice_branches_equal_tao_lattice_branches(
@@ -1651,8 +1937,10 @@ Tao::TaoLatticeCalc Tao::tao_lattice_calc() {
   return TaoLatticeCalc{_calc_ok, _print_err};
 }
 void Tao::tao_lattice_equal_tao_lattice(TaoLatticeStruct &lat1, TaoLatticeStruct &lat2) {
-  fortran_tao_lattice_equal_tao_lattice(/* void* */ lat1.get_fortran_ptr(),
-                                        /* void* */ lat2.get_fortran_ptr());
+  fortran_tao_lattice_equal_tao_lattice(
+      /* void* */ lat1.get_fortran_ptr(),
+      /* void* */ lat2.get_fortran_ptr()
+  );
 }
 bool Tao::tao_limit_calc() {
   bool _limited{};
@@ -1899,8 +2187,10 @@ void Tao::tao_orbit_beta_wave_anal(TaoPlotStruct &plot) {
 }
 TaoBuildingWallPointStruct Tao::tao_oreint_building_wall_pt(TaoBuildingWallPointStruct &pt_in) {
   TaoBuildingWallPointStruct _pt_out;
-  fortran_tao_oreint_building_wall_pt(/* void* */ pt_in.get_fortran_ptr(),
-                                      /* void* */ _pt_out.get_fortran_ptr());
+  fortran_tao_oreint_building_wall_pt(
+      /* void* */ pt_in.get_fortran_ptr(),
+      /* void* */ _pt_out.get_fortran_ptr()
+  );
   return std::move(_pt_out);
 }
 Tao::TaoParamValueAtS Tao::tao_param_value_at_s(
@@ -2131,22 +2421,43 @@ void Tao::tao_plot_data(TaoPlotStruct &plot, TaoGraphStruct &graph) {
   fortran_tao_plot_data(/* void* */ plot.get_fortran_ptr(), /* void* */ graph.get_fortran_ptr());
 }
 void Tao::tao_plot_histogram(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_plot_histogram(/* void* */ plot.get_fortran_ptr(),
-                             /* void* */ graph.get_fortran_ptr());
+  fortran_tao_plot_histogram(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_plot_key_table(TaoPlotStruct &plot, TaoGraphStruct &graph) {
-  fortran_tao_plot_key_table(/* void* */ plot.get_fortran_ptr(),
-                             /* void* */ graph.get_fortran_ptr());
+  fortran_tao_plot_key_table(
+      /* void* */ plot.get_fortran_ptr(),
+      /* void* */ graph.get_fortran_ptr()
+  );
 }
 void Tao::tao_plot_setup() { fortran_tao_plot_setup(); }
 TaoPlotStruct Tao::tao_plot_struct_transfer(TaoPlotStruct &plot_in) {
   TaoPlotStruct _plot_out;
-  fortran_tao_plot_struct_transfer(/* void* */ plot_in.get_fortran_ptr(),
-                                   /* void* */ _plot_out.get_fortran_ptr());
+  fortran_tao_plot_struct_transfer(
+      /* void* */ plot_in.get_fortran_ptr(),
+      /* void* */ _plot_out.get_fortran_ptr()
+  );
   return std::move(_plot_out);
 }
 void Tao::tao_plot_wave(TaoPlotStruct &plot, TaoGraphStruct &graph) {
   fortran_tao_plot_wave(/* void* */ plot.get_fortran_ptr(), /* void* */ graph.get_fortran_ptr());
+}
+Tao::TaoPointerToBranches Tao::tao_pointer_to_branches(std::string branch_str) {
+  auto _branch_str = branch_str.c_str();
+  // intent=out allocatable type array
+  auto branches{BranchPointerStructAlloc1D()};
+  // intent=out allocatable type array
+  auto unis{TaoUniversePointerStructAlloc1D()};
+  bool _err{};
+  fortran_tao_pointer_to_branches(
+      /* const char* */ _branch_str,
+      /* void* */ branches.get_fortran_ptr(),
+      /* void* */ unis.get_fortran_ptr(),
+      /* bool& */ _err
+  );
+  return TaoPointerToBranches{std::move(branches), std::move(unis), _err};
 }
 std::optional<TaoEleShapeStruct> Tao::tao_pointer_to_building_wall_shape(std::string wall_name) {
   auto _wall_name = wall_name.c_str();
@@ -2157,9 +2468,11 @@ std::optional<TaoEleShapeStruct> Tao::tao_pointer_to_building_wall_shape(std::st
 std::optional<TaoDataStruct> Tao::tao_pointer_to_datum(TaoD1DataStruct &d1, std::string ele_name) {
   auto _ele_name = ele_name.c_str();
   void *_datum_ptr;
-  fortran_tao_pointer_to_datum(/* void* */ d1.get_fortran_ptr(),
-                               /* const char* */ _ele_name,
-                               /* void* */ &_datum_ptr);
+  fortran_tao_pointer_to_datum(
+      /* void* */ d1.get_fortran_ptr(),
+      /* const char* */ _ele_name,
+      /* void* */ &_datum_ptr
+  );
   return std::move((_datum_ptr ? std::make_optional<TaoDataStruct>(_datum_ptr) : std::nullopt));
 }
 Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
@@ -2180,14 +2493,16 @@ Tao::TaoPointerToDatumEle Tao::tao_pointer_to_datum_ele(
     _print_err = nullptr;
   }
   void *_ele;
-  fortran_tao_pointer_to_datum_ele(/* void* */ lat.get_fortran_ptr(),
-                                   /* const char* */ _ele_name,
-                                   /* int& */ ix_ele,
-                                   /* void* */ datum.get_fortran_ptr(),
-                                   /* bool& */ _valid,
-                                   /* const char* */ _why_invalid,
-                                   /* bool* */ _print_err,
-                                   /* void* */ &_ele);
+  fortran_tao_pointer_to_datum_ele(
+      /* void* */ lat.get_fortran_ptr(),
+      /* const char* */ _ele_name,
+      /* int& */ ix_ele,
+      /* void* */ datum.get_fortran_ptr(),
+      /* bool& */ _valid,
+      /* const char* */ _why_invalid,
+      /* bool* */ _print_err,
+      /* void* */ &_ele
+  );
   return TaoPointerToDatumEle{
       _valid,
       _why_invalid,
@@ -2236,9 +2551,11 @@ Tao::tao_pointer_to_tao_lat(TaoUniverseStruct &u, std::optional<int> lat_type) {
     _lat_type = nullptr;
   }
   void *_tao_lat;
-  fortran_tao_pointer_to_tao_lat(/* void* */ u.get_fortran_ptr(),
-                                 /* int* */ _lat_type,
-                                 /* void* */ &_tao_lat);
+  fortran_tao_pointer_to_tao_lat(
+      /* void* */ u.get_fortran_ptr(),
+      /* int* */ _lat_type,
+      /* void* */ &_tao_lat
+  );
   return std::move((_tao_lat ? std::make_optional<TaoLatticeStruct>(_tao_lat) : std::nullopt));
 }
 std::optional<TaoUniverseStruct>
@@ -2303,20 +2620,64 @@ Tao::tao_pointer_to_universes(std::string name_in, std::optional<int> dflt_uni) 
 }
 bool Tao::tao_pointer_to_var_in_lattice(TaoVarStruct &var, int ix_uni, EleStruct &ele) {
   bool _err{};
-  fortran_tao_pointer_to_var_in_lattice(/* void* */ var.get_fortran_ptr(),
-                                        /* int& */ ix_uni,
-                                        /* void* */ ele.get_fortran_ptr(),
-                                        /* bool& */ _err);
+  fortran_tao_pointer_to_var_in_lattice(
+      /* void* */ var.get_fortran_ptr(),
+      /* int& */ ix_uni,
+      /* void* */ ele.get_fortran_ptr(),
+      /* bool& */ _err
+  );
   return _err;
 }
 bool Tao::tao_pointer_to_var_in_lattice2(TaoVarStruct &var, int ix_uni) {
   bool _err{};
-  fortran_tao_pointer_to_var_in_lattice2(/* void* */ var.get_fortran_ptr(),
-                                         /* int& */ ix_uni,
-                                         /* bool& */ _err);
+  fortran_tao_pointer_to_var_in_lattice2(
+      /* void* */ var.get_fortran_ptr(),
+      /* int& */ ix_uni,
+      /* bool& */ _err
+  );
   return _err;
 }
 void Tao::tao_print_command_line_info() { fortran_tao_print_command_line_info(); }
+void Tao::tao_print_vars(
+    int iu,
+    int ix_uni,
+    std::optional<bool> show_good_opt_only,
+    std::optional<bool> tao_format,
+    std::optional<TaoVarArrayStructArray1D> v_array
+) {
+  bool show_good_opt_only_lvalue;
+  auto *_show_good_opt_only{&show_good_opt_only_lvalue};
+  if (show_good_opt_only.has_value()) {
+    show_good_opt_only_lvalue = show_good_opt_only.value();
+  } else {
+    _show_good_opt_only = nullptr;
+  }
+  bool tao_format_lvalue;
+  auto *_tao_format{&tao_format_lvalue};
+  if (tao_format.has_value()) {
+    tao_format_lvalue = tao_format.value();
+  } else {
+    _tao_format = nullptr;
+  }
+  // v_array: TaoVarArrayStruct in (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _v_array_desc;
+  _v_array_desc.rank = 1;
+  if (v_array) {
+    _v_array_desc.data_ptr = v_array->data();
+    _v_array_desc.dims[0] = v_array->size();
+  } else {
+    _v_array_desc.data_ptr = nullptr;
+    _v_array_desc.dims[0] = 0;
+  }
+  _v_array_desc.strides[0] = 1;
+  fortran_tao_print_vars(
+      /* int& */ iu,
+      /* int& */ ix_uni,
+      /* bool* */ _show_good_opt_only,
+      /* bool* */ _tao_format,
+      /* Bmad::array_descriptor_t& */ _v_array_desc
+  );
+}
 void Tao::tao_ptc_normal_form(
     bool do_calc,
     TaoLatticeStruct &tao_lat,
@@ -2369,9 +2730,11 @@ void Tao::tao_re_allocate_expression_info(
   } else {
     _exact = nullptr;
   }
-  fortran_tao_re_allocate_expression_info(/* void* */ info.get_fortran_ptr(),
-                                          /* int& */ n,
-                                          /* bool* */ _exact);
+  fortran_tao_re_allocate_expression_info(
+      /* void* */ info.get_fortran_ptr(),
+      /* int& */ n,
+      /* bool* */ _exact
+  );
 }
 void Tao::tao_re_associate_node_array(TaoEvalNodeStruct &tree, int n, std::optional<bool> exact) {
   bool exact_lvalue;
@@ -2381,9 +2744,11 @@ void Tao::tao_re_associate_node_array(TaoEvalNodeStruct &tree, int n, std::optio
   } else {
     _exact = nullptr;
   }
-  fortran_tao_re_associate_node_array(/* void* */ tree.get_fortran_ptr(),
-                                      /* int& */ n,
-                                      /* bool* */ _exact);
+  fortran_tao_re_associate_node_array(
+      /* void* */ tree.get_fortran_ptr(),
+      /* int& */ n,
+      /* bool* */ _exact
+  );
 }
 void Tao::tao_re_execute(std::string string, bool err) {
   auto _string = string.c_str();
@@ -2504,13 +2869,15 @@ Tao::TaoScaleGraph Tao::tao_scale_graph(
   FixedArray1D<Real, 2> _y2_range;
   _y2_range_desc.data_ptr = _y2_range.data();
   _y2_range_desc.dims[0] = _y2_range.size();
-  fortran_tao_scale_graph(/* void* */ graph.get_fortran_ptr(),
-                          /* double& */ y_min,
-                          /* double& */ y_max,
-                          /* const char* */ _axis,
-                          /* bool* */ _include_wall,
-                          /* Bmad::array_descriptor_t& */ _y_range_desc,
-                          /* Bmad::array_descriptor_t& */ _y2_range_desc);
+  fortran_tao_scale_graph(
+      /* void* */ graph.get_fortran_ptr(),
+      /* double& */ y_min,
+      /* double& */ y_max,
+      /* const char* */ _axis,
+      /* bool* */ _include_wall,
+      /* Bmad::array_descriptor_t& */ _y_range_desc,
+      /* Bmad::array_descriptor_t& */ _y2_range_desc
+  );
   return TaoScaleGraph{_y_range, _y2_range};
 }
 void Tao::tao_scale_ping_data(TaoUniverseStruct &u) {
@@ -2541,13 +2908,15 @@ void Tao::tao_scale_plot(
   } else {
     _skip_lat_layout = nullptr;
   }
-  fortran_tao_scale_plot(/* void* */ plot.get_fortran_ptr(),
-                         /* double& */ y_min_in,
-                         /* double& */ y_max_in,
-                         /* const char* */ _axis,
-                         /* bool* */ _include_wall,
-                         /* const char* */ _gang,
-                         /* bool* */ _skip_lat_layout);
+  fortran_tao_scale_plot(
+      /* void* */ plot.get_fortran_ptr(),
+      /* double& */ y_min_in,
+      /* double& */ y_max_in,
+      /* const char* */ _axis,
+      /* bool* */ _include_wall,
+      /* const char* */ _gang,
+      /* bool* */ _skip_lat_layout
+  );
 }
 void Tao::tao_scratch_values_calc(
     EleStruct &ele_ref,
@@ -2566,12 +2935,14 @@ void Tao::tao_scratch_values_calc(
   _orbit_desc.data_ptr = orbit.data();
   _orbit_desc.dims[0] = orbit.size();
   _orbit_desc.strides[0] = 1;
-  fortran_tao_scratch_values_calc(/* void* */ &ele_ref,
-                                  /* void* */ &ele_start,
-                                  /* void* */ &ele,
-                                  /* void* */ datum.get_fortran_ptr(),
-                                  /* void* */ branch.get_fortran_ptr(),
-                                  /* Bmad::array_descriptor_t& */ _orbit_desc);
+  fortran_tao_scratch_values_calc(
+      /* void* */ &ele_ref,
+      /* void* */ &ele_start,
+      /* void* */ &ele,
+      /* void* */ datum.get_fortran_ptr(),
+      /* void* */ branch.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _orbit_desc
+  );
 }
 void Tao::tao_set_beam_cmd(std::string who, std::string value_str, std::string branch_str) {
   auto _who = who.c_str();
@@ -2639,9 +3010,11 @@ void Tao::tao_set_curve_invalid(
   } else {
     _print_err = nullptr;
   }
-  fortran_tao_set_curve_invalid(/* void* */ curve.get_fortran_ptr(),
-                                /* const char* */ _why_invalid,
-                                /* bool* */ _print_err);
+  fortran_tao_set_curve_invalid(
+      /* void* */ curve.get_fortran_ptr(),
+      /* const char* */ _why_invalid,
+      /* bool* */ _print_err
+  );
 }
 void Tao::tao_set_data_cmd(std::string who_str, std::string value_str, std::optional<bool> silent) {
   auto _who_str = who_str.c_str();
@@ -2685,9 +3058,11 @@ void Tao::tao_set_drawing_cmd(
 ) {
   auto _component = component.c_str();
   auto _value_str = value_str.c_str();
-  fortran_tao_set_drawing_cmd(/* void* */ drawing.get_fortran_ptr(),
-                              /* const char* */ _component,
-                              /* const char* */ _value_str);
+  fortran_tao_set_drawing_cmd(
+      /* void* */ drawing.get_fortran_ptr(),
+      /* const char* */ _component,
+      /* const char* */ _value_str
+  );
 }
 void Tao::tao_set_dynamic_aperture_cmd(std::string who, std::string value_str) {
   auto _who = who.c_str();
@@ -2710,6 +3085,27 @@ void Tao::tao_set_elements_cmd(
       /* bool& */ update
   );
 }
+void Tao::tao_set_flags_for_changed_attribute(
+    TaoUniverseStruct &u,
+    std::string ele_name,
+    optional_ref<EleStruct> ele_ptr,
+    optional_ref<AllPointerStruct> val_ptr,
+    std::optional<std::string> who
+) {
+  auto _ele_name = ele_name.c_str();
+  auto *_ele_ptr =
+      ele_ptr.has_value() ? ele_ptr->get().get_fortran_ptr() : nullptr; // input, optional
+  auto *_val_ptr =
+      val_ptr.has_value() ? val_ptr->get().get_fortran_ptr() : nullptr; // input, optional
+  const char *_who = who.has_value() ? who->c_str() : nullptr;
+  fortran_tao_set_flags_for_changed_attribute(
+      /* void* */ u.get_fortran_ptr(),
+      /* const char* */ _ele_name,
+      /* void* */ _ele_ptr,
+      /* void* */ _val_ptr,
+      /* const char* */ _who
+  );
+}
 void Tao::tao_set_floor_plan_axis_label(
     TaoGraphStruct &graph,
     QpAxisStruct &axis_in,
@@ -2717,10 +3113,12 @@ void Tao::tao_set_floor_plan_axis_label(
     std::string which
 ) {
   auto _which = which.c_str();
-  fortran_tao_set_floor_plan_axis_label(/* void* */ graph.get_fortran_ptr(),
-                                        /* void* */ axis_in.get_fortran_ptr(),
-                                        /* void* */ axis_out.get_fortran_ptr(),
-                                        /* const char* */ _which);
+  fortran_tao_set_floor_plan_axis_label(
+      /* void* */ graph.get_fortran_ptr(),
+      /* void* */ axis_in.get_fortran_ptr(),
+      /* void* */ axis_out.get_fortran_ptr(),
+      /* const char* */ _which
+  );
 }
 void Tao::tao_set_geodesic_lm_cmd(std::string who, std::string value_str) {
   auto _who = who.c_str();
@@ -2815,12 +3213,14 @@ std::string Tao::tao_set_invalid(
   } else {
     _print_err = nullptr;
   }
-  fortran_tao_set_invalid(/* void* */ datum.get_fortran_ptr(),
-                          /* const char* */ _message,
-                          /* const char* */ _why_invalid,
-                          /* bool* */ _exterminate,
-                          /* int* */ _err_level,
-                          /* bool* */ _print_err);
+  fortran_tao_set_invalid(
+      /* void* */ datum.get_fortran_ptr(),
+      /* const char* */ _message,
+      /* const char* */ _why_invalid,
+      /* bool* */ _exterminate,
+      /* int* */ _err_level,
+      /* bool* */ _print_err
+  );
   return _why_invalid;
 }
 void Tao::tao_set_key_cmd(std::string key_str, std::string cmd_str) {
@@ -2899,6 +3299,26 @@ void Tao::tao_set_plot_page_cmd(
       /* const char* */ _component,
       /* const char* */ _value_str,
       /* const char* */ _value_str2
+  );
+}
+void Tao::tao_set_plotting(
+    TaoPlotPageInput &plot_input,
+    TaoPlotPageStruct &plot_page,
+    bool use_cmd_line_geom,
+    std::optional<bool> reverse
+) {
+  bool reverse_lvalue;
+  auto *_reverse{&reverse_lvalue};
+  if (reverse.has_value()) {
+    reverse_lvalue = reverse.value();
+  } else {
+    _reverse = nullptr;
+  }
+  fortran_tao_set_plotting(
+      /* void* */ plot_input.get_fortran_ptr(),
+      /* void* */ plot_page.get_fortran_ptr(),
+      /* bool& */ use_cmd_line_geom,
+      /* bool* */ _reverse
   );
 }
 void Tao::tao_set_ptc_com_cmd(std::string who, std::string value_str) {
@@ -3103,9 +3523,11 @@ void Tao::tao_set_var_model_value(
   } else {
     _print_limit_warning = nullptr;
   }
-  fortran_tao_set_var_model_value(/* void* */ var.get_fortran_ptr(),
-                                  /* double& */ value,
-                                  /* bool* */ _print_limit_warning);
+  fortran_tao_set_var_model_value(
+      /* void* */ var.get_fortran_ptr(),
+      /* double& */ value,
+      /* bool* */ _print_limit_warning
+  );
 }
 void Tao::tao_set_var_useit_opt() { fortran_tao_set_var_useit_opt(); }
 bool Tao::tao_set_wave_cmd(std::string who, std::string value_str) {
@@ -3134,9 +3556,11 @@ bool Tao::tao_shape_init(TaoEleShapeStruct &shape, std::optional<bool> print_err
   } else {
     _print_err = nullptr;
   }
-  fortran_tao_shape_init(/* void* */ shape.get_fortran_ptr(),
-                         /* bool& */ _err,
-                         /* bool* */ _print_err);
+  fortran_tao_shape_init(
+      /* void* */ shape.get_fortran_ptr(),
+      /* bool& */ _err,
+      /* bool* */ _print_err
+  );
   return _err;
 }
 void Tao::tao_show_cmd(std::string what) {
@@ -3178,10 +3602,12 @@ bool Tao::tao_single_track(
   } else {
     _print_err = nullptr;
   }
-  fortran_tao_single_track(/* void* */ tao_lat.get_fortran_ptr(),
-                           /* bool& */ _calc_ok,
-                           /* int& */ ix_branch,
-                           /* bool* */ _print_err);
+  fortran_tao_single_track(
+      /* void* */ tao_lat.get_fortran_ptr(),
+      /* bool& */ _calc_ok,
+      /* int& */ ix_branch,
+      /* bool* */ _print_err
+  );
   return _calc_ok;
 }
 bool Tao::tao_spin_matrices_calc_needed(std::string data_type, std::string data_source) {
@@ -3274,11 +3700,13 @@ Tao::TaoToPhaseAndCouplingReading Tao::tao_to_phase_and_coupling_reading(
   BpmPhaseCouplingStruct _bpm_data;
   bool _valid_value{};
   auto _why_invalid = why_invalid.c_str();
-  fortran_tao_to_phase_and_coupling_reading(/* void* */ ele.get_fortran_ptr(),
-                                            /* void* */ _bpm_data.get_fortran_ptr(),
-                                            /* bool& */ _valid_value,
-                                            /* const char* */ _why_invalid,
-                                            /* void* */ datum.get_fortran_ptr());
+  fortran_tao_to_phase_and_coupling_reading(
+      /* void* */ ele.get_fortran_ptr(),
+      /* void* */ _bpm_data.get_fortran_ptr(),
+      /* bool& */ _valid_value,
+      /* const char* */ _why_invalid,
+      /* void* */ datum.get_fortran_ptr()
+  );
   return TaoToPhaseAndCouplingReading{std::move(_bpm_data), _valid_value};
 }
 Tao::TaoToReal Tao::tao_to_real(std::string expression) {
@@ -3287,6 +3715,29 @@ Tao::TaoToReal Tao::tao_to_real(std::string expression) {
   bool _err_flag{};
   fortran_tao_to_real(/* const char* */ _expression, /* double& */ _value, /* bool& */ _err_flag);
   return TaoToReal{_value, _err_flag};
+}
+void Tao::tao_to_top10(
+    TaoTop10StructArray1D top10,
+    double value,
+    std::string name,
+    int c_index,
+    std::string order
+) {
+  // top10: TaoTop10Struct inout (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _top10_desc;
+  _top10_desc.rank = 1;
+  _top10_desc.data_ptr = top10.data();
+  _top10_desc.dims[0] = top10.size();
+  _top10_desc.strides[0] = 1;
+  auto _name = name.c_str();
+  auto _order = order.c_str();
+  fortran_tao_to_top10(
+      /* Bmad::array_descriptor_t& */ _top10_desc,
+      /* double& */ value,
+      /* const char* */ _name,
+      /* int& */ c_index,
+      /* const char* */ _order
+  );
 }
 bool Tao::tao_too_many_particles_lost(BeamStruct &beam) {
   bool _no_beam{};
@@ -3307,10 +3758,12 @@ Tao::TaoTrackingEleIndex Tao::tao_tracking_ele_index(EleStruct &ele, TaoDataStru
   auto _ele = &ele; // input, required, pointer
   int _ix_branch{};
   int _ix_ele{};
-  fortran_tao_tracking_ele_index(/* void* */ &ele,
-                                 /* void* */ datum.get_fortran_ptr(),
-                                 /* int& */ _ix_branch,
-                                 /* int& */ _ix_ele);
+  fortran_tao_tracking_ele_index(
+      /* void* */ &ele,
+      /* void* */ datum.get_fortran_ptr(),
+      /* int& */ _ix_branch,
+      /* int& */ _ix_ele
+  );
   return TaoTrackingEleIndex{_ix_branch, _ix_ele};
 }
 void Tao::tao_turn_on_special_calcs_if_needed_for_plotting() {
@@ -3370,16 +3823,20 @@ std::string Tao::tao_var1_name(TaoVarStruct &var) {
 }
 std::string Tao::tao_var_attrib_name(TaoVarStruct &var) {
   char _var_attrib_name[4096];
-  fortran_tao_var_attrib_name(/* void* */ var.get_fortran_ptr(),
-                              /* const char* */ _var_attrib_name);
+  fortran_tao_var_attrib_name(
+      /* void* */ var.get_fortran_ptr(),
+      /* const char* */ _var_attrib_name
+  );
   return _var_attrib_name;
 }
 void Tao::tao_var_check(ElePointerStructAlloc1D eles, std::string attribute, bool silent) {
   // intent=in allocatable type array
   auto _attribute = attribute.c_str();
-  fortran_tao_var_check(/* void* */ eles.get_fortran_ptr(),
-                        /* const char* */ _attribute,
-                        /* bool& */ silent);
+  fortran_tao_var_check(
+      /* void* */ eles.get_fortran_ptr(),
+      /* const char* */ _attribute,
+      /* bool& */ silent
+  );
 }
 void Tao::tao_var_repoint() { fortran_tao_var_repoint(); }
 void Tao::tao_var_show_use(
@@ -3396,9 +3853,11 @@ void Tao::tao_var_show_use(
   } else {
     _nl = nullptr;
   }
-  fortran_tao_var_show_use(/* void* */ v1_var.get_fortran_ptr(),
-                           /* void* */ _lines,
-                           /* int* */ _nl);
+  fortran_tao_var_show_use(
+      /* void* */ v1_var.get_fortran_ptr(),
+      /* void* */ _lines,
+      /* int* */ _nl
+  );
 }
 void Tao::tao_var_target_calc() { fortran_tao_var_target_calc(); }
 void Tao::tao_var_useit_plot_calc(TaoGraphStruct &graph, TaoVarStructArray1D var) {
@@ -3408,8 +3867,10 @@ void Tao::tao_var_useit_plot_calc(TaoGraphStruct &graph, TaoVarStructArray1D var
   _var_desc.data_ptr = var.data();
   _var_desc.dims[0] = var.size();
   _var_desc.strides[0] = 1;
-  fortran_tao_var_useit_plot_calc(/* void* */ graph.get_fortran_ptr(),
-                                  /* Bmad::array_descriptor_t& */ _var_desc);
+  fortran_tao_var_useit_plot_calc(
+      /* void* */ graph.get_fortran_ptr(),
+      /* Bmad::array_descriptor_t& */ _var_desc
+  );
 }
 void Tao::tao_var_write(
     std::string out_file,
@@ -3506,15 +3967,17 @@ void Tao::tao_wave_fit(
     _f4_desc.data_ptr = nullptr;
     _f4_desc.dims[0] = 0;
   }
-  fortran_tao_wave_fit(/* void* */ curve.get_fortran_ptr(),
-                       /* int& */ ix1,
-                       /* int& */ n_dat,
-                       /* Bmad::array_descriptor_t& */ _coef_desc,
-                       /* Bmad::array_descriptor_t& */ _rms_desc,
-                       /* Bmad::array_descriptor_t& */ _f1_desc,
-                       /* Bmad::array_descriptor_t& */ _f2_desc,
-                       /* Bmad::array_descriptor_t& */ _f3_desc,
-                       /* Bmad::array_descriptor_t& */ _f4_desc);
+  fortran_tao_wave_fit(
+      /* void* */ curve.get_fortran_ptr(),
+      /* int& */ ix1,
+      /* int& */ n_dat,
+      /* Bmad::array_descriptor_t& */ _coef_desc,
+      /* Bmad::array_descriptor_t& */ _rms_desc,
+      /* Bmad::array_descriptor_t& */ _f1_desc,
+      /* Bmad::array_descriptor_t& */ _f2_desc,
+      /* Bmad::array_descriptor_t& */ _f3_desc,
+      /* Bmad::array_descriptor_t& */ _f4_desc
+  );
 }
 void Tao::tao_write_cmd(std::string what) {
   auto _what = what.c_str();
@@ -3595,11 +4058,13 @@ void Tao::tao_x_scale_graph(
   } else {
     _have_scaled = nullptr;
   }
-  fortran_tao_x_scale_graph(/* void* */ graph.get_fortran_ptr(),
-                            /* double& */ x_min,
-                            /* double& */ x_max,
-                            /* bool* */ _include_wall,
-                            /* bool* */ _have_scaled);
+  fortran_tao_x_scale_graph(
+      /* void* */ graph.get_fortran_ptr(),
+      /* double& */ x_min,
+      /* double& */ x_max,
+      /* bool* */ _include_wall,
+      /* bool* */ _have_scaled
+  );
 }
 bool Tao::tao_x_scale_plot(
     TaoPlotStruct &plot,
@@ -3617,11 +4082,13 @@ bool Tao::tao_x_scale_plot(
   }
   const char *_gang = gang.has_value() ? gang->c_str() : nullptr;
   bool _have_scaled{};
-  fortran_tao_x_scale_plot(/* void* */ plot.get_fortran_ptr(),
-                           /* double& */ x_min_in,
-                           /* double& */ x_max_in,
-                           /* bool* */ _include_wall,
-                           /* const char* */ _gang,
-                           /* bool& */ _have_scaled);
+  fortran_tao_x_scale_plot(
+      /* void* */ plot.get_fortran_ptr(),
+      /* double& */ x_min_in,
+      /* double& */ x_max_in,
+      /* bool* */ _include_wall,
+      /* const char* */ _gang,
+      /* bool& */ _have_scaled
+  );
   return _have_scaled;
 }

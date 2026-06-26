@@ -1,18 +1,15 @@
 #include "pybmad/generated/SimUtils_routines_o.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_o(py::module &m) {
+void init_SimUtils_routines_o(nb::module_ &m) {
   m.def(
       "omega_to_quat",
       &SimUtils::omega_to_quat,
-      py::arg("omega"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function omega_to_quat (omega) result (quat)
-
-Routine to convert from omega + angle representation to a quaternion.
+      nb::arg("omega"),
+      R"""(Routine to convert from omega + angle representation to a quaternion.
 
 Parameters
 ----------
@@ -28,11 +25,8 @@ quat : 1D array of float (shape: 0:3)
   m.def(
       "openpmd_species_name",
       &SimUtils::openpmd_species_name,
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function openpmd_species_name (species) result(pmd_name)
-
-Routine to return the openPMD name of a particle species given the Bmad species ID.
+      nb::arg("species"),
+      R"""(Routine to return the openPMD name of a particle species given the Bmad species ID.
 Note: the pmd_name does not include the particle charge. For example, if species
 corresponds to He+ then the pmd_name will be "He".
 
@@ -50,8 +44,7 @@ pmd_name : str
   m.def(
       "ordinal_str",
       &SimUtils::ordinal_str,
-      py::arg("n"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("n"),
       R"""(Wrapper for Fortran routine ordinal_str
 
 Parameters
@@ -66,42 +59,32 @@ str : str
   m.def(
       "out_io_buffer_get_line",
       &SimUtils::out_io_buffer_get_line,
-      py::arg("ix_line"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function out_io_buffer_get_line(ix_line) result (line)
-
-Routine to return the nuber of lines in the internal buffer.
+      nb::arg("ix_line"),
+      R"""(Routine to return the nuber of lines in the internal buffer.
 See the output_direct documentation for more details.
 )"""
   );
   m.def(
       "out_io_buffer_num_lines",
       &SimUtils::out_io_buffer_num_lines,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function out_io_buffer_num_lines() result (n_lines)
-
-Routine to return the nuber of lines in the internal buffer.
+      R"""(Routine to return the nuber of lines in the internal buffer.
 See the output_direct documentation for more details.
 )"""
   );
   m.def(
       "out_io_buffer_reset",
       &SimUtils::out_io_buffer_reset,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine out_io_buffer_reset ()
-
-Routine to initialize the buffer used for capturing output.
+      R"""(Routine to initialize the buffer used for capturing output.
 )"""
   );
   m.def(
       "out_io",
-      py::overload_cast<int, std::string, std::string, int, std::optional<bool>>(&SimUtils::out_io),
-      py::arg("level"),
-      py::arg("routine_name"),
-      py::arg("line"),
-      py::arg("i_num"),
-      py::arg("insert_tag_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::overload_cast<int, std::string, std::string, int, std::optional<bool>>(&SimUtils::out_io),
+      nb::arg("level"),
+      nb::arg("routine_name"),
+      nb::arg("line"),
+      nb::arg("i_num"),
+      nb::arg("insert_tag_line") = nb::none(),
       R"""(Wrapper for Fortran routine out_io_int
 
 Parameters
@@ -117,47 +100,71 @@ i_num : int
 insert_tag_line : bool, optional
 )"""
   );
-  m.def(
-      "out_io",
-      py::overload_cast<
-          int,
-          std::string,
-          std::string,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<std::string>,
-          std::optional<FArray1D<Real>>,
-          std::optional<FArray1D<Int>>,
-          optional_ref<BoolAlloc1D>,
-          std::optional<bool>>(&SimUtils::out_io),
-      py::arg("level"),
-      py::arg("routine_name"),
-      py::arg("line1"),
-      py::arg("line2") = py::none(),
-      py::arg("line3") = py::none(),
-      py::arg("line4") = py::none(),
-      py::arg("line5") = py::none(),
-      py::arg("line6") = py::none(),
-      py::arg("line7") = py::none(),
-      py::arg("line8") = py::none(),
-      py::arg("line9") = py::none(),
-      py::arg("line10") = py::none(),
-      py::arg("line11") = py::none(),
-      py::arg("line12") = py::none(),
-      py::arg("r_array") = py::none(),
-      py::arg("i_array") = py::none(),
-      py::arg("l_array") = py::none(),
-      py::arg("insert_tag_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Wrapper for Fortran routine out_io_line12
+  m
+      .def(
+          "out_io",
+          [](int level,
+             std::string routine_name,
+             std::string line1,
+             std::optional<std::string> line2,
+             std::optional<std::string> line3,
+             std::optional<std::string> line4,
+             std::optional<std::string> line5,
+             std::optional<std::string> line6,
+             std::optional<std::string> line7,
+             std::optional<std::string> line8,
+             std::optional<std::string> line9,
+             std::optional<std::string> line10,
+             std::optional<std::string> line11,
+             std::optional<std::string> line12,
+             std::optional<FArray1D<Real>> r_array,
+             std::optional<FArray1D<Int>> i_array,
+             BoolAlloc1D *l_array,
+             std::optional<bool> insert_tag_line) {
+            auto fn =
+                static_cast<void (*)(int, std::string, std::string, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>, optional_ref<BoolAlloc1D>, std::optional<bool>)>(
+                    &SimUtils::out_io
+                );
+            return fn(
+                level,
+                routine_name,
+                line1,
+                line2,
+                line3,
+                line4,
+                line5,
+                line6,
+                line7,
+                line8,
+                line9,
+                line10,
+                line11,
+                line12,
+                r_array,
+                i_array,
+                ptr_to_opt_ref(l_array),
+                insert_tag_line
+            );
+          },
+          nb::arg("level"),
+          nb::arg("routine_name"),
+          nb::arg("line1"),
+          nb::arg("line2") = nb::none(),
+          nb::arg("line3") = nb::none(),
+          nb::arg("line4") = nb::none(),
+          nb::arg("line5") = nb::none(),
+          nb::arg("line6") = nb::none(),
+          nb::arg("line7") = nb::none(),
+          nb::arg("line8") = nb::none(),
+          nb::arg("line9") = nb::none(),
+          nb::arg("line10") = nb::none(),
+          nb::arg("line11") = nb::none(),
+          nb::arg("line12") = nb::none(),
+          nb::arg("r_array") = nb::none(),
+          nb::arg("i_array") = nb::none(),
+          nb::arg("l_array") = nb::none(),
+          nb::arg("insert_tag_line") = nb::none(),
+          R"""(Wrapper for Fortran routine out_io_line12
 
 Parameters
 ----------
@@ -197,25 +204,37 @@ l_array : 1D array of bool, optional
 
 insert_tag_line : bool, optional
 )"""
-  );
+      );
   m.def(
       "out_io",
-      py::overload_cast<
-          int,
-          std::string,
-          CharacterAlloc1D &,
-          std::optional<FArray1D<Real>>,
-          std::optional<FArray1D<Int>>,
-          optional_ref<BoolAlloc1D>,
-          std::optional<bool>>(&SimUtils::out_io),
-      py::arg("level"),
-      py::arg("routine_name"),
-      py::arg("lines"),
-      py::arg("r_array") = py::none(),
-      py::arg("i_array") = py::none(),
-      py::arg("l_array") = py::none(),
-      py::arg("insert_tag_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](int level,
+         std::string routine_name,
+         CharacterAlloc1D &lines,
+         std::optional<FArray1D<Real>> r_array,
+         std::optional<FArray1D<Int>> i_array,
+         BoolAlloc1D *l_array,
+         std::optional<bool> insert_tag_line) {
+        auto fn = static_cast<
+            void (*)(int, std::string, CharacterAlloc1D &, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>, optional_ref<BoolAlloc1D>, std::optional<bool>)>(
+            &SimUtils::out_io
+        );
+        return fn(
+            level,
+            routine_name,
+            lines,
+            r_array,
+            i_array,
+            ptr_to_opt_ref(l_array),
+            insert_tag_line
+        );
+      },
+      nb::arg("level"),
+      nb::arg("routine_name"),
+      nb::arg("lines"),
+      nb::arg("r_array") = nb::none(),
+      nb::arg("i_array") = nb::none(),
+      nb::arg("l_array") = nb::none(),
+      nb::arg("insert_tag_line") = nb::none(),
       R"""(Wrapper for Fortran routine out_io_lines
 
 Parameters
@@ -237,15 +256,13 @@ insert_tag_line : bool, optional
   );
   m.def(
       "out_io",
-      py::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(
-          &SimUtils::out_io
+      nb::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(&SimUtils::out_io
       ),
-      py::arg("level"),
-      py::arg("routine_name"),
-      py::arg("line"),
-      py::arg("l_num"),
-      py::arg("insert_tag_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("level"),
+      nb::arg("routine_name"),
+      nb::arg("line"),
+      nb::arg("l_num"),
+      nb::arg("insert_tag_line") = nb::none(),
       R"""(Wrapper for Fortran routine out_io_logical
 
 Parameters
@@ -264,13 +281,10 @@ insert_tag_line : bool, optional
   m.def(
       "out_io_print_and_capture_setup",
       &SimUtils::out_io_print_and_capture_setup,
-      py::arg("print_on") = py::none(),
-      py::arg("capture_state") = py::none(),
-      py::arg("capture_add_null") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine out_io_print_and_capture_setup (print_on, capture_state, capture_add_null)
-
-Set whether a message from a call to out_io is sent to the terminal for printing and/or captured for program use.
+      nb::arg("print_on") = nb::none(),
+      nb::arg("capture_state") = nb::none(),
+      nb::arg("capture_add_null") = nb::none(),
+      R"""(Set whether a message from a call to out_io is sent to the terminal for printing and/or captured for program use.
 
 Capture may be desired, for example, to display the output in a separate window or captured output could be passed
 to a python process for processing.
@@ -317,15 +331,14 @@ capture_add_null : bool, optional
   );
   m.def(
       "out_io",
-      py::overload_cast<int, std::string, std::string, double, std::optional<bool>>(
+      nb::overload_cast<int, std::string, std::string, double, std::optional<bool>>(
           &SimUtils::out_io
       ),
-      py::arg("level"),
-      py::arg("routine_name"),
-      py::arg("line"),
-      py::arg("r_num"),
-      py::arg("insert_tag_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("level"),
+      nb::arg("routine_name"),
+      nb::arg("line"),
+      nb::arg("r_num"),
+      nb::arg("insert_tag_line") = nb::none(),
       R"""(Wrapper for Fortran routine out_io_real
 
 Parameters
@@ -339,6 +352,60 @@ line : str
 r_num : float
 
 insert_tag_line : bool, optional
+)"""
+  );
+  m.def(
+      "output_direct",
+      [](std::optional<int> file_unit,
+         std::optional<bool> print_and_capture,
+         std::optional<int> min_level,
+         std::optional<int> max_level,
+         OutIoOutputDirectStruct *set) {
+        auto fn = static_cast<
+            OutIoOutputDirectStruct (*)(std::optional<int>, std::optional<bool>, std::optional<int>, std::optional<int>, optional_ref<OutIoOutputDirectStruct>)>(
+            &SimUtils::output_direct
+        );
+        return fn(file_unit, print_and_capture, min_level, max_level, ptr_to_opt_ref(set));
+      },
+      nb::arg("file_unit") = nb::none(),
+      nb::arg("print_and_capture") = nb::none(),
+      nb::arg("min_level") = nb::none(),
+      nb::arg("max_level") = nb::none(),
+      nb::arg("set") = nb::none(),
+      R"""(Subroutine to set where the output goes when out_io is called.
+Output may be sent to the terminal screen, written to a file, and/or captured for program use.
+
+Settings can be made on a message status level by level basis.
+See the top of this file for the list of the message status levels.
+
+Once set for a given status level, the settings remain until the next call to
+output_direct that cover the same status level.
+
+Parameters
+----------
+file_unit : int, optional
+    Unit number for writing to a file. -1 => No writing (initial default setting).
+
+print_and_capture : bool, optional
+    If present then this sets whether output is printed to the terminal and/or captured for program use. Note:
+    How output capture works is also set by the out_io_print_and_caputure_setup routine. See the
+    out_io_print_and_caputure_setup routine documentation for more details.
+
+min_level : int, optional
+    Minimum message status level to apply to. Default is s_blank$
+
+max_level : int, optional
+    Maximum message status level to apply to. Default is s_important$
+
+set : OutIoOutputDirectStruct, optional
+    If present, use this structure to set where output goes. This structure can be used in place of specifying
+    file_unit, etc. One way to use "set" is to first call this routine with the "get" argument to get the
+    output direction state.
+
+Returns
+-------
+get : OutIoOutputDirectStruct, optional
+    If present, capture the output direction state before any setting is done.
 )"""
   );
 }

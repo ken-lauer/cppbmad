@@ -1,12 +1,13 @@
 #pragma once
-#include <pybind11/pybind11.h>
+#include <nanobind/nanobind.h>
 
 #include "bmad/generated/proxy.hpp"
 #include "pybmad/generated/structs.hpp"
-namespace py = pybind11;
+namespace nb = nanobind;
 
 using namespace Bmad;
 
 // Per-struct init functions
-void init_normal_modes_struct(py::module &m, py::class_<NormalModesStruct> &class_);
-void init_nametable_struct(py::module &m, py::class_<NametableStruct> &class_);
+void init_normal_modes_struct(nb::module_ &m, nb::class_<NormalModesStruct> &class_);
+void init_named_number_struct(nb::module_ &m, nb::class_<NamedNumberStruct> &class_);
+void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &class_);

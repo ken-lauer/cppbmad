@@ -1,83 +1,6 @@
 #include "bmad/generated/proxy.hpp"
 
 using namespace Bmad;
-double SplineStruct::x0() const {
-  double value;
-  spline_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SplineStruct::set_x0(double value) { spline_struct_set_real(fortran_ptr_, 0, value); }
-double SplineStruct::y0() const {
-  double value;
-  spline_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SplineStruct::set_y0(double value) { spline_struct_set_real(fortran_ptr_, 1, value); }
-double SplineStruct::x1() const {
-  double value;
-  spline_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SplineStruct::set_x1(double value) { spline_struct_set_real(fortran_ptr_, 2, value); }
-FArray1D<double> SplineStruct::coef() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spline_struct_get_coef_info);
-}
-void SplineStruct::set_coef(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  spline_struct_set_coef(fortran_ptr_, v.data(), shape);
-}
-double SpinPolarStruct::polarization() const {
-  double value;
-  spin_polar_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SpinPolarStruct::set_polarization(double value) {
-  spin_polar_struct_set_real(fortran_ptr_, 0, value);
-}
-double SpinPolarStruct::theta() const {
-  double value;
-  spin_polar_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SpinPolarStruct::set_theta(double value) {
-  spin_polar_struct_set_real(fortran_ptr_, 1, value);
-}
-double SpinPolarStruct::phi() const {
-  double value;
-  spin_polar_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SpinPolarStruct::set_phi(double value) { spin_polar_struct_set_real(fortran_ptr_, 2, value); }
-double SpinPolarStruct::xi() const {
-  double value;
-  spin_polar_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void SpinPolarStruct::set_xi(double value) { spin_polar_struct_set_real(fortran_ptr_, 3, value); }
-double AcKickerTimeStruct::amp() const {
-  double value;
-  ac_kicker_time_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void AcKickerTimeStruct::set_amp(double value) {
-  ac_kicker_time_struct_set_real(fortran_ptr_, 0, value);
-}
-double AcKickerTimeStruct::time() const {
-  double value;
-  ac_kicker_time_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void AcKickerTimeStruct::set_time(double value) {
-  ac_kicker_time_struct_set_real(fortran_ptr_, 1, value);
-}
-SplineStruct AcKickerTimeStruct::spline() const {
-  void *ptr;
-  ac_kicker_time_struct_get_spline(fortran_ptr_, &ptr);
-  return SplineStruct(ptr);
-}
-void AcKickerTimeStruct::set_spline(const SplineStruct &src) {
-  ac_kicker_time_struct_set_spline(fortran_ptr_, src.get_fortran_ptr());
-}
 double AcKickerFreqStruct::f() const {
   double value;
   ac_kicker_freq_struct_get_real(fortran_ptr_, 0, &value);
@@ -116,3014 +39,1514 @@ AcKickerFreqStructAlloc1D AcKickerStruct::frequency() const {
       ac_kicker_struct_get_frequency_info
   );
 }
-double Interval1CoefStruct::c0() const {
+double AcKickerTimeStruct::amp() const {
   double value;
-  interval1_coef_struct_get_real(fortran_ptr_, 0, &value);
+  ac_kicker_time_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void Interval1CoefStruct::set_c0(double value) {
-  interval1_coef_struct_set_real(fortran_ptr_, 0, value);
+void AcKickerTimeStruct::set_amp(double value) {
+  ac_kicker_time_struct_set_real(fortran_ptr_, 0, value);
 }
-double Interval1CoefStruct::c1() const {
+double AcKickerTimeStruct::time() const {
   double value;
-  interval1_coef_struct_get_real(fortran_ptr_, 1, &value);
+  ac_kicker_time_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void Interval1CoefStruct::set_c1(double value) {
-  interval1_coef_struct_set_real(fortran_ptr_, 1, value);
+void AcKickerTimeStruct::set_time(double value) {
+  ac_kicker_time_struct_set_real(fortran_ptr_, 1, value);
 }
-double Interval1CoefStruct::n_exp() const {
-  double value;
-  interval1_coef_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void Interval1CoefStruct::set_n_exp(double value) {
-  interval1_coef_struct_set_real(fortran_ptr_, 2, value);
-}
-RealAlloc1D PhotonReflectTableStruct::angle() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_table_struct_reallocate_angle,
-      photon_reflect_table_struct_get_angle_info
-  );
-}
-void PhotonReflectTableStruct::set_angle(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_reflect_table_struct_set_angle(fortran_ptr_, v.data(), shape);
-}
-RealAlloc1D PhotonReflectTableStruct::energy() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_table_struct_reallocate_energy,
-      photon_reflect_table_struct_get_energy_info
-  );
-}
-void PhotonReflectTableStruct::set_energy(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_reflect_table_struct_set_energy(fortran_ptr_, v.data(), shape);
-}
-Interval1CoefStructAlloc1D PhotonReflectTableStruct::int1() const {
-  return Interval1CoefStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_table_struct_reallocate_int1,
-      photon_reflect_table_struct_get_int1_info
-  );
-}
-FArray2D<double> PhotonReflectTableStruct::p_reflect() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      photon_reflect_table_struct_get_p_reflect_info
-  );
-}
-void PhotonReflectTableStruct::set_p_reflect(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, photon_reflect_table_struct_set_p_reflect, v);
-}
-double PhotonReflectTableStruct::max_energy() const {
-  double value;
-  photon_reflect_table_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonReflectTableStruct::set_max_energy(double value) {
-  photon_reflect_table_struct_set_real(fortran_ptr_, 0, value);
-}
-RealAlloc1D PhotonReflectTableStruct::p_reflect_scratch() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_table_struct_reallocate_p_reflect_scratch,
-      photon_reflect_table_struct_get_p_reflect_scratch_info
-  );
-}
-void PhotonReflectTableStruct::set_p_reflect_scratch(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_reflect_table_struct_set_p_reflect_scratch(fortran_ptr_, v.data(), shape);
-}
-RealAlloc1D PhotonReflectTableStruct::bragg_angle() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_table_struct_reallocate_bragg_angle,
-      photon_reflect_table_struct_get_bragg_angle_info
-  );
-}
-void PhotonReflectTableStruct::set_bragg_angle(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_reflect_table_struct_set_bragg_angle(fortran_ptr_, v.data(), shape);
-}
-std::string PhotonReflectSurfaceStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, photon_reflect_surface_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void PhotonReflectSurfaceStruct::set_name(const std::string &value) {
-  photon_reflect_surface_struct_set_name(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-std::string PhotonReflectSurfaceStruct::description() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      photon_reflect_surface_struct_get_description_info
-  );
-  return std::string(arr.data(), arr.size());
-}
-void PhotonReflectSurfaceStruct::set_description(const std::string &value) {
-  photon_reflect_surface_struct_set_description(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-std::string PhotonReflectSurfaceStruct::reflectivity_file() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      photon_reflect_surface_struct_get_reflectivity_file_info
-  );
-  return std::string(arr.data(), arr.size());
-}
-void PhotonReflectSurfaceStruct::set_reflectivity_file(const std::string &value) {
-  photon_reflect_surface_struct_set_reflectivity_file(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-PhotonReflectTableStructAlloc1D PhotonReflectSurfaceStruct::table() const {
-  return PhotonReflectTableStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_reflect_surface_struct_reallocate_table,
-      photon_reflect_surface_struct_get_table_info
-  );
-}
-double PhotonReflectSurfaceStruct::surface_roughness_rms() const {
-  double value;
-  photon_reflect_surface_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonReflectSurfaceStruct::set_surface_roughness_rms(double value) {
-  photon_reflect_surface_struct_set_real(fortran_ptr_, 0, value);
-}
-double PhotonReflectSurfaceStruct::roughness_correlation_len() const {
-  double value;
-  photon_reflect_surface_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void PhotonReflectSurfaceStruct::set_roughness_correlation_len(double value) {
-  photon_reflect_surface_struct_set_real(fortran_ptr_, 1, value);
-}
-int PhotonReflectSurfaceStruct::ix_surface() const {
-  int value;
-  photon_reflect_surface_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonReflectSurfaceStruct::set_ix_surface(int value) {
-  photon_reflect_surface_struct_set_integer(fortran_ptr_, 0, value);
-}
-FArray1D<double> CoordStruct::vec() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_vec_info);
-}
-void CoordStruct::set_vec(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  coord_struct_set_vec(fortran_ptr_, v.data(), shape);
-}
-double CoordStruct::s() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void CoordStruct::set_s(double value) { coord_struct_set_real(fortran_ptr_, 0, value); }
-long double CoordStruct::t() const {
-  long double value;
-  coord_struct_get_real16(fortran_ptr_, 0, &value);
-  return value;
-}
-void CoordStruct::set_t(long double value) { coord_struct_set_real16(fortran_ptr_, 0, value); }
-FArray1D<double> CoordStruct::spin() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_spin_info);
-}
-void CoordStruct::set_spin(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  coord_struct_set_spin(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> CoordStruct::field() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_field_info);
-}
-void CoordStruct::set_field(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  coord_struct_set_field(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> CoordStruct::phase() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_phase_info);
-}
-void CoordStruct::set_phase(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  coord_struct_set_phase(fortran_ptr_, v.data(), shape);
-}
-double CoordStruct::charge() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void CoordStruct::set_charge(double value) { coord_struct_set_real(fortran_ptr_, 1, value); }
-double CoordStruct::dt_ref() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void CoordStruct::set_dt_ref(double value) { coord_struct_set_real(fortran_ptr_, 2, value); }
-double CoordStruct::r() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void CoordStruct::set_r(double value) { coord_struct_set_real(fortran_ptr_, 3, value); }
-double CoordStruct::p0c() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void CoordStruct::set_p0c(double value) { coord_struct_set_real(fortran_ptr_, 4, value); }
-double CoordStruct::E_potential() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void CoordStruct::set_E_potential(double value) { coord_struct_set_real(fortran_ptr_, 5, value); }
-double CoordStruct::beta() const {
-  double value;
-  coord_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void CoordStruct::set_beta(double value) { coord_struct_set_real(fortran_ptr_, 6, value); }
-int CoordStruct::ix_ele() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CoordStruct::set_ix_ele(int value) { coord_struct_set_integer(fortran_ptr_, 0, value); }
-int CoordStruct::ix_branch() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void CoordStruct::set_ix_branch(int value) { coord_struct_set_integer(fortran_ptr_, 1, value); }
-int CoordStruct::ix_turn() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void CoordStruct::set_ix_turn(int value) { coord_struct_set_integer(fortran_ptr_, 2, value); }
-int CoordStruct::ix_user() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void CoordStruct::set_ix_user(int value) { coord_struct_set_integer(fortran_ptr_, 3, value); }
-int CoordStruct::state() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void CoordStruct::set_state(int value) { coord_struct_set_integer(fortran_ptr_, 4, value); }
-int CoordStruct::direction() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void CoordStruct::set_direction(int value) { coord_struct_set_integer(fortran_ptr_, 5, value); }
-int CoordStruct::time_dir() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void CoordStruct::set_time_dir(int value) { coord_struct_set_integer(fortran_ptr_, 6, value); }
-int CoordStruct::species() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 7, &value);
-  return value;
-}
-void CoordStruct::set_species(int value) { coord_struct_set_integer(fortran_ptr_, 7, value); }
-int CoordStruct::location() const {
-  int value;
-  coord_struct_get_integer(fortran_ptr_, 8, &value);
-  return value;
-}
-void CoordStruct::set_location(int value) { coord_struct_set_integer(fortran_ptr_, 8, value); }
-CoordStructAlloc1D CoordArrayStruct::orbit() const {
-  return CoordStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      coord_array_struct_reallocate_orbit,
-      coord_array_struct_get_orbit_info
-  );
-}
-double BpmPhaseCouplingStruct::K_22a() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_K_22a(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 0, value);
-}
-double BpmPhaseCouplingStruct::K_12a() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_K_12a(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 1, value);
-}
-double BpmPhaseCouplingStruct::K_11b() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_K_11b(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 2, value);
-}
-double BpmPhaseCouplingStruct::K_12b() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_K_12b(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 3, value);
-}
-double BpmPhaseCouplingStruct::Cbar22_a() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_Cbar22_a(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 4, value);
-}
-double BpmPhaseCouplingStruct::Cbar12_a() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_Cbar12_a(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 5, value);
-}
-double BpmPhaseCouplingStruct::Cbar11_b() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_Cbar11_b(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 6, value);
-}
-double BpmPhaseCouplingStruct::Cbar12_b() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_Cbar12_b(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 7, value);
-}
-double BpmPhaseCouplingStruct::phi_a() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_phi_a(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 8, value);
-}
-double BpmPhaseCouplingStruct::phi_b() const {
-  double value;
-  bpm_phase_coupling_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void BpmPhaseCouplingStruct::set_phi_b(double value) {
-  bpm_phase_coupling_struct_set_real(fortran_ptr_, 9, value);
-}
-std::string ExpressionAtomStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, expression_atom_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void ExpressionAtomStruct::set_name(const std::string &value) {
-  expression_atom_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int ExpressionAtomStruct::type() const {
-  int value;
-  expression_atom_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void ExpressionAtomStruct::set_type(int value) {
-  expression_atom_struct_set_integer(fortran_ptr_, 0, value);
-}
-double ExpressionAtomStruct::value() const {
-  double value;
-  expression_atom_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void ExpressionAtomStruct::set_value(double value) {
-  expression_atom_struct_set_real(fortran_ptr_, 0, value);
-}
-RealAlloc1D WakeSrZLongStruct::w() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_z_long_struct_reallocate_w,
-      wake_sr_z_long_struct_get_w_info
-  );
-}
-void WakeSrZLongStruct::set_w(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wake_sr_z_long_struct_set_w(fortran_ptr_, v.data(), shape);
-}
-ComplexAlloc1D WakeSrZLongStruct::fw() const {
-  return ComplexAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_z_long_struct_reallocate_fw,
-      wake_sr_z_long_struct_get_fw_info
-  );
-}
-void WakeSrZLongStruct::set_fw(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wake_sr_z_long_struct_set_fw(fortran_ptr_, v.data(), shape);
-}
-ComplexAlloc1D WakeSrZLongStruct::fbunch() const {
-  return ComplexAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_z_long_struct_reallocate_fbunch,
-      wake_sr_z_long_struct_get_fbunch_info
-  );
-}
-void WakeSrZLongStruct::set_fbunch(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wake_sr_z_long_struct_set_fbunch(fortran_ptr_, v.data(), shape);
-}
-ComplexAlloc1D WakeSrZLongStruct::w_out() const {
-  return ComplexAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_z_long_struct_reallocate_w_out,
-      wake_sr_z_long_struct_get_w_out_info
-  );
-}
-void WakeSrZLongStruct::set_w_out(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wake_sr_z_long_struct_set_w_out(fortran_ptr_, v.data(), shape);
-}
-double WakeSrZLongStruct::dz() const {
-  double value;
-  wake_sr_z_long_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrZLongStruct::set_dz(double value) {
-  wake_sr_z_long_struct_set_real(fortran_ptr_, 0, value);
-}
-double WakeSrZLongStruct::z0() const {
-  double value;
-  wake_sr_z_long_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeSrZLongStruct::set_z0(double value) {
-  wake_sr_z_long_struct_set_real(fortran_ptr_, 1, value);
-}
-double WakeSrZLongStruct::smoothing_sigma() const {
-  double value;
-  wake_sr_z_long_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void WakeSrZLongStruct::set_smoothing_sigma(double value) {
-  wake_sr_z_long_struct_set_real(fortran_ptr_, 2, value);
-}
-int WakeSrZLongStruct::position_dependence() const {
-  int value;
-  wake_sr_z_long_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrZLongStruct::set_position_dependence(int value) {
-  wake_sr_z_long_struct_set_integer(fortran_ptr_, 0, value);
-}
-bool WakeSrZLongStruct::time_based() const {
-  bool value;
-  wake_sr_z_long_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrZLongStruct::set_time_based(bool value) {
-  wake_sr_z_long_struct_set_logical(fortran_ptr_, 0, value);
-}
-double WakeSrModeStruct::amp() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrModeStruct::set_amp(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 0, value);
-}
-double WakeSrModeStruct::damp() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeSrModeStruct::set_damp(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 1, value);
-}
-double WakeSrModeStruct::k() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void WakeSrModeStruct::set_k(double value) { wake_sr_mode_struct_set_real(fortran_ptr_, 2, value); }
-double WakeSrModeStruct::phi() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void WakeSrModeStruct::set_phi(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 3, value);
-}
-double WakeSrModeStruct::b_sin() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void WakeSrModeStruct::set_b_sin(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 4, value);
-}
-double WakeSrModeStruct::b_cos() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void WakeSrModeStruct::set_b_cos(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 5, value);
-}
-double WakeSrModeStruct::a_sin() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void WakeSrModeStruct::set_a_sin(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 6, value);
-}
-double WakeSrModeStruct::a_cos() const {
-  double value;
-  wake_sr_mode_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void WakeSrModeStruct::set_a_cos(double value) {
-  wake_sr_mode_struct_set_real(fortran_ptr_, 7, value);
-}
-int WakeSrModeStruct::polarization() const {
-  int value;
-  wake_sr_mode_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrModeStruct::set_polarization(int value) {
-  wake_sr_mode_struct_set_integer(fortran_ptr_, 0, value);
-}
-int WakeSrModeStruct::position_dependence() const {
-  int value;
-  wake_sr_mode_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeSrModeStruct::set_position_dependence(int value) {
-  wake_sr_mode_struct_set_integer(fortran_ptr_, 1, value);
-}
-std::string WakeSrStruct::file() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wake_sr_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void WakeSrStruct::set_file(const std::string &value) {
-  wake_sr_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-WakeSrZLongStruct WakeSrStruct::z_long() const {
+SplineStruct AcKickerTimeStruct::spline() const {
   void *ptr;
-  wake_sr_struct_get_z_long(fortran_ptr_, &ptr);
-  return WakeSrZLongStruct(ptr);
+  ac_kicker_time_struct_get_spline(fortran_ptr_, &ptr);
+  return SplineStruct(ptr);
 }
-void WakeSrStruct::set_z_long(const WakeSrZLongStruct &src) {
-  wake_sr_struct_set_z_long(fortran_ptr_, src.get_fortran_ptr());
+void AcKickerTimeStruct::set_spline(const SplineStruct &src) {
+  ac_kicker_time_struct_set_spline(fortran_ptr_, src.get_fortran_ptr());
 }
-WakeSrModeStructAlloc1D WakeSrStruct::long_wake() const {
-  return WakeSrModeStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_struct_reallocate_long,
-      wake_sr_struct_get_long_info
-  );
-}
-WakeSrModeStructAlloc1D WakeSrStruct::trans_wake() const {
-  return WakeSrModeStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_sr_struct_reallocate_trans,
-      wake_sr_struct_get_trans_info
-  );
-}
-double WakeSrStruct::z_ref_long() const {
-  double value;
-  wake_sr_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrStruct::set_z_ref_long(double value) { wake_sr_struct_set_real(fortran_ptr_, 0, value); }
-double WakeSrStruct::z_ref_trans() const {
-  double value;
-  wake_sr_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeSrStruct::set_z_ref_trans(double value) {
-  wake_sr_struct_set_real(fortran_ptr_, 1, value);
-}
-double WakeSrStruct::z_max() const {
-  double value;
-  wake_sr_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void WakeSrStruct::set_z_max(double value) { wake_sr_struct_set_real(fortran_ptr_, 2, value); }
-double WakeSrStruct::amp_scale() const {
-  double value;
-  wake_sr_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void WakeSrStruct::set_amp_scale(double value) { wake_sr_struct_set_real(fortran_ptr_, 3, value); }
-double WakeSrStruct::z_scale() const {
-  double value;
-  wake_sr_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void WakeSrStruct::set_z_scale(double value) { wake_sr_struct_set_real(fortran_ptr_, 4, value); }
-bool WakeSrStruct::scale_with_length() const {
-  bool value;
-  wake_sr_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeSrStruct::set_scale_with_length(bool value) {
-  wake_sr_struct_set_logical(fortran_ptr_, 0, value);
-}
-double WakeLrModeStruct::freq() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeLrModeStruct::set_freq(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 0, value);
-}
-double WakeLrModeStruct::freq_in() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeLrModeStruct::set_freq_in(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 1, value);
-}
-double WakeLrModeStruct::R_over_Q() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void WakeLrModeStruct::set_R_over_Q(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 2, value);
-}
-double WakeLrModeStruct::Q() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void WakeLrModeStruct::set_Q(double value) { wake_lr_mode_struct_set_real(fortran_ptr_, 3, value); }
-double WakeLrModeStruct::damp() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void WakeLrModeStruct::set_damp(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 4, value);
-}
-double WakeLrModeStruct::phi() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void WakeLrModeStruct::set_phi(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 5, value);
-}
-double WakeLrModeStruct::angle() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void WakeLrModeStruct::set_angle(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 6, value);
-}
-double WakeLrModeStruct::b_sin() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void WakeLrModeStruct::set_b_sin(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 7, value);
-}
-double WakeLrModeStruct::b_cos() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void WakeLrModeStruct::set_b_cos(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 8, value);
-}
-double WakeLrModeStruct::a_sin() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void WakeLrModeStruct::set_a_sin(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 9, value);
-}
-double WakeLrModeStruct::a_cos() const {
-  double value;
-  wake_lr_mode_struct_get_real(fortran_ptr_, 10, &value);
-  return value;
-}
-void WakeLrModeStruct::set_a_cos(double value) {
-  wake_lr_mode_struct_set_real(fortran_ptr_, 10, value);
-}
-int WakeLrModeStruct::m() const {
-  int value;
-  wake_lr_mode_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeLrModeStruct::set_m(int value) { wake_lr_mode_struct_set_integer(fortran_ptr_, 0, value); }
-bool WakeLrModeStruct::polarized() const {
-  bool value;
-  wake_lr_mode_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeLrModeStruct::set_polarized(bool value) {
-  wake_lr_mode_struct_set_logical(fortran_ptr_, 0, value);
-}
-std::string WakeLrStruct::file() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wake_lr_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void WakeLrStruct::set_file(const std::string &value) {
-  wake_lr_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-WakeLrModeStructAlloc1D WakeLrStruct::mode() const {
-  return WakeLrModeStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wake_lr_struct_reallocate_mode,
-      wake_lr_struct_get_mode_info
-  );
-}
-double WakeLrStruct::t_ref() const {
-  double value;
-  wake_lr_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeLrStruct::set_t_ref(double value) { wake_lr_struct_set_real(fortran_ptr_, 0, value); }
-double WakeLrStruct::freq_spread() const {
-  double value;
-  wake_lr_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void WakeLrStruct::set_freq_spread(double value) {
-  wake_lr_struct_set_real(fortran_ptr_, 1, value);
-}
-double WakeLrStruct::amp_scale() const {
-  double value;
-  wake_lr_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void WakeLrStruct::set_amp_scale(double value) { wake_lr_struct_set_real(fortran_ptr_, 2, value); }
-double WakeLrStruct::time_scale() const {
-  double value;
-  wake_lr_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void WakeLrStruct::set_time_scale(double value) { wake_lr_struct_set_real(fortran_ptr_, 3, value); }
-bool WakeLrStruct::self_wake_on() const {
-  bool value;
-  wake_lr_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void WakeLrStruct::set_self_wake_on(bool value) {
-  wake_lr_struct_set_logical(fortran_ptr_, 0, value);
-}
-int LatEleLocStruct::ix_ele() const {
-  int value;
-  lat_ele_loc_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatEleLocStruct::set_ix_ele(int value) {
-  lat_ele_loc_struct_set_integer(fortran_ptr_, 0, value);
-}
-int LatEleLocStruct::ix_branch() const {
-  int value;
-  lat_ele_loc_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void LatEleLocStruct::set_ix_branch(int value) {
-  lat_ele_loc_struct_set_integer(fortran_ptr_, 1, value);
-}
-WakeSrStruct WakeStruct::sr() const {
-  void *ptr;
-  wake_struct_get_sr(fortran_ptr_, &ptr);
-  return WakeSrStruct(ptr);
-}
-void WakeStruct::set_sr(const WakeSrStruct &src) {
-  wake_struct_set_sr(fortran_ptr_, src.get_fortran_ptr());
-}
-WakeLrStruct WakeStruct::lr() const {
-  void *ptr;
-  wake_struct_get_lr(fortran_ptr_, &ptr);
-  return WakeLrStruct(ptr);
-}
-void WakeStruct::set_lr(const WakeLrStruct &src) {
-  wake_struct_set_lr(fortran_ptr_, src.get_fortran_ptr());
-}
-double TaylorTermStruct::coef() const {
-  double value;
-  taylor_term_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaylorTermStruct::set_coef(double value) {
-  taylor_term_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<int> TaylorTermStruct::expn() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, taylor_term_struct_get_expn_info);
-}
-void TaylorTermStruct::set_expn(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
-}
-double TaylorStruct::ref() const {
-  double value;
-  taylor_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaylorStruct::set_ref(double value) { taylor_struct_set_real(fortran_ptr_, 0, value); }
-TaylorTermStructArray1D TaylorStruct::term() const {
-  return ProxyHelpers::get_type_array_1d<TaylorTermStructArray1D>(
-      fortran_ptr_,
-      taylor_struct_get_term_info
-  );
-}
-double GgTaylorTermStruct::coef() const {
-  double value;
-  gg_taylor_term_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GgTaylorTermStruct::set_coef(double value) {
-  gg_taylor_term_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<int> GgTaylorTermStruct::expn() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, gg_taylor_term_struct_get_expn_info);
-}
-void GgTaylorTermStruct::set_expn(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  gg_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
-}
-double GgTaylorStruct::ref() const {
-  double value;
-  gg_taylor_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GgTaylorStruct::set_ref(double value) { gg_taylor_struct_set_real(fortran_ptr_, 0, value); }
-GgTaylorTermStructAlloc1D GgTaylorStruct::term() const {
-  return GgTaylorTermStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      gg_taylor_struct_reallocate_term,
-      gg_taylor_struct_get_term_info
-  );
-}
-double CartesianMapTerm1Struct::coef() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_coef(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 0, value);
-}
-double CartesianMapTerm1Struct::kx() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_kx(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 1, value);
-}
-double CartesianMapTerm1Struct::ky() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_ky(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 2, value);
-}
-double CartesianMapTerm1Struct::kz() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_kz(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 3, value);
-}
-double CartesianMapTerm1Struct::x0() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_x0(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 4, value);
-}
-double CartesianMapTerm1Struct::y0() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_y0(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 5, value);
-}
-double CartesianMapTerm1Struct::phi_z() const {
-  double value;
-  cartesian_map_term1_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_phi_z(double value) {
-  cartesian_map_term1_struct_set_real(fortran_ptr_, 6, value);
-}
-int CartesianMapTerm1Struct::family() const {
-  int value;
-  cartesian_map_term1_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_family(int value) {
-  cartesian_map_term1_struct_set_integer(fortran_ptr_, 0, value);
-}
-int CartesianMapTerm1Struct::form() const {
-  int value;
-  cartesian_map_term1_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void CartesianMapTerm1Struct::set_form(int value) {
-  cartesian_map_term1_struct_set_integer(fortran_ptr_, 1, value);
-}
-std::string CartesianMapTermStruct::file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, cartesian_map_term_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void CartesianMapTermStruct::set_file(const std::string &value) {
-  cartesian_map_term_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int CartesianMapTermStruct::n_link() const {
-  int value;
-  cartesian_map_term_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CartesianMapTermStruct::set_n_link(int value) {
-  cartesian_map_term_struct_set_integer(fortran_ptr_, 0, value);
-}
-CartesianMapTerm1StructAlloc1D CartesianMapTermStruct::term() const {
-  return CartesianMapTerm1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      cartesian_map_term_struct_reallocate_term,
-      cartesian_map_term_struct_get_term_info
-  );
-}
-double CartesianMapStruct::field_scale() const {
-  double value;
-  cartesian_map_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void CartesianMapStruct::set_field_scale(double value) {
-  cartesian_map_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<double> CartesianMapStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cartesian_map_struct_get_r0_info);
-}
-void CartesianMapStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  cartesian_map_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-int CartesianMapStruct::master_parameter() const {
-  int value;
-  cartesian_map_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CartesianMapStruct::set_master_parameter(int value) {
-  cartesian_map_struct_set_integer(fortran_ptr_, 0, value);
-}
-int CartesianMapStruct::ele_anchor_pt() const {
-  int value;
-  cartesian_map_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void CartesianMapStruct::set_ele_anchor_pt(int value) {
-  cartesian_map_struct_set_integer(fortran_ptr_, 1, value);
-}
-int CartesianMapStruct::field_type() const {
-  int value;
-  cartesian_map_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void CartesianMapStruct::set_field_type(int value) {
-  cartesian_map_struct_set_integer(fortran_ptr_, 2, value);
-}
-std::optional<CartesianMapTermStruct> CartesianMapStruct::ptr() const {
-  void *ptr;
-  cartesian_map_struct_get_ptr(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return CartesianMapTermStruct(ptr);
-}
-void CartesianMapStruct::set_ptr(const CartesianMapTermStruct &src) {
-  cartesian_map_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
-}
-std::complex<double> CylindricalMapTerm1Struct::e_coef() const {
-  std::complex<double> value;
-  cylindrical_map_term1_struct_get_complex(fortran_ptr_, 0, &value);
-  return value;
-}
-void CylindricalMapTerm1Struct::set_e_coef(std::complex<double> value) {
-  cylindrical_map_term1_struct_set_complex(fortran_ptr_, 0, value);
-}
-std::complex<double> CylindricalMapTerm1Struct::b_coef() const {
-  std::complex<double> value;
-  cylindrical_map_term1_struct_get_complex(fortran_ptr_, 1, &value);
-  return value;
-}
-void CylindricalMapTerm1Struct::set_b_coef(std::complex<double> value) {
-  cylindrical_map_term1_struct_set_complex(fortran_ptr_, 1, value);
-}
-std::string CylindricalMapTermStruct::file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, cylindrical_map_term_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void CylindricalMapTermStruct::set_file(const std::string &value) {
-  cylindrical_map_term_struct_set_file(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-int CylindricalMapTermStruct::n_link() const {
-  int value;
-  cylindrical_map_term_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CylindricalMapTermStruct::set_n_link(int value) {
-  cylindrical_map_term_struct_set_integer(fortran_ptr_, 0, value);
-}
-CylindricalMapTerm1StructAlloc1D CylindricalMapTermStruct::term() const {
-  return CylindricalMapTerm1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      cylindrical_map_term_struct_reallocate_term,
-      cylindrical_map_term_struct_get_term_info
-  );
-}
-int CylindricalMapStruct::m() const {
-  int value;
-  cylindrical_map_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void CylindricalMapStruct::set_m(int value) {
-  cylindrical_map_struct_set_integer(fortran_ptr_, 0, value);
-}
-int CylindricalMapStruct::harmonic() const {
-  int value;
-  cylindrical_map_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void CylindricalMapStruct::set_harmonic(int value) {
-  cylindrical_map_struct_set_integer(fortran_ptr_, 1, value);
-}
-double CylindricalMapStruct::phi0_fieldmap() const {
-  double value;
-  cylindrical_map_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void CylindricalMapStruct::set_phi0_fieldmap(double value) {
-  cylindrical_map_struct_set_real(fortran_ptr_, 0, value);
-}
-double CylindricalMapStruct::theta0_azimuth() const {
-  double value;
-  cylindrical_map_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void CylindricalMapStruct::set_theta0_azimuth(double value) {
-  cylindrical_map_struct_set_real(fortran_ptr_, 1, value);
-}
-double CylindricalMapStruct::field_scale() const {
-  double value;
-  cylindrical_map_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void CylindricalMapStruct::set_field_scale(double value) {
-  cylindrical_map_struct_set_real(fortran_ptr_, 2, value);
-}
-int CylindricalMapStruct::master_parameter() const {
-  int value;
-  cylindrical_map_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void CylindricalMapStruct::set_master_parameter(int value) {
-  cylindrical_map_struct_set_integer(fortran_ptr_, 2, value);
-}
-int CylindricalMapStruct::ele_anchor_pt() const {
-  int value;
-  cylindrical_map_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void CylindricalMapStruct::set_ele_anchor_pt(int value) {
-  cylindrical_map_struct_set_integer(fortran_ptr_, 3, value);
-}
-double CylindricalMapStruct::dz() const {
-  double value;
-  cylindrical_map_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void CylindricalMapStruct::set_dz(double value) {
-  cylindrical_map_struct_set_real(fortran_ptr_, 3, value);
-}
-FArray1D<double> CylindricalMapStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cylindrical_map_struct_get_r0_info);
-}
-void CylindricalMapStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  cylindrical_map_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-std::optional<CylindricalMapTermStruct> CylindricalMapStruct::ptr() const {
-  void *ptr;
-  cylindrical_map_struct_get_ptr(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return CylindricalMapTermStruct(ptr);
-}
-void CylindricalMapStruct::set_ptr(const CylindricalMapTermStruct &src) {
-  cylindrical_map_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray2D<std::complex<double>> BicubicCmplxCoefStruct::coef() const {
-  return ProxyHelpers::get_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      bicubic_cmplx_coef_struct_get_coef_info
-  );
-}
-void BicubicCmplxCoefStruct::set_coef(const std::vector<std::vector<std::complex<double>>> &v) {
-  ProxyHelpers::set_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      bicubic_cmplx_coef_struct_set_coef,
-      v
-  );
-}
-FArray1D<int> BicubicCmplxCoefStruct::i_box() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bicubic_cmplx_coef_struct_get_i_box_info);
-}
-void BicubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bicubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
-}
-FArray3D<std::complex<double>> TricubicCmplxCoefStruct::coef() const {
-  return ProxyHelpers::get_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      tricubic_cmplx_coef_struct_get_coef_info
-  );
-}
-void TricubicCmplxCoefStruct::set_coef(
-    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
-) {
-  ProxyHelpers::set_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      tricubic_cmplx_coef_struct_set_coef,
-      v
-  );
-}
-FArray1D<int> TricubicCmplxCoefStruct::i_box() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tricubic_cmplx_coef_struct_get_i_box_info);
-}
-void TricubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tricubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
-}
-FArray1D<std::complex<double>> GridFieldPt1Struct::E() const {
-  return ProxyHelpers::get_array_1d<std::complex<double>>(
-      fortran_ptr_,
-      grid_field_pt1_struct_get_E_info
-  );
-}
-void GridFieldPt1Struct::set_E(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  grid_field_pt1_struct_set_E(fortran_ptr_, v.data(), shape);
-}
-FArray1D<std::complex<double>> GridFieldPt1Struct::B() const {
-  return ProxyHelpers::get_array_1d<std::complex<double>>(
-      fortran_ptr_,
-      grid_field_pt1_struct_get_B_info
-  );
-}
-void GridFieldPt1Struct::set_B(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  grid_field_pt1_struct_set_B(fortran_ptr_, v.data(), shape);
-}
-std::string GridFieldPtStruct::file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, grid_field_pt_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void GridFieldPtStruct::set_file(const std::string &value) {
-  grid_field_pt_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int GridFieldPtStruct::n_link() const {
-  int value;
-  grid_field_pt_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void GridFieldPtStruct::set_n_link(int value) {
-  grid_field_pt_struct_set_integer(fortran_ptr_, 0, value);
-}
-GridFieldPt1StructArray3D GridFieldPtStruct::pt() const {
-  return ProxyHelpers::get_type_array_3d<GridFieldPt1StructArray3D>(
-      fortran_ptr_,
-      grid_field_pt_struct_get_pt_info
-  );
-}
-int GridFieldStruct::geometry() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void GridFieldStruct::set_geometry(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 0, value);
-}
-int GridFieldStruct::harmonic() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void GridFieldStruct::set_harmonic(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 1, value);
-}
-double GridFieldStruct::phi0_fieldmap() const {
-  double value;
-  grid_field_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GridFieldStruct::set_phi0_fieldmap(double value) {
-  grid_field_struct_set_real(fortran_ptr_, 0, value);
-}
-double GridFieldStruct::field_scale() const {
-  double value;
-  grid_field_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void GridFieldStruct::set_field_scale(double value) {
-  grid_field_struct_set_real(fortran_ptr_, 1, value);
-}
-int GridFieldStruct::field_type() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void GridFieldStruct::set_field_type(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 2, value);
-}
-int GridFieldStruct::master_parameter() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void GridFieldStruct::set_master_parameter(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 3, value);
-}
-int GridFieldStruct::ele_anchor_pt() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void GridFieldStruct::set_ele_anchor_pt(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 4, value);
-}
-int GridFieldStruct::interpolation_order() const {
-  int value;
-  grid_field_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void GridFieldStruct::set_interpolation_order(int value) {
-  grid_field_struct_set_integer(fortran_ptr_, 5, value);
-}
-FArray1D<double> GridFieldStruct::dr() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_dr_info);
-}
-void GridFieldStruct::set_dr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  grid_field_struct_set_dr(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> GridFieldStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_r0_info);
-}
-void GridFieldStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  grid_field_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-bool GridFieldStruct::curved_ref_frame() const {
-  bool value;
-  grid_field_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void GridFieldStruct::set_curved_ref_frame(bool value) {
-  grid_field_struct_set_logical(fortran_ptr_, 0, value);
-}
-std::optional<GridFieldPtStruct> GridFieldStruct::ptr() const {
-  void *ptr;
-  grid_field_struct_get_ptr(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return GridFieldPtStruct(ptr);
-}
-void GridFieldStruct::set_ptr(const GridFieldPtStruct &src) {
-  grid_field_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
-}
-BicubicCmplxCoefStructArray3D GridFieldStruct::bi_coef() const {
-  return ProxyHelpers::get_type_array_3d<BicubicCmplxCoefStructArray3D>(
-      fortran_ptr_,
-      grid_field_struct_get_bi_coef_info
-  );
-}
-TricubicCmplxCoefStructArray3D GridFieldStruct::tri_coef() const {
-  return ProxyHelpers::get_type_array_3d<TricubicCmplxCoefStructArray3D>(
-      fortran_ptr_,
-      grid_field_struct_get_tri_coef_info
-  );
-}
-FArray1D<double> FloorPositionStruct::r() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, floor_position_struct_get_r_info);
-}
-void FloorPositionStruct::set_r(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  floor_position_struct_set_r(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> FloorPositionStruct::w() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, floor_position_struct_get_w_info);
-}
-void FloorPositionStruct::set_w(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, floor_position_struct_set_w, v);
-}
-double FloorPositionStruct::theta() const {
-  double value;
-  floor_position_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void FloorPositionStruct::set_theta(double value) {
-  floor_position_struct_set_real(fortran_ptr_, 0, value);
-}
-double FloorPositionStruct::phi() const {
-  double value;
-  floor_position_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void FloorPositionStruct::set_phi(double value) {
-  floor_position_struct_set_real(fortran_ptr_, 1, value);
-}
-double FloorPositionStruct::psi() const {
-  double value;
-  floor_position_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void FloorPositionStruct::set_psi(double value) {
-  floor_position_struct_set_real(fortran_ptr_, 2, value);
-}
-CoordStruct HighEnergySpaceChargeStruct::closed_orb() const {
-  void *ptr;
-  high_energy_space_charge_struct_get_closed_orb(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void HighEnergySpaceChargeStruct::set_closed_orb(const CoordStruct &src) {
-  high_energy_space_charge_struct_set_closed_orb(fortran_ptr_, src.get_fortran_ptr());
-}
-double HighEnergySpaceChargeStruct::kick_const() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_kick_const(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 0, value);
-}
-double HighEnergySpaceChargeStruct::sig_x() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_sig_x(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 1, value);
-}
-double HighEnergySpaceChargeStruct::sig_y() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_sig_y(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 2, value);
-}
-double HighEnergySpaceChargeStruct::phi() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_phi(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 3, value);
-}
-double HighEnergySpaceChargeStruct::sin_phi() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_sin_phi(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 4, value);
-}
-double HighEnergySpaceChargeStruct::cos_phi() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_cos_phi(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 5, value);
-}
-double HighEnergySpaceChargeStruct::sig_z() const {
-  double value;
-  high_energy_space_charge_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void HighEnergySpaceChargeStruct::set_sig_z(double value) {
-  high_energy_space_charge_struct_set_real(fortran_ptr_, 6, value);
-}
-double XyDispStruct::eta() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void XyDispStruct::set_eta(double value) { xy_disp_struct_set_real(fortran_ptr_, 0, value); }
-double XyDispStruct::etap() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void XyDispStruct::set_etap(double value) { xy_disp_struct_set_real(fortran_ptr_, 1, value); }
-double XyDispStruct::deta_ds() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void XyDispStruct::set_deta_ds(double value) { xy_disp_struct_set_real(fortran_ptr_, 2, value); }
-double XyDispStruct::sigma() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void XyDispStruct::set_sigma(double value) { xy_disp_struct_set_real(fortran_ptr_, 3, value); }
-double XyDispStruct::deta_dpz() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void XyDispStruct::set_deta_dpz(double value) { xy_disp_struct_set_real(fortran_ptr_, 4, value); }
-double XyDispStruct::detap_dpz() const {
-  double value;
-  xy_disp_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void XyDispStruct::set_detap_dpz(double value) { xy_disp_struct_set_real(fortran_ptr_, 5, value); }
-double TwissStruct::beta() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TwissStruct::set_beta(double value) { twiss_struct_set_real(fortran_ptr_, 0, value); }
-double TwissStruct::alpha() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TwissStruct::set_alpha(double value) { twiss_struct_set_real(fortran_ptr_, 1, value); }
-double TwissStruct::gamma() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TwissStruct::set_gamma(double value) { twiss_struct_set_real(fortran_ptr_, 2, value); }
-double TwissStruct::phi() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TwissStruct::set_phi(double value) { twiss_struct_set_real(fortran_ptr_, 3, value); }
-double TwissStruct::eta() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void TwissStruct::set_eta(double value) { twiss_struct_set_real(fortran_ptr_, 4, value); }
-double TwissStruct::etap() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void TwissStruct::set_etap(double value) { twiss_struct_set_real(fortran_ptr_, 5, value); }
-double TwissStruct::deta_ds() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void TwissStruct::set_deta_ds(double value) { twiss_struct_set_real(fortran_ptr_, 6, value); }
-double TwissStruct::sigma() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void TwissStruct::set_sigma(double value) { twiss_struct_set_real(fortran_ptr_, 7, value); }
-double TwissStruct::sigma_p() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void TwissStruct::set_sigma_p(double value) { twiss_struct_set_real(fortran_ptr_, 8, value); }
-double TwissStruct::emit() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void TwissStruct::set_emit(double value) { twiss_struct_set_real(fortran_ptr_, 9, value); }
-double TwissStruct::norm_emit() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 10, &value);
-  return value;
-}
-void TwissStruct::set_norm_emit(double value) { twiss_struct_set_real(fortran_ptr_, 10, value); }
-double TwissStruct::chrom() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 11, &value);
-  return value;
-}
-void TwissStruct::set_chrom(double value) { twiss_struct_set_real(fortran_ptr_, 11, value); }
-double TwissStruct::dbeta_dpz() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 12, &value);
-  return value;
-}
-void TwissStruct::set_dbeta_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 12, value); }
-double TwissStruct::dalpha_dpz() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 13, &value);
-  return value;
-}
-void TwissStruct::set_dalpha_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 13, value); }
-double TwissStruct::deta_dpz() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 14, &value);
-  return value;
-}
-void TwissStruct::set_deta_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 14, value); }
-double TwissStruct::detap_dpz() const {
-  double value;
-  twiss_struct_get_real(fortran_ptr_, 15, &value);
-  return value;
-}
-void TwissStruct::set_detap_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 15, value); }
-FArray2D<double> Mode3Struct::v() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mode3_struct_get_v_info);
-}
-void Mode3Struct::set_v(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, mode3_struct_set_v, v);
-}
-TwissStruct Mode3Struct::a() const {
-  void *ptr;
-  mode3_struct_get_a(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void Mode3Struct::set_a(const TwissStruct &src) {
-  mode3_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct Mode3Struct::b() const {
-  void *ptr;
-  mode3_struct_get_b(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void Mode3Struct::set_b(const TwissStruct &src) {
-  mode3_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct Mode3Struct::c() const {
-  void *ptr;
-  mode3_struct_get_c(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void Mode3Struct::set_c(const TwissStruct &src) {
-  mode3_struct_set_c(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct Mode3Struct::x() const {
-  void *ptr;
-  mode3_struct_get_x(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void Mode3Struct::set_x(const TwissStruct &src) {
-  mode3_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct Mode3Struct::y() const {
-  void *ptr;
-  mode3_struct_get_y(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void Mode3Struct::set_y(const TwissStruct &src) {
-  mode3_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
-}
-int BookkeepingStateStruct::attributes() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_attributes(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 0, value);
-}
-int BookkeepingStateStruct::control() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_control(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 1, value);
-}
-int BookkeepingStateStruct::floor_position() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_floor_position(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 2, value);
-}
-int BookkeepingStateStruct::s_position() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_s_position(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 3, value);
-}
-int BookkeepingStateStruct::ref_energy() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_ref_energy(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 4, value);
-}
-int BookkeepingStateStruct::mat6() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_mat6(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 5, value);
-}
-int BookkeepingStateStruct::rad_int() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_rad_int(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 6, value);
-}
-int BookkeepingStateStruct::ptc() const {
-  int value;
-  bookkeeping_state_struct_get_integer(fortran_ptr_, 7, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_ptc(int value) {
-  bookkeeping_state_struct_set_integer(fortran_ptr_, 7, value);
-}
-bool BookkeepingStateStruct::has_misalign() const {
-  bool value;
-  bookkeeping_state_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void BookkeepingStateStruct::set_has_misalign(bool value) {
-  bookkeeping_state_struct_set_logical(fortran_ptr_, 0, value);
-}
-FArray1D<double> RadMapStruct::ref_orb() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_ref_orb_info);
-}
-void RadMapStruct::set_ref_orb(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  rad_map_struct_set_ref_orb(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> RadMapStruct::damp_dmat() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_damp_dmat_info);
-}
-void RadMapStruct::set_damp_dmat(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_damp_dmat, v);
-}
-FArray1D<double> RadMapStruct::xfer_damp_vec() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_vec_info);
-}
-void RadMapStruct::set_xfer_damp_vec(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  rad_map_struct_set_xfer_damp_vec(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> RadMapStruct::xfer_damp_mat() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_mat_info);
-}
-void RadMapStruct::set_xfer_damp_mat(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_xfer_damp_mat, v);
-}
-FArray2D<double> RadMapStruct::stoc_mat() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_stoc_mat_info);
-}
-void RadMapStruct::set_stoc_mat(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_stoc_mat, v);
-}
-RadMapStruct RadMapEleStruct::rm0() const {
-  void *ptr;
-  rad_map_ele_struct_get_rm0(fortran_ptr_, &ptr);
-  return RadMapStruct(ptr);
-}
-void RadMapEleStruct::set_rm0(const RadMapStruct &src) {
-  rad_map_ele_struct_set_rm0(fortran_ptr_, src.get_fortran_ptr());
-}
-RadMapStruct RadMapEleStruct::rm1() const {
-  void *ptr;
-  rad_map_ele_struct_get_rm1(fortran_ptr_, &ptr);
-  return RadMapStruct(ptr);
-}
-void RadMapEleStruct::set_rm1(const RadMapStruct &src) {
-  rad_map_ele_struct_set_rm1(fortran_ptr_, src.get_fortran_ptr());
-}
-bool RadMapEleStruct::stale() const {
-  bool value;
-  rad_map_ele_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void RadMapEleStruct::set_stale(bool value) {
-  rad_map_ele_struct_set_logical(fortran_ptr_, 0, value);
-}
-int GenGrad1Struct::m() const {
-  int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void GenGrad1Struct::set_m(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 0, value); }
-int GenGrad1Struct::sincos() const {
-  int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void GenGrad1Struct::set_sincos(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 1, value); }
-int GenGrad1Struct::n_deriv_max() const {
-  int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void GenGrad1Struct::set_n_deriv_max(int value) {
-  gen_grad1_struct_set_integer(fortran_ptr_, 2, value);
-}
-FArray2D<double> GenGrad1Struct::deriv() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad1_struct_get_deriv_info);
-}
-void GenGrad1Struct::set_deriv(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad1_struct_set_deriv, v);
-}
-std::string GenGradMapStruct::file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_grad_map_struct_get_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void GenGradMapStruct::set_file(const std::string &value) {
-  gen_grad_map_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-GenGrad1StructAlloc1D GenGradMapStruct::gg() const {
-  return GenGrad1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      gen_grad_map_struct_reallocate_gg,
-      gen_grad_map_struct_get_gg_info
-  );
-}
-int GenGradMapStruct::ele_anchor_pt() const {
-  int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void GenGradMapStruct::set_ele_anchor_pt(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 0, value);
-}
-int GenGradMapStruct::field_type() const {
-  int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void GenGradMapStruct::set_field_type(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 1, value);
-}
-int GenGradMapStruct::iz0() const {
-  int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void GenGradMapStruct::set_iz0(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 2, value);
-}
-int GenGradMapStruct::iz1() const {
-  int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void GenGradMapStruct::set_iz1(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 3, value);
-}
-double GenGradMapStruct::dz() const {
-  double value;
-  gen_grad_map_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GenGradMapStruct::set_dz(double value) {
-  gen_grad_map_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<double> GenGradMapStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_grad_map_struct_get_r0_info);
-}
-void GenGradMapStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  gen_grad_map_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-double GenGradMapStruct::field_scale() const {
-  double value;
-  gen_grad_map_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void GenGradMapStruct::set_field_scale(double value) {
-  gen_grad_map_struct_set_real(fortran_ptr_, 1, value);
-}
-int GenGradMapStruct::master_parameter() const {
-  int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void GenGradMapStruct::set_master_parameter(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 4, value);
-}
-bool GenGradMapStruct::curved_ref_frame() const {
-  bool value;
-  gen_grad_map_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void GenGradMapStruct::set_curved_ref_frame(bool value) {
-  gen_grad_map_struct_set_logical(fortran_ptr_, 0, value);
-}
-double SurfaceSegmentedPtStruct::x0() const {
-  double value;
-  surface_segmented_pt_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceSegmentedPtStruct::set_x0(double value) {
-  surface_segmented_pt_struct_set_real(fortran_ptr_, 0, value);
-}
-double SurfaceSegmentedPtStruct::y0() const {
-  double value;
-  surface_segmented_pt_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SurfaceSegmentedPtStruct::set_y0(double value) {
-  surface_segmented_pt_struct_set_real(fortran_ptr_, 1, value);
-}
-double SurfaceSegmentedPtStruct::z0() const {
-  double value;
-  surface_segmented_pt_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SurfaceSegmentedPtStruct::set_z0(double value) {
-  surface_segmented_pt_struct_set_real(fortran_ptr_, 2, value);
-}
-double SurfaceSegmentedPtStruct::dz_dx() const {
-  double value;
-  surface_segmented_pt_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void SurfaceSegmentedPtStruct::set_dz_dx(double value) {
-  surface_segmented_pt_struct_set_real(fortran_ptr_, 3, value);
-}
-double SurfaceSegmentedPtStruct::dz_dy() const {
-  double value;
-  surface_segmented_pt_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void SurfaceSegmentedPtStruct::set_dz_dy(double value) {
-  surface_segmented_pt_struct_set_real(fortran_ptr_, 4, value);
-}
-bool SurfaceSegmentedStruct::active() const {
-  bool value;
-  surface_segmented_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceSegmentedStruct::set_active(bool value) {
-  surface_segmented_struct_set_logical(fortran_ptr_, 0, value);
-}
-FArray1D<double> SurfaceSegmentedStruct::dr() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_dr_info);
-}
-void SurfaceSegmentedStruct::set_dr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_segmented_struct_set_dr(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> SurfaceSegmentedStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_r0_info);
-}
-void SurfaceSegmentedStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_segmented_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-SurfaceSegmentedPtStructArray2D SurfaceSegmentedStruct::pt() const {
-  return ProxyHelpers::get_type_array_2d<SurfaceSegmentedPtStructArray2D>(
-      fortran_ptr_,
-      surface_segmented_struct_get_pt_info
-  );
-}
-double SurfaceHMisalignPtStruct::x0() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_x0(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 0, value);
-}
-double SurfaceHMisalignPtStruct::y0() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_y0(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 1, value);
-}
-double SurfaceHMisalignPtStruct::rot_y() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_rot_y(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 2, value);
-}
-double SurfaceHMisalignPtStruct::rot_t() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_rot_t(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 3, value);
-}
-double SurfaceHMisalignPtStruct::rot_y_rms() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_rot_y_rms(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 4, value);
-}
-double SurfaceHMisalignPtStruct::rot_t_rms() const {
-  double value;
-  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void SurfaceHMisalignPtStruct::set_rot_t_rms(double value) {
-  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 5, value);
-}
-bool SurfaceHMisalignStruct::active() const {
-  bool value;
-  surface_h_misalign_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceHMisalignStruct::set_active(bool value) {
-  surface_h_misalign_struct_set_logical(fortran_ptr_, 0, value);
-}
-FArray1D<double> SurfaceHMisalignStruct::dr() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_dr_info);
-}
-void SurfaceHMisalignStruct::set_dr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_h_misalign_struct_set_dr(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> SurfaceHMisalignStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_r0_info);
-}
-void SurfaceHMisalignStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_h_misalign_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-SurfaceHMisalignPtStructArray2D SurfaceHMisalignStruct::pt() const {
-  return ProxyHelpers::get_type_array_2d<SurfaceHMisalignPtStructArray2D>(
-      fortran_ptr_,
-      surface_h_misalign_struct_get_pt_info
-  );
-}
-double SurfaceDisplacementPtStruct::x0() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_x0(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 0, value);
-}
-double SurfaceDisplacementPtStruct::y0() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_y0(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 1, value);
-}
-double SurfaceDisplacementPtStruct::z0() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_z0(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 2, value);
-}
-double SurfaceDisplacementPtStruct::dz_dx() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_dz_dx(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 3, value);
-}
-double SurfaceDisplacementPtStruct::dz_dy() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_dz_dy(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 4, value);
-}
-double SurfaceDisplacementPtStruct::d2z_dxdy() const {
-  double value;
-  surface_displacement_pt_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void SurfaceDisplacementPtStruct::set_d2z_dxdy(double value) {
-  surface_displacement_pt_struct_set_real(fortran_ptr_, 5, value);
-}
-bool SurfaceDisplacementStruct::active() const {
-  bool value;
-  surface_displacement_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceDisplacementStruct::set_active(bool value) {
-  surface_displacement_struct_set_logical(fortran_ptr_, 0, value);
-}
-FArray1D<double> SurfaceDisplacementStruct::dr() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_dr_info);
-}
-void SurfaceDisplacementStruct::set_dr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_displacement_struct_set_dr(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> SurfaceDisplacementStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_r0_info);
-}
-void SurfaceDisplacementStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  surface_displacement_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-SurfaceDisplacementPtStructArray2D SurfaceDisplacementStruct::pt() const {
-  return ProxyHelpers::get_type_array_2d<SurfaceDisplacementPtStructArray2D>(
-      fortran_ptr_,
-      surface_displacement_struct_get_pt_info
-  );
-}
-FArray1D<double> TargetPointStruct::r() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, target_point_struct_get_r_info);
-}
-void TargetPointStruct::set_r(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  target_point_struct_set_r(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> SurfaceCurvatureStruct::xy() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, surface_curvature_struct_get_xy_info);
-}
-void SurfaceCurvatureStruct::set_xy(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, surface_curvature_struct_set_xy, v);
-}
-double SurfaceCurvatureStruct::spherical() const {
+double AllEncompassingStruct::real_rp_0d() const {
   double value;
-  surface_curvature_struct_get_real(fortran_ptr_, 0, &value);
+  all_encompassing_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void SurfaceCurvatureStruct::set_spherical(double value) {
-  surface_curvature_struct_set_real(fortran_ptr_, 0, value);
+void AllEncompassingStruct::set_real_rp_0d(double value) {
+  all_encompassing_struct_set_real(fortran_ptr_, 0, value);
 }
-FArray1D<double> SurfaceCurvatureStruct::elliptical() const {
+FArray1D<double> AllEncompassingStruct::real_rp_1d() const {
   return ProxyHelpers::get_array_1d<double>(
       fortran_ptr_,
-      surface_curvature_struct_get_elliptical_info
+      all_encompassing_struct_get_real_rp_1d_info
   );
 }
-void SurfaceCurvatureStruct::set_elliptical(const std::vector<double> &v) {
+void AllEncompassingStruct::set_real_rp_1d(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  surface_curvature_struct_set_elliptical(fortran_ptr_, v.data(), shape);
+  all_encompassing_struct_set_real_rp_1d(fortran_ptr_, v.data(), shape);
 }
-bool SurfaceCurvatureStruct::has_curvature() const {
-  bool value;
-  surface_curvature_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void SurfaceCurvatureStruct::set_has_curvature(bool value) {
-  surface_curvature_struct_set_logical(fortran_ptr_, 0, value);
-}
-int PhotonTargetStruct::type() const {
-  int value;
-  photon_target_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonTargetStruct::set_type(int value) {
-  photon_target_struct_set_integer(fortran_ptr_, 0, value);
-}
-int PhotonTargetStruct::n_corner() const {
-  int value;
-  photon_target_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void PhotonTargetStruct::set_n_corner(int value) {
-  photon_target_struct_set_integer(fortran_ptr_, 1, value);
-}
-LatEleLocStruct PhotonTargetStruct::ele_loc() const {
-  void *ptr;
-  photon_target_struct_get_ele_loc(fortran_ptr_, &ptr);
-  return LatEleLocStruct(ptr);
-}
-void PhotonTargetStruct::set_ele_loc(const LatEleLocStruct &src) {
-  photon_target_struct_set_ele_loc(fortran_ptr_, src.get_fortran_ptr());
-}
-TargetPointStructArray1D PhotonTargetStruct::corner() const {
-  return ProxyHelpers::get_type_array_1d<TargetPointStructArray1D>(
+FArray2D<double> AllEncompassingStruct::real_rp_2d() const {
+  return ProxyHelpers::get_array_2d<double>(
       fortran_ptr_,
-      photon_target_struct_get_corner_info
+      all_encompassing_struct_get_real_rp_2d_info
   );
 }
-TargetPointStruct PhotonTargetStruct::center() const {
-  void *ptr;
-  photon_target_struct_get_center(fortran_ptr_, &ptr);
-  return TargetPointStruct(ptr);
+void AllEncompassingStruct::set_real_rp_2d(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d, v);
 }
-void PhotonTargetStruct::set_center(const TargetPointStruct &src) {
-  photon_target_struct_set_center(fortran_ptr_, src.get_fortran_ptr());
-}
-std::complex<double> PhotonMaterialStruct::f0_m1() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f0_m1(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 0, value);
-}
-std::complex<double> PhotonMaterialStruct::f0_m2() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 1, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f0_m2(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 1, value);
-}
-std::complex<double> PhotonMaterialStruct::f_0() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 2, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f_0(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 2, value);
-}
-std::complex<double> PhotonMaterialStruct::f_h() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 3, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f_h(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 3, value);
-}
-std::complex<double> PhotonMaterialStruct::f_hbar() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 4, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f_hbar(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 4, value);
-}
-std::complex<double> PhotonMaterialStruct::f_hkl() const {
-  std::complex<double> value;
-  photon_material_struct_get_complex(fortran_ptr_, 5, &value);
-  return value;
-}
-void PhotonMaterialStruct::set_f_hkl(std::complex<double> value) {
-  photon_material_struct_set_complex(fortran_ptr_, 5, value);
-}
-FArray1D<double> PhotonMaterialStruct::h_norm() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_h_norm_info);
-}
-void PhotonMaterialStruct::set_h_norm(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_material_struct_set_h_norm(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PhotonMaterialStruct::l_ref() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_l_ref_info);
-}
-void PhotonMaterialStruct::set_l_ref(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_material_struct_set_l_ref(fortran_ptr_, v.data(), shape);
-}
-int64_t PixelPtStruct::n_photon() const {
-  int64_t value;
-  pixel_pt_struct_get_integer8(fortran_ptr_, 0, &value);
-  return value;
-}
-void PixelPtStruct::set_n_photon(int64_t value) {
-  pixel_pt_struct_set_integer8(fortran_ptr_, 0, value);
-}
-std::complex<double> PixelPtStruct::E_x() const {
-  std::complex<double> value;
-  pixel_pt_struct_get_complex(fortran_ptr_, 0, &value);
-  return value;
-}
-void PixelPtStruct::set_E_x(std::complex<double> value) {
-  pixel_pt_struct_set_complex(fortran_ptr_, 0, value);
-}
-std::complex<double> PixelPtStruct::E_y() const {
-  std::complex<double> value;
-  pixel_pt_struct_get_complex(fortran_ptr_, 1, &value);
-  return value;
-}
-void PixelPtStruct::set_E_y(std::complex<double> value) {
-  pixel_pt_struct_set_complex(fortran_ptr_, 1, value);
-}
-double PixelPtStruct::intensity_x() const {
-  double value;
-  pixel_pt_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void PixelPtStruct::set_intensity_x(double value) {
-  pixel_pt_struct_set_real(fortran_ptr_, 0, value);
-}
-double PixelPtStruct::intensity_y() const {
-  double value;
-  pixel_pt_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void PixelPtStruct::set_intensity_y(double value) {
-  pixel_pt_struct_set_real(fortran_ptr_, 1, value);
-}
-double PixelPtStruct::intensity() const {
-  double value;
-  pixel_pt_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void PixelPtStruct::set_intensity(double value) {
-  pixel_pt_struct_set_real(fortran_ptr_, 2, value);
-}
-FArray1D<double> PixelPtStruct::orbit() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_info);
-}
-void PixelPtStruct::set_orbit(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_pt_struct_set_orbit(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PixelPtStruct::orbit_rms() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_rms_info);
-}
-void PixelPtStruct::set_orbit_rms(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_pt_struct_set_orbit_rms(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PixelPtStruct::init_orbit() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_info);
-}
-void PixelPtStruct::set_init_orbit(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_pt_struct_set_init_orbit(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PixelPtStruct::init_orbit_rms() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_rms_info);
-}
-void PixelPtStruct::set_init_orbit_rms(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_pt_struct_set_init_orbit_rms(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PixelDetecStruct::dr() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_dr_info);
-}
-void PixelDetecStruct::set_dr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_detec_struct_set_dr(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> PixelDetecStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_r0_info);
-}
-void PixelDetecStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  pixel_detec_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-int64_t PixelDetecStruct::n_track_tot() const {
-  int64_t value;
-  pixel_detec_struct_get_integer8(fortran_ptr_, 0, &value);
-  return value;
-}
-void PixelDetecStruct::set_n_track_tot(int64_t value) {
-  pixel_detec_struct_set_integer8(fortran_ptr_, 0, value);
-}
-int64_t PixelDetecStruct::n_hit_detec() const {
-  int64_t value;
-  pixel_detec_struct_get_integer8(fortran_ptr_, 1, &value);
-  return value;
-}
-void PixelDetecStruct::set_n_hit_detec(int64_t value) {
-  pixel_detec_struct_set_integer8(fortran_ptr_, 1, value);
-}
-int64_t PixelDetecStruct::n_hit_pixel() const {
-  int64_t value;
-  pixel_detec_struct_get_integer8(fortran_ptr_, 2, &value);
-  return value;
-}
-void PixelDetecStruct::set_n_hit_pixel(int64_t value) {
-  pixel_detec_struct_set_integer8(fortran_ptr_, 2, value);
-}
-PixelPtStructArray2D PixelDetecStruct::pt() const {
-  return ProxyHelpers::get_type_array_2d<PixelPtStructArray2D>(
+FArray3D<double> AllEncompassingStruct::real_rp_3d() const {
+  return ProxyHelpers::get_array_3d<double>(
       fortran_ptr_,
-      pixel_detec_struct_get_pt_info
+      all_encompassing_struct_get_real_rp_3d_info
   );
 }
-SurfaceCurvatureStruct PhotonElementStruct::curvature() const {
-  void *ptr;
-  photon_element_struct_get_curvature(fortran_ptr_, &ptr);
-  return SurfaceCurvatureStruct(ptr);
+void AllEncompassingStruct::set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d, v);
 }
-void PhotonElementStruct::set_curvature(const SurfaceCurvatureStruct &src) {
-  photon_element_struct_set_curvature(fortran_ptr_, src.get_fortran_ptr());
-}
-PhotonTargetStruct PhotonElementStruct::target() const {
-  void *ptr;
-  photon_element_struct_get_target(fortran_ptr_, &ptr);
-  return PhotonTargetStruct(ptr);
-}
-void PhotonElementStruct::set_target(const PhotonTargetStruct &src) {
-  photon_element_struct_set_target(fortran_ptr_, src.get_fortran_ptr());
-}
-PhotonMaterialStruct PhotonElementStruct::material() const {
-  void *ptr;
-  photon_element_struct_get_material(fortran_ptr_, &ptr);
-  return PhotonMaterialStruct(ptr);
-}
-void PhotonElementStruct::set_material(const PhotonMaterialStruct &src) {
-  photon_element_struct_set_material(fortran_ptr_, src.get_fortran_ptr());
-}
-SurfaceSegmentedStruct PhotonElementStruct::segmented() const {
-  void *ptr;
-  photon_element_struct_get_segmented(fortran_ptr_, &ptr);
-  return SurfaceSegmentedStruct(ptr);
-}
-void PhotonElementStruct::set_segmented(const SurfaceSegmentedStruct &src) {
-  photon_element_struct_set_segmented(fortran_ptr_, src.get_fortran_ptr());
-}
-SurfaceHMisalignStruct PhotonElementStruct::h_misalign() const {
-  void *ptr;
-  photon_element_struct_get_h_misalign(fortran_ptr_, &ptr);
-  return SurfaceHMisalignStruct(ptr);
-}
-void PhotonElementStruct::set_h_misalign(const SurfaceHMisalignStruct &src) {
-  photon_element_struct_set_h_misalign(fortran_ptr_, src.get_fortran_ptr());
-}
-SurfaceDisplacementStruct PhotonElementStruct::displacement() const {
-  void *ptr;
-  photon_element_struct_get_displacement(fortran_ptr_, &ptr);
-  return SurfaceDisplacementStruct(ptr);
-}
-void PhotonElementStruct::set_displacement(const SurfaceDisplacementStruct &src) {
-  photon_element_struct_set_displacement(fortran_ptr_, src.get_fortran_ptr());
-}
-PixelDetecStruct PhotonElementStruct::pixel() const {
-  void *ptr;
-  photon_element_struct_get_pixel(fortran_ptr_, &ptr);
-  return PixelDetecStruct(ptr);
-}
-void PhotonElementStruct::set_pixel(const PixelDetecStruct &src) {
-  photon_element_struct_set_pixel(fortran_ptr_, src.get_fortran_ptr());
-}
-int PhotonElementStruct::reflectivity_table_type() const {
-  int value;
-  photon_element_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void PhotonElementStruct::set_reflectivity_table_type(int value) {
-  photon_element_struct_set_integer(fortran_ptr_, 0, value);
-}
-PhotonReflectTableStruct PhotonElementStruct::reflectivity_table_sigma() const {
-  void *ptr;
-  photon_element_struct_get_reflectivity_table_sigma(fortran_ptr_, &ptr);
-  return PhotonReflectTableStruct(ptr);
-}
-void PhotonElementStruct::set_reflectivity_table_sigma(const PhotonReflectTableStruct &src) {
-  photon_element_struct_set_reflectivity_table_sigma(fortran_ptr_, src.get_fortran_ptr());
-}
-PhotonReflectTableStruct PhotonElementStruct::reflectivity_table_pi() const {
-  void *ptr;
-  photon_element_struct_get_reflectivity_table_pi(fortran_ptr_, &ptr);
-  return PhotonReflectTableStruct(ptr);
-}
-void PhotonElementStruct::set_reflectivity_table_pi(const PhotonReflectTableStruct &src) {
-  photon_element_struct_set_reflectivity_table_pi(fortran_ptr_, src.get_fortran_ptr());
-}
-SplineStructAlloc1D PhotonElementStruct::init_energy_prob() const {
-  return SplineStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_element_struct_reallocate_init_energy_prob,
-      photon_element_struct_get_init_energy_prob_info
-  );
-}
-RealAlloc1D PhotonElementStruct::integrated_init_energy_prob() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      photon_element_struct_reallocate_integrated_init_energy_prob,
-      photon_element_struct_get_integrated_init_energy_prob_info
-  );
-}
-void PhotonElementStruct::set_integrated_init_energy_prob(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  photon_element_struct_set_integrated_init_energy_prob(fortran_ptr_, v.data(), shape);
-}
-double Wall3dVertexStruct::x() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_x(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 0, value);
-}
-double Wall3dVertexStruct::y() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_y(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 1, value);
-}
-double Wall3dVertexStruct::radius_x() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_radius_x(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 2, value);
-}
-double Wall3dVertexStruct::radius_y() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_radius_y(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 3, value);
-}
-double Wall3dVertexStruct::tilt() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_tilt(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 4, value);
-}
-double Wall3dVertexStruct::angle() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_angle(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 5, value);
-}
-double Wall3dVertexStruct::x0() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_x0(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 6, value);
-}
-double Wall3dVertexStruct::y0() const {
-  double value;
-  wall3d_vertex_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_y0(double value) {
-  wall3d_vertex_struct_set_real(fortran_ptr_, 7, value);
-}
-int Wall3dVertexStruct::type() const {
-  int value;
-  wall3d_vertex_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dVertexStruct::set_type(int value) {
-  wall3d_vertex_struct_set_integer(fortran_ptr_, 0, value);
-}
-std::string Wall3dSectionStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_section_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void Wall3dSectionStruct::set_name(const std::string &value) {
-  wall3d_section_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string Wall3dSectionStruct::material() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_section_struct_get_material_info);
-  return std::string(arr.data(), arr.size());
-}
-void Wall3dSectionStruct::set_material(const std::string &value) {
-  wall3d_section_struct_set_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-Wall3dVertexStructAlloc1D Wall3dSectionStruct::v() const {
-  return Wall3dVertexStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wall3d_section_struct_reallocate_v,
-      wall3d_section_struct_get_v_info
-  );
-}
-std::optional<PhotonReflectSurfaceStruct> Wall3dSectionStruct::surface() const {
-  void *ptr;
-  wall3d_section_struct_get_surface(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return PhotonReflectSurfaceStruct(ptr);
-}
-void Wall3dSectionStruct::set_surface(const PhotonReflectSurfaceStruct &src) {
-  wall3d_section_struct_set_surface(fortran_ptr_, src.get_fortran_ptr());
-}
-int Wall3dSectionStruct::type() const {
-  int value;
-  wall3d_section_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_type(int value) {
-  wall3d_section_struct_set_integer(fortran_ptr_, 0, value);
-}
-int Wall3dSectionStruct::n_vertex_input() const {
-  int value;
-  wall3d_section_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_n_vertex_input(int value) {
-  wall3d_section_struct_set_integer(fortran_ptr_, 1, value);
-}
-int Wall3dSectionStruct::ix_ele() const {
-  int value;
-  wall3d_section_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_ix_ele(int value) {
-  wall3d_section_struct_set_integer(fortran_ptr_, 2, value);
-}
-int Wall3dSectionStruct::ix_branch() const {
-  int value;
-  wall3d_section_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_ix_branch(int value) {
-  wall3d_section_struct_set_integer(fortran_ptr_, 3, value);
-}
-int Wall3dSectionStruct::vertices_state() const {
-  int value;
-  wall3d_section_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_vertices_state(int value) {
-  wall3d_section_struct_set_integer(fortran_ptr_, 4, value);
-}
-bool Wall3dSectionStruct::patch_in_region() const {
-  bool value;
-  wall3d_section_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_patch_in_region(bool value) {
-  wall3d_section_struct_set_logical(fortran_ptr_, 0, value);
-}
-double Wall3dSectionStruct::thickness() const {
-  double value;
-  wall3d_section_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_thickness(double value) {
-  wall3d_section_struct_set_real(fortran_ptr_, 0, value);
-}
-double Wall3dSectionStruct::s() const {
-  double value;
-  wall3d_section_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_s(double value) {
-  wall3d_section_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<double> Wall3dSectionStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_r0_info);
-}
-void Wall3dSectionStruct::set_r0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wall3d_section_struct_set_r0(fortran_ptr_, v.data(), shape);
-}
-double Wall3dSectionStruct::dx0_ds() const {
-  double value;
-  wall3d_section_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_dx0_ds(double value) {
-  wall3d_section_struct_set_real(fortran_ptr_, 2, value);
-}
-double Wall3dSectionStruct::dy0_ds() const {
-  double value;
-  wall3d_section_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_dy0_ds(double value) {
-  wall3d_section_struct_set_real(fortran_ptr_, 3, value);
-}
-FArray1D<double> Wall3dSectionStruct::x0_coef() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_x0_coef_info);
-}
-void Wall3dSectionStruct::set_x0_coef(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wall3d_section_struct_set_x0_coef(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> Wall3dSectionStruct::y0_coef() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_y0_coef_info);
-}
-void Wall3dSectionStruct::set_y0_coef(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wall3d_section_struct_set_y0_coef(fortran_ptr_, v.data(), shape);
-}
-double Wall3dSectionStruct::dr_ds() const {
-  double value;
-  wall3d_section_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void Wall3dSectionStruct::set_dr_ds(double value) {
-  wall3d_section_struct_set_real(fortran_ptr_, 4, value);
-}
-FArray1D<double> Wall3dSectionStruct::p1_coef() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p1_coef_info);
-}
-void Wall3dSectionStruct::set_p1_coef(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wall3d_section_struct_set_p1_coef(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> Wall3dSectionStruct::p2_coef() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p2_coef_info);
-}
-void Wall3dSectionStruct::set_p2_coef(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  wall3d_section_struct_set_p2_coef(fortran_ptr_, v.data(), shape);
-}
-std::string Wall3dStruct::name() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void Wall3dStruct::set_name(const std::string &value) {
-  wall3d_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int Wall3dStruct::type() const {
-  int value;
-  wall3d_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dStruct::set_type(int value) { wall3d_struct_set_integer(fortran_ptr_, 0, value); }
-int Wall3dStruct::ix_wall3d() const {
-  int value;
-  wall3d_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void Wall3dStruct::set_ix_wall3d(int value) { wall3d_struct_set_integer(fortran_ptr_, 1, value); }
-int Wall3dStruct::n_link() const {
-  int value;
-  wall3d_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void Wall3dStruct::set_n_link(int value) { wall3d_struct_set_integer(fortran_ptr_, 2, value); }
-double Wall3dStruct::thickness() const {
-  double value;
-  wall3d_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dStruct::set_thickness(double value) { wall3d_struct_set_real(fortran_ptr_, 0, value); }
-std::string Wall3dStruct::clear_material() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_clear_material_info);
-  return std::string(arr.data(), arr.size());
-}
-void Wall3dStruct::set_clear_material(const std::string &value) {
-  wall3d_struct_set_clear_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string Wall3dStruct::opaque_material() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_opaque_material_info);
-  return std::string(arr.data(), arr.size());
-}
-void Wall3dStruct::set_opaque_material(const std::string &value) {
-  wall3d_struct_set_opaque_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool Wall3dStruct::superimpose() const {
-  bool value;
-  wall3d_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void Wall3dStruct::set_superimpose(bool value) {
-  wall3d_struct_set_logical(fortran_ptr_, 0, value);
-}
-int Wall3dStruct::ele_anchor_pt() const {
-  int value;
-  wall3d_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void Wall3dStruct::set_ele_anchor_pt(int value) {
-  wall3d_struct_set_integer(fortran_ptr_, 3, value);
-}
-Wall3dSectionStructAlloc1D Wall3dStruct::section() const {
-  return Wall3dSectionStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      wall3d_struct_reallocate_section,
-      wall3d_struct_get_section_info
-  );
-}
-int RamperLordStruct::ix_ele() const {
-  int value;
-  ramper_lord_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void RamperLordStruct::set_ix_ele(int value) {
-  ramper_lord_struct_set_integer(fortran_ptr_, 0, value);
-}
-int RamperLordStruct::ix_con() const {
-  int value;
-  ramper_lord_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void RamperLordStruct::set_ix_con(int value) {
-  ramper_lord_struct_set_integer(fortran_ptr_, 1, value);
-}
-std::optional<double> RamperLordStruct::attrib_ptr() const {
+std::optional<double> AllEncompassingStruct::real_rp_0d_ptr() const {
   double value;
   bool is_valid;
-  ramper_lord_struct_get_attrib_ptr(fortran_ptr_, &value, &is_valid);
+  all_encompassing_struct_get_real_rp_0d_ptr(fortran_ptr_, &value, &is_valid);
   if (is_valid)
     return value;
   return std::nullopt;
 }
-void RamperLordStruct::set_attrib_ptr(double value) {
-  ramper_lord_struct_set_attrib_ptr(fortran_ptr_, value);
+void AllEncompassingStruct::set_real_rp_0d_ptr(double value) {
+  all_encompassing_struct_set_real_rp_0d_ptr(fortran_ptr_, value);
 }
-double ControlStruct::value() const {
-  double value;
-  control_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+FArray1D<double> AllEncompassingStruct::real_rp_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_rp_1d_ptr_info
+  );
 }
-void ControlStruct::set_value(double value) { control_struct_set_real(fortran_ptr_, 0, value); }
-RealAlloc1D ControlStruct::y_knot() const {
+void AllEncompassingStruct::set_real_rp_1d_ptr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_rp_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> AllEncompassingStruct::real_rp_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_rp_2d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_real_rp_2d_ptr(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d_ptr, v);
+}
+FArray3D<double> AllEncompassingStruct::real_rp_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_rp_3d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_real_rp_3d_ptr(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d_ptr, v);
+}
+RealAlloc1D AllEncompassingStruct::real_rp_1d_alloc() const {
   return RealAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      control_struct_reallocate_y_knot,
-      control_struct_get_y_knot_info
+      all_encompassing_struct_reallocate_real_rp_1d_alloc,
+      all_encompassing_struct_get_real_rp_1d_alloc_info
   );
 }
-void ControlStruct::set_y_knot(const std::vector<double> &v) {
+void AllEncompassingStruct::set_real_rp_1d_alloc(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  control_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+  all_encompassing_struct_set_real_rp_1d_alloc(fortran_ptr_, v.data(), shape);
 }
-ExpressionAtomStructAlloc1D ControlStruct::stack() const {
-  return ExpressionAtomStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      control_struct_reallocate_stack,
-      control_struct_get_stack_info
+FArray2D<double> AllEncompassingStruct::real_rp_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_rp_2d_alloc_info
   );
 }
-LatEleLocStruct ControlStruct::slave() const {
-  void *ptr;
-  control_struct_get_slave(fortran_ptr_, &ptr);
-  return LatEleLocStruct(ptr);
+void AllEncompassingStruct::set_real_rp_2d_alloc(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d_alloc, v);
 }
-void ControlStruct::set_slave(const LatEleLocStruct &src) {
-  control_struct_set_slave(fortran_ptr_, src.get_fortran_ptr());
+FArray3D<double> AllEncompassingStruct::real_rp_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_rp_3d_alloc_info
+  );
 }
-LatEleLocStruct ControlStruct::lord() const {
-  void *ptr;
-  control_struct_get_lord(fortran_ptr_, &ptr);
-  return LatEleLocStruct(ptr);
+void AllEncompassingStruct::set_real_rp_3d_alloc(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d_alloc, v);
 }
-void ControlStruct::set_lord(const LatEleLocStruct &src) {
-  control_struct_set_lord(fortran_ptr_, src.get_fortran_ptr());
+double AllEncompassingStruct::real_dp_0d() const {
+  double value;
+  all_encompassing_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-std::string ControlStruct::slave_name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_struct_get_slave_name_info);
-  return std::string(arr.data(), arr.size());
+void AllEncompassingStruct::set_real_dp_0d(double value) {
+  all_encompassing_struct_set_real(fortran_ptr_, 1, value);
 }
-void ControlStruct::set_slave_name(const std::string &value) {
-  control_struct_set_slave_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+FArray1D<double> AllEncompassingStruct::real_dp_1d() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_1d_info
+  );
 }
-std::string ControlStruct::attribute() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_struct_get_attribute_info);
-  return std::string(arr.data(), arr.size());
+void AllEncompassingStruct::set_real_dp_1d(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d(fortran_ptr_, v.data(), shape);
 }
-void ControlStruct::set_attribute(const std::string &value) {
-  control_struct_set_attribute(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+FArray2D<double> AllEncompassingStruct::real_dp_2d() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_2d_info
+  );
 }
-int ControlStruct::ix_attrib() const {
+void AllEncompassingStruct::set_real_dp_2d(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d, v);
+}
+FArray3D<double> AllEncompassingStruct::real_dp_3d() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_3d_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d, v);
+}
+std::optional<double> AllEncompassingStruct::real_dp_0d_ptr() const {
+  double value;
+  bool is_valid;
+  all_encompassing_struct_get_real_dp_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_real_dp_0d_ptr(double value) {
+  all_encompassing_struct_set_real_dp_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<double> AllEncompassingStruct::real_dp_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_1d_ptr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> AllEncompassingStruct::real_dp_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_2d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_2d_ptr(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d_ptr, v);
+}
+FArray3D<double> AllEncompassingStruct::real_dp_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_3d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_3d_ptr(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d_ptr, v);
+}
+RealAlloc1D AllEncompassingStruct::real_dp_1d_alloc() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      all_encompassing_struct_reallocate_real_dp_1d_alloc,
+      all_encompassing_struct_get_real_dp_1d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_1d_alloc(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_real_dp_1d_alloc(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> AllEncompassingStruct::real_dp_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_2d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_2d_alloc(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d_alloc, v);
+}
+FArray3D<double> AllEncompassingStruct::real_dp_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<double>(
+      fortran_ptr_,
+      all_encompassing_struct_get_real_dp_3d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_real_dp_3d_alloc(
+    const std::vector<std::vector<std::vector<double>>> &v
+) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d_alloc, v);
+}
+std::complex<double> AllEncompassingStruct::complex_dp_0d() const {
+  std::complex<double> value;
+  all_encompassing_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void AllEncompassingStruct::set_complex_dp_0d(std::complex<double> value) {
+  all_encompassing_struct_set_complex(fortran_ptr_, 0, value);
+}
+FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d() const {
+  return ProxyHelpers::get_array_1d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_1d_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_1d(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d(fortran_ptr_, v.data(), shape);
+}
+FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d() const {
+  return ProxyHelpers::get_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_2d_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_2d(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  ProxyHelpers::set_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_2d,
+      v
+  );
+}
+FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d() const {
+  return ProxyHelpers::get_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_3d_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_3d(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  ProxyHelpers::set_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_3d,
+      v
+  );
+}
+std::optional<std::complex<double>> AllEncompassingStruct::complex_dp_0d_ptr() const {
+  std::complex<double> val;
+  bool is_valid;
+  all_encompassing_struct_get_complex_dp_0d_ptr(
+      fortran_ptr_,
+      reinterpret_cast<double _Complex *>(&val),
+      &is_valid
+  );
+  if (is_valid)
+    return val;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_complex_dp_0d_ptr(std::complex<double> value) {
+  all_encompassing_struct_set_complex_dp_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_1d_ptr(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_2d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_2d_ptr(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  ProxyHelpers::set_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_2d_ptr,
+      v
+  );
+}
+FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_3d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_3d_ptr(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  ProxyHelpers::set_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_3d_ptr,
+      v
+  );
+}
+ComplexAlloc1D AllEncompassingStruct::complex_dp_1d_alloc() const {
+  return ComplexAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      all_encompassing_struct_reallocate_complex_dp_1d_alloc,
+      all_encompassing_struct_get_complex_dp_1d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_1d_alloc(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_complex_dp_1d_alloc(fortran_ptr_, v.data(), shape);
+}
+FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_2d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_2d_alloc(
+    const std::vector<std::vector<std::complex<double>>> &v
+) {
+  ProxyHelpers::set_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_2d_alloc,
+      v
+  );
+}
+FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_get_complex_dp_3d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_complex_dp_3d_alloc(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  ProxyHelpers::set_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      all_encompassing_struct_set_complex_dp_3d_alloc,
+      v
+  );
+}
+int AllEncompassingStruct::int_0d() const {
   int value;
-  control_struct_get_integer(fortran_ptr_, 0, &value);
+  all_encompassing_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void ControlStruct::set_ix_attrib(int value) { control_struct_set_integer(fortran_ptr_, 0, value); }
-std::string ControlVar1Struct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_var1_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
+void AllEncompassingStruct::set_int_0d(int value) {
+  all_encompassing_struct_set_integer(fortran_ptr_, 0, value);
 }
-void ControlVar1Struct::set_name(const std::string &value) {
-  control_var1_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+FArray1D<int> AllEncompassingStruct::int_1d() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_info);
 }
-double ControlVar1Struct::value() const {
-  double value;
-  control_var1_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void ControlVar1Struct::set_value(double value) {
-  control_var1_struct_set_real(fortran_ptr_, 0, value);
-}
-double ControlVar1Struct::old_value() const {
-  double value;
-  control_var1_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void ControlVar1Struct::set_old_value(double value) {
-  control_var1_struct_set_real(fortran_ptr_, 1, value);
-}
-RealAlloc1D ControlRamp1Struct::y_knot() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      control_ramp1_struct_reallocate_y_knot,
-      control_ramp1_struct_get_y_knot_info
-  );
-}
-void ControlRamp1Struct::set_y_knot(const std::vector<double> &v) {
+void AllEncompassingStruct::set_int_1d(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  control_ramp1_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+  all_encompassing_struct_set_int_1d(fortran_ptr_, v.data(), shape);
 }
-ExpressionAtomStructAlloc1D ControlRamp1Struct::stack() const {
-  return ExpressionAtomStructAlloc1D(
+FArray2D<int> AllEncompassingStruct::int_2d() const {
+  return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_info);
+}
+void AllEncompassingStruct::set_int_2d(const std::vector<std::vector<int>> &v) {
+  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d, v);
+}
+FArray3D<int> AllEncompassingStruct::int_3d() const {
+  return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_info);
+}
+void AllEncompassingStruct::set_int_3d(const std::vector<std::vector<std::vector<int>>> &v) {
+  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d, v);
+}
+std::optional<int> AllEncompassingStruct::int_0d_ptr() const {
+  int value;
+  bool is_valid;
+  all_encompassing_struct_get_int_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_int_0d_ptr(int value) {
+  all_encompassing_struct_set_int_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<int> AllEncompassingStruct::int_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_ptr_info);
+}
+void AllEncompassingStruct::set_int_1d_ptr(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int> AllEncompassingStruct::int_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_ptr_info);
+}
+void AllEncompassingStruct::set_int_2d_ptr(const std::vector<std::vector<int>> &v) {
+  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d_ptr, v);
+}
+FArray3D<int> AllEncompassingStruct::int_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_ptr_info);
+}
+void AllEncompassingStruct::set_int_3d_ptr(const std::vector<std::vector<std::vector<int>>> &v) {
+  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d_ptr, v);
+}
+IntAlloc1D AllEncompassingStruct::int_1d_alloc() const {
+  return IntAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      control_ramp1_struct_reallocate_stack,
-      control_ramp1_struct_get_stack_info
+      all_encompassing_struct_reallocate_int_1d_alloc,
+      all_encompassing_struct_get_int_1d_alloc_info
   );
 }
-std::string ControlRamp1Struct::attribute() const {
+void AllEncompassingStruct::set_int_1d_alloc(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int_1d_alloc(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int> AllEncompassingStruct::int_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<int>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int_2d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int_2d_alloc(const std::vector<std::vector<int>> &v) {
+  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d_alloc, v);
+}
+FArray3D<int> AllEncompassingStruct::int_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<int>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int_3d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int_3d_alloc(const std::vector<std::vector<std::vector<int>>> &v) {
+  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d_alloc, v);
+}
+int64_t AllEncompassingStruct::int8_0d() const {
+  int64_t value;
+  all_encompassing_struct_get_integer8(fortran_ptr_, 0, &value);
+  return value;
+}
+void AllEncompassingStruct::set_int8_0d(int64_t value) {
+  all_encompassing_struct_set_integer8(fortran_ptr_, 0, value);
+}
+FArray1D<int64_t> AllEncompassingStruct::int8_1d() const {
+  return ProxyHelpers::get_array_1d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_1d_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d(const std::vector<std::vector<int64_t>> &v) {
+  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d, v);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v) {
+  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d, v);
+}
+std::optional<int64_t> AllEncompassingStruct::int8_0d_ptr() const {
+  int64_t value;
+  bool is_valid;
+  all_encompassing_struct_get_int8_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_int8_0d_ptr(int64_t value) {
+  all_encompassing_struct_set_int8_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<int64_t> AllEncompassingStruct::int8_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d_ptr(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d_ptr(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d_ptr() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d_ptr(const std::vector<std::vector<int64_t>> &v) {
+  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d_ptr, v);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d_ptr(const std::vector<std::vector<std::vector<int64_t>>> &v
+) {
+  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
+}
+Int8Alloc1D AllEncompassingStruct::int8_1d_alloc() const {
+  return Int8Alloc1D(
+      const_cast<void *>(fortran_ptr_),
+      all_encompassing_struct_reallocate_int8_1d_alloc,
+      all_encompassing_struct_get_int8_1d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_1d_alloc(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_encompassing_struct_set_int8_1d_alloc(fortran_ptr_, v.data(), shape);
+}
+FArray2D<int64_t> AllEncompassingStruct::int8_2d_alloc() const {
+  return ProxyHelpers::get_array_2d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_2d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_2d_alloc(const std::vector<std::vector<int64_t>> &v) {
+  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d_alloc, v);
+}
+FArray3D<int64_t> AllEncompassingStruct::int8_3d_alloc() const {
+  return ProxyHelpers::get_array_3d<int64_t>(
+      fortran_ptr_,
+      all_encompassing_struct_get_int8_3d_alloc_info
+  );
+}
+void AllEncompassingStruct::set_int8_3d_alloc(
+    const std::vector<std::vector<std::vector<int64_t>>> &v
+) {
+  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_alloc, v);
+}
+bool AllEncompassingStruct::logical_0d() const {
+  bool value;
+  all_encompassing_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void AllEncompassingStruct::set_logical_0d(bool value) {
+  all_encompassing_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray1D<bool> AllEncompassingStruct::logical_1d() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_1d_info
+  );
+}
+void AllEncompassingStruct::set_logical_1d(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  all_encompassing_struct_set_logical_1d(fortran_ptr_, bv.data(), shape);
+}
+FArray2D<bool> AllEncompassingStruct::logical_2d() const {
+  return ProxyHelpers::get_array_2d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_2d_info
+  );
+}
+void AllEncompassingStruct::set_logical_2d(const std::vector<std::vector<bool>> &v) {
+  int rows = static_cast<int>(v.size());
+  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
+  int shape[] = {cols, rows};
+
+  std::vector<int> flat;
+  flat.reserve(rows * cols);
+  for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) {
+      flat.push_back(v[i][j] ? 1 : 0);
+    }
+  }
+  all_encompassing_struct_set_logical_2d(fortran_ptr_, flat.data(), shape);
+}
+FArray3D<bool> AllEncompassingStruct::logical_3d() const {
+  return ProxyHelpers::get_array_3d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_3d_info
+  );
+}
+void AllEncompassingStruct::set_logical_3d(const std::vector<std::vector<std::vector<bool>>> &v) {
+  int n3 = static_cast<int>(v.size());
+  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
+  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
+  int shape[] = {n1, n2, n3};
+
+  std::vector<int> flat;
+  flat.reserve(n1 * n2 * n3);
+  for (int k = 0; k < n3; ++k) {
+    for (int j = 0; j < n2; ++j) {
+      for (int i = 0; i < n1; ++i) {
+        flat.push_back(v[k][j][i] ? 1 : 0);
+      }
+    }
+  }
+  all_encompassing_struct_set_logical_3d(fortran_ptr_, flat.data(), shape);
+}
+std::optional<bool> AllEncompassingStruct::logical_0d_ptr() const {
+  bool value;
+  bool is_valid;
+  all_encompassing_struct_get_logical_0d_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllEncompassingStruct::set_logical_0d_ptr(bool value) {
+  all_encompassing_struct_set_logical_0d_ptr(fortran_ptr_, value);
+}
+FArray1D<bool> AllEncompassingStruct::logical_1d_ptr() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      all_encompassing_struct_get_logical_1d_ptr_info
+  );
+}
+void AllEncompassingStruct::set_logical_1d_ptr(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  all_encompassing_struct_set_logical_1d_ptr(fortran_ptr_, bv.data(), shape);
+}
+TestSubStruct AllEncompassingStruct::type_0d() const {
+  void *ptr;
+  all_encompassing_struct_get_type_0d(fortran_ptr_, &ptr);
+  return TestSubStruct(ptr);
+}
+void AllEncompassingStruct::set_type_0d(const TestSubStruct &src) {
+  all_encompassing_struct_set_type_0d(fortran_ptr_, src.get_fortran_ptr());
+}
+TestSubStructArray1D AllEncompassingStruct::type_1d() const {
+  return ProxyHelpers::get_type_array_1d<TestSubStructArray1D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_1d_info
+  );
+}
+TestSubStructArray2D AllEncompassingStruct::type_2d() const {
+  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_2d_info
+  );
+}
+TestSubStructArray3D AllEncompassingStruct::type_3d() const {
+  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_3d_info
+  );
+}
+std::optional<TestSubStruct> AllEncompassingStruct::type_0d_ptr() const {
+  void *ptr;
+  all_encompassing_struct_get_type_0d_ptr(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TestSubStruct(ptr);
+}
+void AllEncompassingStruct::set_type_0d_ptr(const TestSubStruct &src) {
+  all_encompassing_struct_set_type_0d_ptr(fortran_ptr_, src.get_fortran_ptr());
+}
+TestSubStructArray1D AllEncompassingStruct::type_1d_ptr() const {
+  return ProxyHelpers::get_type_array_1d<TestSubStructArray1D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_1d_ptr_info
+  );
+}
+TestSubStructArray2D AllEncompassingStruct::type_2d_ptr() const {
+  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_2d_ptr_info
+  );
+}
+TestSubStructArray3D AllEncompassingStruct::type_3d_ptr() const {
+  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_3d_ptr_info
+  );
+}
+TestSubStructAlloc1D AllEncompassingStruct::type_1d_alloc() const {
+  return TestSubStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      all_encompassing_struct_reallocate_type_1d_alloc,
+      all_encompassing_struct_get_type_1d_alloc_info
+  );
+}
+TestSubStructArray2D AllEncompassingStruct::type_2d_alloc() const {
+  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_2d_alloc_info
+  );
+}
+TestSubStructArray3D AllEncompassingStruct::type_3d_alloc() const {
+  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
+      fortran_ptr_,
+      all_encompassing_struct_get_type_3d_alloc_info
+  );
+}
+std::optional<double> AllPointerStruct::r() const {
+  double value;
+  bool is_valid;
+  all_pointer_struct_get_r(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_r(double value) { all_pointer_struct_set_r(fortran_ptr_, value); }
+std::optional<long double> AllPointerStruct::q() const {
+  long double value;
+  bool is_valid;
+  all_pointer_struct_get_q(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_q(long double value) { all_pointer_struct_set_q(fortran_ptr_, value); }
+std::optional<int> AllPointerStruct::i() const {
+  int value;
+  bool is_valid;
+  all_pointer_struct_get_i(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_i(int value) { all_pointer_struct_set_i(fortran_ptr_, value); }
+std::optional<bool> AllPointerStruct::l() const {
+  bool value;
+  bool is_valid;
+  all_pointer_struct_get_l(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void AllPointerStruct::set_l(bool value) { all_pointer_struct_set_l(fortran_ptr_, value); }
+FArray1D<double> AllPointerStruct::r1() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, all_pointer_struct_get_r1_info);
+}
+void AllPointerStruct::set_r1(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_pointer_struct_set_r1(fortran_ptr_, v.data(), shape);
+}
+FArray1D<int> AllPointerStruct::i1() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_pointer_struct_get_i1_info);
+}
+void AllPointerStruct::set_i1(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  all_pointer_struct_set_i1(fortran_ptr_, v.data(), shape);
+}
+double AnormalModeStruct::emittance() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void AnormalModeStruct::set_emittance(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 0, value);
+}
+double AnormalModeStruct::emittance_no_vert() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void AnormalModeStruct::set_emittance_no_vert(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 1, value);
+}
+FArray1D<double> AnormalModeStruct::synch_int() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, anormal_mode_struct_get_synch_int_info);
+}
+void AnormalModeStruct::set_synch_int(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  anormal_mode_struct_set_synch_int(fortran_ptr_, v.data(), shape);
+}
+double AnormalModeStruct::j_damp() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void AnormalModeStruct::set_j_damp(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 2, value);
+}
+double AnormalModeStruct::alpha_damp() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void AnormalModeStruct::set_alpha_damp(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 3, value);
+}
+double AnormalModeStruct::chrom() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void AnormalModeStruct::set_chrom(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 4, value);
+}
+double AnormalModeStruct::tune() const {
+  double value;
+  anormal_mode_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void AnormalModeStruct::set_tune(double value) {
+  anormal_mode_struct_set_real(fortran_ptr_, 5, value);
+}
+double ApertureParamStruct::min_angle() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ApertureParamStruct::set_min_angle(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 0, value);
+}
+double ApertureParamStruct::max_angle() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void ApertureParamStruct::set_max_angle(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 1, value);
+}
+int ApertureParamStruct::n_angle() const {
+  int value;
+  aperture_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ApertureParamStruct::set_n_angle(int value) {
+  aperture_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+int ApertureParamStruct::n_turn() const {
+  int value;
+  aperture_param_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void ApertureParamStruct::set_n_turn(int value) {
+  aperture_param_struct_set_integer(fortran_ptr_, 1, value);
+}
+double ApertureParamStruct::x_init() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void ApertureParamStruct::set_x_init(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 2, value);
+}
+double ApertureParamStruct::y_init() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void ApertureParamStruct::set_y_init(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 3, value);
+}
+double ApertureParamStruct::rel_accuracy() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void ApertureParamStruct::set_rel_accuracy(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 4, value);
+}
+double ApertureParamStruct::abs_accuracy() const {
+  double value;
+  aperture_param_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void ApertureParamStruct::set_abs_accuracy(double value) {
+  aperture_param_struct_set_real(fortran_ptr_, 5, value);
+}
+std::string ApertureParamStruct::start_ele() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_ramp1_struct_get_attribute_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, aperture_param_struct_get_start_ele_info);
   return std::string(arr.data(), arr.size());
 }
-void ControlRamp1Struct::set_attribute(const std::string &value) {
-  control_ramp1_struct_set_attribute(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string ControlRamp1Struct::slave_name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_ramp1_struct_get_slave_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void ControlRamp1Struct::set_slave_name(const std::string &value) {
-  control_ramp1_struct_set_slave_name(
+void ApertureParamStruct::set_start_ele(const std::string &value) {
+  aperture_param_struct_set_start_ele(
       fortran_ptr_,
       value.c_str(),
       static_cast<int>(value.length())
   );
 }
-bool ControlRamp1Struct::is_controller() const {
+double AperturePointStruct::x() const {
+  double value;
+  aperture_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void AperturePointStruct::set_x(double value) {
+  aperture_point_struct_set_real(fortran_ptr_, 0, value);
+}
+double AperturePointStruct::y() const {
+  double value;
+  aperture_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void AperturePointStruct::set_y(double value) {
+  aperture_point_struct_set_real(fortran_ptr_, 1, value);
+}
+int AperturePointStruct::plane() const {
+  int value;
+  aperture_point_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void AperturePointStruct::set_plane(int value) {
+  aperture_point_struct_set_integer(fortran_ptr_, 0, value);
+}
+int AperturePointStruct::ix_ele() const {
+  int value;
+  aperture_point_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void AperturePointStruct::set_ix_ele(int value) {
+  aperture_point_struct_set_integer(fortran_ptr_, 1, value);
+}
+int AperturePointStruct::i_turn() const {
+  int value;
+  aperture_point_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void AperturePointStruct::set_i_turn(int value) {
+  aperture_point_struct_set_integer(fortran_ptr_, 2, value);
+}
+AperturePointStructAlloc1D ApertureScanStruct::point() const {
+  return AperturePointStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      aperture_scan_struct_reallocate_point,
+      aperture_scan_struct_get_point_info
+  );
+}
+CoordStruct ApertureScanStruct::ref_orb() const {
+  void *ptr;
+  aperture_scan_struct_get_ref_orb(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void ApertureScanStruct::set_ref_orb(const CoordStruct &src) {
+  aperture_scan_struct_set_ref_orb(fortran_ptr_, src.get_fortran_ptr());
+}
+double ApertureScanStruct::pz_start() const {
+  double value;
+  aperture_scan_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ApertureScanStruct::set_pz_start(double value) {
+  aperture_scan_struct_set_real(fortran_ptr_, 0, value);
+}
+int AstraLatticeParamStruct::fieldmap_dimension() const {
+  int value;
+  astra_lattice_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void AstraLatticeParamStruct::set_fieldmap_dimension(int value) {
+  astra_lattice_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string BaseLineEleStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, base_line_ele_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void BaseLineEleStruct::set_name(const std::string &value) {
+  base_line_ele_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string BaseLineEleStruct::tag() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, base_line_ele_struct_get_tag_info);
+  return std::string(arr.data(), arr.size());
+}
+void BaseLineEleStruct::set_tag(const std::string &value) {
+  base_line_ele_struct_set_tag(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BaseLineEleStruct::ix_multi() const {
+  int value;
+  base_line_ele_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BaseLineEleStruct::set_ix_multi(int value) {
+  base_line_ele_struct_set_integer(fortran_ptr_, 0, value);
+}
+int BaseLineEleStruct::orientation() const {
+  int value;
+  base_line_ele_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BaseLineEleStruct::set_orientation(int value) {
+  base_line_ele_struct_set_integer(fortran_ptr_, 1, value);
+}
+int BaseLineEleStruct::ix_ele_in_in_lat() const {
+  int value;
+  base_line_ele_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BaseLineEleStruct::set_ix_ele_in_in_lat(int value) {
+  base_line_ele_struct_set_integer(fortran_ptr_, 2, value);
+}
+bool BaseLineEleStruct::ele_order_reflect() const {
   bool value;
-  control_ramp1_struct_get_logical(fortran_ptr_, 0, &value);
+  base_line_ele_struct_get_logical(fortran_ptr_, 0, &value);
   return value;
 }
-void ControlRamp1Struct::set_is_controller(bool value) {
-  control_ramp1_struct_set_logical(fortran_ptr_, 0, value);
+void BaseLineEleStruct::set_ele_order_reflect(bool value) {
+  base_line_ele_struct_set_logical(fortran_ptr_, 0, value);
 }
-ControlVar1StructAlloc1D ControllerStruct::var() const {
-  return ControlVar1StructAlloc1D(
+BunchStructAlloc1D BbuBeamStruct::bunch() const {
+  return BunchStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      controller_struct_reallocate_var,
-      controller_struct_get_var_info
+      bbu_beam_struct_reallocate_bunch,
+      bbu_beam_struct_get_bunch_info
   );
 }
-ControlRamp1StructAlloc1D ControllerStruct::ramp() const {
-  return ControlRamp1StructAlloc1D(
+BbuStageStructAlloc1D BbuBeamStruct::stage() const {
+  return BbuStageStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      controller_struct_reallocate_ramp,
-      controller_struct_get_ramp_info
+      bbu_beam_struct_reallocate_stage,
+      bbu_beam_struct_get_stage_info
   );
 }
-RamperLordStructAlloc1D ControllerStruct::ramper_lord() const {
-  return RamperLordStructAlloc1D(
+IntAlloc1D BbuBeamStruct::ix_ele_bunch() const {
+  return IntAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      controller_struct_reallocate_ramper_lord,
-      controller_struct_get_ramper_lord_info
+      bbu_beam_struct_reallocate_ix_ele_bunch,
+      bbu_beam_struct_get_ix_ele_bunch_info
   );
 }
-RealAlloc1D ControllerStruct::x_knot() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      controller_struct_reallocate_x_knot,
-      controller_struct_get_x_knot_info
-  );
-}
-void ControllerStruct::set_x_knot(const std::vector<double> &v) {
+void BbuBeamStruct::set_ix_ele_bunch(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  controller_struct_set_x_knot(fortran_ptr_, v.data(), shape);
+  bbu_beam_struct_set_ix_ele_bunch(fortran_ptr_, v.data(), shape);
 }
-int EllipseBeamInitStruct::part_per_ellipse() const {
+int BbuBeamStruct::ix_bunch_head() const {
   int value;
-  ellipse_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
+  bbu_beam_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void EllipseBeamInitStruct::set_part_per_ellipse(int value) {
-  ellipse_beam_init_struct_set_integer(fortran_ptr_, 0, value);
+void BbuBeamStruct::set_ix_bunch_head(int value) {
+  bbu_beam_struct_set_integer(fortran_ptr_, 0, value);
 }
-int EllipseBeamInitStruct::n_ellipse() const {
+int BbuBeamStruct::ix_bunch_end() const {
   int value;
-  ellipse_beam_init_struct_get_integer(fortran_ptr_, 1, &value);
+  bbu_beam_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void EllipseBeamInitStruct::set_n_ellipse(int value) {
-  ellipse_beam_init_struct_set_integer(fortran_ptr_, 1, value);
+void BbuBeamStruct::set_ix_bunch_end(int value) {
+  bbu_beam_struct_set_integer(fortran_ptr_, 1, value);
 }
-double EllipseBeamInitStruct::sigma_cutoff() const {
+int BbuBeamStruct::n_bunch_in_lat() const {
+  int value;
+  bbu_beam_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuBeamStruct::set_n_bunch_in_lat(int value) {
+  bbu_beam_struct_set_integer(fortran_ptr_, 2, value);
+}
+int BbuBeamStruct::ix_stage_voltage_max() const {
+  int value;
+  bbu_beam_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuBeamStruct::set_ix_stage_voltage_max(int value) {
+  bbu_beam_struct_set_integer(fortran_ptr_, 3, value);
+}
+double BbuBeamStruct::hom_voltage_max() const {
   double value;
-  ellipse_beam_init_struct_get_real(fortran_ptr_, 0, &value);
+  bbu_beam_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void EllipseBeamInitStruct::set_sigma_cutoff(double value) {
-  ellipse_beam_init_struct_set_real(fortran_ptr_, 0, value);
+void BbuBeamStruct::set_hom_voltage_max(double value) {
+  bbu_beam_struct_set_real(fortran_ptr_, 0, value);
 }
-FArray1D<int> KvBeamInitStruct::part_per_phi() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, kv_beam_init_struct_get_part_per_phi_info);
+double BbuBeamStruct::time_now() const {
+  double value;
+  bbu_beam_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-void KvBeamInitStruct::set_part_per_phi(const std::vector<int> &v) {
+void BbuBeamStruct::set_time_now(double value) { bbu_beam_struct_set_real(fortran_ptr_, 1, value); }
+double BbuBeamStruct::one_turn_time() const {
+  double value;
+  bbu_beam_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuBeamStruct::set_one_turn_time(double value) {
+  bbu_beam_struct_set_real(fortran_ptr_, 2, value);
+}
+double BbuBeamStruct::rf_wavelength_max() const {
+  double value;
+  bbu_beam_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuBeamStruct::set_rf_wavelength_max(double value) {
+  bbu_beam_struct_set_real(fortran_ptr_, 3, value);
+}
+std::string BbuParamStruct::lat_filename() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_lat_filename_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamStruct::set_lat_filename(const std::string &value) {
+  bbu_param_struct_set_lat_filename(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string BbuParamStruct::lat2_filename() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_lat2_filename_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamStruct::set_lat2_filename(const std::string &value) {
+  bbu_param_struct_set_lat2_filename(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string BbuParamStruct::bunch_by_bunch_info_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      bbu_param_struct_get_bunch_by_bunch_info_file_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamStruct::set_bunch_by_bunch_info_file(const std::string &value) {
+  bbu_param_struct_set_bunch_by_bunch_info_file(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+bool BbuParamStruct::hybridize() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void BbuParamStruct::set_hybridize(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool BbuParamStruct::write_digested_hybrid_lat() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void BbuParamStruct::set_write_digested_hybrid_lat(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool BbuParamStruct::write_voltage_vs_time_dat() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuParamStruct::set_write_voltage_vs_time_dat(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool BbuParamStruct::keep_overlays_and_groups() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuParamStruct::set_keep_overlays_and_groups(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool BbuParamStruct::keep_all_lcavities() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void BbuParamStruct::set_keep_all_lcavities(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool BbuParamStruct::use_taylor_for_hybrids() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void BbuParamStruct::set_use_taylor_for_hybrids(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool BbuParamStruct::stable_orbit_anal() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void BbuParamStruct::set_stable_orbit_anal(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 6, value);
+}
+double BbuParamStruct::limit_factor() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void BbuParamStruct::set_limit_factor(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 0, value);
+}
+double BbuParamStruct::simulation_turns_max() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void BbuParamStruct::set_simulation_turns_max(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 1, value);
+}
+double BbuParamStruct::bunch_freq() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuParamStruct::set_bunch_freq(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 2, value);
+}
+double BbuParamStruct::init_particle_offset() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuParamStruct::set_init_particle_offset(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 3, value);
+}
+double BbuParamStruct::current() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void BbuParamStruct::set_current(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 4, value);
+}
+double BbuParamStruct::rel_tol() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void BbuParamStruct::set_rel_tol(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 5, value);
+}
+bool BbuParamStruct::drscan() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void BbuParamStruct::set_drscan(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool BbuParamStruct::use_interpolated_threshold() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void BbuParamStruct::set_use_interpolated_threshold(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 8, value);
+}
+bool BbuParamStruct::write_hom_info() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 9, &value);
+  return value;
+}
+void BbuParamStruct::set_write_hom_info(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 9, value);
+}
+int BbuParamStruct::elindex() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BbuParamStruct::set_elindex(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string BbuParamStruct::elname() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_elname_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamStruct::set_elname(const std::string &value) {
+  bbu_param_struct_set_elname(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BbuParamStruct::nstep() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BbuParamStruct::set_nstep(int value) { bbu_param_struct_set_integer(fortran_ptr_, 1, value); }
+double BbuParamStruct::begdr() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void BbuParamStruct::set_begdr(double value) { bbu_param_struct_set_real(fortran_ptr_, 6, value); }
+double BbuParamStruct::enddr() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void BbuParamStruct::set_enddr(double value) { bbu_param_struct_set_real(fortran_ptr_, 7, value); }
+int BbuParamStruct::nrep() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuParamStruct::set_nrep(int value) { bbu_param_struct_set_integer(fortran_ptr_, 2, value); }
+int BbuParamStruct::ran_seed() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuParamStruct::set_ran_seed(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 3, value);
+}
+int BbuParamStruct::hom_order_cutoff() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BbuParamStruct::set_hom_order_cutoff(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 4, value);
+}
+double BbuParamStruct::ran_gauss_sigma_cut() const {
+  double value;
+  bbu_param_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void BbuParamStruct::set_ran_gauss_sigma_cut(double value) {
+  bbu_param_struct_set_real(fortran_ptr_, 8, value);
+}
+std::string BbuParamStruct::ele_track_end() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_ele_track_end_info);
+  return std::string(arr.data(), arr.size());
+}
+void BbuParamStruct::set_ele_track_end(const std::string &value) {
+  bbu_param_struct_set_ele_track_end(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BbuParamStruct::ix_ele_track_end() const {
+  int value;
+  bbu_param_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BbuParamStruct::set_ix_ele_track_end(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 5, value);
+}
+bool BbuParamStruct::regression() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 10, &value);
+  return value;
+}
+void BbuParamStruct::set_regression(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 10, value);
+}
+bool BbuParamStruct::normalize_z_to_rf() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 11, &value);
+  return value;
+}
+void BbuParamStruct::set_normalize_z_to_rf(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 11, value);
+}
+bool BbuParamStruct::ramp_on() const {
+  bool value;
+  bbu_param_struct_get_logical(fortran_ptr_, 12, &value);
+  return value;
+}
+void BbuParamStruct::set_ramp_on(bool value) {
+  bbu_param_struct_set_logical(fortran_ptr_, 12, value);
+}
+FArray1D<double> BbuParamStruct::ramp_pattern() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_param_struct_get_ramp_pattern_info);
+}
+void BbuParamStruct::set_ramp_pattern(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  kv_beam_init_struct_set_part_per_phi(fortran_ptr_, v.data(), shape);
+  bbu_param_struct_set_ramp_pattern(fortran_ptr_, v.data(), shape);
 }
-int KvBeamInitStruct::n_I2() const {
+int BbuParamStruct::ramp_n_start() const {
   int value;
-  kv_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
+  bbu_param_struct_get_integer(fortran_ptr_, 6, &value);
   return value;
 }
-void KvBeamInitStruct::set_n_I2(int value) {
-  kv_beam_init_struct_set_integer(fortran_ptr_, 0, value);
+void BbuParamStruct::set_ramp_n_start(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 6, value);
 }
-double KvBeamInitStruct::A() const {
-  double value;
-  kv_beam_init_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void KvBeamInitStruct::set_A(double value) { kv_beam_init_struct_set_real(fortran_ptr_, 0, value); }
-int GridBeamInitStruct::n_x() const {
+int BbuParamStruct::n_ramp_pattern() const {
   int value;
-  grid_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
+  bbu_param_struct_get_integer(fortran_ptr_, 7, &value);
   return value;
 }
-void GridBeamInitStruct::set_n_x(int value) {
-  grid_beam_init_struct_set_integer(fortran_ptr_, 0, value);
+void BbuParamStruct::set_n_ramp_pattern(int value) {
+  bbu_param_struct_set_integer(fortran_ptr_, 7, value);
 }
-int GridBeamInitStruct::n_px() const {
+int BbuStageStruct::ix_ele_lr_wake() const {
   int value;
-  grid_beam_init_struct_get_integer(fortran_ptr_, 1, &value);
+  bbu_stage_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void GridBeamInitStruct::set_n_px(int value) {
-  grid_beam_init_struct_set_integer(fortran_ptr_, 1, value);
+void BbuStageStruct::set_ix_ele_lr_wake(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 0, value);
 }
-double GridBeamInitStruct::x_min() const {
+int BbuStageStruct::ix_ele_stage_end() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BbuStageStruct::set_ix_ele_stage_end(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 1, value);
+}
+int BbuStageStruct::ix_pass() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BbuStageStruct::set_ix_pass(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 2, value);
+}
+int BbuStageStruct::ix_stage_pass1() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BbuStageStruct::set_ix_stage_pass1(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 3, value);
+}
+int BbuStageStruct::ix_head_bunch() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BbuStageStruct::set_ix_head_bunch(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 4, value);
+}
+int BbuStageStruct::ix_hom_max() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BbuStageStruct::set_ix_hom_max(int value) {
+  bbu_stage_struct_set_integer(fortran_ptr_, 5, value);
+}
+double BbuStageStruct::hom_voltage_max() const {
   double value;
-  grid_beam_init_struct_get_real(fortran_ptr_, 0, &value);
+  bbu_stage_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void GridBeamInitStruct::set_x_min(double value) {
-  grid_beam_init_struct_set_real(fortran_ptr_, 0, value);
+void BbuStageStruct::set_hom_voltage_max(double value) {
+  bbu_stage_struct_set_real(fortran_ptr_, 0, value);
 }
-double GridBeamInitStruct::x_max() const {
+double BbuStageStruct::time_at_wake_ele() const {
   double value;
-  grid_beam_init_struct_get_real(fortran_ptr_, 1, &value);
+  bbu_stage_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void GridBeamInitStruct::set_x_max(double value) {
-  grid_beam_init_struct_set_real(fortran_ptr_, 1, value);
+void BbuStageStruct::set_time_at_wake_ele(double value) {
+  bbu_stage_struct_set_real(fortran_ptr_, 1, value);
 }
-double GridBeamInitStruct::px_min() const {
-  double value;
-  grid_beam_init_struct_get_real(fortran_ptr_, 2, &value);
+FArray1D<double> BbuStageStruct::ave_orb() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_ave_orb_info);
+}
+void BbuStageStruct::set_ave_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_ave_orb(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> BbuStageStruct::rms_orb() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_rms_orb_info);
+}
+void BbuStageStruct::set_rms_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_rms_orb(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> BbuStageStruct::min_orb() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_min_orb_info);
+}
+void BbuStageStruct::set_min_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_min_orb(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> BbuStageStruct::max_orb() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_max_orb_info);
+}
+void BbuStageStruct::set_max_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bbu_stage_struct_set_max_orb(fortran_ptr_, v.data(), shape);
+}
+int BbuStageStruct::n_orb() const {
+  int value;
+  bbu_stage_struct_get_integer(fortran_ptr_, 6, &value);
   return value;
 }
-void GridBeamInitStruct::set_px_min(double value) {
-  grid_beam_init_struct_set_real(fortran_ptr_, 2, value);
-}
-double GridBeamInitStruct::px_max() const {
-  double value;
-  grid_beam_init_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void GridBeamInitStruct::set_px_max(double value) {
-  grid_beam_init_struct_set_real(fortran_ptr_, 3, value);
-}
+void BbuStageStruct::set_n_orb(int value) { bbu_stage_struct_set_integer(fortran_ptr_, 6, value); }
 std::string BeamInitStruct::position_file() const {
   FArray1D<char> arr =
       ProxyHelpers::get_array_1d<char>(fortran_ptr_, beam_init_struct_get_position_file_info);
@@ -3389,761 +1812,81 @@ std::string BeamInitStruct::file_name() const {
 void BeamInitStruct::set_file_name(const std::string &value) {
   beam_init_struct_set_file_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-double LatParamStruct::n_part() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatParamStruct::set_n_part(double value) { lat_param_struct_set_real(fortran_ptr_, 0, value); }
-double LatParamStruct::total_length() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void LatParamStruct::set_total_length(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 1, value);
-}
-double LatParamStruct::unstable_factor() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void LatParamStruct::set_unstable_factor(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 2, value);
-}
-FArray2D<double> LatParamStruct::t1_with_RF() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_with_RF_info);
-}
-void LatParamStruct::set_t1_with_RF(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, lat_param_struct_set_t1_with_RF, v);
-}
-FArray2D<double> LatParamStruct::t1_no_RF() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_no_RF_info);
-}
-void LatParamStruct::set_t1_no_RF(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, lat_param_struct_set_t1_no_RF, v);
-}
-double LatParamStruct::spin_tune() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void LatParamStruct::set_spin_tune(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 3, value);
-}
-int LatParamStruct::particle() const {
-  int value;
-  lat_param_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatParamStruct::set_particle(int value) {
-  lat_param_struct_set_integer(fortran_ptr_, 0, value);
-}
-int LatParamStruct::default_tracking_species() const {
-  int value;
-  lat_param_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void LatParamStruct::set_default_tracking_species(int value) {
-  lat_param_struct_set_integer(fortran_ptr_, 1, value);
-}
-int LatParamStruct::geometry() const {
-  int value;
-  lat_param_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void LatParamStruct::set_geometry(int value) {
-  lat_param_struct_set_integer(fortran_ptr_, 2, value);
-}
-int LatParamStruct::ixx() const {
-  int value;
-  lat_param_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void LatParamStruct::set_ixx(int value) { lat_param_struct_set_integer(fortran_ptr_, 3, value); }
-bool LatParamStruct::stable() const {
-  bool value;
-  lat_param_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatParamStruct::set_stable(bool value) {
-  lat_param_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool LatParamStruct::live_branch() const {
-  bool value;
-  lat_param_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void LatParamStruct::set_live_branch(bool value) {
-  lat_param_struct_set_logical(fortran_ptr_, 1, value);
-}
-double LatParamStruct::g1_integral() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void LatParamStruct::set_g1_integral(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 4, value);
-}
-double LatParamStruct::g2_integral() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void LatParamStruct::set_g2_integral(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 5, value);
-}
-double LatParamStruct::g3_integral() const {
-  double value;
-  lat_param_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void LatParamStruct::set_g3_integral(double value) {
-  lat_param_struct_set_real(fortran_ptr_, 6, value);
-}
-BookkeepingStateStruct LatParamStruct::bookkeeping_state() const {
-  void *ptr;
-  lat_param_struct_get_bookkeeping_state(fortran_ptr_, &ptr);
-  return BookkeepingStateStruct(ptr);
-}
-void LatParamStruct::set_bookkeeping_state(const BookkeepingStateStruct &src) {
-  lat_param_struct_set_bookkeeping_state(fortran_ptr_, src.get_fortran_ptr());
-}
-BeamInitStruct LatParamStruct::beam_init() const {
-  void *ptr;
-  lat_param_struct_get_beam_init(fortran_ptr_, &ptr);
-  return BeamInitStruct(ptr);
-}
-void LatParamStruct::set_beam_init(const BeamInitStruct &src) {
-  lat_param_struct_set_beam_init(fortran_ptr_, src.get_fortran_ptr());
-}
-bool ModeInfoStruct::stable() const {
-  bool value;
-  mode_info_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void ModeInfoStruct::set_stable(bool value) {
-  mode_info_struct_set_logical(fortran_ptr_, 0, value);
-}
-double ModeInfoStruct::tune() const {
-  double value;
-  mode_info_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void ModeInfoStruct::set_tune(double value) { mode_info_struct_set_real(fortran_ptr_, 0, value); }
-double ModeInfoStruct::emit() const {
-  double value;
-  mode_info_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void ModeInfoStruct::set_emit(double value) { mode_info_struct_set_real(fortran_ptr_, 1, value); }
-double ModeInfoStruct::chrom() const {
-  double value;
-  mode_info_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void ModeInfoStruct::set_chrom(double value) { mode_info_struct_set_real(fortran_ptr_, 2, value); }
-double ModeInfoStruct::sigma() const {
-  double value;
-  mode_info_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void ModeInfoStruct::set_sigma(double value) { mode_info_struct_set_real(fortran_ptr_, 3, value); }
-double ModeInfoStruct::sigmap() const {
-  double value;
-  mode_info_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void ModeInfoStruct::set_sigmap(double value) { mode_info_struct_set_real(fortran_ptr_, 4, value); }
-int PreTrackerStruct::who() const {
-  int value;
-  pre_tracker_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void PreTrackerStruct::set_who(int value) {
-  pre_tracker_struct_set_integer(fortran_ptr_, 0, value);
-}
-int PreTrackerStruct::ix_ele_start() const {
-  int value;
-  pre_tracker_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void PreTrackerStruct::set_ix_ele_start(int value) {
-  pre_tracker_struct_set_integer(fortran_ptr_, 1, value);
-}
-int PreTrackerStruct::ix_ele_end() const {
-  int value;
-  pre_tracker_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void PreTrackerStruct::set_ix_ele_end(int value) {
-  pre_tracker_struct_set_integer(fortran_ptr_, 2, value);
-}
-std::string PreTrackerStruct::input_file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, pre_tracker_struct_get_input_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void PreTrackerStruct::set_input_file(const std::string &value) {
-  pre_tracker_struct_set_input_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-double AnormalModeStruct::emittance() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void AnormalModeStruct::set_emittance(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 0, value);
-}
-double AnormalModeStruct::emittance_no_vert() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void AnormalModeStruct::set_emittance_no_vert(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<double> AnormalModeStruct::synch_int() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, anormal_mode_struct_get_synch_int_info);
-}
-void AnormalModeStruct::set_synch_int(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  anormal_mode_struct_set_synch_int(fortran_ptr_, v.data(), shape);
-}
-double AnormalModeStruct::j_damp() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void AnormalModeStruct::set_j_damp(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 2, value);
-}
-double AnormalModeStruct::alpha_damp() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void AnormalModeStruct::set_alpha_damp(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 3, value);
-}
-double AnormalModeStruct::chrom() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void AnormalModeStruct::set_chrom(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 4, value);
-}
-double AnormalModeStruct::tune() const {
-  double value;
-  anormal_mode_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void AnormalModeStruct::set_tune(double value) {
-  anormal_mode_struct_set_real(fortran_ptr_, 5, value);
-}
-double LinacNormalModeStruct::i2_E4() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_i2_E4(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 0, value);
-}
-double LinacNormalModeStruct::i3_E7() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_i3_E7(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 1, value);
-}
-double LinacNormalModeStruct::i5a_E6() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_i5a_E6(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 2, value);
-}
-double LinacNormalModeStruct::i5b_E6() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_i5b_E6(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 3, value);
-}
-double LinacNormalModeStruct::sig_E1() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_sig_E1(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 4, value);
-}
-double LinacNormalModeStruct::a_emittance_end() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_a_emittance_end(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 5, value);
-}
-double LinacNormalModeStruct::b_emittance_end() const {
-  double value;
-  linac_normal_mode_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void LinacNormalModeStruct::set_b_emittance_end(double value) {
-  linac_normal_mode_struct_set_real(fortran_ptr_, 6, value);
-}
-FArray1D<double> NormalModesStruct::synch_int() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, normal_modes_struct_get_synch_int_info);
-}
-void NormalModesStruct::set_synch_int(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  normal_modes_struct_set_synch_int(fortran_ptr_, v.data(), shape);
-}
-double NormalModesStruct::sigE_E() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void NormalModesStruct::set_sigE_E(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 0, value);
-}
-double NormalModesStruct::sig_z() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void NormalModesStruct::set_sig_z(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 1, value);
-}
-double NormalModesStruct::e_loss() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void NormalModesStruct::set_e_loss(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 2, value);
-}
-double NormalModesStruct::rf_voltage() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void NormalModesStruct::set_rf_voltage(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 3, value);
-}
-double NormalModesStruct::pz_aperture() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void NormalModesStruct::set_pz_aperture(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 4, value);
-}
-double NormalModesStruct::pz_average() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void NormalModesStruct::set_pz_average(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 5, value);
-}
-double NormalModesStruct::momentum_compaction() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void NormalModesStruct::set_momentum_compaction(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 6, value);
-}
-double NormalModesStruct::dpz_damp() const {
-  double value;
-  normal_modes_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void NormalModesStruct::set_dpz_damp(double value) {
-  normal_modes_struct_set_real(fortran_ptr_, 7, value);
-}
-AnormalModeStruct NormalModesStruct::a() const {
-  void *ptr;
-  normal_modes_struct_get_a(fortran_ptr_, &ptr);
-  return AnormalModeStruct(ptr);
-}
-void NormalModesStruct::set_a(const AnormalModeStruct &src) {
-  normal_modes_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
-}
-AnormalModeStruct NormalModesStruct::b() const {
-  void *ptr;
-  normal_modes_struct_get_b(fortran_ptr_, &ptr);
-  return AnormalModeStruct(ptr);
-}
-void NormalModesStruct::set_b(const AnormalModeStruct &src) {
-  normal_modes_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
-}
-AnormalModeStruct NormalModesStruct::z() const {
-  void *ptr;
-  normal_modes_struct_get_z(fortran_ptr_, &ptr);
-  return AnormalModeStruct(ptr);
-}
-void NormalModesStruct::set_z(const AnormalModeStruct &src) {
-  normal_modes_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
-}
-LinacNormalModeStruct NormalModesStruct::lin() const {
-  void *ptr;
-  normal_modes_struct_get_lin(fortran_ptr_, &ptr);
-  return LinacNormalModeStruct(ptr);
-}
-void NormalModesStruct::set_lin(const LinacNormalModeStruct &src) {
-  normal_modes_struct_set_lin(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray1D<double> EmFieldStruct::E() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_E_info);
-}
-void EmFieldStruct::set_E(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  em_field_struct_set_E(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> EmFieldStruct::B() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_B_info);
-}
-void EmFieldStruct::set_B(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  em_field_struct_set_B(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> EmFieldStruct::dE() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dE_info);
-}
-void EmFieldStruct::set_dE(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, em_field_struct_set_dE, v);
-}
-FArray2D<double> EmFieldStruct::dB() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dB_info);
-}
-void EmFieldStruct::set_dB(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, em_field_struct_set_dB, v);
-}
-double EmFieldStruct::phi() const {
-  double value;
-  em_field_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void EmFieldStruct::set_phi(double value) { em_field_struct_set_real(fortran_ptr_, 0, value); }
-double EmFieldStruct::phi_B() const {
-  double value;
-  em_field_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void EmFieldStruct::set_phi_B(double value) { em_field_struct_set_real(fortran_ptr_, 1, value); }
-FArray1D<double> EmFieldStruct::A() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_A_info);
-}
-void EmFieldStruct::set_A(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  em_field_struct_set_A(fortran_ptr_, v.data(), shape);
-}
-int StrongBeamStruct::ix_slice() const {
-  int value;
-  strong_beam_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void StrongBeamStruct::set_ix_slice(int value) {
-  strong_beam_struct_set_integer(fortran_ptr_, 0, value);
-}
-double StrongBeamStruct::x_center() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void StrongBeamStruct::set_x_center(double value) {
-  strong_beam_struct_set_real(fortran_ptr_, 0, value);
-}
-double StrongBeamStruct::y_center() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void StrongBeamStruct::set_y_center(double value) {
-  strong_beam_struct_set_real(fortran_ptr_, 1, value);
-}
-double StrongBeamStruct::x_sigma() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void StrongBeamStruct::set_x_sigma(double value) {
-  strong_beam_struct_set_real(fortran_ptr_, 2, value);
-}
-double StrongBeamStruct::y_sigma() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void StrongBeamStruct::set_y_sigma(double value) {
-  strong_beam_struct_set_real(fortran_ptr_, 3, value);
-}
-double StrongBeamStruct::dx() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void StrongBeamStruct::set_dx(double value) { strong_beam_struct_set_real(fortran_ptr_, 4, value); }
-double StrongBeamStruct::dy() const {
-  double value;
-  strong_beam_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void StrongBeamStruct::set_dy(double value) { strong_beam_struct_set_real(fortran_ptr_, 5, value); }
-double TrackPointStruct::s_lab() const {
-  double value;
-  track_point_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TrackPointStruct::set_s_lab(double value) {
-  track_point_struct_set_real(fortran_ptr_, 0, value);
-}
-double TrackPointStruct::s_body() const {
-  double value;
-  track_point_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TrackPointStruct::set_s_body(double value) {
-  track_point_struct_set_real(fortran_ptr_, 1, value);
-}
-CoordStruct TrackPointStruct::orb() const {
-  void *ptr;
-  track_point_struct_get_orb(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void TrackPointStruct::set_orb(const CoordStruct &src) {
-  track_point_struct_set_orb(fortran_ptr_, src.get_fortran_ptr());
-}
-EmFieldStruct TrackPointStruct::field() const {
-  void *ptr;
-  track_point_struct_get_field(fortran_ptr_, &ptr);
-  return EmFieldStruct(ptr);
-}
-void TrackPointStruct::set_field(const EmFieldStruct &src) {
-  track_point_struct_set_field(fortran_ptr_, src.get_fortran_ptr());
-}
-StrongBeamStruct TrackPointStruct::strong_beam() const {
-  void *ptr;
-  track_point_struct_get_strong_beam(fortran_ptr_, &ptr);
-  return StrongBeamStruct(ptr);
-}
-void TrackPointStruct::set_strong_beam(const StrongBeamStruct &src) {
-  track_point_struct_set_strong_beam(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray1D<double> TrackPointStruct::vec0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, track_point_struct_get_vec0_info);
-}
-void TrackPointStruct::set_vec0(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  track_point_struct_set_vec0(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> TrackPointStruct::mat6() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, track_point_struct_get_mat6_info);
-}
-void TrackPointStruct::set_mat6(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, track_point_struct_set_mat6, v);
-}
-TrackPointStructAlloc1D TrackStruct::pt() const {
-  return TrackPointStructAlloc1D(
+BunchStructAlloc1D BeamStruct::bunch() const {
+  return BunchStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      track_struct_reallocate_pt,
-      track_struct_get_pt_info
+      beam_struct_reallocate_bunch,
+      beam_struct_get_bunch_info
   );
 }
-double TrackStruct::ds_save() const {
-  double value;
-  track_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TrackStruct::set_ds_save(double value) { track_struct_set_real(fortran_ptr_, 0, value); }
-int TrackStruct::n_pt() const {
-  int value;
-  track_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TrackStruct::set_n_pt(int value) { track_struct_set_integer(fortran_ptr_, 0, value); }
-int TrackStruct::n_bad() const {
-  int value;
-  track_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TrackStruct::set_n_bad(int value) { track_struct_set_integer(fortran_ptr_, 1, value); }
-int TrackStruct::n_ok() const {
-  int value;
-  track_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TrackStruct::set_n_ok(int value) { track_struct_set_integer(fortran_ptr_, 2, value); }
-double SpaceChargeCommonStruct::ds_track_step() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_ds_track_step(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 0, value);
-}
-double SpaceChargeCommonStruct::dt_track_step() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_dt_track_step(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 1, value);
-}
-double SpaceChargeCommonStruct::cathode_strength_cutoff() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_cathode_strength_cutoff(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 2, value);
-}
-double SpaceChargeCommonStruct::rel_tol_tracking() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_rel_tol_tracking(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 3, value);
-}
-double SpaceChargeCommonStruct::abs_tol_tracking() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_abs_tol_tracking(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 4, value);
-}
-double SpaceChargeCommonStruct::beam_chamber_height() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_beam_chamber_height(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 5, value);
-}
-double SpaceChargeCommonStruct::lsc_sigma_cutoff() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_lsc_sigma_cutoff(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 6, value);
-}
-double SpaceChargeCommonStruct::particle_sigma_cutoff() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_particle_sigma_cutoff(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 7, value);
-}
-double SpaceChargeCommonStruct::mesh_growth_factor() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_mesh_growth_factor(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 8, value);
-}
-double SpaceChargeCommonStruct::mesh_shrink_factor() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_mesh_shrink_factor(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 9, value);
-}
-FArray1D<int> SpaceChargeCommonStruct::space_charge_mesh_size() const {
-  return ProxyHelpers::get_array_1d<int>(
+FArray2D<std::complex<double>> BicubicCmplxCoefStruct::coef() const {
+  return ProxyHelpers::get_array_2d<std::complex<double>>(
       fortran_ptr_,
-      space_charge_common_struct_get_space_charge_mesh_size_info
+      bicubic_cmplx_coef_struct_get_coef_info
   );
 }
-void SpaceChargeCommonStruct::set_space_charge_mesh_size(const std::vector<int> &v) {
+void BicubicCmplxCoefStruct::set_coef(const std::vector<std::vector<std::complex<double>>> &v) {
+  ProxyHelpers::set_array_2d<std::complex<double>>(
+      fortran_ptr_,
+      bicubic_cmplx_coef_struct_set_coef,
+      v
+  );
+}
+FArray1D<int> BicubicCmplxCoefStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bicubic_cmplx_coef_struct_get_i_box_info);
+}
+void BicubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  space_charge_common_struct_set_space_charge_mesh_size(fortran_ptr_, v.data(), shape);
+  bicubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
 }
-FArray1D<int> SpaceChargeCommonStruct::csr3d_mesh_size() const {
-  return ProxyHelpers::get_array_1d<int>(
-      fortran_ptr_,
-      space_charge_common_struct_get_csr3d_mesh_size_info
-  );
+FArray2D<double> BicubicCoefStruct::coef() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, bicubic_coef_struct_get_coef_info);
 }
-void SpaceChargeCommonStruct::set_csr3d_mesh_size(const std::vector<int> &v) {
+void BicubicCoefStruct::set_coef(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, bicubic_coef_struct_set_coef, v);
+}
+FArray1D<int> BicubicCoefStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, bicubic_coef_struct_get_i_box_info);
+}
+void BicubicCoefStruct::set_i_box(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  space_charge_common_struct_set_csr3d_mesh_size(fortran_ptr_, v.data(), shape);
+  bicubic_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
 }
-int SpaceChargeCommonStruct::n_bin() const {
-  int value;
-  space_charge_common_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_n_bin(int value) {
-  space_charge_common_struct_set_integer(fortran_ptr_, 0, value);
-}
-int SpaceChargeCommonStruct::particle_bin_span() const {
-  int value;
-  space_charge_common_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_particle_bin_span(int value) {
-  space_charge_common_struct_set_integer(fortran_ptr_, 1, value);
-}
-int SpaceChargeCommonStruct::n_shield_images() const {
-  int value;
-  space_charge_common_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_n_shield_images(int value) {
-  space_charge_common_struct_set_integer(fortran_ptr_, 2, value);
-}
-int SpaceChargeCommonStruct::sc_min_in_bin() const {
-  int value;
-  space_charge_common_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_sc_min_in_bin(int value) {
-  space_charge_common_struct_set_integer(fortran_ptr_, 3, value);
-}
-bool SpaceChargeCommonStruct::lsc_kick_transverse_dependence() const {
-  bool value;
-  space_charge_common_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_lsc_kick_transverse_dependence(bool value) {
-  space_charge_common_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool SpaceChargeCommonStruct::debug() const {
-  bool value;
-  space_charge_common_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_debug(bool value) {
-  space_charge_common_struct_set_logical(fortran_ptr_, 1, value);
-}
-std::string SpaceChargeCommonStruct::diagnostic_output_file() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      space_charge_common_struct_get_diagnostic_output_file_info
-  );
-  return std::string(arr.data(), arr.size());
-}
-void SpaceChargeCommonStruct::set_diagnostic_output_file(const std::string &value) {
-  space_charge_common_struct_set_diagnostic_output_file(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
+RealAlloc1D BinStruct::count() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      bin_struct_reallocate_count,
+      bin_struct_get_count_info
   );
 }
+void BinStruct::set_count(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bin_struct_set_count(fortran_ptr_, v.data(), shape);
+}
+double BinStruct::min() const {
+  double value;
+  bin_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void BinStruct::set_min(double value) { bin_struct_set_real(fortran_ptr_, 0, value); }
+double BinStruct::max() const {
+  double value;
+  bin_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void BinStruct::set_max(double value) { bin_struct_set_real(fortran_ptr_, 1, value); }
+double BinStruct::delta() const {
+  double value;
+  bin_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BinStruct::set_delta(double value) { bin_struct_set_real(fortran_ptr_, 2, value); }
+int BinStruct::n() const {
+  int value;
+  bin_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BinStruct::set_n(int value) { bin_struct_set_integer(fortran_ptr_, 0, value); }
 double BmadCommonStruct::max_aperture_limit() const {
   double value;
   bmad_common_struct_get_real(fortran_ptr_, 0, &value);
@@ -4487,227 +2230,2340 @@ bool BmadCommonStruct::debug() const {
 void BmadCommonStruct::set_debug(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 19, value);
 }
-double RadInt1Struct::i0() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+std::optional<EleStruct> BmadNormalFormStruct::ele_origin() const {
+  void *ptr;
+  bmad_normal_form_struct_get_ele_origin(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
 }
-void RadInt1Struct::set_i0(double value) { rad_int1_struct_set_real(fortran_ptr_, 0, value); }
-double RadInt1Struct::i1() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
+void BmadNormalFormStruct::set_ele_origin(const EleStruct &src) {
+  bmad_normal_form_struct_set_ele_origin(fortran_ptr_, src.get_fortran_ptr());
 }
-void RadInt1Struct::set_i1(double value) { rad_int1_struct_set_real(fortran_ptr_, 1, value); }
-double RadInt1Struct::i2() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void RadInt1Struct::set_i2(double value) { rad_int1_struct_set_real(fortran_ptr_, 2, value); }
-double RadInt1Struct::i3() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void RadInt1Struct::set_i3(double value) { rad_int1_struct_set_real(fortran_ptr_, 3, value); }
-double RadInt1Struct::i4a() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void RadInt1Struct::set_i4a(double value) { rad_int1_struct_set_real(fortran_ptr_, 4, value); }
-double RadInt1Struct::i4b() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void RadInt1Struct::set_i4b(double value) { rad_int1_struct_set_real(fortran_ptr_, 5, value); }
-double RadInt1Struct::i4z() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void RadInt1Struct::set_i4z(double value) { rad_int1_struct_set_real(fortran_ptr_, 6, value); }
-double RadInt1Struct::i5a() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void RadInt1Struct::set_i5a(double value) { rad_int1_struct_set_real(fortran_ptr_, 7, value); }
-double RadInt1Struct::i5b() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void RadInt1Struct::set_i5b(double value) { rad_int1_struct_set_real(fortran_ptr_, 8, value); }
-double RadInt1Struct::i6b() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void RadInt1Struct::set_i6b(double value) { rad_int1_struct_set_real(fortran_ptr_, 9, value); }
-double RadInt1Struct::lin_i2_E4() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 10, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_i2_E4(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 10, value);
-}
-double RadInt1Struct::lin_i3_E7() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 11, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_i3_E7(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 11, value);
-}
-double RadInt1Struct::lin_i5a_E6() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 12, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_i5a_E6(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 12, value);
-}
-double RadInt1Struct::lin_i5b_E6() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 13, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_i5b_E6(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 13, value);
-}
-double RadInt1Struct::lin_norm_emit_a() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 14, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_norm_emit_a(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 14, value);
-}
-double RadInt1Struct::lin_norm_emit_b() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 15, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_norm_emit_b(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 15, value);
-}
-double RadInt1Struct::lin_sig_E() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 16, &value);
-  return value;
-}
-void RadInt1Struct::set_lin_sig_E(double value) {
-  rad_int1_struct_set_real(fortran_ptr_, 16, value);
-}
-double RadInt1Struct::n_steps() const {
-  double value;
-  rad_int1_struct_get_real(fortran_ptr_, 17, &value);
-  return value;
-}
-void RadInt1Struct::set_n_steps(double value) { rad_int1_struct_set_real(fortran_ptr_, 17, value); }
-RadInt1StructAlloc1D RadIntBranchStruct::ele() const {
-  return RadInt1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      rad_int_branch_struct_reallocate_ele,
-      rad_int_branch_struct_get_ele_info
+TaylorStructArray1D BmadNormalFormStruct::M() const {
+  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_M_info
   );
 }
-RadIntBranchStructAlloc1D RadIntAllEleStruct::branch() const {
-  return RadIntBranchStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      rad_int_all_ele_struct_reallocate_branch,
-      rad_int_all_ele_struct_get_branch_info
+TaylorStructArray1D BmadNormalFormStruct::A() const {
+  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_A_info
   );
 }
-double RfStairStepStruct::E_tot0() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+TaylorStructArray1D BmadNormalFormStruct::A_inv() const {
+  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_A_inv_info
+  );
 }
-void RfStairStepStruct::set_E_tot0(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 0, value);
+TaylorStructArray1D BmadNormalFormStruct::dhdj() const {
+  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_dhdj_info
+  );
 }
-double RfStairStepStruct::E_tot1() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
+ComplexTaylorStructArray1D BmadNormalFormStruct::F() const {
+  return ProxyHelpers::get_type_array_1d<ComplexTaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_F_info
+  );
 }
-void RfStairStepStruct::set_E_tot1(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 1, value);
+ComplexTaylorStructArray1D BmadNormalFormStruct::L() const {
+  return ProxyHelpers::get_type_array_1d<ComplexTaylorStructArray1D>(
+      fortran_ptr_,
+      bmad_normal_form_struct_get_L_info
+  );
 }
-double RfStairStepStruct::p0c() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
+ResonanceHStructAlloc1D BmadNormalFormStruct::h() const {
+  return ResonanceHStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      bmad_normal_form_struct_reallocate_h,
+      bmad_normal_form_struct_get_h_info
+  );
 }
-void RfStairStepStruct::set_p0c(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 2, value);
-}
-double RfStairStepStruct::p1c() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void RfStairStepStruct::set_p1c(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 3, value);
-}
-double RfStairStepStruct::scale() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void RfStairStepStruct::set_scale(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 4, value);
-}
-double RfStairStepStruct::time() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void RfStairStepStruct::set_time(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 5, value);
-}
-double RfStairStepStruct::s0() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void RfStairStepStruct::set_s0(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 6, value);
-}
-double RfStairStepStruct::s() const {
-  double value;
-  rf_stair_step_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void RfStairStepStruct::set_s(double value) {
-  rf_stair_step_struct_set_real(fortran_ptr_, 7, value);
-}
-int RfStairStepStruct::ix_step() const {
+int BookkeepingStateStruct::attributes() const {
   int value;
-  rf_stair_step_struct_get_integer(fortran_ptr_, 0, &value);
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void RfStairStepStruct::set_ix_step(int value) {
-  rf_stair_step_struct_set_integer(fortran_ptr_, 0, value);
+void BookkeepingStateStruct::set_attributes(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 0, value);
 }
-RfStairStepStructAlloc1D RfEleStruct::steps() const {
-  return RfStairStepStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      rf_ele_struct_reallocate_steps,
-      rf_ele_struct_get_steps_info
+int BookkeepingStateStruct::control() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_control(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 1, value);
+}
+int BookkeepingStateStruct::floor_position() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_floor_position(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 2, value);
+}
+int BookkeepingStateStruct::s_position() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_s_position(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 3, value);
+}
+int BookkeepingStateStruct::ref_energy() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_ref_energy(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 4, value);
+}
+int BookkeepingStateStruct::mat6() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_mat6(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 5, value);
+}
+int BookkeepingStateStruct::rad_int() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_rad_int(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 6, value);
+}
+int BookkeepingStateStruct::ptc() const {
+  int value;
+  bookkeeping_state_struct_get_integer(fortran_ptr_, 7, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_ptc(int value) {
+  bookkeeping_state_struct_set_integer(fortran_ptr_, 7, value);
+}
+bool BookkeepingStateStruct::has_misalign() const {
+  bool value;
+  bookkeeping_state_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void BookkeepingStateStruct::set_has_misalign(bool value) {
+  bookkeeping_state_struct_set_logical(fortran_ptr_, 0, value);
+}
+double BpmPhaseCouplingStruct::K_22a() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_K_22a(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 0, value);
+}
+double BpmPhaseCouplingStruct::K_12a() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_K_12a(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 1, value);
+}
+double BpmPhaseCouplingStruct::K_11b() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_K_11b(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 2, value);
+}
+double BpmPhaseCouplingStruct::K_12b() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_K_12b(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 3, value);
+}
+double BpmPhaseCouplingStruct::Cbar22_a() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_Cbar22_a(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 4, value);
+}
+double BpmPhaseCouplingStruct::Cbar12_a() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_Cbar12_a(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 5, value);
+}
+double BpmPhaseCouplingStruct::Cbar11_b() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_Cbar11_b(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 6, value);
+}
+double BpmPhaseCouplingStruct::Cbar12_b() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_Cbar12_b(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 7, value);
+}
+double BpmPhaseCouplingStruct::phi_a() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_phi_a(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 8, value);
+}
+double BpmPhaseCouplingStruct::phi_b() const {
+  double value;
+  bpm_phase_coupling_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void BpmPhaseCouplingStruct::set_phi_b(double value) {
+  bpm_phase_coupling_struct_set_real(fortran_ptr_, 9, value);
+}
+std::optional<BranchStruct> BranchPointerStruct::branch() const {
+  void *ptr;
+  branch_pointer_struct_get_branch(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return BranchStruct(ptr);
+}
+void BranchPointerStruct::set_branch(const BranchStruct &src) {
+  branch_pointer_struct_set_branch(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string BranchStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, branch_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void BranchStruct::set_name(const std::string &value) {
+  branch_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int BranchStruct::ix_branch() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BranchStruct::set_ix_branch(int value) { branch_struct_set_integer(fortran_ptr_, 0, value); }
+int BranchStruct::ix_from_branch() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BranchStruct::set_ix_from_branch(int value) {
+  branch_struct_set_integer(fortran_ptr_, 1, value);
+}
+int BranchStruct::ix_from_ele() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BranchStruct::set_ix_from_ele(int value) { branch_struct_set_integer(fortran_ptr_, 2, value); }
+int BranchStruct::ix_to_ele() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BranchStruct::set_ix_to_ele(int value) { branch_struct_set_integer(fortran_ptr_, 3, value); }
+int BranchStruct::ix_fixer() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BranchStruct::set_ix_fixer(int value) { branch_struct_set_integer(fortran_ptr_, 4, value); }
+int BranchStruct::n_ele_track() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BranchStruct::set_n_ele_track(int value) { branch_struct_set_integer(fortran_ptr_, 5, value); }
+int BranchStruct::n_ele_max() const {
+  int value;
+  branch_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void BranchStruct::set_n_ele_max(int value) { branch_struct_set_integer(fortran_ptr_, 6, value); }
+std::optional<LatStruct> BranchStruct::lat() const {
+  void *ptr;
+  branch_struct_get_lat(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return LatStruct(ptr);
+}
+void BranchStruct::set_lat(const LatStruct &src) {
+  branch_struct_set_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+ModeInfoStruct BranchStruct::a() const {
+  void *ptr;
+  branch_struct_get_a(fortran_ptr_, &ptr);
+  return ModeInfoStruct(ptr);
+}
+void BranchStruct::set_a(const ModeInfoStruct &src) {
+  branch_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
+}
+ModeInfoStruct BranchStruct::b() const {
+  void *ptr;
+  branch_struct_get_b(fortran_ptr_, &ptr);
+  return ModeInfoStruct(ptr);
+}
+void BranchStruct::set_b(const ModeInfoStruct &src) {
+  branch_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
+}
+ModeInfoStruct BranchStruct::z() const {
+  void *ptr;
+  branch_struct_get_z(fortran_ptr_, &ptr);
+  return ModeInfoStruct(ptr);
+}
+void BranchStruct::set_z(const ModeInfoStruct &src) {
+  branch_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
+}
+EleStructArray1D BranchStruct::ele() const {
+  return ProxyHelpers::get_type_array_1d<EleStructArray1D>(
+      fortran_ptr_,
+      branch_struct_get_ele_info
   );
 }
-double RfEleStruct::ds_step() const {
+LatParamStruct BranchStruct::param() const {
+  void *ptr;
+  branch_struct_get_param(fortran_ptr_, &ptr);
+  return LatParamStruct(ptr);
+}
+void BranchStruct::set_param(const LatParamStruct &src) {
+  branch_struct_set_param(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct BranchStruct::particle_start() const {
+  void *ptr;
+  branch_struct_get_particle_start(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void BranchStruct::set_particle_start(const CoordStruct &src) {
+  branch_struct_set_particle_start(fortran_ptr_, src.get_fortran_ptr());
+}
+Wall3dStructArray1D BranchStruct::wall3d() const {
+  return ProxyHelpers::get_type_array_1d<Wall3dStructArray1D>(
+      fortran_ptr_,
+      branch_struct_get_wall3d_info
+  );
+}
+PtcBranch1Struct BranchStruct::ptc() const {
+  void *ptr;
+  branch_struct_get_ptc(fortran_ptr_, &ptr);
+  return PtcBranch1Struct(ptr);
+}
+void BranchStruct::set_ptc(const PtcBranch1Struct &src) {
+  branch_struct_set_ptc(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct BunchParamsStruct::centroid() const {
+  void *ptr;
+  bunch_params_struct_get_centroid(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void BunchParamsStruct::set_centroid(const CoordStruct &src) {
+  bunch_params_struct_set_centroid(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::x() const {
+  void *ptr;
+  bunch_params_struct_get_x(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_x(const TwissStruct &src) {
+  bunch_params_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::y() const {
+  void *ptr;
+  bunch_params_struct_get_y(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_y(const TwissStruct &src) {
+  bunch_params_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::z() const {
+  void *ptr;
+  bunch_params_struct_get_z(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_z(const TwissStruct &src) {
+  bunch_params_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::a() const {
+  void *ptr;
+  bunch_params_struct_get_a(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_a(const TwissStruct &src) {
+  bunch_params_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::b() const {
+  void *ptr;
+  bunch_params_struct_get_b(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_b(const TwissStruct &src) {
+  bunch_params_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct BunchParamsStruct::c() const {
+  void *ptr;
+  bunch_params_struct_get_c(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void BunchParamsStruct::set_c(const TwissStruct &src) {
+  bunch_params_struct_set_c(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray2D<double> BunchParamsStruct::sigma() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, bunch_params_struct_get_sigma_info);
+}
+void BunchParamsStruct::set_sigma(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, bunch_params_struct_set_sigma, v);
+}
+FArray1D<double> BunchParamsStruct::rel_max() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_max_info);
+}
+void BunchParamsStruct::set_rel_max(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_params_struct_set_rel_max(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> BunchParamsStruct::rel_min() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_min_info);
+}
+void BunchParamsStruct::set_rel_min(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_params_struct_set_rel_min(fortran_ptr_, v.data(), shape);
+}
+double BunchParamsStruct::s() const {
   double value;
-  rf_ele_struct_get_real(fortran_ptr_, 0, &value);
+  bunch_params_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void RfEleStruct::set_ds_step(double value) { rf_ele_struct_set_real(fortran_ptr_, 0, value); }
+void BunchParamsStruct::set_s(double value) {
+  bunch_params_struct_set_real(fortran_ptr_, 0, value);
+}
+double BunchParamsStruct::t() const {
+  double value;
+  bunch_params_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void BunchParamsStruct::set_t(double value) {
+  bunch_params_struct_set_real(fortran_ptr_, 1, value);
+}
+double BunchParamsStruct::sigma_t() const {
+  double value;
+  bunch_params_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BunchParamsStruct::set_sigma_t(double value) {
+  bunch_params_struct_set_real(fortran_ptr_, 2, value);
+}
+double BunchParamsStruct::charge_live() const {
+  double value;
+  bunch_params_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void BunchParamsStruct::set_charge_live(double value) {
+  bunch_params_struct_set_real(fortran_ptr_, 3, value);
+}
+double BunchParamsStruct::charge_tot() const {
+  double value;
+  bunch_params_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void BunchParamsStruct::set_charge_tot(double value) {
+  bunch_params_struct_set_real(fortran_ptr_, 4, value);
+}
+int BunchParamsStruct::n_particle_tot() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchParamsStruct::set_n_particle_tot(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 0, value);
+}
+int BunchParamsStruct::n_particle_live() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BunchParamsStruct::set_n_particle_live(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 1, value);
+}
+int BunchParamsStruct::n_particle_lost_in_ele() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BunchParamsStruct::set_n_particle_lost_in_ele(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 2, value);
+}
+int BunchParamsStruct::n_good_steps() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BunchParamsStruct::set_n_good_steps(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 3, value);
+}
+int BunchParamsStruct::n_bad_steps() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BunchParamsStruct::set_n_bad_steps(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 4, value);
+}
+int BunchParamsStruct::ix_ele() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BunchParamsStruct::set_ix_ele(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 5, value);
+}
+int BunchParamsStruct::location() const {
+  int value;
+  bunch_params_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void BunchParamsStruct::set_location(int value) {
+  bunch_params_struct_set_integer(fortran_ptr_, 6, value);
+}
+bool BunchParamsStruct::twiss_valid() const {
+  bool value;
+  bunch_params_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchParamsStruct::set_twiss_valid(bool value) {
+  bunch_params_struct_set_logical(fortran_ptr_, 0, value);
+}
+CoordStructAlloc1D BunchStruct::particle() const {
+  return CoordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      bunch_struct_reallocate_particle,
+      bunch_struct_get_particle_info
+  );
+}
+IntAlloc1D BunchStruct::ix_z() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      bunch_struct_reallocate_ix_z,
+      bunch_struct_get_ix_z_info
+  );
+}
+void BunchStruct::set_ix_z(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  bunch_struct_set_ix_z(fortran_ptr_, v.data(), shape);
+}
+double BunchStruct::charge_tot() const {
+  double value;
+  bunch_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchStruct::set_charge_tot(double value) { bunch_struct_set_real(fortran_ptr_, 0, value); }
+double BunchStruct::charge_live() const {
+  double value;
+  bunch_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void BunchStruct::set_charge_live(double value) { bunch_struct_set_real(fortran_ptr_, 1, value); }
+double BunchStruct::z_center() const {
+  double value;
+  bunch_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void BunchStruct::set_z_center(double value) { bunch_struct_set_real(fortran_ptr_, 2, value); }
+double BunchStruct::t_center() const {
+  double value;
+  bunch_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void BunchStruct::set_t_center(double value) { bunch_struct_set_real(fortran_ptr_, 3, value); }
+double BunchStruct::t0() const {
+  double value;
+  bunch_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void BunchStruct::set_t0(double value) { bunch_struct_set_real(fortran_ptr_, 4, value); }
+bool BunchStruct::drift_between_t_and_s() const {
+  bool value;
+  bunch_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchStruct::set_drift_between_t_and_s(bool value) {
+  bunch_struct_set_logical(fortran_ptr_, 0, value);
+}
+int BunchStruct::ix_ele() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchStruct::set_ix_ele(int value) { bunch_struct_set_integer(fortran_ptr_, 0, value); }
+int BunchStruct::ix_bunch() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void BunchStruct::set_ix_bunch(int value) { bunch_struct_set_integer(fortran_ptr_, 1, value); }
+int BunchStruct::ix_turn() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void BunchStruct::set_ix_turn(int value) { bunch_struct_set_integer(fortran_ptr_, 2, value); }
+int BunchStruct::n_live() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void BunchStruct::set_n_live(int value) { bunch_struct_set_integer(fortran_ptr_, 3, value); }
+int BunchStruct::n_good() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void BunchStruct::set_n_good(int value) { bunch_struct_set_integer(fortran_ptr_, 4, value); }
+int BunchStruct::n_bad() const {
+  int value;
+  bunch_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void BunchStruct::set_n_bad(int value) { bunch_struct_set_integer(fortran_ptr_, 5, value); }
+BunchParamsStructAlloc1D BunchTrackStruct::pt() const {
+  return BunchParamsStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      bunch_track_struct_reallocate_pt,
+      bunch_track_struct_get_pt_info
+  );
+}
+double BunchTrackStruct::ds_save() const {
+  double value;
+  bunch_track_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchTrackStruct::set_ds_save(double value) {
+  bunch_track_struct_set_real(fortran_ptr_, 0, value);
+}
+int BunchTrackStruct::n_pt() const {
+  int value;
+  bunch_track_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void BunchTrackStruct::set_n_pt(int value) {
+  bunch_track_struct_set_integer(fortran_ptr_, 0, value);
+}
+double CartesianMapStruct::field_scale() const {
+  double value;
+  cartesian_map_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CartesianMapStruct::set_field_scale(double value) {
+  cartesian_map_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> CartesianMapStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cartesian_map_struct_get_r0_info);
+}
+void CartesianMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cartesian_map_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+int CartesianMapStruct::master_parameter() const {
+  int value;
+  cartesian_map_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CartesianMapStruct::set_master_parameter(int value) {
+  cartesian_map_struct_set_integer(fortran_ptr_, 0, value);
+}
+int CartesianMapStruct::ele_anchor_pt() const {
+  int value;
+  cartesian_map_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void CartesianMapStruct::set_ele_anchor_pt(int value) {
+  cartesian_map_struct_set_integer(fortran_ptr_, 1, value);
+}
+int CartesianMapStruct::field_type() const {
+  int value;
+  cartesian_map_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void CartesianMapStruct::set_field_type(int value) {
+  cartesian_map_struct_set_integer(fortran_ptr_, 2, value);
+}
+std::optional<CartesianMapTermStruct> CartesianMapStruct::ptr() const {
+  void *ptr;
+  cartesian_map_struct_get_ptr(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return CartesianMapTermStruct(ptr);
+}
+void CartesianMapStruct::set_ptr(const CartesianMapTermStruct &src) {
+  cartesian_map_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
+}
+double CartesianMapTerm1Struct::coef() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_coef(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 0, value);
+}
+double CartesianMapTerm1Struct::kx() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_kx(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 1, value);
+}
+double CartesianMapTerm1Struct::ky() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_ky(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 2, value);
+}
+double CartesianMapTerm1Struct::kz() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_kz(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 3, value);
+}
+double CartesianMapTerm1Struct::x0() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_x0(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 4, value);
+}
+double CartesianMapTerm1Struct::y0() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_y0(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 5, value);
+}
+double CartesianMapTerm1Struct::phi_z() const {
+  double value;
+  cartesian_map_term1_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_phi_z(double value) {
+  cartesian_map_term1_struct_set_real(fortran_ptr_, 6, value);
+}
+int CartesianMapTerm1Struct::family() const {
+  int value;
+  cartesian_map_term1_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_family(int value) {
+  cartesian_map_term1_struct_set_integer(fortran_ptr_, 0, value);
+}
+int CartesianMapTerm1Struct::form() const {
+  int value;
+  cartesian_map_term1_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void CartesianMapTerm1Struct::set_form(int value) {
+  cartesian_map_term1_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::string CartesianMapTermStruct::file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, cartesian_map_term_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void CartesianMapTermStruct::set_file(const std::string &value) {
+  cartesian_map_term_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int CartesianMapTermStruct::n_link() const {
+  int value;
+  cartesian_map_term_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CartesianMapTermStruct::set_n_link(int value) {
+  cartesian_map_term_struct_set_integer(fortran_ptr_, 0, value);
+}
+CartesianMapTerm1StructAlloc1D CartesianMapTermStruct::term() const {
+  return CartesianMapTerm1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      cartesian_map_term_struct_reallocate_term,
+      cartesian_map_term_struct_get_term_info
+  );
+}
+std::complex<double> CmplxField1At2dPtStruct::f() const {
+  std::complex<double> value;
+  cmplx_field1_at_2d_pt_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void CmplxField1At2dPtStruct::set_f(std::complex<double> value) {
+  cmplx_field1_at_2d_pt_struct_set_complex(fortran_ptr_, 0, value);
+}
+std::complex<double> CmplxField1At2dPtStruct::df_dx() const {
+  std::complex<double> value;
+  cmplx_field1_at_2d_pt_struct_get_complex(fortran_ptr_, 1, &value);
+  return value;
+}
+void CmplxField1At2dPtStruct::set_df_dx(std::complex<double> value) {
+  cmplx_field1_at_2d_pt_struct_set_complex(fortran_ptr_, 1, value);
+}
+std::complex<double> CmplxField1At2dPtStruct::df_dy() const {
+  std::complex<double> value;
+  cmplx_field1_at_2d_pt_struct_get_complex(fortran_ptr_, 2, &value);
+  return value;
+}
+void CmplxField1At2dPtStruct::set_df_dy(std::complex<double> value) {
+  cmplx_field1_at_2d_pt_struct_set_complex(fortran_ptr_, 2, value);
+}
+std::complex<double> CmplxField1At2dPtStruct::d2f_dxdy() const {
+  std::complex<double> value;
+  cmplx_field1_at_2d_pt_struct_get_complex(fortran_ptr_, 3, &value);
+  return value;
+}
+void CmplxField1At2dPtStruct::set_d2f_dxdy(std::complex<double> value) {
+  cmplx_field1_at_2d_pt_struct_set_complex(fortran_ptr_, 3, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::f() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_f(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 0, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::df_dx() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 1, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_df_dx(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 1, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::df_dy() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 2, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_df_dy(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 2, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::df_dz() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 3, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_df_dz(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 3, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::d2f_dxdy() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 4, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_d2f_dxdy(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 4, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::d2f_dxdz() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 5, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_d2f_dxdz(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 5, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::d2f_dydz() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 6, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_d2f_dydz(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 6, value);
+}
+std::complex<double> CmplxField1At3dPtStruct::d3f_dxdydz() const {
+  std::complex<double> value;
+  cmplx_field1_at_3d_pt_struct_get_complex(fortran_ptr_, 7, &value);
+  return value;
+}
+void CmplxField1At3dPtStruct::set_d3f_dxdydz(std::complex<double> value) {
+  cmplx_field1_at_3d_pt_struct_set_complex(fortran_ptr_, 7, value);
+}
+CmplxField1At2dPtStructArray2D CmplxFieldAt2dBoxStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<CmplxField1At2dPtStructArray2D>(
+      fortran_ptr_,
+      cmplx_field_at_2d_box_struct_get_pt_info
+  );
+}
+FArray1D<int> CmplxFieldAt2dBoxStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, cmplx_field_at_2d_box_struct_get_i_box_info);
+}
+void CmplxFieldAt2dBoxStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cmplx_field_at_2d_box_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+CmplxField1At3dPtStructArray3D CmplxFieldAt3dBoxStruct::pt() const {
+  return ProxyHelpers::get_type_array_3d<CmplxField1At3dPtStructArray3D>(
+      fortran_ptr_,
+      cmplx_field_at_3d_box_struct_get_pt_info
+  );
+}
+FArray1D<int> CmplxFieldAt3dBoxStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, cmplx_field_at_3d_box_struct_get_i_box_info);
+}
+void CmplxFieldAt3dBoxStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cmplx_field_at_3d_box_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+std::complex<double> ComplexTaylorStruct::ref() const {
+  std::complex<double> value;
+  complex_taylor_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void ComplexTaylorStruct::set_ref(std::complex<double> value) {
+  complex_taylor_struct_set_complex(fortran_ptr_, 0, value);
+}
+ComplexTaylorTermStructArray1D ComplexTaylorStruct::term() const {
+  return ProxyHelpers::get_type_array_1d<ComplexTaylorTermStructArray1D>(
+      fortran_ptr_,
+      complex_taylor_struct_get_term_info
+  );
+}
+std::complex<double> ComplexTaylorTermStruct::coef() const {
+  std::complex<double> value;
+  complex_taylor_term_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void ComplexTaylorTermStruct::set_coef(std::complex<double> value) {
+  complex_taylor_term_struct_set_complex(fortran_ptr_, 0, value);
+}
+FArray1D<int> ComplexTaylorTermStruct::expn() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, complex_taylor_term_struct_get_expn_info);
+}
+void ComplexTaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  complex_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D ControlRamp1Struct::y_knot() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      control_ramp1_struct_reallocate_y_knot,
+      control_ramp1_struct_get_y_knot_info
+  );
+}
+void ControlRamp1Struct::set_y_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  control_ramp1_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+}
+ExpressionAtomStructAlloc1D ControlRamp1Struct::stack() const {
+  return ExpressionAtomStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      control_ramp1_struct_reallocate_stack,
+      control_ramp1_struct_get_stack_info
+  );
+}
+std::string ControlRamp1Struct::attribute() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_ramp1_struct_get_attribute_info);
+  return std::string(arr.data(), arr.size());
+}
+void ControlRamp1Struct::set_attribute(const std::string &value) {
+  control_ramp1_struct_set_attribute(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string ControlRamp1Struct::slave_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_ramp1_struct_get_slave_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ControlRamp1Struct::set_slave_name(const std::string &value) {
+  control_ramp1_struct_set_slave_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+bool ControlRamp1Struct::is_controller() const {
+  bool value;
+  control_ramp1_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ControlRamp1Struct::set_is_controller(bool value) {
+  control_ramp1_struct_set_logical(fortran_ptr_, 0, value);
+}
+double ControlStruct::value() const {
+  double value;
+  control_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ControlStruct::set_value(double value) { control_struct_set_real(fortran_ptr_, 0, value); }
+RealAlloc1D ControlStruct::y_knot() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      control_struct_reallocate_y_knot,
+      control_struct_get_y_knot_info
+  );
+}
+void ControlStruct::set_y_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  control_struct_set_y_knot(fortran_ptr_, v.data(), shape);
+}
+ExpressionAtomStructAlloc1D ControlStruct::stack() const {
+  return ExpressionAtomStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      control_struct_reallocate_stack,
+      control_struct_get_stack_info
+  );
+}
+LatEleLocStruct ControlStruct::slave() const {
+  void *ptr;
+  control_struct_get_slave(fortran_ptr_, &ptr);
+  return LatEleLocStruct(ptr);
+}
+void ControlStruct::set_slave(const LatEleLocStruct &src) {
+  control_struct_set_slave(fortran_ptr_, src.get_fortran_ptr());
+}
+LatEleLocStruct ControlStruct::lord() const {
+  void *ptr;
+  control_struct_get_lord(fortran_ptr_, &ptr);
+  return LatEleLocStruct(ptr);
+}
+void ControlStruct::set_lord(const LatEleLocStruct &src) {
+  control_struct_set_lord(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string ControlStruct::slave_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_struct_get_slave_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ControlStruct::set_slave_name(const std::string &value) {
+  control_struct_set_slave_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string ControlStruct::attribute() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_struct_get_attribute_info);
+  return std::string(arr.data(), arr.size());
+}
+void ControlStruct::set_attribute(const std::string &value) {
+  control_struct_set_attribute(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int ControlStruct::ix_attrib() const {
+  int value;
+  control_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ControlStruct::set_ix_attrib(int value) { control_struct_set_integer(fortran_ptr_, 0, value); }
+std::string ControlVar1Struct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, control_var1_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ControlVar1Struct::set_name(const std::string &value) {
+  control_var1_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double ControlVar1Struct::value() const {
+  double value;
+  control_var1_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ControlVar1Struct::set_value(double value) {
+  control_var1_struct_set_real(fortran_ptr_, 0, value);
+}
+double ControlVar1Struct::old_value() const {
+  double value;
+  control_var1_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void ControlVar1Struct::set_old_value(double value) {
+  control_var1_struct_set_real(fortran_ptr_, 1, value);
+}
+ControlVar1StructAlloc1D ControllerStruct::var() const {
+  return ControlVar1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      controller_struct_reallocate_var,
+      controller_struct_get_var_info
+  );
+}
+ControlRamp1StructAlloc1D ControllerStruct::ramp() const {
+  return ControlRamp1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      controller_struct_reallocate_ramp,
+      controller_struct_get_ramp_info
+  );
+}
+RamperLordStructAlloc1D ControllerStruct::ramper_lord() const {
+  return RamperLordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      controller_struct_reallocate_ramper_lord,
+      controller_struct_get_ramper_lord_info
+  );
+}
+RealAlloc1D ControllerStruct::x_knot() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      controller_struct_reallocate_x_knot,
+      controller_struct_get_x_knot_info
+  );
+}
+void ControllerStruct::set_x_knot(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  controller_struct_set_x_knot(fortran_ptr_, v.data(), shape);
+}
+double ConverterDir1dStruct::pc_out() const {
+  double value;
+  converter_dir_1d_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterDir1dStruct::set_pc_out(double value) {
+  converter_dir_1d_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> ConverterDir1dStruct::poly() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, converter_dir_1d_struct_get_poly_info);
+}
+void ConverterDir1dStruct::set_poly(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_dir_1d_struct_set_poly(fortran_ptr_, v.data(), shape);
+}
+double ConverterDir2dStruct::k() const {
+  double value;
+  converter_dir_2d_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterDir2dStruct::set_k(double value) {
+  converter_dir_2d_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> ConverterDir2dStruct::poly() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, converter_dir_2d_struct_get_poly_info);
+}
+void ConverterDir2dStruct::set_poly(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_dir_2d_struct_set_poly(fortran_ptr_, v.data(), shape);
+}
+ConverterDir1dStructAlloc1D ConverterDirCoefStruct::fit_1d_r() const {
+  return ConverterDir1dStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_dir_coef_struct_reallocate_fit_1d_r,
+      converter_dir_coef_struct_get_fit_1d_r_info
+  );
+}
+ConverterDir2dStruct ConverterDirCoefStruct::fit_2d_r() const {
+  void *ptr;
+  converter_dir_coef_struct_get_fit_2d_r(fortran_ptr_, &ptr);
+  return ConverterDir2dStruct(ptr);
+}
+void ConverterDirCoefStruct::set_fit_2d_r(const ConverterDir2dStruct &src) {
+  converter_dir_coef_struct_set_fit_2d_r(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDir2dStruct ConverterDirCoefStruct::fit_2d_pc() const {
+  void *ptr;
+  converter_dir_coef_struct_get_fit_2d_pc(fortran_ptr_, &ptr);
+  return ConverterDir2dStruct(ptr);
+}
+void ConverterDirCoefStruct::set_fit_2d_pc(const ConverterDir2dStruct &src) {
+  converter_dir_coef_struct_set_fit_2d_pc(fortran_ptr_, src.get_fortran_ptr());
+}
+double ConverterDirCoefStruct::c0() const {
+  double value;
+  converter_dir_coef_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterDirCoefStruct::set_c0(double value) {
+  converter_dir_coef_struct_set_real(fortran_ptr_, 0, value);
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::beta() const {
+  void *ptr;
+  converter_direction_out_struct_get_beta(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_beta(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_beta(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::alpha_x() const {
+  void *ptr;
+  converter_direction_out_struct_get_alpha_x(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_alpha_x(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_alpha_x(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::alpha_y() const {
+  void *ptr;
+  converter_direction_out_struct_get_alpha_y(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_alpha_y(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_alpha_y(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::dxds_min() const {
+  void *ptr;
+  converter_direction_out_struct_get_dxds_min(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_dxds_min(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_dxds_min(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::dxds_max() const {
+  void *ptr;
+  converter_direction_out_struct_get_dxds_max(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_dxds_max(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_dxds_max(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::dyds_max() const {
+  void *ptr;
+  converter_direction_out_struct_get_dyds_max(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_dyds_max(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_dyds_max(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirCoefStruct ConverterDirectionOutStruct::c_x() const {
+  void *ptr;
+  converter_direction_out_struct_get_c_x(fortran_ptr_, &ptr);
+  return ConverterDirCoefStruct(ptr);
+}
+void ConverterDirectionOutStruct::set_c_x(const ConverterDirCoefStruct &src) {
+  converter_direction_out_struct_set_c_x(fortran_ptr_, src.get_fortran_ptr());
+}
+double ConverterDistributionStruct::thickness() const {
+  double value;
+  converter_distribution_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterDistributionStruct::set_thickness(double value) {
+  converter_distribution_struct_set_real(fortran_ptr_, 0, value);
+}
+ConverterSubDistributionStructAlloc1D ConverterDistributionStruct::sub_dist() const {
+  return ConverterSubDistributionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_distribution_struct_reallocate_sub_dist,
+      converter_distribution_struct_get_sub_dist_info
+  );
+}
+RealAlloc1D ConverterProbPcRStruct::pc_out() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_prob_pc_r_struct_reallocate_pc_out,
+      converter_prob_pc_r_struct_get_pc_out_info
+  );
+}
+void ConverterProbPcRStruct::set_pc_out(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_prob_pc_r_struct_set_pc_out(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D ConverterProbPcRStruct::r() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_prob_pc_r_struct_reallocate_r,
+      converter_prob_pc_r_struct_get_r_info
+  );
+}
+void ConverterProbPcRStruct::set_r(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_prob_pc_r_struct_set_r(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> ConverterProbPcRStruct::prob() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, converter_prob_pc_r_struct_get_prob_info);
+}
+void ConverterProbPcRStruct::set_prob(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, converter_prob_pc_r_struct_set_prob, v);
+}
+FArray2D<double> ConverterProbPcRStruct::spin_z() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      converter_prob_pc_r_struct_get_spin_z_info
+  );
+}
+void ConverterProbPcRStruct::set_spin_z(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, converter_prob_pc_r_struct_set_spin_z, v);
+}
+double ConverterProbPcRStruct::pc_out_min() const {
+  double value;
+  converter_prob_pc_r_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterProbPcRStruct::set_pc_out_min(double value) {
+  converter_prob_pc_r_struct_set_real(fortran_ptr_, 0, value);
+}
+double ConverterProbPcRStruct::pc_out_max() const {
+  double value;
+  converter_prob_pc_r_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void ConverterProbPcRStruct::set_pc_out_max(double value) {
+  converter_prob_pc_r_struct_set_real(fortran_ptr_, 1, value);
+}
+double ConverterProbPcRStruct::integrated_prob() const {
+  double value;
+  converter_prob_pc_r_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void ConverterProbPcRStruct::set_integrated_prob(double value) {
+  converter_prob_pc_r_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray2D<double> ConverterProbPcRStruct::p_norm() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      converter_prob_pc_r_struct_get_p_norm_info
+  );
+}
+void ConverterProbPcRStruct::set_p_norm(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, converter_prob_pc_r_struct_set_p_norm, v);
+}
+RealAlloc1D ConverterProbPcRStruct::integ_pc_out() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_prob_pc_r_struct_reallocate_integ_pc_out,
+      converter_prob_pc_r_struct_get_integ_pc_out_info
+  );
+}
+void ConverterProbPcRStruct::set_integ_pc_out(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_prob_pc_r_struct_set_integ_pc_out(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> ConverterProbPcRStruct::integ_r() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      converter_prob_pc_r_struct_get_integ_r_info
+  );
+}
+void ConverterProbPcRStruct::set_integ_r(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, converter_prob_pc_r_struct_set_integ_r, v);
+}
+RealAlloc1D ConverterProbPcRStruct::integ_r_ave() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_prob_pc_r_struct_reallocate_integ_r_ave,
+      converter_prob_pc_r_struct_get_integ_r_ave_info
+  );
+}
+void ConverterProbPcRStruct::set_integ_r_ave(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_prob_pc_r_struct_set_integ_r_ave(fortran_ptr_, v.data(), shape);
+}
+int ConverterStruct::species_out() const {
+  int value;
+  converter_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterStruct::set_species_out(int value) {
+  converter_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string ConverterStruct::material_type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, converter_struct_get_material_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void ConverterStruct::set_material_type(const std::string &value) {
+  converter_struct_set_material_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+ConverterDistributionStructAlloc1D ConverterStruct::dist() const {
+  return ConverterDistributionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      converter_struct_reallocate_dist,
+      converter_struct_get_dist_info
+  );
+}
+double ConverterSubDistributionStruct::pc_in() const {
+  double value;
+  converter_sub_distribution_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ConverterSubDistributionStruct::set_pc_in(double value) {
+  converter_sub_distribution_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> ConverterSubDistributionStruct::spin_in() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      converter_sub_distribution_struct_get_spin_in_info
+  );
+}
+void ConverterSubDistributionStruct::set_spin_in(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  converter_sub_distribution_struct_set_spin_in(fortran_ptr_, v.data(), shape);
+}
+ConverterProbPcRStruct ConverterSubDistributionStruct::prob_pc_r() const {
+  void *ptr;
+  converter_sub_distribution_struct_get_prob_pc_r(fortran_ptr_, &ptr);
+  return ConverterProbPcRStruct(ptr);
+}
+void ConverterSubDistributionStruct::set_prob_pc_r(const ConverterProbPcRStruct &src) {
+  converter_sub_distribution_struct_set_prob_pc_r(fortran_ptr_, src.get_fortran_ptr());
+}
+ConverterDirectionOutStruct ConverterSubDistributionStruct::dir_out() const {
+  void *ptr;
+  converter_sub_distribution_struct_get_dir_out(fortran_ptr_, &ptr);
+  return ConverterDirectionOutStruct(ptr);
+}
+void ConverterSubDistributionStruct::set_dir_out(const ConverterDirectionOutStruct &src) {
+  converter_sub_distribution_struct_set_dir_out(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStructAlloc1D CoordArrayStruct::orbit() const {
+  return CoordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      coord_array_struct_reallocate_orbit,
+      coord_array_struct_get_orbit_info
+  );
+}
+FArray1D<double> CoordStruct::vec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_vec_info);
+}
+void CoordStruct::set_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_vec(fortran_ptr_, v.data(), shape);
+}
+double CoordStruct::s() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CoordStruct::set_s(double value) { coord_struct_set_real(fortran_ptr_, 0, value); }
+long double CoordStruct::t() const {
+  long double value;
+  coord_struct_get_real16(fortran_ptr_, 0, &value);
+  return value;
+}
+void CoordStruct::set_t(long double value) { coord_struct_set_real16(fortran_ptr_, 0, value); }
+FArray1D<double> CoordStruct::spin() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_spin_info);
+}
+void CoordStruct::set_spin(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_spin(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> CoordStruct::field() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_field_info);
+}
+void CoordStruct::set_field(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_field(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> CoordStruct::phase() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, coord_struct_get_phase_info);
+}
+void CoordStruct::set_phase(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  coord_struct_set_phase(fortran_ptr_, v.data(), shape);
+}
+double CoordStruct::charge() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CoordStruct::set_charge(double value) { coord_struct_set_real(fortran_ptr_, 1, value); }
+double CoordStruct::dt_ref() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CoordStruct::set_dt_ref(double value) { coord_struct_set_real(fortran_ptr_, 2, value); }
+double CoordStruct::r() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CoordStruct::set_r(double value) { coord_struct_set_real(fortran_ptr_, 3, value); }
+double CoordStruct::p0c() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void CoordStruct::set_p0c(double value) { coord_struct_set_real(fortran_ptr_, 4, value); }
+double CoordStruct::E_potential() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void CoordStruct::set_E_potential(double value) { coord_struct_set_real(fortran_ptr_, 5, value); }
+double CoordStruct::beta() const {
+  double value;
+  coord_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void CoordStruct::set_beta(double value) { coord_struct_set_real(fortran_ptr_, 6, value); }
+int CoordStruct::ix_ele() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CoordStruct::set_ix_ele(int value) { coord_struct_set_integer(fortran_ptr_, 0, value); }
+int CoordStruct::ix_branch() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void CoordStruct::set_ix_branch(int value) { coord_struct_set_integer(fortran_ptr_, 1, value); }
+int CoordStruct::ix_turn() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void CoordStruct::set_ix_turn(int value) { coord_struct_set_integer(fortran_ptr_, 2, value); }
+int CoordStruct::ix_user() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void CoordStruct::set_ix_user(int value) { coord_struct_set_integer(fortran_ptr_, 3, value); }
+int CoordStruct::state() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void CoordStruct::set_state(int value) { coord_struct_set_integer(fortran_ptr_, 4, value); }
+int CoordStruct::direction() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void CoordStruct::set_direction(int value) { coord_struct_set_integer(fortran_ptr_, 5, value); }
+int CoordStruct::time_dir() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void CoordStruct::set_time_dir(int value) { coord_struct_set_integer(fortran_ptr_, 6, value); }
+int CoordStruct::species() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 7, &value);
+  return value;
+}
+void CoordStruct::set_species(int value) { coord_struct_set_integer(fortran_ptr_, 7, value); }
+int CoordStruct::location() const {
+  int value;
+  coord_struct_get_integer(fortran_ptr_, 8, &value);
+  return value;
+}
+void CoordStruct::set_location(int value) { coord_struct_set_integer(fortran_ptr_, 8, value); }
+double CrystalParamStruct::cap_gamma() const {
+  double value;
+  crystal_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CrystalParamStruct::set_cap_gamma(double value) {
+  crystal_param_struct_set_real(fortran_ptr_, 0, value);
+}
+double CrystalParamStruct::dtheta_sin_2theta() const {
+  double value;
+  crystal_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CrystalParamStruct::set_dtheta_sin_2theta(double value) {
+  crystal_param_struct_set_real(fortran_ptr_, 1, value);
+}
+double CrystalParamStruct::b_eff() const {
+  double value;
+  crystal_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CrystalParamStruct::set_b_eff(double value) {
+  crystal_param_struct_set_real(fortran_ptr_, 2, value);
+}
+double CrystalParamStruct::wavelength() const {
+  double value;
+  crystal_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CrystalParamStruct::set_wavelength(double value) {
+  crystal_param_struct_set_real(fortran_ptr_, 3, value);
+}
+FArray1D<double> CrystalParamStruct::old_vvec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, crystal_param_struct_get_old_vvec_info);
+}
+void CrystalParamStruct::set_old_vvec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  crystal_param_struct_set_old_vvec(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> CrystalParamStruct::new_vvec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, crystal_param_struct_get_new_vvec_info);
+}
+void CrystalParamStruct::set_new_vvec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  crystal_param_struct_set_new_vvec(fortran_ptr_, v.data(), shape);
+}
+double CsrBunchSliceStruct::x0() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_x0(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 0, value);
+}
+double CsrBunchSliceStruct::y0() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_y0(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 1, value);
+}
+double CsrBunchSliceStruct::z0_edge() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_z0_edge(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 2, value);
+}
+double CsrBunchSliceStruct::z1_edge() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_z1_edge(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 3, value);
+}
+double CsrBunchSliceStruct::z_center() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_z_center(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 4, value);
+}
+double CsrBunchSliceStruct::sig_x() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_sig_x(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 5, value);
+}
+double CsrBunchSliceStruct::sig_y() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_sig_y(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 6, value);
+}
+double CsrBunchSliceStruct::charge() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_charge(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 7, value);
+}
+double CsrBunchSliceStruct::dcharge_density_dz() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_dcharge_density_dz(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 8, value);
+}
+double CsrBunchSliceStruct::edge_dcharge_density_dz() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_edge_dcharge_density_dz(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 9, value);
+}
+double CsrBunchSliceStruct::kick_csr() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_kick_csr(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 10, value);
+}
+FArray2D<double> CsrBunchSliceStruct::coef_lsc_plus() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      csr_bunch_slice_struct_get_coef_lsc_plus_info
+  );
+}
+void CsrBunchSliceStruct::set_coef_lsc_plus(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, csr_bunch_slice_struct_set_coef_lsc_plus, v);
+}
+FArray2D<double> CsrBunchSliceStruct::coef_lsc_minus() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      csr_bunch_slice_struct_get_coef_lsc_minus_info
+  );
+}
+void CsrBunchSliceStruct::set_coef_lsc_minus(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, csr_bunch_slice_struct_set_coef_lsc_minus, v);
+}
+double CsrBunchSliceStruct::kick_lsc() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_kick_lsc(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 11, value);
+}
+double CsrBunchSliceStruct::n_particle() const {
+  double value;
+  csr_bunch_slice_struct_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void CsrBunchSliceStruct::set_n_particle(double value) {
+  csr_bunch_slice_struct_set_real(fortran_ptr_, 12, value);
+}
+std::optional<EleStruct> CsrEleInfoStruct::ele() const {
+  void *ptr;
+  csr_ele_info_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
+}
+void CsrEleInfoStruct::set_ele(const EleStruct &src) {
+  csr_ele_info_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct CsrEleInfoStruct::orbit0() const {
+  void *ptr;
+  csr_ele_info_struct_get_orbit0(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void CsrEleInfoStruct::set_orbit0(const CoordStruct &src) {
+  csr_ele_info_struct_set_orbit0(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct CsrEleInfoStruct::orbit1() const {
+  void *ptr;
+  csr_ele_info_struct_get_orbit1(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void CsrEleInfoStruct::set_orbit1(const CoordStruct &src) {
+  csr_ele_info_struct_set_orbit1(fortran_ptr_, src.get_fortran_ptr());
+}
+FloorPositionStruct CsrEleInfoStruct::floor0() const {
+  void *ptr;
+  csr_ele_info_struct_get_floor0(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrEleInfoStruct::set_floor0(const FloorPositionStruct &src) {
+  csr_ele_info_struct_set_floor0(fortran_ptr_, src.get_fortran_ptr());
+}
+FloorPositionStruct CsrEleInfoStruct::floor1() const {
+  void *ptr;
+  csr_ele_info_struct_get_floor1(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrEleInfoStruct::set_floor1(const FloorPositionStruct &src) {
+  csr_ele_info_struct_set_floor1(fortran_ptr_, src.get_fortran_ptr());
+}
+FloorPositionStruct CsrEleInfoStruct::ref_floor0() const {
+  void *ptr;
+  csr_ele_info_struct_get_ref_floor0(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrEleInfoStruct::set_ref_floor0(const FloorPositionStruct &src) {
+  csr_ele_info_struct_set_ref_floor0(fortran_ptr_, src.get_fortran_ptr());
+}
+FloorPositionStruct CsrEleInfoStruct::ref_floor1() const {
+  void *ptr;
+  csr_ele_info_struct_get_ref_floor1(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrEleInfoStruct::set_ref_floor1(const FloorPositionStruct &src) {
+  csr_ele_info_struct_set_ref_floor1(fortran_ptr_, src.get_fortran_ptr());
+}
+SplineStruct CsrEleInfoStruct::spline() const {
+  void *ptr;
+  csr_ele_info_struct_get_spline(fortran_ptr_, &ptr);
+  return SplineStruct(ptr);
+}
+void CsrEleInfoStruct::set_spline(const SplineStruct &src) {
+  csr_ele_info_struct_set_spline(fortran_ptr_, src.get_fortran_ptr());
+}
+double CsrEleInfoStruct::theta_chord() const {
+  double value;
+  csr_ele_info_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrEleInfoStruct::set_theta_chord(double value) {
+  csr_ele_info_struct_set_real(fortran_ptr_, 0, value);
+}
+double CsrEleInfoStruct::L_chord() const {
+  double value;
+  csr_ele_info_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CsrEleInfoStruct::set_L_chord(double value) {
+  csr_ele_info_struct_set_real(fortran_ptr_, 1, value);
+}
+double CsrEleInfoStruct::dL_s() const {
+  double value;
+  csr_ele_info_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CsrEleInfoStruct::set_dL_s(double value) {
+  csr_ele_info_struct_set_real(fortran_ptr_, 2, value);
+}
+double CsrKick1Struct::I_csr() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrKick1Struct::set_I_csr(double value) { csr_kick1_struct_set_real(fortran_ptr_, 0, value); }
+double CsrKick1Struct::I_int_csr() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CsrKick1Struct::set_I_int_csr(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 1, value);
+}
+double CsrKick1Struct::image_kick_csr() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CsrKick1Struct::set_image_kick_csr(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray1D<double> CsrKick1Struct::L_vec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, csr_kick1_struct_get_L_vec_info);
+}
+void CsrKick1Struct::set_L_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  csr_kick1_struct_set_L_vec(fortran_ptr_, v.data(), shape);
+}
+double CsrKick1Struct::L() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CsrKick1Struct::set_L(double value) { csr_kick1_struct_set_real(fortran_ptr_, 3, value); }
+double CsrKick1Struct::dL() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void CsrKick1Struct::set_dL(double value) { csr_kick1_struct_set_real(fortran_ptr_, 4, value); }
+double CsrKick1Struct::dz_particles() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void CsrKick1Struct::set_dz_particles(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 5, value);
+}
+double CsrKick1Struct::s_chord_source() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void CsrKick1Struct::set_s_chord_source(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 6, value);
+}
+double CsrKick1Struct::theta_L() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void CsrKick1Struct::set_theta_L(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 7, value);
+}
+double CsrKick1Struct::theta_sl() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void CsrKick1Struct::set_theta_sl(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 8, value);
+}
+double CsrKick1Struct::theta_lk() const {
+  double value;
+  csr_kick1_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void CsrKick1Struct::set_theta_lk(double value) {
+  csr_kick1_struct_set_real(fortran_ptr_, 9, value);
+}
+int CsrKick1Struct::ix_ele_source() const {
+  int value;
+  csr_kick1_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrKick1Struct::set_ix_ele_source(int value) {
+  csr_kick1_struct_set_integer(fortran_ptr_, 0, value);
+}
+FloorPositionStruct CsrKick1Struct::floor_s() const {
+  void *ptr;
+  csr_kick1_struct_get_floor_s(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrKick1Struct::set_floor_s(const FloorPositionStruct &src) {
+  csr_kick1_struct_set_floor_s(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray1D<double> CsrParticlePositionStruct::r() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, csr_particle_position_struct_get_r_info);
+}
+void CsrParticlePositionStruct::set_r(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  csr_particle_position_struct_set_r(fortran_ptr_, v.data(), shape);
+}
+double CsrParticlePositionStruct::charge() const {
+  double value;
+  csr_particle_position_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrParticlePositionStruct::set_charge(double value) {
+  csr_particle_position_struct_set_real(fortran_ptr_, 0, value);
+}
+double CsrStruct::gamma() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrStruct::set_gamma(double value) { csr_struct_set_real(fortran_ptr_, 0, value); }
+double CsrStruct::gamma2() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CsrStruct::set_gamma2(double value) { csr_struct_set_real(fortran_ptr_, 1, value); }
+double CsrStruct::rel_mass() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CsrStruct::set_rel_mass(double value) { csr_struct_set_real(fortran_ptr_, 2, value); }
+double CsrStruct::beta() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CsrStruct::set_beta(double value) { csr_struct_set_real(fortran_ptr_, 3, value); }
+double CsrStruct::dz_slice() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void CsrStruct::set_dz_slice(double value) { csr_struct_set_real(fortran_ptr_, 4, value); }
+double CsrStruct::ds_track_step() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void CsrStruct::set_ds_track_step(double value) { csr_struct_set_real(fortran_ptr_, 5, value); }
+double CsrStruct::s_kick() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void CsrStruct::set_s_kick(double value) { csr_struct_set_real(fortran_ptr_, 6, value); }
+double CsrStruct::s_chord_kick() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void CsrStruct::set_s_chord_kick(double value) { csr_struct_set_real(fortran_ptr_, 7, value); }
+double CsrStruct::y_source() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void CsrStruct::set_y_source(double value) { csr_struct_set_real(fortran_ptr_, 8, value); }
+double CsrStruct::kick_factor() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void CsrStruct::set_kick_factor(double value) { csr_struct_set_real(fortran_ptr_, 9, value); }
+double CsrStruct::actual_track_step() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void CsrStruct::set_actual_track_step(double value) {
+  csr_struct_set_real(fortran_ptr_, 10, value);
+}
+double CsrStruct::x0_bunch() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void CsrStruct::set_x0_bunch(double value) { csr_struct_set_real(fortran_ptr_, 11, value); }
+double CsrStruct::y0_bunch() const {
+  double value;
+  csr_struct_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void CsrStruct::set_y0_bunch(double value) { csr_struct_set_real(fortran_ptr_, 12, value); }
+FloorPositionStruct CsrStruct::floor_k() const {
+  void *ptr;
+  csr_struct_get_floor_k(fortran_ptr_, &ptr);
+  return FloorPositionStruct(ptr);
+}
+void CsrStruct::set_floor_k(const FloorPositionStruct &src) {
+  csr_struct_set_floor_k(fortran_ptr_, src.get_fortran_ptr());
+}
+int CsrStruct::species() const {
+  int value;
+  csr_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CsrStruct::set_species(int value) { csr_struct_set_integer(fortran_ptr_, 0, value); }
+int CsrStruct::ix_ele_kick() const {
+  int value;
+  csr_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void CsrStruct::set_ix_ele_kick(int value) { csr_struct_set_integer(fortran_ptr_, 1, value); }
+CsrBunchSliceStructAlloc1D CsrStruct::slice() const {
+  return CsrBunchSliceStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      csr_struct_reallocate_slice,
+      csr_struct_get_slice_info
+  );
+}
+CsrKick1StructAlloc1D CsrStruct::kick1() const {
+  return CsrKick1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      csr_struct_reallocate_kick1,
+      csr_struct_get_kick1_info
+  );
+}
+CsrEleInfoStructAlloc1D CsrStruct::eleinfo() const {
+  return CsrEleInfoStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      csr_struct_reallocate_eleinfo,
+      csr_struct_get_eleinfo_info
+  );
+}
+std::optional<EleStruct> CsrStruct::kick_ele() const {
+  void *ptr;
+  csr_struct_get_kick_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
+}
+void CsrStruct::set_kick_ele(const EleStruct &src) {
+  csr_struct_set_kick_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+Mesh3dStruct CsrStruct::mesh3d() const {
+  void *ptr;
+  csr_struct_get_mesh3d(fortran_ptr_, &ptr);
+  return Mesh3dStruct(ptr);
+}
+void CsrStruct::set_mesh3d(const Mesh3dStruct &src) {
+  csr_struct_set_mesh3d(fortran_ptr_, src.get_fortran_ptr());
+}
+CsrParticlePositionStructAlloc1D CsrStruct::position() const {
+  return CsrParticlePositionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      csr_struct_reallocate_position,
+      csr_struct_get_position_info
+  );
+}
+int CylindricalMapStruct::m() const {
+  int value;
+  cylindrical_map_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CylindricalMapStruct::set_m(int value) {
+  cylindrical_map_struct_set_integer(fortran_ptr_, 0, value);
+}
+int CylindricalMapStruct::harmonic() const {
+  int value;
+  cylindrical_map_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void CylindricalMapStruct::set_harmonic(int value) {
+  cylindrical_map_struct_set_integer(fortran_ptr_, 1, value);
+}
+double CylindricalMapStruct::phi0_fieldmap() const {
+  double value;
+  cylindrical_map_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void CylindricalMapStruct::set_phi0_fieldmap(double value) {
+  cylindrical_map_struct_set_real(fortran_ptr_, 0, value);
+}
+double CylindricalMapStruct::theta0_azimuth() const {
+  double value;
+  cylindrical_map_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void CylindricalMapStruct::set_theta0_azimuth(double value) {
+  cylindrical_map_struct_set_real(fortran_ptr_, 1, value);
+}
+double CylindricalMapStruct::field_scale() const {
+  double value;
+  cylindrical_map_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void CylindricalMapStruct::set_field_scale(double value) {
+  cylindrical_map_struct_set_real(fortran_ptr_, 2, value);
+}
+int CylindricalMapStruct::master_parameter() const {
+  int value;
+  cylindrical_map_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void CylindricalMapStruct::set_master_parameter(int value) {
+  cylindrical_map_struct_set_integer(fortran_ptr_, 2, value);
+}
+int CylindricalMapStruct::ele_anchor_pt() const {
+  int value;
+  cylindrical_map_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void CylindricalMapStruct::set_ele_anchor_pt(int value) {
+  cylindrical_map_struct_set_integer(fortran_ptr_, 3, value);
+}
+double CylindricalMapStruct::dz() const {
+  double value;
+  cylindrical_map_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void CylindricalMapStruct::set_dz(double value) {
+  cylindrical_map_struct_set_real(fortran_ptr_, 3, value);
+}
+FArray1D<double> CylindricalMapStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, cylindrical_map_struct_get_r0_info);
+}
+void CylindricalMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  cylindrical_map_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+std::optional<CylindricalMapTermStruct> CylindricalMapStruct::ptr() const {
+  void *ptr;
+  cylindrical_map_struct_get_ptr(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return CylindricalMapTermStruct(ptr);
+}
+void CylindricalMapStruct::set_ptr(const CylindricalMapTermStruct &src) {
+  cylindrical_map_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
+}
+std::complex<double> CylindricalMapTerm1Struct::e_coef() const {
+  std::complex<double> value;
+  cylindrical_map_term1_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void CylindricalMapTerm1Struct::set_e_coef(std::complex<double> value) {
+  cylindrical_map_term1_struct_set_complex(fortran_ptr_, 0, value);
+}
+std::complex<double> CylindricalMapTerm1Struct::b_coef() const {
+  std::complex<double> value;
+  cylindrical_map_term1_struct_get_complex(fortran_ptr_, 1, &value);
+  return value;
+}
+void CylindricalMapTerm1Struct::set_b_coef(std::complex<double> value) {
+  cylindrical_map_term1_struct_set_complex(fortran_ptr_, 1, value);
+}
+std::string CylindricalMapTermStruct::file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, cylindrical_map_term_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void CylindricalMapTermStruct::set_file(const std::string &value) {
+  cylindrical_map_term_struct_set_file(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+int CylindricalMapTermStruct::n_link() const {
+  int value;
+  cylindrical_map_term_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void CylindricalMapTermStruct::set_n_link(int value) {
+  cylindrical_map_term_struct_set_integer(fortran_ptr_, 0, value);
+}
+CylindricalMapTerm1StructAlloc1D CylindricalMapTermStruct::term() const {
+  return CylindricalMapTerm1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      cylindrical_map_term_struct_reallocate_term,
+      cylindrical_map_term_struct_get_term_info
+  );
+}
+double DiffuseParamStruct::x() const {
+  double value;
+  diffuse_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void DiffuseParamStruct::set_x(double value) {
+  diffuse_param_struct_set_real(fortran_ptr_, 0, value);
+}
+double DiffuseParamStruct::y() const {
+  double value;
+  diffuse_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void DiffuseParamStruct::set_y(double value) {
+  diffuse_param_struct_set_real(fortran_ptr_, 1, value);
+}
+double DiffuseParamStruct::lambda() const {
+  double value;
+  diffuse_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void DiffuseParamStruct::set_lambda(double value) {
+  diffuse_param_struct_set_real(fortran_ptr_, 2, value);
+}
+double DiffuseParamStruct::c_norm() const {
+  double value;
+  diffuse_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void DiffuseParamStruct::set_c_norm(double value) {
+  diffuse_param_struct_set_real(fortran_ptr_, 3, value);
+}
+double DiffuseParamStruct::chx_norm() const {
+  double value;
+  diffuse_param_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void DiffuseParamStruct::set_chx_norm(double value) {
+  diffuse_param_struct_set_real(fortran_ptr_, 4, value);
+}
+SplineStructArray1D DiffuseParamStruct::prob_spline() const {
+  return ProxyHelpers::get_type_array_1d<SplineStructArray1D>(
+      fortran_ptr_,
+      diffuse_param_struct_get_prob_spline_info
+  );
+}
+int DiffuseParamStruct::n_pt_spline() const {
+  int value;
+  diffuse_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void DiffuseParamStruct::set_n_pt_spline(int value) {
+  diffuse_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string DoLoopStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, do_loop_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void DoLoopStruct::set_name(const std::string &value) {
+  do_loop_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int DoLoopStruct::index() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void DoLoopStruct::set_index(int value) { do_loop_struct_set_integer(fortran_ptr_, 0, value); }
+int DoLoopStruct::start() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void DoLoopStruct::set_start(int value) { do_loop_struct_set_integer(fortran_ptr_, 1, value); }
+int DoLoopStruct::end() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void DoLoopStruct::set_end(int value) { do_loop_struct_set_integer(fortran_ptr_, 2, value); }
+int DoLoopStruct::step() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void DoLoopStruct::set_step(int value) { do_loop_struct_set_integer(fortran_ptr_, 3, value); }
+int DoLoopStruct::n_line_start() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void DoLoopStruct::set_n_line_start(int value) {
+  do_loop_struct_set_integer(fortran_ptr_, 4, value);
+}
+int DoLoopStruct::n_line_end() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void DoLoopStruct::set_n_line_end(int value) { do_loop_struct_set_integer(fortran_ptr_, 5, value); }
+int DoLoopStruct::value() const {
+  int value;
+  do_loop_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void DoLoopStruct::set_value(int value) { do_loop_struct_set_integer(fortran_ptr_, 6, value); }
+std::string EleAttributeStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, ele_attribute_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void EleAttributeStruct::set_name(const std::string &value) {
+  ele_attribute_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int EleAttributeStruct::state() const {
+  int value;
+  ele_attribute_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void EleAttributeStruct::set_state(int value) {
+  ele_attribute_struct_set_integer(fortran_ptr_, 0, value);
+}
+int EleAttributeStruct::kind() const {
+  int value;
+  ele_attribute_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void EleAttributeStruct::set_kind(int value) {
+  ele_attribute_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::string EleAttributeStruct::units() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, ele_attribute_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void EleAttributeStruct::set_units(const std::string &value) {
+  ele_attribute_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int EleAttributeStruct::ix_attrib() const {
+  int value;
+  ele_attribute_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void EleAttributeStruct::set_ix_attrib(int value) {
+  ele_attribute_struct_set_integer(fortran_ptr_, 2, value);
+}
+double EleAttributeStruct::value() const {
+  double value;
+  ele_attribute_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void EleAttributeStruct::set_value(double value) {
+  ele_attribute_struct_set_real(fortran_ptr_, 0, value);
+}
+std::optional<EleStruct> ElePointerStruct::ele() const {
+  void *ptr;
+  ele_pointer_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
+}
+void ElePointerStruct::set_ele(const EleStruct &src) {
+  ele_pointer_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+LatEleLocStruct ElePointerStruct::loc() const {
+  void *ptr;
+  ele_pointer_struct_get_loc(fortran_ptr_, &ptr);
+  return LatEleLocStruct(ptr);
+}
+void ElePointerStruct::set_loc(const LatEleLocStruct &src) {
+  ele_pointer_struct_set_loc(fortran_ptr_, src.get_fortran_ptr());
+}
+int ElePointerStruct::id() const {
+  int value;
+  ele_pointer_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ElePointerStruct::set_id(int value) { ele_pointer_struct_set_integer(fortran_ptr_, 0, value); }
 std::string EleStruct::name() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, ele_struct_get_name_info);
   return std::string(arr.data(), arr.size());
@@ -4821,6 +4677,16 @@ std::optional<ControllerStruct> EleStruct::control() const {
 void EleStruct::set_control(const ControllerStruct &src) {
   ele_struct_set_control(fortran_ptr_, src.get_fortran_ptr());
 }
+std::optional<ConverterStruct> EleStruct::converter() const {
+  void *ptr;
+  ele_struct_get_converter(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return ConverterStruct(ptr);
+}
+void EleStruct::set_converter(const ConverterStruct &src) {
+  ele_struct_set_converter(fortran_ptr_, src.get_fortran_ptr());
+}
 std::optional<RfEleStruct> EleStruct::rf() const {
   void *ptr;
   ele_struct_get_rf(fortran_ptr_, &ptr);
@@ -4831,6 +4697,16 @@ std::optional<RfEleStruct> EleStruct::rf() const {
 void EleStruct::set_rf(const RfEleStruct &src) {
   ele_struct_set_rf(fortran_ptr_, src.get_fortran_ptr());
 }
+std::optional<FoilStruct> EleStruct::foil() const {
+  void *ptr;
+  ele_struct_get_foil(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return FoilStruct(ptr);
+}
+void EleStruct::set_foil(const FoilStruct &src) {
+  ele_struct_set_foil(fortran_ptr_, src.get_fortran_ptr());
+}
 std::optional<EleStruct> EleStruct::lord() const {
   void *ptr;
   ele_struct_get_lord(fortran_ptr_, &ptr);
@@ -4840,16 +4716,6 @@ std::optional<EleStruct> EleStruct::lord() const {
 }
 void EleStruct::set_lord(const EleStruct &src) {
   ele_struct_set_lord(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<Fibre> EleStruct::ptc_fibre() const {
-  void *ptr;
-  ele_struct_get_ptc_fibre(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void EleStruct::set_ptc_fibre(const Fibre &src) {
-  ele_struct_set_ptc_fibre(fortran_ptr_, src.get_fortran_ptr());
 }
 FloorPositionStruct EleStruct::floor() const {
   void *ptr;
@@ -5347,147 +5213,1871 @@ bool EleStruct::offset_moves_aperture() const {
 void EleStruct::set_offset_moves_aperture(bool value) {
   ele_struct_set_logical(fortran_ptr_, 10, value);
 }
-std::complex<double> ComplexTaylorTermStruct::coef() const {
-  std::complex<double> value;
-  complex_taylor_term_struct_get_complex(fortran_ptr_, 0, &value);
+int EllipseBeamInitStruct::part_per_ellipse() const {
+  int value;
+  ellipse_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void ComplexTaylorTermStruct::set_coef(std::complex<double> value) {
-  complex_taylor_term_struct_set_complex(fortran_ptr_, 0, value);
+void EllipseBeamInitStruct::set_part_per_ellipse(int value) {
+  ellipse_beam_init_struct_set_integer(fortran_ptr_, 0, value);
 }
-FArray1D<int> ComplexTaylorTermStruct::expn() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, complex_taylor_term_struct_get_expn_info);
+int EllipseBeamInitStruct::n_ellipse() const {
+  int value;
+  ellipse_beam_init_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
 }
-void ComplexTaylorTermStruct::set_expn(const std::vector<int> &v) {
+void EllipseBeamInitStruct::set_n_ellipse(int value) {
+  ellipse_beam_init_struct_set_integer(fortran_ptr_, 1, value);
+}
+double EllipseBeamInitStruct::sigma_cutoff() const {
+  double value;
+  ellipse_beam_init_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void EllipseBeamInitStruct::set_sigma_cutoff(double value) {
+  ellipse_beam_init_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> EmFieldStruct::E() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_E_info);
+}
+void EmFieldStruct::set_E(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  complex_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+  em_field_struct_set_E(fortran_ptr_, v.data(), shape);
 }
-std::complex<double> ComplexTaylorStruct::ref() const {
-  std::complex<double> value;
-  complex_taylor_struct_get_complex(fortran_ptr_, 0, &value);
+FArray1D<double> EmFieldStruct::B() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_B_info);
+}
+void EmFieldStruct::set_B(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_field_struct_set_B(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> EmFieldStruct::dE() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dE_info);
+}
+void EmFieldStruct::set_dE(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, em_field_struct_set_dE, v);
+}
+FArray2D<double> EmFieldStruct::dB() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, em_field_struct_get_dB_info);
+}
+void EmFieldStruct::set_dB(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, em_field_struct_set_dB, v);
+}
+double EmFieldStruct::phi() const {
+  double value;
+  em_field_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void ComplexTaylorStruct::set_ref(std::complex<double> value) {
-  complex_taylor_struct_set_complex(fortran_ptr_, 0, value);
+void EmFieldStruct::set_phi(double value) { em_field_struct_set_real(fortran_ptr_, 0, value); }
+double EmFieldStruct::phi_B() const {
+  double value;
+  em_field_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-ComplexTaylorTermStructArray1D ComplexTaylorStruct::term() const {
-  return ProxyHelpers::get_type_array_1d<ComplexTaylorTermStructArray1D>(
-      fortran_ptr_,
-      complex_taylor_struct_get_term_info
-  );
+void EmFieldStruct::set_phi_B(double value) { em_field_struct_set_real(fortran_ptr_, 1, value); }
+FArray1D<double> EmFieldStruct::A() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, em_field_struct_get_A_info);
 }
-std::string BranchStruct::name() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, branch_struct_get_name_info);
+void EmFieldStruct::set_A(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_field_struct_set_A(fortran_ptr_, v.data(), shape);
+}
+std::string ExpressionAtomStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, expression_atom_struct_get_name_info);
   return std::string(arr.data(), arr.size());
 }
-void BranchStruct::set_name(const std::string &value) {
-  branch_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void ExpressionAtomStruct::set_name(const std::string &value) {
+  expression_atom_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-int BranchStruct::ix_branch() const {
+int ExpressionAtomStruct::type() const {
   int value;
-  branch_struct_get_integer(fortran_ptr_, 0, &value);
+  expression_atom_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void BranchStruct::set_ix_branch(int value) { branch_struct_set_integer(fortran_ptr_, 0, value); }
-int BranchStruct::ix_from_branch() const {
-  int value;
-  branch_struct_get_integer(fortran_ptr_, 1, &value);
+void ExpressionAtomStruct::set_type(int value) {
+  expression_atom_struct_set_integer(fortran_ptr_, 0, value);
+}
+double ExpressionAtomStruct::value() const {
+  double value;
+  expression_atom_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void BranchStruct::set_ix_from_branch(int value) {
-  branch_struct_set_integer(fortran_ptr_, 1, value);
+void ExpressionAtomStruct::set_value(double value) {
+  expression_atom_struct_set_real(fortran_ptr_, 0, value);
 }
-int BranchStruct::ix_from_ele() const {
+std::string ExpressionTreeStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, expression_tree_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ExpressionTreeStruct::set_name(const std::string &value) {
+  expression_tree_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int ExpressionTreeStruct::type() const {
   int value;
-  branch_struct_get_integer(fortran_ptr_, 2, &value);
+  expression_tree_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void BranchStruct::set_ix_from_ele(int value) { branch_struct_set_integer(fortran_ptr_, 2, value); }
-int BranchStruct::ix_to_ele() const {
-  int value;
-  branch_struct_get_integer(fortran_ptr_, 3, &value);
+void ExpressionTreeStruct::set_type(int value) {
+  expression_tree_struct_set_integer(fortran_ptr_, 0, value);
+}
+double ExpressionTreeStruct::value() const {
+  double value;
+  expression_tree_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void BranchStruct::set_ix_to_ele(int value) { branch_struct_set_integer(fortran_ptr_, 3, value); }
-int BranchStruct::ix_fixer() const {
-  int value;
-  branch_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
+void ExpressionTreeStruct::set_value(double value) {
+  expression_tree_struct_set_real(fortran_ptr_, 0, value);
 }
-void BranchStruct::set_ix_fixer(int value) { branch_struct_set_integer(fortran_ptr_, 4, value); }
-int BranchStruct::n_ele_track() const {
-  int value;
-  branch_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
+ExpressionTreeStructArray1D ExpressionTreeStruct::node() const {
+  return ProxyHelpers::get_type_array_1d<ExpressionTreeStructArray1D>(
+      fortran_ptr_,
+      expression_tree_struct_get_node_info
+  );
 }
-void BranchStruct::set_n_ele_track(int value) { branch_struct_set_integer(fortran_ptr_, 5, value); }
-int BranchStruct::n_ele_max() const {
-  int value;
-  branch_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void BranchStruct::set_n_ele_max(int value) { branch_struct_set_integer(fortran_ptr_, 6, value); }
-std::optional<LatStruct> BranchStruct::lat() const {
+RandomStateStruct ExtraParsingInfoStruct::ran_state() const {
   void *ptr;
-  branch_struct_get_lat(fortran_ptr_, &ptr);
+  extra_parsing_info_struct_get_ran_state(fortran_ptr_, &ptr);
+  return RandomStateStruct(ptr);
+}
+void ExtraParsingInfoStruct::set_ran_state(const RandomStateStruct &src) {
+  extra_parsing_info_struct_set_ran_state(fortran_ptr_, src.get_fortran_ptr());
+}
+int ExtraParsingInfoStruct::ran_seed() const {
+  int value;
+  extra_parsing_info_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_ran_seed(int value) {
+  extra_parsing_info_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool ExtraParsingInfoStruct::undeterministic_ran_function_called() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_undeterministic_ran_function_called(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool ExtraParsingInfoStruct::d_orb_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_d_orb_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool ExtraParsingInfoStruct::max_aperture_limit_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_max_aperture_limit_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool ExtraParsingInfoStruct::default_ds_step_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_default_ds_step_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool ExtraParsingInfoStruct::significant_length_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_significant_length_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool ExtraParsingInfoStruct::rel_tol_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_rel_tol_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool ExtraParsingInfoStruct::abs_tol_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_abs_tol_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool ExtraParsingInfoStruct::rel_tol_adaptive_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_rel_tol_adaptive_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool ExtraParsingInfoStruct::abs_tol_adaptive_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_abs_tol_adaptive_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 8, value);
+}
+bool ExtraParsingInfoStruct::init_ds_adaptive_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 9, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_init_ds_adaptive_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 9, value);
+}
+bool ExtraParsingInfoStruct::min_ds_adaptive_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 10, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_min_ds_adaptive_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 10, value);
+}
+bool ExtraParsingInfoStruct::fatal_ds_adaptive_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 11, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_fatal_ds_adaptive_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 11, value);
+}
+bool ExtraParsingInfoStruct::synch_rad_scale_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 12, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_synch_rad_scale_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 12, value);
+}
+bool ExtraParsingInfoStruct::autoscale_amp_abs_tol_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 13, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_autoscale_amp_abs_tol_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 13, value);
+}
+bool ExtraParsingInfoStruct::autoscale_amp_rel_tol_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 14, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_autoscale_amp_rel_tol_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 14, value);
+}
+bool ExtraParsingInfoStruct::autoscale_phase_tol_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 15, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_autoscale_phase_tol_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 15, value);
+}
+bool ExtraParsingInfoStruct::rf_phase_below_transition_ref_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 16, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_rf_phase_below_transition_ref_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 16, value);
+}
+bool ExtraParsingInfoStruct::electric_dipole_moment_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 17, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_electric_dipole_moment_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 17, value);
+}
+bool ExtraParsingInfoStruct::taylor_order_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 18, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_taylor_order_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 18, value);
+}
+bool ExtraParsingInfoStruct::runge_kutta_order_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 19, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_runge_kutta_order_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 19, value);
+}
+bool ExtraParsingInfoStruct::default_integ_order_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 20, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_default_integ_order_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 20, value);
+}
+bool ExtraParsingInfoStruct::sr_wakes_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 21, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sr_wakes_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 21, value);
+}
+bool ExtraParsingInfoStruct::lr_wakes_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 22, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_lr_wakes_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 22, value);
+}
+bool ExtraParsingInfoStruct::high_energy_space_charge_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 23, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_high_energy_space_charge_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 23, value);
+}
+bool ExtraParsingInfoStruct::high_energy_space_charge_linear_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 24, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_high_energy_space_charge_linear_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 24, value);
+}
+bool ExtraParsingInfoStruct::csr_and_space_charge_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 25, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_csr_and_space_charge_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 25, value);
+}
+bool ExtraParsingInfoStruct::spin_tracking_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 26, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_spin_tracking_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 26, value);
+}
+bool ExtraParsingInfoStruct::spin_sokolov_ternov_flipping_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 27, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_spin_sokolov_ternov_flipping_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 27, value);
+}
+bool ExtraParsingInfoStruct::radiation_damping_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 28, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_radiation_damping_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 28, value);
+}
+bool ExtraParsingInfoStruct::radiation_zero_average_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 29, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_radiation_zero_average_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 29, value);
+}
+bool ExtraParsingInfoStruct::radiation_fluctuations_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 30, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_radiation_fluctuations_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 30, value);
+}
+bool ExtraParsingInfoStruct::conserve_taylor_maps_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 31, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_conserve_taylor_maps_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 31, value);
+}
+bool ExtraParsingInfoStruct::absolute_time_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 32, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_absolute_time_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 32, value);
+}
+bool ExtraParsingInfoStruct::absolute_time_ref_shift_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 33, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_absolute_time_ref_shift_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 33, value);
+}
+bool ExtraParsingInfoStruct::convert_to_kinetic_momentum_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 34, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_convert_to_kinetic_momentum_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 34, value);
+}
+bool ExtraParsingInfoStruct::aperture_limit_on_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 35, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_aperture_limit_on_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 35, value);
+}
+bool ExtraParsingInfoStruct::normalize_twiss_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 36, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_normalize_twiss_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 36, value);
+}
+bool ExtraParsingInfoStruct::sad_eps_scale_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 37, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sad_eps_scale_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 37, value);
+}
+bool ExtraParsingInfoStruct::sad_amp_max_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 38, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sad_amp_max_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 38, value);
+}
+bool ExtraParsingInfoStruct::sad_n_div_max_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 39, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sad_n_div_max_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 39, value);
+}
+bool ExtraParsingInfoStruct::max_num_runge_kutta_step_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 40, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_max_num_runge_kutta_step_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 40, value);
+}
+bool ExtraParsingInfoStruct::spin_n0_direction_user_set_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 41, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_spin_n0_direction_user_set_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 41, value);
+}
+bool ExtraParsingInfoStruct::debug_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 42, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_debug_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 42, value);
+}
+bool ExtraParsingInfoStruct::ds_track_step_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 43, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_ds_track_step_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 43, value);
+}
+bool ExtraParsingInfoStruct::dt_track_step_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 44, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_dt_track_step_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 44, value);
+}
+bool ExtraParsingInfoStruct::cathode_strength_cutoff_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 45, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_cathode_strength_cutoff_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 45, value);
+}
+bool ExtraParsingInfoStruct::sc_rel_tol_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 46, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sc_rel_tol_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 46, value);
+}
+bool ExtraParsingInfoStruct::sc_abs_tol_tracking_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 47, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sc_abs_tol_tracking_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 47, value);
+}
+bool ExtraParsingInfoStruct::beam_chamber_height_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 48, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_beam_chamber_height_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 48, value);
+}
+bool ExtraParsingInfoStruct::lsc_sigma_cutoff_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 49, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_lsc_sigma_cutoff_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 49, value);
+}
+bool ExtraParsingInfoStruct::particle_sigma_cutoff_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 50, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_particle_sigma_cutoff_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 50, value);
+}
+bool ExtraParsingInfoStruct::space_charge_mesh_size_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 51, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_space_charge_mesh_size_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 51, value);
+}
+bool ExtraParsingInfoStruct::csr3d_mesh_size_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 52, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_csr3d_mesh_size_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 52, value);
+}
+bool ExtraParsingInfoStruct::n_bin_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 53, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_n_bin_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 53, value);
+}
+bool ExtraParsingInfoStruct::particle_bin_span_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 54, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_particle_bin_span_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 54, value);
+}
+bool ExtraParsingInfoStruct::n_shield_images_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 55, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_n_shield_images_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 55, value);
+}
+bool ExtraParsingInfoStruct::sc_min_in_bin_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 56, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sc_min_in_bin_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 56, value);
+}
+bool ExtraParsingInfoStruct::lsc_kick_transverse_dependence_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 57, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_lsc_kick_transverse_dependence_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 57, value);
+}
+bool ExtraParsingInfoStruct::sc_debug_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 58, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_sc_debug_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 58, value);
+}
+bool ExtraParsingInfoStruct::diagnostic_output_file_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 59, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_diagnostic_output_file_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 59, value);
+}
+bool ExtraParsingInfoStruct::old_integrator_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 60, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_old_integrator_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 60, value);
+}
+bool ExtraParsingInfoStruct::use_orientation_patches_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 61, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_use_orientation_patches_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 61, value);
+}
+bool ExtraParsingInfoStruct::print_info_messages_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 62, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_print_info_messages_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 62, value);
+}
+bool ExtraParsingInfoStruct::max_fringe_order_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 63, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_max_fringe_order_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 63, value);
+}
+bool ExtraParsingInfoStruct::exact_model_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 64, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_exact_model_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 64, value);
+}
+bool ExtraParsingInfoStruct::exact_misalign_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 65, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_exact_misalign_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 65, value);
+}
+bool ExtraParsingInfoStruct::vertical_kick_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 66, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_vertical_kick_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 66, value);
+}
+bool ExtraParsingInfoStruct::cut_factor_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 67, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_cut_factor_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 67, value);
+}
+bool ExtraParsingInfoStruct::translate_patch_drift_time_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 68, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_translate_patch_drift_time_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 68, value);
+}
+std::optional<int> Fibre::DIR() const {
+  int value;
+  bool is_valid;
+  fibre_get_DIR(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_DIR(int value) { fibre_set_DIR(fortran_ptr_, value); }
+std::optional<int> Fibre::pos() const {
+  int value;
+  bool is_valid;
+  fibre_get_pos(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_pos(int value) { fibre_set_pos(fortran_ptr_, value); }
+std::optional<double> Fibre::BETA0() const {
+  double value;
+  bool is_valid;
+  fibre_get_BETA0(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_BETA0(double value) { fibre_set_BETA0(fortran_ptr_, value); }
+std::optional<double> Fibre::GAMMA0I() const {
+  double value;
+  bool is_valid;
+  fibre_get_GAMMA0I(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_GAMMA0I(double value) { fibre_set_GAMMA0I(fortran_ptr_, value); }
+std::optional<double> Fibre::GAMBET() const {
+  double value;
+  bool is_valid;
+  fibre_get_GAMBET(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_GAMBET(double value) { fibre_set_GAMBET(fortran_ptr_, value); }
+std::optional<double> Fibre::MASS() const {
+  double value;
+  bool is_valid;
+  fibre_get_MASS(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_MASS(double value) { fibre_set_MASS(fortran_ptr_, value); }
+std::optional<double> Fibre::CHARGE() const {
+  double value;
+  bool is_valid;
+  fibre_get_CHARGE(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_CHARGE(double value) { fibre_set_CHARGE(fortran_ptr_, value); }
+std::optional<double> Fibre::AG() const {
+  double value;
+  bool is_valid;
+  fibre_get_AG(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_AG(double value) { fibre_set_AG(fortran_ptr_, value); }
+std::optional<int> Fibre::loc() const {
+  int value;
+  bool is_valid;
+  fibre_get_loc(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void Fibre::set_loc(int value) { fibre_set_loc(fortran_ptr_, value); }
+double Field1At2dPtStruct::f() const {
+  double value;
+  field1_at_2d_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Field1At2dPtStruct::set_f(double value) {
+  field1_at_2d_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double Field1At2dPtStruct::df_dx() const {
+  double value;
+  field1_at_2d_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Field1At2dPtStruct::set_df_dx(double value) {
+  field1_at_2d_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double Field1At2dPtStruct::df_dy() const {
+  double value;
+  field1_at_2d_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void Field1At2dPtStruct::set_df_dy(double value) {
+  field1_at_2d_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double Field1At2dPtStruct::d2f_dxdy() const {
+  double value;
+  field1_at_2d_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void Field1At2dPtStruct::set_d2f_dxdy(double value) {
+  field1_at_2d_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double Field1At3dPtStruct::f() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_f(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double Field1At3dPtStruct::df_dx() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_df_dx(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double Field1At3dPtStruct::df_dy() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_df_dy(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double Field1At3dPtStruct::df_dz() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_df_dz(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double Field1At3dPtStruct::d2f_dxdy() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_d2f_dxdy(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 4, value);
+}
+double Field1At3dPtStruct::d2f_dxdz() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_d2f_dxdz(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 5, value);
+}
+double Field1At3dPtStruct::d2f_dydz() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_d2f_dydz(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 6, value);
+}
+double Field1At3dPtStruct::d3f_dxdydz() const {
+  double value;
+  field1_at_3d_pt_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void Field1At3dPtStruct::set_d3f_dxdydz(double value) {
+  field1_at_3d_pt_struct_set_real(fortran_ptr_, 7, value);
+}
+Field1At2dPtStructArray2D FieldAt2dBoxStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<Field1At2dPtStructArray2D>(
+      fortran_ptr_,
+      field_at_2d_box_struct_get_pt_info
+  );
+}
+FArray1D<int> FieldAt2dBoxStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, field_at_2d_box_struct_get_i_box_info);
+}
+void FieldAt2dBoxStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  field_at_2d_box_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+Field1At3dPtStructArray3D FieldAt3dBoxStruct::pt() const {
+  return ProxyHelpers::get_type_array_3d<Field1At3dPtStructArray3D>(
+      fortran_ptr_,
+      field_at_3d_box_struct_get_pt_info
+  );
+}
+FArray1D<int> FieldAt3dBoxStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, field_at_3d_box_struct_get_i_box_info);
+}
+void FieldAt3dBoxStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  field_at_3d_box_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> FloorPositionStruct::r() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, floor_position_struct_get_r_info);
+}
+void FloorPositionStruct::set_r(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  floor_position_struct_set_r(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> FloorPositionStruct::w() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, floor_position_struct_get_w_info);
+}
+void FloorPositionStruct::set_w(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, floor_position_struct_set_w, v);
+}
+double FloorPositionStruct::theta() const {
+  double value;
+  floor_position_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void FloorPositionStruct::set_theta(double value) {
+  floor_position_struct_set_real(fortran_ptr_, 0, value);
+}
+double FloorPositionStruct::phi() const {
+  double value;
+  floor_position_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void FloorPositionStruct::set_phi(double value) {
+  floor_position_struct_set_real(fortran_ptr_, 1, value);
+}
+double FloorPositionStruct::psi() const {
+  double value;
+  floor_position_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void FloorPositionStruct::set_psi(double value) {
+  floor_position_struct_set_real(fortran_ptr_, 2, value);
+}
+MaterialStructAlloc1D FoilStruct::material() const {
+  return MaterialStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      foil_struct_reallocate_material,
+      foil_struct_get_material_info
+  );
+}
+std::optional<EleStruct> FringeFieldInfoStruct::hard_ele() const {
+  void *ptr;
+  fringe_field_info_struct_get_hard_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
+}
+void FringeFieldInfoStruct::set_hard_ele(const EleStruct &src) {
+  fringe_field_info_struct_set_hard_ele(fortran_ptr_, src.get_fortran_ptr());
+}
+double FringeFieldInfoStruct::s_edge_hard() const {
+  double value;
+  fringe_field_info_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void FringeFieldInfoStruct::set_s_edge_hard(double value) {
+  fringe_field_info_struct_set_real(fortran_ptr_, 0, value);
+}
+double FringeFieldInfoStruct::ds_edge() const {
+  double value;
+  fringe_field_info_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void FringeFieldInfoStruct::set_ds_edge(double value) {
+  fringe_field_info_struct_set_real(fortran_ptr_, 1, value);
+}
+int FringeFieldInfoStruct::particle_at() const {
+  int value;
+  fringe_field_info_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void FringeFieldInfoStruct::set_particle_at(int value) {
+  fringe_field_info_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::optional<int> FringeFieldInfoStruct::hard_location() const {
+  int value;
+  bool is_valid;
+  fringe_field_info_struct_get_hard_location(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void FringeFieldInfoStruct::set_hard_location(int value) {
+  fringe_field_info_struct_set_hard_location(fortran_ptr_, value);
+}
+IntAlloc1D FringeFieldInfoStruct::location() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      fringe_field_info_struct_reallocate_location,
+      fringe_field_info_struct_get_location_info
+  );
+}
+void FringeFieldInfoStruct::set_location(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  fringe_field_info_struct_set_location(fortran_ptr_, v.data(), shape);
+}
+bool FringeFieldInfoStruct::has_fringe() const {
+  bool value;
+  fringe_field_info_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void FringeFieldInfoStruct::set_has_fringe(bool value) {
+  fringe_field_info_struct_set_logical(fortran_ptr_, 0, value);
+}
+int GenGrad1Struct::m() const {
+  int value;
+  gen_grad1_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GenGrad1Struct::set_m(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 0, value); }
+int GenGrad1Struct::sincos() const {
+  int value;
+  gen_grad1_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void GenGrad1Struct::set_sincos(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 1, value); }
+int GenGrad1Struct::n_deriv_max() const {
+  int value;
+  gen_grad1_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void GenGrad1Struct::set_n_deriv_max(int value) {
+  gen_grad1_struct_set_integer(fortran_ptr_, 2, value);
+}
+FArray2D<double> GenGrad1Struct::deriv() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad1_struct_get_deriv_info);
+}
+void GenGrad1Struct::set_deriv(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad1_struct_set_deriv, v);
+}
+std::string GenGradMapStruct::file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_grad_map_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void GenGradMapStruct::set_file(const std::string &value) {
+  gen_grad_map_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+GenGrad1StructAlloc1D GenGradMapStruct::gg() const {
+  return GenGrad1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      gen_grad_map_struct_reallocate_gg,
+      gen_grad_map_struct_get_gg_info
+  );
+}
+int GenGradMapStruct::ele_anchor_pt() const {
+  int value;
+  gen_grad_map_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GenGradMapStruct::set_ele_anchor_pt(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 0, value);
+}
+int GenGradMapStruct::field_type() const {
+  int value;
+  gen_grad_map_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void GenGradMapStruct::set_field_type(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 1, value);
+}
+int GenGradMapStruct::iz0() const {
+  int value;
+  gen_grad_map_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void GenGradMapStruct::set_iz0(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 2, value);
+}
+int GenGradMapStruct::iz1() const {
+  int value;
+  gen_grad_map_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void GenGradMapStruct::set_iz1(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 3, value);
+}
+double GenGradMapStruct::dz() const {
+  double value;
+  gen_grad_map_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void GenGradMapStruct::set_dz(double value) {
+  gen_grad_map_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<double> GenGradMapStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_grad_map_struct_get_r0_info);
+}
+void GenGradMapStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  gen_grad_map_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+double GenGradMapStruct::field_scale() const {
+  double value;
+  gen_grad_map_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void GenGradMapStruct::set_field_scale(double value) {
+  gen_grad_map_struct_set_real(fortran_ptr_, 1, value);
+}
+int GenGradMapStruct::master_parameter() const {
+  int value;
+  gen_grad_map_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void GenGradMapStruct::set_master_parameter(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 4, value);
+}
+bool GenGradMapStruct::curved_ref_frame() const {
+  bool value;
+  gen_grad_map_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void GenGradMapStruct::set_curved_ref_frame(bool value) {
+  gen_grad_map_struct_set_logical(fortran_ptr_, 0, value);
+}
+RealAlloc1D GeneralBinStruct::count() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      general_bin_struct_reallocate_count,
+      general_bin_struct_get_count_info
+  );
+}
+void GeneralBinStruct::set_count(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  general_bin_struct_set_count(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> GeneralBinStruct::min() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, general_bin_struct_get_min_info);
+}
+void GeneralBinStruct::set_min(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  general_bin_struct_set_min(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> GeneralBinStruct::max() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, general_bin_struct_get_max_info);
+}
+void GeneralBinStruct::set_max(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  general_bin_struct_set_max(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> GeneralBinStruct::delta() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, general_bin_struct_get_delta_info);
+}
+void GeneralBinStruct::set_delta(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  general_bin_struct_set_delta(fortran_ptr_, v.data(), shape);
+}
+int GeneralBinStruct::dim() const {
+  int value;
+  general_bin_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GeneralBinStruct::set_dim(int value) {
+  general_bin_struct_set_integer(fortran_ptr_, 0, value);
+}
+FArray1D<int> GeneralBinStruct::n() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, general_bin_struct_get_n_info);
+}
+void GeneralBinStruct::set_n(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  general_bin_struct_set_n(fortran_ptr_, v.data(), shape);
+}
+double GgTaylorStruct::ref() const {
+  double value;
+  gg_taylor_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void GgTaylorStruct::set_ref(double value) { gg_taylor_struct_set_real(fortran_ptr_, 0, value); }
+GgTaylorTermStructAlloc1D GgTaylorStruct::term() const {
+  return GgTaylorTermStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      gg_taylor_struct_reallocate_term,
+      gg_taylor_struct_get_term_info
+  );
+}
+double GgTaylorTermStruct::coef() const {
+  double value;
+  gg_taylor_term_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void GgTaylorTermStruct::set_coef(double value) {
+  gg_taylor_term_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<int> GgTaylorTermStruct::expn() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, gg_taylor_term_struct_get_expn_info);
+}
+void GgTaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  gg_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+}
+int GptLatParamStruct::fieldmap_dimension() const {
+  int value;
+  gpt_lat_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GptLatParamStruct::set_fieldmap_dimension(int value) {
+  gpt_lat_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool GptLatParamStruct::only_write_autophase_parameters() const {
+  bool value;
+  gpt_lat_param_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void GptLatParamStruct::set_only_write_autophase_parameters(bool value) {
+  gpt_lat_param_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::string GptLatParamStruct::gpt_filename() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gpt_lat_param_struct_get_gpt_filename_info);
+  return std::string(arr.data(), arr.size());
+}
+void GptLatParamStruct::set_gpt_filename(const std::string &value) {
+  gpt_lat_param_struct_set_gpt_filename(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string GptLatParamStruct::header_file_name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      gpt_lat_param_struct_get_header_file_name_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void GptLatParamStruct::set_header_file_name(const std::string &value) {
+  gpt_lat_param_struct_set_header_file_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string GptLatParamStruct::tracking_end_element() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      gpt_lat_param_struct_get_tracking_end_element_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void GptLatParamStruct::set_tracking_end_element(const std::string &value) {
+  gpt_lat_param_struct_set_tracking_end_element(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+int GridBeamInitStruct::n_x() const {
+  int value;
+  grid_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridBeamInitStruct::set_n_x(int value) {
+  grid_beam_init_struct_set_integer(fortran_ptr_, 0, value);
+}
+int GridBeamInitStruct::n_px() const {
+  int value;
+  grid_beam_init_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void GridBeamInitStruct::set_n_px(int value) {
+  grid_beam_init_struct_set_integer(fortran_ptr_, 1, value);
+}
+double GridBeamInitStruct::x_min() const {
+  double value;
+  grid_beam_init_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridBeamInitStruct::set_x_min(double value) {
+  grid_beam_init_struct_set_real(fortran_ptr_, 0, value);
+}
+double GridBeamInitStruct::x_max() const {
+  double value;
+  grid_beam_init_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void GridBeamInitStruct::set_x_max(double value) {
+  grid_beam_init_struct_set_real(fortran_ptr_, 1, value);
+}
+double GridBeamInitStruct::px_min() const {
+  double value;
+  grid_beam_init_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void GridBeamInitStruct::set_px_min(double value) {
+  grid_beam_init_struct_set_real(fortran_ptr_, 2, value);
+}
+double GridBeamInitStruct::px_max() const {
+  double value;
+  grid_beam_init_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void GridBeamInitStruct::set_px_max(double value) {
+  grid_beam_init_struct_set_real(fortran_ptr_, 3, value);
+}
+FArray1D<std::complex<double>> GridFieldPt1Struct::E() const {
+  return ProxyHelpers::get_array_1d<std::complex<double>>(
+      fortran_ptr_,
+      grid_field_pt1_struct_get_E_info
+  );
+}
+void GridFieldPt1Struct::set_E(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_pt1_struct_set_E(fortran_ptr_, v.data(), shape);
+}
+FArray1D<std::complex<double>> GridFieldPt1Struct::B() const {
+  return ProxyHelpers::get_array_1d<std::complex<double>>(
+      fortran_ptr_,
+      grid_field_pt1_struct_get_B_info
+  );
+}
+void GridFieldPt1Struct::set_B(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_pt1_struct_set_B(fortran_ptr_, v.data(), shape);
+}
+std::string GridFieldPtStruct::file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, grid_field_pt_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void GridFieldPtStruct::set_file(const std::string &value) {
+  grid_field_pt_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int GridFieldPtStruct::n_link() const {
+  int value;
+  grid_field_pt_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridFieldPtStruct::set_n_link(int value) {
+  grid_field_pt_struct_set_integer(fortran_ptr_, 0, value);
+}
+GridFieldPt1StructArray3D GridFieldPtStruct::pt() const {
+  return ProxyHelpers::get_type_array_3d<GridFieldPt1StructArray3D>(
+      fortran_ptr_,
+      grid_field_pt_struct_get_pt_info
+  );
+}
+int GridFieldStruct::geometry() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridFieldStruct::set_geometry(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 0, value);
+}
+int GridFieldStruct::harmonic() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void GridFieldStruct::set_harmonic(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 1, value);
+}
+double GridFieldStruct::phi0_fieldmap() const {
+  double value;
+  grid_field_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridFieldStruct::set_phi0_fieldmap(double value) {
+  grid_field_struct_set_real(fortran_ptr_, 0, value);
+}
+double GridFieldStruct::field_scale() const {
+  double value;
+  grid_field_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void GridFieldStruct::set_field_scale(double value) {
+  grid_field_struct_set_real(fortran_ptr_, 1, value);
+}
+int GridFieldStruct::field_type() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void GridFieldStruct::set_field_type(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 2, value);
+}
+int GridFieldStruct::master_parameter() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void GridFieldStruct::set_master_parameter(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 3, value);
+}
+int GridFieldStruct::ele_anchor_pt() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void GridFieldStruct::set_ele_anchor_pt(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 4, value);
+}
+int GridFieldStruct::interpolation_order() const {
+  int value;
+  grid_field_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void GridFieldStruct::set_interpolation_order(int value) {
+  grid_field_struct_set_integer(fortran_ptr_, 5, value);
+}
+FArray1D<double> GridFieldStruct::dr() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_dr_info);
+}
+void GridFieldStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> GridFieldStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, grid_field_struct_get_r0_info);
+}
+void GridFieldStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  grid_field_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+bool GridFieldStruct::curved_ref_frame() const {
+  bool value;
+  grid_field_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void GridFieldStruct::set_curved_ref_frame(bool value) {
+  grid_field_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::optional<GridFieldPtStruct> GridFieldStruct::ptr() const {
+  void *ptr;
+  grid_field_struct_get_ptr(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return GridFieldPtStruct(ptr);
+}
+void GridFieldStruct::set_ptr(const GridFieldPtStruct &src) {
+  grid_field_struct_set_ptr(fortran_ptr_, src.get_fortran_ptr());
+}
+BicubicCmplxCoefStructArray3D GridFieldStruct::bi_coef() const {
+  return ProxyHelpers::get_type_array_3d<BicubicCmplxCoefStructArray3D>(
+      fortran_ptr_,
+      grid_field_struct_get_bi_coef_info
+  );
+}
+TricubicCmplxCoefStructArray3D GridFieldStruct::tri_coef() const {
+  return ProxyHelpers::get_type_array_3d<TricubicCmplxCoefStructArray3D>(
+      fortran_ptr_,
+      grid_field_struct_get_tri_coef_info
+  );
+}
+CoordStruct HighEnergySpaceChargeStruct::closed_orb() const {
+  void *ptr;
+  high_energy_space_charge_struct_get_closed_orb(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void HighEnergySpaceChargeStruct::set_closed_orb(const CoordStruct &src) {
+  high_energy_space_charge_struct_set_closed_orb(fortran_ptr_, src.get_fortran_ptr());
+}
+double HighEnergySpaceChargeStruct::kick_const() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_kick_const(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 0, value);
+}
+double HighEnergySpaceChargeStruct::sig_x() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_sig_x(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 1, value);
+}
+double HighEnergySpaceChargeStruct::sig_y() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_sig_y(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 2, value);
+}
+double HighEnergySpaceChargeStruct::phi() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_phi(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 3, value);
+}
+double HighEnergySpaceChargeStruct::sin_phi() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_sin_phi(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 4, value);
+}
+double HighEnergySpaceChargeStruct::cos_phi() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_cos_phi(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 5, value);
+}
+double HighEnergySpaceChargeStruct::sig_z() const {
+  double value;
+  high_energy_space_charge_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void HighEnergySpaceChargeStruct::set_sig_z(double value) {
+  high_energy_space_charge_struct_set_real(fortran_ptr_, 6, value);
+}
+double IbsLifetimeStruct::Tlx() const {
+  double value;
+  ibs_lifetime_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsLifetimeStruct::set_Tlx(double value) {
+  ibs_lifetime_struct_set_real(fortran_ptr_, 0, value);
+}
+double IbsLifetimeStruct::Tly() const {
+  double value;
+  ibs_lifetime_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void IbsLifetimeStruct::set_Tly(double value) {
+  ibs_lifetime_struct_set_real(fortran_ptr_, 1, value);
+}
+double IbsLifetimeStruct::Tlp() const {
+  double value;
+  ibs_lifetime_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void IbsLifetimeStruct::set_Tlp(double value) {
+  ibs_lifetime_struct_set_real(fortran_ptr_, 2, value);
+}
+double IbsMaxratioStruct::rx() const {
+  double value;
+  ibs_maxratio_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsMaxratioStruct::set_rx(double value) {
+  ibs_maxratio_struct_set_real(fortran_ptr_, 0, value);
+}
+double IbsMaxratioStruct::ry() const {
+  double value;
+  ibs_maxratio_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void IbsMaxratioStruct::set_ry(double value) {
+  ibs_maxratio_struct_set_real(fortran_ptr_, 1, value);
+}
+double IbsMaxratioStruct::r_p() const {
+  double value;
+  ibs_maxratio_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void IbsMaxratioStruct::set_r_p(double value) {
+  ibs_maxratio_struct_set_real(fortran_ptr_, 2, value);
+}
+double IbsSimParamStruct::tau_a() const {
+  double value;
+  ibs_sim_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsSimParamStruct::set_tau_a(double value) {
+  ibs_sim_param_struct_set_real(fortran_ptr_, 0, value);
+}
+int IbsSimParamStruct::clog_to_use() const {
+  int value;
+  ibs_sim_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsSimParamStruct::set_clog_to_use(int value) {
+  ibs_sim_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool IbsSimParamStruct::set_dispersion() const {
+  bool value;
+  ibs_sim_param_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsSimParamStruct::set_set_dispersion(bool value) {
+  ibs_sim_param_struct_set_logical(fortran_ptr_, 0, value);
+}
+double IbsSimParamStruct::eta_set() const {
+  double value;
+  ibs_sim_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void IbsSimParamStruct::set_eta_set(double value) {
+  ibs_sim_param_struct_set_real(fortran_ptr_, 1, value);
+}
+double IbsSimParamStruct::etap_set() const {
+  double value;
+  ibs_sim_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void IbsSimParamStruct::set_etap_set(double value) {
+  ibs_sim_param_struct_set_real(fortran_ptr_, 2, value);
+}
+bool IbsSimParamStruct::do_pwd() const {
+  bool value;
+  ibs_sim_param_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void IbsSimParamStruct::set_do_pwd(bool value) {
+  ibs_sim_param_struct_set_logical(fortran_ptr_, 1, value);
+}
+double IbsSimParamStruct::inductance() const {
+  double value;
+  ibs_sim_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void IbsSimParamStruct::set_inductance(double value) {
+  ibs_sim_param_struct_set_real(fortran_ptr_, 3, value);
+}
+std::string IbsSimParamStruct::formula() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, ibs_sim_param_struct_get_formula_info);
+  return std::string(arr.data(), arr.size());
+}
+void IbsSimParamStruct::set_formula(const std::string &value) {
+  ibs_sim_param_struct_set_formula(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double IbsStruct::inv_Ta() const {
+  double value;
+  ibs_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void IbsStruct::set_inv_Ta(double value) { ibs_struct_set_real(fortran_ptr_, 0, value); }
+double IbsStruct::inv_Tb() const {
+  double value;
+  ibs_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void IbsStruct::set_inv_Tb(double value) { ibs_struct_set_real(fortran_ptr_, 1, value); }
+double IbsStruct::inv_Tz() const {
+  double value;
+  ibs_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void IbsStruct::set_inv_Tz(double value) { ibs_struct_set_real(fortran_ptr_, 2, value); }
+double Interval1CoefStruct::c0() const {
+  double value;
+  interval1_coef_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Interval1CoefStruct::set_c0(double value) {
+  interval1_coef_struct_set_real(fortran_ptr_, 0, value);
+}
+double Interval1CoefStruct::c1() const {
+  double value;
+  interval1_coef_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Interval1CoefStruct::set_c1(double value) {
+  interval1_coef_struct_set_real(fortran_ptr_, 1, value);
+}
+double Interval1CoefStruct::n_exp() const {
+  double value;
+  interval1_coef_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void Interval1CoefStruct::set_n_exp(double value) {
+  interval1_coef_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray1D<int> KvBeamInitStruct::part_per_phi() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, kv_beam_init_struct_get_part_per_phi_info);
+}
+void KvBeamInitStruct::set_part_per_phi(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  kv_beam_init_struct_set_part_per_phi(fortran_ptr_, v.data(), shape);
+}
+int KvBeamInitStruct::n_I2() const {
+  int value;
+  kv_beam_init_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void KvBeamInitStruct::set_n_I2(int value) {
+  kv_beam_init_struct_set_integer(fortran_ptr_, 0, value);
+}
+double KvBeamInitStruct::A() const {
+  double value;
+  kv_beam_init_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void KvBeamInitStruct::set_A(double value) { kv_beam_init_struct_set_real(fortran_ptr_, 0, value); }
+int LatEleLocStruct::ix_ele() const {
+  int value;
+  lat_ele_loc_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void LatEleLocStruct::set_ix_ele(int value) {
+  lat_ele_loc_struct_set_integer(fortran_ptr_, 0, value);
+}
+int LatEleLocStruct::ix_branch() const {
+  int value;
+  lat_ele_loc_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void LatEleLocStruct::set_ix_branch(int value) {
+  lat_ele_loc_struct_set_integer(fortran_ptr_, 1, value);
+}
+int LatEleOrder1Struct::ix_branch() const {
+  int value;
+  lat_ele_order1_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void LatEleOrder1Struct::set_ix_branch(int value) {
+  lat_ele_order1_struct_set_integer(fortran_ptr_, 0, value);
+}
+int LatEleOrder1Struct::ix_order() const {
+  int value;
+  lat_ele_order1_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void LatEleOrder1Struct::set_ix_order(int value) {
+  lat_ele_order1_struct_set_integer(fortran_ptr_, 1, value);
+}
+LatEleOrder1StructAlloc1D LatEleOrderArrayStruct::ele() const {
+  return LatEleOrder1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      lat_ele_order_array_struct_reallocate_ele,
+      lat_ele_order_array_struct_get_ele_info
+  );
+}
+LatEleOrderArrayStructAlloc1D LatEleOrderStruct::branch() const {
+  return LatEleOrderArrayStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      lat_ele_order_struct_reallocate_branch,
+      lat_ele_order_struct_get_branch_info
+  );
+}
+double LatParamStruct::n_part() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void LatParamStruct::set_n_part(double value) { lat_param_struct_set_real(fortran_ptr_, 0, value); }
+double LatParamStruct::total_length() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void LatParamStruct::set_total_length(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 1, value);
+}
+double LatParamStruct::unstable_factor() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void LatParamStruct::set_unstable_factor(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray2D<double> LatParamStruct::t1_with_RF() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_with_RF_info);
+}
+void LatParamStruct::set_t1_with_RF(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, lat_param_struct_set_t1_with_RF, v);
+}
+FArray2D<double> LatParamStruct::t1_no_RF() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, lat_param_struct_get_t1_no_RF_info);
+}
+void LatParamStruct::set_t1_no_RF(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, lat_param_struct_set_t1_no_RF, v);
+}
+double LatParamStruct::spin_tune() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void LatParamStruct::set_spin_tune(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 3, value);
+}
+int LatParamStruct::particle() const {
+  int value;
+  lat_param_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void LatParamStruct::set_particle(int value) {
+  lat_param_struct_set_integer(fortran_ptr_, 0, value);
+}
+int LatParamStruct::default_tracking_species() const {
+  int value;
+  lat_param_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void LatParamStruct::set_default_tracking_species(int value) {
+  lat_param_struct_set_integer(fortran_ptr_, 1, value);
+}
+int LatParamStruct::geometry() const {
+  int value;
+  lat_param_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void LatParamStruct::set_geometry(int value) {
+  lat_param_struct_set_integer(fortran_ptr_, 2, value);
+}
+int LatParamStruct::ixx() const {
+  int value;
+  lat_param_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void LatParamStruct::set_ixx(int value) { lat_param_struct_set_integer(fortran_ptr_, 3, value); }
+bool LatParamStruct::stable() const {
+  bool value;
+  lat_param_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void LatParamStruct::set_stable(bool value) {
+  lat_param_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool LatParamStruct::live_branch() const {
+  bool value;
+  lat_param_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void LatParamStruct::set_live_branch(bool value) {
+  lat_param_struct_set_logical(fortran_ptr_, 1, value);
+}
+double LatParamStruct::g1_integral() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void LatParamStruct::set_g1_integral(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 4, value);
+}
+double LatParamStruct::g2_integral() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void LatParamStruct::set_g2_integral(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 5, value);
+}
+double LatParamStruct::g3_integral() const {
+  double value;
+  lat_param_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void LatParamStruct::set_g3_integral(double value) {
+  lat_param_struct_set_real(fortran_ptr_, 6, value);
+}
+BookkeepingStateStruct LatParamStruct::bookkeeping_state() const {
+  void *ptr;
+  lat_param_struct_get_bookkeeping_state(fortran_ptr_, &ptr);
+  return BookkeepingStateStruct(ptr);
+}
+void LatParamStruct::set_bookkeeping_state(const BookkeepingStateStruct &src) {
+  lat_param_struct_set_bookkeeping_state(fortran_ptr_, src.get_fortran_ptr());
+}
+BeamInitStruct LatParamStruct::beam_init() const {
+  void *ptr;
+  lat_param_struct_get_beam_init(fortran_ptr_, &ptr);
+  return BeamInitStruct(ptr);
+}
+void LatParamStruct::set_beam_init(const BeamInitStruct &src) {
+  lat_param_struct_set_beam_init(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<LatStruct> LatPointerStruct::lat() const {
+  void *ptr;
+  lat_pointer_struct_get_lat(fortran_ptr_, &ptr);
   if (!ptr)
     return std::nullopt;
   return LatStruct(ptr);
 }
-void BranchStruct::set_lat(const LatStruct &src) {
-  branch_struct_set_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-ModeInfoStruct BranchStruct::a() const {
-  void *ptr;
-  branch_struct_get_a(fortran_ptr_, &ptr);
-  return ModeInfoStruct(ptr);
-}
-void BranchStruct::set_a(const ModeInfoStruct &src) {
-  branch_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
-}
-ModeInfoStruct BranchStruct::b() const {
-  void *ptr;
-  branch_struct_get_b(fortran_ptr_, &ptr);
-  return ModeInfoStruct(ptr);
-}
-void BranchStruct::set_b(const ModeInfoStruct &src) {
-  branch_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
-}
-ModeInfoStruct BranchStruct::z() const {
-  void *ptr;
-  branch_struct_get_z(fortran_ptr_, &ptr);
-  return ModeInfoStruct(ptr);
-}
-void BranchStruct::set_z(const ModeInfoStruct &src) {
-  branch_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
-}
-EleStructArray1D BranchStruct::ele() const {
-  return ProxyHelpers::get_type_array_1d<EleStructArray1D>(
-      fortran_ptr_,
-      branch_struct_get_ele_info
-  );
-}
-LatParamStruct BranchStruct::param() const {
-  void *ptr;
-  branch_struct_get_param(fortran_ptr_, &ptr);
-  return LatParamStruct(ptr);
-}
-void BranchStruct::set_param(const LatParamStruct &src) {
-  branch_struct_set_param(fortran_ptr_, src.get_fortran_ptr());
-}
-CoordStruct BranchStruct::particle_start() const {
-  void *ptr;
-  branch_struct_get_particle_start(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void BranchStruct::set_particle_start(const CoordStruct &src) {
-  branch_struct_set_particle_start(fortran_ptr_, src.get_fortran_ptr());
-}
-Wall3dStructArray1D BranchStruct::wall3d() const {
-  return ProxyHelpers::get_type_array_1d<Wall3dStructArray1D>(
-      fortran_ptr_,
-      branch_struct_get_wall3d_info
-  );
+void LatPointerStruct::set_lat(const LatStruct &src) {
+  lat_pointer_struct_set_lat(fortran_ptr_, src.get_fortran_ptr());
 }
 std::string LatStruct::use_name() const {
   FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, lat_struct_get_use_name_info);
@@ -5634,6 +7224,14 @@ PreTrackerStruct LatStruct::pre_tracker() const {
 void LatStruct::set_pre_tracker(const PreTrackerStruct &src) {
   lat_struct_set_pre_tracker(fortran_ptr_, src.get_fortran_ptr());
 }
+NametableStruct LatStruct::nametable() const {
+  void *ptr;
+  lat_struct_get_nametable(fortran_ptr_, &ptr);
+  return NametableStruct(ptr);
+}
+void LatStruct::set_nametable(const NametableStruct &src) {
+  lat_struct_set_nametable(fortran_ptr_, src.get_fortran_ptr());
+}
 RealAlloc1D LatStruct::custom() const {
   return RealAlloc1D(
       const_cast<void *>(fortran_ptr_),
@@ -5728,477 +7326,759 @@ bool LatStruct::parser_make_xfer_mats() const {
 void LatStruct::set_parser_make_xfer_mats(bool value) {
   lat_struct_set_logical(fortran_ptr_, 0, value);
 }
-CoordStructAlloc1D BunchStruct::particle() const {
-  return CoordStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bunch_struct_reallocate_particle,
-      bunch_struct_get_particle_info
-  );
+std::string Layout::NAME() const {
+  return ProxyHelpers::get_string(fortran_ptr_, layout_get_NAME_info);
 }
-IntAlloc1D BunchStruct::ix_z() const {
-  return IntAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bunch_struct_reallocate_ix_z,
-      bunch_struct_get_ix_z_info
-  );
+void Layout::set_NAME(const std::string &value) {
+  layout_set_NAME(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-void BunchStruct::set_ix_z(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bunch_struct_set_ix_z(fortran_ptr_, v.data(), shape);
+std::optional<int> Layout::INDEX() const {
+  int value;
+  bool is_valid;
+  layout_get_INDEX(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-double BunchStruct::charge_tot() const {
+void Layout::set_INDEX(int value) { layout_set_INDEX(fortran_ptr_, value); }
+std::optional<double> Layout::HARMONIC_NUMBER() const {
   double value;
-  bunch_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+  bool is_valid;
+  layout_get_HARMONIC_NUMBER(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-void BunchStruct::set_charge_tot(double value) { bunch_struct_set_real(fortran_ptr_, 0, value); }
-double BunchStruct::charge_live() const {
-  double value;
-  bunch_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void BunchStruct::set_charge_live(double value) { bunch_struct_set_real(fortran_ptr_, 1, value); }
-double BunchStruct::z_center() const {
-  double value;
-  bunch_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void BunchStruct::set_z_center(double value) { bunch_struct_set_real(fortran_ptr_, 2, value); }
-double BunchStruct::t_center() const {
-  double value;
-  bunch_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void BunchStruct::set_t_center(double value) { bunch_struct_set_real(fortran_ptr_, 3, value); }
-double BunchStruct::t0() const {
-  double value;
-  bunch_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void BunchStruct::set_t0(double value) { bunch_struct_set_real(fortran_ptr_, 4, value); }
-bool BunchStruct::drift_between_t_and_s() const {
+void Layout::set_HARMONIC_NUMBER(double value) { layout_set_HARMONIC_NUMBER(fortran_ptr_, value); }
+std::optional<bool> Layout::CLOSED() const {
   bool value;
-  bunch_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
+  bool is_valid;
+  layout_get_CLOSED(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-void BunchStruct::set_drift_between_t_and_s(bool value) {
-  bunch_struct_set_logical(fortran_ptr_, 0, value);
-}
-int BunchStruct::ix_ele() const {
+void Layout::set_CLOSED(bool value) { layout_set_CLOSED(fortran_ptr_, value); }
+std::optional<int> Layout::N() const {
   int value;
-  bunch_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
+  bool is_valid;
+  layout_get_N(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-void BunchStruct::set_ix_ele(int value) { bunch_struct_set_integer(fortran_ptr_, 0, value); }
-int BunchStruct::ix_bunch() const {
+void Layout::set_N(int value) { layout_set_N(fortran_ptr_, value); }
+std::optional<int> Layout::NTHIN() const {
   int value;
-  bunch_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
+  bool is_valid;
+  layout_get_NTHIN(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-void BunchStruct::set_ix_bunch(int value) { bunch_struct_set_integer(fortran_ptr_, 1, value); }
-int BunchStruct::ix_turn() const {
-  int value;
-  bunch_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void BunchStruct::set_ix_turn(int value) { bunch_struct_set_integer(fortran_ptr_, 2, value); }
-int BunchStruct::n_live() const {
-  int value;
-  bunch_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BunchStruct::set_n_live(int value) { bunch_struct_set_integer(fortran_ptr_, 3, value); }
-int BunchStruct::n_good() const {
-  int value;
-  bunch_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void BunchStruct::set_n_good(int value) { bunch_struct_set_integer(fortran_ptr_, 4, value); }
-int BunchStruct::n_bad() const {
-  int value;
-  bunch_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void BunchStruct::set_n_bad(int value) { bunch_struct_set_integer(fortran_ptr_, 5, value); }
-CoordStruct BunchParamsStruct::centroid() const {
-  void *ptr;
-  bunch_params_struct_get_centroid(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void BunchParamsStruct::set_centroid(const CoordStruct &src) {
-  bunch_params_struct_set_centroid(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::x() const {
-  void *ptr;
-  bunch_params_struct_get_x(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_x(const TwissStruct &src) {
-  bunch_params_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::y() const {
-  void *ptr;
-  bunch_params_struct_get_y(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_y(const TwissStruct &src) {
-  bunch_params_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::z() const {
-  void *ptr;
-  bunch_params_struct_get_z(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_z(const TwissStruct &src) {
-  bunch_params_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::a() const {
-  void *ptr;
-  bunch_params_struct_get_a(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_a(const TwissStruct &src) {
-  bunch_params_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::b() const {
-  void *ptr;
-  bunch_params_struct_get_b(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_b(const TwissStruct &src) {
-  bunch_params_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
-}
-TwissStruct BunchParamsStruct::c() const {
-  void *ptr;
-  bunch_params_struct_get_c(fortran_ptr_, &ptr);
-  return TwissStruct(ptr);
-}
-void BunchParamsStruct::set_c(const TwissStruct &src) {
-  bunch_params_struct_set_c(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray2D<double> BunchParamsStruct::sigma() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, bunch_params_struct_get_sigma_info);
-}
-void BunchParamsStruct::set_sigma(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, bunch_params_struct_set_sigma, v);
-}
-FArray1D<double> BunchParamsStruct::rel_max() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_max_info);
-}
-void BunchParamsStruct::set_rel_max(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bunch_params_struct_set_rel_max(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> BunchParamsStruct::rel_min() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bunch_params_struct_get_rel_min_info);
-}
-void BunchParamsStruct::set_rel_min(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bunch_params_struct_set_rel_min(fortran_ptr_, v.data(), shape);
-}
-double BunchParamsStruct::s() const {
+void Layout::set_NTHIN(int value) { layout_set_NTHIN(fortran_ptr_, value); }
+std::optional<double> Layout::THIN() const {
   double value;
-  bunch_params_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+  bool is_valid;
+  layout_get_THIN(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-void BunchParamsStruct::set_s(double value) {
-  bunch_params_struct_set_real(fortran_ptr_, 0, value);
+void Layout::set_THIN(double value) { layout_set_THIN(fortran_ptr_, value); }
+std::optional<int> Layout::LASTPOS() const {
+  int value;
+  bool is_valid;
+  layout_get_LASTPOS(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
 }
-double BunchParamsStruct::t() const {
+void Layout::set_LASTPOS(int value) { layout_set_LASTPOS(fortran_ptr_, value); }
+double LinacNormalModeStruct::i2_E4() const {
   double value;
-  bunch_params_struct_get_real(fortran_ptr_, 1, &value);
+  linac_normal_mode_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void BunchParamsStruct::set_t(double value) {
-  bunch_params_struct_set_real(fortran_ptr_, 1, value);
+void LinacNormalModeStruct::set_i2_E4(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 0, value);
 }
-double BunchParamsStruct::sigma_t() const {
+double LinacNormalModeStruct::i3_E7() const {
   double value;
-  bunch_params_struct_get_real(fortran_ptr_, 2, &value);
+  linac_normal_mode_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void BunchParamsStruct::set_sigma_t(double value) {
-  bunch_params_struct_set_real(fortran_ptr_, 2, value);
+void LinacNormalModeStruct::set_i3_E7(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 1, value);
 }
-double BunchParamsStruct::charge_live() const {
+double LinacNormalModeStruct::i5a_E6() const {
   double value;
-  bunch_params_struct_get_real(fortran_ptr_, 3, &value);
+  linac_normal_mode_struct_get_real(fortran_ptr_, 2, &value);
   return value;
 }
-void BunchParamsStruct::set_charge_live(double value) {
-  bunch_params_struct_set_real(fortran_ptr_, 3, value);
+void LinacNormalModeStruct::set_i5a_E6(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 2, value);
 }
-double BunchParamsStruct::charge_tot() const {
+double LinacNormalModeStruct::i5b_E6() const {
   double value;
-  bunch_params_struct_get_real(fortran_ptr_, 4, &value);
+  linac_normal_mode_struct_get_real(fortran_ptr_, 3, &value);
   return value;
 }
-void BunchParamsStruct::set_charge_tot(double value) {
-  bunch_params_struct_set_real(fortran_ptr_, 4, value);
+void LinacNormalModeStruct::set_i5b_E6(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 3, value);
 }
-int BunchParamsStruct::n_particle_tot() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 0, &value);
+double LinacNormalModeStruct::sig_E1() const {
+  double value;
+  linac_normal_mode_struct_get_real(fortran_ptr_, 4, &value);
   return value;
 }
-void BunchParamsStruct::set_n_particle_tot(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 0, value);
+void LinacNormalModeStruct::set_sig_E1(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 4, value);
 }
-int BunchParamsStruct::n_particle_live() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 1, &value);
+double LinacNormalModeStruct::a_emittance_end() const {
+  double value;
+  linac_normal_mode_struct_get_real(fortran_ptr_, 5, &value);
   return value;
 }
-void BunchParamsStruct::set_n_particle_live(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 1, value);
+void LinacNormalModeStruct::set_a_emittance_end(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 5, value);
 }
-int BunchParamsStruct::n_particle_lost_in_ele() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 2, &value);
+double LinacNormalModeStruct::b_emittance_end() const {
+  double value;
+  linac_normal_mode_struct_get_real(fortran_ptr_, 6, &value);
   return value;
 }
-void BunchParamsStruct::set_n_particle_lost_in_ele(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 2, value);
+void LinacNormalModeStruct::set_b_emittance_end(double value) {
+  linac_normal_mode_struct_set_real(fortran_ptr_, 6, value);
 }
-int BunchParamsStruct::n_good_steps() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BunchParamsStruct::set_n_good_steps(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 3, value);
-}
-int BunchParamsStruct::n_bad_steps() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void BunchParamsStruct::set_n_bad_steps(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 4, value);
-}
-int BunchParamsStruct::ix_ele() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void BunchParamsStruct::set_ix_ele(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 5, value);
-}
-int BunchParamsStruct::location() const {
-  int value;
-  bunch_params_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void BunchParamsStruct::set_location(int value) {
-  bunch_params_struct_set_integer(fortran_ptr_, 6, value);
-}
-bool BunchParamsStruct::twiss_valid() const {
-  bool value;
-  bunch_params_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void BunchParamsStruct::set_twiss_valid(bool value) {
-  bunch_params_struct_set_logical(fortran_ptr_, 0, value);
-}
-BunchStructAlloc1D BeamStruct::bunch() const {
-  return BunchStructAlloc1D(
+LinearIsf1StructAlloc1D LinearEleIsfStruct::node() const {
+  return LinearIsf1StructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      beam_struct_reallocate_bunch,
-      beam_struct_get_bunch_info
+      linear_ele_isf_struct_reallocate_node,
+      linear_ele_isf_struct_get_node_info
   );
 }
-double AperturePointStruct::x() const {
+FArray1D<double> LinearIsf1Struct::orb0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, linear_isf1_struct_get_orb0_info);
+}
+void LinearIsf1Struct::set_orb0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  linear_isf1_struct_set_orb0(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> LinearIsf1Struct::isf() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, linear_isf1_struct_get_isf_info);
+}
+void LinearIsf1Struct::set_isf(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, linear_isf1_struct_set_isf, v);
+}
+double LinearIsf1Struct::s() const {
   double value;
-  aperture_point_struct_get_real(fortran_ptr_, 0, &value);
+  linear_isf1_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void AperturePointStruct::set_x(double value) {
-  aperture_point_struct_set_real(fortran_ptr_, 0, value);
-}
-double AperturePointStruct::y() const {
+void LinearIsf1Struct::set_s(double value) { linear_isf1_struct_set_real(fortran_ptr_, 0, value); }
+double MadEnergyStruct::total() const {
   double value;
-  aperture_point_struct_get_real(fortran_ptr_, 1, &value);
+  mad_energy_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void AperturePointStruct::set_y(double value) {
-  aperture_point_struct_set_real(fortran_ptr_, 1, value);
+void MadEnergyStruct::set_total(double value) {
+  mad_energy_struct_set_real(fortran_ptr_, 0, value);
 }
-int AperturePointStruct::plane() const {
+double MadEnergyStruct::beta() const {
+  double value;
+  mad_energy_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void MadEnergyStruct::set_beta(double value) { mad_energy_struct_set_real(fortran_ptr_, 1, value); }
+double MadEnergyStruct::gamma() const {
+  double value;
+  mad_energy_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void MadEnergyStruct::set_gamma(double value) {
+  mad_energy_struct_set_real(fortran_ptr_, 2, value);
+}
+double MadEnergyStruct::kinetic() const {
+  double value;
+  mad_energy_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void MadEnergyStruct::set_kinetic(double value) {
+  mad_energy_struct_set_real(fortran_ptr_, 3, value);
+}
+double MadEnergyStruct::p0c() const {
+  double value;
+  mad_energy_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void MadEnergyStruct::set_p0c(double value) { mad_energy_struct_set_real(fortran_ptr_, 4, value); }
+int MadEnergyStruct::particle() const {
   int value;
-  aperture_point_struct_get_integer(fortran_ptr_, 0, &value);
+  mad_energy_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void AperturePointStruct::set_plane(int value) {
-  aperture_point_struct_set_integer(fortran_ptr_, 0, value);
+void MadEnergyStruct::set_particle(int value) {
+  mad_energy_struct_set_integer(fortran_ptr_, 0, value);
 }
-int AperturePointStruct::ix_ele() const {
+FArray1D<double> MadMapStruct::k() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mad_map_struct_get_k_info);
+}
+void MadMapStruct::set_k(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mad_map_struct_set_k(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> MadMapStruct::r() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mad_map_struct_get_r_info);
+}
+void MadMapStruct::set_r(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, mad_map_struct_set_r, v);
+}
+FArray3D<double> MadMapStruct::t() const {
+  return ProxyHelpers::get_array_3d<double>(fortran_ptr_, mad_map_struct_get_t_info);
+}
+void MadMapStruct::set_t(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, mad_map_struct_set_t, v);
+}
+int MaterialStruct::species() const {
   int value;
-  aperture_point_struct_get_integer(fortran_ptr_, 1, &value);
+  material_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void AperturePointStruct::set_ix_ele(int value) {
-  aperture_point_struct_set_integer(fortran_ptr_, 1, value);
-}
-int AperturePointStruct::i_turn() const {
+void MaterialStruct::set_species(int value) { material_struct_set_integer(fortran_ptr_, 0, value); }
+int MaterialStruct::number() const {
   int value;
-  aperture_point_struct_get_integer(fortran_ptr_, 2, &value);
+  material_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void AperturePointStruct::set_i_turn(int value) {
-  aperture_point_struct_set_integer(fortran_ptr_, 2, value);
-}
-double ApertureParamStruct::min_angle() const {
+void MaterialStruct::set_number(int value) { material_struct_set_integer(fortran_ptr_, 1, value); }
+double MaterialStruct::density() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 0, &value);
+  material_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void ApertureParamStruct::set_min_angle(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 0, value);
-}
-double ApertureParamStruct::max_angle() const {
+void MaterialStruct::set_density(double value) { material_struct_set_real(fortran_ptr_, 0, value); }
+double MaterialStruct::density_used() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 1, &value);
+  material_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void ApertureParamStruct::set_max_angle(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 1, value);
+void MaterialStruct::set_density_used(double value) {
+  material_struct_set_real(fortran_ptr_, 1, value);
 }
-int ApertureParamStruct::n_angle() const {
-  int value;
-  aperture_param_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void ApertureParamStruct::set_n_angle(int value) {
-  aperture_param_struct_set_integer(fortran_ptr_, 0, value);
-}
-int ApertureParamStruct::n_turn() const {
-  int value;
-  aperture_param_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void ApertureParamStruct::set_n_turn(int value) {
-  aperture_param_struct_set_integer(fortran_ptr_, 1, value);
-}
-double ApertureParamStruct::x_init() const {
+double MaterialStruct::area_density() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 2, &value);
+  material_struct_get_real(fortran_ptr_, 2, &value);
   return value;
 }
-void ApertureParamStruct::set_x_init(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 2, value);
+void MaterialStruct::set_area_density(double value) {
+  material_struct_set_real(fortran_ptr_, 2, value);
 }
-double ApertureParamStruct::y_init() const {
+double MaterialStruct::area_density_used() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 3, &value);
+  material_struct_get_real(fortran_ptr_, 3, &value);
   return value;
 }
-void ApertureParamStruct::set_y_init(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 3, value);
+void MaterialStruct::set_area_density_used(double value) {
+  material_struct_set_real(fortran_ptr_, 3, value);
 }
-double ApertureParamStruct::rel_accuracy() const {
+double MaterialStruct::radiation_length() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 4, &value);
+  material_struct_get_real(fortran_ptr_, 4, &value);
   return value;
 }
-void ApertureParamStruct::set_rel_accuracy(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 4, value);
+void MaterialStruct::set_radiation_length(double value) {
+  material_struct_set_real(fortran_ptr_, 4, value);
 }
-double ApertureParamStruct::abs_accuracy() const {
+double MaterialStruct::radiation_length_used() const {
   double value;
-  aperture_param_struct_get_real(fortran_ptr_, 5, &value);
+  material_struct_get_real(fortran_ptr_, 5, &value);
   return value;
 }
-void ApertureParamStruct::set_abs_accuracy(double value) {
-  aperture_param_struct_set_real(fortran_ptr_, 5, value);
+void MaterialStruct::set_radiation_length_used(double value) {
+  material_struct_set_real(fortran_ptr_, 5, value);
 }
-std::string ApertureParamStruct::start_ele() const {
+FArray1D<int> Mesh3dStruct::nlo() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, mesh3d_struct_get_nlo_info);
+}
+void Mesh3dStruct::set_nlo(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_nlo(fortran_ptr_, v.data(), shape);
+}
+FArray1D<int> Mesh3dStruct::nhi() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, mesh3d_struct_get_nhi_info);
+}
+void Mesh3dStruct::set_nhi(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_nhi(fortran_ptr_, v.data(), shape);
+}
+FArray1D<int> Mesh3dStruct::npad() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, mesh3d_struct_get_npad_info);
+}
+void Mesh3dStruct::set_npad(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_npad(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> Mesh3dStruct::min() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mesh3d_struct_get_min_info);
+}
+void Mesh3dStruct::set_min(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_min(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> Mesh3dStruct::max() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mesh3d_struct_get_max_info);
+}
+void Mesh3dStruct::set_max(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_max(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> Mesh3dStruct::delta() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mesh3d_struct_get_delta_info);
+}
+void Mesh3dStruct::set_delta(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  mesh3d_struct_set_delta(fortran_ptr_, v.data(), shape);
+}
+double Mesh3dStruct::gamma() const {
+  double value;
+  mesh3d_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Mesh3dStruct::set_gamma(double value) { mesh3d_struct_set_real(fortran_ptr_, 0, value); }
+double Mesh3dStruct::charge() const {
+  double value;
+  mesh3d_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Mesh3dStruct::set_charge(double value) { mesh3d_struct_set_real(fortran_ptr_, 1, value); }
+FArray3D<double> Mesh3dStruct::rho() const {
+  return ProxyHelpers::get_array_3d<double>(fortran_ptr_, mesh3d_struct_get_rho_info);
+}
+void Mesh3dStruct::set_rho(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, mesh3d_struct_set_rho, v);
+}
+FArray3D<double> Mesh3dStruct::phi() const {
+  return ProxyHelpers::get_array_3d<double>(fortran_ptr_, mesh3d_struct_get_phi_info);
+}
+void Mesh3dStruct::set_phi(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, mesh3d_struct_set_phi, v);
+}
+FArray2D<double> Mode3Struct::v() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mode3_struct_get_v_info);
+}
+void Mode3Struct::set_v(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, mode3_struct_set_v, v);
+}
+TwissStruct Mode3Struct::a() const {
+  void *ptr;
+  mode3_struct_get_a(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void Mode3Struct::set_a(const TwissStruct &src) {
+  mode3_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct Mode3Struct::b() const {
+  void *ptr;
+  mode3_struct_get_b(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void Mode3Struct::set_b(const TwissStruct &src) {
+  mode3_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct Mode3Struct::c() const {
+  void *ptr;
+  mode3_struct_get_c(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void Mode3Struct::set_c(const TwissStruct &src) {
+  mode3_struct_set_c(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct Mode3Struct::x() const {
+  void *ptr;
+  mode3_struct_get_x(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void Mode3Struct::set_x(const TwissStruct &src) {
+  mode3_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
+}
+TwissStruct Mode3Struct::y() const {
+  void *ptr;
+  mode3_struct_get_y(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
+}
+void Mode3Struct::set_y(const TwissStruct &src) {
+  mode3_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
+}
+bool ModeInfoStruct::stable() const {
+  bool value;
+  mode_info_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ModeInfoStruct::set_stable(bool value) {
+  mode_info_struct_set_logical(fortran_ptr_, 0, value);
+}
+double ModeInfoStruct::tune() const {
+  double value;
+  mode_info_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ModeInfoStruct::set_tune(double value) { mode_info_struct_set_real(fortran_ptr_, 0, value); }
+double ModeInfoStruct::emit() const {
+  double value;
+  mode_info_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void ModeInfoStruct::set_emit(double value) { mode_info_struct_set_real(fortran_ptr_, 1, value); }
+double ModeInfoStruct::chrom() const {
+  double value;
+  mode_info_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void ModeInfoStruct::set_chrom(double value) { mode_info_struct_set_real(fortran_ptr_, 2, value); }
+double ModeInfoStruct::sigma() const {
+  double value;
+  mode_info_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void ModeInfoStruct::set_sigma(double value) { mode_info_struct_set_real(fortran_ptr_, 3, value); }
+double ModeInfoStruct::sigmap() const {
+  double value;
+  mode_info_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void ModeInfoStruct::set_sigmap(double value) { mode_info_struct_set_real(fortran_ptr_, 4, value); }
+std::string MolecularComponentStruct::atom() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, aperture_param_struct_get_start_ele_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, molecular_component_struct_get_atom_info);
   return std::string(arr.data(), arr.size());
 }
-void ApertureParamStruct::set_start_ele(const std::string &value) {
-  aperture_param_struct_set_start_ele(
+void MolecularComponentStruct::set_atom(const std::string &value) {
+  molecular_component_struct_set_atom(
       fortran_ptr_,
       value.c_str(),
       static_cast<int>(value.length())
   );
 }
-AperturePointStructAlloc1D ApertureScanStruct::point() const {
-  return AperturePointStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      aperture_scan_struct_reallocate_point,
-      aperture_scan_struct_get_point_info
-  );
-}
-CoordStruct ApertureScanStruct::ref_orb() const {
-  void *ptr;
-  aperture_scan_struct_get_ref_orb(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void ApertureScanStruct::set_ref_orb(const CoordStruct &src) {
-  aperture_scan_struct_set_ref_orb(fortran_ptr_, src.get_fortran_ptr());
-}
-double ApertureScanStruct::pz_start() const {
-  double value;
-  aperture_scan_struct_get_real(fortran_ptr_, 0, &value);
+int MolecularComponentStruct::number() const {
+  int value;
+  molecular_component_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void ApertureScanStruct::set_pz_start(double value) {
-  aperture_scan_struct_set_real(fortran_ptr_, 0, value);
+void MolecularComponentStruct::set_number(int value) {
+  molecular_component_struct_set_integer(fortran_ptr_, 0, value);
 }
-std::optional<EleStruct> ElePointerStruct::ele() const {
+double MomentumApertureStruct::s() const {
+  double value;
+  momentum_aperture_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void MomentumApertureStruct::set_s(double value) {
+  momentum_aperture_struct_set_real(fortran_ptr_, 0, value);
+}
+double MomentumApertureStruct::pos() const {
+  double value;
+  momentum_aperture_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void MomentumApertureStruct::set_pos(double value) {
+  momentum_aperture_struct_set_real(fortran_ptr_, 1, value);
+}
+double MomentumApertureStruct::neg() const {
+  double value;
+  momentum_aperture_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void MomentumApertureStruct::set_neg(double value) {
+  momentum_aperture_struct_set_real(fortran_ptr_, 2, value);
+}
+MultipassLordInfoStructAlloc1D MultipassAllInfoStruct::lord() const {
+  return MultipassLordInfoStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_all_info_struct_reallocate_lord,
+      multipass_all_info_struct_get_lord_info
+  );
+}
+MultipassBranchInfoStructAlloc1D MultipassAllInfoStruct::branch() const {
+  return MultipassBranchInfoStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_all_info_struct_reallocate_branch,
+      multipass_all_info_struct_get_branch_info
+  );
+}
+MultipassEleInfoStructAlloc1D MultipassBranchInfoStruct::ele() const {
+  return MultipassEleInfoStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_branch_info_struct_reallocate_ele,
+      multipass_branch_info_struct_get_ele_info
+  );
+}
+bool MultipassEleInfoStruct::multipass() const {
+  bool value;
+  multipass_ele_info_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipassEleInfoStruct::set_multipass(bool value) {
+  multipass_ele_info_struct_set_logical(fortran_ptr_, 0, value);
+}
+int MultipassEleInfoStruct::ix_pass() const {
+  int value;
+  multipass_ele_info_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipassEleInfoStruct::set_ix_pass(int value) {
+  multipass_ele_info_struct_set_integer(fortran_ptr_, 0, value);
+}
+IntAlloc1D MultipassEleInfoStruct::ix_lord() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_ele_info_struct_reallocate_ix_lord,
+      multipass_ele_info_struct_get_ix_lord_info
+  );
+}
+void MultipassEleInfoStruct::set_ix_lord(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipass_ele_info_struct_set_ix_lord(fortran_ptr_, v.data(), shape);
+}
+IntAlloc1D MultipassEleInfoStruct::ix_super() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_ele_info_struct_reallocate_ix_super,
+      multipass_ele_info_struct_get_ix_super_info
+  );
+}
+void MultipassEleInfoStruct::set_ix_super(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipass_ele_info_struct_set_ix_super(fortran_ptr_, v.data(), shape);
+}
+std::optional<EleStruct> MultipassLordInfoStruct::lord() const {
   void *ptr;
-  ele_pointer_struct_get_ele(fortran_ptr_, &ptr);
+  multipass_lord_info_struct_get_lord(fortran_ptr_, &ptr);
   if (!ptr)
     return std::nullopt;
   return EleStruct(ptr);
 }
-void ElePointerStruct::set_ele(const EleStruct &src) {
-  ele_pointer_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
+void MultipassLordInfoStruct::set_lord(const EleStruct &src) {
+  multipass_lord_info_struct_set_lord(fortran_ptr_, src.get_fortran_ptr());
 }
-LatEleLocStruct ElePointerStruct::loc() const {
-  void *ptr;
-  ele_pointer_struct_get_loc(fortran_ptr_, &ptr);
-  return LatEleLocStruct(ptr);
-}
-void ElePointerStruct::set_loc(const LatEleLocStruct &src) {
-  ele_pointer_struct_set_loc(fortran_ptr_, src.get_fortran_ptr());
-}
-int ElePointerStruct::id() const {
+int MultipassLordInfoStruct::n_pass() const {
   int value;
-  ele_pointer_struct_get_integer(fortran_ptr_, 0, &value);
+  multipass_lord_info_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void ElePointerStruct::set_id(int value) { ele_pointer_struct_set_integer(fortran_ptr_, 0, value); }
-std::string ExpressionTreeStruct::name() const {
+void MultipassLordInfoStruct::set_n_pass(int value) {
+  multipass_lord_info_struct_set_integer(fortran_ptr_, 0, value);
+}
+int MultipassLordInfoStruct::n_super_slave() const {
+  int value;
+  multipass_lord_info_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void MultipassLordInfoStruct::set_n_super_slave(int value) {
+  multipass_lord_info_struct_set_integer(fortran_ptr_, 1, value);
+}
+ElePointerStructAlloc1D MultipassLordInfoStruct::super_lord() const {
+  return ElePointerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_lord_info_struct_reallocate_super_lord,
+      multipass_lord_info_struct_get_super_lord_info
+  );
+}
+ElePointerStructArray2D MultipassLordInfoStruct::slave() const {
+  return ProxyHelpers::get_type_array_2d<ElePointerStructArray2D>(
+      fortran_ptr_,
+      multipass_lord_info_struct_get_slave_info
+  );
+}
+MultipassRegionEleStructAlloc1D MultipassRegionBranchStruct::ele() const {
+  return MultipassRegionEleStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_region_branch_struct_reallocate_ele,
+      multipass_region_branch_struct_get_ele_info
+  );
+}
+int MultipassRegionEleStruct::ix_region() const {
+  int value;
+  multipass_region_ele_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipassRegionEleStruct::set_ix_region(int value) {
+  multipass_region_ele_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool MultipassRegionEleStruct::region_start_pt() const {
+  bool value;
+  multipass_region_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipassRegionEleStruct::set_region_start_pt(bool value) {
+  multipass_region_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool MultipassRegionEleStruct::region_stop_pt() const {
+  bool value;
+  multipass_region_ele_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void MultipassRegionEleStruct::set_region_stop_pt(bool value) {
+  multipass_region_ele_struct_set_logical(fortran_ptr_, 1, value);
+}
+MultipassRegionBranchStructAlloc1D MultipassRegionLatStruct::branch() const {
+  return MultipassRegionBranchStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipass_region_lat_struct_reallocate_branch,
+      multipass_region_lat_struct_get_branch_info
+  );
+}
+RealAlloc1D MultipoleCacheStruct::a_pole_mag() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_a_pole_mag,
+      multipole_cache_struct_get_a_pole_mag_info
+  );
+}
+void MultipoleCacheStruct::set_a_pole_mag(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_a_pole_mag(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::b_pole_mag() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_b_pole_mag,
+      multipole_cache_struct_get_b_pole_mag_info
+  );
+}
+void MultipoleCacheStruct::set_b_pole_mag(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_b_pole_mag(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::a_kick_mag() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_a_kick_mag,
+      multipole_cache_struct_get_a_kick_mag_info
+  );
+}
+void MultipoleCacheStruct::set_a_kick_mag(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_a_kick_mag(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::b_kick_mag() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_b_kick_mag,
+      multipole_cache_struct_get_b_kick_mag_info
+  );
+}
+void MultipoleCacheStruct::set_b_kick_mag(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_b_kick_mag(fortran_ptr_, v.data(), shape);
+}
+int MultipoleCacheStruct::ix_pole_mag_max() const {
+  int value;
+  multipole_cache_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_ix_pole_mag_max(int value) {
+  multipole_cache_struct_set_integer(fortran_ptr_, 0, value);
+}
+int MultipoleCacheStruct::ix_kick_mag_max() const {
+  int value;
+  multipole_cache_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_ix_kick_mag_max(int value) {
+  multipole_cache_struct_set_integer(fortran_ptr_, 1, value);
+}
+bool MultipoleCacheStruct::mag_valid() const {
+  bool value;
+  multipole_cache_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_mag_valid(bool value) {
+  multipole_cache_struct_set_logical(fortran_ptr_, 0, value);
+}
+RealAlloc1D MultipoleCacheStruct::a_pole_elec() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_a_pole_elec,
+      multipole_cache_struct_get_a_pole_elec_info
+  );
+}
+void MultipoleCacheStruct::set_a_pole_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_a_pole_elec(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::b_pole_elec() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_b_pole_elec,
+      multipole_cache_struct_get_b_pole_elec_info
+  );
+}
+void MultipoleCacheStruct::set_b_pole_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_b_pole_elec(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::a_kick_elec() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_a_kick_elec,
+      multipole_cache_struct_get_a_kick_elec_info
+  );
+}
+void MultipoleCacheStruct::set_a_kick_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_a_kick_elec(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D MultipoleCacheStruct::b_kick_elec() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      multipole_cache_struct_reallocate_b_kick_elec,
+      multipole_cache_struct_get_b_kick_elec_info
+  );
+}
+void MultipoleCacheStruct::set_b_kick_elec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  multipole_cache_struct_set_b_kick_elec(fortran_ptr_, v.data(), shape);
+}
+int MultipoleCacheStruct::ix_pole_elec_max() const {
+  int value;
+  multipole_cache_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_ix_pole_elec_max(int value) {
+  multipole_cache_struct_set_integer(fortran_ptr_, 2, value);
+}
+int MultipoleCacheStruct::ix_kick_elec_max() const {
+  int value;
+  multipole_cache_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_ix_kick_elec_max(int value) {
+  multipole_cache_struct_set_integer(fortran_ptr_, 3, value);
+}
+bool MultipoleCacheStruct::elec_valid() const {
+  bool value;
+  multipole_cache_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void MultipoleCacheStruct::set_elec_valid(bool value) {
+  multipole_cache_struct_set_logical(fortran_ptr_, 1, value);
+}
+std::string NamedNumberStruct::name() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, expression_tree_struct_get_name_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, named_number_struct_get_name_info);
   return std::string(arr.data(), arr.size());
 }
-void ExpressionTreeStruct::set_name(const std::string &value) {
-  expression_tree_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void NamedNumberStruct::set_name(const std::string &value) {
+  named_number_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-int ExpressionTreeStruct::type() const {
-  int value;
-  expression_tree_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void ExpressionTreeStruct::set_type(int value) {
-  expression_tree_struct_set_integer(fortran_ptr_, 0, value);
-}
-double ExpressionTreeStruct::value() const {
+double NamedNumberStruct::value() const {
   double value;
-  expression_tree_struct_get_real(fortran_ptr_, 0, &value);
+  named_number_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void ExpressionTreeStruct::set_value(double value) {
-  expression_tree_struct_set_real(fortran_ptr_, 0, value);
-}
-ExpressionTreeStructArray1D ExpressionTreeStruct::node() const {
-  return ProxyHelpers::get_type_array_1d<ExpressionTreeStructArray1D>(
-      fortran_ptr_,
-      expression_tree_struct_get_node_info
-  );
+void NamedNumberStruct::set_value(double value) {
+  named_number_struct_set_real(fortran_ptr_, 0, value);
 }
 FCharArray1D NametableStruct::name() const {
   return ProxyHelpers::get_char_array_1d(fortran_ptr_, nametable_struct_get_name_info);
@@ -6226,80 +8106,1045 @@ int NametableStruct::n_max() const {
   return value;
 }
 void NametableStruct::set_n_max(int value) { nametable_struct_set_integer(fortran_ptr_, 1, value); }
-FArray1D<double> TaoSpinDnDpzStruct::vec() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_vec_info);
+FArray1D<double> NormalModesStruct::synch_int() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, normal_modes_struct_get_synch_int_info);
 }
-void TaoSpinDnDpzStruct::set_vec(const std::vector<double> &v) {
+void NormalModesStruct::set_synch_int(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  tao_spin_dn_dpz_struct_set_vec(fortran_ptr_, v.data(), shape);
+  normal_modes_struct_set_synch_int(fortran_ptr_, v.data(), shape);
 }
-FArray2D<double> TaoSpinDnDpzStruct::partial() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial_info);
-}
-void TaoSpinDnDpzStruct::set_partial(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_set_partial, v);
-}
-FArray2D<double> TaoSpinDnDpzStruct::partial2() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial2_info);
-}
-void TaoSpinDnDpzStruct::set_partial2(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_set_partial2, v);
-}
-std::string ResonanceHStruct::id() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, resonance_h_struct_get_id_info);
-  return std::string(arr.data(), arr.size());
-}
-void ResonanceHStruct::set_id(const std::string &value) {
-  resonance_h_struct_set_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::complex<double> ResonanceHStruct::c_val() const {
-  std::complex<double> value;
-  resonance_h_struct_get_complex(fortran_ptr_, 0, &value);
+double NormalModesStruct::sigE_E() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void ResonanceHStruct::set_c_val(std::complex<double> value) {
-  resonance_h_struct_set_complex(fortran_ptr_, 0, value);
+void NormalModesStruct::set_sigE_E(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 0, value);
 }
-FArray2D<double> SpinOrbitMap1Struct::orb_mat() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_orb_mat_info);
+double NormalModesStruct::sig_z() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-void SpinOrbitMap1Struct::set_orb_mat(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_set_orb_mat, v);
+void NormalModesStruct::set_sig_z(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 1, value);
 }
-FArray1D<double> SpinOrbitMap1Struct::vec0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_orbit_map1_struct_get_vec0_info);
+double NormalModesStruct::e_loss() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
 }
-void SpinOrbitMap1Struct::set_vec0(const std::vector<double> &v) {
+void NormalModesStruct::set_e_loss(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 2, value);
+}
+double NormalModesStruct::rf_voltage() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void NormalModesStruct::set_rf_voltage(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 3, value);
+}
+double NormalModesStruct::pz_aperture() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void NormalModesStruct::set_pz_aperture(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 4, value);
+}
+double NormalModesStruct::pz_average() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void NormalModesStruct::set_pz_average(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 5, value);
+}
+double NormalModesStruct::momentum_compaction() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void NormalModesStruct::set_momentum_compaction(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 6, value);
+}
+double NormalModesStruct::dpz_damp() const {
+  double value;
+  normal_modes_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void NormalModesStruct::set_dpz_damp(double value) {
+  normal_modes_struct_set_real(fortran_ptr_, 7, value);
+}
+AnormalModeStruct NormalModesStruct::a() const {
+  void *ptr;
+  normal_modes_struct_get_a(fortran_ptr_, &ptr);
+  return AnormalModeStruct(ptr);
+}
+void NormalModesStruct::set_a(const AnormalModeStruct &src) {
+  normal_modes_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
+}
+AnormalModeStruct NormalModesStruct::b() const {
+  void *ptr;
+  normal_modes_struct_get_b(fortran_ptr_, &ptr);
+  return AnormalModeStruct(ptr);
+}
+void NormalModesStruct::set_b(const AnormalModeStruct &src) {
+  normal_modes_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
+}
+AnormalModeStruct NormalModesStruct::z() const {
+  void *ptr;
+  normal_modes_struct_get_z(fortran_ptr_, &ptr);
+  return AnormalModeStruct(ptr);
+}
+void NormalModesStruct::set_z(const AnormalModeStruct &src) {
+  normal_modes_struct_set_z(fortran_ptr_, src.get_fortran_ptr());
+}
+LinacNormalModeStruct NormalModesStruct::lin() const {
+  void *ptr;
+  normal_modes_struct_get_lin(fortran_ptr_, &ptr);
+  return LinacNormalModeStruct(ptr);
+}
+void NormalModesStruct::set_lin(const LinacNormalModeStruct &src) {
+  normal_modes_struct_set_lin(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray1D<bool> OutIoOutputDirectStruct::print_and_capture() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      out_io_output_direct_struct_get_print_and_capture_info
+  );
+}
+void OutIoOutputDirectStruct::set_print_and_capture(const std::vector<bool> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  spin_orbit_map1_struct_set_vec0(fortran_ptr_, v.data(), shape);
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  out_io_output_direct_struct_set_print_and_capture(fortran_ptr_, bv.data(), shape);
 }
-FArray2D<double> SpinOrbitMap1Struct::spin_q() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_spin_q_info);
+FArray1D<int> OutIoOutputDirectStruct::file_unit() const {
+  return ProxyHelpers::get_array_1d<int>(
+      fortran_ptr_,
+      out_io_output_direct_struct_get_file_unit_info
+  );
 }
-void SpinOrbitMap1Struct::set_spin_q(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_set_spin_q, v);
-}
-FArray1D<double> SpinAxisStruct::l() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_l_info);
-}
-void SpinAxisStruct::set_l(const std::vector<double> &v) {
+void OutIoOutputDirectStruct::set_file_unit(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  spin_axis_struct_set_l(fortran_ptr_, v.data(), shape);
+  out_io_output_direct_struct_set_file_unit(fortran_ptr_, v.data(), shape);
 }
-FArray1D<double> SpinAxisStruct::n0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_n0_info);
+std::string ParserControllerStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_controller_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
 }
-void SpinAxisStruct::set_n0(const std::vector<double> &v) {
+void ParserControllerStruct::set_name(const std::string &value) {
+  parser_controller_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string ParserControllerStruct::attrib_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_controller_struct_get_attrib_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserControllerStruct::set_attrib_name(const std::string &value) {
+  parser_controller_struct_set_attrib_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+ExpressionAtomStructAlloc1D ParserControllerStruct::stack() const {
+  return ExpressionAtomStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_controller_struct_reallocate_stack,
+      parser_controller_struct_get_stack_info
+  );
+}
+RealAlloc1D ParserControllerStruct::y_knot() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_controller_struct_reallocate_y_knot,
+      parser_controller_struct_get_y_knot_info
+  );
+}
+void ParserControllerStruct::set_y_knot(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  spin_axis_struct_set_n0(fortran_ptr_, v.data(), shape);
+  parser_controller_struct_set_y_knot(fortran_ptr_, v.data(), shape);
 }
-FArray1D<double> SpinAxisStruct::m() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_m_info);
+int ParserControllerStruct::n_stk() const {
+  int value;
+  parser_controller_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
 }
-void SpinAxisStruct::set_m(const std::vector<double> &v) {
+void ParserControllerStruct::set_n_stk(int value) {
+  parser_controller_struct_set_integer(fortran_ptr_, 0, value);
+}
+ParserControllerStructAlloc1D ParserEleStruct::control() const {
+  return ParserControllerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_ele_struct_reallocate_control,
+      parser_ele_struct_get_control_info
+  );
+}
+FCharArray1D ParserEleStruct::field_overlaps() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_field_overlaps_info);
+}
+std::string ParserEleStruct::ref_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_ref_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_ref_name(const std::string &value) {
+  parser_ele_struct_set_ref_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int ParserEleStruct::ix_super_ref_multipass() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_super_ref_multipass(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string ParserEleStruct::ele_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_ele_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_ele_name(const std::string &value) {
+  parser_ele_struct_set_ele_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+FCharArray1D ParserEleStruct::names1() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_names1_info);
+}
+FCharArray1D ParserEleStruct::names2() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, parser_ele_struct_get_names2_info);
+}
+std::string ParserEleStruct::lat_file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_lat_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_lat_file(const std::string &value) {
+  parser_ele_struct_set_lat_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double ParserEleStruct::offset() const {
+  double value;
+  parser_ele_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_offset(double value) {
+  parser_ele_struct_set_real(fortran_ptr_, 0, value);
+}
+int ParserEleStruct::ix_line_in_file() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_line_in_file(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 1, value);
+}
+int ParserEleStruct::ix_count() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void ParserEleStruct::set_ix_count(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 2, value);
+}
+int ParserEleStruct::ele_pt() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void ParserEleStruct::set_ele_pt(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 3, value);
+}
+int ParserEleStruct::ref_pt() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void ParserEleStruct::set_ref_pt(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 4, value);
+}
+int ParserEleStruct::index() const {
+  int value;
+  parser_ele_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void ParserEleStruct::set_index(int value) {
+  parser_ele_struct_set_integer(fortran_ptr_, 5, value);
+}
+bool ParserEleStruct::superposition_command_here() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ParserEleStruct::set_superposition_command_here(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool ParserEleStruct::superposition_has_been_set() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void ParserEleStruct::set_superposition_has_been_set(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool ParserEleStruct::wrap_superimpose() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void ParserEleStruct::set_wrap_superimpose(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool ParserEleStruct::create_jumbo_slave() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void ParserEleStruct::set_create_jumbo_slave(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool ParserEleStruct::is_range() const {
+  bool value;
+  parser_ele_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void ParserEleStruct::set_is_range(bool value) {
+  parser_ele_struct_set_logical(fortran_ptr_, 4, value);
+}
+std::string ParserEleStruct::default_attrib() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, parser_ele_struct_get_default_attrib_info);
+  return std::string(arr.data(), arr.size());
+}
+void ParserEleStruct::set_default_attrib(const std::string &value) {
+  parser_ele_struct_set_default_attrib(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+ParserEleStructAlloc1D ParserLatStruct::ele() const {
+  return ParserEleStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      parser_lat_struct_reallocate_ele,
+      parser_lat_struct_get_ele_info
+  );
+}
+CoordStruct PhotonCoordStruct::orb() const {
+  void *ptr;
+  photon_coord_struct_get_orb(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void PhotonCoordStruct::set_orb(const CoordStruct &src) {
+  photon_coord_struct_set_orb(fortran_ptr_, src.get_fortran_ptr());
+}
+double PhotonCoordStruct::track_len() const {
+  double value;
+  photon_coord_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonCoordStruct::set_track_len(double value) {
+  photon_coord_struct_set_real(fortran_ptr_, 0, value);
+}
+int PhotonCoordStruct::ix_section() const {
+  int value;
+  photon_coord_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonCoordStruct::set_ix_section(int value) {
+  photon_coord_struct_set_integer(fortran_ptr_, 0, value);
+}
+SurfaceCurvatureStruct PhotonElementStruct::curvature() const {
+  void *ptr;
+  photon_element_struct_get_curvature(fortran_ptr_, &ptr);
+  return SurfaceCurvatureStruct(ptr);
+}
+void PhotonElementStruct::set_curvature(const SurfaceCurvatureStruct &src) {
+  photon_element_struct_set_curvature(fortran_ptr_, src.get_fortran_ptr());
+}
+PhotonTargetStruct PhotonElementStruct::target() const {
+  void *ptr;
+  photon_element_struct_get_target(fortran_ptr_, &ptr);
+  return PhotonTargetStruct(ptr);
+}
+void PhotonElementStruct::set_target(const PhotonTargetStruct &src) {
+  photon_element_struct_set_target(fortran_ptr_, src.get_fortran_ptr());
+}
+PhotonMaterialStruct PhotonElementStruct::material() const {
+  void *ptr;
+  photon_element_struct_get_material(fortran_ptr_, &ptr);
+  return PhotonMaterialStruct(ptr);
+}
+void PhotonElementStruct::set_material(const PhotonMaterialStruct &src) {
+  photon_element_struct_set_material(fortran_ptr_, src.get_fortran_ptr());
+}
+SurfaceSegmentedStruct PhotonElementStruct::segmented() const {
+  void *ptr;
+  photon_element_struct_get_segmented(fortran_ptr_, &ptr);
+  return SurfaceSegmentedStruct(ptr);
+}
+void PhotonElementStruct::set_segmented(const SurfaceSegmentedStruct &src) {
+  photon_element_struct_set_segmented(fortran_ptr_, src.get_fortran_ptr());
+}
+SurfaceHMisalignStruct PhotonElementStruct::h_misalign() const {
+  void *ptr;
+  photon_element_struct_get_h_misalign(fortran_ptr_, &ptr);
+  return SurfaceHMisalignStruct(ptr);
+}
+void PhotonElementStruct::set_h_misalign(const SurfaceHMisalignStruct &src) {
+  photon_element_struct_set_h_misalign(fortran_ptr_, src.get_fortran_ptr());
+}
+SurfaceDisplacementStruct PhotonElementStruct::displacement() const {
+  void *ptr;
+  photon_element_struct_get_displacement(fortran_ptr_, &ptr);
+  return SurfaceDisplacementStruct(ptr);
+}
+void PhotonElementStruct::set_displacement(const SurfaceDisplacementStruct &src) {
+  photon_element_struct_set_displacement(fortran_ptr_, src.get_fortran_ptr());
+}
+PixelDetecStruct PhotonElementStruct::pixel() const {
+  void *ptr;
+  photon_element_struct_get_pixel(fortran_ptr_, &ptr);
+  return PixelDetecStruct(ptr);
+}
+void PhotonElementStruct::set_pixel(const PixelDetecStruct &src) {
+  photon_element_struct_set_pixel(fortran_ptr_, src.get_fortran_ptr());
+}
+int PhotonElementStruct::reflectivity_table_type() const {
+  int value;
+  photon_element_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonElementStruct::set_reflectivity_table_type(int value) {
+  photon_element_struct_set_integer(fortran_ptr_, 0, value);
+}
+PhotonReflectTableStruct PhotonElementStruct::reflectivity_table_sigma() const {
+  void *ptr;
+  photon_element_struct_get_reflectivity_table_sigma(fortran_ptr_, &ptr);
+  return PhotonReflectTableStruct(ptr);
+}
+void PhotonElementStruct::set_reflectivity_table_sigma(const PhotonReflectTableStruct &src) {
+  photon_element_struct_set_reflectivity_table_sigma(fortran_ptr_, src.get_fortran_ptr());
+}
+PhotonReflectTableStruct PhotonElementStruct::reflectivity_table_pi() const {
+  void *ptr;
+  photon_element_struct_get_reflectivity_table_pi(fortran_ptr_, &ptr);
+  return PhotonReflectTableStruct(ptr);
+}
+void PhotonElementStruct::set_reflectivity_table_pi(const PhotonReflectTableStruct &src) {
+  photon_element_struct_set_reflectivity_table_pi(fortran_ptr_, src.get_fortran_ptr());
+}
+SplineStructAlloc1D PhotonElementStruct::init_energy_prob() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_element_struct_reallocate_init_energy_prob,
+      photon_element_struct_get_init_energy_prob_info
+  );
+}
+RealAlloc1D PhotonElementStruct::integrated_init_energy_prob() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_element_struct_reallocate_integrated_init_energy_prob,
+      photon_element_struct_get_integrated_init_energy_prob_info
+  );
+}
+void PhotonElementStruct::set_integrated_init_energy_prob(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  spin_axis_struct_set_m(fortran_ptr_, v.data(), shape);
+  photon_element_struct_set_integrated_init_energy_prob(fortran_ptr_, v.data(), shape);
+}
+std::string PhotonInitSplinesStruct::source_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      photon_init_splines_struct_get_source_type_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void PhotonInitSplinesStruct::set_source_type(const std::string &value) {
+  photon_init_splines_struct_set_source_type(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+int PhotonInitSplinesStruct::spline_space_dimensions() const {
+  int value;
+  photon_init_splines_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonInitSplinesStruct::set_spline_space_dimensions(int value) {
+  photon_init_splines_struct_set_integer(fortran_ptr_, 0, value);
+}
+SplineStructAlloc1D PhotonInitSplinesStruct::energy_prob() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_splines_struct_reallocate_energy_prob,
+      photon_init_splines_struct_get_energy_prob_info
+  );
+}
+PhotonInitYAngleSplineStructAlloc1D PhotonInitSplinesStruct::y_angle() const {
+  return PhotonInitYAngleSplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_splines_struct_reallocate_y_angle,
+      photon_init_splines_struct_get_y_angle_info
+  );
+}
+SplineStructAlloc1D PhotonInitXAngleSplineStruct::prob() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_x_angle_spline_struct_reallocate_prob,
+      photon_init_x_angle_spline_struct_get_prob_info
+  );
+}
+SplineStructAlloc1D PhotonInitXAngleSplineStruct::pl() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_x_angle_spline_struct_reallocate_pl,
+      photon_init_x_angle_spline_struct_get_pl_info
+  );
+}
+SplineStructAlloc1D PhotonInitXAngleSplineStruct::pc() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_x_angle_spline_struct_reallocate_pc,
+      photon_init_x_angle_spline_struct_get_pc_info
+  );
+}
+SplineStructAlloc1D PhotonInitXAngleSplineStruct::pl45() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_x_angle_spline_struct_reallocate_pl45,
+      photon_init_x_angle_spline_struct_get_pl45_info
+  );
+}
+SplineStructAlloc1D PhotonInitYAngleSplineStruct::prob() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_y_angle_spline_struct_reallocate_prob,
+      photon_init_y_angle_spline_struct_get_prob_info
+  );
+}
+SplineStructAlloc1D PhotonInitYAngleSplineStruct::pl() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_y_angle_spline_struct_reallocate_pl,
+      photon_init_y_angle_spline_struct_get_pl_info
+  );
+}
+SplineStructAlloc1D PhotonInitYAngleSplineStruct::pc() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_y_angle_spline_struct_reallocate_pc,
+      photon_init_y_angle_spline_struct_get_pc_info
+  );
+}
+SplineStructAlloc1D PhotonInitYAngleSplineStruct::pl45() const {
+  return SplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_y_angle_spline_struct_reallocate_pl45,
+      photon_init_y_angle_spline_struct_get_pl45_info
+  );
+}
+PhotonInitXAngleSplineStructAlloc1D PhotonInitYAngleSplineStruct::x_angle() const {
+  return PhotonInitXAngleSplineStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_init_y_angle_spline_struct_reallocate_x_angle,
+      photon_init_y_angle_spline_struct_get_x_angle_info
+  );
+}
+std::complex<double> PhotonMaterialStruct::f0_m1() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f0_m1(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 0, value);
+}
+std::complex<double> PhotonMaterialStruct::f0_m2() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 1, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f0_m2(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 1, value);
+}
+std::complex<double> PhotonMaterialStruct::f_0() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 2, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f_0(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 2, value);
+}
+std::complex<double> PhotonMaterialStruct::f_h() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 3, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f_h(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 3, value);
+}
+std::complex<double> PhotonMaterialStruct::f_hbar() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 4, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f_hbar(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 4, value);
+}
+std::complex<double> PhotonMaterialStruct::f_hkl() const {
+  std::complex<double> value;
+  photon_material_struct_get_complex(fortran_ptr_, 5, &value);
+  return value;
+}
+void PhotonMaterialStruct::set_f_hkl(std::complex<double> value) {
+  photon_material_struct_set_complex(fortran_ptr_, 5, value);
+}
+FArray1D<double> PhotonMaterialStruct::h_norm() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_h_norm_info);
+}
+void PhotonMaterialStruct::set_h_norm(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_material_struct_set_h_norm(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PhotonMaterialStruct::l_ref() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, photon_material_struct_get_l_ref_info);
+}
+void PhotonMaterialStruct::set_l_ref(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_material_struct_set_l_ref(fortran_ptr_, v.data(), shape);
+}
+std::string PhotonReflectSurfaceStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, photon_reflect_surface_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void PhotonReflectSurfaceStruct::set_name(const std::string &value) {
+  photon_reflect_surface_struct_set_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string PhotonReflectSurfaceStruct::description() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      photon_reflect_surface_struct_get_description_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void PhotonReflectSurfaceStruct::set_description(const std::string &value) {
+  photon_reflect_surface_struct_set_description(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string PhotonReflectSurfaceStruct::reflectivity_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      photon_reflect_surface_struct_get_reflectivity_file_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void PhotonReflectSurfaceStruct::set_reflectivity_file(const std::string &value) {
+  photon_reflect_surface_struct_set_reflectivity_file(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+PhotonReflectTableStructAlloc1D PhotonReflectSurfaceStruct::table() const {
+  return PhotonReflectTableStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_surface_struct_reallocate_table,
+      photon_reflect_surface_struct_get_table_info
+  );
+}
+double PhotonReflectSurfaceStruct::surface_roughness_rms() const {
+  double value;
+  photon_reflect_surface_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonReflectSurfaceStruct::set_surface_roughness_rms(double value) {
+  photon_reflect_surface_struct_set_real(fortran_ptr_, 0, value);
+}
+double PhotonReflectSurfaceStruct::roughness_correlation_len() const {
+  double value;
+  photon_reflect_surface_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void PhotonReflectSurfaceStruct::set_roughness_correlation_len(double value) {
+  photon_reflect_surface_struct_set_real(fortran_ptr_, 1, value);
+}
+int PhotonReflectSurfaceStruct::ix_surface() const {
+  int value;
+  photon_reflect_surface_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonReflectSurfaceStruct::set_ix_surface(int value) {
+  photon_reflect_surface_struct_set_integer(fortran_ptr_, 0, value);
+}
+RealAlloc1D PhotonReflectTableStruct::angle() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_table_struct_reallocate_angle,
+      photon_reflect_table_struct_get_angle_info
+  );
+}
+void PhotonReflectTableStruct::set_angle(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_angle(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D PhotonReflectTableStruct::energy() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_table_struct_reallocate_energy,
+      photon_reflect_table_struct_get_energy_info
+  );
+}
+void PhotonReflectTableStruct::set_energy(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_energy(fortran_ptr_, v.data(), shape);
+}
+Interval1CoefStructAlloc1D PhotonReflectTableStruct::int1() const {
+  return Interval1CoefStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_table_struct_reallocate_int1,
+      photon_reflect_table_struct_get_int1_info
+  );
+}
+FArray2D<double> PhotonReflectTableStruct::p_reflect() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      photon_reflect_table_struct_get_p_reflect_info
+  );
+}
+void PhotonReflectTableStruct::set_p_reflect(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, photon_reflect_table_struct_set_p_reflect, v);
+}
+double PhotonReflectTableStruct::max_energy() const {
+  double value;
+  photon_reflect_table_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonReflectTableStruct::set_max_energy(double value) {
+  photon_reflect_table_struct_set_real(fortran_ptr_, 0, value);
+}
+RealAlloc1D PhotonReflectTableStruct::p_reflect_scratch() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_table_struct_reallocate_p_reflect_scratch,
+      photon_reflect_table_struct_get_p_reflect_scratch_info
+  );
+}
+void PhotonReflectTableStruct::set_p_reflect_scratch(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_p_reflect_scratch(fortran_ptr_, v.data(), shape);
+}
+RealAlloc1D PhotonReflectTableStruct::bragg_angle() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      photon_reflect_table_struct_reallocate_bragg_angle,
+      photon_reflect_table_struct_get_bragg_angle_info
+  );
+}
+void PhotonReflectTableStruct::set_bragg_angle(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  photon_reflect_table_struct_set_bragg_angle(fortran_ptr_, v.data(), shape);
+}
+int PhotonTargetStruct::type() const {
+  int value;
+  photon_target_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PhotonTargetStruct::set_type(int value) {
+  photon_target_struct_set_integer(fortran_ptr_, 0, value);
+}
+int PhotonTargetStruct::n_corner() const {
+  int value;
+  photon_target_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void PhotonTargetStruct::set_n_corner(int value) {
+  photon_target_struct_set_integer(fortran_ptr_, 1, value);
+}
+LatEleLocStruct PhotonTargetStruct::ele_loc() const {
+  void *ptr;
+  photon_target_struct_get_ele_loc(fortran_ptr_, &ptr);
+  return LatEleLocStruct(ptr);
+}
+void PhotonTargetStruct::set_ele_loc(const LatEleLocStruct &src) {
+  photon_target_struct_set_ele_loc(fortran_ptr_, src.get_fortran_ptr());
+}
+TargetPointStructArray1D PhotonTargetStruct::corner() const {
+  return ProxyHelpers::get_type_array_1d<TargetPointStructArray1D>(
+      fortran_ptr_,
+      photon_target_struct_get_corner_info
+  );
+}
+TargetPointStruct PhotonTargetStruct::center() const {
+  void *ptr;
+  photon_target_struct_get_center(fortran_ptr_, &ptr);
+  return TargetPointStruct(ptr);
+}
+void PhotonTargetStruct::set_center(const TargetPointStruct &src) {
+  photon_target_struct_set_center(fortran_ptr_, src.get_fortran_ptr());
+}
+PhotonCoordStruct PhotonTrackStruct::old() const {
+  void *ptr;
+  photon_track_struct_get_old(fortran_ptr_, &ptr);
+  return PhotonCoordStruct(ptr);
+}
+void PhotonTrackStruct::set_old(const PhotonCoordStruct &src) {
+  photon_track_struct_set_old(fortran_ptr_, src.get_fortran_ptr());
+}
+PhotonCoordStruct PhotonTrackStruct::now() const {
+  void *ptr;
+  photon_track_struct_get_now(fortran_ptr_, &ptr);
+  return PhotonCoordStruct(ptr);
+}
+void PhotonTrackStruct::set_now(const PhotonCoordStruct &src) {
+  photon_track_struct_set_now(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray1D<double> PixelDetecStruct::dr() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_dr_info);
+}
+void PixelDetecStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_detec_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PixelDetecStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_detec_struct_get_r0_info);
+}
+void PixelDetecStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_detec_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+int64_t PixelDetecStruct::n_track_tot() const {
+  int64_t value;
+  pixel_detec_struct_get_integer8(fortran_ptr_, 0, &value);
+  return value;
+}
+void PixelDetecStruct::set_n_track_tot(int64_t value) {
+  pixel_detec_struct_set_integer8(fortran_ptr_, 0, value);
+}
+int64_t PixelDetecStruct::n_hit_detec() const {
+  int64_t value;
+  pixel_detec_struct_get_integer8(fortran_ptr_, 1, &value);
+  return value;
+}
+void PixelDetecStruct::set_n_hit_detec(int64_t value) {
+  pixel_detec_struct_set_integer8(fortran_ptr_, 1, value);
+}
+int64_t PixelDetecStruct::n_hit_pixel() const {
+  int64_t value;
+  pixel_detec_struct_get_integer8(fortran_ptr_, 2, &value);
+  return value;
+}
+void PixelDetecStruct::set_n_hit_pixel(int64_t value) {
+  pixel_detec_struct_set_integer8(fortran_ptr_, 2, value);
+}
+PixelPtStructArray2D PixelDetecStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<PixelPtStructArray2D>(
+      fortran_ptr_,
+      pixel_detec_struct_get_pt_info
+  );
+}
+int64_t PixelPtStruct::n_photon() const {
+  int64_t value;
+  pixel_pt_struct_get_integer8(fortran_ptr_, 0, &value);
+  return value;
+}
+void PixelPtStruct::set_n_photon(int64_t value) {
+  pixel_pt_struct_set_integer8(fortran_ptr_, 0, value);
+}
+std::complex<double> PixelPtStruct::E_x() const {
+  std::complex<double> value;
+  pixel_pt_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void PixelPtStruct::set_E_x(std::complex<double> value) {
+  pixel_pt_struct_set_complex(fortran_ptr_, 0, value);
+}
+std::complex<double> PixelPtStruct::E_y() const {
+  std::complex<double> value;
+  pixel_pt_struct_get_complex(fortran_ptr_, 1, &value);
+  return value;
+}
+void PixelPtStruct::set_E_y(std::complex<double> value) {
+  pixel_pt_struct_set_complex(fortran_ptr_, 1, value);
+}
+double PixelPtStruct::intensity_x() const {
+  double value;
+  pixel_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void PixelPtStruct::set_intensity_x(double value) {
+  pixel_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double PixelPtStruct::intensity_y() const {
+  double value;
+  pixel_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void PixelPtStruct::set_intensity_y(double value) {
+  pixel_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double PixelPtStruct::intensity() const {
+  double value;
+  pixel_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void PixelPtStruct::set_intensity(double value) {
+  pixel_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray1D<double> PixelPtStruct::orbit() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_info);
+}
+void PixelPtStruct::set_orbit(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_orbit(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PixelPtStruct::orbit_rms() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_orbit_rms_info);
+}
+void PixelPtStruct::set_orbit_rms(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_orbit_rms(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PixelPtStruct::init_orbit() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_info);
+}
+void PixelPtStruct::set_init_orbit(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_init_orbit(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PixelPtStruct::init_orbit_rms() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, pixel_pt_struct_get_init_orbit_rms_info);
+}
+void PixelPtStruct::set_init_orbit_rms(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  pixel_pt_struct_set_init_orbit_rms(fortran_ptr_, v.data(), shape);
+}
+std::string PmdHeaderStruct::openPMD() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_openPMD_info);
+}
+void PmdHeaderStruct::set_openPMD(const std::string &value) {
+  pmd_header_struct_set_openPMD(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::openPMDextension() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_openPMDextension_info);
+}
+void PmdHeaderStruct::set_openPMDextension(const std::string &value) {
+  pmd_header_struct_set_openPMDextension(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string PmdHeaderStruct::basePath() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_basePath_info);
+}
+void PmdHeaderStruct::set_basePath(const std::string &value) {
+  pmd_header_struct_set_basePath(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::particlesPath() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_particlesPath_info);
+}
+void PmdHeaderStruct::set_particlesPath(const std::string &value) {
+  pmd_header_struct_set_particlesPath(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string PmdHeaderStruct::meshesPath() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_meshesPath_info);
+}
+void PmdHeaderStruct::set_meshesPath(const std::string &value) {
+  pmd_header_struct_set_meshesPath(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::author() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_author_info);
+}
+void PmdHeaderStruct::set_author(const std::string &value) {
+  pmd_header_struct_set_author(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::software() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_software_info);
+}
+void PmdHeaderStruct::set_software(const std::string &value) {
+  pmd_header_struct_set_software(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::softwareVersion() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_softwareVersion_info);
+}
+void PmdHeaderStruct::set_softwareVersion(const std::string &value) {
+  pmd_header_struct_set_softwareVersion(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string PmdHeaderStruct::date() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_date_info);
+}
+void PmdHeaderStruct::set_date(const std::string &value) {
+  pmd_header_struct_set_date(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::latticeFile() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_latticeFile_info);
+}
+void PmdHeaderStruct::set_latticeFile(const std::string &value) {
+  pmd_header_struct_set_latticeFile(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string PmdHeaderStruct::latticeName() const {
+  return ProxyHelpers::get_string(fortran_ptr_, pmd_header_struct_get_latticeName_info);
+}
+void PmdHeaderStruct::set_latticeName(const std::string &value) {
+  pmd_header_struct_set_latticeName(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int PreTrackerStruct::who() const {
+  int value;
+  pre_tracker_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PreTrackerStruct::set_who(int value) {
+  pre_tracker_struct_set_integer(fortran_ptr_, 0, value);
+}
+int PreTrackerStruct::ix_ele_start() const {
+  int value;
+  pre_tracker_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void PreTrackerStruct::set_ix_ele_start(int value) {
+  pre_tracker_struct_set_integer(fortran_ptr_, 1, value);
+}
+int PreTrackerStruct::ix_ele_end() const {
+  int value;
+  pre_tracker_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void PreTrackerStruct::set_ix_ele_end(int value) {
+  pre_tracker_struct_set_integer(fortran_ptr_, 2, value);
+}
+std::string PreTrackerStruct::input_file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, pre_tracker_struct_get_input_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void PreTrackerStruct::set_input_file(const std::string &value) {
+  pre_tracker_struct_set_input_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+PtcLayoutPointerStructAlloc1D PtcBranch1Struct::m_u_layout() const {
+  return PtcLayoutPointerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      ptc_branch1_struct_reallocate_m_u_layout,
+      ptc_branch1_struct_get_m_u_layout_info
+  );
 }
 std::optional<EleStruct> PtcNormalFormStruct::ele_origin() const {
   void *ptr;
@@ -6326,82 +9171,1668 @@ bool PtcNormalFormStruct::valid_map() const {
 void PtcNormalFormStruct::set_valid_map(bool value) {
   ptc_normal_form_struct_set_logical(fortran_ptr_, 0, value);
 }
-std::optional<EleStruct> BmadNormalFormStruct::ele_origin() const {
+std::string PtcRadMapStruct::lattice_file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, ptc_rad_map_struct_get_lattice_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void PtcRadMapStruct::set_lattice_file(const std::string &value) {
+  ptc_rad_map_struct_set_lattice_file(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+double PtcRadMapStruct::dref_time() const {
+  double value;
+  ptc_rad_map_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void PtcRadMapStruct::set_dref_time(double value) {
+  ptc_rad_map_struct_set_real(fortran_ptr_, 0, value);
+}
+double PtcRadMapStruct::p0c_start() const {
+  double value;
+  ptc_rad_map_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void PtcRadMapStruct::set_p0c_start(double value) {
+  ptc_rad_map_struct_set_real(fortran_ptr_, 1, value);
+}
+double PtcRadMapStruct::p0c_end() const {
+  double value;
+  ptc_rad_map_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void PtcRadMapStruct::set_p0c_end(double value) {
+  ptc_rad_map_struct_set_real(fortran_ptr_, 2, value);
+}
+double PtcRadMapStruct::s_end() const {
+  double value;
+  ptc_rad_map_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void PtcRadMapStruct::set_s_end(double value) {
+  ptc_rad_map_struct_set_real(fortran_ptr_, 3, value);
+}
+int PtcRadMapStruct::map_order() const {
+  int value;
+  ptc_rad_map_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void PtcRadMapStruct::set_map_order(int value) {
+  ptc_rad_map_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool PtcRadMapStruct::radiation_damping_on() const {
+  bool value;
+  ptc_rad_map_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void PtcRadMapStruct::set_radiation_damping_on(bool value) {
+  ptc_rad_map_struct_set_logical(fortran_ptr_, 0, value);
+}
+int PtcRadMapStruct::ix_branch() const {
+  int value;
+  ptc_rad_map_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void PtcRadMapStruct::set_ix_branch(int value) {
+  ptc_rad_map_struct_set_integer(fortran_ptr_, 1, value);
+}
+int PtcRadMapStruct::ix_ele_start() const {
+  int value;
+  ptc_rad_map_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void PtcRadMapStruct::set_ix_ele_start(int value) {
+  ptc_rad_map_struct_set_integer(fortran_ptr_, 2, value);
+}
+int PtcRadMapStruct::ix_ele_end() const {
+  int value;
+  ptc_rad_map_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void PtcRadMapStruct::set_ix_ele_end(int value) {
+  ptc_rad_map_struct_set_integer(fortran_ptr_, 3, value);
+}
+FArray2D<double> PtcRadMapStruct::nodamp_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_get_nodamp_mat_info);
+}
+void PtcRadMapStruct::set_nodamp_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_set_nodamp_mat, v);
+}
+FArray2D<double> PtcRadMapStruct::damp_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_get_damp_mat_info);
+}
+void PtcRadMapStruct::set_damp_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_set_damp_mat, v);
+}
+FArray2D<double> PtcRadMapStruct::stoc_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_get_stoc_mat_info);
+}
+void PtcRadMapStruct::set_stoc_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, ptc_rad_map_struct_set_stoc_mat, v);
+}
+FArray1D<double> PtcRadMapStruct::ref0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ptc_rad_map_struct_get_ref0_info);
+}
+void PtcRadMapStruct::set_ref0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ptc_rad_map_struct_set_ref0(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> PtcRadMapStruct::ref1() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, ptc_rad_map_struct_get_ref1_info);
+}
+void PtcRadMapStruct::set_ref1(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  ptc_rad_map_struct_set_ref1(fortran_ptr_, v.data(), shape);
+}
+std::string QpAxisStruct::label() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_label_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisStruct::set_label(const std::string &value) {
+  qp_axis_struct_set_label(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpAxisStruct::min() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpAxisStruct::set_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 0, value); }
+double QpAxisStruct::max() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpAxisStruct::set_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 1, value); }
+double QpAxisStruct::tick_min() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void QpAxisStruct::set_tick_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 2, value); }
+double QpAxisStruct::tick_max() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void QpAxisStruct::set_tick_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 3, value); }
+double QpAxisStruct::eval_min() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void QpAxisStruct::set_eval_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 4, value); }
+double QpAxisStruct::eval_max() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void QpAxisStruct::set_eval_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 5, value); }
+double QpAxisStruct::dtick() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void QpAxisStruct::set_dtick(double value) { qp_axis_struct_set_real(fortran_ptr_, 6, value); }
+double QpAxisStruct::number_offset() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void QpAxisStruct::set_number_offset(double value) {
+  qp_axis_struct_set_real(fortran_ptr_, 7, value);
+}
+double QpAxisStruct::label_offset() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void QpAxisStruct::set_label_offset(double value) {
+  qp_axis_struct_set_real(fortran_ptr_, 8, value);
+}
+double QpAxisStruct::major_tick_len() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void QpAxisStruct::set_major_tick_len(double value) {
+  qp_axis_struct_set_real(fortran_ptr_, 9, value);
+}
+double QpAxisStruct::minor_tick_len() const {
+  double value;
+  qp_axis_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void QpAxisStruct::set_minor_tick_len(double value) {
+  qp_axis_struct_set_real(fortran_ptr_, 10, value);
+}
+std::string QpAxisStruct::label_color() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_label_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisStruct::set_label_color(const std::string &value) {
+  qp_axis_struct_set_label_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpAxisStruct::major_div() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpAxisStruct::set_major_div(int value) { qp_axis_struct_set_integer(fortran_ptr_, 0, value); }
+int QpAxisStruct::major_div_nominal() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpAxisStruct::set_major_div_nominal(int value) {
+  qp_axis_struct_set_integer(fortran_ptr_, 1, value);
+}
+int QpAxisStruct::minor_div() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void QpAxisStruct::set_minor_div(int value) { qp_axis_struct_set_integer(fortran_ptr_, 2, value); }
+int QpAxisStruct::minor_div_max() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void QpAxisStruct::set_minor_div_max(int value) {
+  qp_axis_struct_set_integer(fortran_ptr_, 3, value);
+}
+int QpAxisStruct::places() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void QpAxisStruct::set_places(int value) { qp_axis_struct_set_integer(fortran_ptr_, 4, value); }
+std::string QpAxisStruct::type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisStruct::set_type(const std::string &value) {
+  qp_axis_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpAxisStruct::bounds() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_bounds_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpAxisStruct::set_bounds(const std::string &value) {
+  qp_axis_struct_set_bounds(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpAxisStruct::tick_side() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void QpAxisStruct::set_tick_side(int value) { qp_axis_struct_set_integer(fortran_ptr_, 5, value); }
+int QpAxisStruct::number_side() const {
+  int value;
+  qp_axis_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void QpAxisStruct::set_number_side(int value) {
+  qp_axis_struct_set_integer(fortran_ptr_, 6, value);
+}
+bool QpAxisStruct::draw_label() const {
+  bool value;
+  qp_axis_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpAxisStruct::set_draw_label(bool value) {
+  qp_axis_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool QpAxisStruct::draw_numbers() const {
+  bool value;
+  qp_axis_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpAxisStruct::set_draw_numbers(bool value) {
+  qp_axis_struct_set_logical(fortran_ptr_, 1, value);
+}
+double QpLegendStruct::row_spacing() const {
+  double value;
+  qp_legend_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpLegendStruct::set_row_spacing(double value) {
+  qp_legend_struct_set_real(fortran_ptr_, 0, value);
+}
+double QpLegendStruct::line_length() const {
+  double value;
+  qp_legend_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpLegendStruct::set_line_length(double value) {
+  qp_legend_struct_set_real(fortran_ptr_, 1, value);
+}
+double QpLegendStruct::text_offset() const {
+  double value;
+  qp_legend_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void QpLegendStruct::set_text_offset(double value) {
+  qp_legend_struct_set_real(fortran_ptr_, 2, value);
+}
+bool QpLegendStruct::draw_line() const {
+  bool value;
+  qp_legend_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpLegendStruct::set_draw_line(bool value) {
+  qp_legend_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool QpLegendStruct::draw_symbol() const {
+  bool value;
+  qp_legend_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpLegendStruct::set_draw_symbol(bool value) {
+  qp_legend_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool QpLegendStruct::draw_text() const {
+  bool value;
+  qp_legend_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void QpLegendStruct::set_draw_text(bool value) {
+  qp_legend_struct_set_logical(fortran_ptr_, 2, value);
+}
+int QpLineStruct::width() const {
+  int value;
+  qp_line_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpLineStruct::set_width(int value) { qp_line_struct_set_integer(fortran_ptr_, 0, value); }
+std::string QpLineStruct::color() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_line_struct_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpLineStruct::set_color(const std::string &value) {
+  qp_line_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpLineStruct::pattern() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_line_struct_get_pattern_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpLineStruct::set_pattern(const std::string &value) {
+  qp_line_struct_set_pattern(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpPointStruct::x() const {
+  double value;
+  qp_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpPointStruct::set_x(double value) { qp_point_struct_set_real(fortran_ptr_, 0, value); }
+double QpPointStruct::y() const {
+  double value;
+  qp_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpPointStruct::set_y(double value) { qp_point_struct_set_real(fortran_ptr_, 1, value); }
+std::string QpPointStruct::units() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_point_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpPointStruct::set_units(const std::string &value) {
+  qp_point_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpRectStruct::x1() const {
+  double value;
+  qp_rect_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpRectStruct::set_x1(double value) { qp_rect_struct_set_real(fortran_ptr_, 0, value); }
+double QpRectStruct::x2() const {
+  double value;
+  qp_rect_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void QpRectStruct::set_x2(double value) { qp_rect_struct_set_real(fortran_ptr_, 1, value); }
+double QpRectStruct::y1() const {
+  double value;
+  qp_rect_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void QpRectStruct::set_y1(double value) { qp_rect_struct_set_real(fortran_ptr_, 2, value); }
+double QpRectStruct::y2() const {
+  double value;
+  qp_rect_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void QpRectStruct::set_y2(double value) { qp_rect_struct_set_real(fortran_ptr_, 3, value); }
+std::string QpRectStruct::units() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_rect_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpRectStruct::set_units(const std::string &value) {
+  qp_rect_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpSymbolStruct::type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolStruct::set_type(const std::string &value) {
+  qp_symbol_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double QpSymbolStruct::height() const {
+  double value;
+  qp_symbol_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpSymbolStruct::set_height(double value) { qp_symbol_struct_set_real(fortran_ptr_, 0, value); }
+std::string QpSymbolStruct::color() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolStruct::set_color(const std::string &value) {
+  qp_symbol_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string QpSymbolStruct::fill_pattern() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_fill_pattern_info);
+  return std::string(arr.data(), arr.size());
+}
+void QpSymbolStruct::set_fill_pattern(const std::string &value) {
+  qp_symbol_struct_set_fill_pattern(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int QpSymbolStruct::line_width() const {
+  int value;
+  qp_symbol_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void QpSymbolStruct::set_line_width(int value) {
+  qp_symbol_struct_set_integer(fortran_ptr_, 0, value);
+}
+double RadInt1Struct::i0() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void RadInt1Struct::set_i0(double value) { rad_int1_struct_set_real(fortran_ptr_, 0, value); }
+double RadInt1Struct::i1() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void RadInt1Struct::set_i1(double value) { rad_int1_struct_set_real(fortran_ptr_, 1, value); }
+double RadInt1Struct::i2() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void RadInt1Struct::set_i2(double value) { rad_int1_struct_set_real(fortran_ptr_, 2, value); }
+double RadInt1Struct::i3() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void RadInt1Struct::set_i3(double value) { rad_int1_struct_set_real(fortran_ptr_, 3, value); }
+double RadInt1Struct::i4a() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void RadInt1Struct::set_i4a(double value) { rad_int1_struct_set_real(fortran_ptr_, 4, value); }
+double RadInt1Struct::i4b() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void RadInt1Struct::set_i4b(double value) { rad_int1_struct_set_real(fortran_ptr_, 5, value); }
+double RadInt1Struct::i4z() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void RadInt1Struct::set_i4z(double value) { rad_int1_struct_set_real(fortran_ptr_, 6, value); }
+double RadInt1Struct::i5a() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void RadInt1Struct::set_i5a(double value) { rad_int1_struct_set_real(fortran_ptr_, 7, value); }
+double RadInt1Struct::i5b() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void RadInt1Struct::set_i5b(double value) { rad_int1_struct_set_real(fortran_ptr_, 8, value); }
+double RadInt1Struct::i6b() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void RadInt1Struct::set_i6b(double value) { rad_int1_struct_set_real(fortran_ptr_, 9, value); }
+double RadInt1Struct::lin_i2_E4() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_i2_E4(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 10, value);
+}
+double RadInt1Struct::lin_i3_E7() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_i3_E7(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 11, value);
+}
+double RadInt1Struct::lin_i5a_E6() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_i5a_E6(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 12, value);
+}
+double RadInt1Struct::lin_i5b_E6() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 13, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_i5b_E6(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 13, value);
+}
+double RadInt1Struct::lin_norm_emit_a() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 14, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_norm_emit_a(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 14, value);
+}
+double RadInt1Struct::lin_norm_emit_b() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 15, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_norm_emit_b(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 15, value);
+}
+double RadInt1Struct::lin_sig_E() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 16, &value);
+  return value;
+}
+void RadInt1Struct::set_lin_sig_E(double value) {
+  rad_int1_struct_set_real(fortran_ptr_, 16, value);
+}
+double RadInt1Struct::n_steps() const {
+  double value;
+  rad_int1_struct_get_real(fortran_ptr_, 17, &value);
+  return value;
+}
+void RadInt1Struct::set_n_steps(double value) { rad_int1_struct_set_real(fortran_ptr_, 17, value); }
+RadIntBranchStructAlloc1D RadIntAllEleStruct::branch() const {
+  return RadIntBranchStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      rad_int_all_ele_struct_reallocate_branch,
+      rad_int_all_ele_struct_get_branch_info
+  );
+}
+RadInt1StructAlloc1D RadIntBranchStruct::ele() const {
+  return RadInt1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      rad_int_branch_struct_reallocate_ele,
+      rad_int_branch_struct_get_ele_info
+  );
+}
+RadIntTrackPointStructAlloc1D RadIntCache1Struct::pt() const {
+  return RadIntTrackPointStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      rad_int_cache1_struct_reallocate_pt,
+      rad_int_cache1_struct_get_pt_info
+  );
+}
+int RadIntCache1Struct::n_pt() const {
+  int value;
+  rad_int_cache1_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void RadIntCache1Struct::set_n_pt(int value) {
+  rad_int_cache1_struct_set_integer(fortran_ptr_, 0, value);
+}
+int RadIntCache1Struct::cache_type() const {
+  int value;
+  rad_int_cache1_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void RadIntCache1Struct::set_cache_type(int value) {
+  rad_int_cache1_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::optional<BranchStruct> RadIntInfoStruct::branch() const {
   void *ptr;
-  bmad_normal_form_struct_get_ele_origin(fortran_ptr_, &ptr);
+  rad_int_info_struct_get_branch(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return BranchStruct(ptr);
+}
+void RadIntInfoStruct::set_branch(const BranchStruct &src) {
+  rad_int_info_struct_set_branch(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<EleStruct> RadIntInfoStruct::ele() const {
+  void *ptr;
+  rad_int_info_struct_get_ele(fortran_ptr_, &ptr);
   if (!ptr)
     return std::nullopt;
   return EleStruct(ptr);
 }
-void BmadNormalFormStruct::set_ele_origin(const EleStruct &src) {
-  bmad_normal_form_struct_set_ele_origin(fortran_ptr_, src.get_fortran_ptr());
+void RadIntInfoStruct::set_ele(const EleStruct &src) {
+  rad_int_info_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
 }
-TaylorStructArray1D BmadNormalFormStruct::M() const {
-  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
+CoordStructArray1D RadIntInfoStruct::orbit() const {
+  return ProxyHelpers::get_type_array_1d<CoordStructArray1D>(
       fortran_ptr_,
-      bmad_normal_form_struct_get_M_info
+      rad_int_info_struct_get_orbit_info
   );
 }
-TaylorStructArray1D BmadNormalFormStruct::A() const {
-  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
-      fortran_ptr_,
-      bmad_normal_form_struct_get_A_info
-  );
+TwissStruct RadIntInfoStruct::a() const {
+  void *ptr;
+  rad_int_info_struct_get_a(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
 }
-TaylorStructArray1D BmadNormalFormStruct::A_inv() const {
-  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
-      fortran_ptr_,
-      bmad_normal_form_struct_get_A_inv_info
-  );
+void RadIntInfoStruct::set_a(const TwissStruct &src) {
+  rad_int_info_struct_set_a(fortran_ptr_, src.get_fortran_ptr());
 }
-TaylorStructArray1D BmadNormalFormStruct::dhdj() const {
-  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
-      fortran_ptr_,
-      bmad_normal_form_struct_get_dhdj_info
-  );
+TwissStruct RadIntInfoStruct::b() const {
+  void *ptr;
+  rad_int_info_struct_get_b(fortran_ptr_, &ptr);
+  return TwissStruct(ptr);
 }
-ComplexTaylorStructArray1D BmadNormalFormStruct::F() const {
-  return ProxyHelpers::get_type_array_1d<ComplexTaylorStructArray1D>(
-      fortran_ptr_,
-      bmad_normal_form_struct_get_F_info
-  );
+void RadIntInfoStruct::set_b(const TwissStruct &src) {
+  rad_int_info_struct_set_b(fortran_ptr_, src.get_fortran_ptr());
 }
-ComplexTaylorStructArray1D BmadNormalFormStruct::L() const {
-  return ProxyHelpers::get_type_array_1d<ComplexTaylorStructArray1D>(
-      fortran_ptr_,
-      bmad_normal_form_struct_get_L_info
-  );
+std::optional<RadIntCache1Struct> RadIntInfoStruct::cache_ele() const {
+  void *ptr;
+  rad_int_info_struct_get_cache_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return RadIntCache1Struct(ptr);
 }
-ResonanceHStructAlloc1D BmadNormalFormStruct::h() const {
-  return ResonanceHStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bmad_normal_form_struct_reallocate_h,
-      bmad_normal_form_struct_get_h_info
-  );
+void RadIntInfoStruct::set_cache_ele(const RadIntCache1Struct &src) {
+  rad_int_info_struct_set_cache_ele(fortran_ptr_, src.get_fortran_ptr());
 }
-BunchParamsStructAlloc1D BunchTrackStruct::pt() const {
-  return BunchParamsStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bunch_track_struct_reallocate_pt,
-      bunch_track_struct_get_pt_info
-  );
+FArray1D<double> RadIntInfoStruct::eta_a() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_int_info_struct_get_eta_a_info);
 }
-double BunchTrackStruct::ds_save() const {
+void RadIntInfoStruct::set_eta_a(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_int_info_struct_set_eta_a(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> RadIntInfoStruct::eta_b() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_int_info_struct_get_eta_b_info);
+}
+void RadIntInfoStruct::set_eta_b(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_int_info_struct_set_eta_b(fortran_ptr_, v.data(), shape);
+}
+double RadIntInfoStruct::g() const {
   double value;
-  bunch_track_struct_get_real(fortran_ptr_, 0, &value);
+  rad_int_info_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void BunchTrackStruct::set_ds_save(double value) {
-  bunch_track_struct_set_real(fortran_ptr_, 0, value);
+void RadIntInfoStruct::set_g(double value) { rad_int_info_struct_set_real(fortran_ptr_, 0, value); }
+double RadIntInfoStruct::g2() const {
+  double value;
+  rad_int_info_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-int BunchTrackStruct::n_pt() const {
+void RadIntInfoStruct::set_g2(double value) {
+  rad_int_info_struct_set_real(fortran_ptr_, 1, value);
+}
+double RadIntInfoStruct::g_x() const {
+  double value;
+  rad_int_info_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void RadIntInfoStruct::set_g_x(double value) {
+  rad_int_info_struct_set_real(fortran_ptr_, 2, value);
+}
+double RadIntInfoStruct::g_y() const {
+  double value;
+  rad_int_info_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void RadIntInfoStruct::set_g_y(double value) {
+  rad_int_info_struct_set_real(fortran_ptr_, 3, value);
+}
+double RadIntInfoStruct::dg2_x() const {
+  double value;
+  rad_int_info_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void RadIntInfoStruct::set_dg2_x(double value) {
+  rad_int_info_struct_set_real(fortran_ptr_, 4, value);
+}
+double RadIntInfoStruct::dg2_y() const {
+  double value;
+  rad_int_info_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void RadIntInfoStruct::set_dg2_y(double value) {
+  rad_int_info_struct_set_real(fortran_ptr_, 5, value);
+}
+double RadIntTrackPointStruct::s_body() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_s_body(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray2D<double> RadIntTrackPointStruct::mat6() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_int_track_point_struct_get_mat6_info);
+}
+void RadIntTrackPointStruct::set_mat6(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_int_track_point_struct_set_mat6, v);
+}
+FArray1D<double> RadIntTrackPointStruct::vec0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_int_track_point_struct_get_vec0_info);
+}
+void RadIntTrackPointStruct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_int_track_point_struct_set_vec0(fortran_ptr_, v.data(), shape);
+}
+CoordStruct RadIntTrackPointStruct::ref_orb_in() const {
+  void *ptr;
+  rad_int_track_point_struct_get_ref_orb_in(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void RadIntTrackPointStruct::set_ref_orb_in(const CoordStruct &src) {
+  rad_int_track_point_struct_set_ref_orb_in(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct RadIntTrackPointStruct::ref_orb_out() const {
+  void *ptr;
+  rad_int_track_point_struct_get_ref_orb_out(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void RadIntTrackPointStruct::set_ref_orb_out(const CoordStruct &src) {
+  rad_int_track_point_struct_set_ref_orb_out(fortran_ptr_, src.get_fortran_ptr());
+}
+double RadIntTrackPointStruct::g_x0() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_g_x0(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 1, value);
+}
+double RadIntTrackPointStruct::g_y0() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_g_y0(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 2, value);
+}
+double RadIntTrackPointStruct::dgx_dx() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_dgx_dx(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 3, value);
+}
+double RadIntTrackPointStruct::dgx_dy() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_dgx_dy(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 4, value);
+}
+double RadIntTrackPointStruct::dgy_dx() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_dgy_dx(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 5, value);
+}
+double RadIntTrackPointStruct::dgy_dy() const {
+  double value;
+  rad_int_track_point_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void RadIntTrackPointStruct::set_dgy_dy(double value) {
+  rad_int_track_point_struct_set_real(fortran_ptr_, 6, value);
+}
+RadMapStruct RadMapEleStruct::rm0() const {
+  void *ptr;
+  rad_map_ele_struct_get_rm0(fortran_ptr_, &ptr);
+  return RadMapStruct(ptr);
+}
+void RadMapEleStruct::set_rm0(const RadMapStruct &src) {
+  rad_map_ele_struct_set_rm0(fortran_ptr_, src.get_fortran_ptr());
+}
+RadMapStruct RadMapEleStruct::rm1() const {
+  void *ptr;
+  rad_map_ele_struct_get_rm1(fortran_ptr_, &ptr);
+  return RadMapStruct(ptr);
+}
+void RadMapEleStruct::set_rm1(const RadMapStruct &src) {
+  rad_map_ele_struct_set_rm1(fortran_ptr_, src.get_fortran_ptr());
+}
+bool RadMapEleStruct::stale() const {
+  bool value;
+  rad_map_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void RadMapEleStruct::set_stale(bool value) {
+  rad_map_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray1D<double> RadMapStruct::ref_orb() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_ref_orb_info);
+}
+void RadMapStruct::set_ref_orb(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_map_struct_set_ref_orb(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> RadMapStruct::damp_dmat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_damp_dmat_info);
+}
+void RadMapStruct::set_damp_dmat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_damp_dmat, v);
+}
+FArray1D<double> RadMapStruct::xfer_damp_vec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_vec_info);
+}
+void RadMapStruct::set_xfer_damp_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  rad_map_struct_set_xfer_damp_vec(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> RadMapStruct::xfer_damp_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_xfer_damp_mat_info);
+}
+void RadMapStruct::set_xfer_damp_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_xfer_damp_mat, v);
+}
+FArray2D<double> RadMapStruct::stoc_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, rad_map_struct_get_stoc_mat_info);
+}
+void RadMapStruct::set_stoc_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, rad_map_struct_set_stoc_mat, v);
+}
+int RamperLordStruct::ix_ele() const {
   int value;
-  bunch_track_struct_get_integer(fortran_ptr_, 0, &value);
+  ramper_lord_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void BunchTrackStruct::set_n_pt(int value) {
-  bunch_track_struct_set_integer(fortran_ptr_, 0, value);
+void RamperLordStruct::set_ix_ele(int value) {
+  ramper_lord_struct_set_integer(fortran_ptr_, 0, value);
 }
+int RamperLordStruct::ix_con() const {
+  int value;
+  ramper_lord_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void RamperLordStruct::set_ix_con(int value) {
+  ramper_lord_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::optional<double> RamperLordStruct::attrib_ptr() const {
+  double value;
+  bool is_valid;
+  ramper_lord_struct_get_attrib_ptr(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void RamperLordStruct::set_attrib_ptr(double value) {
+  ramper_lord_struct_set_attrib_ptr(fortran_ptr_, value);
+}
+int64_t RandomStateStruct::ix() const {
+  int64_t value;
+  random_state_struct_get_integer8(fortran_ptr_, 0, &value);
+  return value;
+}
+void RandomStateStruct::set_ix(int64_t value) {
+  random_state_struct_set_integer8(fortran_ptr_, 0, value);
+}
+int64_t RandomStateStruct::iy() const {
+  int64_t value;
+  random_state_struct_get_integer8(fortran_ptr_, 1, &value);
+  return value;
+}
+void RandomStateStruct::set_iy(int64_t value) {
+  random_state_struct_set_integer8(fortran_ptr_, 1, value);
+}
+bool RandomStateStruct::number_stored() const {
+  bool value;
+  random_state_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void RandomStateStruct::set_number_stored(bool value) {
+  random_state_struct_set_logical(fortran_ptr_, 0, value);
+}
+double RandomStateStruct::h_saved() const {
+  double value;
+  random_state_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void RandomStateStruct::set_h_saved(double value) {
+  random_state_struct_set_real(fortran_ptr_, 0, value);
+}
+int RandomStateStruct::engine() const {
+  int value;
+  random_state_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void RandomStateStruct::set_engine(int value) {
+  random_state_struct_set_integer(fortran_ptr_, 0, value);
+}
+int RandomStateStruct::seed() const {
+  int value;
+  random_state_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void RandomStateStruct::set_seed(int value) {
+  random_state_struct_set_integer(fortran_ptr_, 1, value);
+}
+double RandomStateStruct::am() const {
+  double value;
+  random_state_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void RandomStateStruct::set_am(double value) {
+  random_state_struct_set_real(fortran_ptr_, 1, value);
+}
+int RandomStateStruct::gauss_converter() const {
+  int value;
+  random_state_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void RandomStateStruct::set_gauss_converter(int value) {
+  random_state_struct_set_integer(fortran_ptr_, 2, value);
+}
+double RandomStateStruct::gauss_sigma_cut() const {
+  double value;
+  random_state_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void RandomStateStruct::set_gauss_sigma_cut(double value) {
+  random_state_struct_set_real(fortran_ptr_, 2, value);
+}
+int64_t RandomStateStruct::in_sobseq() const {
+  int64_t value;
+  random_state_struct_get_integer8(fortran_ptr_, 2, &value);
+  return value;
+}
+void RandomStateStruct::set_in_sobseq(int64_t value) {
+  random_state_struct_set_integer8(fortran_ptr_, 2, value);
+}
+FArray1D<int64_t> RandomStateStruct::ix_sobseq() const {
+  return ProxyHelpers::get_array_1d<int64_t>(fortran_ptr_, random_state_struct_get_ix_sobseq_info);
+}
+void RandomStateStruct::set_ix_sobseq(const std::vector<int64_t> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  random_state_struct_set_ix_sobseq(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> RandomStateStruct::x_sobseq() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, random_state_struct_get_x_sobseq_info);
+}
+void RandomStateStruct::set_x_sobseq(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  random_state_struct_set_x_sobseq(fortran_ptr_, v.data(), shape);
+}
+std::string ResonanceHStruct::id() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, resonance_h_struct_get_id_info);
+  return std::string(arr.data(), arr.size());
+}
+void ResonanceHStruct::set_id(const std::string &value) {
+  resonance_h_struct_set_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::complex<double> ResonanceHStruct::c_val() const {
+  std::complex<double> value;
+  resonance_h_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void ResonanceHStruct::set_c_val(std::complex<double> value) {
+  resonance_h_struct_set_complex(fortran_ptr_, 0, value);
+}
+RfStairStepStructAlloc1D RfEleStruct::steps() const {
+  return RfStairStepStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      rf_ele_struct_reallocate_steps,
+      rf_ele_struct_get_steps_info
+  );
+}
+double RfEleStruct::ds_step() const {
+  double value;
+  rf_ele_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void RfEleStruct::set_ds_step(double value) { rf_ele_struct_set_real(fortran_ptr_, 0, value); }
+double RfStairStepStruct::E_tot0() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void RfStairStepStruct::set_E_tot0(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 0, value);
+}
+double RfStairStepStruct::E_tot1() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void RfStairStepStruct::set_E_tot1(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 1, value);
+}
+double RfStairStepStruct::p0c() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void RfStairStepStruct::set_p0c(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 2, value);
+}
+double RfStairStepStruct::p1c() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void RfStairStepStruct::set_p1c(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 3, value);
+}
+double RfStairStepStruct::scale() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void RfStairStepStruct::set_scale(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 4, value);
+}
+double RfStairStepStruct::time() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void RfStairStepStruct::set_time(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 5, value);
+}
+double RfStairStepStruct::s0() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void RfStairStepStruct::set_s0(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 6, value);
+}
+double RfStairStepStruct::s() const {
+  double value;
+  rf_stair_step_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void RfStairStepStruct::set_s(double value) {
+  rf_stair_step_struct_set_real(fortran_ptr_, 7, value);
+}
+int RfStairStepStruct::ix_step() const {
+  int value;
+  rf_stair_step_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void RfStairStepStruct::set_ix_step(int value) {
+  rf_stair_step_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string SeqEleStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_ele_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqEleStruct::set_name(const std::string &value) {
+  seq_ele_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+FCharArray1D SeqEleStruct::actual_arg() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, seq_ele_struct_get_actual_arg_info);
+}
+std::string SeqEleStruct::tag() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_ele_struct_get_tag_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqEleStruct::set_tag(const std::string &value) {
+  seq_ele_struct_set_tag(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string SeqEleStruct::slice_start() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_ele_struct_get_slice_start_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqEleStruct::set_slice_start(const std::string &value) {
+  seq_ele_struct_set_slice_start(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string SeqEleStruct::slice_end() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_ele_struct_get_slice_end_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqEleStruct::set_slice_end(const std::string &value) {
+  seq_ele_struct_set_slice_end(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int SeqEleStruct::type() const {
+  int value;
+  seq_ele_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void SeqEleStruct::set_type(int value) { seq_ele_struct_set_integer(fortran_ptr_, 0, value); }
+int SeqEleStruct::ix_ele() const {
+  int value;
+  seq_ele_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void SeqEleStruct::set_ix_ele(int value) { seq_ele_struct_set_integer(fortran_ptr_, 1, value); }
+int SeqEleStruct::ix_arg() const {
+  int value;
+  seq_ele_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void SeqEleStruct::set_ix_arg(int value) { seq_ele_struct_set_integer(fortran_ptr_, 2, value); }
+int SeqEleStruct::rep_count() const {
+  int value;
+  seq_ele_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void SeqEleStruct::set_rep_count(int value) { seq_ele_struct_set_integer(fortran_ptr_, 3, value); }
+bool SeqEleStruct::ele_order_reflect() const {
+  bool value;
+  seq_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SeqEleStruct::set_ele_order_reflect(bool value) {
+  seq_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+int SeqEleStruct::ele_orientation() const {
+  int value;
+  seq_ele_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void SeqEleStruct::set_ele_orientation(int value) {
+  seq_ele_struct_set_integer(fortran_ptr_, 4, value);
+}
+std::string SeqStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqStruct::set_name(const std::string &value) {
+  seq_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+SeqEleStructAlloc1D SeqStruct::ele() const {
+  return SeqEleStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      seq_struct_reallocate_ele,
+      seq_struct_get_ele_info
+  );
+}
+FCharArray1D SeqStruct::dummy_arg() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, seq_struct_get_dummy_arg_info);
+}
+FCharArray1D SeqStruct::corresponding_actual_arg() const {
+  return ProxyHelpers::get_char_array_1d(
+      fortran_ptr_,
+      seq_struct_get_corresponding_actual_arg_info
+  );
+}
+int SeqStruct::type() const {
+  int value;
+  seq_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void SeqStruct::set_type(int value) { seq_struct_set_integer(fortran_ptr_, 0, value); }
+int SeqStruct::ix_list() const {
+  int value;
+  seq_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void SeqStruct::set_ix_list(int value) { seq_struct_set_integer(fortran_ptr_, 1, value); }
+int SeqStruct::list_upcount() const {
+  int value;
+  seq_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void SeqStruct::set_list_upcount(int value) { seq_struct_set_integer(fortran_ptr_, 2, value); }
+int SeqStruct::index() const {
+  int value;
+  seq_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void SeqStruct::set_index(int value) { seq_struct_set_integer(fortran_ptr_, 3, value); }
+std::string SeqStruct::file_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, seq_struct_get_file_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void SeqStruct::set_file_name(const std::string &value) {
+  seq_struct_set_file_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int SeqStruct::ix_file_line() const {
+  int value;
+  seq_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void SeqStruct::set_ix_file_line(int value) { seq_struct_set_integer(fortran_ptr_, 4, value); }
+bool SeqStruct::multipass() const {
+  bool value;
+  seq_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SeqStruct::set_multipass(bool value) { seq_struct_set_logical(fortran_ptr_, 0, value); }
+bool SeqStruct::ptc_layout() const {
+  bool value;
+  seq_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void SeqStruct::set_ptc_layout(bool value) { seq_struct_set_logical(fortran_ptr_, 1, value); }
+bool SeqStruct::active() const {
+  bool value;
+  seq_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void SeqStruct::set_active(bool value) { seq_struct_set_logical(fortran_ptr_, 2, value); }
+double SpaceChargeCommonStruct::ds_track_step() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_ds_track_step(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 0, value);
+}
+double SpaceChargeCommonStruct::dt_track_step() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_dt_track_step(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 1, value);
+}
+double SpaceChargeCommonStruct::cathode_strength_cutoff() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_cathode_strength_cutoff(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 2, value);
+}
+double SpaceChargeCommonStruct::rel_tol_tracking() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_rel_tol_tracking(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 3, value);
+}
+double SpaceChargeCommonStruct::abs_tol_tracking() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_abs_tol_tracking(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 4, value);
+}
+double SpaceChargeCommonStruct::beam_chamber_height() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_beam_chamber_height(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 5, value);
+}
+double SpaceChargeCommonStruct::lsc_sigma_cutoff() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_lsc_sigma_cutoff(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 6, value);
+}
+double SpaceChargeCommonStruct::particle_sigma_cutoff() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_particle_sigma_cutoff(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 7, value);
+}
+double SpaceChargeCommonStruct::mesh_growth_factor() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_mesh_growth_factor(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 8, value);
+}
+double SpaceChargeCommonStruct::mesh_shrink_factor() const {
+  double value;
+  space_charge_common_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_mesh_shrink_factor(double value) {
+  space_charge_common_struct_set_real(fortran_ptr_, 9, value);
+}
+FArray1D<int> SpaceChargeCommonStruct::space_charge_mesh_size() const {
+  return ProxyHelpers::get_array_1d<int>(
+      fortran_ptr_,
+      space_charge_common_struct_get_space_charge_mesh_size_info
+  );
+}
+void SpaceChargeCommonStruct::set_space_charge_mesh_size(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  space_charge_common_struct_set_space_charge_mesh_size(fortran_ptr_, v.data(), shape);
+}
+FArray1D<int> SpaceChargeCommonStruct::csr3d_mesh_size() const {
+  return ProxyHelpers::get_array_1d<int>(
+      fortran_ptr_,
+      space_charge_common_struct_get_csr3d_mesh_size_info
+  );
+}
+void SpaceChargeCommonStruct::set_csr3d_mesh_size(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  space_charge_common_struct_set_csr3d_mesh_size(fortran_ptr_, v.data(), shape);
+}
+int SpaceChargeCommonStruct::n_bin() const {
+  int value;
+  space_charge_common_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_n_bin(int value) {
+  space_charge_common_struct_set_integer(fortran_ptr_, 0, value);
+}
+int SpaceChargeCommonStruct::particle_bin_span() const {
+  int value;
+  space_charge_common_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_particle_bin_span(int value) {
+  space_charge_common_struct_set_integer(fortran_ptr_, 1, value);
+}
+int SpaceChargeCommonStruct::n_shield_images() const {
+  int value;
+  space_charge_common_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_n_shield_images(int value) {
+  space_charge_common_struct_set_integer(fortran_ptr_, 2, value);
+}
+int SpaceChargeCommonStruct::sc_min_in_bin() const {
+  int value;
+  space_charge_common_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_sc_min_in_bin(int value) {
+  space_charge_common_struct_set_integer(fortran_ptr_, 3, value);
+}
+bool SpaceChargeCommonStruct::lsc_kick_transverse_dependence() const {
+  bool value;
+  space_charge_common_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_lsc_kick_transverse_dependence(bool value) {
+  space_charge_common_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool SpaceChargeCommonStruct::debug() const {
+  bool value;
+  space_charge_common_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void SpaceChargeCommonStruct::set_debug(bool value) {
+  space_charge_common_struct_set_logical(fortran_ptr_, 1, value);
+}
+std::string SpaceChargeCommonStruct::diagnostic_output_file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      space_charge_common_struct_get_diagnostic_output_file_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void SpaceChargeCommonStruct::set_diagnostic_output_file(const std::string &value) {
+  space_charge_common_struct_set_diagnostic_output_file(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+FArray1D<double> SpinAxisStruct::l() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_l_info);
+}
+void SpinAxisStruct::set_l(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_l(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinAxisStruct::n0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_n0_info);
+}
+void SpinAxisStruct::set_n0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_n0(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinAxisStruct::m() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_axis_struct_get_m_info);
+}
+void SpinAxisStruct::set_m(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_axis_struct_set_m(fortran_ptr_, v.data(), shape);
+}
+FArray1D<std::complex<double>> SpinEigenStruct::vec() const {
+  return ProxyHelpers::get_array_1d<std::complex<double>>(
+      fortran_ptr_,
+      spin_eigen_struct_get_vec_info
+  );
+}
+void SpinEigenStruct::set_vec(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_eigen_struct_set_vec(fortran_ptr_, v.data(), shape);
+}
+std::complex<double> SpinEigenStruct::val() const {
+  std::complex<double> value;
+  spin_eigen_struct_get_complex(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpinEigenStruct::set_val(std::complex<double> value) {
+  spin_eigen_struct_set_complex(fortran_ptr_, 0, value);
+}
+SpinAxisStruct SpinMatchingStruct::axis() const {
+  void *ptr;
+  spin_matching_struct_get_axis(fortran_ptr_, &ptr);
+  return SpinAxisStruct(ptr);
+}
+void SpinMatchingStruct::set_axis(const SpinAxisStruct &src) {
+  spin_matching_struct_set_axis(fortran_ptr_, src.get_fortran_ptr());
+}
+SpinEigenStructArray1D SpinMatchingStruct::eigen() const {
+  return ProxyHelpers::get_type_array_1d<SpinEigenStructArray1D>(
+      fortran_ptr_,
+      spin_matching_struct_get_eigen_info
+  );
+}
+FArray1D<double> SpinMatchingStruct::dn_dpz() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_dn_dpz_info);
+}
+void SpinMatchingStruct::set_dn_dpz(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_dn_dpz(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinMatchingStruct::alpha() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_alpha_info);
+}
+void SpinMatchingStruct::set_alpha(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_alpha(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinMatchingStruct::beta() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_beta_info);
+}
+void SpinMatchingStruct::set_beta(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_beta(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinMatchingStruct::orb0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_orb0_info);
+}
+void SpinMatchingStruct::set_orb0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_orb0(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> SpinMatchingStruct::M_1turn() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_matching_struct_get_M_1turn_info);
+}
+void SpinMatchingStruct::set_M_1turn(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_matching_struct_set_M_1turn, v);
+}
+FArray2D<double> SpinMatchingStruct::M_ele() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_matching_struct_get_M_ele_info);
+}
+void SpinMatchingStruct::set_M_ele(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_matching_struct_set_M_ele, v);
+}
+FArray1D<double> SpinMatchingStruct::sq_ele() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_sq_ele_info);
+}
+void SpinMatchingStruct::set_sq_ele(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_sq_ele(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SpinMatchingStruct::sq_1turn() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_matching_struct_get_sq_1turn_info);
+}
+void SpinMatchingStruct::set_sq_1turn(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_matching_struct_set_sq_1turn(fortran_ptr_, v.data(), shape);
+}
+bool SpinMatchingStruct::valid() const {
+  bool value;
+  spin_matching_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpinMatchingStruct::set_valid(bool value) {
+  spin_matching_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray2D<double> SpinOrbitMap1Struct::orb_mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_orb_mat_info);
+}
+void SpinOrbitMap1Struct::set_orb_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_set_orb_mat, v);
+}
+FArray1D<double> SpinOrbitMap1Struct::vec0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spin_orbit_map1_struct_get_vec0_info);
+}
+void SpinOrbitMap1Struct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spin_orbit_map1_struct_set_vec0(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> SpinOrbitMap1Struct::spin_q() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_get_spin_q_info);
+}
+void SpinOrbitMap1Struct::set_spin_q(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, spin_orbit_map1_struct_set_spin_q, v);
+}
+double SpinPolarStruct::polarization() const {
+  double value;
+  spin_polar_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SpinPolarStruct::set_polarization(double value) {
+  spin_polar_struct_set_real(fortran_ptr_, 0, value);
+}
+double SpinPolarStruct::theta() const {
+  double value;
+  spin_polar_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SpinPolarStruct::set_theta(double value) {
+  spin_polar_struct_set_real(fortran_ptr_, 1, value);
+}
+double SpinPolarStruct::phi() const {
+  double value;
+  spin_polar_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SpinPolarStruct::set_phi(double value) { spin_polar_struct_set_real(fortran_ptr_, 2, value); }
+double SpinPolarStruct::xi() const {
+  double value;
+  spin_polar_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void SpinPolarStruct::set_xi(double value) { spin_polar_struct_set_real(fortran_ptr_, 3, value); }
+double SplineStruct::x0() const {
+  double value;
+  spline_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SplineStruct::set_x0(double value) { spline_struct_set_real(fortran_ptr_, 0, value); }
+double SplineStruct::y0() const {
+  double value;
+  spline_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SplineStruct::set_y0(double value) { spline_struct_set_real(fortran_ptr_, 1, value); }
+double SplineStruct::x1() const {
+  double value;
+  spline_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SplineStruct::set_x1(double value) { spline_struct_set_real(fortran_ptr_, 2, value); }
+FArray1D<double> SplineStruct::coef() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, spline_struct_get_coef_info);
+}
+void SplineStruct::set_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  spline_struct_set_coef(fortran_ptr_, v.data(), shape);
+}
+VarLengthStringStructAlloc1D StrIndexStruct::name() const {
+  return VarLengthStringStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      str_index_struct_reallocate_name,
+      str_index_struct_get_name_info
+  );
+}
+IntAlloc1D StrIndexStruct::index() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      str_index_struct_reallocate_index,
+      str_index_struct_get_index_info
+  );
+}
+void StrIndexStruct::set_index(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  str_index_struct_set_index(fortran_ptr_, v.data(), shape);
+}
+int StrIndexStruct::n_min() const {
+  int value;
+  str_index_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void StrIndexStruct::set_n_min(int value) { str_index_struct_set_integer(fortran_ptr_, 0, value); }
+int StrIndexStruct::n_max() const {
+  int value;
+  str_index_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void StrIndexStruct::set_n_max(int value) { str_index_struct_set_integer(fortran_ptr_, 1, value); }
+int StrongBeamStruct::ix_slice() const {
+  int value;
+  strong_beam_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void StrongBeamStruct::set_ix_slice(int value) {
+  strong_beam_struct_set_integer(fortran_ptr_, 0, value);
+}
+double StrongBeamStruct::x_center() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void StrongBeamStruct::set_x_center(double value) {
+  strong_beam_struct_set_real(fortran_ptr_, 0, value);
+}
+double StrongBeamStruct::y_center() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void StrongBeamStruct::set_y_center(double value) {
+  strong_beam_struct_set_real(fortran_ptr_, 1, value);
+}
+double StrongBeamStruct::x_sigma() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void StrongBeamStruct::set_x_sigma(double value) {
+  strong_beam_struct_set_real(fortran_ptr_, 2, value);
+}
+double StrongBeamStruct::y_sigma() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void StrongBeamStruct::set_y_sigma(double value) {
+  strong_beam_struct_set_real(fortran_ptr_, 3, value);
+}
+double StrongBeamStruct::dx() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void StrongBeamStruct::set_dx(double value) { strong_beam_struct_set_real(fortran_ptr_, 4, value); }
+double StrongBeamStruct::dy() const {
+  double value;
+  strong_beam_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void StrongBeamStruct::set_dy(double value) { strong_beam_struct_set_real(fortran_ptr_, 5, value); }
 std::complex<double> SummationRdtStruct::h11001() const {
   std::complex<double> value;
   summation_rdt_struct_get_complex(fortran_ptr_, 0, &value);
@@ -6570,115 +11001,1042 @@ std::complex<double> SummationRdtStruct::h11110() const {
 void SummationRdtStruct::set_h11110(std::complex<double> value) {
   summation_rdt_struct_set_complex(fortran_ptr_, 20, value);
 }
-std::string TaoEleShapeStruct::ele_id() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_ele_id_info);
-  return std::string(arr.data(), arr.size());
+FArray2D<double> SurfaceCurvatureStruct::xy() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, surface_curvature_struct_get_xy_info);
 }
-void TaoEleShapeStruct::set_ele_id(const std::string &value) {
-  tao_ele_shape_struct_set_ele_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void SurfaceCurvatureStruct::set_xy(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, surface_curvature_struct_set_xy, v);
 }
-std::string TaoEleShapeStruct::shape() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_shape_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoEleShapeStruct::set_shape(const std::string &value) {
-  tao_ele_shape_struct_set_shape(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoEleShapeStruct::color() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_color_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoEleShapeStruct::set_color(const std::string &value) {
-  tao_ele_shape_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-double TaoEleShapeStruct::size() const {
+double SurfaceCurvatureStruct::spherical() const {
   double value;
-  tao_ele_shape_struct_get_real(fortran_ptr_, 0, &value);
+  surface_curvature_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoEleShapeStruct::set_size(double value) {
-  tao_ele_shape_struct_set_real(fortran_ptr_, 0, value);
+void SurfaceCurvatureStruct::set_spherical(double value) {
+  surface_curvature_struct_set_real(fortran_ptr_, 0, value);
 }
-std::string TaoEleShapeStruct::label() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_label_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoEleShapeStruct::set_label(const std::string &value) {
-  tao_ele_shape_struct_set_label(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool TaoEleShapeStruct::draw() const {
-  bool value;
-  tao_ele_shape_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoEleShapeStruct::set_draw(bool value) {
-  tao_ele_shape_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoEleShapeStruct::multi() const {
-  bool value;
-  tao_ele_shape_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoEleShapeStruct::set_multi(bool value) {
-  tao_ele_shape_struct_set_logical(fortran_ptr_, 1, value);
-}
-int TaoEleShapeStruct::line_width() const {
-  int value;
-  tao_ele_shape_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoEleShapeStruct::set_line_width(int value) {
-  tao_ele_shape_struct_set_integer(fortran_ptr_, 0, value);
-}
-double TaoEleShapeStruct::offset() const {
-  double value;
-  tao_ele_shape_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoEleShapeStruct::set_offset(double value) {
-  tao_ele_shape_struct_set_real(fortran_ptr_, 1, value);
-}
-int TaoEleShapeStruct::ix_key() const {
-  int value;
-  tao_ele_shape_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoEleShapeStruct::set_ix_key(int value) {
-  tao_ele_shape_struct_set_integer(fortran_ptr_, 1, value);
-}
-std::string TaoEleShapeStruct::name_ele() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_name_ele_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoEleShapeStruct::set_name_ele(const std::string &value) {
-  tao_ele_shape_struct_set_name_ele(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoElePointerStructAlloc1D TaoEleShapeStruct::uni() const {
-  return TaoElePointerStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_ele_shape_struct_reallocate_uni,
-      tao_ele_shape_struct_get_uni_info
+FArray1D<double> SurfaceCurvatureStruct::elliptical() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      surface_curvature_struct_get_elliptical_info
   );
 }
-ElePointerStructAlloc1D TaoElePointerStruct::eles() const {
-  return ElePointerStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_ele_pointer_struct_reallocate_eles,
-      tao_ele_pointer_struct_get_eles_info
-  );
+void SurfaceCurvatureStruct::set_elliptical(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_curvature_struct_set_elliptical(fortran_ptr_, v.data(), shape);
 }
-int TaoElePointerStruct::n_loc() const {
-  int value;
-  tao_ele_pointer_struct_get_integer(fortran_ptr_, 0, &value);
+bool SurfaceCurvatureStruct::has_curvature() const {
+  bool value;
+  surface_curvature_struct_get_logical(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoElePointerStruct::set_n_loc(int value) {
-  tao_ele_pointer_struct_set_integer(fortran_ptr_, 0, value);
+void SurfaceCurvatureStruct::set_has_curvature(bool value) {
+  surface_curvature_struct_set_logical(fortran_ptr_, 0, value);
+}
+double SurfaceDisplacementPtStruct::x0() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_x0(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double SurfaceDisplacementPtStruct::y0() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_y0(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double SurfaceDisplacementPtStruct::z0() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_z0(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double SurfaceDisplacementPtStruct::dz_dx() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_dz_dx(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double SurfaceDisplacementPtStruct::dz_dy() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_dz_dy(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 4, value);
+}
+double SurfaceDisplacementPtStruct::d2z_dxdy() const {
+  double value;
+  surface_displacement_pt_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void SurfaceDisplacementPtStruct::set_d2z_dxdy(double value) {
+  surface_displacement_pt_struct_set_real(fortran_ptr_, 5, value);
+}
+bool SurfaceDisplacementStruct::active() const {
+  bool value;
+  surface_displacement_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceDisplacementStruct::set_active(bool value) {
+  surface_displacement_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray1D<double> SurfaceDisplacementStruct::dr() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_dr_info);
+}
+void SurfaceDisplacementStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_displacement_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SurfaceDisplacementStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_displacement_struct_get_r0_info);
+}
+void SurfaceDisplacementStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_displacement_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+SurfaceDisplacementPtStructArray2D SurfaceDisplacementStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<SurfaceDisplacementPtStructArray2D>(
+      fortran_ptr_,
+      surface_displacement_struct_get_pt_info
+  );
+}
+double SurfaceHMisalignPtStruct::x0() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_x0(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double SurfaceHMisalignPtStruct::y0() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_y0(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double SurfaceHMisalignPtStruct::rot_y() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_rot_y(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double SurfaceHMisalignPtStruct::rot_t() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_rot_t(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double SurfaceHMisalignPtStruct::rot_y_rms() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_rot_y_rms(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 4, value);
+}
+double SurfaceHMisalignPtStruct::rot_t_rms() const {
+  double value;
+  surface_h_misalign_pt_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void SurfaceHMisalignPtStruct::set_rot_t_rms(double value) {
+  surface_h_misalign_pt_struct_set_real(fortran_ptr_, 5, value);
+}
+bool SurfaceHMisalignStruct::active() const {
+  bool value;
+  surface_h_misalign_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceHMisalignStruct::set_active(bool value) {
+  surface_h_misalign_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray1D<double> SurfaceHMisalignStruct::dr() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_dr_info);
+}
+void SurfaceHMisalignStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_h_misalign_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SurfaceHMisalignStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_h_misalign_struct_get_r0_info);
+}
+void SurfaceHMisalignStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_h_misalign_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+SurfaceHMisalignPtStructArray2D SurfaceHMisalignStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<SurfaceHMisalignPtStructArray2D>(
+      fortran_ptr_,
+      surface_h_misalign_struct_get_pt_info
+  );
+}
+double SurfaceSegmentedPtStruct::x0() const {
+  double value;
+  surface_segmented_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceSegmentedPtStruct::set_x0(double value) {
+  surface_segmented_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double SurfaceSegmentedPtStruct::y0() const {
+  double value;
+  surface_segmented_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void SurfaceSegmentedPtStruct::set_y0(double value) {
+  surface_segmented_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double SurfaceSegmentedPtStruct::z0() const {
+  double value;
+  surface_segmented_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void SurfaceSegmentedPtStruct::set_z0(double value) {
+  surface_segmented_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double SurfaceSegmentedPtStruct::dz_dx() const {
+  double value;
+  surface_segmented_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void SurfaceSegmentedPtStruct::set_dz_dx(double value) {
+  surface_segmented_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double SurfaceSegmentedPtStruct::dz_dy() const {
+  double value;
+  surface_segmented_pt_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void SurfaceSegmentedPtStruct::set_dz_dy(double value) {
+  surface_segmented_pt_struct_set_real(fortran_ptr_, 4, value);
+}
+bool SurfaceSegmentedStruct::active() const {
+  bool value;
+  surface_segmented_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void SurfaceSegmentedStruct::set_active(bool value) {
+  surface_segmented_struct_set_logical(fortran_ptr_, 0, value);
+}
+FArray1D<double> SurfaceSegmentedStruct::dr() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_dr_info);
+}
+void SurfaceSegmentedStruct::set_dr(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_segmented_struct_set_dr(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> SurfaceSegmentedStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, surface_segmented_struct_get_r0_info);
+}
+void SurfaceSegmentedStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  surface_segmented_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+SurfaceSegmentedPtStructArray2D SurfaceSegmentedStruct::pt() const {
+  return ProxyHelpers::get_type_array_2d<SurfaceSegmentedPtStructArray2D>(
+      fortran_ptr_,
+      surface_segmented_struct_get_pt_info
+  );
+}
+std::string TaoAliasStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_alias_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoAliasStruct::set_name(const std::string &value) {
+  tao_alias_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoAliasStruct::expanded_str() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_alias_struct_get_expanded_str_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoAliasStruct::set_expanded_str(const std::string &value) {
+  tao_alias_struct_set_expanded_str(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+BeamStruct TaoBeamBranchStruct::beam_at_start() const {
+  void *ptr;
+  tao_beam_branch_struct_get_beam_at_start(fortran_ptr_, &ptr);
+  return BeamStruct(ptr);
+}
+void TaoBeamBranchStruct::set_beam_at_start(const BeamStruct &src) {
+  tao_beam_branch_struct_set_beam_at_start(fortran_ptr_, src.get_fortran_ptr());
+}
+BeamInitStruct TaoBeamBranchStruct::beam_init() const {
+  void *ptr;
+  tao_beam_branch_struct_get_beam_init(fortran_ptr_, &ptr);
+  return BeamInitStruct(ptr);
+}
+void TaoBeamBranchStruct::set_beam_init(const BeamInitStruct &src) {
+  tao_beam_branch_struct_set_beam_init(fortran_ptr_, src.get_fortran_ptr());
+}
+BeamInitStruct TaoBeamBranchStruct::beam_init_used() const {
+  void *ptr;
+  tao_beam_branch_struct_get_beam_init_used(fortran_ptr_, &ptr);
+  return BeamInitStruct(ptr);
+}
+void TaoBeamBranchStruct::set_beam_init_used(const BeamInitStruct &src) {
+  tao_beam_branch_struct_set_beam_init_used(fortran_ptr_, src.get_fortran_ptr());
+}
+bool TaoBeamBranchStruct::init_starting_distribution() const {
+  bool value;
+  tao_beam_branch_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoBeamBranchStruct::set_init_starting_distribution(bool value) {
+  tao_beam_branch_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::string TaoBeamBranchStruct::track_start() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_branch_struct_get_track_start_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBeamBranchStruct::set_track_start(const std::string &value) {
+  tao_beam_branch_struct_set_track_start(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string TaoBeamBranchStruct::track_end() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_branch_struct_get_track_end_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBeamBranchStruct::set_track_end(const std::string &value) {
+  tao_beam_branch_struct_set_track_end(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+int TaoBeamBranchStruct::ix_branch() const {
+  int value;
+  tao_beam_branch_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoBeamBranchStruct::set_ix_branch(int value) {
+  tao_beam_branch_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoBeamBranchStruct::ix_track_start() const {
+  int value;
+  tao_beam_branch_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoBeamBranchStruct::set_ix_track_start(int value) {
+  tao_beam_branch_struct_set_integer(fortran_ptr_, 1, value);
+}
+int TaoBeamBranchStruct::ix_track_end() const {
+  int value;
+  tao_beam_branch_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoBeamBranchStruct::set_ix_track_end(int value) {
+  tao_beam_branch_struct_set_integer(fortran_ptr_, 2, value);
+}
+std::string TaoBeamUniStruct::saved_at() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_saved_at_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBeamUniStruct::set_saved_at(const std::string &value) {
+  tao_beam_uni_struct_set_saved_at(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoBeamUniStruct::dump_file() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_dump_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBeamUniStruct::set_dump_file(const std::string &value) {
+  tao_beam_uni_struct_set_dump_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoBeamUniStruct::dump_at() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_dump_at_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoBeamUniStruct::set_dump_at(const std::string &value) {
+  tao_beam_uni_struct_set_dump_at(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoBeamUniStruct::track_beam_in_universe() const {
+  bool value;
+  tao_beam_uni_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoBeamUniStruct::set_track_beam_in_universe(bool value) {
+  tao_beam_uni_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoBeamUniStruct::always_reinit() const {
+  bool value;
+  tao_beam_uni_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoBeamUniStruct::set_always_reinit(bool value) {
+  tao_beam_uni_struct_set_logical(fortran_ptr_, 1, value);
+}
+double TaoBuildingWallOrientationStruct::theta() const {
+  double value;
+  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoBuildingWallOrientationStruct::set_theta(double value) {
+  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoBuildingWallOrientationStruct::x_offset() const {
+  double value;
+  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoBuildingWallOrientationStruct::set_x_offset(double value) {
+  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoBuildingWallOrientationStruct::z_offset() const {
+  double value;
+  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoBuildingWallOrientationStruct::set_z_offset(double value) {
+  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 2, value);
+}
+double TaoBuildingWallPointStruct::z() const {
+  double value;
+  tao_building_wall_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoBuildingWallPointStruct::set_z(double value) {
+  tao_building_wall_point_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoBuildingWallPointStruct::x() const {
+  double value;
+  tao_building_wall_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoBuildingWallPointStruct::set_x(double value) {
+  tao_building_wall_point_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoBuildingWallPointStruct::radius() const {
+  double value;
+  tao_building_wall_point_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoBuildingWallPointStruct::set_radius(double value) {
+  tao_building_wall_point_struct_set_real(fortran_ptr_, 2, value);
+}
+double TaoBuildingWallPointStruct::z_center() const {
+  double value;
+  tao_building_wall_point_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoBuildingWallPointStruct::set_z_center(double value) {
+  tao_building_wall_point_struct_set_real(fortran_ptr_, 3, value);
+}
+double TaoBuildingWallPointStruct::x_center() const {
+  double value;
+  tao_building_wall_point_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoBuildingWallPointStruct::set_x_center(double value) {
+  tao_building_wall_point_struct_set_real(fortran_ptr_, 4, value);
+}
+std::string TaoBuildingWallSectionStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      tao_building_wall_section_struct_get_name_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void TaoBuildingWallSectionStruct::set_name(const std::string &value) {
+  tao_building_wall_section_struct_set_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string TaoBuildingWallSectionStruct::constraint() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      tao_building_wall_section_struct_get_constraint_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void TaoBuildingWallSectionStruct::set_constraint(const std::string &value) {
+  tao_building_wall_section_struct_set_constraint(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+TaoBuildingWallPointStructAlloc1D TaoBuildingWallSectionStruct::point() const {
+  return TaoBuildingWallPointStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_building_wall_section_struct_reallocate_point,
+      tao_building_wall_section_struct_get_point_info
+  );
+}
+TaoBuildingWallOrientationStruct TaoBuildingWallStruct::orientation() const {
+  void *ptr;
+  tao_building_wall_struct_get_orientation(fortran_ptr_, &ptr);
+  return TaoBuildingWallOrientationStruct(ptr);
+}
+void TaoBuildingWallStruct::set_orientation(const TaoBuildingWallOrientationStruct &src) {
+  tao_building_wall_struct_set_orientation(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoBuildingWallSectionStructAlloc1D TaoBuildingWallStruct::section() const {
+  return TaoBuildingWallSectionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_building_wall_struct_reallocate_section,
+      tao_building_wall_struct_get_section_info
+  );
+}
+std::string TaoCmdHistoryStruct::cmd() const {
+  return ProxyHelpers::get_string(fortran_ptr_, tao_cmd_history_struct_get_cmd_info);
+}
+void TaoCmdHistoryStruct::set_cmd(const std::string &value) {
+  tao_cmd_history_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoCmdHistoryStruct::ix() const {
+  int value;
+  tao_cmd_history_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCmdHistoryStruct::set_ix(int value) {
+  tao_cmd_history_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string TaoCommandFileStruct::full_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_command_file_struct_get_full_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommandFileStruct::set_full_name(const std::string &value) {
+  tao_command_file_struct_set_full_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string TaoCommandFileStruct::dir() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_command_file_struct_get_dir_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommandFileStruct::set_dir(const std::string &value) {
+  tao_command_file_struct_set_dir(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoCommandFileStruct::ix_unit() const {
+  int value;
+  tao_command_file_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_ix_unit(int value) {
+  tao_command_file_struct_set_integer(fortran_ptr_, 0, value);
+}
+FCharArray1D TaoCommandFileStruct::cmd_arg() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_command_file_struct_get_cmd_arg_info);
+}
+std::string TaoCommandFileStruct::quiet() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_command_file_struct_get_quiet_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommandFileStruct::set_quiet(const std::string &value) {
+  tao_command_file_struct_set_quiet(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoCommandFileStruct::paused() const {
+  bool value;
+  tao_command_file_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_paused(bool value) {
+  tao_command_file_struct_set_logical(fortran_ptr_, 0, value);
+}
+int TaoCommandFileStruct::n_line() const {
+  int value;
+  tao_command_file_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_n_line(int value) {
+  tao_command_file_struct_set_integer(fortran_ptr_, 1, value);
+}
+bool TaoCommandFileStruct::reset_at_end() const {
+  bool value;
+  tao_command_file_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_reset_at_end(bool value) {
+  tao_command_file_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoCommandFileStruct::lattice_calc_save() const {
+  bool value;
+  tao_command_file_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_lattice_calc_save(bool value) {
+  tao_command_file_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoCommandFileStruct::plot_save() const {
+  bool value;
+  tao_command_file_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoCommandFileStruct::set_plot_save(bool value) {
+  tao_command_file_struct_set_logical(fortran_ptr_, 3, value);
+}
+std::string TaoCommandFileStruct::multi_cmd() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_command_file_struct_get_multi_cmd_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommandFileStruct::set_multi_cmd(const std::string &value) {
+  tao_command_file_struct_set_multi_cmd(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+TaoAliasStructArray1D TaoCommonStruct::alias() const {
+  return ProxyHelpers::get_type_array_1d<TaoAliasStructArray1D>(
+      fortran_ptr_,
+      tao_common_struct_get_alias_info
+  );
+}
+TaoAliasStructArray1D TaoCommonStruct::key() const {
+  return ProxyHelpers::get_type_array_1d<TaoAliasStructArray1D>(
+      fortran_ptr_,
+      tao_common_struct_get_key_info
+  );
+}
+TaoCommandFileStructAlloc1D TaoCommonStruct::cmd_file() const {
+  return TaoCommandFileStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_common_struct_reallocate_cmd_file,
+      tao_common_struct_get_cmd_file_info
+  );
+}
+NamedNumberStructAlloc1D TaoCommonStruct::symbolic_num() const {
+  return NamedNumberStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_common_struct_reallocate_symbolic_num,
+      tao_common_struct_get_symbolic_num_info
+  );
+}
+TaoPlotRegionStructAlloc1D TaoCommonStruct::plot_place_buffer() const {
+  return TaoPlotRegionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_common_struct_reallocate_plot_place_buffer,
+      tao_common_struct_get_plot_place_buffer_info
+  );
+}
+DoLoopStructAlloc1D TaoCommonStruct::do_loop() const {
+  return DoLoopStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_common_struct_reallocate_do_loop,
+      tao_common_struct_get_do_loop_info
+  );
+}
+FArray2D<double> TaoCommonStruct::covar() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_covar_info);
+}
+void TaoCommonStruct::set_covar(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_common_struct_set_covar, v);
+}
+FArray2D<double> TaoCommonStruct::alpha() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_alpha_info);
+}
+void TaoCommonStruct::set_alpha(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_common_struct_set_alpha, v);
+}
+double TaoCommonStruct::dummy_target() const {
+  double value;
+  tao_common_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCommonStruct::set_dummy_target(double value) {
+  tao_common_struct_set_real(fortran_ptr_, 0, value);
+}
+int TaoCommonStruct::n_alias() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCommonStruct::set_n_alias(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoCommonStruct::cmd_file_level() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCommonStruct::set_cmd_file_level(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 1, value);
+}
+int TaoCommonStruct::ix_key_bank() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoCommonStruct::set_ix_key_bank(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 2, value);
+}
+int TaoCommonStruct::ix_history() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoCommonStruct::set_ix_history(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 3, value);
+}
+int TaoCommonStruct::n_history() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoCommonStruct::set_n_history(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 4, value);
+}
+int TaoCommonStruct::lev_loop() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoCommonStruct::set_lev_loop(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 5, value);
+}
+int TaoCommonStruct::n_err_messages_printed() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoCommonStruct::set_n_err_messages_printed(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 6, value);
+}
+int TaoCommonStruct::n_universes() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoCommonStruct::set_n_universes(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 7, value);
+}
+int TaoCommonStruct::ix_beam_track_active_element() const {
+  int value;
+  tao_common_struct_get_integer(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoCommonStruct::set_ix_beam_track_active_element(int value) {
+  tao_common_struct_set_integer(fortran_ptr_, 8, value);
+}
+bool TaoCommonStruct::cmd_file_paused() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCommonStruct::set_cmd_file_paused(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoCommonStruct::use_cmd_here() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCommonStruct::set_use_cmd_here(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoCommonStruct::cmd_from_cmd_file() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoCommonStruct::set_cmd_from_cmd_file(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoCommonStruct::use_saved_beam_in_tracking() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoCommonStruct::set_use_saved_beam_in_tracking(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool TaoCommonStruct::single_mode() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoCommonStruct::set_single_mode(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool TaoCommonStruct::combine_consecutive_elements_of_like_name() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoCommonStruct::set_combine_consecutive_elements_of_like_name(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool TaoCommonStruct::have_tracked_beam() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoCommonStruct::set_have_tracked_beam(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool TaoCommonStruct::init_plot_needed() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoCommonStruct::set_init_plot_needed(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool TaoCommonStruct::init_beam() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoCommonStruct::set_init_beam(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 8, value);
+}
+bool TaoCommonStruct::init_var() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 9, &value);
+  return value;
+}
+void TaoCommonStruct::set_init_var(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 9, value);
+}
+bool TaoCommonStruct::init_read_lat_info() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 10, &value);
+  return value;
+}
+void TaoCommonStruct::set_init_read_lat_info(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 10, value);
+}
+bool TaoCommonStruct::optimizer_running() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 11, &value);
+  return value;
+}
+void TaoCommonStruct::set_optimizer_running(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 11, value);
+}
+bool TaoCommonStruct::have_datums_using_expressions() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 12, &value);
+  return value;
+}
+void TaoCommonStruct::set_have_datums_using_expressions(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 12, value);
+}
+bool TaoCommonStruct::print_to_terminal() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 13, &value);
+  return value;
+}
+void TaoCommonStruct::set_print_to_terminal(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 13, value);
+}
+bool TaoCommonStruct::lattice_calc_done() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 14, &value);
+  return value;
+}
+void TaoCommonStruct::set_lattice_calc_done(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 14, value);
+}
+bool TaoCommonStruct::add_measurement_noise() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 15, &value);
+  return value;
+}
+void TaoCommonStruct::set_add_measurement_noise(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 15, value);
+}
+FArray1D<bool> TaoCommonStruct::is_err_message_printed() const {
+  return ProxyHelpers::get_array_1d<bool>(
+      fortran_ptr_,
+      tao_common_struct_get_is_err_message_printed_info
+  );
+}
+void TaoCommonStruct::set_is_err_message_printed(const std::vector<bool> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  std::vector<int> bv(v.size());
+  for (size_t i = 0; i < v.size(); ++i)
+    bv[i] = v[i] ? 1 : 0;
+  tao_common_struct_set_is_err_message_printed(fortran_ptr_, bv.data(), shape);
+}
+bool TaoCommonStruct::command_arg_has_been_executed() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 16, &value);
+  return value;
+}
+void TaoCommonStruct::set_command_arg_has_been_executed(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 16, value);
+}
+bool TaoCommonStruct::all_merit_weights_positive() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 17, &value);
+  return value;
+}
+void TaoCommonStruct::set_all_merit_weights_positive(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 17, value);
+}
+bool TaoCommonStruct::multi_turn_orbit_is_plotted() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 18, &value);
+  return value;
+}
+void TaoCommonStruct::set_multi_turn_orbit_is_plotted(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 18, value);
+}
+bool TaoCommonStruct::force_chrom_calc() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 19, &value);
+  return value;
+}
+void TaoCommonStruct::set_force_chrom_calc(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 19, value);
+}
+bool TaoCommonStruct::force_rad_int_calc() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 20, &value);
+  return value;
+}
+void TaoCommonStruct::set_force_rad_int_calc(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 20, value);
+}
+bool TaoCommonStruct::rad_int_ri_calc_on() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 21, &value);
+  return value;
+}
+void TaoCommonStruct::set_rad_int_ri_calc_on(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 21, value);
+}
+bool TaoCommonStruct::rad_int_6d_calc_on() const {
+  bool value;
+  tao_common_struct_get_logical(fortran_ptr_, 22, &value);
+  return value;
+}
+void TaoCommonStruct::set_rad_int_6d_calc_on(bool value) {
+  tao_common_struct_set_logical(fortran_ptr_, 22, value);
+}
+FCharArray1D TaoCommonStruct::valid_plot_who() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_common_struct_get_valid_plot_who_info);
+}
+std::string TaoCommonStruct::single_mode_buffer() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_single_mode_buffer_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonStruct::set_single_mode_buffer(const std::string &value) {
+  tao_common_struct_set_single_mode_buffer(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+std::string TaoCommonStruct::cmd() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_cmd_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonStruct::set_cmd(const std::string &value) {
+  tao_common_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::optional<TaoCurveStruct> TaoCurveArrayStruct::c() const {
+  void *ptr;
+  tao_curve_array_struct_get_c(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoCurveStruct(ptr);
+}
+void TaoCurveArrayStruct::set_c(const TaoCurveStruct &src) {
+  tao_curve_array_struct_set_c(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string TaoCurveColorStruct::data_type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_curve_color_struct_get_data_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCurveColorStruct::set_data_type(const std::string &value) {
+  tao_curve_color_struct_set_data_type(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
+}
+bool TaoCurveColorStruct::is_on() const {
+  bool value;
+  tao_curve_color_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCurveColorStruct::set_is_on(bool value) {
+  tao_curve_color_struct_set_logical(fortran_ptr_, 0, value);
+}
+double TaoCurveColorStruct::min() const {
+  double value;
+  tao_curve_color_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCurveColorStruct::set_min(double value) {
+  tao_curve_color_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoCurveColorStruct::max() const {
+  double value;
+  tao_curve_color_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCurveColorStruct::set_max(double value) {
+  tao_curve_color_struct_set_real(fortran_ptr_, 1, value);
+}
+bool TaoCurveColorStruct::autoscale() const {
+  bool value;
+  tao_curve_color_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCurveColorStruct::set_autoscale(bool value) {
+  tao_curve_color_struct_set_logical(fortran_ptr_, 1, value);
+}
+double TaoCurveOrbitStruct::x() const {
+  double value;
+  tao_curve_orbit_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoCurveOrbitStruct::set_x(double value) {
+  tao_curve_orbit_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoCurveOrbitStruct::y() const {
+  double value;
+  tao_curve_orbit_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoCurveOrbitStruct::set_y(double value) {
+  tao_curve_orbit_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoCurveOrbitStruct::t() const {
+  double value;
+  tao_curve_orbit_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoCurveOrbitStruct::set_t(double value) {
+  tao_curve_orbit_struct_set_real(fortran_ptr_, 2, value);
 }
 std::string TaoCurveStruct::name() const {
   FArray1D<char> arr =
@@ -7018,729 +12376,15 @@ bool TaoCurveStruct::valid() const {
   return value;
 }
 void TaoCurveStruct::set_valid(bool value) { tao_curve_struct_set_logical(fortran_ptr_, 6, value); }
-std::string TaoCurveColorStruct::data_type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_curve_color_struct_get_data_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoCurveColorStruct::set_data_type(const std::string &value) {
-  tao_curve_color_struct_set_data_type(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-bool TaoCurveColorStruct::is_on() const {
-  bool value;
-  tao_curve_color_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoCurveColorStruct::set_is_on(bool value) {
-  tao_curve_color_struct_set_logical(fortran_ptr_, 0, value);
-}
-double TaoCurveColorStruct::min() const {
-  double value;
-  tao_curve_color_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoCurveColorStruct::set_min(double value) {
-  tao_curve_color_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoCurveColorStruct::max() const {
-  double value;
-  tao_curve_color_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoCurveColorStruct::set_max(double value) {
-  tao_curve_color_struct_set_real(fortran_ptr_, 1, value);
-}
-bool TaoCurveColorStruct::autoscale() const {
-  bool value;
-  tao_curve_color_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoCurveColorStruct::set_autoscale(bool value) {
-  tao_curve_color_struct_set_logical(fortran_ptr_, 1, value);
-}
-double TaoCurveOrbitStruct::x() const {
-  double value;
-  tao_curve_orbit_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoCurveOrbitStruct::set_x(double value) {
-  tao_curve_orbit_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoCurveOrbitStruct::y() const {
-  double value;
-  tao_curve_orbit_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoCurveOrbitStruct::set_y(double value) {
-  tao_curve_orbit_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoCurveOrbitStruct::t() const {
-  double value;
-  tao_curve_orbit_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoCurveOrbitStruct::set_t(double value) {
-  tao_curve_orbit_struct_set_real(fortran_ptr_, 2, value);
-}
-bool TaoHistogramStruct::density_normalized() const {
-  bool value;
-  tao_histogram_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoHistogramStruct::set_density_normalized(bool value) {
-  tao_histogram_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoHistogramStruct::weight_by_charge() const {
-  bool value;
-  tao_histogram_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoHistogramStruct::set_weight_by_charge(bool value) {
-  tao_histogram_struct_set_logical(fortran_ptr_, 1, value);
-}
-double TaoHistogramStruct::minimum() const {
-  double value;
-  tao_histogram_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoHistogramStruct::set_minimum(double value) {
-  tao_histogram_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoHistogramStruct::maximum() const {
-  double value;
-  tao_histogram_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoHistogramStruct::set_maximum(double value) {
-  tao_histogram_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoHistogramStruct::width() const {
-  double value;
-  tao_histogram_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoHistogramStruct::set_width(double value) {
-  tao_histogram_struct_set_real(fortran_ptr_, 2, value);
-}
-double TaoHistogramStruct::center() const {
-  double value;
-  tao_histogram_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoHistogramStruct::set_center(double value) {
-  tao_histogram_struct_set_real(fortran_ptr_, 3, value);
-}
-int TaoHistogramStruct::number() const {
-  int value;
-  tao_histogram_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoHistogramStruct::set_number(int value) {
-  tao_histogram_struct_set_integer(fortran_ptr_, 0, value);
-}
-int LatEleOrder1Struct::ix_branch() const {
-  int value;
-  lat_ele_order1_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatEleOrder1Struct::set_ix_branch(int value) {
-  lat_ele_order1_struct_set_integer(fortran_ptr_, 0, value);
-}
-int LatEleOrder1Struct::ix_order() const {
-  int value;
-  lat_ele_order1_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void LatEleOrder1Struct::set_ix_order(int value) {
-  lat_ele_order1_struct_set_integer(fortran_ptr_, 1, value);
-}
-LatEleOrder1StructAlloc1D LatEleOrderArrayStruct::ele() const {
-  return LatEleOrder1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      lat_ele_order_array_struct_reallocate_ele,
-      lat_ele_order_array_struct_get_ele_info
-  );
-}
-FArray2D<double> TaoLatSigmaStruct::mat() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_lat_sigma_struct_get_mat_info);
-}
-void TaoLatSigmaStruct::set_mat(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_lat_sigma_struct_set_mat, v);
-}
-TaoSpinDnDpzStruct TaoSpinEleStruct::dn_dpz() const {
+std::optional<TaoD1DataStruct> TaoD1DataArrayStruct::d1() const {
   void *ptr;
-  tao_spin_ele_struct_get_dn_dpz(fortran_ptr_, &ptr);
-  return TaoSpinDnDpzStruct(ptr);
-}
-void TaoSpinEleStruct::set_dn_dpz(const TaoSpinDnDpzStruct &src) {
-  tao_spin_ele_struct_set_dn_dpz(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray1D<double> TaoSpinEleStruct::orb_eigen_val() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      tao_spin_ele_struct_get_orb_eigen_val_info
-  );
-}
-void TaoSpinEleStruct::set_orb_eigen_val(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_spin_ele_struct_set_orb_eigen_val(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> TaoSpinEleStruct::orb_eigen_vec() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      tao_spin_ele_struct_get_orb_eigen_vec_info
-  );
-}
-void TaoSpinEleStruct::set_orb_eigen_vec(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_ele_struct_set_orb_eigen_vec, v);
-}
-FArray2D<double> TaoSpinEleStruct::spin_eigen_vec() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      tao_spin_ele_struct_get_spin_eigen_vec_info
-  );
-}
-void TaoSpinEleStruct::set_spin_eigen_vec(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_ele_struct_set_spin_eigen_vec, v);
-}
-bool TaoSpinEleStruct::valid() const {
-  bool value;
-  tao_spin_ele_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSpinEleStruct::set_valid(bool value) {
-  tao_spin_ele_struct_set_logical(fortran_ptr_, 0, value);
-}
-EleStruct TaoPlotCacheStruct::ele_to_s() const {
-  void *ptr;
-  tao_plot_cache_struct_get_ele_to_s(fortran_ptr_, &ptr);
-  return EleStruct(ptr);
-}
-void TaoPlotCacheStruct::set_ele_to_s(const EleStruct &src) {
-  tao_plot_cache_struct_set_ele_to_s(fortran_ptr_, src.get_fortran_ptr());
-}
-CoordStruct TaoPlotCacheStruct::orbit() const {
-  void *ptr;
-  tao_plot_cache_struct_get_orbit(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void TaoPlotCacheStruct::set_orbit(const CoordStruct &src) {
-  tao_plot_cache_struct_set_orbit(fortran_ptr_, src.get_fortran_ptr());
-}
-bool TaoPlotCacheStruct::err() const {
-  bool value;
-  tao_plot_cache_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoPlotCacheStruct::set_err(bool value) {
-  tao_plot_cache_struct_set_logical(fortran_ptr_, 0, value);
-}
-double TaoSpinPolarizationStruct::tune() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_tune(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoSpinPolarizationStruct::pol_limit_st() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_pol_limit_st(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoSpinPolarizationStruct::pol_limit_dk() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_pol_limit_dk(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 2, value);
-}
-FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      tao_spin_polarization_struct_get_pol_limit_dk_partial_info
-  );
-}
-void TaoSpinPolarizationStruct::set_pol_limit_dk_partial(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_spin_polarization_struct_set_pol_limit_dk_partial(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial2() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      tao_spin_polarization_struct_get_pol_limit_dk_partial2_info
-  );
-}
-void TaoSpinPolarizationStruct::set_pol_limit_dk_partial2(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_spin_polarization_struct_set_pol_limit_dk_partial2(fortran_ptr_, v.data(), shape);
-}
-double TaoSpinPolarizationStruct::pol_rate_bks() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_pol_rate_bks(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 3, value);
-}
-double TaoSpinPolarizationStruct::depol_rate() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_depol_rate(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 4, value);
-}
-FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      tao_spin_polarization_struct_get_depol_rate_partial_info
-  );
-}
-void TaoSpinPolarizationStruct::set_depol_rate_partial(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_spin_polarization_struct_set_depol_rate_partial(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial2() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      tao_spin_polarization_struct_get_depol_rate_partial2_info
-  );
-}
-void TaoSpinPolarizationStruct::set_depol_rate_partial2(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_spin_polarization_struct_set_depol_rate_partial2(fortran_ptr_, v.data(), shape);
-}
-double TaoSpinPolarizationStruct::integral_bn() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_integral_bn(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 5, value);
-}
-double TaoSpinPolarizationStruct::integral_bdn() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_integral_bdn(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 6, value);
-}
-double TaoSpinPolarizationStruct::integral_1ns() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_integral_1ns(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 7, value);
-}
-double TaoSpinPolarizationStruct::integral_dn2() const {
-  double value;
-  tao_spin_polarization_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_integral_dn2(double value) {
-  tao_spin_polarization_struct_set_real(fortran_ptr_, 8, value);
-}
-bool TaoSpinPolarizationStruct::valid() const {
-  bool value;
-  tao_spin_polarization_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSpinPolarizationStruct::set_valid(bool value) {
-  tao_spin_polarization_struct_set_logical(fortran_ptr_, 0, value);
-}
-SpinOrbitMap1Struct TaoSpinPolarizationStruct::q_1turn() const {
-  void *ptr;
-  tao_spin_polarization_struct_get_q_1turn(fortran_ptr_, &ptr);
-  return SpinOrbitMap1Struct(ptr);
-}
-void TaoSpinPolarizationStruct::set_q_1turn(const SpinOrbitMap1Struct &src) {
-  tao_spin_polarization_struct_set_q_1turn(fortran_ptr_, src.get_fortran_ptr());
-}
-SpinOrbitMap1StructAlloc1D TaoSpinPolarizationStruct::q_ele() const {
-  return SpinOrbitMap1StructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_spin_polarization_struct_reallocate_q_ele,
-      tao_spin_polarization_struct_get_q_ele_info
-  );
-}
-std::optional<TaoLatticeStruct> TaoLatticeBranchStruct::tao_lat() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_tao_lat(fortran_ptr_, &ptr);
+  tao_d1_data_array_struct_get_d1(fortran_ptr_, &ptr);
   if (!ptr)
     return std::nullopt;
-  return TaoLatticeStruct(ptr);
+  return TaoD1DataStruct(ptr);
 }
-void TaoLatticeBranchStruct::set_tao_lat(const TaoLatticeStruct &src) {
-  tao_lattice_branch_struct_set_tao_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoLatSigmaStructAlloc1D TaoLatticeBranchStruct::lat_sigma() const {
-  return TaoLatSigmaStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_lat_sigma,
-      tao_lattice_branch_struct_get_lat_sigma_info
-  );
-}
-TaoSpinEleStructAlloc1D TaoLatticeBranchStruct::spin_ele() const {
-  return TaoSpinEleStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_spin_ele,
-      tao_lattice_branch_struct_get_spin_ele_info
-  );
-}
-BunchParamsStructAlloc1D TaoLatticeBranchStruct::bunch_params() const {
-  return BunchParamsStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_bunch_params,
-      tao_lattice_branch_struct_get_bunch_params_info
-  );
-}
-BunchTrackStructAlloc1D TaoLatticeBranchStruct::bunch_params_comb() const {
-  return BunchTrackStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_bunch_params_comb,
-      tao_lattice_branch_struct_get_bunch_params_comb_info
-  );
-}
-CoordStructAlloc1D TaoLatticeBranchStruct::orbit() const {
-  return CoordStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_orbit,
-      tao_lattice_branch_struct_get_orbit_info
-  );
-}
-TaoPlotCacheStructAlloc1D TaoLatticeBranchStruct::plot_cache() const {
-  return TaoPlotCacheStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_plot_cache,
-      tao_lattice_branch_struct_get_plot_cache_info
-  );
-}
-TaoSpinPolarizationStruct TaoLatticeBranchStruct::spin() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_spin(fortran_ptr_, &ptr);
-  return TaoSpinPolarizationStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_spin(const TaoSpinPolarizationStruct &src) {
-  tao_lattice_branch_struct_set_spin(fortran_ptr_, src.get_fortran_ptr());
-}
-SummationRdtStruct TaoLatticeBranchStruct::srdt() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_srdt(fortran_ptr_, &ptr);
-  return SummationRdtStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_srdt(const SummationRdtStruct &src) {
-  tao_lattice_branch_struct_set_srdt(fortran_ptr_, src.get_fortran_ptr());
-}
-CoordStruct TaoLatticeBranchStruct::orb0() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_orb0(fortran_ptr_, &ptr);
-  return CoordStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_orb0(const CoordStruct &src) {
-  tao_lattice_branch_struct_set_orb0(fortran_ptr_, src.get_fortran_ptr());
-}
-NormalModesStruct TaoLatticeBranchStruct::modes_ri() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_modes_ri(fortran_ptr_, &ptr);
-  return NormalModesStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_modes_ri(const NormalModesStruct &src) {
-  tao_lattice_branch_struct_set_modes_ri(fortran_ptr_, src.get_fortran_ptr());
-}
-NormalModesStruct TaoLatticeBranchStruct::modes_6d() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_modes_6d(fortran_ptr_, &ptr);
-  return NormalModesStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_modes_6d(const NormalModesStruct &src) {
-  tao_lattice_branch_struct_set_modes_6d(fortran_ptr_, src.get_fortran_ptr());
-}
-PtcNormalFormStruct TaoLatticeBranchStruct::ptc_normal_form() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_ptc_normal_form(fortran_ptr_, &ptr);
-  return PtcNormalFormStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_ptc_normal_form(const PtcNormalFormStruct &src) {
-  tao_lattice_branch_struct_set_ptc_normal_form(fortran_ptr_, src.get_fortran_ptr());
-}
-BmadNormalFormStruct TaoLatticeBranchStruct::bmad_normal_form() const {
-  void *ptr;
-  tao_lattice_branch_struct_get_bmad_normal_form(fortran_ptr_, &ptr);
-  return BmadNormalFormStruct(ptr);
-}
-void TaoLatticeBranchStruct::set_bmad_normal_form(const BmadNormalFormStruct &src) {
-  tao_lattice_branch_struct_set_bmad_normal_form(fortran_ptr_, src.get_fortran_ptr());
-}
-CoordStructAlloc1D TaoLatticeBranchStruct::high_E_orb() const {
-  return CoordStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_high_E_orb,
-      tao_lattice_branch_struct_get_high_E_orb_info
-  );
-}
-CoordStructAlloc1D TaoLatticeBranchStruct::low_E_orb() const {
-  return CoordStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_branch_struct_reallocate_low_E_orb,
-      tao_lattice_branch_struct_get_low_E_orb_info
-  );
-}
-TaylorStructArray1D TaoLatticeBranchStruct::taylor_save() const {
-  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
-      fortran_ptr_,
-      tao_lattice_branch_struct_get_taylor_save_info
-  );
-}
-double TaoLatticeBranchStruct::cache_x_min() const {
-  double value;
-  tao_lattice_branch_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_cache_x_min(double value) {
-  tao_lattice_branch_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoLatticeBranchStruct::cache_x_max() const {
-  double value;
-  tao_lattice_branch_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_cache_x_max(double value) {
-  tao_lattice_branch_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoLatticeBranchStruct::comb_ds_save() const {
-  double value;
-  tao_lattice_branch_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_comb_ds_save(double value) {
-  tao_lattice_branch_struct_set_real(fortran_ptr_, 2, value);
-}
-int TaoLatticeBranchStruct::ix_ref_taylor() const {
-  int value;
-  tao_lattice_branch_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_ix_ref_taylor(int value) {
-  tao_lattice_branch_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoLatticeBranchStruct::ix_ele_taylor() const {
-  int value;
-  tao_lattice_branch_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_ix_ele_taylor(int value) {
-  tao_lattice_branch_struct_set_integer(fortran_ptr_, 1, value);
-}
-int TaoLatticeBranchStruct::track_state() const {
-  int value;
-  tao_lattice_branch_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_track_state(int value) {
-  tao_lattice_branch_struct_set_integer(fortran_ptr_, 2, value);
-}
-int TaoLatticeBranchStruct::cache_n_pts() const {
-  int value;
-  tao_lattice_branch_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_cache_n_pts(int value) {
-  tao_lattice_branch_struct_set_integer(fortran_ptr_, 3, value);
-}
-int TaoLatticeBranchStruct::ix_rad_int_cache() const {
-  int value;
-  tao_lattice_branch_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_ix_rad_int_cache(int value) {
-  tao_lattice_branch_struct_set_integer(fortran_ptr_, 4, value);
-}
-bool TaoLatticeBranchStruct::has_open_match_element() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_has_open_match_element(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoLatticeBranchStruct::plot_cache_valid() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_plot_cache_valid(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoLatticeBranchStruct::spin_map_valid() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_spin_map_valid(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool TaoLatticeBranchStruct::twiss_valid() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_twiss_valid(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool TaoLatticeBranchStruct::mode_flip_here() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_mode_flip_here(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool TaoLatticeBranchStruct::chrom_calc_ok() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_chrom_calc_ok(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 5, value);
-}
-bool TaoLatticeBranchStruct::rad_int_calc_ok() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_rad_int_calc_ok(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 6, value);
-}
-bool TaoLatticeBranchStruct::emit_6d_calc_ok() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_emit_6d_calc_ok(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 7, value);
-}
-bool TaoLatticeBranchStruct::sigma_track_ok() const {
-  bool value;
-  tao_lattice_branch_struct_get_logical(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoLatticeBranchStruct::set_sigma_track_ok(bool value) {
-  tao_lattice_branch_struct_set_logical(fortran_ptr_, 8, value);
-}
-BeamStruct TaoModelElementStruct::beam() const {
-  void *ptr;
-  tao_model_element_struct_get_beam(fortran_ptr_, &ptr);
-  return BeamStruct(ptr);
-}
-void TaoModelElementStruct::set_beam(const BeamStruct &src) {
-  tao_model_element_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
-}
-bool TaoModelElementStruct::save_beam_internally() const {
-  bool value;
-  tao_model_element_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoModelElementStruct::set_save_beam_internally(bool value) {
-  tao_model_element_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoModelElementStruct::save_beam_to_file() const {
-  bool value;
-  tao_model_element_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoModelElementStruct::set_save_beam_to_file(bool value) {
-  tao_model_element_struct_set_logical(fortran_ptr_, 1, value);
-}
-BeamStruct TaoBeamBranchStruct::beam_at_start() const {
-  void *ptr;
-  tao_beam_branch_struct_get_beam_at_start(fortran_ptr_, &ptr);
-  return BeamStruct(ptr);
-}
-void TaoBeamBranchStruct::set_beam_at_start(const BeamStruct &src) {
-  tao_beam_branch_struct_set_beam_at_start(fortran_ptr_, src.get_fortran_ptr());
-}
-BeamInitStruct TaoBeamBranchStruct::beam_init() const {
-  void *ptr;
-  tao_beam_branch_struct_get_beam_init(fortran_ptr_, &ptr);
-  return BeamInitStruct(ptr);
-}
-void TaoBeamBranchStruct::set_beam_init(const BeamInitStruct &src) {
-  tao_beam_branch_struct_set_beam_init(fortran_ptr_, src.get_fortran_ptr());
-}
-BeamInitStruct TaoBeamBranchStruct::beam_init_used() const {
-  void *ptr;
-  tao_beam_branch_struct_get_beam_init_used(fortran_ptr_, &ptr);
-  return BeamInitStruct(ptr);
-}
-void TaoBeamBranchStruct::set_beam_init_used(const BeamInitStruct &src) {
-  tao_beam_branch_struct_set_beam_init_used(fortran_ptr_, src.get_fortran_ptr());
-}
-bool TaoBeamBranchStruct::init_starting_distribution() const {
-  bool value;
-  tao_beam_branch_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoBeamBranchStruct::set_init_starting_distribution(bool value) {
-  tao_beam_branch_struct_set_logical(fortran_ptr_, 0, value);
-}
-std::string TaoBeamBranchStruct::track_start() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_branch_struct_get_track_start_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoBeamBranchStruct::set_track_start(const std::string &value) {
-  tao_beam_branch_struct_set_track_start(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-std::string TaoBeamBranchStruct::track_end() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_branch_struct_get_track_end_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoBeamBranchStruct::set_track_end(const std::string &value) {
-  tao_beam_branch_struct_set_track_end(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-int TaoBeamBranchStruct::ix_branch() const {
-  int value;
-  tao_beam_branch_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoBeamBranchStruct::set_ix_branch(int value) {
-  tao_beam_branch_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoBeamBranchStruct::ix_track_start() const {
-  int value;
-  tao_beam_branch_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoBeamBranchStruct::set_ix_track_start(int value) {
-  tao_beam_branch_struct_set_integer(fortran_ptr_, 1, value);
-}
-int TaoBeamBranchStruct::ix_track_end() const {
-  int value;
-  tao_beam_branch_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoBeamBranchStruct::set_ix_track_end(int value) {
-  tao_beam_branch_struct_set_integer(fortran_ptr_, 2, value);
+void TaoD1DataArrayStruct::set_d1(const TaoD1DataStruct &src) {
+  tao_d1_data_array_struct_set_d1(fortran_ptr_, src.get_fortran_ptr());
 }
 std::string TaoD1DataStruct::name() const {
   FArray1D<char> arr =
@@ -7765,6 +12409,16 @@ TaoDataStructArray1D TaoD1DataStruct::d() const {
       fortran_ptr_,
       tao_d1_data_struct_get_d_info
   );
+}
+std::optional<TaoD2DataStruct> TaoD2DataArrayStruct::d2() const {
+  void *ptr;
+  tao_d2_data_array_struct_get_d2(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoD2DataStruct(ptr);
+}
+void TaoD2DataArrayStruct::set_d2(const TaoD2DataStruct &src) {
+  tao_d2_data_array_struct_set_d2(fortran_ptr_, src.get_fortran_ptr());
 }
 std::string TaoD2DataStruct::name() const {
   FArray1D<char> arr =
@@ -7864,1119 +12518,15 @@ bool TaoD2DataStruct::ref_read_in() const {
 void TaoD2DataStruct::set_ref_read_in(bool value) {
   tao_d2_data_struct_set_logical(fortran_ptr_, 1, value);
 }
-std::string TaoDataVarComponentStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_data_var_component_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoDataVarComponentStruct::set_name(const std::string &value) {
-  tao_data_var_component_struct_set_name(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-double TaoDataVarComponentStruct::sign() const {
-  double value;
-  tao_data_var_component_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoDataVarComponentStruct::set_sign(double value) {
-  tao_data_var_component_struct_set_real(fortran_ptr_, 0, value);
-}
-std::string TaoGraphStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoGraphStruct::set_name(const std::string &value) {
-  tao_graph_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoGraphStruct::type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoGraphStruct::set_type(const std::string &value) {
-  tao_graph_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoGraphStruct::title() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_title_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoGraphStruct::set_title(const std::string &value) {
-  tao_graph_struct_set_title(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoGraphStruct::title_suffix() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_title_suffix_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoGraphStruct::set_title_suffix(const std::string &value) {
-  tao_graph_struct_set_title_suffix(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-FCharArray1D TaoGraphStruct::text_legend() const {
-  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_graph_struct_get_text_legend_info);
-}
-FCharArray1D TaoGraphStruct::text_legend_out() const {
-  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_graph_struct_get_text_legend_out_info);
-}
-std::string TaoGraphStruct::why_invalid() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_why_invalid_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoGraphStruct::set_why_invalid(const std::string &value) {
-  tao_graph_struct_set_why_invalid(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoCurveStructAlloc1D TaoGraphStruct::curve() const {
-  return TaoCurveStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_graph_struct_reallocate_curve,
-      tao_graph_struct_get_curve_info
-  );
-}
-std::optional<TaoPlotStruct> TaoGraphStruct::p() const {
+std::optional<TaoDataStruct> TaoDataArrayStruct::d() const {
   void *ptr;
-  tao_graph_struct_get_p(fortran_ptr_, &ptr);
+  tao_data_array_struct_get_d(fortran_ptr_, &ptr);
   if (!ptr)
     return std::nullopt;
-  return TaoPlotStruct(ptr);
+  return TaoDataStruct(ptr);
 }
-void TaoGraphStruct::set_p(const TaoPlotStruct &src) {
-  tao_graph_struct_set_p(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoFloorPlanStruct TaoGraphStruct::floor_plan() const {
-  void *ptr;
-  tao_graph_struct_get_floor_plan(fortran_ptr_, &ptr);
-  return TaoFloorPlanStruct(ptr);
-}
-void TaoGraphStruct::set_floor_plan(const TaoFloorPlanStruct &src) {
-  tao_graph_struct_set_floor_plan(fortran_ptr_, src.get_fortran_ptr());
-}
-QpPointStruct TaoGraphStruct::text_legend_origin() const {
-  void *ptr;
-  tao_graph_struct_get_text_legend_origin(fortran_ptr_, &ptr);
-  return QpPointStruct(ptr);
-}
-void TaoGraphStruct::set_text_legend_origin(const QpPointStruct &src) {
-  tao_graph_struct_set_text_legend_origin(fortran_ptr_, src.get_fortran_ptr());
-}
-QpPointStruct TaoGraphStruct::curve_legend_origin() const {
-  void *ptr;
-  tao_graph_struct_get_curve_legend_origin(fortran_ptr_, &ptr);
-  return QpPointStruct(ptr);
-}
-void TaoGraphStruct::set_curve_legend_origin(const QpPointStruct &src) {
-  tao_graph_struct_set_curve_legend_origin(fortran_ptr_, src.get_fortran_ptr());
-}
-QpLegendStruct TaoGraphStruct::curve_legend() const {
-  void *ptr;
-  tao_graph_struct_get_curve_legend(fortran_ptr_, &ptr);
-  return QpLegendStruct(ptr);
-}
-void TaoGraphStruct::set_curve_legend(const QpLegendStruct &src) {
-  tao_graph_struct_set_curve_legend(fortran_ptr_, src.get_fortran_ptr());
-}
-QpAxisStruct TaoGraphStruct::x() const {
-  void *ptr;
-  tao_graph_struct_get_x(fortran_ptr_, &ptr);
-  return QpAxisStruct(ptr);
-}
-void TaoGraphStruct::set_x(const QpAxisStruct &src) {
-  tao_graph_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
-}
-QpAxisStruct TaoGraphStruct::y() const {
-  void *ptr;
-  tao_graph_struct_get_y(fortran_ptr_, &ptr);
-  return QpAxisStruct(ptr);
-}
-void TaoGraphStruct::set_y(const QpAxisStruct &src) {
-  tao_graph_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
-}
-QpAxisStruct TaoGraphStruct::x2() const {
-  void *ptr;
-  tao_graph_struct_get_x2(fortran_ptr_, &ptr);
-  return QpAxisStruct(ptr);
-}
-void TaoGraphStruct::set_x2(const QpAxisStruct &src) {
-  tao_graph_struct_set_x2(fortran_ptr_, src.get_fortran_ptr());
-}
-QpAxisStruct TaoGraphStruct::y2() const {
-  void *ptr;
-  tao_graph_struct_get_y2(fortran_ptr_, &ptr);
-  return QpAxisStruct(ptr);
-}
-void TaoGraphStruct::set_y2(const QpAxisStruct &src) {
-  tao_graph_struct_set_y2(fortran_ptr_, src.get_fortran_ptr());
-}
-QpRectStruct TaoGraphStruct::margin() const {
-  void *ptr;
-  tao_graph_struct_get_margin(fortran_ptr_, &ptr);
-  return QpRectStruct(ptr);
-}
-void TaoGraphStruct::set_margin(const QpRectStruct &src) {
-  tao_graph_struct_set_margin(fortran_ptr_, src.get_fortran_ptr());
-}
-QpRectStruct TaoGraphStruct::scale_margin() const {
-  void *ptr;
-  tao_graph_struct_get_scale_margin(fortran_ptr_, &ptr);
-  return QpRectStruct(ptr);
-}
-void TaoGraphStruct::set_scale_margin(const QpRectStruct &src) {
-  tao_graph_struct_set_scale_margin(fortran_ptr_, src.get_fortran_ptr());
-}
-double TaoGraphStruct::x_axis_scale_factor() const {
-  double value;
-  tao_graph_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoGraphStruct::set_x_axis_scale_factor(double value) {
-  tao_graph_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoGraphStruct::symbol_size_scale() const {
-  double value;
-  tao_graph_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoGraphStruct::set_symbol_size_scale(double value) {
-  tao_graph_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<int> TaoGraphStruct::box() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_graph_struct_get_box_info);
-}
-void TaoGraphStruct::set_box(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_graph_struct_set_box(fortran_ptr_, v.data(), shape);
-}
-int TaoGraphStruct::ix_branch() const {
-  int value;
-  tao_graph_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoGraphStruct::set_ix_branch(int value) {
-  tao_graph_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoGraphStruct::ix_universe() const {
-  int value;
-  tao_graph_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoGraphStruct::set_ix_universe(int value) {
-  tao_graph_struct_set_integer(fortran_ptr_, 1, value);
-}
-bool TaoGraphStruct::clip() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoGraphStruct::set_clip(bool value) { tao_graph_struct_set_logical(fortran_ptr_, 0, value); }
-bool TaoGraphStruct::y2_mirrors_y() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoGraphStruct::set_y2_mirrors_y(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoGraphStruct::limited() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoGraphStruct::set_limited(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool TaoGraphStruct::draw_axes() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoGraphStruct::set_draw_axes(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool TaoGraphStruct::draw_curve_legend() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoGraphStruct::set_draw_curve_legend(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool TaoGraphStruct::draw_grid() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoGraphStruct::set_draw_grid(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 5, value);
-}
-bool TaoGraphStruct::draw_title() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoGraphStruct::set_draw_title(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 6, value);
-}
-bool TaoGraphStruct::draw_only_good_user_data_or_vars() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoGraphStruct::set_draw_only_good_user_data_or_vars(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 7, value);
-}
-bool TaoGraphStruct::allow_wrap_around() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoGraphStruct::set_allow_wrap_around(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 8, value);
-}
-bool TaoGraphStruct::is_valid() const {
-  bool value;
-  tao_graph_struct_get_logical(fortran_ptr_, 9, &value);
-  return value;
-}
-void TaoGraphStruct::set_is_valid(bool value) {
-  tao_graph_struct_set_logical(fortran_ptr_, 9, value);
-}
-std::string TaoPlotStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoPlotStruct::set_name(const std::string &value) {
-  tao_plot_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoPlotStruct::description() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_description_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoPlotStruct::set_description(const std::string &value) {
-  tao_plot_struct_set_description(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoGraphStructAlloc1D TaoPlotStruct::graph() const {
-  return TaoGraphStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_plot_struct_reallocate_graph,
-      tao_plot_struct_get_graph_info
-  );
-}
-std::optional<TaoPlotRegionStruct> TaoPlotStruct::r() const {
-  void *ptr;
-  tao_plot_struct_get_r(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoPlotRegionStruct(ptr);
-}
-void TaoPlotStruct::set_r(const TaoPlotRegionStruct &src) {
-  tao_plot_struct_set_r(fortran_ptr_, src.get_fortran_ptr());
-}
-int TaoPlotStruct::ix_plot() const {
-  int value;
-  tao_plot_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoPlotStruct::set_ix_plot(int value) { tao_plot_struct_set_integer(fortran_ptr_, 0, value); }
-int TaoPlotStruct::n_curve_pts() const {
-  int value;
-  tao_plot_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoPlotStruct::set_n_curve_pts(int value) {
-  tao_plot_struct_set_integer(fortran_ptr_, 1, value);
-}
-std::string TaoPlotStruct::type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoPlotStruct::set_type(const std::string &value) {
-  tao_plot_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoPlotStruct::x_axis_type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_x_axis_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoPlotStruct::set_x_axis_type(const std::string &value) {
-  tao_plot_struct_set_x_axis_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool TaoPlotStruct::autoscale_x() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoPlotStruct::set_autoscale_x(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoPlotStruct::autoscale_y() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoPlotStruct::set_autoscale_y(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoPlotStruct::autoscale_gang_x() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoPlotStruct::set_autoscale_gang_x(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool TaoPlotStruct::autoscale_gang_y() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoPlotStruct::set_autoscale_gang_y(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool TaoPlotStruct::list_with_show_plot_command() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoPlotStruct::set_list_with_show_plot_command(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool TaoPlotStruct::phantom() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoPlotStruct::set_phantom(bool value) { tao_plot_struct_set_logical(fortran_ptr_, 5, value); }
-bool TaoPlotStruct::default_plot() const {
-  bool value;
-  tao_plot_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoPlotStruct::set_default_plot(bool value) {
-  tao_plot_struct_set_logical(fortran_ptr_, 6, value);
-}
-std::string TaoPlotRegionStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_region_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoPlotRegionStruct::set_name(const std::string &value) {
-  tao_plot_region_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoPlotStruct TaoPlotRegionStruct::plot() const {
-  void *ptr;
-  tao_plot_region_struct_get_plot(fortran_ptr_, &ptr);
-  return TaoPlotStruct(ptr);
-}
-void TaoPlotRegionStruct::set_plot(const TaoPlotStruct &src) {
-  tao_plot_region_struct_set_plot(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray1D<double> TaoPlotRegionStruct::location() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_plot_region_struct_get_location_info);
-}
-void TaoPlotRegionStruct::set_location(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_plot_region_struct_set_location(fortran_ptr_, v.data(), shape);
-}
-bool TaoPlotRegionStruct::visible() const {
-  bool value;
-  tao_plot_region_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoPlotRegionStruct::set_visible(bool value) {
-  tao_plot_region_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoPlotRegionStruct::list_with_show_plot_command() const {
-  bool value;
-  tao_plot_region_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoPlotRegionStruct::set_list_with_show_plot_command(bool value) {
-  tao_plot_region_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoPlotRegionStruct::setup_done() const {
-  bool value;
-  tao_plot_region_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoPlotRegionStruct::set_setup_done(bool value) {
-  tao_plot_region_struct_set_logical(fortran_ptr_, 2, value);
-}
-std::optional<TaoUniverseStruct> TaoUniversePointerStruct::u() const {
-  void *ptr;
-  tao_universe_pointer_struct_get_u(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoUniverseStruct(ptr);
-}
-void TaoUniversePointerStruct::set_u(const TaoUniverseStruct &src) {
-  tao_universe_pointer_struct_set_u(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoGlobalStruct TaoSuperUniverseStruct::global() const {
-  void *ptr;
-  tao_super_universe_struct_get_global(fortran_ptr_, &ptr);
-  return TaoGlobalStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_global(const TaoGlobalStruct &src) {
-  tao_super_universe_struct_set_global(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoInitStruct TaoSuperUniverseStruct::init() const {
-  void *ptr;
-  tao_super_universe_struct_get_init(fortran_ptr_, &ptr);
-  return TaoInitStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_init(const TaoInitStruct &src) {
-  tao_super_universe_struct_set_init(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoCommonStruct TaoSuperUniverseStruct::com() const {
-  void *ptr;
-  tao_super_universe_struct_get_com(fortran_ptr_, &ptr);
-  return TaoCommonStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_com(const TaoCommonStruct &src) {
-  tao_super_universe_struct_set_com(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoPlotPageStruct TaoSuperUniverseStruct::plot_page() const {
-  void *ptr;
-  tao_super_universe_struct_get_plot_page(fortran_ptr_, &ptr);
-  return TaoPlotPageStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_plot_page(const TaoPlotPageStruct &src) {
-  tao_super_universe_struct_set_plot_page(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoV1VarStructAlloc1D TaoSuperUniverseStruct::v1_var() const {
-  return TaoV1VarStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_super_universe_struct_reallocate_v1_var,
-      tao_super_universe_struct_get_v1_var_info
-  );
-}
-TaoVarStructAlloc1D TaoSuperUniverseStruct::var() const {
-  return TaoVarStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_super_universe_struct_reallocate_var,
-      tao_super_universe_struct_get_var_info
-  );
-}
-TaoUniverseStructAlloc1D TaoSuperUniverseStruct::u() const {
-  return TaoUniverseStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_super_universe_struct_reallocate_u,
-      tao_super_universe_struct_get_u_info
-  );
-}
-IntAlloc1D TaoSuperUniverseStruct::key() const {
-  return IntAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_super_universe_struct_reallocate_key,
-      tao_super_universe_struct_get_key_info
-  );
-}
-void TaoSuperUniverseStruct::set_key(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_super_universe_struct_set_key(fortran_ptr_, v.data(), shape);
-}
-TaoBuildingWallStruct TaoSuperUniverseStruct::building_wall() const {
-  void *ptr;
-  tao_super_universe_struct_get_building_wall(fortran_ptr_, &ptr);
-  return TaoBuildingWallStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_building_wall(const TaoBuildingWallStruct &src) {
-  tao_super_universe_struct_set_building_wall(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoWaveStruct TaoSuperUniverseStruct::wave() const {
-  void *ptr;
-  tao_super_universe_struct_get_wave(fortran_ptr_, &ptr);
-  return TaoWaveStruct(ptr);
-}
-void TaoSuperUniverseStruct::set_wave(const TaoWaveStruct &src) {
-  tao_super_universe_struct_set_wave(fortran_ptr_, src.get_fortran_ptr());
-}
-int TaoSuperUniverseStruct::n_var_used() const {
-  int value;
-  tao_super_universe_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSuperUniverseStruct::set_n_var_used(int value) {
-  tao_super_universe_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoSuperUniverseStruct::n_v1_var_used() const {
-  int value;
-  tao_super_universe_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoSuperUniverseStruct::set_n_v1_var_used(int value) {
-  tao_super_universe_struct_set_integer(fortran_ptr_, 1, value);
-}
-TaoCmdHistoryStructArray1D TaoSuperUniverseStruct::history() const {
-  return ProxyHelpers::get_type_array_1d<TaoCmdHistoryStructArray1D>(
-      fortran_ptr_,
-      tao_super_universe_struct_get_history_info
-  );
-}
-bool TaoSuperUniverseStruct::initialized() const {
-  bool value;
-  tao_super_universe_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSuperUniverseStruct::set_initialized(bool value) {
-  tao_super_universe_struct_set_logical(fortran_ptr_, 0, value);
-}
-std::string TaoVarStruct::ele_name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_ele_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoVarStruct::set_ele_name(const std::string &value) {
-  tao_var_struct_set_ele_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoVarStruct::attrib_name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_attrib_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoVarStruct::set_attrib_name(const std::string &value) {
-  tao_var_struct_set_attrib_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoVarStruct::id() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_id_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoVarStruct::set_id(const std::string &value) {
-  tao_var_struct_set_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoVarSlaveStructAlloc1D TaoVarStruct::slave() const {
-  return TaoVarSlaveStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_var_struct_reallocate_slave,
-      tao_var_struct_get_slave_info
-  );
-}
-int TaoVarStruct::ix_v1() const {
-  int value;
-  tao_var_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoVarStruct::set_ix_v1(int value) { tao_var_struct_set_integer(fortran_ptr_, 0, value); }
-int TaoVarStruct::ix_var() const {
-  int value;
-  tao_var_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoVarStruct::set_ix_var(int value) { tao_var_struct_set_integer(fortran_ptr_, 1, value); }
-int TaoVarStruct::ix_dvar() const {
-  int value;
-  tao_var_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoVarStruct::set_ix_dvar(int value) { tao_var_struct_set_integer(fortran_ptr_, 2, value); }
-int TaoVarStruct::ix_attrib() const {
-  int value;
-  tao_var_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoVarStruct::set_ix_attrib(int value) { tao_var_struct_set_integer(fortran_ptr_, 3, value); }
-int TaoVarStruct::ix_key_table() const {
-  int value;
-  tao_var_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoVarStruct::set_ix_key_table(int value) {
-  tao_var_struct_set_integer(fortran_ptr_, 4, value);
-}
-std::optional<double> TaoVarStruct::model_value() const {
-  double value;
-  bool is_valid;
-  tao_var_struct_get_model_value(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void TaoVarStruct::set_model_value(double value) {
-  tao_var_struct_set_model_value(fortran_ptr_, value);
-}
-std::optional<double> TaoVarStruct::base_value() const {
-  double value;
-  bool is_valid;
-  tao_var_struct_get_base_value(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void TaoVarStruct::set_base_value(double value) {
-  tao_var_struct_set_base_value(fortran_ptr_, value);
-}
-double TaoVarStruct::design_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoVarStruct::set_design_value(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoVarStruct::scratch_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoVarStruct::set_scratch_value(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoVarStruct::old_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoVarStruct::set_old_value(double value) { tao_var_struct_set_real(fortran_ptr_, 2, value); }
-double TaoVarStruct::meas_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoVarStruct::set_meas_value(double value) { tao_var_struct_set_real(fortran_ptr_, 3, value); }
-double TaoVarStruct::ref_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoVarStruct::set_ref_value(double value) { tao_var_struct_set_real(fortran_ptr_, 4, value); }
-double TaoVarStruct::correction_value() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoVarStruct::set_correction_value(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 5, value);
-}
-double TaoVarStruct::high_lim() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoVarStruct::set_high_lim(double value) { tao_var_struct_set_real(fortran_ptr_, 6, value); }
-double TaoVarStruct::low_lim() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoVarStruct::set_low_lim(double value) { tao_var_struct_set_real(fortran_ptr_, 7, value); }
-double TaoVarStruct::step() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoVarStruct::set_step(double value) { tao_var_struct_set_real(fortran_ptr_, 8, value); }
-double TaoVarStruct::weight() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void TaoVarStruct::set_weight(double value) { tao_var_struct_set_real(fortran_ptr_, 9, value); }
-double TaoVarStruct::delta_merit() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 10, &value);
-  return value;
-}
-void TaoVarStruct::set_delta_merit(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 10, value);
-}
-double TaoVarStruct::merit() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 11, &value);
-  return value;
-}
-void TaoVarStruct::set_merit(double value) { tao_var_struct_set_real(fortran_ptr_, 11, value); }
-double TaoVarStruct::dMerit_dVar() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 12, &value);
-  return value;
-}
-void TaoVarStruct::set_dMerit_dVar(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 12, value);
-}
-double TaoVarStruct::key_val0() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 13, &value);
-  return value;
-}
-void TaoVarStruct::set_key_val0(double value) { tao_var_struct_set_real(fortran_ptr_, 13, value); }
-double TaoVarStruct::key_delta() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 14, &value);
-  return value;
-}
-void TaoVarStruct::set_key_delta(double value) { tao_var_struct_set_real(fortran_ptr_, 14, value); }
-double TaoVarStruct::s() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 15, &value);
-  return value;
-}
-void TaoVarStruct::set_s(double value) { tao_var_struct_set_real(fortran_ptr_, 15, value); }
-double TaoVarStruct::extend_val() const {
-  double value;
-  tao_var_struct_get_real(fortran_ptr_, 16, &value);
-  return value;
-}
-void TaoVarStruct::set_extend_val(double value) {
-  tao_var_struct_set_real(fortran_ptr_, 16, value);
-}
-std::string TaoVarStruct::merit_type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_merit_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoVarStruct::set_merit_type(const std::string &value) {
-  tao_var_struct_set_merit_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool TaoVarStruct::exists() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoVarStruct::set_exists(bool value) { tao_var_struct_set_logical(fortran_ptr_, 0, value); }
-bool TaoVarStruct::good_var() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoVarStruct::set_good_var(bool value) { tao_var_struct_set_logical(fortran_ptr_, 1, value); }
-bool TaoVarStruct::good_user() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoVarStruct::set_good_user(bool value) { tao_var_struct_set_logical(fortran_ptr_, 2, value); }
-bool TaoVarStruct::good_opt() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoVarStruct::set_good_opt(bool value) { tao_var_struct_set_logical(fortran_ptr_, 3, value); }
-bool TaoVarStruct::good_plot() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoVarStruct::set_good_plot(bool value) { tao_var_struct_set_logical(fortran_ptr_, 4, value); }
-bool TaoVarStruct::useit_opt() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoVarStruct::set_useit_opt(bool value) { tao_var_struct_set_logical(fortran_ptr_, 5, value); }
-bool TaoVarStruct::useit_plot() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoVarStruct::set_useit_plot(bool value) {
-  tao_var_struct_set_logical(fortran_ptr_, 6, value);
-}
-bool TaoVarStruct::key_bound() const {
-  bool value;
-  tao_var_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoVarStruct::set_key_bound(bool value) { tao_var_struct_set_logical(fortran_ptr_, 7, value); }
-std::optional<TaoV1VarStruct> TaoVarStruct::v1() const {
-  void *ptr;
-  tao_var_struct_get_v1(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoV1VarStruct(ptr);
-}
-void TaoVarStruct::set_v1(const TaoV1VarStruct &src) {
-  tao_var_struct_set_v1(fortran_ptr_, src.get_fortran_ptr());
-}
-int TaoVarSlaveStruct::ix_uni() const {
-  int value;
-  tao_var_slave_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoVarSlaveStruct::set_ix_uni(int value) {
-  tao_var_slave_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoVarSlaveStruct::ix_branch() const {
-  int value;
-  tao_var_slave_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoVarSlaveStruct::set_ix_branch(int value) {
-  tao_var_slave_struct_set_integer(fortran_ptr_, 1, value);
-}
-int TaoVarSlaveStruct::ix_ele() const {
-  int value;
-  tao_var_slave_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoVarSlaveStruct::set_ix_ele(int value) {
-  tao_var_slave_struct_set_integer(fortran_ptr_, 2, value);
-}
-std::optional<double> TaoVarSlaveStruct::model_value() const {
-  double value;
-  bool is_valid;
-  tao_var_slave_struct_get_model_value(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void TaoVarSlaveStruct::set_model_value(double value) {
-  tao_var_slave_struct_set_model_value(fortran_ptr_, value);
-}
-std::optional<double> TaoVarSlaveStruct::base_value() const {
-  double value;
-  bool is_valid;
-  tao_var_slave_struct_get_base_value(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void TaoVarSlaveStruct::set_base_value(double value) {
-  tao_var_slave_struct_set_base_value(fortran_ptr_, value);
-}
-std::string TaoLatticeStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_lattice_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoLatticeStruct::set_name(const std::string &value) {
-  tao_lattice_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-LatStruct TaoLatticeStruct::lat() const {
-  void *ptr;
-  tao_lattice_struct_get_lat(fortran_ptr_, &ptr);
-  return LatStruct(ptr);
-}
-void TaoLatticeStruct::set_lat(const LatStruct &src) {
-  tao_lattice_struct_set_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-LatStruct TaoLatticeStruct::high_E_lat() const {
-  void *ptr;
-  tao_lattice_struct_get_high_E_lat(fortran_ptr_, &ptr);
-  return LatStruct(ptr);
-}
-void TaoLatticeStruct::set_high_E_lat(const LatStruct &src) {
-  tao_lattice_struct_set_high_E_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-LatStruct TaoLatticeStruct::low_E_lat() const {
-  void *ptr;
-  tao_lattice_struct_get_low_E_lat(fortran_ptr_, &ptr);
-  return LatStruct(ptr);
-}
-void TaoLatticeStruct::set_low_E_lat(const LatStruct &src) {
-  tao_lattice_struct_set_low_E_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-RadIntAllEleStruct TaoLatticeStruct::rad_int_by_ele_ri() const {
-  void *ptr;
-  tao_lattice_struct_get_rad_int_by_ele_ri(fortran_ptr_, &ptr);
-  return RadIntAllEleStruct(ptr);
-}
-void TaoLatticeStruct::set_rad_int_by_ele_ri(const RadIntAllEleStruct &src) {
-  tao_lattice_struct_set_rad_int_by_ele_ri(fortran_ptr_, src.get_fortran_ptr());
-}
-RadIntAllEleStruct TaoLatticeStruct::rad_int_by_ele_6d() const {
-  void *ptr;
-  tao_lattice_struct_get_rad_int_by_ele_6d(fortran_ptr_, &ptr);
-  return RadIntAllEleStruct(ptr);
-}
-void TaoLatticeStruct::set_rad_int_by_ele_6d(const RadIntAllEleStruct &src) {
-  tao_lattice_struct_set_rad_int_by_ele_6d(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoLatticeBranchStructAlloc1D TaoLatticeStruct::tao_branch() const {
-  return TaoLatticeBranchStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_lattice_struct_reallocate_tao_branch,
-      tao_lattice_struct_get_tao_branch_info
-  );
-}
-std::string TaoBeamUniStruct::saved_at() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_saved_at_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoBeamUniStruct::set_saved_at(const std::string &value) {
-  tao_beam_uni_struct_set_saved_at(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoBeamUniStruct::dump_file() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_dump_file_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoBeamUniStruct::set_dump_file(const std::string &value) {
-  tao_beam_uni_struct_set_dump_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoBeamUniStruct::dump_at() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_beam_uni_struct_get_dump_at_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoBeamUniStruct::set_dump_at(const std::string &value) {
-  tao_beam_uni_struct_set_dump_at(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool TaoBeamUniStruct::track_beam_in_universe() const {
-  bool value;
-  tao_beam_uni_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoBeamUniStruct::set_track_beam_in_universe(bool value) {
-  tao_beam_uni_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoBeamUniStruct::always_reinit() const {
-  bool value;
-  tao_beam_uni_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoBeamUniStruct::set_always_reinit(bool value) {
-  tao_beam_uni_struct_set_logical(fortran_ptr_, 1, value);
-}
-ApertureParamStruct TaoDynamicApertureStruct::param() const {
-  void *ptr;
-  tao_dynamic_aperture_struct_get_param(fortran_ptr_, &ptr);
-  return ApertureParamStruct(ptr);
-}
-void TaoDynamicApertureStruct::set_param(const ApertureParamStruct &src) {
-  tao_dynamic_aperture_struct_set_param(fortran_ptr_, src.get_fortran_ptr());
-}
-ApertureScanStructAlloc1D TaoDynamicApertureStruct::scan() const {
-  return ApertureScanStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_dynamic_aperture_struct_reallocate_scan,
-      tao_dynamic_aperture_struct_get_scan_info
-  );
-}
-RealAlloc1D TaoDynamicApertureStruct::pz() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_dynamic_aperture_struct_reallocate_pz,
-      tao_dynamic_aperture_struct_get_pz_info
-  );
-}
-void TaoDynamicApertureStruct::set_pz(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  tao_dynamic_aperture_struct_set_pz(fortran_ptr_, v.data(), shape);
-}
-double TaoDynamicApertureStruct::ellipse_scale() const {
-  double value;
-  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoDynamicApertureStruct::set_ellipse_scale(double value) {
-  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoDynamicApertureStruct::a_emit() const {
-  double value;
-  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoDynamicApertureStruct::set_a_emit(double value) {
-  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoDynamicApertureStruct::b_emit() const {
-  double value;
-  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoDynamicApertureStruct::set_b_emit(double value) {
-  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 2, value);
-}
-TaoModelElementStructAlloc1D TaoModelBranchStruct::ele() const {
-  return TaoModelElementStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_model_branch_struct_reallocate_ele,
-      tao_model_branch_struct_get_ele_info
-  );
-}
-TaoBeamBranchStruct TaoModelBranchStruct::beam() const {
-  void *ptr;
-  tao_model_branch_struct_get_beam(fortran_ptr_, &ptr);
-  return TaoBeamBranchStruct(ptr);
-}
-void TaoModelBranchStruct::set_beam(const TaoBeamBranchStruct &src) {
-  tao_model_branch_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
-}
-bool TaoSpinMapStruct::valid() const {
-  bool value;
-  tao_spin_map_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSpinMapStruct::set_valid(bool value) {
-  tao_spin_map_struct_set_logical(fortran_ptr_, 0, value);
-}
-SpinOrbitMap1Struct TaoSpinMapStruct::map1() const {
-  void *ptr;
-  tao_spin_map_struct_get_map1(fortran_ptr_, &ptr);
-  return SpinOrbitMap1Struct(ptr);
-}
-void TaoSpinMapStruct::set_map1(const SpinOrbitMap1Struct &src) {
-  tao_spin_map_struct_set_map1(fortran_ptr_, src.get_fortran_ptr());
-}
-SpinAxisStruct TaoSpinMapStruct::axis_input() const {
-  void *ptr;
-  tao_spin_map_struct_get_axis_input(fortran_ptr_, &ptr);
-  return SpinAxisStruct(ptr);
-}
-void TaoSpinMapStruct::set_axis_input(const SpinAxisStruct &src) {
-  tao_spin_map_struct_set_axis_input(fortran_ptr_, src.get_fortran_ptr());
-}
-SpinAxisStruct TaoSpinMapStruct::axis0() const {
-  void *ptr;
-  tao_spin_map_struct_get_axis0(fortran_ptr_, &ptr);
-  return SpinAxisStruct(ptr);
-}
-void TaoSpinMapStruct::set_axis0(const SpinAxisStruct &src) {
-  tao_spin_map_struct_set_axis0(fortran_ptr_, src.get_fortran_ptr());
-}
-SpinAxisStruct TaoSpinMapStruct::axis1() const {
-  void *ptr;
-  tao_spin_map_struct_get_axis1(fortran_ptr_, &ptr);
-  return SpinAxisStruct(ptr);
-}
-void TaoSpinMapStruct::set_axis1(const SpinAxisStruct &src) {
-  tao_spin_map_struct_set_axis1(fortran_ptr_, src.get_fortran_ptr());
-}
-int TaoSpinMapStruct::ix_ele() const {
-  int value;
-  tao_spin_map_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoSpinMapStruct::set_ix_ele(int value) {
-  tao_spin_map_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoSpinMapStruct::ix_ref() const {
-  int value;
-  tao_spin_map_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoSpinMapStruct::set_ix_ref(int value) {
-  tao_spin_map_struct_set_integer(fortran_ptr_, 1, value);
-}
-int TaoSpinMapStruct::ix_uni() const {
-  int value;
-  tao_spin_map_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoSpinMapStruct::set_ix_uni(int value) {
-  tao_spin_map_struct_set_integer(fortran_ptr_, 2, value);
-}
-int TaoSpinMapStruct::ix_branch() const {
-  int value;
-  tao_spin_map_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoSpinMapStruct::set_ix_branch(int value) {
-  tao_spin_map_struct_set_integer(fortran_ptr_, 3, value);
-}
-FArray2D<double> TaoSpinMapStruct::mat8() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_map_struct_get_mat8_info);
-}
-void TaoSpinMapStruct::set_mat8(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_map_struct_set_mat8, v);
+void TaoDataArrayStruct::set_d(const TaoDataStruct &src) {
+  tao_data_array_struct_set_d(fortran_ptr_, src.get_fortran_ptr());
 }
 std::string TaoDataStruct::ele_name() const {
   FArray1D<char> arr =
@@ -9335,174 +12885,264 @@ std::optional<TaoD1DataStruct> TaoDataStruct::d1() const {
 void TaoDataStruct::set_d1(const TaoD1DataStruct &src) {
   tao_data_struct_set_d1(fortran_ptr_, src.get_fortran_ptr());
 }
-double TaoPingScaleStruct::a_mode_meas() const {
-  double value;
-  tao_ping_scale_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+std::string TaoDataVarComponentStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_data_var_component_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
 }
-void TaoPingScaleStruct::set_a_mode_meas(double value) {
-  tao_ping_scale_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoPingScaleStruct::a_mode_ref() const {
-  double value;
-  tao_ping_scale_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoPingScaleStruct::set_a_mode_ref(double value) {
-  tao_ping_scale_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoPingScaleStruct::b_mode_meas() const {
-  double value;
-  tao_ping_scale_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoPingScaleStruct::set_b_mode_meas(double value) {
-  tao_ping_scale_struct_set_real(fortran_ptr_, 2, value);
-}
-double TaoPingScaleStruct::b_mode_ref() const {
-  double value;
-  tao_ping_scale_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoPingScaleStruct::set_b_mode_ref(double value) {
-  tao_ping_scale_struct_set_real(fortran_ptr_, 3, value);
-}
-int TaoUniverseCalcStruct::srdt_for_data() const {
-  int value;
-  tao_universe_calc_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_srdt_for_data(int value) {
-  tao_universe_calc_struct_set_integer(fortran_ptr_, 0, value);
-}
-bool TaoUniverseCalcStruct::rad_int_for_data() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_rad_int_for_data(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoUniverseCalcStruct::rad_int_for_plotting() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_rad_int_for_plotting(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoUniverseCalcStruct::chrom_for_data() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_chrom_for_data(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool TaoUniverseCalcStruct::chrom_for_plotting() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_chrom_for_plotting(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool TaoUniverseCalcStruct::lat_sigma_for_data() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_lat_sigma_for_data(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool TaoUniverseCalcStruct::lat_sigma_for_plotting() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_lat_sigma_for_plotting(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 5, value);
-}
-bool TaoUniverseCalcStruct::dynamic_aperture() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_dynamic_aperture(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 6, value);
-}
-bool TaoUniverseCalcStruct::one_turn_map() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_one_turn_map(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 7, value);
-}
-bool TaoUniverseCalcStruct::lattice() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_lattice(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 8, value);
-}
-bool TaoUniverseCalcStruct::twiss() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 9, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_twiss(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 9, value);
-}
-bool TaoUniverseCalcStruct::track() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 10, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_track(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 10, value);
-}
-bool TaoUniverseCalcStruct::spin_matrices() const {
-  bool value;
-  tao_universe_calc_struct_get_logical(fortran_ptr_, 11, &value);
-  return value;
-}
-void TaoUniverseCalcStruct::set_spin_matrices(bool value) {
-  tao_universe_calc_struct_set_logical(fortran_ptr_, 11, value);
-}
-LatEleOrderArrayStructAlloc1D LatEleOrderStruct::branch() const {
-  return LatEleOrderArrayStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      lat_ele_order_struct_reallocate_branch,
-      lat_ele_order_struct_get_branch_info
+void TaoDataVarComponentStruct::set_name(const std::string &value) {
+  tao_data_var_component_struct_set_name(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
   );
 }
-bool TaoExpressionInfoStruct::good() const {
-  bool value;
-  tao_expression_info_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoExpressionInfoStruct::set_good(bool value) {
-  tao_expression_info_struct_set_logical(fortran_ptr_, 0, value);
-}
-std::optional<EleStruct> TaoExpressionInfoStruct::ele() const {
-  void *ptr;
-  tao_expression_info_struct_get_ele(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return EleStruct(ptr);
-}
-void TaoExpressionInfoStruct::set_ele(const EleStruct &src) {
-  tao_expression_info_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
-}
-double TaoExpressionInfoStruct::s() const {
+double TaoDataVarComponentStruct::sign() const {
   double value;
-  tao_expression_info_struct_get_real(fortran_ptr_, 0, &value);
+  tao_data_var_component_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoExpressionInfoStruct::set_s(double value) {
-  tao_expression_info_struct_set_real(fortran_ptr_, 0, value);
+void TaoDataVarComponentStruct::set_sign(double value) {
+  tao_data_var_component_struct_set_real(fortran_ptr_, 0, value);
+}
+TaoEleShapeStructAlloc1D TaoDrawingStruct::ele_shape() const {
+  return TaoEleShapeStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_drawing_struct_reallocate_ele_shape,
+      tao_drawing_struct_get_ele_shape_info
+  );
+}
+ApertureParamStruct TaoDynamicApertureStruct::param() const {
+  void *ptr;
+  tao_dynamic_aperture_struct_get_param(fortran_ptr_, &ptr);
+  return ApertureParamStruct(ptr);
+}
+void TaoDynamicApertureStruct::set_param(const ApertureParamStruct &src) {
+  tao_dynamic_aperture_struct_set_param(fortran_ptr_, src.get_fortran_ptr());
+}
+ApertureScanStructAlloc1D TaoDynamicApertureStruct::scan() const {
+  return ApertureScanStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_dynamic_aperture_struct_reallocate_scan,
+      tao_dynamic_aperture_struct_get_scan_info
+  );
+}
+RealAlloc1D TaoDynamicApertureStruct::pz() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_dynamic_aperture_struct_reallocate_pz,
+      tao_dynamic_aperture_struct_get_pz_info
+  );
+}
+void TaoDynamicApertureStruct::set_pz(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_dynamic_aperture_struct_set_pz(fortran_ptr_, v.data(), shape);
+}
+double TaoDynamicApertureStruct::ellipse_scale() const {
+  double value;
+  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoDynamicApertureStruct::set_ellipse_scale(double value) {
+  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoDynamicApertureStruct::a_emit() const {
+  double value;
+  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoDynamicApertureStruct::set_a_emit(double value) {
+  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoDynamicApertureStruct::b_emit() const {
+  double value;
+  tao_dynamic_aperture_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoDynamicApertureStruct::set_b_emit(double value) {
+  tao_dynamic_aperture_struct_set_real(fortran_ptr_, 2, value);
+}
+ElePointerStructAlloc1D TaoElePointerStruct::eles() const {
+  return ElePointerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_ele_pointer_struct_reallocate_eles,
+      tao_ele_pointer_struct_get_eles_info
+  );
+}
+int TaoElePointerStruct::n_loc() const {
+  int value;
+  tao_ele_pointer_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoElePointerStruct::set_n_loc(int value) {
+  tao_ele_pointer_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::string TaoEleShapeInput::ele_id() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_input_get_ele_id_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeInput::set_ele_id(const std::string &value) {
+  tao_ele_shape_input_set_ele_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoEleShapeInput::shape() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_input_get_shape_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeInput::set_shape(const std::string &value) {
+  tao_ele_shape_input_set_shape(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoEleShapeInput::color() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_input_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeInput::set_color(const std::string &value) {
+  tao_ele_shape_input_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoEleShapeInput::size() const {
+  double value;
+  tao_ele_shape_input_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeInput::set_size(double value) {
+  tao_ele_shape_input_set_real(fortran_ptr_, 0, value);
+}
+std::string TaoEleShapeInput::label() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_input_get_label_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeInput::set_label(const std::string &value) {
+  tao_ele_shape_input_set_label(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoEleShapeInput::draw() const {
+  bool value;
+  tao_ele_shape_input_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeInput::set_draw(bool value) {
+  tao_ele_shape_input_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoEleShapeInput::multi() const {
+  bool value;
+  tao_ele_shape_input_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoEleShapeInput::set_multi(bool value) {
+  tao_ele_shape_input_set_logical(fortran_ptr_, 1, value);
+}
+int TaoEleShapeInput::line_width() const {
+  int value;
+  tao_ele_shape_input_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeInput::set_line_width(int value) {
+  tao_ele_shape_input_set_integer(fortran_ptr_, 0, value);
+}
+double TaoEleShapeInput::offset() const {
+  double value;
+  tao_ele_shape_input_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoEleShapeInput::set_offset(double value) {
+  tao_ele_shape_input_set_real(fortran_ptr_, 1, value);
+}
+std::string TaoEleShapeStruct::ele_id() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_ele_id_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeStruct::set_ele_id(const std::string &value) {
+  tao_ele_shape_struct_set_ele_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoEleShapeStruct::shape() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_shape_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeStruct::set_shape(const std::string &value) {
+  tao_ele_shape_struct_set_shape(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoEleShapeStruct::color() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_color_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeStruct::set_color(const std::string &value) {
+  tao_ele_shape_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoEleShapeStruct::size() const {
+  double value;
+  tao_ele_shape_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_size(double value) {
+  tao_ele_shape_struct_set_real(fortran_ptr_, 0, value);
+}
+std::string TaoEleShapeStruct::label() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_label_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeStruct::set_label(const std::string &value) {
+  tao_ele_shape_struct_set_label(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoEleShapeStruct::draw() const {
+  bool value;
+  tao_ele_shape_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_draw(bool value) {
+  tao_ele_shape_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoEleShapeStruct::multi() const {
+  bool value;
+  tao_ele_shape_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_multi(bool value) {
+  tao_ele_shape_struct_set_logical(fortran_ptr_, 1, value);
+}
+int TaoEleShapeStruct::line_width() const {
+  int value;
+  tao_ele_shape_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_line_width(int value) {
+  tao_ele_shape_struct_set_integer(fortran_ptr_, 0, value);
+}
+double TaoEleShapeStruct::offset() const {
+  double value;
+  tao_ele_shape_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_offset(double value) {
+  tao_ele_shape_struct_set_real(fortran_ptr_, 1, value);
+}
+int TaoEleShapeStruct::ix_key() const {
+  int value;
+  tao_ele_shape_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoEleShapeStruct::set_ix_key(int value) {
+  tao_ele_shape_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::string TaoEleShapeStruct::name_ele() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_ele_shape_struct_get_name_ele_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoEleShapeStruct::set_name_ele(const std::string &value) {
+  tao_ele_shape_struct_set_name_ele(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoElePointerStructAlloc1D TaoEleShapeStruct::uni() const {
+  return TaoElePointerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_ele_shape_struct_reallocate_uni,
+      tao_ele_shape_struct_get_uni_info
+  );
 }
 int TaoEvalNodeStruct::type() const {
   int value;
@@ -9546,438 +13186,44 @@ TaoExpressionInfoStructAlloc1D TaoEvalNodeStruct::info() const {
       tao_eval_node_struct_get_info_info
   );
 }
+TaoRealPointerStructAlloc1D TaoEvalNodeStruct::value_ptr() const {
+  return TaoRealPointerStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_eval_node_struct_reallocate_value_ptr,
+      tao_eval_node_struct_get_value_ptr_info
+  );
+}
 TaoEvalNodeStructArray1D TaoEvalNodeStruct::node() const {
   return ProxyHelpers::get_type_array_1d<TaoEvalNodeStructArray1D>(
       fortran_ptr_,
       tao_eval_node_struct_get_node_info
   );
 }
-std::string TaoTitleStruct::string() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_string_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoTitleStruct::set_string(const std::string &value) {
-  tao_title_struct_set_string(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-double TaoTitleStruct::x() const {
-  double value;
-  tao_title_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoTitleStruct::set_x(double value) { tao_title_struct_set_real(fortran_ptr_, 0, value); }
-double TaoTitleStruct::y() const {
-  double value;
-  tao_title_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoTitleStruct::set_y(double value) { tao_title_struct_set_real(fortran_ptr_, 1, value); }
-std::string TaoTitleStruct::units() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_units_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoTitleStruct::set_units(const std::string &value) {
-  tao_title_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string TaoTitleStruct::justify() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_justify_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoTitleStruct::set_justify(const std::string &value) {
-  tao_title_struct_set_justify(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-bool TaoTitleStruct::draw_it() const {
+bool TaoExpressionInfoStruct::good() const {
   bool value;
-  tao_title_struct_get_logical(fortran_ptr_, 0, &value);
+  tao_expression_info_struct_get_logical(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoTitleStruct::set_draw_it(bool value) {
-  tao_title_struct_set_logical(fortran_ptr_, 0, value);
+void TaoExpressionInfoStruct::set_good(bool value) {
+  tao_expression_info_struct_set_logical(fortran_ptr_, 0, value);
 }
-double QpRectStruct::x1() const {
-  double value;
-  qp_rect_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpRectStruct::set_x1(double value) { qp_rect_struct_set_real(fortran_ptr_, 0, value); }
-double QpRectStruct::x2() const {
-  double value;
-  qp_rect_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpRectStruct::set_x2(double value) { qp_rect_struct_set_real(fortran_ptr_, 1, value); }
-double QpRectStruct::y1() const {
-  double value;
-  qp_rect_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void QpRectStruct::set_y1(double value) { qp_rect_struct_set_real(fortran_ptr_, 2, value); }
-double QpRectStruct::y2() const {
-  double value;
-  qp_rect_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void QpRectStruct::set_y2(double value) { qp_rect_struct_set_real(fortran_ptr_, 3, value); }
-std::string QpRectStruct::units() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_rect_struct_get_units_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpRectStruct::set_units(const std::string &value) {
-  qp_rect_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-TaoEleShapeStructAlloc1D TaoDrawingStruct::ele_shape() const {
-  return TaoEleShapeStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_drawing_struct_reallocate_ele_shape,
-      tao_drawing_struct_get_ele_shape_info
-  );
-}
-std::string TaoShapePatternStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_shape_pattern_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoShapePatternStruct::set_name(const std::string &value) {
-  tao_shape_pattern_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-QpLineStruct TaoShapePatternStruct::line() const {
+std::optional<EleStruct> TaoExpressionInfoStruct::ele() const {
   void *ptr;
-  tao_shape_pattern_struct_get_line(fortran_ptr_, &ptr);
-  return QpLineStruct(ptr);
+  tao_expression_info_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
 }
-void TaoShapePatternStruct::set_line(const QpLineStruct &src) {
-  tao_shape_pattern_struct_set_line(fortran_ptr_, src.get_fortran_ptr());
+void TaoExpressionInfoStruct::set_ele(const EleStruct &src) {
+  tao_expression_info_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
 }
-TaoShapePatternPointStructAlloc1D TaoShapePatternStruct::pt() const {
-  return TaoShapePatternPointStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_shape_pattern_struct_reallocate_pt,
-      tao_shape_pattern_struct_get_pt_info
-  );
-}
-double TaoShapePatternPointStruct::s() const {
+double TaoExpressionInfoStruct::s() const {
   double value;
-  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 0, &value);
+  tao_expression_info_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoShapePatternPointStruct::set_s(double value) {
-  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoShapePatternPointStruct::y() const {
-  double value;
-  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoShapePatternPointStruct::set_y(double value) {
-  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoShapePatternPointStruct::radius() const {
-  double value;
-  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoShapePatternPointStruct::set_radius(double value) {
-  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 2, value);
-}
-std::string QpAxisStruct::label() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_label_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpAxisStruct::set_label(const std::string &value) {
-  qp_axis_struct_set_label(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-double QpAxisStruct::min() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpAxisStruct::set_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 0, value); }
-double QpAxisStruct::max() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpAxisStruct::set_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 1, value); }
-double QpAxisStruct::tick_min() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void QpAxisStruct::set_tick_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 2, value); }
-double QpAxisStruct::tick_max() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void QpAxisStruct::set_tick_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 3, value); }
-double QpAxisStruct::eval_min() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void QpAxisStruct::set_eval_min(double value) { qp_axis_struct_set_real(fortran_ptr_, 4, value); }
-double QpAxisStruct::eval_max() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void QpAxisStruct::set_eval_max(double value) { qp_axis_struct_set_real(fortran_ptr_, 5, value); }
-double QpAxisStruct::dtick() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void QpAxisStruct::set_dtick(double value) { qp_axis_struct_set_real(fortran_ptr_, 6, value); }
-double QpAxisStruct::number_offset() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void QpAxisStruct::set_number_offset(double value) {
-  qp_axis_struct_set_real(fortran_ptr_, 7, value);
-}
-double QpAxisStruct::label_offset() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void QpAxisStruct::set_label_offset(double value) {
-  qp_axis_struct_set_real(fortran_ptr_, 8, value);
-}
-double QpAxisStruct::major_tick_len() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void QpAxisStruct::set_major_tick_len(double value) {
-  qp_axis_struct_set_real(fortran_ptr_, 9, value);
-}
-double QpAxisStruct::minor_tick_len() const {
-  double value;
-  qp_axis_struct_get_real(fortran_ptr_, 10, &value);
-  return value;
-}
-void QpAxisStruct::set_minor_tick_len(double value) {
-  qp_axis_struct_set_real(fortran_ptr_, 10, value);
-}
-std::string QpAxisStruct::label_color() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_label_color_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpAxisStruct::set_label_color(const std::string &value) {
-  qp_axis_struct_set_label_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int QpAxisStruct::major_div() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpAxisStruct::set_major_div(int value) { qp_axis_struct_set_integer(fortran_ptr_, 0, value); }
-int QpAxisStruct::major_div_nominal() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpAxisStruct::set_major_div_nominal(int value) {
-  qp_axis_struct_set_integer(fortran_ptr_, 1, value);
-}
-int QpAxisStruct::minor_div() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void QpAxisStruct::set_minor_div(int value) { qp_axis_struct_set_integer(fortran_ptr_, 2, value); }
-int QpAxisStruct::minor_div_max() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void QpAxisStruct::set_minor_div_max(int value) {
-  qp_axis_struct_set_integer(fortran_ptr_, 3, value);
-}
-int QpAxisStruct::places() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void QpAxisStruct::set_places(int value) { qp_axis_struct_set_integer(fortran_ptr_, 4, value); }
-std::string QpAxisStruct::type() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpAxisStruct::set_type(const std::string &value) {
-  qp_axis_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string QpAxisStruct::bounds() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_axis_struct_get_bounds_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpAxisStruct::set_bounds(const std::string &value) {
-  qp_axis_struct_set_bounds(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int QpAxisStruct::tick_side() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void QpAxisStruct::set_tick_side(int value) { qp_axis_struct_set_integer(fortran_ptr_, 5, value); }
-int QpAxisStruct::number_side() const {
-  int value;
-  qp_axis_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void QpAxisStruct::set_number_side(int value) {
-  qp_axis_struct_set_integer(fortran_ptr_, 6, value);
-}
-bool QpAxisStruct::draw_label() const {
-  bool value;
-  qp_axis_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpAxisStruct::set_draw_label(bool value) {
-  qp_axis_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool QpAxisStruct::draw_numbers() const {
-  bool value;
-  qp_axis_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpAxisStruct::set_draw_numbers(bool value) {
-  qp_axis_struct_set_logical(fortran_ptr_, 1, value);
-}
-double QpLegendStruct::row_spacing() const {
-  double value;
-  qp_legend_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpLegendStruct::set_row_spacing(double value) {
-  qp_legend_struct_set_real(fortran_ptr_, 0, value);
-}
-double QpLegendStruct::line_length() const {
-  double value;
-  qp_legend_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpLegendStruct::set_line_length(double value) {
-  qp_legend_struct_set_real(fortran_ptr_, 1, value);
-}
-double QpLegendStruct::text_offset() const {
-  double value;
-  qp_legend_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void QpLegendStruct::set_text_offset(double value) {
-  qp_legend_struct_set_real(fortran_ptr_, 2, value);
-}
-bool QpLegendStruct::draw_line() const {
-  bool value;
-  qp_legend_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpLegendStruct::set_draw_line(bool value) {
-  qp_legend_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool QpLegendStruct::draw_symbol() const {
-  bool value;
-  qp_legend_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpLegendStruct::set_draw_symbol(bool value) {
-  qp_legend_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool QpLegendStruct::draw_text() const {
-  bool value;
-  qp_legend_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void QpLegendStruct::set_draw_text(bool value) {
-  qp_legend_struct_set_logical(fortran_ptr_, 2, value);
-}
-double QpPointStruct::x() const {
-  double value;
-  qp_point_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpPointStruct::set_x(double value) { qp_point_struct_set_real(fortran_ptr_, 0, value); }
-double QpPointStruct::y() const {
-  double value;
-  qp_point_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void QpPointStruct::set_y(double value) { qp_point_struct_set_real(fortran_ptr_, 1, value); }
-std::string QpPointStruct::units() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_point_struct_get_units_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpPointStruct::set_units(const std::string &value) {
-  qp_point_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int QpLineStruct::width() const {
-  int value;
-  qp_line_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpLineStruct::set_width(int value) { qp_line_struct_set_integer(fortran_ptr_, 0, value); }
-std::string QpLineStruct::color() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_line_struct_get_color_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpLineStruct::set_color(const std::string &value) {
-  qp_line_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string QpLineStruct::pattern() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_line_struct_get_pattern_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpLineStruct::set_pattern(const std::string &value) {
-  qp_line_struct_set_pattern(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string QpSymbolStruct::type() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_type_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpSymbolStruct::set_type(const std::string &value) {
-  qp_symbol_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-double QpSymbolStruct::height() const {
-  double value;
-  qp_symbol_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpSymbolStruct::set_height(double value) { qp_symbol_struct_set_real(fortran_ptr_, 0, value); }
-std::string QpSymbolStruct::color() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_color_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpSymbolStruct::set_color(const std::string &value) {
-  qp_symbol_struct_set_color(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string QpSymbolStruct::fill_pattern() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, qp_symbol_struct_get_fill_pattern_info);
-  return std::string(arr.data(), arr.size());
-}
-void QpSymbolStruct::set_fill_pattern(const std::string &value) {
-  qp_symbol_struct_set_fill_pattern(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int QpSymbolStruct::line_width() const {
-  int value;
-  qp_symbol_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void QpSymbolStruct::set_line_width(int value) {
-  qp_symbol_struct_set_integer(fortran_ptr_, 0, value);
+void TaoExpressionInfoStruct::set_s(double value) {
+  tao_expression_info_struct_set_real(fortran_ptr_, 0, value);
 }
 std::string TaoFloorPlanStruct::view() const {
   FArray1D<char> arr =
@@ -10086,28 +13332,6 @@ int TaoFloorPlanStruct::orbit_width() const {
 }
 void TaoFloorPlanStruct::set_orbit_width(int value) {
   tao_floor_plan_struct_set_integer(fortran_ptr_, 0, value);
-}
-std::string TaoV1VarStruct::name() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_v1_var_struct_get_name_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoV1VarStruct::set_name(const std::string &value) {
-  tao_v1_var_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int TaoV1VarStruct::ix_v1_var() const {
-  int value;
-  tao_v1_var_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoV1VarStruct::set_ix_v1_var(int value) {
-  tao_v1_var_struct_set_integer(fortran_ptr_, 0, value);
-}
-TaoVarStructArray1D TaoV1VarStruct::v() const {
-  return ProxyHelpers::get_type_array_1d<TaoVarStructArray1D>(
-      fortran_ptr_,
-      tao_v1_var_struct_get_v_info
-  );
 }
 double TaoGlobalStruct::beam_dead_cutoff() const {
   double value;
@@ -10685,6 +13909,332 @@ bool TaoGlobalStruct::verbose_on() const {
 void TaoGlobalStruct::set_verbose_on(bool value) {
   tao_global_struct_set_logical(fortran_ptr_, 32, value);
 }
+std::optional<TaoGraphStruct> TaoGraphArrayStruct::g() const {
+  void *ptr;
+  tao_graph_array_struct_get_g(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoGraphStruct(ptr);
+}
+void TaoGraphArrayStruct::set_g(const TaoGraphStruct &src) {
+  tao_graph_array_struct_set_g(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string TaoGraphStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGraphStruct::set_name(const std::string &value) {
+  tao_graph_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGraphStruct::type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGraphStruct::set_type(const std::string &value) {
+  tao_graph_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGraphStruct::title() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_title_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGraphStruct::set_title(const std::string &value) {
+  tao_graph_struct_set_title(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoGraphStruct::title_suffix() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_title_suffix_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGraphStruct::set_title_suffix(const std::string &value) {
+  tao_graph_struct_set_title_suffix(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+FCharArray1D TaoGraphStruct::text_legend() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_graph_struct_get_text_legend_info);
+}
+FCharArray1D TaoGraphStruct::text_legend_out() const {
+  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_graph_struct_get_text_legend_out_info);
+}
+std::string TaoGraphStruct::why_invalid() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_graph_struct_get_why_invalid_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoGraphStruct::set_why_invalid(const std::string &value) {
+  tao_graph_struct_set_why_invalid(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoCurveStructAlloc1D TaoGraphStruct::curve() const {
+  return TaoCurveStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_graph_struct_reallocate_curve,
+      tao_graph_struct_get_curve_info
+  );
+}
+std::optional<TaoPlotStruct> TaoGraphStruct::p() const {
+  void *ptr;
+  tao_graph_struct_get_p(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoPlotStruct(ptr);
+}
+void TaoGraphStruct::set_p(const TaoPlotStruct &src) {
+  tao_graph_struct_set_p(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoFloorPlanStruct TaoGraphStruct::floor_plan() const {
+  void *ptr;
+  tao_graph_struct_get_floor_plan(fortran_ptr_, &ptr);
+  return TaoFloorPlanStruct(ptr);
+}
+void TaoGraphStruct::set_floor_plan(const TaoFloorPlanStruct &src) {
+  tao_graph_struct_set_floor_plan(fortran_ptr_, src.get_fortran_ptr());
+}
+QpPointStruct TaoGraphStruct::text_legend_origin() const {
+  void *ptr;
+  tao_graph_struct_get_text_legend_origin(fortran_ptr_, &ptr);
+  return QpPointStruct(ptr);
+}
+void TaoGraphStruct::set_text_legend_origin(const QpPointStruct &src) {
+  tao_graph_struct_set_text_legend_origin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpPointStruct TaoGraphStruct::curve_legend_origin() const {
+  void *ptr;
+  tao_graph_struct_get_curve_legend_origin(fortran_ptr_, &ptr);
+  return QpPointStruct(ptr);
+}
+void TaoGraphStruct::set_curve_legend_origin(const QpPointStruct &src) {
+  tao_graph_struct_set_curve_legend_origin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpLegendStruct TaoGraphStruct::curve_legend() const {
+  void *ptr;
+  tao_graph_struct_get_curve_legend(fortran_ptr_, &ptr);
+  return QpLegendStruct(ptr);
+}
+void TaoGraphStruct::set_curve_legend(const QpLegendStruct &src) {
+  tao_graph_struct_set_curve_legend(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisStruct TaoGraphStruct::x() const {
+  void *ptr;
+  tao_graph_struct_get_x(fortran_ptr_, &ptr);
+  return QpAxisStruct(ptr);
+}
+void TaoGraphStruct::set_x(const QpAxisStruct &src) {
+  tao_graph_struct_set_x(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisStruct TaoGraphStruct::y() const {
+  void *ptr;
+  tao_graph_struct_get_y(fortran_ptr_, &ptr);
+  return QpAxisStruct(ptr);
+}
+void TaoGraphStruct::set_y(const QpAxisStruct &src) {
+  tao_graph_struct_set_y(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisStruct TaoGraphStruct::x2() const {
+  void *ptr;
+  tao_graph_struct_get_x2(fortran_ptr_, &ptr);
+  return QpAxisStruct(ptr);
+}
+void TaoGraphStruct::set_x2(const QpAxisStruct &src) {
+  tao_graph_struct_set_x2(fortran_ptr_, src.get_fortran_ptr());
+}
+QpAxisStruct TaoGraphStruct::y2() const {
+  void *ptr;
+  tao_graph_struct_get_y2(fortran_ptr_, &ptr);
+  return QpAxisStruct(ptr);
+}
+void TaoGraphStruct::set_y2(const QpAxisStruct &src) {
+  tao_graph_struct_set_y2(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectStruct TaoGraphStruct::margin() const {
+  void *ptr;
+  tao_graph_struct_get_margin(fortran_ptr_, &ptr);
+  return QpRectStruct(ptr);
+}
+void TaoGraphStruct::set_margin(const QpRectStruct &src) {
+  tao_graph_struct_set_margin(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectStruct TaoGraphStruct::scale_margin() const {
+  void *ptr;
+  tao_graph_struct_get_scale_margin(fortran_ptr_, &ptr);
+  return QpRectStruct(ptr);
+}
+void TaoGraphStruct::set_scale_margin(const QpRectStruct &src) {
+  tao_graph_struct_set_scale_margin(fortran_ptr_, src.get_fortran_ptr());
+}
+double TaoGraphStruct::x_axis_scale_factor() const {
+  double value;
+  tao_graph_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoGraphStruct::set_x_axis_scale_factor(double value) {
+  tao_graph_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoGraphStruct::symbol_size_scale() const {
+  double value;
+  tao_graph_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoGraphStruct::set_symbol_size_scale(double value) {
+  tao_graph_struct_set_real(fortran_ptr_, 1, value);
+}
+FArray1D<int> TaoGraphStruct::box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tao_graph_struct_get_box_info);
+}
+void TaoGraphStruct::set_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_graph_struct_set_box(fortran_ptr_, v.data(), shape);
+}
+int TaoGraphStruct::ix_branch() const {
+  int value;
+  tao_graph_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoGraphStruct::set_ix_branch(int value) {
+  tao_graph_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoGraphStruct::ix_universe() const {
+  int value;
+  tao_graph_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoGraphStruct::set_ix_universe(int value) {
+  tao_graph_struct_set_integer(fortran_ptr_, 1, value);
+}
+bool TaoGraphStruct::clip() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoGraphStruct::set_clip(bool value) { tao_graph_struct_set_logical(fortran_ptr_, 0, value); }
+bool TaoGraphStruct::y2_mirrors_y() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoGraphStruct::set_y2_mirrors_y(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoGraphStruct::limited() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoGraphStruct::set_limited(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoGraphStruct::draw_axes() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoGraphStruct::set_draw_axes(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool TaoGraphStruct::draw_curve_legend() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoGraphStruct::set_draw_curve_legend(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool TaoGraphStruct::draw_grid() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoGraphStruct::set_draw_grid(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool TaoGraphStruct::draw_title() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoGraphStruct::set_draw_title(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool TaoGraphStruct::draw_only_good_user_data_or_vars() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoGraphStruct::set_draw_only_good_user_data_or_vars(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool TaoGraphStruct::allow_wrap_around() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoGraphStruct::set_allow_wrap_around(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 8, value);
+}
+bool TaoGraphStruct::is_valid() const {
+  bool value;
+  tao_graph_struct_get_logical(fortran_ptr_, 9, &value);
+  return value;
+}
+void TaoGraphStruct::set_is_valid(bool value) {
+  tao_graph_struct_set_logical(fortran_ptr_, 9, value);
+}
+bool TaoHistogramStruct::density_normalized() const {
+  bool value;
+  tao_histogram_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoHistogramStruct::set_density_normalized(bool value) {
+  tao_histogram_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoHistogramStruct::weight_by_charge() const {
+  bool value;
+  tao_histogram_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoHistogramStruct::set_weight_by_charge(bool value) {
+  tao_histogram_struct_set_logical(fortran_ptr_, 1, value);
+}
+double TaoHistogramStruct::minimum() const {
+  double value;
+  tao_histogram_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoHistogramStruct::set_minimum(double value) {
+  tao_histogram_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoHistogramStruct::maximum() const {
+  double value;
+  tao_histogram_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoHistogramStruct::set_maximum(double value) {
+  tao_histogram_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoHistogramStruct::width() const {
+  double value;
+  tao_histogram_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoHistogramStruct::set_width(double value) {
+  tao_histogram_struct_set_real(fortran_ptr_, 2, value);
+}
+double TaoHistogramStruct::center() const {
+  double value;
+  tao_histogram_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoHistogramStruct::set_center(double value) {
+  tao_histogram_struct_set_real(fortran_ptr_, 3, value);
+}
+int TaoHistogramStruct::number() const {
+  int value;
+  tao_histogram_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoHistogramStruct::set_number(int value) {
+  tao_histogram_struct_set_integer(fortran_ptr_, 0, value);
+}
 bool TaoInitStruct::parse_cmd_args() const {
   bool value;
   tao_init_struct_get_logical(fortran_ptr_, 0, &value);
@@ -11085,324 +14635,640 @@ void TaoInitStruct::set_unique_name_suffix(const std::string &value) {
       static_cast<int>(value.length())
   );
 }
-TaoPlotRegionStructAlloc1D TaoCommonStruct::plot_place_buffer() const {
-  return TaoPlotRegionStructAlloc1D(
+std::optional<int> TaoIntegerArrayStruct::i() const {
+  int value;
+  bool is_valid;
+  tao_integer_array_struct_get_i(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoIntegerArrayStruct::set_i(int value) {
+  tao_integer_array_struct_set_i(fortran_ptr_, value);
+}
+FArray2D<double> TaoLatSigmaStruct::mat() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_lat_sigma_struct_get_mat_info);
+}
+void TaoLatSigmaStruct::set_mat(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_lat_sigma_struct_set_mat, v);
+}
+std::optional<TaoLatticeStruct> TaoLatticeBranchStruct::tao_lat() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_tao_lat(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoLatticeStruct(ptr);
+}
+void TaoLatticeBranchStruct::set_tao_lat(const TaoLatticeStruct &src) {
+  tao_lattice_branch_struct_set_tao_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoLatSigmaStructAlloc1D TaoLatticeBranchStruct::lat_sigma() const {
+  return TaoLatSigmaStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      tao_common_struct_reallocate_plot_place_buffer,
-      tao_common_struct_get_plot_place_buffer_info
+      tao_lattice_branch_struct_reallocate_lat_sigma,
+      tao_lattice_branch_struct_get_lat_sigma_info
   );
 }
-FArray2D<double> TaoCommonStruct::covar() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_covar_info);
+TaoSpinEleStructAlloc1D TaoLatticeBranchStruct::spin_ele() const {
+  return TaoSpinEleStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_spin_ele,
+      tao_lattice_branch_struct_get_spin_ele_info
+  );
 }
-void TaoCommonStruct::set_covar(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_common_struct_set_covar, v);
+BunchParamsStructAlloc1D TaoLatticeBranchStruct::bunch_params() const {
+  return BunchParamsStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_bunch_params,
+      tao_lattice_branch_struct_get_bunch_params_info
+  );
 }
-FArray2D<double> TaoCommonStruct::alpha() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_common_struct_get_alpha_info);
+BunchTrackStructAlloc1D TaoLatticeBranchStruct::bunch_params_comb() const {
+  return BunchTrackStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_bunch_params_comb,
+      tao_lattice_branch_struct_get_bunch_params_comb_info
+  );
 }
-void TaoCommonStruct::set_alpha(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_common_struct_set_alpha, v);
+CoordStructAlloc1D TaoLatticeBranchStruct::orbit() const {
+  return CoordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_orbit,
+      tao_lattice_branch_struct_get_orbit_info
+  );
 }
-double TaoCommonStruct::dummy_target() const {
-  double value;
-  tao_common_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+TaoPlotCacheStructAlloc1D TaoLatticeBranchStruct::plot_cache() const {
+  return TaoPlotCacheStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_plot_cache,
+      tao_lattice_branch_struct_get_plot_cache_info
+  );
 }
-void TaoCommonStruct::set_dummy_target(double value) {
-  tao_common_struct_set_real(fortran_ptr_, 0, value);
+TaoSpinPolarizationStruct TaoLatticeBranchStruct::spin() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_spin(fortran_ptr_, &ptr);
+  return TaoSpinPolarizationStruct(ptr);
 }
-int TaoCommonStruct::n_alias() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
+void TaoLatticeBranchStruct::set_spin(const TaoSpinPolarizationStruct &src) {
+  tao_lattice_branch_struct_set_spin(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_n_alias(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 0, value);
+SummationRdtStruct TaoLatticeBranchStruct::srdt() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_srdt(fortran_ptr_, &ptr);
+  return SummationRdtStruct(ptr);
 }
-int TaoCommonStruct::cmd_file_level() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
+void TaoLatticeBranchStruct::set_srdt(const SummationRdtStruct &src) {
+  tao_lattice_branch_struct_set_srdt(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_cmd_file_level(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 1, value);
+CoordStruct TaoLatticeBranchStruct::orb0() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_orb0(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
 }
-int TaoCommonStruct::ix_key_bank() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
+void TaoLatticeBranchStruct::set_orb0(const CoordStruct &src) {
+  tao_lattice_branch_struct_set_orb0(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_ix_key_bank(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 2, value);
+NormalModesStruct TaoLatticeBranchStruct::modes_ri() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_modes_ri(fortran_ptr_, &ptr);
+  return NormalModesStruct(ptr);
 }
-int TaoCommonStruct::ix_history() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
+void TaoLatticeBranchStruct::set_modes_ri(const NormalModesStruct &src) {
+  tao_lattice_branch_struct_set_modes_ri(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_ix_history(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 3, value);
+NormalModesStruct TaoLatticeBranchStruct::modes_6d() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_modes_6d(fortran_ptr_, &ptr);
+  return NormalModesStruct(ptr);
 }
-int TaoCommonStruct::n_history() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
+void TaoLatticeBranchStruct::set_modes_6d(const NormalModesStruct &src) {
+  tao_lattice_branch_struct_set_modes_6d(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_n_history(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 4, value);
+PtcNormalFormStruct TaoLatticeBranchStruct::ptc_normal_form() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_ptc_normal_form(fortran_ptr_, &ptr);
+  return PtcNormalFormStruct(ptr);
 }
-int TaoCommonStruct::lev_loop() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
+void TaoLatticeBranchStruct::set_ptc_normal_form(const PtcNormalFormStruct &src) {
+  tao_lattice_branch_struct_set_ptc_normal_form(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_lev_loop(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 5, value);
+BmadNormalFormStruct TaoLatticeBranchStruct::bmad_normal_form() const {
+  void *ptr;
+  tao_lattice_branch_struct_get_bmad_normal_form(fortran_ptr_, &ptr);
+  return BmadNormalFormStruct(ptr);
 }
-int TaoCommonStruct::n_err_messages_printed() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
+void TaoLatticeBranchStruct::set_bmad_normal_form(const BmadNormalFormStruct &src) {
+  tao_lattice_branch_struct_set_bmad_normal_form(fortran_ptr_, src.get_fortran_ptr());
 }
-void TaoCommonStruct::set_n_err_messages_printed(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 6, value);
+CoordStructAlloc1D TaoLatticeBranchStruct::high_E_orb() const {
+  return CoordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_high_E_orb,
+      tao_lattice_branch_struct_get_high_E_orb_info
+  );
 }
-int TaoCommonStruct::n_universes() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 7, &value);
-  return value;
+CoordStructAlloc1D TaoLatticeBranchStruct::low_E_orb() const {
+  return CoordStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_branch_struct_reallocate_low_E_orb,
+      tao_lattice_branch_struct_get_low_E_orb_info
+  );
 }
-void TaoCommonStruct::set_n_universes(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 7, value);
-}
-int TaoCommonStruct::ix_beam_track_active_element() const {
-  int value;
-  tao_common_struct_get_integer(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoCommonStruct::set_ix_beam_track_active_element(int value) {
-  tao_common_struct_set_integer(fortran_ptr_, 8, value);
-}
-bool TaoCommonStruct::cmd_file_paused() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoCommonStruct::set_cmd_file_paused(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoCommonStruct::use_cmd_here() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoCommonStruct::set_use_cmd_here(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoCommonStruct::cmd_from_cmd_file() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoCommonStruct::set_cmd_from_cmd_file(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool TaoCommonStruct::use_saved_beam_in_tracking() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoCommonStruct::set_use_saved_beam_in_tracking(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool TaoCommonStruct::single_mode() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoCommonStruct::set_single_mode(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool TaoCommonStruct::combine_consecutive_elements_of_like_name() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void TaoCommonStruct::set_combine_consecutive_elements_of_like_name(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 5, value);
-}
-bool TaoCommonStruct::have_tracked_beam() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void TaoCommonStruct::set_have_tracked_beam(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 6, value);
-}
-bool TaoCommonStruct::init_plot_needed() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void TaoCommonStruct::set_init_plot_needed(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 7, value);
-}
-bool TaoCommonStruct::init_beam() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 8, &value);
-  return value;
-}
-void TaoCommonStruct::set_init_beam(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 8, value);
-}
-bool TaoCommonStruct::init_var() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 9, &value);
-  return value;
-}
-void TaoCommonStruct::set_init_var(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 9, value);
-}
-bool TaoCommonStruct::init_read_lat_info() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 10, &value);
-  return value;
-}
-void TaoCommonStruct::set_init_read_lat_info(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 10, value);
-}
-bool TaoCommonStruct::optimizer_running() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 11, &value);
-  return value;
-}
-void TaoCommonStruct::set_optimizer_running(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 11, value);
-}
-bool TaoCommonStruct::have_datums_using_expressions() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 12, &value);
-  return value;
-}
-void TaoCommonStruct::set_have_datums_using_expressions(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 12, value);
-}
-bool TaoCommonStruct::print_to_terminal() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 13, &value);
-  return value;
-}
-void TaoCommonStruct::set_print_to_terminal(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 13, value);
-}
-bool TaoCommonStruct::lattice_calc_done() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 14, &value);
-  return value;
-}
-void TaoCommonStruct::set_lattice_calc_done(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 14, value);
-}
-bool TaoCommonStruct::add_measurement_noise() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 15, &value);
-  return value;
-}
-void TaoCommonStruct::set_add_measurement_noise(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 15, value);
-}
-FArray1D<bool> TaoCommonStruct::is_err_message_printed() const {
-  return ProxyHelpers::get_array_1d<bool>(
+TaylorStructArray1D TaoLatticeBranchStruct::taylor_save() const {
+  return ProxyHelpers::get_type_array_1d<TaylorStructArray1D>(
       fortran_ptr_,
-      tao_common_struct_get_is_err_message_printed_info
+      tao_lattice_branch_struct_get_taylor_save_info
   );
 }
-void TaoCommonStruct::set_is_err_message_printed(const std::vector<bool> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  std::vector<int> bv(v.size());
-  for (size_t i = 0; i < v.size(); ++i)
-    bv[i] = v[i] ? 1 : 0;
-  tao_common_struct_set_is_err_message_printed(fortran_ptr_, bv.data(), shape);
-}
-bool TaoCommonStruct::command_arg_has_been_executed() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 16, &value);
+double TaoLatticeBranchStruct::cache_x_min() const {
+  double value;
+  tao_lattice_branch_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoCommonStruct::set_command_arg_has_been_executed(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 16, value);
+void TaoLatticeBranchStruct::set_cache_x_min(double value) {
+  tao_lattice_branch_struct_set_real(fortran_ptr_, 0, value);
 }
-bool TaoCommonStruct::all_merit_weights_positive() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 17, &value);
+double TaoLatticeBranchStruct::cache_x_max() const {
+  double value;
+  tao_lattice_branch_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void TaoCommonStruct::set_all_merit_weights_positive(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 17, value);
+void TaoLatticeBranchStruct::set_cache_x_max(double value) {
+  tao_lattice_branch_struct_set_real(fortran_ptr_, 1, value);
 }
-bool TaoCommonStruct::multi_turn_orbit_is_plotted() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 18, &value);
+double TaoLatticeBranchStruct::comb_ds_save() const {
+  double value;
+  tao_lattice_branch_struct_get_real(fortran_ptr_, 2, &value);
   return value;
 }
-void TaoCommonStruct::set_multi_turn_orbit_is_plotted(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 18, value);
+void TaoLatticeBranchStruct::set_comb_ds_save(double value) {
+  tao_lattice_branch_struct_set_real(fortran_ptr_, 2, value);
 }
-bool TaoCommonStruct::force_chrom_calc() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 19, &value);
+int TaoLatticeBranchStruct::ix_ref_taylor() const {
+  int value;
+  tao_lattice_branch_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoCommonStruct::set_force_chrom_calc(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 19, value);
+void TaoLatticeBranchStruct::set_ix_ref_taylor(int value) {
+  tao_lattice_branch_struct_set_integer(fortran_ptr_, 0, value);
 }
-bool TaoCommonStruct::force_rad_int_calc() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 20, &value);
+int TaoLatticeBranchStruct::ix_ele_taylor() const {
+  int value;
+  tao_lattice_branch_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void TaoCommonStruct::set_force_rad_int_calc(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 20, value);
+void TaoLatticeBranchStruct::set_ix_ele_taylor(int value) {
+  tao_lattice_branch_struct_set_integer(fortran_ptr_, 1, value);
 }
-bool TaoCommonStruct::rad_int_ri_calc_on() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 21, &value);
+int TaoLatticeBranchStruct::track_state() const {
+  int value;
+  tao_lattice_branch_struct_get_integer(fortran_ptr_, 2, &value);
   return value;
 }
-void TaoCommonStruct::set_rad_int_ri_calc_on(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 21, value);
+void TaoLatticeBranchStruct::set_track_state(int value) {
+  tao_lattice_branch_struct_set_integer(fortran_ptr_, 2, value);
 }
-bool TaoCommonStruct::rad_int_6d_calc_on() const {
-  bool value;
-  tao_common_struct_get_logical(fortran_ptr_, 22, &value);
+int TaoLatticeBranchStruct::cache_n_pts() const {
+  int value;
+  tao_lattice_branch_struct_get_integer(fortran_ptr_, 3, &value);
   return value;
 }
-void TaoCommonStruct::set_rad_int_6d_calc_on(bool value) {
-  tao_common_struct_set_logical(fortran_ptr_, 22, value);
+void TaoLatticeBranchStruct::set_cache_n_pts(int value) {
+  tao_lattice_branch_struct_set_integer(fortran_ptr_, 3, value);
 }
-FCharArray1D TaoCommonStruct::valid_plot_who() const {
-  return ProxyHelpers::get_char_array_1d(fortran_ptr_, tao_common_struct_get_valid_plot_who_info);
+int TaoLatticeBranchStruct::ix_rad_int_cache() const {
+  int value;
+  tao_lattice_branch_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
 }
-std::string TaoCommonStruct::single_mode_buffer() const {
+void TaoLatticeBranchStruct::set_ix_rad_int_cache(int value) {
+  tao_lattice_branch_struct_set_integer(fortran_ptr_, 4, value);
+}
+bool TaoLatticeBranchStruct::has_open_match_element() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_has_open_match_element(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoLatticeBranchStruct::plot_cache_valid() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_plot_cache_valid(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoLatticeBranchStruct::spin_map_valid() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_spin_map_valid(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoLatticeBranchStruct::twiss_valid() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_twiss_valid(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool TaoLatticeBranchStruct::mode_flip_here() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_mode_flip_here(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool TaoLatticeBranchStruct::chrom_calc_ok() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_chrom_calc_ok(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool TaoLatticeBranchStruct::rad_int_calc_ok() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_rad_int_calc_ok(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool TaoLatticeBranchStruct::emit_6d_calc_ok() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_emit_6d_calc_ok(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool TaoLatticeBranchStruct::sigma_track_ok() const {
+  bool value;
+  tao_lattice_branch_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoLatticeBranchStruct::set_sigma_track_ok(bool value) {
+  tao_lattice_branch_struct_set_logical(fortran_ptr_, 8, value);
+}
+std::string TaoLatticeStruct::name() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_single_mode_buffer_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_lattice_struct_get_name_info);
   return std::string(arr.data(), arr.size());
 }
-void TaoCommonStruct::set_single_mode_buffer(const std::string &value) {
-  tao_common_struct_set_single_mode_buffer(
+void TaoLatticeStruct::set_name(const std::string &value) {
+  tao_lattice_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+LatStruct TaoLatticeStruct::lat() const {
+  void *ptr;
+  tao_lattice_struct_get_lat(fortran_ptr_, &ptr);
+  return LatStruct(ptr);
+}
+void TaoLatticeStruct::set_lat(const LatStruct &src) {
+  tao_lattice_struct_set_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+LatStruct TaoLatticeStruct::high_E_lat() const {
+  void *ptr;
+  tao_lattice_struct_get_high_E_lat(fortran_ptr_, &ptr);
+  return LatStruct(ptr);
+}
+void TaoLatticeStruct::set_high_E_lat(const LatStruct &src) {
+  tao_lattice_struct_set_high_E_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+LatStruct TaoLatticeStruct::low_E_lat() const {
+  void *ptr;
+  tao_lattice_struct_get_low_E_lat(fortran_ptr_, &ptr);
+  return LatStruct(ptr);
+}
+void TaoLatticeStruct::set_low_E_lat(const LatStruct &src) {
+  tao_lattice_struct_set_low_E_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoUniverseStruct> TaoLatticeStruct::u() const {
+  void *ptr;
+  tao_lattice_struct_get_u(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoUniverseStruct(ptr);
+}
+void TaoLatticeStruct::set_u(const TaoUniverseStruct &src) {
+  tao_lattice_struct_set_u(fortran_ptr_, src.get_fortran_ptr());
+}
+RadIntAllEleStruct TaoLatticeStruct::rad_int_by_ele_ri() const {
+  void *ptr;
+  tao_lattice_struct_get_rad_int_by_ele_ri(fortran_ptr_, &ptr);
+  return RadIntAllEleStruct(ptr);
+}
+void TaoLatticeStruct::set_rad_int_by_ele_ri(const RadIntAllEleStruct &src) {
+  tao_lattice_struct_set_rad_int_by_ele_ri(fortran_ptr_, src.get_fortran_ptr());
+}
+RadIntAllEleStruct TaoLatticeStruct::rad_int_by_ele_6d() const {
+  void *ptr;
+  tao_lattice_struct_get_rad_int_by_ele_6d(fortran_ptr_, &ptr);
+  return RadIntAllEleStruct(ptr);
+}
+void TaoLatticeStruct::set_rad_int_by_ele_6d(const RadIntAllEleStruct &src) {
+  tao_lattice_struct_set_rad_int_by_ele_6d(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoLatticeBranchStructAlloc1D TaoLatticeStruct::tao_branch() const {
+  return TaoLatticeBranchStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_lattice_struct_reallocate_tao_branch,
+      tao_lattice_struct_get_tao_branch_info
+  );
+}
+std::optional<bool> TaoLogicalArrayStruct::l() const {
+  bool value;
+  bool is_valid;
+  tao_logical_array_struct_get_l(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoLogicalArrayStruct::set_l(bool value) {
+  tao_logical_array_struct_set_l(fortran_ptr_, value);
+}
+TaoModelElementStructAlloc1D TaoModelBranchStruct::ele() const {
+  return TaoModelElementStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_model_branch_struct_reallocate_ele,
+      tao_model_branch_struct_get_ele_info
+  );
+}
+TaoBeamBranchStruct TaoModelBranchStruct::beam() const {
+  void *ptr;
+  tao_model_branch_struct_get_beam(fortran_ptr_, &ptr);
+  return TaoBeamBranchStruct(ptr);
+}
+void TaoModelBranchStruct::set_beam(const TaoBeamBranchStruct &src) {
+  tao_model_branch_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
+}
+BeamStruct TaoModelElementStruct::beam() const {
+  void *ptr;
+  tao_model_element_struct_get_beam(fortran_ptr_, &ptr);
+  return BeamStruct(ptr);
+}
+void TaoModelElementStruct::set_beam(const BeamStruct &src) {
+  tao_model_element_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
+}
+bool TaoModelElementStruct::save_beam_internally() const {
+  bool value;
+  tao_model_element_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoModelElementStruct::set_save_beam_internally(bool value) {
+  tao_model_element_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoModelElementStruct::save_beam_to_file() const {
+  bool value;
+  tao_model_element_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoModelElementStruct::set_save_beam_to_file(bool value) {
+  tao_model_element_struct_set_logical(fortran_ptr_, 1, value);
+}
+double TaoPingScaleStruct::a_mode_meas() const {
+  double value;
+  tao_ping_scale_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoPingScaleStruct::set_a_mode_meas(double value) {
+  tao_ping_scale_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoPingScaleStruct::a_mode_ref() const {
+  double value;
+  tao_ping_scale_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoPingScaleStruct::set_a_mode_ref(double value) {
+  tao_ping_scale_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoPingScaleStruct::b_mode_meas() const {
+  double value;
+  tao_ping_scale_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoPingScaleStruct::set_b_mode_meas(double value) {
+  tao_ping_scale_struct_set_real(fortran_ptr_, 2, value);
+}
+double TaoPingScaleStruct::b_mode_ref() const {
+  double value;
+  tao_ping_scale_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoPingScaleStruct::set_b_mode_ref(double value) {
+  tao_ping_scale_struct_set_real(fortran_ptr_, 3, value);
+}
+std::optional<TaoPlotStruct> TaoPlotArrayStruct::p() const {
+  void *ptr;
+  tao_plot_array_struct_get_p(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoPlotStruct(ptr);
+}
+void TaoPlotArrayStruct::set_p(const TaoPlotStruct &src) {
+  tao_plot_array_struct_set_p(fortran_ptr_, src.get_fortran_ptr());
+}
+EleStruct TaoPlotCacheStruct::ele_to_s() const {
+  void *ptr;
+  tao_plot_cache_struct_get_ele_to_s(fortran_ptr_, &ptr);
+  return EleStruct(ptr);
+}
+void TaoPlotCacheStruct::set_ele_to_s(const EleStruct &src) {
+  tao_plot_cache_struct_set_ele_to_s(fortran_ptr_, src.get_fortran_ptr());
+}
+CoordStruct TaoPlotCacheStruct::orbit() const {
+  void *ptr;
+  tao_plot_cache_struct_get_orbit(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void TaoPlotCacheStruct::set_orbit(const CoordStruct &src) {
+  tao_plot_cache_struct_set_orbit(fortran_ptr_, src.get_fortran_ptr());
+}
+bool TaoPlotCacheStruct::err() const {
+  bool value;
+  tao_plot_cache_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoPlotCacheStruct::set_err(bool value) {
+  tao_plot_cache_struct_set_logical(fortran_ptr_, 0, value);
+}
+TaoTitleStruct TaoPlotPageInput::title() const {
+  void *ptr;
+  tao_plot_page_input_get_title(fortran_ptr_, &ptr);
+  return TaoTitleStruct(ptr);
+}
+void TaoPlotPageInput::set_title(const TaoTitleStruct &src) {
+  tao_plot_page_input_set_title(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoTitleStruct TaoPlotPageInput::subtitle() const {
+  void *ptr;
+  tao_plot_page_input_get_subtitle(fortran_ptr_, &ptr);
+  return TaoTitleStruct(ptr);
+}
+void TaoPlotPageInput::set_subtitle(const TaoTitleStruct &src) {
+  tao_plot_page_input_set_subtitle(fortran_ptr_, src.get_fortran_ptr());
+}
+QpRectStruct TaoPlotPageInput::border() const {
+  void *ptr;
+  tao_plot_page_input_get_border(fortran_ptr_, &ptr);
+  return QpRectStruct(ptr);
+}
+void TaoPlotPageInput::set_border(const QpRectStruct &src) {
+  tao_plot_page_input_set_border(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string TaoPlotPageInput::plot_display_type() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
+      fortran_ptr_,
+      tao_plot_page_input_get_plot_display_type_info
+  );
+  return std::string(arr.data(), arr.size());
+}
+void TaoPlotPageInput::set_plot_display_type(const std::string &value) {
+  tao_plot_page_input_set_plot_display_type(
       fortran_ptr_,
       value.c_str(),
       static_cast<int>(value.length())
   );
 }
-std::string TaoCommonStruct::cmd() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_cmd_info);
-  return std::string(arr.data(), arr.size());
+FArray1D<double> TaoPlotPageInput::size() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_plot_page_input_get_size_info);
 }
-void TaoCommonStruct::set_cmd(const std::string &value) {
-  tao_common_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void TaoPlotPageInput::set_size(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_plot_page_input_set_size(fortran_ptr_, v.data(), shape);
+}
+double TaoPlotPageInput::text_height() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoPlotPageInput::set_text_height(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 0, value);
+}
+double TaoPlotPageInput::main_title_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoPlotPageInput::set_main_title_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 1, value);
+}
+double TaoPlotPageInput::graph_title_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoPlotPageInput::set_graph_title_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 2, value);
+}
+double TaoPlotPageInput::axis_number_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoPlotPageInput::set_axis_number_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 3, value);
+}
+double TaoPlotPageInput::axis_label_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoPlotPageInput::set_axis_label_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 4, value);
+}
+double TaoPlotPageInput::legend_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoPlotPageInput::set_legend_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 5, value);
+}
+double TaoPlotPageInput::key_table_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoPlotPageInput::set_key_table_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 6, value);
+}
+double TaoPlotPageInput::floor_plan_shape_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoPlotPageInput::set_floor_plan_shape_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 7, value);
+}
+double TaoPlotPageInput::floor_plan_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoPlotPageInput::set_floor_plan_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 8, value);
+}
+double TaoPlotPageInput::lat_layout_shape_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void TaoPlotPageInput::set_lat_layout_shape_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 9, value);
+}
+double TaoPlotPageInput::lat_layout_text_scale() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void TaoPlotPageInput::set_lat_layout_text_scale(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 10, value);
+}
+double TaoPlotPageInput::curve_legend_line_len() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void TaoPlotPageInput::set_curve_legend_line_len(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 11, value);
+}
+double TaoPlotPageInput::curve_legend_text_offset() const {
+  double value;
+  tao_plot_page_input_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void TaoPlotPageInput::set_curve_legend_text_offset(double value) {
+  tao_plot_page_input_set_real(fortran_ptr_, 12, value);
+}
+int TaoPlotPageInput::n_curve_pts() const {
+  int value;
+  tao_plot_page_input_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoPlotPageInput::set_n_curve_pts(int value) {
+  tao_plot_page_input_set_integer(fortran_ptr_, 0, value);
+}
+bool TaoPlotPageInput::delete_overlapping_plots() const {
+  bool value;
+  tao_plot_page_input_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoPlotPageInput::set_delete_overlapping_plots(bool value) {
+  tao_plot_page_input_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoPlotPageInput::draw_graph_title_suffix() const {
+  bool value;
+  tao_plot_page_input_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoPlotPageInput::set_draw_graph_title_suffix(bool value) {
+  tao_plot_page_input_set_logical(fortran_ptr_, 1, value);
 }
 TaoTitleStruct TaoPlotPageStruct::title() const {
   void *ptr;
@@ -11606,119 +15472,1397 @@ bool TaoPlotPageStruct::draw_graph_title_suffix() const {
 void TaoPlotPageStruct::set_draw_graph_title_suffix(bool value) {
   tao_plot_page_struct_set_logical(fortran_ptr_, 1, value);
 }
-TaoBuildingWallOrientationStruct TaoBuildingWallStruct::orientation() const {
+std::string TaoPlotRegionStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_region_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoPlotRegionStruct::set_name(const std::string &value) {
+  tao_plot_region_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoPlotStruct TaoPlotRegionStruct::plot() const {
   void *ptr;
-  tao_building_wall_struct_get_orientation(fortran_ptr_, &ptr);
-  return TaoBuildingWallOrientationStruct(ptr);
+  tao_plot_region_struct_get_plot(fortran_ptr_, &ptr);
+  return TaoPlotStruct(ptr);
 }
-void TaoBuildingWallStruct::set_orientation(const TaoBuildingWallOrientationStruct &src) {
-  tao_building_wall_struct_set_orientation(fortran_ptr_, src.get_fortran_ptr());
+void TaoPlotRegionStruct::set_plot(const TaoPlotStruct &src) {
+  tao_plot_region_struct_set_plot(fortran_ptr_, src.get_fortran_ptr());
 }
-TaoBuildingWallSectionStructAlloc1D TaoBuildingWallStruct::section() const {
-  return TaoBuildingWallSectionStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_building_wall_struct_reallocate_section,
-      tao_building_wall_struct_get_section_info
-  );
+FArray1D<double> TaoPlotRegionStruct::location() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_plot_region_struct_get_location_info);
 }
-double TaoBuildingWallOrientationStruct::theta() const {
-  double value;
-  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 0, &value);
+void TaoPlotRegionStruct::set_location(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_plot_region_struct_set_location(fortran_ptr_, v.data(), shape);
+}
+bool TaoPlotRegionStruct::visible() const {
+  bool value;
+  tao_plot_region_struct_get_logical(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoBuildingWallOrientationStruct::set_theta(double value) {
-  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 0, value);
+void TaoPlotRegionStruct::set_visible(bool value) {
+  tao_plot_region_struct_set_logical(fortran_ptr_, 0, value);
 }
-double TaoBuildingWallOrientationStruct::x_offset() const {
-  double value;
-  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 1, &value);
+bool TaoPlotRegionStruct::list_with_show_plot_command() const {
+  bool value;
+  tao_plot_region_struct_get_logical(fortran_ptr_, 1, &value);
   return value;
 }
-void TaoBuildingWallOrientationStruct::set_x_offset(double value) {
-  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 1, value);
+void TaoPlotRegionStruct::set_list_with_show_plot_command(bool value) {
+  tao_plot_region_struct_set_logical(fortran_ptr_, 1, value);
 }
-double TaoBuildingWallOrientationStruct::z_offset() const {
-  double value;
-  tao_building_wall_orientation_struct_get_real(fortran_ptr_, 2, &value);
+bool TaoPlotRegionStruct::setup_done() const {
+  bool value;
+  tao_plot_region_struct_get_logical(fortran_ptr_, 2, &value);
   return value;
 }
-void TaoBuildingWallOrientationStruct::set_z_offset(double value) {
-  tao_building_wall_orientation_struct_set_real(fortran_ptr_, 2, value);
+void TaoPlotRegionStruct::set_setup_done(bool value) {
+  tao_plot_region_struct_set_logical(fortran_ptr_, 2, value);
 }
-std::string TaoBuildingWallSectionStruct::name() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      tao_building_wall_section_struct_get_name_info
-  );
+std::string TaoPlotStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_name_info);
   return std::string(arr.data(), arr.size());
 }
-void TaoBuildingWallSectionStruct::set_name(const std::string &value) {
-  tao_building_wall_section_struct_set_name(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
+void TaoPlotStruct::set_name(const std::string &value) {
+  tao_plot_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-std::string TaoBuildingWallSectionStruct::constraint() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      tao_building_wall_section_struct_get_constraint_info
-  );
+std::string TaoPlotStruct::description() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_description_info);
   return std::string(arr.data(), arr.size());
 }
-void TaoBuildingWallSectionStruct::set_constraint(const std::string &value) {
-  tao_building_wall_section_struct_set_constraint(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
+void TaoPlotStruct::set_description(const std::string &value) {
+  tao_plot_struct_set_description(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-TaoBuildingWallPointStructAlloc1D TaoBuildingWallSectionStruct::point() const {
-  return TaoBuildingWallPointStructAlloc1D(
+TaoGraphStructAlloc1D TaoPlotStruct::graph() const {
+  return TaoGraphStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      tao_building_wall_section_struct_reallocate_point,
-      tao_building_wall_section_struct_get_point_info
+      tao_plot_struct_reallocate_graph,
+      tao_plot_struct_get_graph_info
   );
 }
-double TaoBuildingWallPointStruct::z() const {
-  double value;
-  tao_building_wall_point_struct_get_real(fortran_ptr_, 0, &value);
+std::optional<TaoPlotRegionStruct> TaoPlotStruct::r() const {
+  void *ptr;
+  tao_plot_struct_get_r(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoPlotRegionStruct(ptr);
+}
+void TaoPlotStruct::set_r(const TaoPlotRegionStruct &src) {
+  tao_plot_struct_set_r(fortran_ptr_, src.get_fortran_ptr());
+}
+int TaoPlotStruct::ix_plot() const {
+  int value;
+  tao_plot_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoBuildingWallPointStruct::set_z(double value) {
-  tao_building_wall_point_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoBuildingWallPointStruct::x() const {
-  double value;
-  tao_building_wall_point_struct_get_real(fortran_ptr_, 1, &value);
+void TaoPlotStruct::set_ix_plot(int value) { tao_plot_struct_set_integer(fortran_ptr_, 0, value); }
+int TaoPlotStruct::n_curve_pts() const {
+  int value;
+  tao_plot_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void TaoBuildingWallPointStruct::set_x(double value) {
-  tao_building_wall_point_struct_set_real(fortran_ptr_, 1, value);
+void TaoPlotStruct::set_n_curve_pts(int value) {
+  tao_plot_struct_set_integer(fortran_ptr_, 1, value);
 }
-double TaoBuildingWallPointStruct::radius() const {
-  double value;
-  tao_building_wall_point_struct_get_real(fortran_ptr_, 2, &value);
+std::string TaoPlotStruct::type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoPlotStruct::set_type(const std::string &value) {
+  tao_plot_struct_set_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoPlotStruct::x_axis_type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_plot_struct_get_x_axis_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoPlotStruct::set_x_axis_type(const std::string &value) {
+  tao_plot_struct_set_x_axis_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoPlotStruct::autoscale_x() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 0, &value);
   return value;
 }
-void TaoBuildingWallPointStruct::set_radius(double value) {
-  tao_building_wall_point_struct_set_real(fortran_ptr_, 2, value);
+void TaoPlotStruct::set_autoscale_x(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 0, value);
 }
-double TaoBuildingWallPointStruct::z_center() const {
-  double value;
-  tao_building_wall_point_struct_get_real(fortran_ptr_, 3, &value);
+bool TaoPlotStruct::autoscale_y() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 1, &value);
   return value;
 }
-void TaoBuildingWallPointStruct::set_z_center(double value) {
-  tao_building_wall_point_struct_set_real(fortran_ptr_, 3, value);
+void TaoPlotStruct::set_autoscale_y(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 1, value);
 }
-double TaoBuildingWallPointStruct::x_center() const {
-  double value;
-  tao_building_wall_point_struct_get_real(fortran_ptr_, 4, &value);
+bool TaoPlotStruct::autoscale_gang_x() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 2, &value);
   return value;
 }
-void TaoBuildingWallPointStruct::set_x_center(double value) {
-  tao_building_wall_point_struct_set_real(fortran_ptr_, 4, value);
+void TaoPlotStruct::set_autoscale_gang_x(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoPlotStruct::autoscale_gang_y() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoPlotStruct::set_autoscale_gang_y(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool TaoPlotStruct::list_with_show_plot_command() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoPlotStruct::set_list_with_show_plot_command(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool TaoPlotStruct::phantom() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoPlotStruct::set_phantom(bool value) { tao_plot_struct_set_logical(fortran_ptr_, 5, value); }
+bool TaoPlotStruct::default_plot() const {
+  bool value;
+  tao_plot_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoPlotStruct::set_default_plot(bool value) {
+  tao_plot_struct_set_logical(fortran_ptr_, 6, value);
+}
+std::optional<double> TaoRealPointerStruct::r() const {
+  double value;
+  bool is_valid;
+  tao_real_pointer_struct_get_r(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoRealPointerStruct::set_r(double value) {
+  tao_real_pointer_struct_set_r(fortran_ptr_, value);
+}
+std::optional<bool> TaoRealPointerStruct::good_value() const {
+  bool value;
+  bool is_valid;
+  tao_real_pointer_struct_get_good_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoRealPointerStruct::set_good_value(bool value) {
+  tao_real_pointer_struct_set_good_value(fortran_ptr_, value);
+}
+std::optional<bool> TaoRealPointerStruct::good_user() const {
+  bool value;
+  bool is_valid;
+  tao_real_pointer_struct_get_good_user(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoRealPointerStruct::set_good_user(bool value) {
+  tao_real_pointer_struct_set_good_user(fortran_ptr_, value);
+}
+double TaoShapePatternPointStruct::s() const {
+  double value;
+  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoShapePatternPointStruct::set_s(double value) {
+  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoShapePatternPointStruct::y() const {
+  double value;
+  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoShapePatternPointStruct::set_y(double value) {
+  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoShapePatternPointStruct::radius() const {
+  double value;
+  tao_shape_pattern_point_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoShapePatternPointStruct::set_radius(double value) {
+  tao_shape_pattern_point_struct_set_real(fortran_ptr_, 2, value);
+}
+std::string TaoShapePatternStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_shape_pattern_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoShapePatternStruct::set_name(const std::string &value) {
+  tao_shape_pattern_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+QpLineStruct TaoShapePatternStruct::line() const {
+  void *ptr;
+  tao_shape_pattern_struct_get_line(fortran_ptr_, &ptr);
+  return QpLineStruct(ptr);
+}
+void TaoShapePatternStruct::set_line(const QpLineStruct &src) {
+  tao_shape_pattern_struct_set_line(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoShapePatternPointStructAlloc1D TaoShapePatternStruct::pt() const {
+  return TaoShapePatternPointStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_shape_pattern_struct_reallocate_pt,
+      tao_shape_pattern_struct_get_pt_info
+  );
+}
+FArray1D<double> TaoSpinDnDpzStruct::vec() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_vec_info);
+}
+void TaoSpinDnDpzStruct::set_vec(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_dn_dpz_struct_set_vec(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> TaoSpinDnDpzStruct::partial() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial_info);
+}
+void TaoSpinDnDpzStruct::set_partial(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_set_partial, v);
+}
+FArray2D<double> TaoSpinDnDpzStruct::partial2() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_get_partial2_info);
+}
+void TaoSpinDnDpzStruct::set_partial2(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_dn_dpz_struct_set_partial2, v);
+}
+TaoSpinDnDpzStruct TaoSpinEleStruct::dn_dpz() const {
+  void *ptr;
+  tao_spin_ele_struct_get_dn_dpz(fortran_ptr_, &ptr);
+  return TaoSpinDnDpzStruct(ptr);
+}
+void TaoSpinEleStruct::set_dn_dpz(const TaoSpinDnDpzStruct &src) {
+  tao_spin_ele_struct_set_dn_dpz(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray1D<double> TaoSpinEleStruct::orb_eigen_val() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      tao_spin_ele_struct_get_orb_eigen_val_info
+  );
+}
+void TaoSpinEleStruct::set_orb_eigen_val(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_ele_struct_set_orb_eigen_val(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> TaoSpinEleStruct::orb_eigen_vec() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      tao_spin_ele_struct_get_orb_eigen_vec_info
+  );
+}
+void TaoSpinEleStruct::set_orb_eigen_vec(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_ele_struct_set_orb_eigen_vec, v);
+}
+FArray2D<double> TaoSpinEleStruct::spin_eigen_vec() const {
+  return ProxyHelpers::get_array_2d<double>(
+      fortran_ptr_,
+      tao_spin_ele_struct_get_spin_eigen_vec_info
+  );
+}
+void TaoSpinEleStruct::set_spin_eigen_vec(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_ele_struct_set_spin_eigen_vec, v);
+}
+bool TaoSpinEleStruct::valid() const {
+  bool value;
+  tao_spin_ele_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSpinEleStruct::set_valid(bool value) {
+  tao_spin_ele_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoSpinMapStruct::valid() const {
+  bool value;
+  tao_spin_map_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSpinMapStruct::set_valid(bool value) {
+  tao_spin_map_struct_set_logical(fortran_ptr_, 0, value);
+}
+SpinOrbitMap1Struct TaoSpinMapStruct::map1() const {
+  void *ptr;
+  tao_spin_map_struct_get_map1(fortran_ptr_, &ptr);
+  return SpinOrbitMap1Struct(ptr);
+}
+void TaoSpinMapStruct::set_map1(const SpinOrbitMap1Struct &src) {
+  tao_spin_map_struct_set_map1(fortran_ptr_, src.get_fortran_ptr());
+}
+SpinAxisStruct TaoSpinMapStruct::axis_input() const {
+  void *ptr;
+  tao_spin_map_struct_get_axis_input(fortran_ptr_, &ptr);
+  return SpinAxisStruct(ptr);
+}
+void TaoSpinMapStruct::set_axis_input(const SpinAxisStruct &src) {
+  tao_spin_map_struct_set_axis_input(fortran_ptr_, src.get_fortran_ptr());
+}
+SpinAxisStruct TaoSpinMapStruct::axis0() const {
+  void *ptr;
+  tao_spin_map_struct_get_axis0(fortran_ptr_, &ptr);
+  return SpinAxisStruct(ptr);
+}
+void TaoSpinMapStruct::set_axis0(const SpinAxisStruct &src) {
+  tao_spin_map_struct_set_axis0(fortran_ptr_, src.get_fortran_ptr());
+}
+SpinAxisStruct TaoSpinMapStruct::axis1() const {
+  void *ptr;
+  tao_spin_map_struct_get_axis1(fortran_ptr_, &ptr);
+  return SpinAxisStruct(ptr);
+}
+void TaoSpinMapStruct::set_axis1(const SpinAxisStruct &src) {
+  tao_spin_map_struct_set_axis1(fortran_ptr_, src.get_fortran_ptr());
+}
+int TaoSpinMapStruct::ix_ele() const {
+  int value;
+  tao_spin_map_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSpinMapStruct::set_ix_ele(int value) {
+  tao_spin_map_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoSpinMapStruct::ix_ref() const {
+  int value;
+  tao_spin_map_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoSpinMapStruct::set_ix_ref(int value) {
+  tao_spin_map_struct_set_integer(fortran_ptr_, 1, value);
+}
+int TaoSpinMapStruct::ix_uni() const {
+  int value;
+  tao_spin_map_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoSpinMapStruct::set_ix_uni(int value) {
+  tao_spin_map_struct_set_integer(fortran_ptr_, 2, value);
+}
+int TaoSpinMapStruct::ix_branch() const {
+  int value;
+  tao_spin_map_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoSpinMapStruct::set_ix_branch(int value) {
+  tao_spin_map_struct_set_integer(fortran_ptr_, 3, value);
+}
+FArray2D<double> TaoSpinMapStruct::mat8() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_spin_map_struct_get_mat8_info);
+}
+void TaoSpinMapStruct::set_mat8(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_spin_map_struct_set_mat8, v);
+}
+double TaoSpinPolarizationStruct::tune() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_tune(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoSpinPolarizationStruct::pol_limit_st() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_pol_limit_st(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoSpinPolarizationStruct::pol_limit_dk() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_pol_limit_dk(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 2, value);
+}
+FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      tao_spin_polarization_struct_get_pol_limit_dk_partial_info
+  );
+}
+void TaoSpinPolarizationStruct::set_pol_limit_dk_partial(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_pol_limit_dk_partial(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> TaoSpinPolarizationStruct::pol_limit_dk_partial2() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      tao_spin_polarization_struct_get_pol_limit_dk_partial2_info
+  );
+}
+void TaoSpinPolarizationStruct::set_pol_limit_dk_partial2(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_pol_limit_dk_partial2(fortran_ptr_, v.data(), shape);
+}
+double TaoSpinPolarizationStruct::pol_rate_bks() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_pol_rate_bks(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 3, value);
+}
+double TaoSpinPolarizationStruct::depol_rate() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_depol_rate(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 4, value);
+}
+FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      tao_spin_polarization_struct_get_depol_rate_partial_info
+  );
+}
+void TaoSpinPolarizationStruct::set_depol_rate_partial(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_depol_rate_partial(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> TaoSpinPolarizationStruct::depol_rate_partial2() const {
+  return ProxyHelpers::get_array_1d<double>(
+      fortran_ptr_,
+      tao_spin_polarization_struct_get_depol_rate_partial2_info
+  );
+}
+void TaoSpinPolarizationStruct::set_depol_rate_partial2(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_spin_polarization_struct_set_depol_rate_partial2(fortran_ptr_, v.data(), shape);
+}
+double TaoSpinPolarizationStruct::integral_bn() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_integral_bn(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 5, value);
+}
+double TaoSpinPolarizationStruct::integral_bdn() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_integral_bdn(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 6, value);
+}
+double TaoSpinPolarizationStruct::integral_1ns() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_integral_1ns(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 7, value);
+}
+double TaoSpinPolarizationStruct::integral_dn2() const {
+  double value;
+  tao_spin_polarization_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_integral_dn2(double value) {
+  tao_spin_polarization_struct_set_real(fortran_ptr_, 8, value);
+}
+bool TaoSpinPolarizationStruct::valid() const {
+  bool value;
+  tao_spin_polarization_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSpinPolarizationStruct::set_valid(bool value) {
+  tao_spin_polarization_struct_set_logical(fortran_ptr_, 0, value);
+}
+SpinOrbitMap1Struct TaoSpinPolarizationStruct::q_1turn() const {
+  void *ptr;
+  tao_spin_polarization_struct_get_q_1turn(fortran_ptr_, &ptr);
+  return SpinOrbitMap1Struct(ptr);
+}
+void TaoSpinPolarizationStruct::set_q_1turn(const SpinOrbitMap1Struct &src) {
+  tao_spin_polarization_struct_set_q_1turn(fortran_ptr_, src.get_fortran_ptr());
+}
+SpinOrbitMap1StructAlloc1D TaoSpinPolarizationStruct::q_ele() const {
+  return SpinOrbitMap1StructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_spin_polarization_struct_reallocate_q_ele,
+      tao_spin_polarization_struct_get_q_ele_info
+  );
+}
+std::string TaoStringArrayStruct::s() const {
+  return ProxyHelpers::get_string(fortran_ptr_, tao_string_array_struct_get_s_info);
+}
+void TaoStringArrayStruct::set_s(const std::string &value) {
+  tao_string_array_struct_set_s(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoGlobalStruct TaoSuperUniverseStruct::global() const {
+  void *ptr;
+  tao_super_universe_struct_get_global(fortran_ptr_, &ptr);
+  return TaoGlobalStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_global(const TaoGlobalStruct &src) {
+  tao_super_universe_struct_set_global(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoInitStruct TaoSuperUniverseStruct::init() const {
+  void *ptr;
+  tao_super_universe_struct_get_init(fortran_ptr_, &ptr);
+  return TaoInitStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_init(const TaoInitStruct &src) {
+  tao_super_universe_struct_set_init(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoCommonStruct TaoSuperUniverseStruct::com() const {
+  void *ptr;
+  tao_super_universe_struct_get_com(fortran_ptr_, &ptr);
+  return TaoCommonStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_com(const TaoCommonStruct &src) {
+  tao_super_universe_struct_set_com(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoPlotPageStruct TaoSuperUniverseStruct::plot_page() const {
+  void *ptr;
+  tao_super_universe_struct_get_plot_page(fortran_ptr_, &ptr);
+  return TaoPlotPageStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_plot_page(const TaoPlotPageStruct &src) {
+  tao_super_universe_struct_set_plot_page(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoV1VarStructAlloc1D TaoSuperUniverseStruct::v1_var() const {
+  return TaoV1VarStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_super_universe_struct_reallocate_v1_var,
+      tao_super_universe_struct_get_v1_var_info
+  );
+}
+TaoVarStructAlloc1D TaoSuperUniverseStruct::var() const {
+  return TaoVarStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_super_universe_struct_reallocate_var,
+      tao_super_universe_struct_get_var_info
+  );
+}
+TaoUniverseStructAlloc1D TaoSuperUniverseStruct::u() const {
+  return TaoUniverseStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_super_universe_struct_reallocate_u,
+      tao_super_universe_struct_get_u_info
+  );
+}
+IntAlloc1D TaoSuperUniverseStruct::key() const {
+  return IntAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_super_universe_struct_reallocate_key,
+      tao_super_universe_struct_get_key_info
+  );
+}
+void TaoSuperUniverseStruct::set_key(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tao_super_universe_struct_set_key(fortran_ptr_, v.data(), shape);
+}
+TaoBuildingWallStruct TaoSuperUniverseStruct::building_wall() const {
+  void *ptr;
+  tao_super_universe_struct_get_building_wall(fortran_ptr_, &ptr);
+  return TaoBuildingWallStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_building_wall(const TaoBuildingWallStruct &src) {
+  tao_super_universe_struct_set_building_wall(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoWaveStruct TaoSuperUniverseStruct::wave() const {
+  void *ptr;
+  tao_super_universe_struct_get_wave(fortran_ptr_, &ptr);
+  return TaoWaveStruct(ptr);
+}
+void TaoSuperUniverseStruct::set_wave(const TaoWaveStruct &src) {
+  tao_super_universe_struct_set_wave(fortran_ptr_, src.get_fortran_ptr());
+}
+int TaoSuperUniverseStruct::n_var_used() const {
+  int value;
+  tao_super_universe_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSuperUniverseStruct::set_n_var_used(int value) {
+  tao_super_universe_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoSuperUniverseStruct::n_v1_var_used() const {
+  int value;
+  tao_super_universe_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoSuperUniverseStruct::set_n_v1_var_used(int value) {
+  tao_super_universe_struct_set_integer(fortran_ptr_, 1, value);
+}
+TaoCmdHistoryStructArray1D TaoSuperUniverseStruct::history() const {
+  return ProxyHelpers::get_type_array_1d<TaoCmdHistoryStructArray1D>(
+      fortran_ptr_,
+      tao_super_universe_struct_get_history_info
+  );
+}
+bool TaoSuperUniverseStruct::initialized() const {
+  bool value;
+  tao_super_universe_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoSuperUniverseStruct::set_initialized(bool value) {
+  tao_super_universe_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::string TaoTitleStruct::string() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_string_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleStruct::set_string(const std::string &value) {
+  tao_title_struct_set_string(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoTitleStruct::x() const {
+  double value;
+  tao_title_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoTitleStruct::set_x(double value) { tao_title_struct_set_real(fortran_ptr_, 0, value); }
+double TaoTitleStruct::y() const {
+  double value;
+  tao_title_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoTitleStruct::set_y(double value) { tao_title_struct_set_real(fortran_ptr_, 1, value); }
+std::string TaoTitleStruct::units() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_units_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleStruct::set_units(const std::string &value) {
+  tao_title_struct_set_units(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoTitleStruct::justify() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_title_struct_get_justify_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTitleStruct::set_justify(const std::string &value) {
+  tao_title_struct_set_justify(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoTitleStruct::draw_it() const {
+  bool value;
+  tao_title_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoTitleStruct::set_draw_it(bool value) {
+  tao_title_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::string TaoTop10Struct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_top10_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoTop10Struct::set_name(const std::string &value) {
+  tao_top10_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double TaoTop10Struct::value() const {
+  double value;
+  tao_top10_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoTop10Struct::set_value(double value) { tao_top10_struct_set_real(fortran_ptr_, 0, value); }
+int TaoTop10Struct::index() const {
+  int value;
+  tao_top10_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoTop10Struct::set_index(int value) { tao_top10_struct_set_integer(fortran_ptr_, 0, value); }
+bool TaoTop10Struct::valid() const {
+  bool value;
+  tao_top10_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoTop10Struct::set_valid(bool value) { tao_top10_struct_set_logical(fortran_ptr_, 0, value); }
+int TaoUniverseCalcStruct::srdt_for_data() const {
+  int value;
+  tao_universe_calc_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_srdt_for_data(int value) {
+  tao_universe_calc_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool TaoUniverseCalcStruct::rad_int_for_data() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_rad_int_for_data(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoUniverseCalcStruct::rad_int_for_plotting() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_rad_int_for_plotting(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoUniverseCalcStruct::chrom_for_data() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_chrom_for_data(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 2, value);
+}
+bool TaoUniverseCalcStruct::chrom_for_plotting() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_chrom_for_plotting(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 3, value);
+}
+bool TaoUniverseCalcStruct::lat_sigma_for_data() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_lat_sigma_for_data(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 4, value);
+}
+bool TaoUniverseCalcStruct::lat_sigma_for_plotting() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_lat_sigma_for_plotting(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 5, value);
+}
+bool TaoUniverseCalcStruct::dynamic_aperture() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_dynamic_aperture(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool TaoUniverseCalcStruct::one_turn_map() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_one_turn_map(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 7, value);
+}
+bool TaoUniverseCalcStruct::lattice() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_lattice(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 8, value);
+}
+bool TaoUniverseCalcStruct::twiss() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 9, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_twiss(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 9, value);
+}
+bool TaoUniverseCalcStruct::track() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 10, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_track(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 10, value);
+}
+bool TaoUniverseCalcStruct::spin_matrices() const {
+  bool value;
+  tao_universe_calc_struct_get_logical(fortran_ptr_, 11, &value);
+  return value;
+}
+void TaoUniverseCalcStruct::set_spin_matrices(bool value) {
+  tao_universe_calc_struct_set_logical(fortran_ptr_, 11, value);
+}
+std::optional<TaoUniverseStruct> TaoUniversePointerStruct::u() const {
+  void *ptr;
+  tao_universe_pointer_struct_get_u(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoUniverseStruct(ptr);
+}
+void TaoUniversePointerStruct::set_u(const TaoUniverseStruct &src) {
+  tao_universe_pointer_struct_set_u(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoLatticeStruct> TaoUniverseStruct::model() const {
+  void *ptr;
+  tao_universe_struct_get_model(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoLatticeStruct(ptr);
+}
+void TaoUniverseStruct::set_model(const TaoLatticeStruct &src) {
+  tao_universe_struct_set_model(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoLatticeStruct> TaoUniverseStruct::design() const {
+  void *ptr;
+  tao_universe_struct_get_design(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoLatticeStruct(ptr);
+}
+void TaoUniverseStruct::set_design(const TaoLatticeStruct &src) {
+  tao_universe_struct_set_design(fortran_ptr_, src.get_fortran_ptr());
+}
+std::optional<TaoLatticeStruct> TaoUniverseStruct::base() const {
+  void *ptr;
+  tao_universe_struct_get_base(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoLatticeStruct(ptr);
+}
+void TaoUniverseStruct::set_base(const TaoLatticeStruct &src) {
+  tao_universe_struct_set_base(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoBeamUniStruct TaoUniverseStruct::beam() const {
+  void *ptr;
+  tao_universe_struct_get_beam(fortran_ptr_, &ptr);
+  return TaoBeamUniStruct(ptr);
+}
+void TaoUniverseStruct::set_beam(const TaoBeamUniStruct &src) {
+  tao_universe_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoDynamicApertureStruct TaoUniverseStruct::dynamic_aperture() const {
+  void *ptr;
+  tao_universe_struct_get_dynamic_aperture(fortran_ptr_, &ptr);
+  return TaoDynamicApertureStruct(ptr);
+}
+void TaoUniverseStruct::set_dynamic_aperture(const TaoDynamicApertureStruct &src) {
+  tao_universe_struct_set_dynamic_aperture(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoModelBranchStructArray1D TaoUniverseStruct::model_branch() const {
+  return ProxyHelpers::get_type_array_1d<TaoModelBranchStructArray1D>(
+      fortran_ptr_,
+      tao_universe_struct_get_model_branch_info
+  );
+}
+TaoD2DataStructAlloc1D TaoUniverseStruct::d2_data() const {
+  return TaoD2DataStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_universe_struct_reallocate_d2_data,
+      tao_universe_struct_get_d2_data_info
+  );
+}
+TaoDataStructAlloc1D TaoUniverseStruct::data() const {
+  return TaoDataStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_universe_struct_reallocate_data,
+      tao_universe_struct_get_data_info
+  );
+}
+TaoPingScaleStruct TaoUniverseStruct::ping_scale() const {
+  void *ptr;
+  tao_universe_struct_get_ping_scale(fortran_ptr_, &ptr);
+  return TaoPingScaleStruct(ptr);
+}
+void TaoUniverseStruct::set_ping_scale(const TaoPingScaleStruct &src) {
+  tao_universe_struct_set_ping_scale(fortran_ptr_, src.get_fortran_ptr());
+}
+LatStruct TaoUniverseStruct::scratch_lat() const {
+  void *ptr;
+  tao_universe_struct_get_scratch_lat(fortran_ptr_, &ptr);
+  return LatStruct(ptr);
+}
+void TaoUniverseStruct::set_scratch_lat(const LatStruct &src) {
+  tao_universe_struct_set_scratch_lat(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoUniverseCalcStruct TaoUniverseStruct::calc() const {
+  void *ptr;
+  tao_universe_struct_get_calc(fortran_ptr_, &ptr);
+  return TaoUniverseCalcStruct(ptr);
+}
+void TaoUniverseStruct::set_calc(const TaoUniverseCalcStruct &src) {
+  tao_universe_struct_set_calc(fortran_ptr_, src.get_fortran_ptr());
+}
+LatEleOrderStruct TaoUniverseStruct::ele_order() const {
+  void *ptr;
+  tao_universe_struct_get_ele_order(fortran_ptr_, &ptr);
+  return LatEleOrderStruct(ptr);
+}
+void TaoUniverseStruct::set_ele_order(const LatEleOrderStruct &src) {
+  tao_universe_struct_set_ele_order(fortran_ptr_, src.get_fortran_ptr());
+}
+TaoSpinMapStruct TaoUniverseStruct::spin_map() const {
+  void *ptr;
+  tao_universe_struct_get_spin_map(fortran_ptr_, &ptr);
+  return TaoSpinMapStruct(ptr);
+}
+void TaoUniverseStruct::set_spin_map(const TaoSpinMapStruct &src) {
+  tao_universe_struct_set_spin_map(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray2D<double> TaoUniverseStruct::dModel_dVar() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_universe_struct_get_dModel_dVar_info);
+}
+void TaoUniverseStruct::set_dModel_dVar(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_universe_struct_set_dModel_dVar, v);
+}
+int TaoUniverseStruct::ix_uni() const {
+  int value;
+  tao_universe_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoUniverseStruct::set_ix_uni(int value) {
+  tao_universe_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoUniverseStruct::n_d2_data_used() const {
+  int value;
+  tao_universe_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoUniverseStruct::set_n_d2_data_used(int value) {
+  tao_universe_struct_set_integer(fortran_ptr_, 1, value);
+}
+int TaoUniverseStruct::n_data_used() const {
+  int value;
+  tao_universe_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoUniverseStruct::set_n_data_used(int value) {
+  tao_universe_struct_set_integer(fortran_ptr_, 2, value);
+}
+bool TaoUniverseStruct::is_on() const {
+  bool value;
+  tao_universe_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoUniverseStruct::set_is_on(bool value) {
+  tao_universe_struct_set_logical(fortran_ptr_, 0, value);
+}
+bool TaoUniverseStruct::design_same_as_previous() const {
+  bool value;
+  tao_universe_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoUniverseStruct::set_design_same_as_previous(bool value) {
+  tao_universe_struct_set_logical(fortran_ptr_, 1, value);
+}
+bool TaoUniverseStruct::picked_uni() const {
+  bool value;
+  tao_universe_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoUniverseStruct::set_picked_uni(bool value) {
+  tao_universe_struct_set_logical(fortran_ptr_, 2, value);
+}
+std::optional<TaoV1VarStruct> TaoV1VarArrayStruct::v1() const {
+  void *ptr;
+  tao_v1_var_array_struct_get_v1(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoV1VarStruct(ptr);
+}
+void TaoV1VarArrayStruct::set_v1(const TaoV1VarStruct &src) {
+  tao_v1_var_array_struct_set_v1(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string TaoV1VarStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_v1_var_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoV1VarStruct::set_name(const std::string &value) {
+  tao_v1_var_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int TaoV1VarStruct::ix_v1_var() const {
+  int value;
+  tao_v1_var_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoV1VarStruct::set_ix_v1_var(int value) {
+  tao_v1_var_struct_set_integer(fortran_ptr_, 0, value);
+}
+TaoVarStructArray1D TaoV1VarStruct::v() const {
+  return ProxyHelpers::get_type_array_1d<TaoVarStructArray1D>(
+      fortran_ptr_,
+      tao_v1_var_struct_get_v_info
+  );
+}
+std::optional<TaoVarStruct> TaoVarArrayStruct::v() const {
+  void *ptr;
+  tao_var_array_struct_get_v(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoVarStruct(ptr);
+}
+void TaoVarArrayStruct::set_v(const TaoVarStruct &src) {
+  tao_var_array_struct_set_v(fortran_ptr_, src.get_fortran_ptr());
+}
+int TaoVarSlaveStruct::ix_uni() const {
+  int value;
+  tao_var_slave_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoVarSlaveStruct::set_ix_uni(int value) {
+  tao_var_slave_struct_set_integer(fortran_ptr_, 0, value);
+}
+int TaoVarSlaveStruct::ix_branch() const {
+  int value;
+  tao_var_slave_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoVarSlaveStruct::set_ix_branch(int value) {
+  tao_var_slave_struct_set_integer(fortran_ptr_, 1, value);
+}
+int TaoVarSlaveStruct::ix_ele() const {
+  int value;
+  tao_var_slave_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoVarSlaveStruct::set_ix_ele(int value) {
+  tao_var_slave_struct_set_integer(fortran_ptr_, 2, value);
+}
+std::optional<double> TaoVarSlaveStruct::model_value() const {
+  double value;
+  bool is_valid;
+  tao_var_slave_struct_get_model_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoVarSlaveStruct::set_model_value(double value) {
+  tao_var_slave_struct_set_model_value(fortran_ptr_, value);
+}
+std::optional<double> TaoVarSlaveStruct::base_value() const {
+  double value;
+  bool is_valid;
+  tao_var_slave_struct_get_base_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoVarSlaveStruct::set_base_value(double value) {
+  tao_var_slave_struct_set_base_value(fortran_ptr_, value);
+}
+std::string TaoVarStruct::ele_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_ele_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoVarStruct::set_ele_name(const std::string &value) {
+  tao_var_struct_set_ele_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoVarStruct::attrib_name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_attrib_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoVarStruct::set_attrib_name(const std::string &value) {
+  tao_var_struct_set_attrib_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoVarStruct::id() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_id_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoVarStruct::set_id(const std::string &value) {
+  tao_var_struct_set_id(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+TaoVarSlaveStructAlloc1D TaoVarStruct::slave() const {
+  return TaoVarSlaveStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      tao_var_struct_reallocate_slave,
+      tao_var_struct_get_slave_info
+  );
+}
+int TaoVarStruct::ix_v1() const {
+  int value;
+  tao_var_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoVarStruct::set_ix_v1(int value) { tao_var_struct_set_integer(fortran_ptr_, 0, value); }
+int TaoVarStruct::ix_var() const {
+  int value;
+  tao_var_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoVarStruct::set_ix_var(int value) { tao_var_struct_set_integer(fortran_ptr_, 1, value); }
+int TaoVarStruct::ix_dvar() const {
+  int value;
+  tao_var_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoVarStruct::set_ix_dvar(int value) { tao_var_struct_set_integer(fortran_ptr_, 2, value); }
+int TaoVarStruct::ix_attrib() const {
+  int value;
+  tao_var_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoVarStruct::set_ix_attrib(int value) { tao_var_struct_set_integer(fortran_ptr_, 3, value); }
+int TaoVarStruct::ix_key_table() const {
+  int value;
+  tao_var_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoVarStruct::set_ix_key_table(int value) {
+  tao_var_struct_set_integer(fortran_ptr_, 4, value);
+}
+std::optional<double> TaoVarStruct::model_value() const {
+  double value;
+  bool is_valid;
+  tao_var_struct_get_model_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoVarStruct::set_model_value(double value) {
+  tao_var_struct_set_model_value(fortran_ptr_, value);
+}
+std::optional<double> TaoVarStruct::base_value() const {
+  double value;
+  bool is_valid;
+  tao_var_struct_get_base_value(fortran_ptr_, &value, &is_valid);
+  if (is_valid)
+    return value;
+  return std::nullopt;
+}
+void TaoVarStruct::set_base_value(double value) {
+  tao_var_struct_set_base_value(fortran_ptr_, value);
+}
+double TaoVarStruct::design_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoVarStruct::set_design_value(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoVarStruct::scratch_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoVarStruct::set_scratch_value(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoVarStruct::old_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoVarStruct::set_old_value(double value) { tao_var_struct_set_real(fortran_ptr_, 2, value); }
+double TaoVarStruct::meas_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoVarStruct::set_meas_value(double value) { tao_var_struct_set_real(fortran_ptr_, 3, value); }
+double TaoVarStruct::ref_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoVarStruct::set_ref_value(double value) { tao_var_struct_set_real(fortran_ptr_, 4, value); }
+double TaoVarStruct::correction_value() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoVarStruct::set_correction_value(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 5, value);
+}
+double TaoVarStruct::high_lim() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoVarStruct::set_high_lim(double value) { tao_var_struct_set_real(fortran_ptr_, 6, value); }
+double TaoVarStruct::low_lim() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoVarStruct::set_low_lim(double value) { tao_var_struct_set_real(fortran_ptr_, 7, value); }
+double TaoVarStruct::step() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void TaoVarStruct::set_step(double value) { tao_var_struct_set_real(fortran_ptr_, 8, value); }
+double TaoVarStruct::weight() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void TaoVarStruct::set_weight(double value) { tao_var_struct_set_real(fortran_ptr_, 9, value); }
+double TaoVarStruct::delta_merit() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void TaoVarStruct::set_delta_merit(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 10, value);
+}
+double TaoVarStruct::merit() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void TaoVarStruct::set_merit(double value) { tao_var_struct_set_real(fortran_ptr_, 11, value); }
+double TaoVarStruct::dMerit_dVar() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void TaoVarStruct::set_dMerit_dVar(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 12, value);
+}
+double TaoVarStruct::key_val0() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 13, &value);
+  return value;
+}
+void TaoVarStruct::set_key_val0(double value) { tao_var_struct_set_real(fortran_ptr_, 13, value); }
+double TaoVarStruct::key_delta() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 14, &value);
+  return value;
+}
+void TaoVarStruct::set_key_delta(double value) { tao_var_struct_set_real(fortran_ptr_, 14, value); }
+double TaoVarStruct::s() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 15, &value);
+  return value;
+}
+void TaoVarStruct::set_s(double value) { tao_var_struct_set_real(fortran_ptr_, 15, value); }
+double TaoVarStruct::extend_val() const {
+  double value;
+  tao_var_struct_get_real(fortran_ptr_, 16, &value);
+  return value;
+}
+void TaoVarStruct::set_extend_val(double value) {
+  tao_var_struct_set_real(fortran_ptr_, 16, value);
+}
+std::string TaoVarStruct::merit_type() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_var_struct_get_merit_type_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoVarStruct::set_merit_type(const std::string &value) {
+  tao_var_struct_set_merit_type(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool TaoVarStruct::exists() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoVarStruct::set_exists(bool value) { tao_var_struct_set_logical(fortran_ptr_, 0, value); }
+bool TaoVarStruct::good_var() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoVarStruct::set_good_var(bool value) { tao_var_struct_set_logical(fortran_ptr_, 1, value); }
+bool TaoVarStruct::good_user() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoVarStruct::set_good_user(bool value) { tao_var_struct_set_logical(fortran_ptr_, 2, value); }
+bool TaoVarStruct::good_opt() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoVarStruct::set_good_opt(bool value) { tao_var_struct_set_logical(fortran_ptr_, 3, value); }
+bool TaoVarStruct::good_plot() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoVarStruct::set_good_plot(bool value) { tao_var_struct_set_logical(fortran_ptr_, 4, value); }
+bool TaoVarStruct::useit_opt() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 5, &value);
+  return value;
+}
+void TaoVarStruct::set_useit_opt(bool value) { tao_var_struct_set_logical(fortran_ptr_, 5, value); }
+bool TaoVarStruct::useit_plot() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 6, &value);
+  return value;
+}
+void TaoVarStruct::set_useit_plot(bool value) {
+  tao_var_struct_set_logical(fortran_ptr_, 6, value);
+}
+bool TaoVarStruct::key_bound() const {
+  bool value;
+  tao_var_struct_get_logical(fortran_ptr_, 7, &value);
+  return value;
+}
+void TaoVarStruct::set_key_bound(bool value) { tao_var_struct_set_logical(fortran_ptr_, 7, value); }
+std::optional<TaoV1VarStruct> TaoVarStruct::v1() const {
+  void *ptr;
+  tao_var_struct_get_v1(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return TaoV1VarStruct(ptr);
+}
+void TaoVarStruct::set_v1(const TaoV1VarStruct &src) {
+  tao_var_struct_set_v1(fortran_ptr_, src.get_fortran_ptr());
+}
+double TaoWaveKickPtStruct::phi_s() const {
+  double value;
+  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_phi_s(double value) {
+  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 0, value);
+}
+double TaoWaveKickPtStruct::phi_r() const {
+  double value;
+  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_phi_r(double value) {
+  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 1, value);
+}
+double TaoWaveKickPtStruct::phi() const {
+  double value;
+  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_phi(double value) {
+  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 2, value);
+}
+double TaoWaveKickPtStruct::amp() const {
+  double value;
+  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_amp(double value) {
+  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 3, value);
+}
+double TaoWaveKickPtStruct::s() const {
+  double value;
+  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_s(double value) {
+  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 4, value);
+}
+int TaoWaveKickPtStruct::ix_dat_before_kick() const {
+  int value;
+  tao_wave_kick_pt_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TaoWaveKickPtStruct::set_ix_dat_before_kick(int value) {
+  tao_wave_kick_pt_struct_set_integer(fortran_ptr_, 0, value);
+}
+std::optional<EleStruct> TaoWaveKickPtStruct::ele() const {
+  void *ptr;
+  tao_wave_kick_pt_struct_get_ele(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return EleStruct(ptr);
+}
+void TaoWaveKickPtStruct::set_ele(const EleStruct &src) {
+  tao_wave_kick_pt_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
 }
 std::string TaoWaveStruct::data_type() const {
   FArray1D<char> arr =
@@ -12024,1835 +17168,39 @@ std::optional<TaoD1DataStruct> TaoWaveStruct::d1_dat() const {
 void TaoWaveStruct::set_d1_dat(const TaoD1DataStruct &src) {
   tao_wave_struct_set_d1_dat(fortran_ptr_, src.get_fortran_ptr());
 }
-double TaoWaveKickPtStruct::phi_s() const {
-  double value;
-  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
+FArray1D<double> TargetPointStruct::r() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, target_point_struct_get_r_info);
 }
-void TaoWaveKickPtStruct::set_phi_s(double value) {
-  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 0, value);
-}
-double TaoWaveKickPtStruct::phi_r() const {
-  double value;
-  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoWaveKickPtStruct::set_phi_r(double value) {
-  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 1, value);
-}
-double TaoWaveKickPtStruct::phi() const {
-  double value;
-  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoWaveKickPtStruct::set_phi(double value) {
-  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 2, value);
-}
-double TaoWaveKickPtStruct::amp() const {
-  double value;
-  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void TaoWaveKickPtStruct::set_amp(double value) {
-  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 3, value);
-}
-double TaoWaveKickPtStruct::s() const {
-  double value;
-  tao_wave_kick_pt_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void TaoWaveKickPtStruct::set_s(double value) {
-  tao_wave_kick_pt_struct_set_real(fortran_ptr_, 4, value);
-}
-int TaoWaveKickPtStruct::ix_dat_before_kick() const {
-  int value;
-  tao_wave_kick_pt_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoWaveKickPtStruct::set_ix_dat_before_kick(int value) {
-  tao_wave_kick_pt_struct_set_integer(fortran_ptr_, 0, value);
-}
-std::optional<EleStruct> TaoWaveKickPtStruct::ele() const {
-  void *ptr;
-  tao_wave_kick_pt_struct_get_ele(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return EleStruct(ptr);
-}
-void TaoWaveKickPtStruct::set_ele(const EleStruct &src) {
-  tao_wave_kick_pt_struct_set_ele(fortran_ptr_, src.get_fortran_ptr());
-}
-std::string TaoCmdHistoryStruct::cmd() const {
-  return ProxyHelpers::get_string(fortran_ptr_, tao_cmd_history_struct_get_cmd_info);
-}
-void TaoCmdHistoryStruct::set_cmd(const std::string &value) {
-  tao_cmd_history_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int TaoCmdHistoryStruct::ix() const {
-  int value;
-  tao_cmd_history_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoCmdHistoryStruct::set_ix(int value) {
-  tao_cmd_history_struct_set_integer(fortran_ptr_, 0, value);
-}
-std::optional<TaoLatticeStruct> TaoUniverseStruct::model() const {
-  void *ptr;
-  tao_universe_struct_get_model(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoLatticeStruct(ptr);
-}
-void TaoUniverseStruct::set_model(const TaoLatticeStruct &src) {
-  tao_universe_struct_set_model(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<TaoLatticeStruct> TaoUniverseStruct::design() const {
-  void *ptr;
-  tao_universe_struct_get_design(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoLatticeStruct(ptr);
-}
-void TaoUniverseStruct::set_design(const TaoLatticeStruct &src) {
-  tao_universe_struct_set_design(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<TaoLatticeStruct> TaoUniverseStruct::base() const {
-  void *ptr;
-  tao_universe_struct_get_base(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TaoLatticeStruct(ptr);
-}
-void TaoUniverseStruct::set_base(const TaoLatticeStruct &src) {
-  tao_universe_struct_set_base(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoBeamUniStruct TaoUniverseStruct::beam() const {
-  void *ptr;
-  tao_universe_struct_get_beam(fortran_ptr_, &ptr);
-  return TaoBeamUniStruct(ptr);
-}
-void TaoUniverseStruct::set_beam(const TaoBeamUniStruct &src) {
-  tao_universe_struct_set_beam(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoDynamicApertureStruct TaoUniverseStruct::dynamic_aperture() const {
-  void *ptr;
-  tao_universe_struct_get_dynamic_aperture(fortran_ptr_, &ptr);
-  return TaoDynamicApertureStruct(ptr);
-}
-void TaoUniverseStruct::set_dynamic_aperture(const TaoDynamicApertureStruct &src) {
-  tao_universe_struct_set_dynamic_aperture(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoModelBranchStructArray1D TaoUniverseStruct::model_branch() const {
-  return ProxyHelpers::get_type_array_1d<TaoModelBranchStructArray1D>(
-      fortran_ptr_,
-      tao_universe_struct_get_model_branch_info
-  );
-}
-TaoD2DataStructAlloc1D TaoUniverseStruct::d2_data() const {
-  return TaoD2DataStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_universe_struct_reallocate_d2_data,
-      tao_universe_struct_get_d2_data_info
-  );
-}
-TaoDataStructAlloc1D TaoUniverseStruct::data() const {
-  return TaoDataStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      tao_universe_struct_reallocate_data,
-      tao_universe_struct_get_data_info
-  );
-}
-TaoPingScaleStruct TaoUniverseStruct::ping_scale() const {
-  void *ptr;
-  tao_universe_struct_get_ping_scale(fortran_ptr_, &ptr);
-  return TaoPingScaleStruct(ptr);
-}
-void TaoUniverseStruct::set_ping_scale(const TaoPingScaleStruct &src) {
-  tao_universe_struct_set_ping_scale(fortran_ptr_, src.get_fortran_ptr());
-}
-LatStruct TaoUniverseStruct::scratch_lat() const {
-  void *ptr;
-  tao_universe_struct_get_scratch_lat(fortran_ptr_, &ptr);
-  return LatStruct(ptr);
-}
-void TaoUniverseStruct::set_scratch_lat(const LatStruct &src) {
-  tao_universe_struct_set_scratch_lat(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoUniverseCalcStruct TaoUniverseStruct::calc() const {
-  void *ptr;
-  tao_universe_struct_get_calc(fortran_ptr_, &ptr);
-  return TaoUniverseCalcStruct(ptr);
-}
-void TaoUniverseStruct::set_calc(const TaoUniverseCalcStruct &src) {
-  tao_universe_struct_set_calc(fortran_ptr_, src.get_fortran_ptr());
-}
-LatEleOrderStruct TaoUniverseStruct::ele_order() const {
-  void *ptr;
-  tao_universe_struct_get_ele_order(fortran_ptr_, &ptr);
-  return LatEleOrderStruct(ptr);
-}
-void TaoUniverseStruct::set_ele_order(const LatEleOrderStruct &src) {
-  tao_universe_struct_set_ele_order(fortran_ptr_, src.get_fortran_ptr());
-}
-TaoSpinMapStruct TaoUniverseStruct::spin_map() const {
-  void *ptr;
-  tao_universe_struct_get_spin_map(fortran_ptr_, &ptr);
-  return TaoSpinMapStruct(ptr);
-}
-void TaoUniverseStruct::set_spin_map(const TaoSpinMapStruct &src) {
-  tao_universe_struct_set_spin_map(fortran_ptr_, src.get_fortran_ptr());
-}
-FArray2D<double> TaoUniverseStruct::dModel_dVar() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, tao_universe_struct_get_dModel_dVar_info);
-}
-void TaoUniverseStruct::set_dModel_dVar(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, tao_universe_struct_set_dModel_dVar, v);
-}
-int TaoUniverseStruct::ix_uni() const {
-  int value;
-  tao_universe_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoUniverseStruct::set_ix_uni(int value) {
-  tao_universe_struct_set_integer(fortran_ptr_, 0, value);
-}
-int TaoUniverseStruct::n_d2_data_used() const {
-  int value;
-  tao_universe_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoUniverseStruct::set_n_d2_data_used(int value) {
-  tao_universe_struct_set_integer(fortran_ptr_, 1, value);
-}
-int TaoUniverseStruct::n_data_used() const {
-  int value;
-  tao_universe_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoUniverseStruct::set_n_data_used(int value) {
-  tao_universe_struct_set_integer(fortran_ptr_, 2, value);
-}
-bool TaoUniverseStruct::is_on() const {
-  bool value;
-  tao_universe_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void TaoUniverseStruct::set_is_on(bool value) {
-  tao_universe_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool TaoUniverseStruct::design_same_as_previous() const {
-  bool value;
-  tao_universe_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void TaoUniverseStruct::set_design_same_as_previous(bool value) {
-  tao_universe_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool TaoUniverseStruct::picked_uni() const {
-  bool value;
-  tao_universe_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void TaoUniverseStruct::set_picked_uni(bool value) {
-  tao_universe_struct_set_logical(fortran_ptr_, 2, value);
-}
-double MadEnergyStruct::total() const {
-  double value;
-  mad_energy_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void MadEnergyStruct::set_total(double value) {
-  mad_energy_struct_set_real(fortran_ptr_, 0, value);
-}
-double MadEnergyStruct::beta() const {
-  double value;
-  mad_energy_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void MadEnergyStruct::set_beta(double value) { mad_energy_struct_set_real(fortran_ptr_, 1, value); }
-double MadEnergyStruct::gamma() const {
-  double value;
-  mad_energy_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void MadEnergyStruct::set_gamma(double value) {
-  mad_energy_struct_set_real(fortran_ptr_, 2, value);
-}
-double MadEnergyStruct::kinetic() const {
-  double value;
-  mad_energy_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void MadEnergyStruct::set_kinetic(double value) {
-  mad_energy_struct_set_real(fortran_ptr_, 3, value);
-}
-double MadEnergyStruct::p0c() const {
-  double value;
-  mad_energy_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void MadEnergyStruct::set_p0c(double value) { mad_energy_struct_set_real(fortran_ptr_, 4, value); }
-int MadEnergyStruct::particle() const {
-  int value;
-  mad_energy_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void MadEnergyStruct::set_particle(int value) {
-  mad_energy_struct_set_integer(fortran_ptr_, 0, value);
-}
-FArray1D<double> MadMapStruct::k() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, mad_map_struct_get_k_info);
-}
-void MadMapStruct::set_k(const std::vector<double> &v) {
+void TargetPointStruct::set_r(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  mad_map_struct_set_k(fortran_ptr_, v.data(), shape);
+  target_point_struct_set_r(fortran_ptr_, v.data(), shape);
 }
-FArray2D<double> MadMapStruct::r() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, mad_map_struct_get_r_info);
-}
-void MadMapStruct::set_r(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, mad_map_struct_set_r, v);
-}
-FArray3D<double> MadMapStruct::t() const {
-  return ProxyHelpers::get_array_3d<double>(fortran_ptr_, mad_map_struct_get_t_info);
-}
-void MadMapStruct::set_t(const std::vector<std::vector<std::vector<double>>> &v) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, mad_map_struct_set_t, v);
-}
-int64_t RandomStateStruct::ix() const {
-  int64_t value;
-  random_state_struct_get_integer8(fortran_ptr_, 0, &value);
-  return value;
-}
-void RandomStateStruct::set_ix(int64_t value) {
-  random_state_struct_set_integer8(fortran_ptr_, 0, value);
-}
-int64_t RandomStateStruct::iy() const {
-  int64_t value;
-  random_state_struct_get_integer8(fortran_ptr_, 1, &value);
-  return value;
-}
-void RandomStateStruct::set_iy(int64_t value) {
-  random_state_struct_set_integer8(fortran_ptr_, 1, value);
-}
-bool RandomStateStruct::number_stored() const {
-  bool value;
-  random_state_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void RandomStateStruct::set_number_stored(bool value) {
-  random_state_struct_set_logical(fortran_ptr_, 0, value);
-}
-double RandomStateStruct::h_saved() const {
+double TaylorStruct::ref() const {
   double value;
-  random_state_struct_get_real(fortran_ptr_, 0, &value);
+  taylor_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void RandomStateStruct::set_h_saved(double value) {
-  random_state_struct_set_real(fortran_ptr_, 0, value);
+void TaylorStruct::set_ref(double value) { taylor_struct_set_real(fortran_ptr_, 0, value); }
+TaylorTermStructArray1D TaylorStruct::term() const {
+  return ProxyHelpers::get_type_array_1d<TaylorTermStructArray1D>(
+      fortran_ptr_,
+      taylor_struct_get_term_info
+  );
 }
-int RandomStateStruct::engine() const {
-  int value;
-  random_state_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void RandomStateStruct::set_engine(int value) {
-  random_state_struct_set_integer(fortran_ptr_, 0, value);
-}
-int RandomStateStruct::seed() const {
-  int value;
-  random_state_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void RandomStateStruct::set_seed(int value) {
-  random_state_struct_set_integer(fortran_ptr_, 1, value);
-}
-double RandomStateStruct::am() const {
+double TaylorTermStruct::coef() const {
   double value;
-  random_state_struct_get_real(fortran_ptr_, 1, &value);
+  taylor_term_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void RandomStateStruct::set_am(double value) {
-  random_state_struct_set_real(fortran_ptr_, 1, value);
+void TaylorTermStruct::set_coef(double value) {
+  taylor_term_struct_set_real(fortran_ptr_, 0, value);
 }
-int RandomStateStruct::gauss_converter() const {
-  int value;
-  random_state_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
+FArray1D<int> TaylorTermStruct::expn() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, taylor_term_struct_get_expn_info);
 }
-void RandomStateStruct::set_gauss_converter(int value) {
-  random_state_struct_set_integer(fortran_ptr_, 2, value);
-}
-double RandomStateStruct::gauss_sigma_cut() const {
-  double value;
-  random_state_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void RandomStateStruct::set_gauss_sigma_cut(double value) {
-  random_state_struct_set_real(fortran_ptr_, 2, value);
-}
-int64_t RandomStateStruct::in_sobseq() const {
-  int64_t value;
-  random_state_struct_get_integer8(fortran_ptr_, 2, &value);
-  return value;
-}
-void RandomStateStruct::set_in_sobseq(int64_t value) {
-  random_state_struct_set_integer8(fortran_ptr_, 2, value);
-}
-FArray1D<int64_t> RandomStateStruct::ix_sobseq() const {
-  return ProxyHelpers::get_array_1d<int64_t>(fortran_ptr_, random_state_struct_get_ix_sobseq_info);
-}
-void RandomStateStruct::set_ix_sobseq(const std::vector<int64_t> &v) {
+void TaylorTermStruct::set_expn(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  random_state_struct_set_ix_sobseq(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> RandomStateStruct::x_sobseq() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, random_state_struct_get_x_sobseq_info);
-}
-void RandomStateStruct::set_x_sobseq(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  random_state_struct_set_x_sobseq(fortran_ptr_, v.data(), shape);
-}
-int BbuStageStruct::ix_ele_lr_wake() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_ele_lr_wake(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 0, value);
-}
-int BbuStageStruct::ix_ele_stage_end() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_ele_stage_end(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 1, value);
-}
-int BbuStageStruct::ix_pass() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_pass(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 2, value);
-}
-int BbuStageStruct::ix_stage_pass1() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_stage_pass1(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 3, value);
-}
-int BbuStageStruct::ix_head_bunch() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_head_bunch(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 4, value);
-}
-int BbuStageStruct::ix_hom_max() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void BbuStageStruct::set_ix_hom_max(int value) {
-  bbu_stage_struct_set_integer(fortran_ptr_, 5, value);
-}
-double BbuStageStruct::hom_voltage_max() const {
-  double value;
-  bbu_stage_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuStageStruct::set_hom_voltage_max(double value) {
-  bbu_stage_struct_set_real(fortran_ptr_, 0, value);
-}
-double BbuStageStruct::time_at_wake_ele() const {
-  double value;
-  bbu_stage_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuStageStruct::set_time_at_wake_ele(double value) {
-  bbu_stage_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<double> BbuStageStruct::ave_orb() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_ave_orb_info);
-}
-void BbuStageStruct::set_ave_orb(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_stage_struct_set_ave_orb(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> BbuStageStruct::rms_orb() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_rms_orb_info);
-}
-void BbuStageStruct::set_rms_orb(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_stage_struct_set_rms_orb(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> BbuStageStruct::min_orb() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_min_orb_info);
-}
-void BbuStageStruct::set_min_orb(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_stage_struct_set_min_orb(fortran_ptr_, v.data(), shape);
-}
-FArray1D<double> BbuStageStruct::max_orb() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_stage_struct_get_max_orb_info);
-}
-void BbuStageStruct::set_max_orb(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_stage_struct_set_max_orb(fortran_ptr_, v.data(), shape);
-}
-int BbuStageStruct::n_orb() const {
-  int value;
-  bbu_stage_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void BbuStageStruct::set_n_orb(int value) { bbu_stage_struct_set_integer(fortran_ptr_, 6, value); }
-BunchStructAlloc1D BbuBeamStruct::bunch() const {
-  return BunchStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bbu_beam_struct_reallocate_bunch,
-      bbu_beam_struct_get_bunch_info
-  );
-}
-BbuStageStructAlloc1D BbuBeamStruct::stage() const {
-  return BbuStageStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bbu_beam_struct_reallocate_stage,
-      bbu_beam_struct_get_stage_info
-  );
-}
-IntAlloc1D BbuBeamStruct::ix_ele_bunch() const {
-  return IntAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      bbu_beam_struct_reallocate_ix_ele_bunch,
-      bbu_beam_struct_get_ix_ele_bunch_info
-  );
-}
-void BbuBeamStruct::set_ix_ele_bunch(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_beam_struct_set_ix_ele_bunch(fortran_ptr_, v.data(), shape);
-}
-int BbuBeamStruct::ix_bunch_head() const {
-  int value;
-  bbu_beam_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuBeamStruct::set_ix_bunch_head(int value) {
-  bbu_beam_struct_set_integer(fortran_ptr_, 0, value);
-}
-int BbuBeamStruct::ix_bunch_end() const {
-  int value;
-  bbu_beam_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuBeamStruct::set_ix_bunch_end(int value) {
-  bbu_beam_struct_set_integer(fortran_ptr_, 1, value);
-}
-int BbuBeamStruct::n_bunch_in_lat() const {
-  int value;
-  bbu_beam_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuBeamStruct::set_n_bunch_in_lat(int value) {
-  bbu_beam_struct_set_integer(fortran_ptr_, 2, value);
-}
-int BbuBeamStruct::ix_stage_voltage_max() const {
-  int value;
-  bbu_beam_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuBeamStruct::set_ix_stage_voltage_max(int value) {
-  bbu_beam_struct_set_integer(fortran_ptr_, 3, value);
-}
-double BbuBeamStruct::hom_voltage_max() const {
-  double value;
-  bbu_beam_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuBeamStruct::set_hom_voltage_max(double value) {
-  bbu_beam_struct_set_real(fortran_ptr_, 0, value);
-}
-double BbuBeamStruct::time_now() const {
-  double value;
-  bbu_beam_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuBeamStruct::set_time_now(double value) { bbu_beam_struct_set_real(fortran_ptr_, 1, value); }
-double BbuBeamStruct::one_turn_time() const {
-  double value;
-  bbu_beam_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuBeamStruct::set_one_turn_time(double value) {
-  bbu_beam_struct_set_real(fortran_ptr_, 2, value);
-}
-double BbuBeamStruct::rf_wavelength_max() const {
-  double value;
-  bbu_beam_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuBeamStruct::set_rf_wavelength_max(double value) {
-  bbu_beam_struct_set_real(fortran_ptr_, 3, value);
-}
-std::string BbuParamStruct::lat_filename() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_lat_filename_info);
-  return std::string(arr.data(), arr.size());
-}
-void BbuParamStruct::set_lat_filename(const std::string &value) {
-  bbu_param_struct_set_lat_filename(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string BbuParamStruct::lat2_filename() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_lat2_filename_info);
-  return std::string(arr.data(), arr.size());
-}
-void BbuParamStruct::set_lat2_filename(const std::string &value) {
-  bbu_param_struct_set_lat2_filename(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::string BbuParamStruct::bunch_by_bunch_info_file() const {
-  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(
-      fortran_ptr_,
-      bbu_param_struct_get_bunch_by_bunch_info_file_info
-  );
-  return std::string(arr.data(), arr.size());
-}
-void BbuParamStruct::set_bunch_by_bunch_info_file(const std::string &value) {
-  bbu_param_struct_set_bunch_by_bunch_info_file(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
-bool BbuParamStruct::hybridize() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuParamStruct::set_hybridize(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 0, value);
-}
-bool BbuParamStruct::write_digested_hybrid_lat() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuParamStruct::set_write_digested_hybrid_lat(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 1, value);
-}
-bool BbuParamStruct::write_voltage_vs_time_dat() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuParamStruct::set_write_voltage_vs_time_dat(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 2, value);
-}
-bool BbuParamStruct::keep_overlays_and_groups() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuParamStruct::set_keep_overlays_and_groups(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 3, value);
-}
-bool BbuParamStruct::keep_all_lcavities() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 4, &value);
-  return value;
-}
-void BbuParamStruct::set_keep_all_lcavities(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 4, value);
-}
-bool BbuParamStruct::use_taylor_for_hybrids() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 5, &value);
-  return value;
-}
-void BbuParamStruct::set_use_taylor_for_hybrids(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 5, value);
-}
-bool BbuParamStruct::stable_orbit_anal() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 6, &value);
-  return value;
-}
-void BbuParamStruct::set_stable_orbit_anal(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 6, value);
-}
-double BbuParamStruct::limit_factor() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuParamStruct::set_limit_factor(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 0, value);
-}
-double BbuParamStruct::simulation_turns_max() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuParamStruct::set_simulation_turns_max(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 1, value);
-}
-double BbuParamStruct::bunch_freq() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuParamStruct::set_bunch_freq(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 2, value);
-}
-double BbuParamStruct::init_particle_offset() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuParamStruct::set_init_particle_offset(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 3, value);
-}
-double BbuParamStruct::current() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 4, &value);
-  return value;
-}
-void BbuParamStruct::set_current(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 4, value);
-}
-double BbuParamStruct::rel_tol() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 5, &value);
-  return value;
-}
-void BbuParamStruct::set_rel_tol(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 5, value);
-}
-bool BbuParamStruct::drscan() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 7, &value);
-  return value;
-}
-void BbuParamStruct::set_drscan(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 7, value);
-}
-bool BbuParamStruct::use_interpolated_threshold() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 8, &value);
-  return value;
-}
-void BbuParamStruct::set_use_interpolated_threshold(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 8, value);
-}
-bool BbuParamStruct::write_hom_info() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 9, &value);
-  return value;
-}
-void BbuParamStruct::set_write_hom_info(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 9, value);
-}
-int BbuParamStruct::elindex() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void BbuParamStruct::set_elindex(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 0, value);
-}
-std::string BbuParamStruct::elname() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_elname_info);
-  return std::string(arr.data(), arr.size());
-}
-void BbuParamStruct::set_elname(const std::string &value) {
-  bbu_param_struct_set_elname(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int BbuParamStruct::nstep() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 1, &value);
-  return value;
-}
-void BbuParamStruct::set_nstep(int value) { bbu_param_struct_set_integer(fortran_ptr_, 1, value); }
-double BbuParamStruct::begdr() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 6, &value);
-  return value;
-}
-void BbuParamStruct::set_begdr(double value) { bbu_param_struct_set_real(fortran_ptr_, 6, value); }
-double BbuParamStruct::enddr() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 7, &value);
-  return value;
-}
-void BbuParamStruct::set_enddr(double value) { bbu_param_struct_set_real(fortran_ptr_, 7, value); }
-int BbuParamStruct::nrep() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 2, &value);
-  return value;
-}
-void BbuParamStruct::set_nrep(int value) { bbu_param_struct_set_integer(fortran_ptr_, 2, value); }
-int BbuParamStruct::ran_seed() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 3, &value);
-  return value;
-}
-void BbuParamStruct::set_ran_seed(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 3, value);
-}
-int BbuParamStruct::hom_order_cutoff() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 4, &value);
-  return value;
-}
-void BbuParamStruct::set_hom_order_cutoff(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 4, value);
-}
-double BbuParamStruct::ran_gauss_sigma_cut() const {
-  double value;
-  bbu_param_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void BbuParamStruct::set_ran_gauss_sigma_cut(double value) {
-  bbu_param_struct_set_real(fortran_ptr_, 8, value);
-}
-std::string BbuParamStruct::ele_track_end() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, bbu_param_struct_get_ele_track_end_info);
-  return std::string(arr.data(), arr.size());
-}
-void BbuParamStruct::set_ele_track_end(const std::string &value) {
-  bbu_param_struct_set_ele_track_end(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-int BbuParamStruct::ix_ele_track_end() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 5, &value);
-  return value;
-}
-void BbuParamStruct::set_ix_ele_track_end(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 5, value);
-}
-bool BbuParamStruct::regression() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 10, &value);
-  return value;
-}
-void BbuParamStruct::set_regression(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 10, value);
-}
-bool BbuParamStruct::normalize_z_to_rf() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 11, &value);
-  return value;
-}
-void BbuParamStruct::set_normalize_z_to_rf(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 11, value);
-}
-bool BbuParamStruct::ramp_on() const {
-  bool value;
-  bbu_param_struct_get_logical(fortran_ptr_, 12, &value);
-  return value;
-}
-void BbuParamStruct::set_ramp_on(bool value) {
-  bbu_param_struct_set_logical(fortran_ptr_, 12, value);
-}
-FArray1D<double> BbuParamStruct::ramp_pattern() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, bbu_param_struct_get_ramp_pattern_info);
-}
-void BbuParamStruct::set_ramp_pattern(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  bbu_param_struct_set_ramp_pattern(fortran_ptr_, v.data(), shape);
-}
-int BbuParamStruct::ramp_n_start() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 6, &value);
-  return value;
-}
-void BbuParamStruct::set_ramp_n_start(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 6, value);
-}
-int BbuParamStruct::n_ramp_pattern() const {
-  int value;
-  bbu_param_struct_get_integer(fortran_ptr_, 7, &value);
-  return value;
-}
-void BbuParamStruct::set_n_ramp_pattern(int value) {
-  bbu_param_struct_set_integer(fortran_ptr_, 7, value);
-}
-std::optional<int> Fibre::DIR() const {
-  int value;
-  bool is_valid;
-  fibre_get_DIR(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_DIR(int value) { fibre_set_DIR(fortran_ptr_, value); }
-std::optional<Fibre> Fibre::PREVIOUS() const {
-  void *ptr;
-  fibre_get_PREVIOUS(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Fibre::set_PREVIOUS(const Fibre &src) {
-  fibre_set_PREVIOUS(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<Fibre> Fibre::NEXT() const {
-  void *ptr;
-  fibre_get_NEXT(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Fibre::set_NEXT(const Fibre &src) { fibre_set_NEXT(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Layout> Fibre::PARENT_LAYOUT() const {
-  void *ptr;
-  fibre_get_PARENT_LAYOUT(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Layout(ptr);
-}
-void Fibre::set_PARENT_LAYOUT(const Layout &src) {
-  fibre_set_PARENT_LAYOUT(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<int> Fibre::pos() const {
-  int value;
-  bool is_valid;
-  fibre_get_pos(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_pos(int value) { fibre_set_pos(fortran_ptr_, value); }
-std::optional<double> Fibre::BETA0() const {
-  double value;
-  bool is_valid;
-  fibre_get_BETA0(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_BETA0(double value) { fibre_set_BETA0(fortran_ptr_, value); }
-std::optional<double> Fibre::GAMMA0I() const {
-  double value;
-  bool is_valid;
-  fibre_get_GAMMA0I(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_GAMMA0I(double value) { fibre_set_GAMMA0I(fortran_ptr_, value); }
-std::optional<double> Fibre::GAMBET() const {
-  double value;
-  bool is_valid;
-  fibre_get_GAMBET(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_GAMBET(double value) { fibre_set_GAMBET(fortran_ptr_, value); }
-std::optional<double> Fibre::MASS() const {
-  double value;
-  bool is_valid;
-  fibre_get_MASS(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_MASS(double value) { fibre_set_MASS(fortran_ptr_, value); }
-std::optional<double> Fibre::CHARGE() const {
-  double value;
-  bool is_valid;
-  fibre_get_CHARGE(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_CHARGE(double value) { fibre_set_CHARGE(fortran_ptr_, value); }
-std::optional<double> Fibre::AG() const {
-  double value;
-  bool is_valid;
-  fibre_get_AG(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_AG(double value) { fibre_set_AG(fortran_ptr_, value); }
-std::optional<Fibre> Fibre::P() const {
-  void *ptr;
-  fibre_get_P(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Fibre::set_P(const Fibre &src) { fibre_set_P(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Fibre> Fibre::N() const {
-  void *ptr;
-  fibre_get_N(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Fibre::set_N(const Fibre &src) { fibre_set_N(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<int> Fibre::loc() const {
-  int value;
-  bool is_valid;
-  fibre_get_loc(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Fibre::set_loc(int value) { fibre_set_loc(fortran_ptr_, value); }
-std::string Layout::NAME() const {
-  return ProxyHelpers::get_string(fortran_ptr_, layout_get_NAME_info);
-}
-void Layout::set_NAME(const std::string &value) {
-  layout_set_NAME(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
-}
-std::optional<int> Layout::INDEX() const {
-  int value;
-  bool is_valid;
-  layout_get_INDEX(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_INDEX(int value) { layout_set_INDEX(fortran_ptr_, value); }
-std::optional<double> Layout::HARMONIC_NUMBER() const {
-  double value;
-  bool is_valid;
-  layout_get_HARMONIC_NUMBER(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_HARMONIC_NUMBER(double value) { layout_set_HARMONIC_NUMBER(fortran_ptr_, value); }
-std::optional<bool> Layout::CLOSED() const {
-  bool value;
-  bool is_valid;
-  layout_get_CLOSED(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_CLOSED(bool value) { layout_set_CLOSED(fortran_ptr_, value); }
-std::optional<int> Layout::N() const {
-  int value;
-  bool is_valid;
-  layout_get_N(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_N(int value) { layout_set_N(fortran_ptr_, value); }
-std::optional<int> Layout::NTHIN() const {
-  int value;
-  bool is_valid;
-  layout_get_NTHIN(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_NTHIN(int value) { layout_set_NTHIN(fortran_ptr_, value); }
-std::optional<double> Layout::THIN() const {
-  double value;
-  bool is_valid;
-  layout_get_THIN(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_THIN(double value) { layout_set_THIN(fortran_ptr_, value); }
-std::optional<int> Layout::LASTPOS() const {
-  int value;
-  bool is_valid;
-  layout_get_LASTPOS(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void Layout::set_LASTPOS(int value) { layout_set_LASTPOS(fortran_ptr_, value); }
-std::optional<Fibre> Layout::LAST() const {
-  void *ptr;
-  layout_get_LAST(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Layout::set_LAST(const Fibre &src) { layout_set_LAST(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Fibre> Layout::END() const {
-  void *ptr;
-  layout_get_END(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Layout::set_END(const Fibre &src) { layout_set_END(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Fibre> Layout::START() const {
-  void *ptr;
-  layout_get_START(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Layout::set_START(const Fibre &src) { layout_set_START(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Fibre> Layout::START_GROUND() const {
-  void *ptr;
-  layout_get_START_GROUND(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Layout::set_START_GROUND(const Fibre &src) {
-  layout_set_START_GROUND(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<Fibre> Layout::END_GROUND() const {
-  void *ptr;
-  layout_get_END_GROUND(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Fibre(ptr);
-}
-void Layout::set_END_GROUND(const Fibre &src) {
-  layout_set_END_GROUND(fortran_ptr_, src.get_fortran_ptr());
-}
-std::optional<Layout> Layout::NEXT() const {
-  void *ptr;
-  layout_get_NEXT(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Layout(ptr);
-}
-void Layout::set_NEXT(const Layout &src) { layout_set_NEXT(fortran_ptr_, src.get_fortran_ptr()); }
-std::optional<Layout> Layout::PREVIOUS() const {
-  void *ptr;
-  layout_get_PREVIOUS(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return Layout(ptr);
-}
-void Layout::set_PREVIOUS(const Layout &src) {
-  layout_set_PREVIOUS(fortran_ptr_, src.get_fortran_ptr());
-}
-double AllEncompassingStruct::real_rp_0d() const {
-  double value;
-  all_encompassing_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void AllEncompassingStruct::set_real_rp_0d(double value) {
-  all_encompassing_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<double> AllEncompassingStruct::real_rp_1d() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_1d_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_1d(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_rp_1d(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_rp_2d() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_2d_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_2d(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d, v);
-}
-FArray3D<double> AllEncompassingStruct::real_rp_3d() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_3d_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d, v);
-}
-std::optional<double> AllEncompassingStruct::real_rp_0d_ptr() const {
-  double value;
-  bool is_valid;
-  all_encompassing_struct_get_real_rp_0d_ptr(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_real_rp_0d_ptr(double value) {
-  all_encompassing_struct_set_real_rp_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<double> AllEncompassingStruct::real_rp_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_1d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_1d_ptr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_rp_1d_ptr(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_rp_2d_ptr() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_2d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_2d_ptr(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d_ptr, v);
-}
-FArray3D<double> AllEncompassingStruct::real_rp_3d_ptr() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_3d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_3d_ptr(
-    const std::vector<std::vector<std::vector<double>>> &v
-) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d_ptr, v);
-}
-RealAlloc1D AllEncompassingStruct::real_rp_1d_alloc() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_real_rp_1d_alloc,
-      all_encompassing_struct_get_real_rp_1d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_1d_alloc(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_rp_1d_alloc(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_rp_2d_alloc() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_2d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_2d_alloc(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_2d_alloc, v);
-}
-FArray3D<double> AllEncompassingStruct::real_rp_3d_alloc() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_rp_3d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_rp_3d_alloc(
-    const std::vector<std::vector<std::vector<double>>> &v
-) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_rp_3d_alloc, v);
-}
-double AllEncompassingStruct::real_dp_0d() const {
-  double value;
-  all_encompassing_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
-}
-void AllEncompassingStruct::set_real_dp_0d(double value) {
-  all_encompassing_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<double> AllEncompassingStruct::real_dp_1d() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_1d_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_1d(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_dp_1d(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_dp_2d() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_2d_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_2d(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d, v);
-}
-FArray3D<double> AllEncompassingStruct::real_dp_3d() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_3d_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_3d(const std::vector<std::vector<std::vector<double>>> &v) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d, v);
-}
-std::optional<double> AllEncompassingStruct::real_dp_0d_ptr() const {
-  double value;
-  bool is_valid;
-  all_encompassing_struct_get_real_dp_0d_ptr(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_real_dp_0d_ptr(double value) {
-  all_encompassing_struct_set_real_dp_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<double> AllEncompassingStruct::real_dp_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_1d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_1d_ptr(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_dp_1d_ptr(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_dp_2d_ptr() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_2d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_2d_ptr(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d_ptr, v);
-}
-FArray3D<double> AllEncompassingStruct::real_dp_3d_ptr() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_3d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_3d_ptr(
-    const std::vector<std::vector<std::vector<double>>> &v
-) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d_ptr, v);
-}
-RealAlloc1D AllEncompassingStruct::real_dp_1d_alloc() const {
-  return RealAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_real_dp_1d_alloc,
-      all_encompassing_struct_get_real_dp_1d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_1d_alloc(const std::vector<double> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_real_dp_1d_alloc(fortran_ptr_, v.data(), shape);
-}
-FArray2D<double> AllEncompassingStruct::real_dp_2d_alloc() const {
-  return ProxyHelpers::get_array_2d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_2d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_2d_alloc(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_2d_alloc, v);
-}
-FArray3D<double> AllEncompassingStruct::real_dp_3d_alloc() const {
-  return ProxyHelpers::get_array_3d<double>(
-      fortran_ptr_,
-      all_encompassing_struct_get_real_dp_3d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_real_dp_3d_alloc(
-    const std::vector<std::vector<std::vector<double>>> &v
-) {
-  ProxyHelpers::set_array_3d<double>(fortran_ptr_, all_encompassing_struct_set_real_dp_3d_alloc, v);
-}
-std::complex<double> AllEncompassingStruct::complex_dp_0d() const {
-  std::complex<double> value;
-  all_encompassing_struct_get_complex(fortran_ptr_, 0, &value);
-  return value;
-}
-void AllEncompassingStruct::set_complex_dp_0d(std::complex<double> value) {
-  all_encompassing_struct_set_complex(fortran_ptr_, 0, value);
-}
-FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d() const {
-  return ProxyHelpers::get_array_1d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_1d_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_1d(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_complex_dp_1d(fortran_ptr_, v.data(), shape);
-}
-FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d() const {
-  return ProxyHelpers::get_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_2d_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_2d(
-    const std::vector<std::vector<std::complex<double>>> &v
-) {
-  ProxyHelpers::set_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_2d,
-      v
-  );
-}
-FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d() const {
-  return ProxyHelpers::get_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_3d_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_3d(
-    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
-) {
-  ProxyHelpers::set_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_3d,
-      v
-  );
-}
-std::optional<std::complex<double>> AllEncompassingStruct::complex_dp_0d_ptr() const {
-  std::complex<double> val;
-  bool is_valid;
-  all_encompassing_struct_get_complex_dp_0d_ptr(
-      fortran_ptr_,
-      reinterpret_cast<double _Complex *>(&val),
-      &is_valid
-  );
-  if (is_valid)
-    return val;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_complex_dp_0d_ptr(std::complex<double> value) {
-  all_encompassing_struct_set_complex_dp_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<std::complex<double>> AllEncompassingStruct::complex_dp_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_1d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_1d_ptr(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_complex_dp_1d_ptr(fortran_ptr_, v.data(), shape);
-}
-FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_ptr() const {
-  return ProxyHelpers::get_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_2d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_2d_ptr(
-    const std::vector<std::vector<std::complex<double>>> &v
-) {
-  ProxyHelpers::set_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_2d_ptr,
-      v
-  );
-}
-FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_ptr() const {
-  return ProxyHelpers::get_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_3d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_3d_ptr(
-    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
-) {
-  ProxyHelpers::set_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_3d_ptr,
-      v
-  );
-}
-ComplexAlloc1D AllEncompassingStruct::complex_dp_1d_alloc() const {
-  return ComplexAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_complex_dp_1d_alloc,
-      all_encompassing_struct_get_complex_dp_1d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_1d_alloc(const std::vector<std::complex<double>> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_complex_dp_1d_alloc(fortran_ptr_, v.data(), shape);
-}
-FArray2D<std::complex<double>> AllEncompassingStruct::complex_dp_2d_alloc() const {
-  return ProxyHelpers::get_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_2d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_2d_alloc(
-    const std::vector<std::vector<std::complex<double>>> &v
-) {
-  ProxyHelpers::set_array_2d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_2d_alloc,
-      v
-  );
-}
-FArray3D<std::complex<double>> AllEncompassingStruct::complex_dp_3d_alloc() const {
-  return ProxyHelpers::get_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_get_complex_dp_3d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_complex_dp_3d_alloc(
-    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
-) {
-  ProxyHelpers::set_array_3d<std::complex<double>>(
-      fortran_ptr_,
-      all_encompassing_struct_set_complex_dp_3d_alloc,
-      v
-  );
-}
-int AllEncompassingStruct::int_0d() const {
-  int value;
-  all_encompassing_struct_get_integer(fortran_ptr_, 0, &value);
-  return value;
-}
-void AllEncompassingStruct::set_int_0d(int value) {
-  all_encompassing_struct_set_integer(fortran_ptr_, 0, value);
-}
-FArray1D<int> AllEncompassingStruct::int_1d() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_info);
-}
-void AllEncompassingStruct::set_int_1d(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int_1d(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int> AllEncompassingStruct::int_2d() const {
-  return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_info);
-}
-void AllEncompassingStruct::set_int_2d(const std::vector<std::vector<int>> &v) {
-  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d, v);
-}
-FArray3D<int> AllEncompassingStruct::int_3d() const {
-  return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_info);
-}
-void AllEncompassingStruct::set_int_3d(const std::vector<std::vector<std::vector<int>>> &v) {
-  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d, v);
-}
-std::optional<int> AllEncompassingStruct::int_0d_ptr() const {
-  int value;
-  bool is_valid;
-  all_encompassing_struct_get_int_0d_ptr(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_int_0d_ptr(int value) {
-  all_encompassing_struct_set_int_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<int> AllEncompassingStruct::int_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, all_encompassing_struct_get_int_1d_ptr_info);
-}
-void AllEncompassingStruct::set_int_1d_ptr(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int_1d_ptr(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int> AllEncompassingStruct::int_2d_ptr() const {
-  return ProxyHelpers::get_array_2d<int>(fortran_ptr_, all_encompassing_struct_get_int_2d_ptr_info);
-}
-void AllEncompassingStruct::set_int_2d_ptr(const std::vector<std::vector<int>> &v) {
-  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d_ptr, v);
-}
-FArray3D<int> AllEncompassingStruct::int_3d_ptr() const {
-  return ProxyHelpers::get_array_3d<int>(fortran_ptr_, all_encompassing_struct_get_int_3d_ptr_info);
-}
-void AllEncompassingStruct::set_int_3d_ptr(const std::vector<std::vector<std::vector<int>>> &v) {
-  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d_ptr, v);
-}
-IntAlloc1D AllEncompassingStruct::int_1d_alloc() const {
-  return IntAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_int_1d_alloc,
-      all_encompassing_struct_get_int_1d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int_1d_alloc(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int_1d_alloc(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int> AllEncompassingStruct::int_2d_alloc() const {
-  return ProxyHelpers::get_array_2d<int>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int_2d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int_2d_alloc(const std::vector<std::vector<int>> &v) {
-  ProxyHelpers::set_array_2d<int>(fortran_ptr_, all_encompassing_struct_set_int_2d_alloc, v);
-}
-FArray3D<int> AllEncompassingStruct::int_3d_alloc() const {
-  return ProxyHelpers::get_array_3d<int>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int_3d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int_3d_alloc(const std::vector<std::vector<std::vector<int>>> &v) {
-  ProxyHelpers::set_array_3d<int>(fortran_ptr_, all_encompassing_struct_set_int_3d_alloc, v);
-}
-int64_t AllEncompassingStruct::int8_0d() const {
-  int64_t value;
-  all_encompassing_struct_get_integer8(fortran_ptr_, 0, &value);
-  return value;
-}
-void AllEncompassingStruct::set_int8_0d(int64_t value) {
-  all_encompassing_struct_set_integer8(fortran_ptr_, 0, value);
-}
-FArray1D<int64_t> AllEncompassingStruct::int8_1d() const {
-  return ProxyHelpers::get_array_1d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_1d_info
-  );
-}
-void AllEncompassingStruct::set_int8_1d(const std::vector<int64_t> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int8_1d(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int64_t> AllEncompassingStruct::int8_2d() const {
-  return ProxyHelpers::get_array_2d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_2d_info
-  );
-}
-void AllEncompassingStruct::set_int8_2d(const std::vector<std::vector<int64_t>> &v) {
-  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d, v);
-}
-FArray3D<int64_t> AllEncompassingStruct::int8_3d() const {
-  return ProxyHelpers::get_array_3d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_3d_info
-  );
-}
-void AllEncompassingStruct::set_int8_3d(const std::vector<std::vector<std::vector<int64_t>>> &v) {
-  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d, v);
-}
-std::optional<int64_t> AllEncompassingStruct::int8_0d_ptr() const {
-  int64_t value;
-  bool is_valid;
-  all_encompassing_struct_get_int8_0d_ptr(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_int8_0d_ptr(int64_t value) {
-  all_encompassing_struct_set_int8_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<int64_t> AllEncompassingStruct::int8_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_1d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_int8_1d_ptr(const std::vector<int64_t> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int8_1d_ptr(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int64_t> AllEncompassingStruct::int8_2d_ptr() const {
-  return ProxyHelpers::get_array_2d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_2d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_int8_2d_ptr(const std::vector<std::vector<int64_t>> &v) {
-  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d_ptr, v);
-}
-FArray3D<int64_t> AllEncompassingStruct::int8_3d_ptr() const {
-  return ProxyHelpers::get_array_3d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_3d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_int8_3d_ptr(
-    const std::vector<std::vector<std::vector<int64_t>>> &v
-) {
-  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_ptr, v);
-}
-Int8Alloc1D AllEncompassingStruct::int8_1d_alloc() const {
-  return Int8Alloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_int8_1d_alloc,
-      all_encompassing_struct_get_int8_1d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int8_1d_alloc(const std::vector<int64_t> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  all_encompassing_struct_set_int8_1d_alloc(fortran_ptr_, v.data(), shape);
-}
-FArray2D<int64_t> AllEncompassingStruct::int8_2d_alloc() const {
-  return ProxyHelpers::get_array_2d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_2d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int8_2d_alloc(const std::vector<std::vector<int64_t>> &v) {
-  ProxyHelpers::set_array_2d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_2d_alloc, v);
-}
-FArray3D<int64_t> AllEncompassingStruct::int8_3d_alloc() const {
-  return ProxyHelpers::get_array_3d<int64_t>(
-      fortran_ptr_,
-      all_encompassing_struct_get_int8_3d_alloc_info
-  );
-}
-void AllEncompassingStruct::set_int8_3d_alloc(
-    const std::vector<std::vector<std::vector<int64_t>>> &v
-) {
-  ProxyHelpers::set_array_3d<int64_t>(fortran_ptr_, all_encompassing_struct_set_int8_3d_alloc, v);
-}
-bool AllEncompassingStruct::logical_0d() const {
-  bool value;
-  all_encompassing_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void AllEncompassingStruct::set_logical_0d(bool value) {
-  all_encompassing_struct_set_logical(fortran_ptr_, 0, value);
-}
-FArray1D<bool> AllEncompassingStruct::logical_1d() const {
-  return ProxyHelpers::get_array_1d<bool>(
-      fortran_ptr_,
-      all_encompassing_struct_get_logical_1d_info
-  );
-}
-void AllEncompassingStruct::set_logical_1d(const std::vector<bool> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  std::vector<int> bv(v.size());
-  for (size_t i = 0; i < v.size(); ++i)
-    bv[i] = v[i] ? 1 : 0;
-  all_encompassing_struct_set_logical_1d(fortran_ptr_, bv.data(), shape);
-}
-FArray2D<bool> AllEncompassingStruct::logical_2d() const {
-  return ProxyHelpers::get_array_2d<bool>(
-      fortran_ptr_,
-      all_encompassing_struct_get_logical_2d_info
-  );
-}
-void AllEncompassingStruct::set_logical_2d(const std::vector<std::vector<bool>> &v) {
-  int rows = static_cast<int>(v.size());
-  int cols = rows > 0 ? static_cast<int>(v[0].size()) : 0;
-  int shape[] = {cols, rows};
-
-  std::vector<int> flat;
-  flat.reserve(rows * cols);
-  for (int j = 0; j < cols; ++j) {
-    for (int i = 0; i < rows; ++i) {
-      flat.push_back(v[i][j] ? 1 : 0);
-    }
-  }
-  all_encompassing_struct_set_logical_2d(fortran_ptr_, flat.data(), shape);
-}
-FArray3D<bool> AllEncompassingStruct::logical_3d() const {
-  return ProxyHelpers::get_array_3d<bool>(
-      fortran_ptr_,
-      all_encompassing_struct_get_logical_3d_info
-  );
-}
-void AllEncompassingStruct::set_logical_3d(const std::vector<std::vector<std::vector<bool>>> &v) {
-  int n3 = static_cast<int>(v.size());
-  int n2 = n3 > 0 ? static_cast<int>(v[0].size()) : 0;
-  int n1 = n2 > 0 ? static_cast<int>(v[0][0].size()) : 0;
-  int shape[] = {n1, n2, n3};
-
-  std::vector<int> flat;
-  flat.reserve(n1 * n2 * n3);
-  for (int k = 0; k < n3; ++k) {
-    for (int j = 0; j < n2; ++j) {
-      for (int i = 0; i < n1; ++i) {
-        flat.push_back(v[k][j][i] ? 1 : 0);
-      }
-    }
-  }
-  all_encompassing_struct_set_logical_3d(fortran_ptr_, flat.data(), shape);
-}
-std::optional<bool> AllEncompassingStruct::logical_0d_ptr() const {
-  bool value;
-  bool is_valid;
-  all_encompassing_struct_get_logical_0d_ptr(fortran_ptr_, &value, &is_valid);
-  if (is_valid)
-    return value;
-  return std::nullopt;
-}
-void AllEncompassingStruct::set_logical_0d_ptr(bool value) {
-  all_encompassing_struct_set_logical_0d_ptr(fortran_ptr_, value);
-}
-FArray1D<bool> AllEncompassingStruct::logical_1d_ptr() const {
-  return ProxyHelpers::get_array_1d<bool>(
-      fortran_ptr_,
-      all_encompassing_struct_get_logical_1d_ptr_info
-  );
-}
-void AllEncompassingStruct::set_logical_1d_ptr(const std::vector<bool> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  std::vector<int> bv(v.size());
-  for (size_t i = 0; i < v.size(); ++i)
-    bv[i] = v[i] ? 1 : 0;
-  all_encompassing_struct_set_logical_1d_ptr(fortran_ptr_, bv.data(), shape);
-}
-TestSubStruct AllEncompassingStruct::type_0d() const {
-  void *ptr;
-  all_encompassing_struct_get_type_0d(fortran_ptr_, &ptr);
-  return TestSubStruct(ptr);
-}
-void AllEncompassingStruct::set_type_0d(const TestSubStruct &src) {
-  all_encompassing_struct_set_type_0d(fortran_ptr_, src.get_fortran_ptr());
-}
-TestSubStructArray1D AllEncompassingStruct::type_1d() const {
-  return ProxyHelpers::get_type_array_1d<TestSubStructArray1D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_1d_info
-  );
-}
-TestSubStructArray2D AllEncompassingStruct::type_2d() const {
-  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_2d_info
-  );
-}
-TestSubStructArray3D AllEncompassingStruct::type_3d() const {
-  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_3d_info
-  );
-}
-std::optional<TestSubStruct> AllEncompassingStruct::type_0d_ptr() const {
-  void *ptr;
-  all_encompassing_struct_get_type_0d_ptr(fortran_ptr_, &ptr);
-  if (!ptr)
-    return std::nullopt;
-  return TestSubStruct(ptr);
-}
-void AllEncompassingStruct::set_type_0d_ptr(const TestSubStruct &src) {
-  all_encompassing_struct_set_type_0d_ptr(fortran_ptr_, src.get_fortran_ptr());
-}
-TestSubStructArray1D AllEncompassingStruct::type_1d_ptr() const {
-  return ProxyHelpers::get_type_array_1d<TestSubStructArray1D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_1d_ptr_info
-  );
-}
-TestSubStructArray2D AllEncompassingStruct::type_2d_ptr() const {
-  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_2d_ptr_info
-  );
-}
-TestSubStructArray3D AllEncompassingStruct::type_3d_ptr() const {
-  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_3d_ptr_info
-  );
-}
-TestSubStructAlloc1D AllEncompassingStruct::type_1d_alloc() const {
-  return TestSubStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      all_encompassing_struct_reallocate_type_1d_alloc,
-      all_encompassing_struct_get_type_1d_alloc_info
-  );
-}
-TestSubStructArray2D AllEncompassingStruct::type_2d_alloc() const {
-  return ProxyHelpers::get_type_array_2d<TestSubStructArray2D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_2d_alloc_info
-  );
-}
-TestSubStructArray3D AllEncompassingStruct::type_3d_alloc() const {
-  return ProxyHelpers::get_type_array_3d<TestSubStructArray3D>(
-      fortran_ptr_,
-      all_encompassing_struct_get_type_3d_alloc_info
-  );
+  taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
 }
 TestSubSubStruct TestSubStruct::sr() const {
   void *ptr;
@@ -13902,3 +17250,953 @@ double TestSubSubStruct::freq_spread() const {
 void TestSubSubStruct::set_freq_spread(double value) {
   test_sub_sub_struct_set_real(fortran_ptr_, 1, value);
 }
+double TrackPointStruct::s_lab() const {
+  double value;
+  track_point_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TrackPointStruct::set_s_lab(double value) {
+  track_point_struct_set_real(fortran_ptr_, 0, value);
+}
+double TrackPointStruct::s_body() const {
+  double value;
+  track_point_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TrackPointStruct::set_s_body(double value) {
+  track_point_struct_set_real(fortran_ptr_, 1, value);
+}
+CoordStruct TrackPointStruct::orb() const {
+  void *ptr;
+  track_point_struct_get_orb(fortran_ptr_, &ptr);
+  return CoordStruct(ptr);
+}
+void TrackPointStruct::set_orb(const CoordStruct &src) {
+  track_point_struct_set_orb(fortran_ptr_, src.get_fortran_ptr());
+}
+EmFieldStruct TrackPointStruct::field() const {
+  void *ptr;
+  track_point_struct_get_field(fortran_ptr_, &ptr);
+  return EmFieldStruct(ptr);
+}
+void TrackPointStruct::set_field(const EmFieldStruct &src) {
+  track_point_struct_set_field(fortran_ptr_, src.get_fortran_ptr());
+}
+StrongBeamStruct TrackPointStruct::strong_beam() const {
+  void *ptr;
+  track_point_struct_get_strong_beam(fortran_ptr_, &ptr);
+  return StrongBeamStruct(ptr);
+}
+void TrackPointStruct::set_strong_beam(const StrongBeamStruct &src) {
+  track_point_struct_set_strong_beam(fortran_ptr_, src.get_fortran_ptr());
+}
+FArray1D<double> TrackPointStruct::vec0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, track_point_struct_get_vec0_info);
+}
+void TrackPointStruct::set_vec0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  track_point_struct_set_vec0(fortran_ptr_, v.data(), shape);
+}
+FArray2D<double> TrackPointStruct::mat6() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, track_point_struct_get_mat6_info);
+}
+void TrackPointStruct::set_mat6(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, track_point_struct_set_mat6, v);
+}
+TrackPointStructAlloc1D TrackStruct::pt() const {
+  return TrackPointStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      track_struct_reallocate_pt,
+      track_struct_get_pt_info
+  );
+}
+double TrackStruct::ds_save() const {
+  double value;
+  track_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TrackStruct::set_ds_save(double value) { track_struct_set_real(fortran_ptr_, 0, value); }
+int TrackStruct::n_pt() const {
+  int value;
+  track_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void TrackStruct::set_n_pt(int value) { track_struct_set_integer(fortran_ptr_, 0, value); }
+int TrackStruct::n_bad() const {
+  int value;
+  track_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void TrackStruct::set_n_bad(int value) { track_struct_set_integer(fortran_ptr_, 1, value); }
+int TrackStruct::n_ok() const {
+  int value;
+  track_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void TrackStruct::set_n_ok(int value) { track_struct_set_integer(fortran_ptr_, 2, value); }
+FArray3D<std::complex<double>> TricubicCmplxCoefStruct::coef() const {
+  return ProxyHelpers::get_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      tricubic_cmplx_coef_struct_get_coef_info
+  );
+}
+void TricubicCmplxCoefStruct::set_coef(
+    const std::vector<std::vector<std::vector<std::complex<double>>>> &v
+) {
+  ProxyHelpers::set_array_3d<std::complex<double>>(
+      fortran_ptr_,
+      tricubic_cmplx_coef_struct_set_coef,
+      v
+  );
+}
+FArray1D<int> TricubicCmplxCoefStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tricubic_cmplx_coef_struct_get_i_box_info);
+}
+void TricubicCmplxCoefStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tricubic_cmplx_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+FArray3D<double> TricubicCoefStruct::coef() const {
+  return ProxyHelpers::get_array_3d<double>(fortran_ptr_, tricubic_coef_struct_get_coef_info);
+}
+void TricubicCoefStruct::set_coef(const std::vector<std::vector<std::vector<double>>> &v) {
+  ProxyHelpers::set_array_3d<double>(fortran_ptr_, tricubic_coef_struct_set_coef, v);
+}
+FArray1D<int> TricubicCoefStruct::i_box() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, tricubic_coef_struct_get_i_box_info);
+}
+void TricubicCoefStruct::set_i_box(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  tricubic_coef_struct_set_i_box(fortran_ptr_, v.data(), shape);
+}
+double TwissStruct::beta() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void TwissStruct::set_beta(double value) { twiss_struct_set_real(fortran_ptr_, 0, value); }
+double TwissStruct::alpha() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void TwissStruct::set_alpha(double value) { twiss_struct_set_real(fortran_ptr_, 1, value); }
+double TwissStruct::gamma() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void TwissStruct::set_gamma(double value) { twiss_struct_set_real(fortran_ptr_, 2, value); }
+double TwissStruct::phi() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void TwissStruct::set_phi(double value) { twiss_struct_set_real(fortran_ptr_, 3, value); }
+double TwissStruct::eta() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void TwissStruct::set_eta(double value) { twiss_struct_set_real(fortran_ptr_, 4, value); }
+double TwissStruct::etap() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void TwissStruct::set_etap(double value) { twiss_struct_set_real(fortran_ptr_, 5, value); }
+double TwissStruct::deta_ds() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void TwissStruct::set_deta_ds(double value) { twiss_struct_set_real(fortran_ptr_, 6, value); }
+double TwissStruct::sigma() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void TwissStruct::set_sigma(double value) { twiss_struct_set_real(fortran_ptr_, 7, value); }
+double TwissStruct::sigma_p() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void TwissStruct::set_sigma_p(double value) { twiss_struct_set_real(fortran_ptr_, 8, value); }
+double TwissStruct::emit() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void TwissStruct::set_emit(double value) { twiss_struct_set_real(fortran_ptr_, 9, value); }
+double TwissStruct::norm_emit() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void TwissStruct::set_norm_emit(double value) { twiss_struct_set_real(fortran_ptr_, 10, value); }
+double TwissStruct::chrom() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 11, &value);
+  return value;
+}
+void TwissStruct::set_chrom(double value) { twiss_struct_set_real(fortran_ptr_, 11, value); }
+double TwissStruct::dbeta_dpz() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 12, &value);
+  return value;
+}
+void TwissStruct::set_dbeta_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 12, value); }
+double TwissStruct::dalpha_dpz() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 13, &value);
+  return value;
+}
+void TwissStruct::set_dalpha_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 13, value); }
+double TwissStruct::deta_dpz() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 14, &value);
+  return value;
+}
+void TwissStruct::set_deta_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 14, value); }
+double TwissStruct::detap_dpz() const {
+  double value;
+  twiss_struct_get_real(fortran_ptr_, 15, &value);
+  return value;
+}
+void TwissStruct::set_detap_dpz(double value) { twiss_struct_set_real(fortran_ptr_, 15, value); }
+std::string VarLengthStringStruct::str() const {
+  return ProxyHelpers::get_string(fortran_ptr_, var_length_string_struct_get_str_info);
+}
+void VarLengthStringStruct::set_str(const std::string &value) {
+  var_length_string_struct_set_str(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+double WakeLrModeStruct::freq() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeLrModeStruct::set_freq(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 0, value);
+}
+double WakeLrModeStruct::freq_in() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeLrModeStruct::set_freq_in(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 1, value);
+}
+double WakeLrModeStruct::R_over_Q() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void WakeLrModeStruct::set_R_over_Q(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 2, value);
+}
+double WakeLrModeStruct::Q() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void WakeLrModeStruct::set_Q(double value) { wake_lr_mode_struct_set_real(fortran_ptr_, 3, value); }
+double WakeLrModeStruct::damp() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void WakeLrModeStruct::set_damp(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 4, value);
+}
+double WakeLrModeStruct::phi() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void WakeLrModeStruct::set_phi(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 5, value);
+}
+double WakeLrModeStruct::angle() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void WakeLrModeStruct::set_angle(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 6, value);
+}
+double WakeLrModeStruct::b_sin() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void WakeLrModeStruct::set_b_sin(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 7, value);
+}
+double WakeLrModeStruct::b_cos() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 8, &value);
+  return value;
+}
+void WakeLrModeStruct::set_b_cos(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 8, value);
+}
+double WakeLrModeStruct::a_sin() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 9, &value);
+  return value;
+}
+void WakeLrModeStruct::set_a_sin(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 9, value);
+}
+double WakeLrModeStruct::a_cos() const {
+  double value;
+  wake_lr_mode_struct_get_real(fortran_ptr_, 10, &value);
+  return value;
+}
+void WakeLrModeStruct::set_a_cos(double value) {
+  wake_lr_mode_struct_set_real(fortran_ptr_, 10, value);
+}
+int WakeLrModeStruct::m() const {
+  int value;
+  wake_lr_mode_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeLrModeStruct::set_m(int value) { wake_lr_mode_struct_set_integer(fortran_ptr_, 0, value); }
+bool WakeLrModeStruct::polarized() const {
+  bool value;
+  wake_lr_mode_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeLrModeStruct::set_polarized(bool value) {
+  wake_lr_mode_struct_set_logical(fortran_ptr_, 0, value);
+}
+std::string WakeLrStruct::file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wake_lr_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void WakeLrStruct::set_file(const std::string &value) {
+  wake_lr_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+WakeLrModeStructAlloc1D WakeLrStruct::mode() const {
+  return WakeLrModeStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_lr_struct_reallocate_mode,
+      wake_lr_struct_get_mode_info
+  );
+}
+double WakeLrStruct::t_ref() const {
+  double value;
+  wake_lr_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeLrStruct::set_t_ref(double value) { wake_lr_struct_set_real(fortran_ptr_, 0, value); }
+double WakeLrStruct::freq_spread() const {
+  double value;
+  wake_lr_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeLrStruct::set_freq_spread(double value) {
+  wake_lr_struct_set_real(fortran_ptr_, 1, value);
+}
+double WakeLrStruct::amp_scale() const {
+  double value;
+  wake_lr_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void WakeLrStruct::set_amp_scale(double value) { wake_lr_struct_set_real(fortran_ptr_, 2, value); }
+double WakeLrStruct::time_scale() const {
+  double value;
+  wake_lr_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void WakeLrStruct::set_time_scale(double value) { wake_lr_struct_set_real(fortran_ptr_, 3, value); }
+bool WakeLrStruct::self_wake_on() const {
+  bool value;
+  wake_lr_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeLrStruct::set_self_wake_on(bool value) {
+  wake_lr_struct_set_logical(fortran_ptr_, 0, value);
+}
+double WakeSrModeStruct::amp() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrModeStruct::set_amp(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 0, value);
+}
+double WakeSrModeStruct::damp() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeSrModeStruct::set_damp(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 1, value);
+}
+double WakeSrModeStruct::k() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void WakeSrModeStruct::set_k(double value) { wake_sr_mode_struct_set_real(fortran_ptr_, 2, value); }
+double WakeSrModeStruct::phi() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void WakeSrModeStruct::set_phi(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 3, value);
+}
+double WakeSrModeStruct::b_sin() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void WakeSrModeStruct::set_b_sin(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 4, value);
+}
+double WakeSrModeStruct::b_cos() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void WakeSrModeStruct::set_b_cos(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 5, value);
+}
+double WakeSrModeStruct::a_sin() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void WakeSrModeStruct::set_a_sin(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 6, value);
+}
+double WakeSrModeStruct::a_cos() const {
+  double value;
+  wake_sr_mode_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void WakeSrModeStruct::set_a_cos(double value) {
+  wake_sr_mode_struct_set_real(fortran_ptr_, 7, value);
+}
+int WakeSrModeStruct::polarization() const {
+  int value;
+  wake_sr_mode_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrModeStruct::set_polarization(int value) {
+  wake_sr_mode_struct_set_integer(fortran_ptr_, 0, value);
+}
+int WakeSrModeStruct::position_dependence() const {
+  int value;
+  wake_sr_mode_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeSrModeStruct::set_position_dependence(int value) {
+  wake_sr_mode_struct_set_integer(fortran_ptr_, 1, value);
+}
+std::string WakeSrStruct::file() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wake_sr_struct_get_file_info);
+  return std::string(arr.data(), arr.size());
+}
+void WakeSrStruct::set_file(const std::string &value) {
+  wake_sr_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+WakeSrZLongStruct WakeSrStruct::z_long() const {
+  void *ptr;
+  wake_sr_struct_get_z_long(fortran_ptr_, &ptr);
+  return WakeSrZLongStruct(ptr);
+}
+void WakeSrStruct::set_z_long(const WakeSrZLongStruct &src) {
+  wake_sr_struct_set_z_long(fortran_ptr_, src.get_fortran_ptr());
+}
+WakeSrModeStructAlloc1D WakeSrStruct::long_wake() const {
+  return WakeSrModeStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_struct_reallocate_long,
+      wake_sr_struct_get_long_info
+  );
+}
+WakeSrModeStructAlloc1D WakeSrStruct::trans_wake() const {
+  return WakeSrModeStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_struct_reallocate_trans,
+      wake_sr_struct_get_trans_info
+  );
+}
+double WakeSrStruct::z_ref_long() const {
+  double value;
+  wake_sr_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrStruct::set_z_ref_long(double value) { wake_sr_struct_set_real(fortran_ptr_, 0, value); }
+double WakeSrStruct::z_ref_trans() const {
+  double value;
+  wake_sr_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeSrStruct::set_z_ref_trans(double value) {
+  wake_sr_struct_set_real(fortran_ptr_, 1, value);
+}
+double WakeSrStruct::z_max() const {
+  double value;
+  wake_sr_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void WakeSrStruct::set_z_max(double value) { wake_sr_struct_set_real(fortran_ptr_, 2, value); }
+double WakeSrStruct::amp_scale() const {
+  double value;
+  wake_sr_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void WakeSrStruct::set_amp_scale(double value) { wake_sr_struct_set_real(fortran_ptr_, 3, value); }
+double WakeSrStruct::z_scale() const {
+  double value;
+  wake_sr_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void WakeSrStruct::set_z_scale(double value) { wake_sr_struct_set_real(fortran_ptr_, 4, value); }
+bool WakeSrStruct::scale_with_length() const {
+  bool value;
+  wake_sr_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrStruct::set_scale_with_length(bool value) {
+  wake_sr_struct_set_logical(fortran_ptr_, 0, value);
+}
+RealAlloc1D WakeSrZLongStruct::w() const {
+  return RealAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_z_long_struct_reallocate_w,
+      wake_sr_z_long_struct_get_w_info
+  );
+}
+void WakeSrZLongStruct::set_w(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_w(fortran_ptr_, v.data(), shape);
+}
+ComplexAlloc1D WakeSrZLongStruct::fw() const {
+  return ComplexAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_z_long_struct_reallocate_fw,
+      wake_sr_z_long_struct_get_fw_info
+  );
+}
+void WakeSrZLongStruct::set_fw(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_fw(fortran_ptr_, v.data(), shape);
+}
+ComplexAlloc1D WakeSrZLongStruct::fbunch() const {
+  return ComplexAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_z_long_struct_reallocate_fbunch,
+      wake_sr_z_long_struct_get_fbunch_info
+  );
+}
+void WakeSrZLongStruct::set_fbunch(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_fbunch(fortran_ptr_, v.data(), shape);
+}
+ComplexAlloc1D WakeSrZLongStruct::w_out() const {
+  return ComplexAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wake_sr_z_long_struct_reallocate_w_out,
+      wake_sr_z_long_struct_get_w_out_info
+  );
+}
+void WakeSrZLongStruct::set_w_out(const std::vector<std::complex<double>> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wake_sr_z_long_struct_set_w_out(fortran_ptr_, v.data(), shape);
+}
+double WakeSrZLongStruct::dz() const {
+  double value;
+  wake_sr_z_long_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrZLongStruct::set_dz(double value) {
+  wake_sr_z_long_struct_set_real(fortran_ptr_, 0, value);
+}
+double WakeSrZLongStruct::z0() const {
+  double value;
+  wake_sr_z_long_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void WakeSrZLongStruct::set_z0(double value) {
+  wake_sr_z_long_struct_set_real(fortran_ptr_, 1, value);
+}
+double WakeSrZLongStruct::smoothing_sigma() const {
+  double value;
+  wake_sr_z_long_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void WakeSrZLongStruct::set_smoothing_sigma(double value) {
+  wake_sr_z_long_struct_set_real(fortran_ptr_, 2, value);
+}
+int WakeSrZLongStruct::position_dependence() const {
+  int value;
+  wake_sr_z_long_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrZLongStruct::set_position_dependence(int value) {
+  wake_sr_z_long_struct_set_integer(fortran_ptr_, 0, value);
+}
+bool WakeSrZLongStruct::time_based() const {
+  bool value;
+  wake_sr_z_long_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void WakeSrZLongStruct::set_time_based(bool value) {
+  wake_sr_z_long_struct_set_logical(fortran_ptr_, 0, value);
+}
+WakeSrStruct WakeStruct::sr() const {
+  void *ptr;
+  wake_struct_get_sr(fortran_ptr_, &ptr);
+  return WakeSrStruct(ptr);
+}
+void WakeStruct::set_sr(const WakeSrStruct &src) {
+  wake_struct_set_sr(fortran_ptr_, src.get_fortran_ptr());
+}
+WakeLrStruct WakeStruct::lr() const {
+  void *ptr;
+  wake_struct_get_lr(fortran_ptr_, &ptr);
+  return WakeLrStruct(ptr);
+}
+void WakeStruct::set_lr(const WakeLrStruct &src) {
+  wake_struct_set_lr(fortran_ptr_, src.get_fortran_ptr());
+}
+std::string Wall3dSectionStruct::name() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_section_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void Wall3dSectionStruct::set_name(const std::string &value) {
+  wall3d_section_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string Wall3dSectionStruct::material() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_section_struct_get_material_info);
+  return std::string(arr.data(), arr.size());
+}
+void Wall3dSectionStruct::set_material(const std::string &value) {
+  wall3d_section_struct_set_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+Wall3dVertexStructAlloc1D Wall3dSectionStruct::v() const {
+  return Wall3dVertexStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wall3d_section_struct_reallocate_v,
+      wall3d_section_struct_get_v_info
+  );
+}
+std::optional<PhotonReflectSurfaceStruct> Wall3dSectionStruct::surface() const {
+  void *ptr;
+  wall3d_section_struct_get_surface(fortran_ptr_, &ptr);
+  if (!ptr)
+    return std::nullopt;
+  return PhotonReflectSurfaceStruct(ptr);
+}
+void Wall3dSectionStruct::set_surface(const PhotonReflectSurfaceStruct &src) {
+  wall3d_section_struct_set_surface(fortran_ptr_, src.get_fortran_ptr());
+}
+int Wall3dSectionStruct::type() const {
+  int value;
+  wall3d_section_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_type(int value) {
+  wall3d_section_struct_set_integer(fortran_ptr_, 0, value);
+}
+int Wall3dSectionStruct::n_vertex_input() const {
+  int value;
+  wall3d_section_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_n_vertex_input(int value) {
+  wall3d_section_struct_set_integer(fortran_ptr_, 1, value);
+}
+int Wall3dSectionStruct::ix_ele() const {
+  int value;
+  wall3d_section_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_ix_ele(int value) {
+  wall3d_section_struct_set_integer(fortran_ptr_, 2, value);
+}
+int Wall3dSectionStruct::ix_branch() const {
+  int value;
+  wall3d_section_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_ix_branch(int value) {
+  wall3d_section_struct_set_integer(fortran_ptr_, 3, value);
+}
+int Wall3dSectionStruct::vertices_state() const {
+  int value;
+  wall3d_section_struct_get_integer(fortran_ptr_, 4, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_vertices_state(int value) {
+  wall3d_section_struct_set_integer(fortran_ptr_, 4, value);
+}
+bool Wall3dSectionStruct::patch_in_region() const {
+  bool value;
+  wall3d_section_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_patch_in_region(bool value) {
+  wall3d_section_struct_set_logical(fortran_ptr_, 0, value);
+}
+double Wall3dSectionStruct::thickness() const {
+  double value;
+  wall3d_section_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_thickness(double value) {
+  wall3d_section_struct_set_real(fortran_ptr_, 0, value);
+}
+double Wall3dSectionStruct::s() const {
+  double value;
+  wall3d_section_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_s(double value) {
+  wall3d_section_struct_set_real(fortran_ptr_, 1, value);
+}
+FArray1D<double> Wall3dSectionStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_r0_info);
+}
+void Wall3dSectionStruct::set_r0(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_r0(fortran_ptr_, v.data(), shape);
+}
+double Wall3dSectionStruct::dx0_ds() const {
+  double value;
+  wall3d_section_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_dx0_ds(double value) {
+  wall3d_section_struct_set_real(fortran_ptr_, 2, value);
+}
+double Wall3dSectionStruct::dy0_ds() const {
+  double value;
+  wall3d_section_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_dy0_ds(double value) {
+  wall3d_section_struct_set_real(fortran_ptr_, 3, value);
+}
+FArray1D<double> Wall3dSectionStruct::x0_coef() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_x0_coef_info);
+}
+void Wall3dSectionStruct::set_x0_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_x0_coef(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> Wall3dSectionStruct::y0_coef() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_y0_coef_info);
+}
+void Wall3dSectionStruct::set_y0_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_y0_coef(fortran_ptr_, v.data(), shape);
+}
+double Wall3dSectionStruct::dr_ds() const {
+  double value;
+  wall3d_section_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void Wall3dSectionStruct::set_dr_ds(double value) {
+  wall3d_section_struct_set_real(fortran_ptr_, 4, value);
+}
+FArray1D<double> Wall3dSectionStruct::p1_coef() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p1_coef_info);
+}
+void Wall3dSectionStruct::set_p1_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_p1_coef(fortran_ptr_, v.data(), shape);
+}
+FArray1D<double> Wall3dSectionStruct::p2_coef() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, wall3d_section_struct_get_p2_coef_info);
+}
+void Wall3dSectionStruct::set_p2_coef(const std::vector<double> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  wall3d_section_struct_set_p2_coef(fortran_ptr_, v.data(), shape);
+}
+std::string Wall3dStruct::name() const {
+  FArray1D<char> arr = ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_name_info);
+  return std::string(arr.data(), arr.size());
+}
+void Wall3dStruct::set_name(const std::string &value) {
+  wall3d_struct_set_name(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+int Wall3dStruct::type() const {
+  int value;
+  wall3d_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dStruct::set_type(int value) { wall3d_struct_set_integer(fortran_ptr_, 0, value); }
+int Wall3dStruct::ix_wall3d() const {
+  int value;
+  wall3d_struct_get_integer(fortran_ptr_, 1, &value);
+  return value;
+}
+void Wall3dStruct::set_ix_wall3d(int value) { wall3d_struct_set_integer(fortran_ptr_, 1, value); }
+int Wall3dStruct::n_link() const {
+  int value;
+  wall3d_struct_get_integer(fortran_ptr_, 2, &value);
+  return value;
+}
+void Wall3dStruct::set_n_link(int value) { wall3d_struct_set_integer(fortran_ptr_, 2, value); }
+double Wall3dStruct::thickness() const {
+  double value;
+  wall3d_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dStruct::set_thickness(double value) { wall3d_struct_set_real(fortran_ptr_, 0, value); }
+std::string Wall3dStruct::clear_material() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_clear_material_info);
+  return std::string(arr.data(), arr.size());
+}
+void Wall3dStruct::set_clear_material(const std::string &value) {
+  wall3d_struct_set_clear_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string Wall3dStruct::opaque_material() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, wall3d_struct_get_opaque_material_info);
+  return std::string(arr.data(), arr.size());
+}
+void Wall3dStruct::set_opaque_material(const std::string &value) {
+  wall3d_struct_set_opaque_material(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+bool Wall3dStruct::superimpose() const {
+  bool value;
+  wall3d_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dStruct::set_superimpose(bool value) {
+  wall3d_struct_set_logical(fortran_ptr_, 0, value);
+}
+int Wall3dStruct::ele_anchor_pt() const {
+  int value;
+  wall3d_struct_get_integer(fortran_ptr_, 3, &value);
+  return value;
+}
+void Wall3dStruct::set_ele_anchor_pt(int value) {
+  wall3d_struct_set_integer(fortran_ptr_, 3, value);
+}
+Wall3dSectionStructAlloc1D Wall3dStruct::section() const {
+  return Wall3dSectionStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      wall3d_struct_reallocate_section,
+      wall3d_struct_get_section_info
+  );
+}
+double Wall3dVertexStruct::x() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_x(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 0, value);
+}
+double Wall3dVertexStruct::y() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_y(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 1, value);
+}
+double Wall3dVertexStruct::radius_x() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_radius_x(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 2, value);
+}
+double Wall3dVertexStruct::radius_y() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_radius_y(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 3, value);
+}
+double Wall3dVertexStruct::tilt() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_tilt(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 4, value);
+}
+double Wall3dVertexStruct::angle() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_angle(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 5, value);
+}
+double Wall3dVertexStruct::x0() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 6, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_x0(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 6, value);
+}
+double Wall3dVertexStruct::y0() const {
+  double value;
+  wall3d_vertex_struct_get_real(fortran_ptr_, 7, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_y0(double value) {
+  wall3d_vertex_struct_set_real(fortran_ptr_, 7, value);
+}
+int Wall3dVertexStruct::type() const {
+  int value;
+  wall3d_vertex_struct_get_integer(fortran_ptr_, 0, &value);
+  return value;
+}
+void Wall3dVertexStruct::set_type(int value) {
+  wall3d_vertex_struct_set_integer(fortran_ptr_, 0, value);
+}
+double XyDispStruct::eta() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void XyDispStruct::set_eta(double value) { xy_disp_struct_set_real(fortran_ptr_, 0, value); }
+double XyDispStruct::etap() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
+}
+void XyDispStruct::set_etap(double value) { xy_disp_struct_set_real(fortran_ptr_, 1, value); }
+double XyDispStruct::deta_ds() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 2, &value);
+  return value;
+}
+void XyDispStruct::set_deta_ds(double value) { xy_disp_struct_set_real(fortran_ptr_, 2, value); }
+double XyDispStruct::sigma() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 3, &value);
+  return value;
+}
+void XyDispStruct::set_sigma(double value) { xy_disp_struct_set_real(fortran_ptr_, 3, value); }
+double XyDispStruct::deta_dpz() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 4, &value);
+  return value;
+}
+void XyDispStruct::set_deta_dpz(double value) { xy_disp_struct_set_real(fortran_ptr_, 4, value); }
+double XyDispStruct::detap_dpz() const {
+  double value;
+  xy_disp_struct_get_real(fortran_ptr_, 5, &value);
+  return value;
+}
+void XyDispStruct::set_detap_dpz(double value) { xy_disp_struct_set_real(fortran_ptr_, 5, value); }

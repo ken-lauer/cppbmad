@@ -1,18 +1,15 @@
 #include "pybmad/generated/Bmad_routines_u.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_u(py::module &m) {
+void init_Bmad_routines_u(nb::module_ &m) {
   m.def(
       "update_ele_from_fibre",
       &Bmad::update_ele_from_fibre,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine update_ele_from_fibre (ele)
-
-Routine to update a bmad lattice element when the associated PTC fibre has been modified.
+      nb::arg("ele"),
+      R"""(Routine to update a bmad lattice element when the associated PTC fibre has been modified.
 Remember to call lattice_bookkeeper after calling this routine.
 
 Parameters
@@ -26,8 +23,7 @@ ele : EleStruct
   m.def(
       "update_fibre_from_ele",
       &Bmad::update_fibre_from_ele,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine update_fibre_from_ele
 
 Parameters
@@ -44,10 +40,14 @@ survey_needed : bool
   );
   m.def(
       "update_floor_angles",
-      &Bmad::update_floor_angles,
-      py::arg("floor"),
-      py::arg("floor0") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](FloorPositionStruct &floor, FloorPositionStruct *floor0) {
+        auto fn = static_cast<void (*)(FloorPositionStruct &, optional_ref<FloorPositionStruct>)>(
+            &Bmad::update_floor_angles
+        );
+        return fn(floor, ptr_to_opt_ref(floor0));
+      },
+      nb::arg("floor"),
+      nb::arg("floor0") = nb::none(),
       R"""(Wrapper for Fortran routine update_floor_angles
 
 Parameters

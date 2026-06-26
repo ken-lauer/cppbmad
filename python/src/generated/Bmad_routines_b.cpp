@@ -1,31 +1,42 @@
 #include "pybmad/generated/Bmad_routines_b.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_b(py::module &m) {
-  py::class_<Bmad::BbiKick, std::unique_ptr<Bmad::BbiKick>>(m, "BbiKick", "bbi_kick return type")
-      .def_readonly("nk", &Bmad::BbiKick::nk)
-      .def_readonly("dnk", &Bmad::BbiKick::dnk)
+void init_Bmad_routines_b(nb::module_ &m) {
+  m.def(
+      "bane1",
+      &Bmad::bane1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(This is an implementation of equations 10-15 from "Intrabeam
+scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+It is a high energy approximation of the Bjorken-Mtingwa IBS
+formulation.
+)"""
+  );
+  nb::class_<Bmad::BbiKick>(m, "BbiKick", "bbi_kick return type")
+      .def_ro("nk", &Bmad::BbiKick::nk)
+      .def_ro("dnk", &Bmad::BbiKick::dnk)
       .def("__len__", [](const Bmad::BbiKick &) { return 2; })
-      .def("__getitem__", [](const Bmad::BbiKick &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::BbiKick &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.nk);
+          return nb::cast(s.nk);
         if (i == 1)
-          return py::cast(s.dnk);
-        throw py::index_error();
+          return nb::cast(s.dnk);
+        throw nb::index_error();
       });
   m.def(
       "bbi_kick",
       &Bmad::bbi_kick,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("sigma"),
-      py::arg("linear_kick") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("sigma"),
+      nb::arg("linear_kick") = nb::none(),
       R"""(Wrapper for Fortran routine bbi_kick
 
 Parameters
@@ -56,10 +67,9 @@ dnk : 2D array of float (shape: 2,2)
   m.def(
       "bbi_slice_calc",
       &Bmad::bbi_slice_calc,
-      py::arg("ele"),
-      py::arg("n_slice"),
-      py::arg("z_slice"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("n_slice"),
+      nb::arg("z_slice"),
       R"""(Wrapper for Fortran routine bbi_slice_calc
 
 Parameters
@@ -77,16 +87,13 @@ z_slice : 1D array of float
   m.def(
       "beam_envelope_ibs",
       &Bmad::beam_envelope_ibs,
-      py::arg("sigma_mat"),
-      py::arg("tail_cut"),
-      py::arg("tau"),
-      py::arg("energy"),
-      py::arg("n_part"),
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine beam_envelope_ibs(sigma_mat, ibs_mat, tail_cut, tau, energy, n_part, species)
-
-This is a sigma matrix based IBS calculation.
+      nb::arg("sigma_mat"),
+      nb::arg("tail_cut"),
+      nb::arg("tau"),
+      nb::arg("energy"),
+      nb::arg("n_part"),
+      nb::arg("species"),
+      R"""(This is a sigma matrix based IBS calculation.
 It takes the beam sigma matrix and returns a matrix with changes to the 2nd order
 moments due to IBS.
 
@@ -123,9 +130,8 @@ ibs_mat : 2D array of float (shape: 6,6)
   m.def(
       "beam_equal_beam",
       &Bmad::beam_equal_beam,
-      py::arg("beam1"),
-      py::arg("beam2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("beam1"),
+      nb::arg("beam2"),
       R"""(Wrapper for Fortran routine beam_equal_beam
 
 Parameters
@@ -135,31 +141,33 @@ beam1 : BeamStruct
 beam2 : BeamStruct
 )"""
   );
-  py::class_<Bmad::BeamInitSetup, std::unique_ptr<Bmad::BeamInitSetup>>(
-      m,
-      "BeamInitSetup",
-      "beam_init_setup return type"
-  )
-      .def_readonly("err_flag", &Bmad::BeamInitSetup::err_flag)
-      .def_readonly("beam_init_set", &Bmad::BeamInitSetup::beam_init_set)
+  nb::class_<Bmad::BeamInitSetup>(m, "BeamInitSetup", "beam_init_setup return type")
+      .def_ro("err_flag", &Bmad::BeamInitSetup::err_flag)
+      .def_ro("beam_init_set", &Bmad::BeamInitSetup::beam_init_set)
       .def("__len__", [](const Bmad::BeamInitSetup &) { return 2; })
-      .def("__getitem__", [](const Bmad::BeamInitSetup &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::BeamInitSetup &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.beam_init_set);
-        throw py::index_error();
+          return nb::cast(s.beam_init_set);
+        throw nb::index_error();
       });
   m.def(
       "beam_init_setup",
-      &Bmad::beam_init_setup,
-      py::arg("beam_init_in"),
-      py::arg("ele"),
-      py::arg("species"),
-      py::arg("modes") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](BeamInitStruct &beam_init_in, EleStruct &ele, int species, NormalModesStruct *modes) {
+        auto fn = static_cast<
+            Bmad::
+                BeamInitSetup (*)(BeamInitStruct &, EleStruct &, int, optional_ref<NormalModesStruct>)>(
+            &Bmad::beam_init_setup
+        );
+        return fn(beam_init_in, ele, species, ptr_to_opt_ref(modes));
+      },
+      nb::arg("beam_init_in"),
+      nb::arg("ele"),
+      nb::arg("species"),
+      nb::arg("modes") = nb::none(),
       R"""(Wrapper for Fortran routine beam_init_setup
 
 Parameters
@@ -184,40 +192,33 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
-  py::class_<Bmad::BeamTilts, std::unique_ptr<Bmad::BeamTilts>>(
-      m,
-      "BeamTilts",
-      "beam_tilts return type"
-  )
-      .def_readonly("angle_xy", &Bmad::BeamTilts::angle_xy)
-      .def_readonly("angle_xz", &Bmad::BeamTilts::angle_xz)
-      .def_readonly("angle_yz", &Bmad::BeamTilts::angle_yz)
-      .def_readonly("angle_xpz", &Bmad::BeamTilts::angle_xpz)
-      .def_readonly("angle_ypz", &Bmad::BeamTilts::angle_ypz)
+  nb::class_<Bmad::BeamTilts>(m, "BeamTilts", "beam_tilts return type")
+      .def_ro("angle_xy", &Bmad::BeamTilts::angle_xy)
+      .def_ro("angle_xz", &Bmad::BeamTilts::angle_xz)
+      .def_ro("angle_yz", &Bmad::BeamTilts::angle_yz)
+      .def_ro("angle_xpz", &Bmad::BeamTilts::angle_xpz)
+      .def_ro("angle_ypz", &Bmad::BeamTilts::angle_ypz)
       .def("__len__", [](const Bmad::BeamTilts &) { return 5; })
-      .def("__getitem__", [](const Bmad::BeamTilts &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::BeamTilts &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.angle_xy);
+          return nb::cast(s.angle_xy);
         if (i == 1)
-          return py::cast(s.angle_xz);
+          return nb::cast(s.angle_xz);
         if (i == 2)
-          return py::cast(s.angle_yz);
+          return nb::cast(s.angle_yz);
         if (i == 3)
-          return py::cast(s.angle_xpz);
+          return nb::cast(s.angle_xpz);
         if (i == 4)
-          return py::cast(s.angle_ypz);
-        throw py::index_error();
+          return nb::cast(s.angle_ypz);
+        throw nb::index_error();
       });
   m.def(
       "beam_tilts",
       &Bmad::beam_tilts,
-      py::arg("S"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine beam_tilts(S, angle_xy, angle_xz, angle_yz, angle_xpz, angle_ypz)
-
-Given a 6x6 matrix of second-order moments, this routine returns
+      nb::arg("S"),
+      R"""(Given a 6x6 matrix of second-order moments, this routine returns
 the beam tilts.
 
 angle_xy is obtained from the projection of the beam envelop into the
@@ -259,11 +260,8 @@ angle_ypz : float
   m.def(
       "beambeam_fibre_setup",
       &Bmad::beambeam_fibre_setup,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine beambeam_fibre_setup(ele, ptc_fibre)
-
-Routine to setup a fibre to handle the beambeam interaction.
+      nb::arg("ele"),
+      R"""(Routine to setup a fibre to handle the beambeam interaction.
 
 Parameters
 ----------
@@ -279,17 +277,14 @@ ptc_fibre : Fibre
   m.def(
       "bend_edge_kick",
       &Bmad::bend_edge_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("orb"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::arg("track_spin") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix, track_spin)
-
-Subroutine to track through the edge field of an sbend.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orb"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      nb::arg("track_spin") = nb::none(),
+      R"""(Subroutine to track through the edge field of an sbend.
 This routine is called by apply_element_edge_kick only.
 
 Parameters
@@ -323,13 +318,12 @@ track_spin : bool, optional
   m.def(
       "bend_exact_multipole_field",
       &Bmad::bend_exact_multipole_field,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::arg("local_ref_frame"),
-      py::arg("calc_dfield") = py::none(),
-      py::arg("calc_potential") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      nb::arg("local_ref_frame"),
+      nb::arg("calc_dfield") = nb::none(),
+      nb::arg("calc_potential") = nb::none(),
       R"""(Wrapper for Fortran routine bend_exact_multipole_field
 
 Parameters
@@ -361,8 +355,7 @@ field : EmFieldStruct
   m.def(
       "bend_length_has_been_set",
       &Bmad::bend_length_has_been_set,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine bend_length_has_been_set
 
 Parameters
@@ -379,11 +372,8 @@ is_set : bool
   m.def(
       "bend_photon_e_rel_init",
       &Bmad::bend_photon_e_rel_init,
-      py::arg("r_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bend_photon_e_rel_init (r_in) result (E_rel)
-
-Routine to convert a random number in the interval [0,1] to a photon energy.
+      nb::arg("r_in") = nb::none(),
+      R"""(Routine to convert a random number in the interval [0,1] to a photon energy.
 The photon probability spectrum is:
   P(E_rel) = (3 / (5 * Pi)) * Integral_{E_rel}^{Infty} K_{5/3}(x) dx
 Where
@@ -415,13 +405,10 @@ E_rel : float
   m.def(
       "bend_photon_energy_integ_prob",
       &Bmad::bend_photon_energy_integ_prob,
-      py::arg("E_photon"),
-      py::arg("g_bend"),
-      py::arg("gamma"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bend_photon_energy_integ_prob (E_photon, g_bend, gamma) result (integ_prob)
-
-Routine to find the integrated probability corresponding to emitting a photon
+      nb::arg("E_photon"),
+      nb::arg("g_bend"),
+      nb::arg("gamma"),
+      R"""(Routine to find the integrated probability corresponding to emitting a photon
 from a bend in the range [0, E_photon].
 
 Parameters
@@ -444,11 +431,8 @@ integ_prob : float
   m.def(
       "bend_photon_energy_normalized_probability",
       &Bmad::bend_photon_energy_normalized_probability,
-      py::arg("E_rel"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bend_photon_energy_normalized_probability (E_rel) result (prob)
-
-Routine to return the normalized probability that a photon will be emitted in a bend with energy
+      nb::arg("E_rel"),
+      R"""(Routine to return the normalized probability that a photon will be emitted in a bend with energy
 E_rel relative to the critical energy. The probability is normalized such that
   Integral[0,Infinity] dE_rel P(E_rel) = 1
 
@@ -466,19 +450,17 @@ prob : float
   m.def(
       "bend_photon_init",
       &Bmad::bend_photon_init,
-      py::arg("g_bend_x"),
-      py::arg("g_bend_y"),
-      py::arg("gamma"),
-      py::arg("E_min") = py::none(),
-      py::arg("E_max") = py::none(),
-      py::arg("E_integ_prob") = py::none(),
-      py::arg("vert_angle_min") = py::none(),
-      py::arg("vert_angle_max") = py::none(),
-      py::arg("vert_angle_symmetric") = py::none(),
-      py::arg("emit_probability") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine bend_photon_init (g_bend_x, g_bend_y, gamma, orbit, E_min, E_max, E_integ_prob,
-                                        vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
+      nb::arg("g_bend_x"),
+      nb::arg("g_bend_y"),
+      nb::arg("gamma"),
+      nb::arg("E_min") = nb::none(),
+      nb::arg("E_max") = nb::none(),
+      nb::arg("E_integ_prob") = nb::none(),
+      nb::arg("vert_angle_min") = nb::none(),
+      nb::arg("vert_angle_max") = nb::none(),
+      nb::arg("vert_angle_symmetric") = nb::none(),
+      nb::arg("emit_probability") = nb::none(),
+      R"""(                                        vert_angle_min, vert_angle_max, vert_angle_symmetric, emit_probability)
 
 Routine to initalize a photon for dipole bends and wigglers (but not undulators).
 The photon is initialized using the standard formulas for bending radiation.
@@ -549,14 +531,11 @@ orbit : CoordStruct
   m.def(
       "bend_photon_polarization_init",
       &Bmad::bend_photon_polarization_init,
-      py::arg("g_bend_x"),
-      py::arg("g_bend_y"),
-      py::arg("E_rel"),
-      py::arg("gamma_phi"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine bend_photon_polarization_init (g_bend_x, g_bend_y, E_rel, gamma_phi, orbit)
-
-Routine to set a photon's polarization.
+      nb::arg("g_bend_x"),
+      nb::arg("g_bend_y"),
+      nb::arg("E_rel"),
+      nb::arg("gamma_phi"),
+      R"""(Routine to set a photon's polarization.
 The photon's polarization will be either in the plane of the bend or out of the plane and
 the magnitude will be 1.
 
@@ -583,14 +562,11 @@ orbit : CoordStruct
   m.def(
       "bend_photon_vert_angle_init",
       &Bmad::bend_photon_vert_angle_init,
-      py::arg("E_rel"),
-      py::arg("gamma"),
-      py::arg("r_in") = py::none(),
-      py::arg("invert") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bend_photon_vert_angle_init (E_rel, gamma, r_in, invert) result (phi)
-
-Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
+      nb::arg("E_rel"),
+      nb::arg("gamma"),
+      nb::arg("r_in") = nb::none(),
+      nb::arg("invert") = nb::none(),
+      R"""(Routine to convert an integrated probability to a vertical angle for emitting a photon from a bend.
 The integrated probability is in the range [0,1] with 0 corresponding to a phi = -pi/2 and
 integrated probability of 1 corresponding to phi = pi/2.
 
@@ -616,31 +592,26 @@ phi : float
     The photon vertical emission angle (in radians). Note: phi is an increasing monotonic function of r_in.
 )"""
   );
-  py::class_<Bmad::BendShift, std::unique_ptr<Bmad::BendShift>>(
-      m,
-      "BendShift",
-      "bend_shift return type"
-  )
-      .def_readonly("w_mat", &Bmad::BendShift::w_mat)
-      .def_readonly("position2", &Bmad::BendShift::position2)
+  nb::class_<Bmad::BendShift>(m, "BendShift", "bend_shift return type")
+      .def_ro("w_mat", &Bmad::BendShift::w_mat)
+      .def_ro("position2", &Bmad::BendShift::position2)
       .def("__len__", [](const Bmad::BendShift &) { return 2; })
-      .def("__getitem__", [](const Bmad::BendShift &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::BendShift &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.w_mat);
+          return nb::cast(s.w_mat);
         if (i == 1)
-          return py::cast(s.position2);
-        throw py::index_error();
+          return nb::cast(s.position2);
+        throw nb::index_error();
       });
   m.def(
       "bend_shift",
       &Bmad::bend_shift,
-      py::arg("position1"),
-      py::arg("g"),
-      py::arg("delta_s"),
-      py::arg("ref_tilt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("position1"),
+      nb::arg("g"),
+      nb::arg("delta_s"),
+      nb::arg("ref_tilt") = nb::none(),
       R"""(Wrapper for Fortran routine bend_shift
 
 Parameters
@@ -669,13 +640,10 @@ w_mat : 2D array of float (shape: 3,3), optional
   m.def(
       "bend_vert_angle_integ_prob",
       &Bmad::bend_vert_angle_integ_prob,
-      py::arg("vert_angle"),
-      py::arg("E_rel"),
-      py::arg("gamma"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function bend_vert_angle_integ_prob (vert_angle, E_rel, gamma) result (integ_prob)
-
-Routine to find the integrated probability corresponding to emitting a photon
+      nb::arg("vert_angle"),
+      nb::arg("E_rel"),
+      nb::arg("gamma"),
+      R"""(Routine to find the integrated probability corresponding to emitting a photon
 from a bend and with relative energy E_rel in the vertical angle range [-pi/2, vert_angle/2].
 
 Note: vert_angle is allowed to be out of the range [-pi/2, pi/2]. In this case, integ_prob
@@ -699,22 +667,44 @@ integ_prob : float
 )"""
   );
   m.def(
+      "bjmt1",
+      &Bmad::bjmt1,
+      nb::arg("ele"),
+      nb::arg("coulomb_log"),
+      nb::arg("n_part"),
+      R"""(This is an implementation of equations 1-9 from "Intrabeam
+scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
+
+This formulation is one of the slowest methods for calculating IBS rates.
+
+rates returns betatron growth rates.  Multiply by two to get transverse emittance growth rates.
+)"""
+  );
+  m.def(
+      "bl_via_mat",
+      &Bmad::bl_via_mat,
+      nb::arg("lat"),
+      nb::arg("ibs_sim_params"),
+      nb::arg("mode"),
+      nb::arg("sig_z"),
+      R"""(Calculates bunch length while taking PWD effects into account.
+PWD is approximated as a defocusing rf voltage.
+)"""
+  );
+  m.def(
       "bl_via_vlassov",
       &Bmad::bl_via_vlassov,
-      py::arg("current"),
-      py::arg("alpha"),
-      py::arg("Energy"),
-      py::arg("sigma_p"),
-      py::arg("Vrf"),
-      py::arg("omega"),
-      py::arg("U0"),
-      py::arg("circ"),
-      py::arg("R"),
-      py::arg("L"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine bl_via_vlassov(current,alpha,Energy,sigma_p,Vrf,omega,U0,circ,R,L,sigma_z)
-
-This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
+      nb::arg("current"),
+      nb::arg("alpha"),
+      nb::arg("Energy"),
+      nb::arg("sigma_p"),
+      nb::arg("Vrf"),
+      nb::arg("omega"),
+      nb::arg("U0"),
+      nb::arg("circ"),
+      nb::arg("R"),
+      nb::arg("L"),
+      R"""(This is a frontend for get_bl_from_fwhm from longitudinal_profile_mod.
 See longitudinal_profile_mod for details.  In short, this implements a model of potential well distortion
 based on the Vlassov equation which uses an effective Resistive, Inductive, and Capacitive impedance.
 
@@ -756,36 +746,31 @@ sigma_z : float
     Bunch length. FWHM/TwoRootTwoLogTwo from bunch profile
 )"""
   );
-  py::class_<Bmad::BmadParser, std::unique_ptr<Bmad::BmadParser>>(
-      m,
-      "BmadParser",
-      "bmad_parser return type"
-  )
-      .def_readonly("lat", &Bmad::BmadParser::lat)
-      .def_readonly("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
-      .def_readonly("err_flag", &Bmad::BmadParser::err_flag)
-      .def_readonly("parse_lat", &Bmad::BmadParser::parse_lat)
+  nb::class_<Bmad::BmadParser>(m, "BmadParser", "bmad_parser return type")
+      .def_ro("lat", &Bmad::BmadParser::lat)
+      .def_ro("digested_read_ok", &Bmad::BmadParser::digested_read_ok)
+      .def_ro("err_flag", &Bmad::BmadParser::err_flag)
+      .def_ro("parse_lat", &Bmad::BmadParser::parse_lat)
       .def("__len__", [](const Bmad::BmadParser &) { return 4; })
-      .def("__getitem__", [](const Bmad::BmadParser &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::BmadParser &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.lat);
+          return nb::cast(s.lat);
         if (i == 1)
-          return py::cast(s.digested_read_ok);
+          return nb::cast(s.digested_read_ok);
         if (i == 2)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 3)
-          return py::cast(s.parse_lat);
-        throw py::index_error();
+          return nb::cast(s.parse_lat);
+        throw nb::index_error();
       });
   m.def(
       "bmad_parser",
       &Bmad::bmad_parser,
-      py::arg("lat_file"),
-      py::arg("make_mats6") = py::none(),
-      py::arg("use_line") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat_file"),
+      nb::arg("make_mats6") = nb::none(),
+      nb::arg("use_line") = nb::none(),
       R"""(Wrapper for Fortran routine bmad_parser
 
 Parameters
@@ -820,14 +805,24 @@ parse_lat : LatStruct, optional
   );
   m.def(
       "bmad_parser2",
-      &Bmad::bmad_parser2,
-      py::arg("lat_file"),
-      py::arg("lat"),
-      py::arg("orbit") = py::none(),
-      py::arg("make_mats6") = py::none(),
-      py::arg("err_flag") = py::none(),
-      py::arg("parse_lat") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](std::string lat_file,
+         LatStruct &lat,
+         std::optional<CoordStructArray1D> orbit,
+         std::optional<bool> make_mats6,
+         std::optional<bool> err_flag,
+         LatStruct *parse_lat) {
+        auto fn = static_cast<
+            void (*)(std::string, LatStruct &, std::optional<CoordStructArray1D>, std::optional<bool>, std::optional<bool>, optional_ref<LatStruct>)>(
+            &Bmad::bmad_parser2
+        );
+        return fn(lat_file, lat, orbit, make_mats6, err_flag, ptr_to_opt_ref(parse_lat));
+      },
+      nb::arg("lat_file"),
+      nb::arg("lat"),
+      nb::arg("orbit") = nb::none(),
+      nb::arg("make_mats6") = nb::none(),
+      nb::arg("err_flag") = nb::none(),
+      nb::arg("parse_lat") = nb::none(),
       R"""(Wrapper for Fortran routine bmad_parser2
 
 Parameters
@@ -855,11 +850,47 @@ parse_lat : LatStruct, optional
 )"""
   );
   m.def(
+      "bmad_parser_string_attribute_set",
+      [](EleStruct &ele,
+         std::string attrib_name,
+         std::string delim,
+         bool delim_found,
+         ParserEleStruct *pele,
+         std::optional<std::string> str_out) {
+        auto fn = static_cast<
+            void (*)(EleStruct &, std::string, std::string, bool, optional_ref<ParserEleStruct>, std::optional<std::string>)>(
+            &Bmad::bmad_parser_string_attribute_set
+        );
+        return fn(ele, attrib_name, delim, delim_found, ptr_to_opt_ref(pele), str_out);
+      },
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("pele") = nb::none(),
+      nb::arg("str_out") = nb::none(),
+      R"""(Wrapper for Fortran routine bmad_parser_string_attribute_set
+
+Parameters
+----------
+ele : EleStruct
+
+attrib_name : str
+
+delim : str
+
+delim_found : bool
+
+pele : ParserEleStruct, optional
+
+str_out : str, optional
+)"""
+  );
+  m.def(
       "bmad_patch_parameters_to_ptc",
       &Bmad::bmad_patch_parameters_to_ptc,
-      py::arg("ang"),
-      py::arg("exi"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ang"),
+      nb::arg("exi"),
       R"""(Wrapper for Fortran routine bmad_patch_parameters_to_ptc
 
 Parameters
@@ -872,16 +903,14 @@ exi : 2D array of float (shape: 3,3)
   m.def(
       "bp_set_ran_status",
       &Bmad::bp_set_ran_status,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine bp_set_ran_status
 )"""
   );
   m.def(
       "branch_equal_branch",
       &Bmad::branch_equal_branch,
-      py::arg("branch1"),
-      py::arg("branch2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch1"),
+      nb::arg("branch2"),
       R"""(Wrapper for Fortran routine branch_equal_branch
 
 Parameters
@@ -894,8 +923,7 @@ branch2 : BranchStruct
   m.def(
       "branch_name",
       &Bmad::branch_name,
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
       R"""(Wrapper for Fortran routine branch_name
 
 Parameters
@@ -912,11 +940,8 @@ name : str
   m.def(
       "branch_to_ptc_m_u",
       &Bmad::branch_to_ptc_m_u,
-      py::arg("branch"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine branch_to_ptc_m_u (branch)
-
-Subroutine to create a PTC layout from a Bmad lattice branch.
+      nb::arg("branch"),
+      R"""(Subroutine to create a PTC layout from a Bmad lattice branch.
 Note: If lat_to_ptc_layout has already been setup, you should first do a
           call kill_ptc_layouts(lat)
 This deallocates the pointers in PTC
@@ -943,9 +968,8 @@ branch : BranchStruct
   m.def(
       "bunch_equal_bunch",
       &Bmad::bunch_equal_bunch,
-      py::arg("bunch1"),
-      py::arg("bunch2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("bunch1"),
+      nb::arg("bunch2"),
       R"""(Wrapper for Fortran routine bunch_equal_bunch
 
 Parameters

@@ -1,41 +1,34 @@
 #include "pybmad/generated/Bmad_routines_z.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_z(py::module &m) {
-  py::class_<Bmad::ZAtSurface, std::unique_ptr<Bmad::ZAtSurface>>(
-      m,
-      "ZAtSurface",
-      "z_at_surface return type"
-  )
-      .def_readonly("err_flag", &Bmad::ZAtSurface::err_flag)
-      .def_readonly("dz_dxy", &Bmad::ZAtSurface::dz_dxy)
-      .def_readonly("z", &Bmad::ZAtSurface::z)
+void init_Bmad_routines_z(nb::module_ &m) {
+  nb::class_<Bmad::ZAtSurface>(m, "ZAtSurface", "z_at_surface return type")
+      .def_ro("err_flag", &Bmad::ZAtSurface::err_flag)
+      .def_ro("dz_dxy", &Bmad::ZAtSurface::dz_dxy)
+      .def_ro("z", &Bmad::ZAtSurface::z)
       .def("__len__", [](const Bmad::ZAtSurface &) { return 3; })
-      .def("__getitem__", [](const Bmad::ZAtSurface &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ZAtSurface &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.dz_dxy);
+          return nb::cast(s.dz_dxy);
         if (i == 2)
-          return py::cast(s.z);
-        throw py::index_error();
+          return nb::cast(s.z);
+        throw nb::index_error();
       });
   m.def(
       "z_at_surface",
       &Bmad::z_at_surface,
-      py::arg("ele"),
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("extend_grid") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function z_at_surface (ele, x, y, err_flag, extend_grid, dz_dxy) result (z)
-
-Routine return the height (z) of the surface for a particular (x,y) position.
+      nb::arg("ele"),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("extend_grid") = nb::none(),
+      R"""(Routine return the height (z) of the surface for a particular (x,y) position.
 Remember: +z points into the element.
 
 Parameters
@@ -68,8 +61,7 @@ dz_dxy : 1D array of float (shape: 2), optional
   m.def(
       "zero_ele_kicks",
       &Bmad::zero_ele_kicks,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine zero_ele_kicks
 
 Parameters
@@ -83,8 +75,7 @@ ele : EleStruct
   m.def(
       "zero_ele_offsets",
       &Bmad::zero_ele_offsets,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine zero_ele_offsets
 
 Parameters
@@ -98,11 +89,8 @@ ele : EleStruct
   m.def(
       "zero_lr_wakes_in_lat",
       &Bmad::zero_lr_wakes_in_lat,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine zero_lr_wakes_in_lat (lat)
-
-Routine to zero the long range wake amplitudes for the elements that have
+      nb::arg("lat"),
+      R"""(Routine to zero the long range wake amplitudes for the elements that have
 long range wakes in a lattice.
 
 Parameters
@@ -114,10 +102,9 @@ lat : LatStruct
   m.def(
       "zlafun",
       &Bmad::zlafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
       R"""(Wrapper for Fortran routine zlafun
 
 Parameters

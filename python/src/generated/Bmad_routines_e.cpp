@@ -1,7 +1,7 @@
 #include "pybmad/generated/Bmad_routines_e.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
 PyExpectOneOf python_expect_one_of(
@@ -16,14 +16,13 @@ PyExpectOneOf python_expect_one_of(
   return py_result;
 }
 
-void init_Bmad_routines_e(py::module &m) {
+void init_Bmad_routines_e(nb::module_ &m) {
   m.def(
       "e_accel_field",
       &Bmad::e_accel_field,
-      py::arg("ele"),
-      py::arg("voltage_or_gradient"),
-      py::arg("bmad_standard_tracking") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("voltage_or_gradient"),
+      nb::arg("bmad_standard_tracking") = nb::none(),
       R"""(Wrapper for Fortran routine e_accel_field
 
 Parameters
@@ -46,12 +45,9 @@ field : float
   m.def(
       "e_crit_photon",
       &Bmad::e_crit_photon,
-      py::arg("gamma"),
-      py::arg("g_bend"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function E_crit_photon (gamma, g_bend) result (E_crit)
-
-Routine to calculate the photon critical energy in a bend.
+      nb::arg("gamma"),
+      nb::arg("g_bend"),
+      R"""(Routine to calculate the photon critical energy in a bend.
 
 Parameters
 ----------
@@ -67,37 +63,30 @@ E_crit : float
     Critical photon energy.
 )"""
   );
-  py::class_<Bmad::EigenDecomp6mat, std::unique_ptr<Bmad::EigenDecomp6mat>>(
-      m,
-      "EigenDecomp6mat",
-      "eigen_decomp_6mat return type"
-  )
-      .def_readonly("eval", &Bmad::EigenDecomp6mat::eval)
-      .def_readonly("evec", &Bmad::EigenDecomp6mat::evec)
-      .def_readonly("err_flag", &Bmad::EigenDecomp6mat::err_flag)
-      .def_readonly("tunes", &Bmad::EigenDecomp6mat::tunes)
+  nb::class_<Bmad::EigenDecomp6mat>(m, "EigenDecomp6mat", "eigen_decomp_6mat return type")
+      .def_ro("eval", &Bmad::EigenDecomp6mat::eval)
+      .def_ro("evec", &Bmad::EigenDecomp6mat::evec)
+      .def_ro("err_flag", &Bmad::EigenDecomp6mat::err_flag)
+      .def_ro("tunes", &Bmad::EigenDecomp6mat::tunes)
       .def("__len__", [](const Bmad::EigenDecomp6mat &) { return 4; })
-      .def("__getitem__", [](const Bmad::EigenDecomp6mat &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EigenDecomp6mat &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.eval);
+          return nb::cast(s.eval);
         if (i == 1)
-          return py::cast(s.evec);
+          return nb::cast(s.evec);
         if (i == 2)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 3)
-          return py::cast(s.tunes);
-        throw py::index_error();
+          return nb::cast(s.tunes);
+        throw nb::index_error();
       });
   m.def(
       "eigen_decomp_6mat",
       &Bmad::eigen_decomp_6mat,
-      py::arg("mat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine eigen_decomp_6mat(mat, eval, evec, tunes, err_flag)
-
-Compute eigenvalues and eigenvectors of a real 6x6 matrix.
+      nb::arg("mat"),
+      R"""(Compute eigenvalues and eigenvectors of a real 6x6 matrix.
 The evals and evecs are in general complex.
 
 Parameters
@@ -123,11 +112,10 @@ tunes : 1D array of float (shape: 3), optional
   m.def(
       "ele_compute_ref_energy_and_time",
       &Bmad::ele_compute_ref_energy_and_time,
-      py::arg("ele0"),
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele0"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine ele_compute_ref_energy_and_time
 
 Parameters
@@ -150,9 +138,8 @@ err_flag : bool
   m.def(
       "ele_equal_ele",
       &Bmad::ele_equal_ele,
-      py::arg("ele_out"),
-      py::arg("ele_in"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_out"),
+      nb::arg("ele_in"),
       R"""(Wrapper for Fortran routine ele_equal_ele
 
 Parameters
@@ -165,12 +152,9 @@ ele_in : EleStruct
   m.def(
       "ele_equals_ele",
       &Bmad::ele_equals_ele,
-      py::arg("ele_in"),
-      py::arg("update_nametable"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ele_equals_ele (ele_out, ele_in, update_nametable)
-
-Subroutine that is used to set an element equal to another.
+      nb::arg("ele_in"),
+      nb::arg("update_nametable"),
+      R"""(Subroutine that is used to set an element equal to another.
 Note: Use ele_equal_ele instead unless you know what you are doing.
 
 Parameters
@@ -191,11 +175,8 @@ ele_out : EleStruct
   m.def(
       "ele_finalizer",
       &Bmad::ele_finalizer,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ele_finalizer(ele)
-
-Finalizer routine for ele_struct instances.
+      nb::arg("ele"),
+      R"""(Finalizer routine for ele_struct instances.
 NOTE: Not currently used.
 
 Parameters
@@ -209,9 +190,8 @@ ele : EleStruct
   m.def(
       "ele_full_name",
       &Bmad::ele_full_name,
-      py::arg("ele"),
-      py::arg("template_") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("template_") = nb::none(),
       R"""(Wrapper for Fortran routine ele_full_name
 
 Parameters
@@ -228,11 +208,10 @@ str : str
   m.def(
       "ele_geometry",
       &Bmad::ele_geometry,
-      py::arg("floor_start"),
-      py::arg("ele"),
-      py::arg("len_scale") = py::none(),
-      py::arg("ignore_patch_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("floor_start"),
+      nb::arg("ele"),
+      nb::arg("len_scale") = nb::none(),
+      nb::arg("ignore_patch_err") = nb::none(),
       R"""(Wrapper for Fortran routine ele_geometry
 
 Parameters
@@ -261,9 +240,8 @@ floor_end : FloorPositionStruct, optional
   m.def(
       "ele_geometry_with_misalignments",
       &Bmad::ele_geometry_with_misalignments,
-      py::arg("ele"),
-      py::arg("len_scale") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("len_scale") = nb::none(),
       R"""(Wrapper for Fortran routine ele_geometry_with_misalignments
 
 Parameters
@@ -284,8 +262,7 @@ floor : FloorPositionStruct
   m.def(
       "ele_has_constant_ds_dt_ref",
       &Bmad::ele_has_constant_ds_dt_ref,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_has_constant_ds_dt_ref
 
 Parameters
@@ -302,8 +279,7 @@ is_const : bool
   m.def(
       "ele_has_nonzero_kick",
       &Bmad::ele_has_nonzero_kick,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_has_nonzero_kick
 
 Parameters
@@ -321,8 +297,7 @@ has_kick : bool
   m.def(
       "ele_has_nonzero_offset",
       &Bmad::ele_has_nonzero_offset,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_has_nonzero_offset
 
 Parameters
@@ -339,12 +314,9 @@ has_offset : bool
   m.def(
       "ele_is_monitor",
       &Bmad::ele_is_monitor,
-      py::arg("ele"),
-      py::arg("print_warning") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function ele_is_monitor (ele, print_warning) result (is_monitor)
-
-Routine to check that an element is either a detector, instrument, monitor, or marker.
+      nb::arg("ele"),
+      nb::arg("print_warning") = nb::none(),
+      R"""(Routine to check that an element is either a detector, instrument, monitor, or marker.
 These are the elements where measurement errors can be defined.
 
 Parameters
@@ -364,8 +336,7 @@ is_monitor : bool
   m.def(
       "ele_loc",
       &Bmad::ele_loc,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_loc
 
 Parameters
@@ -382,10 +353,9 @@ loc : LatEleLocStruct
   m.def(
       "ele_loc_name",
       &Bmad::ele_loc_name,
-      py::arg("ele"),
-      py::arg("show_branch0") = py::none(),
-      py::arg("parens") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("show_branch0") = nb::none(),
+      nb::arg("parens") = nb::none(),
       R"""(Wrapper for Fortran routine ele_loc_name
 
 Parameters
@@ -406,28 +376,27 @@ str : str
     Output string. Left justified.
 )"""
   );
-  py::class_<Bmad::EleMisalignmentLSCalc, std::unique_ptr<Bmad::EleMisalignmentLSCalc>>(
+  nb::class_<Bmad::EleMisalignmentLSCalc>(
       m,
       "EleMisalignmentLSCalc",
       "ele_misalignment_l_s_calc return type"
   )
-      .def_readonly("L_mis", &Bmad::EleMisalignmentLSCalc::L_mis)
-      .def_readonly("S_mis", &Bmad::EleMisalignmentLSCalc::S_mis)
+      .def_ro("L_mis", &Bmad::EleMisalignmentLSCalc::L_mis)
+      .def_ro("S_mis", &Bmad::EleMisalignmentLSCalc::S_mis)
       .def("__len__", [](const Bmad::EleMisalignmentLSCalc &) { return 2; })
-      .def("__getitem__", [](const Bmad::EleMisalignmentLSCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EleMisalignmentLSCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.L_mis);
+          return nb::cast(s.L_mis);
         if (i == 1)
-          return py::cast(s.S_mis);
-        throw py::index_error();
+          return nb::cast(s.S_mis);
+        throw nb::index_error();
       });
   m.def(
       "ele_misalignment_l_s_calc",
       &Bmad::ele_misalignment_l_s_calc,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_misalignment_l_s_calc
 
 Parameters
@@ -447,8 +416,7 @@ S_mis : 2D array of float (shape: 3,3)
   m.def(
       "ele_nametable_index",
       &Bmad::ele_nametable_index,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_nametable_index
 
 Parameters
@@ -466,8 +434,7 @@ ix_nt : int
   m.def(
       "ele_order_calc",
       &Bmad::ele_order_calc,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine ele_order_calc
 
 Parameters
@@ -484,12 +451,11 @@ order : LatEleOrderStruct
   m.def(
       "ele_reference_energy_correction",
       &Bmad::ele_reference_energy_correction,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("particle_at"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("particle_at"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
       R"""(Wrapper for Fortran routine ele_reference_energy_correction
 
 Parameters
@@ -517,10 +483,9 @@ make_matrix : bool, optional
   m.def(
       "ele_rf_step_index",
       &Bmad::ele_rf_step_index,
-      py::arg("E_ref"),
-      py::arg("s_rel"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("E_ref"),
+      nb::arg("s_rel"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine ele_rf_step_index
 
 Parameters
@@ -540,33 +505,40 @@ ix_step : int
     Corresponding index in the ele.rf.steps(:) array.
 )"""
   );
-  py::class_<Bmad::EleToFibre, std::unique_ptr<Bmad::EleToFibre>>(
-      m,
-      "EleToFibre",
-      "ele_to_fibre return type"
-  )
-      .def_readonly("ptc_fibre", &Bmad::EleToFibre::ptc_fibre)
-      .def_readonly("err_flag", &Bmad::EleToFibre::err_flag)
+  nb::class_<Bmad::EleToFibre>(m, "EleToFibre", "ele_to_fibre return type")
+      .def_ro("ptc_fibre", &Bmad::EleToFibre::ptc_fibre)
+      .def_ro("err_flag", &Bmad::EleToFibre::err_flag)
       .def("__len__", [](const Bmad::EleToFibre &) { return 2; })
-      .def("__getitem__", [](const Bmad::EleToFibre &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EleToFibre &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ptc_fibre);
+          return nb::cast(s.ptc_fibre);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "ele_to_fibre",
-      &Bmad::ele_to_fibre,
-      py::arg("ele"),
-      py::arg("use_offsets"),
-      py::arg("integ_order") = py::none(),
-      py::arg("steps") = py::none(),
-      py::arg("for_layout") = py::none(),
-      py::arg("ref_in") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         bool use_offsets,
+         std::optional<int> integ_order,
+         std::optional<int> steps,
+         std::optional<bool> for_layout,
+         CoordStruct *ref_in) {
+        auto fn = static_cast<
+            Bmad::
+                EleToFibre (*)(EleStruct &, bool, std::optional<int>, std::optional<int>, std::optional<bool>, optional_ref<CoordStruct>)>(
+            &Bmad::ele_to_fibre
+        );
+        return fn(ele, use_offsets, integ_order, steps, for_layout, ptr_to_opt_ref(ref_in));
+      },
+      nb::arg("ele"),
+      nb::arg("use_offsets"),
+      nb::arg("integ_order") = nb::none(),
+      nb::arg("steps") = nb::none(),
+      nb::arg("for_layout") = nb::none(),
+      nb::arg("ref_in") = nb::none(),
       R"""(Wrapper for Fortran routine ele_to_fibre
 
 Parameters
@@ -603,13 +575,10 @@ ptc_fibre : Fibre, optional
   m.def(
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
-      py::arg("ele"),
-      py::arg("bn"),
-      py::arg("an"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max)
-
-Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
+      nb::arg("ele"),
+      nb::arg("bn"),
+      nb::arg("an"),
+      R"""(Routine to compute the a(n) and b(n) magnetic multipole components of a magnet.
 This is used to interface between eles and PTC fibres
 
 Note: The multipole index uses the PTC convention of starting from 1 instead of zero.
@@ -637,10 +606,9 @@ n_max : int, optional
   m.def(
       "ele_to_spin_taylor",
       &Bmad::ele_to_spin_taylor,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orb0"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orb0"),
       R"""(Wrapper for Fortran routine ele_to_spin_taylor
 
 Parameters
@@ -657,31 +625,36 @@ orb0 : CoordStruct
     Starting ref coords.
 )"""
   );
-  py::class_<Bmad::EleToTaylor, std::unique_ptr<Bmad::EleToTaylor>>(
-      m,
-      "EleToTaylor",
-      "ele_to_taylor return type"
-  )
-      .def_readonly("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
-      .def_readonly("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
+  nb::class_<Bmad::EleToTaylor>(m, "EleToTaylor", "ele_to_taylor return type")
+      .def_ro("orbital_taylor", &Bmad::EleToTaylor::orbital_taylor)
+      .def_ro("spin_taylor", &Bmad::EleToTaylor::spin_taylor)
       .def("__len__", [](const Bmad::EleToTaylor &) { return 2; })
-      .def("__getitem__", [](const Bmad::EleToTaylor &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EleToTaylor &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.orbital_taylor);
+          return nb::cast(s.orbital_taylor);
         if (i == 1)
-          return py::cast(s.spin_taylor);
-        throw py::index_error();
+          return nb::cast(s.spin_taylor);
+        throw nb::index_error();
       });
   m.def(
       "ele_to_taylor",
-      &Bmad::ele_to_taylor,
-      py::arg("ele"),
-      py::arg("orb0") = py::none(),
-      py::arg("taylor_map_includes_offsets") = py::none(),
-      py::arg("include_damping") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         CoordStruct *orb0,
+         std::optional<bool> taylor_map_includes_offsets,
+         std::optional<bool> include_damping) {
+        auto fn = static_cast<
+            Bmad::
+                EleToTaylor (*)(EleStruct &, optional_ref<CoordStruct>, std::optional<bool>, std::optional<bool>)>(
+            &Bmad::ele_to_taylor
+        );
+        return fn(ele, ptr_to_opt_ref(orb0), taylor_map_includes_offsets, include_damping);
+      },
+      nb::arg("ele"),
+      nb::arg("orb0") = nb::none(),
+      nb::arg("taylor_map_includes_offsets") = nb::none(),
+      nb::arg("include_damping") = nb::none(),
       R"""(Wrapper for Fortran routine ele_to_taylor
 
 Parameters
@@ -710,9 +683,8 @@ spin_taylor : 1D array of TaylorStruct (shape: 0:3), optional
   m.def(
       "ele_unique_name",
       &Bmad::ele_unique_name,
-      py::arg("ele"),
-      py::arg("order"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("order"),
       R"""(Wrapper for Fortran routine ele_unique_name
 
 Parameters
@@ -734,11 +706,10 @@ unique_name : str
   m.def(
       "ele_value_has_changed",
       &Bmad::ele_value_has_changed,
-      py::arg("ele"),
-      py::arg("list"),
-      py::arg("abs_tol"),
-      py::arg("set_old"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("list"),
+      nb::arg("abs_tol"),
+      nb::arg("set_old"),
       R"""(Wrapper for Fortran routine ele_value_has_changed
 
 Parameters
@@ -767,9 +738,8 @@ has_changed : bool
   m.def(
       "ele_vec_equal_ele_vec",
       &Bmad::ele_vec_equal_ele_vec,
-      py::arg("ele1"),
-      py::arg("ele2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele1"),
+      nb::arg("ele2"),
       R"""(Wrapper for Fortran routine ele_vec_equal_ele_vec
 
 Parameters
@@ -779,37 +749,32 @@ ele1 : 1D array of EleStruct
 ele2 : 1D array of EleStruct
 )"""
   );
-  py::class_<Bmad::ElecMultipoleField, std::unique_ptr<Bmad::ElecMultipoleField>>(
-      m,
-      "ElecMultipoleField",
-      "elec_multipole_field return type"
-  )
-      .def_readonly("Ex", &Bmad::ElecMultipoleField::Ex)
-      .def_readonly("Ey", &Bmad::ElecMultipoleField::Ey)
-      .def_readonly("dE", &Bmad::ElecMultipoleField::dE)
-      .def_readonly("compute_dE", &Bmad::ElecMultipoleField::compute_dE)
+  nb::class_<Bmad::ElecMultipoleField>(m, "ElecMultipoleField", "elec_multipole_field return type")
+      .def_ro("Ex", &Bmad::ElecMultipoleField::Ex)
+      .def_ro("Ey", &Bmad::ElecMultipoleField::Ey)
+      .def_ro("dE", &Bmad::ElecMultipoleField::dE)
+      .def_ro("compute_dE", &Bmad::ElecMultipoleField::compute_dE)
       .def("__len__", [](const Bmad::ElecMultipoleField &) { return 4; })
-      .def("__getitem__", [](const Bmad::ElecMultipoleField &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ElecMultipoleField &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.Ex);
+          return nb::cast(s.Ex);
         if (i == 1)
-          return py::cast(s.Ey);
+          return nb::cast(s.Ey);
         if (i == 2)
-          return py::cast(s.dE);
+          return nb::cast(s.dE);
         if (i == 3)
-          return py::cast(s.compute_dE);
-        throw py::index_error();
+          return nb::cast(s.compute_dE);
+        throw nb::index_error();
       });
   m.def(
       "elec_multipole_field",
       &Bmad::elec_multipole_field,
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("n"),
-      py::arg("coord"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("n"),
+      nb::arg("coord"),
       R"""(Wrapper for Fortran routine elec_multipole_field
 
 Parameters
@@ -840,40 +805,33 @@ compute_dE : bool, optional
     If False, do not compute the field derivatives even if dE is present. Default is True.
 )"""
   );
-  py::class_<Bmad::ElementAtSBranch, std::unique_ptr<Bmad::ElementAtSBranch>>(
-      m,
-      "ElementAtSBranch",
-      "element_at_s_branch return type"
-  )
-      .def_readonly("err_flag", &Bmad::ElementAtSBranch::err_flag)
-      .def_readonly("s_eff", &Bmad::ElementAtSBranch::s_eff)
-      .def_readonly("position", &Bmad::ElementAtSBranch::position)
-      .def_readonly("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
+  nb::class_<Bmad::ElementAtSBranch>(m, "ElementAtSBranch", "element_at_s_branch return type")
+      .def_ro("err_flag", &Bmad::ElementAtSBranch::err_flag)
+      .def_ro("s_eff", &Bmad::ElementAtSBranch::s_eff)
+      .def_ro("position", &Bmad::ElementAtSBranch::position)
+      .def_ro("ix_ele", &Bmad::ElementAtSBranch::ix_ele)
       .def("__len__", [](const Bmad::ElementAtSBranch &) { return 4; })
-      .def("__getitem__", [](const Bmad::ElementAtSBranch &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ElementAtSBranch &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.s_eff);
+          return nb::cast(s.s_eff);
         if (i == 2)
-          return py::cast(s.position);
+          return nb::cast(s.position);
         if (i == 3)
-          return py::cast(s.ix_ele);
-        throw py::index_error();
+          return nb::cast(s.ix_ele);
+        throw nb::index_error();
       });
   m.def(
       "element_at_s",
-      py::overload_cast<BranchStruct &, double, bool, std::optional<bool>>(&Bmad::element_at_s),
-      py::arg("branch"),
-      py::arg("s"),
-      py::arg("choose_max"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function element_at_s (...) result (ix_ele)
-
-Function to return the index of the element at position s.
+      nb::overload_cast<BranchStruct &, double, bool, std::optional<bool>>(&Bmad::element_at_s),
+      nb::arg("branch"),
+      nb::arg("s"),
+      nb::arg("choose_max"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Function to return the index of the element at position s.
 
 element_at_s is an overloaded name for:
   function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
@@ -933,43 +891,36 @@ position : CoordStruct, optional
     Positional information.
 )"""
   );
-  py::class_<Bmad::ElementAtSLat, std::unique_ptr<Bmad::ElementAtSLat>>(
-      m,
-      "ElementAtSLat",
-      "element_at_s_lat return type"
-  )
-      .def_readonly("err_flag", &Bmad::ElementAtSLat::err_flag)
-      .def_readonly("s_eff", &Bmad::ElementAtSLat::s_eff)
-      .def_readonly("position", &Bmad::ElementAtSLat::position)
-      .def_readonly("ix_ele", &Bmad::ElementAtSLat::ix_ele)
+  nb::class_<Bmad::ElementAtSLat>(m, "ElementAtSLat", "element_at_s_lat return type")
+      .def_ro("err_flag", &Bmad::ElementAtSLat::err_flag)
+      .def_ro("s_eff", &Bmad::ElementAtSLat::s_eff)
+      .def_ro("position", &Bmad::ElementAtSLat::position)
+      .def_ro("ix_ele", &Bmad::ElementAtSLat::ix_ele)
       .def("__len__", [](const Bmad::ElementAtSLat &) { return 4; })
-      .def("__getitem__", [](const Bmad::ElementAtSLat &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ElementAtSLat &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.s_eff);
+          return nb::cast(s.s_eff);
         if (i == 2)
-          return py::cast(s.position);
+          return nb::cast(s.position);
         if (i == 3)
-          return py::cast(s.ix_ele);
-        throw py::index_error();
+          return nb::cast(s.ix_ele);
+        throw nb::index_error();
       });
   m.def(
       "element_at_s",
-      py::overload_cast<LatStruct &, double, bool, std::optional<int>, std::optional<bool>>(
+      nb::overload_cast<LatStruct &, double, bool, std::optional<int>, std::optional<bool>>(
           &Bmad::element_at_s
       ),
-      py::arg("lat"),
-      py::arg("s"),
-      py::arg("choose_max"),
-      py::arg("ix_branch") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function element_at_s (...) result (ix_ele)
-
-Function to return the index of the element at position s.
+      nb::arg("lat"),
+      nb::arg("s"),
+      nb::arg("choose_max"),
+      nb::arg("ix_branch") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      R"""(Function to return the index of the element at position s.
 
 element_at_s is an overloaded name for:
   function element_at_s_lat (lat, s, choose_max, ix_branch, err_flag, s_eff, position, print_err) result (ix_ele)
@@ -1035,14 +986,13 @@ position : CoordStruct, optional
   m.def(
       "element_slice_iterator",
       &Bmad::element_slice_iterator,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("i_slice"),
-      py::arg("n_slice_tot"),
-      py::arg("sliced_ele"),
-      py::arg("s_start") = py::none(),
-      py::arg("s_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("i_slice"),
+      nb::arg("n_slice_tot"),
+      nb::arg("sliced_ele"),
+      nb::arg("s_start") = nb::none(),
+      nb::arg("s_end") = nb::none(),
       R"""(Wrapper for Fortran routine element_slice_iterator
 
 Parameters
@@ -1071,44 +1021,72 @@ s_end : float, optional
   m.def(
       "ellipinc_test",
       &Bmad::ellipinc_test,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine ellipinc_test
 )"""
   );
-  py::class_<Bmad::EmFieldCalc, std::unique_ptr<Bmad::EmFieldCalc>>(
-      m,
-      "EmFieldCalc",
-      "em_field_calc return type"
-  )
-      .def_readonly("field", &Bmad::EmFieldCalc::field)
-      .def_readonly("err_flag", &Bmad::EmFieldCalc::err_flag)
+  nb::class_<Bmad::EmFieldCalc>(m, "EmFieldCalc", "em_field_calc return type")
+      .def_ro("field", &Bmad::EmFieldCalc::field)
+      .def_ro("err_flag", &Bmad::EmFieldCalc::err_flag)
       .def("__len__", [](const Bmad::EmFieldCalc &) { return 2; })
-      .def("__getitem__", [](const Bmad::EmFieldCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EmFieldCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.field);
+          return nb::cast(s.field);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "em_field_calc",
-      &Bmad::em_field_calc,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("s_pos"),
-      py::arg("orbit"),
-      py::arg("local_ref_frame"),
-      py::arg("calc_dfield") = py::none(),
-      py::arg("calc_potential") = py::none(),
-      py::arg("use_overlap") = py::none(),
-      py::arg("grid_allow_s_out_of_bounds") = py::none(),
-      py::arg("rf_time") = py::none(),
-      py::arg("used_eles") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::arg("original_ele") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         double s_pos,
+         CoordStruct &orbit,
+         bool local_ref_frame,
+         std::optional<bool> calc_dfield,
+         std::optional<bool> calc_potential,
+         std::optional<bool> use_overlap,
+         std::optional<bool> grid_allow_s_out_of_bounds,
+         std::optional<double> rf_time,
+         std::optional<ElePointerStructAlloc1D> used_eles,
+         std::optional<bool> print_err,
+         EleStruct *original_ele) {
+        auto fn =
+            static_cast<
+                Bmad::
+                    EmFieldCalc (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, bool, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<double>, std::optional<ElePointerStructAlloc1D>, std::optional<bool>, optional_ref<EleStruct>)>(
+                &Bmad::em_field_calc
+            );
+        return fn(
+            ele,
+            param,
+            s_pos,
+            orbit,
+            local_ref_frame,
+            calc_dfield,
+            calc_potential,
+            use_overlap,
+            grid_allow_s_out_of_bounds,
+            rf_time,
+            used_eles,
+            print_err,
+            ptr_to_opt_ref(original_ele)
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s_pos"),
+      nb::arg("orbit"),
+      nb::arg("local_ref_frame"),
+      nb::arg("calc_dfield") = nb::none(),
+      nb::arg("calc_potential") = nb::none(),
+      nb::arg("use_overlap") = nb::none(),
+      nb::arg("grid_allow_s_out_of_bounds") = nb::none(),
+      nb::arg("rf_time") = nb::none(),
+      nb::arg("used_eles") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("original_ele") = nb::none(),
       R"""(Wrapper for Fortran routine em_field_calc
 
 Parameters
@@ -1172,17 +1150,14 @@ err_flag : bool, optional
   m.def(
       "em_field_derivatives",
       &Bmad::em_field_derivatives,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("s_pos"),
-      py::arg("orbit"),
-      py::arg("local_ref_frame"),
-      py::arg("grid_allow_s_out_of_bounds") = py::none(),
-      py::arg("rf_time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine em_field_derivatives (ele, param, s_pos, orbit, local_ref_frame, dfield, grid_allow_s_out_of_bounds, rf_time)
-
-Routine to calculate field derivatives.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s_pos"),
+      nb::arg("orbit"),
+      nb::arg("local_ref_frame"),
+      nb::arg("grid_allow_s_out_of_bounds") = nb::none(),
+      nb::arg("rf_time") = nb::none(),
+      R"""(Routine to calculate field derivatives.
 In theory this should be handled by em_filed_calc. In practice, em_field_calc is currently incomplete.
 
 Parameters
@@ -1218,18 +1193,28 @@ dfield : EmFieldStruct
   );
   m.def(
       "em_field_kick_vector_time",
-      &Bmad::em_field_kick_vector_time,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("rf_time"),
-      py::arg("orbit"),
-      py::arg("err_flag"),
-      py::arg("print_err") = py::none(),
-      py::arg("extra_field") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine em_field_kick_vector_time (ele, param, rf_time, orbit, dvec_dt, err_flag, print_err, extra_field))
-
-Subroutine to convert particle coordinates from t-based to s-based system.
+      [](EleStruct &ele,
+         LatParamStruct &param,
+         double rf_time,
+         CoordStruct &orbit,
+         bool err_flag,
+         std::optional<bool> print_err,
+         EmFieldStruct *extra_field) {
+        auto fn = static_cast<FixedArray1D<
+            Real,
+            10> (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, bool, std::optional<bool>, optional_ref<EmFieldStruct>)>(
+            &Bmad::em_field_kick_vector_time
+        );
+        return fn(ele, param, rf_time, orbit, err_flag, print_err, ptr_to_opt_ref(extra_field));
+      },
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("rf_time"),
+      nb::arg("orbit"),
+      nb::arg("err_flag"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("extra_field") = nb::none(),
+      R"""(Subroutine to convert particle coordinates from t-based to s-based system.
 
 Parameters
 ----------
@@ -1263,9 +1248,8 @@ dvec_dt : 1D array of float (shape: 10)
   m.def(
       "em_field_plus_em_field",
       &Bmad::em_field_plus_em_field,
-      py::arg("field1"),
-      py::arg("field2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("field1"),
+      nb::arg("field2"),
       R"""(Wrapper for Fortran routine em_field_plus_em_field
 
 Parameters
@@ -1279,32 +1263,29 @@ Returns
 field_tot : EmFieldStruct
 )"""
   );
-  py::class_<Bmad::Emit6d, std::unique_ptr<Bmad::Emit6d>>(m, "Emit6d", "emit_6d return type")
-      .def_readonly("mode", &Bmad::Emit6d::mode)
-      .def_readonly("sigma_mat", &Bmad::Emit6d::sigma_mat)
-      .def_readonly("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
+  nb::class_<Bmad::Emit6d>(m, "Emit6d", "emit_6d return type")
+      .def_ro("mode", &Bmad::Emit6d::mode)
+      .def_ro("sigma_mat", &Bmad::Emit6d::sigma_mat)
+      .def_ro("rad_int_by_ele", &Bmad::Emit6d::rad_int_by_ele)
       .def("__len__", [](const Bmad::Emit6d &) { return 3; })
-      .def("__getitem__", [](const Bmad::Emit6d &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::Emit6d &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.mode);
+          return nb::cast(s.mode);
         if (i == 1)
-          return py::cast(s.sigma_mat);
+          return nb::cast(s.sigma_mat);
         if (i == 2)
-          return py::cast(s.rad_int_by_ele);
-        throw py::index_error();
+          return nb::cast(s.rad_int_by_ele);
+        throw nb::index_error();
       });
   m.def(
       "emit_6d",
       &Bmad::emit_6d,
-      py::arg("ele_ref"),
-      py::arg("include_opening_angle"),
-      py::arg("closed_orbit") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, closed_orbit, rad_int_by_ele)
-
-Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
+      nb::arg("ele_ref"),
+      nb::arg("include_opening_angle"),
+      nb::arg("closed_orbit") = nb::none(),
+      R"""(Routine to calculate the three normal mode emittances, damping partition numbers, radiation integrals, etc.
 Since the emattances, etc. are only an invariant in the limit of zero damping, the calculated
 values will vary depending upon the reference element.
 
@@ -1337,9 +1318,8 @@ rad_int_by_ele : RadIntAllEleStruct, optional
   m.def(
       "entering_element",
       &Bmad::entering_element,
-      py::arg("orbit"),
-      py::arg("particle_at"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("particle_at"),
       R"""(Wrapper for Fortran routine entering_element
 
 Parameters
@@ -1359,15 +1339,12 @@ is_entering : bool
   m.def(
       "envelope_radints",
       &Bmad::envelope_radints,
-      py::arg("Lambda"),
-      py::arg("Theta"),
-      py::arg("Iota"),
-      py::arg("alpha"),
-      py::arg("emit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine envelope_radints(Lambda,Theta,Iota,alpha,emit)
-
-Calculates damping decrement and emittance of the three
+      nb::arg("Lambda"),
+      nb::arg("Theta"),
+      nb::arg("Iota"),
+      nb::arg("alpha"),
+      nb::arg("emit"),
+      R"""(Calculates damping decrement and emittance of the three
 normal modes from the integrate diffusion, damping, and vertical
 excitation matrices names Lambda, Theta, and Iota, respectively.
 These three matrices are obtained from the subroutine integrated_mats.
@@ -1376,38 +1353,31 @@ The damping times can obtained from alpha using:
    tau = lattice_length/c_light/alpha
 )"""
   );
-  py::class_<Bmad::EnvelopeRadintsIbs, std::unique_ptr<Bmad::EnvelopeRadintsIbs>>(
-      m,
-      "EnvelopeRadintsIbs",
-      "envelope_radints_ibs return type"
-  )
-      .def_readonly("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
-      .def_readonly("emit", &Bmad::EnvelopeRadintsIbs::emit)
+  nb::class_<Bmad::EnvelopeRadintsIbs>(m, "EnvelopeRadintsIbs", "envelope_radints_ibs return type")
+      .def_ro("alpha", &Bmad::EnvelopeRadintsIbs::alpha)
+      .def_ro("emit", &Bmad::EnvelopeRadintsIbs::emit)
       .def("__len__", [](const Bmad::EnvelopeRadintsIbs &) { return 2; })
-      .def("__getitem__", [](const Bmad::EnvelopeRadintsIbs &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EnvelopeRadintsIbs &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.alpha);
+          return nb::cast(s.alpha);
         if (i == 1)
-          return py::cast(s.emit);
-        throw py::index_error();
+          return nb::cast(s.emit);
+        throw nb::index_error();
       });
   m.def(
       "envelope_radints_ibs",
       &Bmad::envelope_radints_ibs,
-      py::arg("Lambda"),
-      py::arg("Theta"),
-      py::arg("Iota"),
-      py::arg("eles"),
-      py::arg("mode"),
-      py::arg("tail_cut"),
-      py::arg("npart"),
-      py::arg("species"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(subroutine envelope_radints_ibs(Lambda, Theta, Iota, eles, alpha, emit, mode, tail_cut, npart, species)
-
-Calculates damping decrement and emittance of the three
+      nb::arg("Lambda"),
+      nb::arg("Theta"),
+      nb::arg("Iota"),
+      nb::arg("eles"),
+      nb::arg("mode"),
+      nb::arg("tail_cut"),
+      nb::arg("npart"),
+      nb::arg("species"),
+      R"""(Calculates damping decrement and emittance of the three
 normal modes by integrating the IBS, SR diffusion, and SR damping matrices.
 
 The IBS depends on the envelope, and so this routine iterates to
@@ -1461,9 +1431,8 @@ emit : 1D array of float (shape: 3)
   m.def(
       "eq_ac_kicker",
       &Bmad::eq_ac_kicker,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ac_kicker
 
 Parameters
@@ -1480,9 +1449,8 @@ is_eq : bool
   m.def(
       "eq_ac_kicker_freq",
       &Bmad::eq_ac_kicker_freq,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ac_kicker_freq
 
 Parameters
@@ -1499,9 +1467,8 @@ is_eq : bool
   m.def(
       "eq_ac_kicker_time",
       &Bmad::eq_ac_kicker_time,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ac_kicker_time
 
 Parameters
@@ -1518,9 +1485,8 @@ is_eq : bool
   m.def(
       "eq_anormal_mode",
       &Bmad::eq_anormal_mode,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_anormal_mode
 
 Parameters
@@ -1537,9 +1503,8 @@ is_eq : bool
   m.def(
       "eq_aperture_param",
       &Bmad::eq_aperture_param,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_aperture_param
 
 Parameters
@@ -1556,9 +1521,8 @@ is_eq : bool
   m.def(
       "eq_aperture_point",
       &Bmad::eq_aperture_point,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_aperture_point
 
 Parameters
@@ -1575,9 +1539,8 @@ is_eq : bool
   m.def(
       "eq_aperture_scan",
       &Bmad::eq_aperture_scan,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_aperture_scan
 
 Parameters
@@ -1594,9 +1557,8 @@ is_eq : bool
   m.def(
       "eq_beam",
       &Bmad::eq_beam,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_beam
 
 Parameters
@@ -1613,9 +1575,8 @@ is_eq : bool
   m.def(
       "eq_beam_init",
       &Bmad::eq_beam_init,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_beam_init
 
 Parameters
@@ -1632,9 +1593,8 @@ is_eq : bool
   m.def(
       "eq_bmad_common",
       &Bmad::eq_bmad_common,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_bmad_common
 
 Parameters
@@ -1651,9 +1611,8 @@ is_eq : bool
   m.def(
       "eq_bookkeeping_state",
       &Bmad::eq_bookkeeping_state,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_bookkeeping_state
 
 Parameters
@@ -1670,9 +1629,8 @@ is_eq : bool
   m.def(
       "eq_bpm_phase_coupling",
       &Bmad::eq_bpm_phase_coupling,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_bpm_phase_coupling
 
 Parameters
@@ -1689,9 +1647,8 @@ is_eq : bool
   m.def(
       "eq_branch",
       &Bmad::eq_branch,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_branch
 
 Parameters
@@ -1708,9 +1665,8 @@ is_eq : bool
   m.def(
       "eq_bunch",
       &Bmad::eq_bunch,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_bunch
 
 Parameters
@@ -1727,9 +1683,8 @@ is_eq : bool
   m.def(
       "eq_bunch_params",
       &Bmad::eq_bunch_params,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_bunch_params
 
 Parameters
@@ -1746,9 +1701,8 @@ is_eq : bool
   m.def(
       "eq_cartesian_map",
       &Bmad::eq_cartesian_map,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cartesian_map
 
 Parameters
@@ -1765,9 +1719,8 @@ is_eq : bool
   m.def(
       "eq_cartesian_map_term",
       &Bmad::eq_cartesian_map_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cartesian_map_term
 
 Parameters
@@ -1784,9 +1737,8 @@ is_eq : bool
   m.def(
       "eq_cartesian_map_term1",
       &Bmad::eq_cartesian_map_term1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cartesian_map_term1
 
 Parameters
@@ -1803,9 +1755,8 @@ is_eq : bool
   m.def(
       "eq_complex_taylor",
       &Bmad::eq_complex_taylor,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_complex_taylor
 
 Parameters
@@ -1822,9 +1773,8 @@ is_eq : bool
   m.def(
       "eq_complex_taylor_term",
       &Bmad::eq_complex_taylor_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_complex_taylor_term
 
 Parameters
@@ -1841,9 +1791,8 @@ is_eq : bool
   m.def(
       "eq_control",
       &Bmad::eq_control,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_control
 
 Parameters
@@ -1860,9 +1809,8 @@ is_eq : bool
   m.def(
       "eq_control_ramp1",
       &Bmad::eq_control_ramp1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_control_ramp1
 
 Parameters
@@ -1879,9 +1827,8 @@ is_eq : bool
   m.def(
       "eq_control_var1",
       &Bmad::eq_control_var1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_control_var1
 
 Parameters
@@ -1898,9 +1845,8 @@ is_eq : bool
   m.def(
       "eq_controller",
       &Bmad::eq_controller,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_controller
 
 Parameters
@@ -1917,9 +1863,8 @@ is_eq : bool
   m.def(
       "eq_coord",
       &Bmad::eq_coord,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_coord
 
 Parameters
@@ -1936,9 +1881,8 @@ is_eq : bool
   m.def(
       "eq_coord_array",
       &Bmad::eq_coord_array,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_coord_array
 
 Parameters
@@ -1955,9 +1899,8 @@ is_eq : bool
   m.def(
       "eq_cylindrical_map",
       &Bmad::eq_cylindrical_map,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cylindrical_map
 
 Parameters
@@ -1974,9 +1917,8 @@ is_eq : bool
   m.def(
       "eq_cylindrical_map_term",
       &Bmad::eq_cylindrical_map_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cylindrical_map_term
 
 Parameters
@@ -1993,9 +1935,8 @@ is_eq : bool
   m.def(
       "eq_cylindrical_map_term1",
       &Bmad::eq_cylindrical_map_term1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_cylindrical_map_term1
 
 Parameters
@@ -2012,9 +1953,8 @@ is_eq : bool
   m.def(
       "eq_ele",
       &Bmad::eq_ele,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ele
 
 Parameters
@@ -2031,9 +1971,8 @@ is_eq : bool
   m.def(
       "eq_ellipse_beam_init",
       &Bmad::eq_ellipse_beam_init,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ellipse_beam_init
 
 Parameters
@@ -2050,9 +1989,8 @@ is_eq : bool
   m.def(
       "eq_em_field",
       &Bmad::eq_em_field,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_em_field
 
 Parameters
@@ -2069,9 +2007,8 @@ is_eq : bool
   m.def(
       "eq_expression_atom",
       &Bmad::eq_expression_atom,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_expression_atom
 
 Parameters
@@ -2088,9 +2025,8 @@ is_eq : bool
   m.def(
       "eq_floor_position",
       &Bmad::eq_floor_position,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_floor_position
 
 Parameters
@@ -2107,9 +2043,8 @@ is_eq : bool
   m.def(
       "eq_gen_grad1",
       &Bmad::eq_gen_grad1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_gen_grad1
 
 Parameters
@@ -2126,9 +2061,8 @@ is_eq : bool
   m.def(
       "eq_gen_grad_map",
       &Bmad::eq_gen_grad_map,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_gen_grad_map
 
 Parameters
@@ -2145,9 +2079,8 @@ is_eq : bool
   m.def(
       "eq_gg_taylor",
       &Bmad::eq_gg_taylor,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_gg_taylor
 
 Parameters
@@ -2164,9 +2097,8 @@ is_eq : bool
   m.def(
       "eq_gg_taylor_term",
       &Bmad::eq_gg_taylor_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_gg_taylor_term
 
 Parameters
@@ -2183,9 +2115,8 @@ is_eq : bool
   m.def(
       "eq_grid_beam_init",
       &Bmad::eq_grid_beam_init,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_grid_beam_init
 
 Parameters
@@ -2202,9 +2133,8 @@ is_eq : bool
   m.def(
       "eq_grid_field",
       &Bmad::eq_grid_field,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_grid_field
 
 Parameters
@@ -2221,9 +2151,8 @@ is_eq : bool
   m.def(
       "eq_grid_field_pt",
       &Bmad::eq_grid_field_pt,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_grid_field_pt
 
 Parameters
@@ -2240,9 +2169,8 @@ is_eq : bool
   m.def(
       "eq_grid_field_pt1",
       &Bmad::eq_grid_field_pt1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_grid_field_pt1
 
 Parameters
@@ -2259,9 +2187,8 @@ is_eq : bool
   m.def(
       "eq_high_energy_space_charge",
       &Bmad::eq_high_energy_space_charge,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_high_energy_space_charge
 
 Parameters
@@ -2278,9 +2205,8 @@ is_eq : bool
   m.def(
       "eq_interval1_coef",
       &Bmad::eq_interval1_coef,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_interval1_coef
 
 Parameters
@@ -2297,9 +2223,8 @@ is_eq : bool
   m.def(
       "eq_kv_beam_init",
       &Bmad::eq_kv_beam_init,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_kv_beam_init
 
 Parameters
@@ -2316,9 +2241,8 @@ is_eq : bool
   m.def(
       "eq_lat",
       &Bmad::eq_lat,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_lat
 
 Parameters
@@ -2335,9 +2259,8 @@ is_eq : bool
   m.def(
       "eq_lat_ele_loc",
       &Bmad::eq_lat_ele_loc,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_lat_ele_loc
 
 Parameters
@@ -2354,9 +2277,8 @@ is_eq : bool
   m.def(
       "eq_lat_param",
       &Bmad::eq_lat_param,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_lat_param
 
 Parameters
@@ -2373,9 +2295,8 @@ is_eq : bool
   m.def(
       "eq_linac_normal_mode",
       &Bmad::eq_linac_normal_mode,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_linac_normal_mode
 
 Parameters
@@ -2392,9 +2313,8 @@ is_eq : bool
   m.def(
       "eq_mode3",
       &Bmad::eq_mode3,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_mode3
 
 Parameters
@@ -2411,9 +2331,8 @@ is_eq : bool
   m.def(
       "eq_mode_info",
       &Bmad::eq_mode_info,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_mode_info
 
 Parameters
@@ -2430,9 +2349,8 @@ is_eq : bool
   m.def(
       "eq_normal_modes",
       &Bmad::eq_normal_modes,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_normal_modes
 
 Parameters
@@ -2449,9 +2367,8 @@ is_eq : bool
   m.def(
       "eq_photon_element",
       &Bmad::eq_photon_element,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_photon_element
 
 Parameters
@@ -2468,9 +2385,8 @@ is_eq : bool
   m.def(
       "eq_photon_material",
       &Bmad::eq_photon_material,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_photon_material
 
 Parameters
@@ -2487,9 +2403,8 @@ is_eq : bool
   m.def(
       "eq_photon_reflect_surface",
       &Bmad::eq_photon_reflect_surface,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_photon_reflect_surface
 
 Parameters
@@ -2506,9 +2421,8 @@ is_eq : bool
   m.def(
       "eq_photon_reflect_table",
       &Bmad::eq_photon_reflect_table,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_photon_reflect_table
 
 Parameters
@@ -2525,9 +2439,8 @@ is_eq : bool
   m.def(
       "eq_photon_target",
       &Bmad::eq_photon_target,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_photon_target
 
 Parameters
@@ -2544,9 +2457,8 @@ is_eq : bool
   m.def(
       "eq_pixel_detec",
       &Bmad::eq_pixel_detec,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_pixel_detec
 
 Parameters
@@ -2563,9 +2475,8 @@ is_eq : bool
   m.def(
       "eq_pixel_pt",
       &Bmad::eq_pixel_pt,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_pixel_pt
 
 Parameters
@@ -2582,9 +2493,8 @@ is_eq : bool
   m.def(
       "eq_pre_tracker",
       &Bmad::eq_pre_tracker,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_pre_tracker
 
 Parameters
@@ -2601,9 +2511,8 @@ is_eq : bool
   m.def(
       "eq_rad_int1",
       &Bmad::eq_rad_int1,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_rad_int1
 
 Parameters
@@ -2620,9 +2529,8 @@ is_eq : bool
   m.def(
       "eq_rad_int_all_ele",
       &Bmad::eq_rad_int_all_ele,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_rad_int_all_ele
 
 Parameters
@@ -2639,9 +2547,8 @@ is_eq : bool
   m.def(
       "eq_rad_int_branch",
       &Bmad::eq_rad_int_branch,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_rad_int_branch
 
 Parameters
@@ -2658,9 +2565,8 @@ is_eq : bool
   m.def(
       "eq_rad_map",
       &Bmad::eq_rad_map,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_rad_map
 
 Parameters
@@ -2677,9 +2583,8 @@ is_eq : bool
   m.def(
       "eq_rad_map_ele",
       &Bmad::eq_rad_map_ele,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_rad_map_ele
 
 Parameters
@@ -2696,9 +2601,8 @@ is_eq : bool
   m.def(
       "eq_ramper_lord",
       &Bmad::eq_ramper_lord,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_ramper_lord
 
 Parameters
@@ -2715,9 +2619,8 @@ is_eq : bool
   m.def(
       "eq_space_charge_common",
       &Bmad::eq_space_charge_common,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_space_charge_common
 
 Parameters
@@ -2734,9 +2637,8 @@ is_eq : bool
   m.def(
       "eq_spin_polar",
       &Bmad::eq_spin_polar,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_spin_polar
 
 Parameters
@@ -2753,9 +2655,8 @@ is_eq : bool
   m.def(
       "eq_spline",
       &Bmad::eq_spline,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_spline
 
 Parameters
@@ -2772,9 +2673,8 @@ is_eq : bool
   m.def(
       "eq_strong_beam",
       &Bmad::eq_strong_beam,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_strong_beam
 
 Parameters
@@ -2791,9 +2691,8 @@ is_eq : bool
   m.def(
       "eq_surface_curvature",
       &Bmad::eq_surface_curvature,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_curvature
 
 Parameters
@@ -2810,9 +2709,8 @@ is_eq : bool
   m.def(
       "eq_surface_displacement",
       &Bmad::eq_surface_displacement,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_displacement
 
 Parameters
@@ -2829,9 +2727,8 @@ is_eq : bool
   m.def(
       "eq_surface_displacement_pt",
       &Bmad::eq_surface_displacement_pt,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_displacement_pt
 
 Parameters
@@ -2848,9 +2745,8 @@ is_eq : bool
   m.def(
       "eq_surface_h_misalign",
       &Bmad::eq_surface_h_misalign,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_h_misalign
 
 Parameters
@@ -2867,9 +2763,8 @@ is_eq : bool
   m.def(
       "eq_surface_h_misalign_pt",
       &Bmad::eq_surface_h_misalign_pt,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_h_misalign_pt
 
 Parameters
@@ -2886,9 +2781,8 @@ is_eq : bool
   m.def(
       "eq_surface_segmented",
       &Bmad::eq_surface_segmented,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_segmented
 
 Parameters
@@ -2905,9 +2799,8 @@ is_eq : bool
   m.def(
       "eq_surface_segmented_pt",
       &Bmad::eq_surface_segmented_pt,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_surface_segmented_pt
 
 Parameters
@@ -2924,9 +2817,8 @@ is_eq : bool
   m.def(
       "eq_target_point",
       &Bmad::eq_target_point,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_target_point
 
 Parameters
@@ -2943,9 +2835,8 @@ is_eq : bool
   m.def(
       "eq_taylor",
       &Bmad::eq_taylor,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_taylor
 
 Parameters
@@ -2962,9 +2853,8 @@ is_eq : bool
   m.def(
       "eq_taylor_term",
       &Bmad::eq_taylor_term,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_taylor_term
 
 Parameters
@@ -2981,9 +2871,8 @@ is_eq : bool
   m.def(
       "eq_track",
       &Bmad::eq_track,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_track
 
 Parameters
@@ -3000,9 +2889,8 @@ is_eq : bool
   m.def(
       "eq_track_point",
       &Bmad::eq_track_point,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_track_point
 
 Parameters
@@ -3019,9 +2907,8 @@ is_eq : bool
   m.def(
       "eq_twiss",
       &Bmad::eq_twiss,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_twiss
 
 Parameters
@@ -3038,9 +2925,8 @@ is_eq : bool
   m.def(
       "eq_wake",
       &Bmad::eq_wake,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake
 
 Parameters
@@ -3057,9 +2943,8 @@ is_eq : bool
   m.def(
       "eq_wake_lr",
       &Bmad::eq_wake_lr,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake_lr
 
 Parameters
@@ -3076,9 +2961,8 @@ is_eq : bool
   m.def(
       "eq_wake_lr_mode",
       &Bmad::eq_wake_lr_mode,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake_lr_mode
 
 Parameters
@@ -3095,9 +2979,8 @@ is_eq : bool
   m.def(
       "eq_wake_sr",
       &Bmad::eq_wake_sr,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake_sr
 
 Parameters
@@ -3114,9 +2997,8 @@ is_eq : bool
   m.def(
       "eq_wake_sr_mode",
       &Bmad::eq_wake_sr_mode,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake_sr_mode
 
 Parameters
@@ -3133,9 +3015,8 @@ is_eq : bool
   m.def(
       "eq_wake_sr_z_long",
       &Bmad::eq_wake_sr_z_long,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wake_sr_z_long
 
 Parameters
@@ -3152,9 +3033,8 @@ is_eq : bool
   m.def(
       "eq_wall3d",
       &Bmad::eq_wall3d,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wall3d
 
 Parameters
@@ -3171,9 +3051,8 @@ is_eq : bool
   m.def(
       "eq_wall3d_section",
       &Bmad::eq_wall3d_section,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wall3d_section
 
 Parameters
@@ -3190,9 +3069,8 @@ is_eq : bool
   m.def(
       "eq_wall3d_vertex",
       &Bmad::eq_wall3d_vertex,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_wall3d_vertex
 
 Parameters
@@ -3209,9 +3087,8 @@ is_eq : bool
   m.def(
       "eq_xy_disp",
       &Bmad::eq_xy_disp,
-      py::arg("f1"),
-      py::arg("f2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("f1"),
+      nb::arg("f2"),
       R"""(Wrapper for Fortran routine eq_xy_disp
 
 Parameters
@@ -3228,9 +3105,8 @@ is_eq : bool
   m.def(
       "equal_sign_here",
       &Bmad::equal_sign_here,
-      py::arg("ele"),
-      py::arg("delim"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("delim"),
       R"""(Wrapper for Fortran routine equal_sign_here
 
 Parameters
@@ -3247,9 +3123,8 @@ is_here : bool
   m.def(
       "equivalent_taylor_attributes",
       &Bmad::equivalent_taylor_attributes,
-      py::arg("ele_taylor"),
-      py::arg("ele2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele_taylor"),
+      nb::arg("ele2"),
       R"""(Wrapper for Fortran routine equivalent_taylor_attributes
 
 Parameters
@@ -3269,13 +3144,12 @@ equiv : bool
   m.def(
       "etdiv",
       &Bmad::etdiv,
-      py::arg("A"),
-      py::arg("B"),
-      py::arg("C"),
-      py::arg("D"),
-      py::arg("E"),
-      py::arg("F"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("A"),
+      nb::arg("B"),
+      nb::arg("C"),
+      nb::arg("D"),
+      nb::arg("E"),
+      nb::arg("F"),
       R"""(Wrapper for Fortran routine etdiv
 
 Parameters
@@ -3293,38 +3167,31 @@ E : float
 F : float
 )"""
   );
-  py::class_<Bmad::EvaluateArrayIndex, std::unique_ptr<Bmad::EvaluateArrayIndex>>(
-      m,
-      "EvaluateArrayIndex",
-      "evaluate_array_index return type"
-  )
-      .def_readonly("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
-      .def_readonly("word2", &Bmad::EvaluateArrayIndex::word2)
-      .def_readonly("delim2", &Bmad::EvaluateArrayIndex::delim2)
-      .def_readonly("this_index", &Bmad::EvaluateArrayIndex::this_index)
+  nb::class_<Bmad::EvaluateArrayIndex>(m, "EvaluateArrayIndex", "evaluate_array_index return type")
+      .def_ro("err_flag", &Bmad::EvaluateArrayIndex::err_flag)
+      .def_ro("word2", &Bmad::EvaluateArrayIndex::word2)
+      .def_ro("delim2", &Bmad::EvaluateArrayIndex::delim2)
+      .def_ro("this_index", &Bmad::EvaluateArrayIndex::this_index)
       .def("__len__", [](const Bmad::EvaluateArrayIndex &) { return 4; })
-      .def("__getitem__", [](const Bmad::EvaluateArrayIndex &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EvaluateArrayIndex &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.word2);
+          return nb::cast(s.word2);
         if (i == 2)
-          return py::cast(s.delim2);
+          return nb::cast(s.delim2);
         if (i == 3)
-          return py::cast(s.this_index);
-        throw py::index_error();
+          return nb::cast(s.this_index);
+        throw nb::index_error();
       });
   m.def(
       "evaluate_array_index",
       &Bmad::evaluate_array_index,
-      py::arg("delim_list1"),
-      py::arg("delim_list2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function evaluate_array_index (err_flag, delim_list1, word2, delim_list2, delim2) result (this_index)
-
-Function of evaluate the index of an array. Typically the text being parsed looks like:
+      nb::arg("delim_list1"),
+      nb::arg("delim_list2"),
+      R"""(Function of evaluate the index of an array. Typically the text being parsed looks like:
      "5) = ..."         or
      "6).COMP = ..."
 
@@ -3351,31 +3218,24 @@ this_index : int
     Integer value
 )"""
   );
-  py::class_<Bmad::EvaluateLogical, std::unique_ptr<Bmad::EvaluateLogical>>(
-      m,
-      "EvaluateLogical",
-      "evaluate_logical return type"
-  )
-      .def_readonly("iostat", &Bmad::EvaluateLogical::iostat)
-      .def_readonly("this_logic", &Bmad::EvaluateLogical::this_logic)
+  nb::class_<Bmad::EvaluateLogical>(m, "EvaluateLogical", "evaluate_logical return type")
+      .def_ro("iostat", &Bmad::EvaluateLogical::iostat)
+      .def_ro("this_logic", &Bmad::EvaluateLogical::this_logic)
       .def("__len__", [](const Bmad::EvaluateLogical &) { return 2; })
-      .def("__getitem__", [](const Bmad::EvaluateLogical &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::EvaluateLogical &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.iostat);
+          return nb::cast(s.iostat);
         if (i == 1)
-          return py::cast(s.this_logic);
-        throw py::index_error();
+          return nb::cast(s.this_logic);
+        throw nb::index_error();
       });
   m.def(
       "evaluate_logical",
       &Bmad::evaluate_logical,
-      py::arg("word"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function evaluate_logical (word, iostat) result (this_logic)
-
-Function of convert a string into a logical value.
+      nb::arg("word"),
+      R"""(Function of convert a string into a logical value.
 Accepted possibilities are:
   .TRUE.  .FALSE.
    TRUE    FALSE
@@ -3398,16 +3258,13 @@ this_logic : bool
   m.def(
       "exact_bend_edge_kick",
       &Bmad::exact_bend_edge_kick,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("particle_at"),
-      py::arg("orb"),
-      py::arg("mat6") = py::none(),
-      py::arg("make_matrix") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine exact_bend_edge_kick (ele, param, particle_at, orb, mat6, make_matrix)
-
-Subroutine to track through the edge field of an sbend.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orb"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Subroutine to track through the edge field of an sbend.
 Uses routines adapted from PTC
 
 Parameters
@@ -3435,13 +3292,10 @@ make_matrix : bool, optional
   m.def(
       "exp_bessi0",
       &Bmad::exp_bessi0,
-      py::arg("t"),
-      py::arg("B1"),
-      py::arg("B2"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function exp_bessi0(t, B1, B2)
-
-This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
+      nb::arg("t"),
+      nb::arg("B1"),
+      nb::arg("B2"),
+      R"""(This is essentially the Numercal Recipes bessi0 function multiplied by exp(-B1*t).
 
 This overcomes an issue where exp(B2*t) may be huge and exp(-B1*t) may be small.
 Evaluating exp(B2*t) may result in overflow, but exp((B2-B1)*t) has a moderate value.
@@ -3459,35 +3313,28 @@ B2 : float
     Scalar value.  Eq. 34 from Piwinski's paper.
 )"""
   );
-  py::class_<PyExpectOneOf, std::unique_ptr<PyExpectOneOf>>(
-      m,
-      "ExpectOneOf",
-      "expect_one_of return type"
-  )
-      .def_readonly("is_ok", &PyExpectOneOf::is_ok)
-      .def_readonly("delim", &PyExpectOneOf::delim)
+  nb::class_<PyExpectOneOf>(m, "ExpectOneOf", "expect_one_of return type")
+      .def_ro("is_ok", &PyExpectOneOf::is_ok)
+      .def_ro("delim", &PyExpectOneOf::delim)
       .def("__len__", [](const PyExpectOneOf &) { return 2; })
-      .def("__getitem__", [](const PyExpectOneOf &s, int i) -> py::object {
+      .def("__getitem__", [](const PyExpectOneOf &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.is_ok);
+          return nb::cast(s.is_ok);
         if (i == 1)
-          return py::cast(s.delim);
-        throw py::index_error();
+          return nb::cast(s.delim);
+        throw nb::index_error();
       });
   m.def(
       "expect_one_of",
       &python_expect_one_of,
-      py::arg("delim_list"),
-      py::arg("check_input_delim"),
-      py::arg("ele_name"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expect_one_of (delim_list, check_input_delim, ele_name, delim, delim_found) result (is_ok)
-
-Routine to check either that the current delimitor or the next character in the parse stream is the
+      nb::arg("delim_list"),
+      nb::arg("check_input_delim"),
+      nb::arg("ele_name"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      R"""(Routine to check either that the current delimitor or the next character in the parse stream is the
 expected delimitor.
 This routine is used for Bmad lattice file parsing and is not meant for general use.
 
@@ -3519,38 +3366,31 @@ delim : str
     As an output, delim: Next delim if check_input_delim = False.
 )"""
   );
-  py::class_<Bmad::ExpectThis, std::unique_ptr<Bmad::ExpectThis>>(
-      m,
-      "ExpectThis",
-      "expect_this return type"
-  )
-      .def_readonly("delim", &Bmad::ExpectThis::delim)
-      .def_readonly("delim_found", &Bmad::ExpectThis::delim_found)
-      .def_readonly("is_ok", &Bmad::ExpectThis::is_ok)
+  nb::class_<Bmad::ExpectThis>(m, "ExpectThis", "expect_this return type")
+      .def_ro("delim", &Bmad::ExpectThis::delim)
+      .def_ro("delim_found", &Bmad::ExpectThis::delim_found)
+      .def_ro("is_ok", &Bmad::ExpectThis::is_ok)
       .def("__len__", [](const Bmad::ExpectThis &) { return 3; })
-      .def("__getitem__", [](const Bmad::ExpectThis &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ExpectThis &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 1)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 2)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "expect_this",
       &Bmad::expect_this,
-      py::arg("expecting"),
-      py::arg("check_delim"),
-      py::arg("call_check"),
-      py::arg("err_str"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expect_this (expecting, check_delim, call_check, err_str, ele, delim, delim_found) result (is_ok)
-
-Checks that the next character or characters in the parse stream corresponds to the
+      nb::arg("expecting"),
+      nb::arg("check_delim"),
+      nb::arg("call_check"),
+      nb::arg("err_str"),
+      nb::arg("ele"),
+      R"""(Checks that the next character or characters in the parse stream corresponds to the
 characters in the expecting argument. For example, if expecting is ')={' these three characters
 should be the next non-blank characters in the parse stream.
 
@@ -3586,12 +3426,9 @@ delim_found : bool
   m.def(
       "expression_stack_to_string",
       &Bmad::expression_stack_to_string,
-      py::arg("stack"),
-      py::arg("polish") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expression_stack_to_string (stack, polish) result (str)
-
-Routine to convert an expression stack to a string
+      nb::arg("stack"),
+      nb::arg("polish") = nb::none(),
+      R"""(Routine to convert an expression stack to a string
 
 Parameters
 ----------
@@ -3607,36 +3444,33 @@ str : str
     : Expression in string form.
 )"""
   );
-  py::class_<Bmad::ExpressionStackValue, std::unique_ptr<Bmad::ExpressionStackValue>>(
+  nb::class_<Bmad::ExpressionStackValue>(
       m,
       "ExpressionStackValue",
       "expression_stack_value return type"
   )
-      .def_readonly("err_flag", &Bmad::ExpressionStackValue::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStackValue::err_str)
-      .def_readonly("value", &Bmad::ExpressionStackValue::value)
+      .def_ro("err_flag", &Bmad::ExpressionStackValue::err_flag)
+      .def_ro("err_str", &Bmad::ExpressionStackValue::err_str)
+      .def_ro("value", &Bmad::ExpressionStackValue::value)
       .def("__len__", [](const Bmad::ExpressionStackValue &) { return 3; })
-      .def("__getitem__", [](const Bmad::ExpressionStackValue &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ExpressionStackValue &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.err_str);
+          return nb::cast(s.err_str);
         if (i == 2)
-          return py::cast(s.value);
-        throw py::index_error();
+          return nb::cast(s.value);
+        throw nb::index_error();
       });
   m.def(
       "expression_stack_value",
       &Bmad::expression_stack_value,
-      py::arg("stack"),
-      py::arg("var") = py::none(),
-      py::arg("use_old") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expression_stack_value (stack, err_flag, err_str, var, use_old) result (value)
-
-Routine to evaluate a mathematical expression represented by an "expression stack".
+      nb::arg("stack"),
+      nb::arg("var") = nb::none(),
+      nb::arg("use_old") = nb::none(),
+      R"""(Routine to evaluate a mathematical expression represented by an "expression stack".
 Expression stacks are created by expression_string_to_stack.
 
 Note: Stack elements with stack(i)%type == variable$ need to be evalauated before
@@ -3669,37 +3503,34 @@ value : float
     Value of the expression.
 )"""
   );
-  py::class_<Bmad::ExpressionStringToStack, std::unique_ptr<Bmad::ExpressionStringToStack>>(
+  nb::class_<Bmad::ExpressionStringToStack>(
       m,
       "ExpressionStringToStack",
       "expression_string_to_stack return type"
   )
-      .def_readonly("stack", &Bmad::ExpressionStringToStack::stack)
-      .def_readonly("n_stack", &Bmad::ExpressionStringToStack::n_stack)
-      .def_readonly("err_flag", &Bmad::ExpressionStringToStack::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStringToStack::err_str)
+      .def_ro("stack", &Bmad::ExpressionStringToStack::stack)
+      .def_ro("n_stack", &Bmad::ExpressionStringToStack::n_stack)
+      .def_ro("err_flag", &Bmad::ExpressionStringToStack::err_flag)
+      .def_ro("err_str", &Bmad::ExpressionStringToStack::err_str)
       .def("__len__", [](const Bmad::ExpressionStringToStack &) { return 4; })
-      .def("__getitem__", [](const Bmad::ExpressionStringToStack &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ExpressionStringToStack &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.stack);
+          return nb::cast(s.stack);
         if (i == 1)
-          return py::cast(s.n_stack);
+          return nb::cast(s.n_stack);
         if (i == 2)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 3)
-          return py::cast(s.err_str);
-        throw py::index_error();
+          return nb::cast(s.err_str);
+        throw nb::index_error();
       });
   m.def(
       "expression_string_to_stack",
       &Bmad::expression_string_to_stack,
-      py::arg("string"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine expression_string_to_stack (string, stack, n_stack, err_flag, err_str)
-
-This routine creates an expression stack array which can be used
+      nb::arg("string"),
+      R"""(This routine creates an expression stack array which can be used
 to evaluate an arithmethic expression.
 
 Stack end elements not used are marked stack(i)%type = end_stack$
@@ -3731,32 +3562,29 @@ err_str : str
     String describing the error.
 )"""
   );
-  py::class_<Bmad::ExpressionStringToTree, std::unique_ptr<Bmad::ExpressionStringToTree>>(
+  nb::class_<Bmad::ExpressionStringToTree>(
       m,
       "ExpressionStringToTree",
       "expression_string_to_tree return type"
   )
-      .def_readonly("err_flag", &Bmad::ExpressionStringToTree::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionStringToTree::err_str)
+      .def_ro("err_flag", &Bmad::ExpressionStringToTree::err_flag)
+      .def_ro("err_str", &Bmad::ExpressionStringToTree::err_str)
       .def("__len__", [](const Bmad::ExpressionStringToTree &) { return 2; })
-      .def("__getitem__", [](const Bmad::ExpressionStringToTree &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ExpressionStringToTree &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.err_str);
-        throw py::index_error();
+          return nb::cast(s.err_str);
+        throw nb::index_error();
       });
   m.def(
       "expression_string_to_tree",
       &Bmad::expression_string_to_tree,
-      py::arg("string"),
-      py::arg("root_tree"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine expression_string_to_tree (string, root_tree, err_flag, err_str)
-
-Routine to create an expression tree array which can be used
+      nb::arg("string"),
+      nb::arg("root_tree"),
+      R"""(Routine to create an expression tree array which can be used
 to evaluate an arithmethic expression.
 
 Also see:
@@ -3806,15 +3634,22 @@ err_str : str
   );
   m.def(
       "expression_tree_to_string",
-      &Bmad::expression_tree_to_string,
-      py::arg("tree"),
-      py::arg("include_root") = py::none(),
-      py::arg("n_node") = py::none(),
-      py::arg("parent") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expression_tree_to_string (tree, include_root, n_node, parent) result(str_out)
-
-Routine to convert an expression tree to a expression string.
+      [](ExpressionTreeStruct &tree,
+         std::optional<bool> include_root,
+         std::optional<int> n_node,
+         ExpressionTreeStruct *parent) {
+        auto fn = static_cast<
+            std::
+                string (*)(ExpressionTreeStruct &, std::optional<bool>, std::optional<int>, optional_ref<ExpressionTreeStruct>)>(
+            &Bmad::expression_tree_to_string
+        );
+        return fn(tree, include_root, n_node, ptr_to_opt_ref(parent));
+      },
+      nb::arg("tree"),
+      nb::arg("include_root") = nb::none(),
+      nb::arg("n_node") = nb::none(),
+      nb::arg("parent") = nb::none(),
+      R"""(Routine to convert an expression tree to a expression string.
 
 Parameters
 ----------
@@ -3837,36 +3672,29 @@ str_out : str
     Expression string.
 )"""
   );
-  py::class_<Bmad::ExpressionValue, std::unique_ptr<Bmad::ExpressionValue>>(
-      m,
-      "ExpressionValue",
-      "expression_value return type"
-  )
-      .def_readonly("err_flag", &Bmad::ExpressionValue::err_flag)
-      .def_readonly("err_str", &Bmad::ExpressionValue::err_str)
-      .def_readonly("value", &Bmad::ExpressionValue::value)
+  nb::class_<Bmad::ExpressionValue>(m, "ExpressionValue", "expression_value return type")
+      .def_ro("err_flag", &Bmad::ExpressionValue::err_flag)
+      .def_ro("err_str", &Bmad::ExpressionValue::err_str)
+      .def_ro("value", &Bmad::ExpressionValue::value)
       .def("__len__", [](const Bmad::ExpressionValue &) { return 3; })
-      .def("__getitem__", [](const Bmad::ExpressionValue &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ExpressionValue &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.err_str);
+          return nb::cast(s.err_str);
         if (i == 2)
-          return py::cast(s.value);
-        throw py::index_error();
+          return nb::cast(s.value);
+        throw nb::index_error();
       });
   m.def(
       "expression_value",
       &Bmad::expression_value,
-      py::arg("expression"),
-      py::arg("var") = py::none(),
-      py::arg("use_old") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function expression_value (expression, err_flag, err_str, var, use_old) result (value)
-
-Routine to evaluate a mathematical expression encoded in a string.
+      nb::arg("expression"),
+      nb::arg("var") = nb::none(),
+      nb::arg("use_old") = nb::none(),
+      R"""(Routine to evaluate a mathematical expression encoded in a string.
 
 Also see:
   expression_string_to_stack

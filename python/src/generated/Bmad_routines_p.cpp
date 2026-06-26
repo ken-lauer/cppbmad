@@ -1,23 +1,20 @@
 #include "pybmad/generated/Bmad_routines_p.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_p(py::module &m) {
+void init_Bmad_routines_p(nb::module_ &m) {
   m.def(
       "parse_cartesian_map",
       &Bmad::parse_cartesian_map,
-      py::arg("ct_map"),
-      py::arg("ele"),
-      py::arg("lat"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parse_cartesian_map (ct_map, ele, lat, delim, delim_found, err_flag)
-
-Subroutine to parse a "cartesian_map = {}" construct
+      nb::arg("ct_map"),
+      nb::arg("ele"),
+      nb::arg("lat"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to parse a "cartesian_map = {}" construct
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is private to bmad_parser_mod.
@@ -34,13 +31,12 @@ This must read in:
   m.def(
       "parse_cylindrical_map",
       &Bmad::parse_cylindrical_map,
-      py::arg("cl_map"),
-      py::arg("ele"),
-      py::arg("lat"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("cl_map"),
+      nb::arg("ele"),
+      nb::arg("lat"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine parse_cylindrical_map
 
 Parameters
@@ -61,28 +57,24 @@ err_flag : bool
   m.def(
       "parse_gen_grad_map",
       &Bmad::parse_gen_grad_map,
-      py::arg("gg_map"),
-      py::arg("ele"),
-      py::arg("lat"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parse_gen_grad_map (gg_map, ele, lat, delim, delim_found, err_flag)
-
-Subroutine to parse a "gen_grad_map = {}" construct
+      nb::arg("gg_map"),
+      nb::arg("ele"),
+      nb::arg("lat"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to parse a "gen_grad_map = {}" construct
 )"""
   );
   m.def(
       "parse_grid_field",
       &Bmad::parse_grid_field,
-      py::arg("g_field"),
-      py::arg("ele"),
-      py::arg("lat"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("g_field"),
+      nb::arg("ele"),
+      nb::arg("lat"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine parse_grid_field
 
 Parameters
@@ -103,19 +95,17 @@ err_flag : bool
   m.def(
       "parse_integer_list",
       &Bmad::parse_integer_list,
-      py::arg("err_str"),
-      py::arg("lat"),
-      py::arg("int_array"),
-      py::arg("exact_size"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("open_delim") = py::none(),
-      py::arg("separator") = py::none(),
-      py::arg("close_delim") = py::none(),
-      py::arg("default_value") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parse_integer_list (err_str, lat, int_array, exact_size, delim, delim_found, open_delim,
-                                      separator, close_delim, default_value) result (is_ok)
+      nb::arg("err_str"),
+      nb::arg("lat"),
+      nb::arg("int_array"),
+      nb::arg("exact_size"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("open_delim") = nb::none(),
+      nb::arg("separator") = nb::none(),
+      nb::arg("close_delim") = nb::none(),
+      nb::arg("default_value") = nb::none(),
+      R"""(                                      separator, close_delim, default_value) result (is_ok)
 
 Routine to parse a list of integers of the form:
    open_delim integer_1 separator integer_2 . . . close_delim
@@ -125,43 +115,37 @@ Similar to parse_integer_list2 except does not use allocatable array.
 See parse_integer_list2 for more details
 )"""
   );
-  py::class_<Bmad::ParseIntegerList2, std::unique_ptr<Bmad::ParseIntegerList2>>(
-      m,
-      "ParseIntegerList2",
-      "parse_integer_list2 return type"
-  )
-      .def_readonly("num_found", &Bmad::ParseIntegerList2::num_found)
-      .def_readonly("delim", &Bmad::ParseIntegerList2::delim)
-      .def_readonly("delim_found", &Bmad::ParseIntegerList2::delim_found)
-      .def_readonly("is_ok", &Bmad::ParseIntegerList2::is_ok)
+  nb::class_<Bmad::ParseIntegerList2>(m, "ParseIntegerList2", "parse_integer_list2 return type")
+      .def_ro("num_found", &Bmad::ParseIntegerList2::num_found)
+      .def_ro("delim", &Bmad::ParseIntegerList2::delim)
+      .def_ro("delim_found", &Bmad::ParseIntegerList2::delim_found)
+      .def_ro("is_ok", &Bmad::ParseIntegerList2::is_ok)
       .def("__len__", [](const Bmad::ParseIntegerList2 &) { return 4; })
-      .def("__getitem__", [](const Bmad::ParseIntegerList2 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ParseIntegerList2 &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.num_found);
+          return nb::cast(s.num_found);
         if (i == 1)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 2)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 3)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "parse_integer_list2",
       &Bmad::parse_integer_list2,
-      py::arg("err_str"),
-      py::arg("lat"),
-      py::arg("int_array"),
-      py::arg("num_expected") = py::none(),
-      py::arg("open_delim") = py::none(),
-      py::arg("separator") = py::none(),
-      py::arg("close_delim") = py::none(),
-      py::arg("default_value") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parse_integer_list2 (err_str, lat, int_array, num_found, delim, delim_found, num_expected,
-                                       open_delim, separator, close_delim, default_value) result (is_ok)
+      nb::arg("err_str"),
+      nb::arg("lat"),
+      nb::arg("int_array"),
+      nb::arg("num_expected") = nb::none(),
+      nb::arg("open_delim") = nb::none(),
+      nb::arg("separator") = nb::none(),
+      nb::arg("close_delim") = nb::none(),
+      nb::arg("default_value") = nb::none(),
+      R"""(                                       open_delim, separator, close_delim, default_value) result (is_ok)
 
 Routine to parse a list of integers of the form
    open_delim integer_1 separator integer_2 . . . close_delim
@@ -195,43 +179,49 @@ is_ok : bool
     Set True if everything is ok.
 )"""
   );
-  py::class_<Bmad::ParseRealList, std::unique_ptr<Bmad::ParseRealList>>(
-      m,
-      "ParseRealList",
-      "parse_real_list return type"
-  )
-      .def_readonly("delim", &Bmad::ParseRealList::delim)
-      .def_readonly("delim_found", &Bmad::ParseRealList::delim_found)
-      .def_readonly("num_found", &Bmad::ParseRealList::num_found)
-      .def_readonly("is_ok", &Bmad::ParseRealList::is_ok)
+  m.def(
+      "parse_line_or_list",
+      &Bmad::parse_line_or_list,
+      nb::arg("sequence"),
+      nb::arg("iseq_tot"),
+      nb::arg("lat"),
+      nb::arg("top_level"),
+      R"""(Subroutine to parse a sequence.
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  nb::class_<Bmad::ParseRealList>(m, "ParseRealList", "parse_real_list return type")
+      .def_ro("delim", &Bmad::ParseRealList::delim)
+      .def_ro("delim_found", &Bmad::ParseRealList::delim_found)
+      .def_ro("num_found", &Bmad::ParseRealList::num_found)
+      .def_ro("is_ok", &Bmad::ParseRealList::is_ok)
       .def("__len__", [](const Bmad::ParseRealList &) { return 4; })
-      .def("__getitem__", [](const Bmad::ParseRealList &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ParseRealList &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 1)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 2)
-          return py::cast(s.num_found);
+          return nb::cast(s.num_found);
         if (i == 3)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "parse_real_list",
       &Bmad::parse_real_list,
-      py::arg("lat"),
-      py::arg("err_str"),
-      py::arg("real_array"),
-      py::arg("exact_size"),
-      py::arg("open_delim") = py::none(),
-      py::arg("separator") = py::none(),
-      py::arg("close_delim") = py::none(),
-      py::arg("default_value") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parse_real_list (lat, err_str, real_array, exact_size, delim, delim_found, open_delim,
-                               separator, close_delim, default_value, num_found) result (is_ok)
+      nb::arg("lat"),
+      nb::arg("err_str"),
+      nb::arg("real_array"),
+      nb::arg("exact_size"),
+      nb::arg("open_delim") = nb::none(),
+      nb::arg("separator") = nb::none(),
+      nb::arg("close_delim") = nb::none(),
+      nb::arg("default_value") = nb::none(),
+      R"""(                               separator, close_delim, default_value, num_found) result (is_ok)
 
 Routine to parse a list of reals of the form:
    open_delim real_1 separator real_2 . . . close_delim
@@ -269,44 +259,38 @@ delim_found : bool
 num_found : int, optional
 )"""
   );
-  py::class_<Bmad::ParseRealList2, std::unique_ptr<Bmad::ParseRealList2>>(
-      m,
-      "ParseRealList2",
-      "parse_real_list2 return type"
-  )
-      .def_readonly("num_found", &Bmad::ParseRealList2::num_found)
-      .def_readonly("delim", &Bmad::ParseRealList2::delim)
-      .def_readonly("delim_found", &Bmad::ParseRealList2::delim_found)
-      .def_readonly("is_ok", &Bmad::ParseRealList2::is_ok)
+  nb::class_<Bmad::ParseRealList2>(m, "ParseRealList2", "parse_real_list2 return type")
+      .def_ro("num_found", &Bmad::ParseRealList2::num_found)
+      .def_ro("delim", &Bmad::ParseRealList2::delim)
+      .def_ro("delim_found", &Bmad::ParseRealList2::delim_found)
+      .def_ro("is_ok", &Bmad::ParseRealList2::is_ok)
       .def("__len__", [](const Bmad::ParseRealList2 &) { return 4; })
-      .def("__getitem__", [](const Bmad::ParseRealList2 &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ParseRealList2 &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.num_found);
+          return nb::cast(s.num_found);
         if (i == 1)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 2)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 3)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "parse_real_list2",
       &Bmad::parse_real_list2,
-      py::arg("lat"),
-      py::arg("err_str"),
-      py::arg("real_array"),
-      py::arg("num_expected") = py::none(),
-      py::arg("open_brace") = py::none(),
-      py::arg("separator") = py::none(),
-      py::arg("close_brace") = py::none(),
-      py::arg("default_value") = py::none(),
-      py::arg("single_value") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parse_real_list2 (lat, err_str, real_array, num_found, delim, delim_found, num_expected,
-                           open_delim, separator, close_delim, default_value, single_value) result (is_ok)
+      nb::arg("lat"),
+      nb::arg("err_str"),
+      nb::arg("real_array"),
+      nb::arg("num_expected") = nb::none(),
+      nb::arg("open_brace") = nb::none(),
+      nb::arg("separator") = nb::none(),
+      nb::arg("close_brace") = nb::none(),
+      nb::arg("default_value") = nb::none(),
+      nb::arg("single_value") = nb::none(),
+      R"""(                           open_delim, separator, close_delim, default_value, single_value) result (is_ok)
 
 Routine to parse a list of reals of the form:
    open_brace real_1 separator real_2 . . . close_brace
@@ -345,12 +329,68 @@ is_ok : bool
 )"""
   );
   m.def(
+      "parse_superimpose_command",
+      &Bmad::parse_superimpose_command,
+      nb::arg("lat"),
+      nb::arg("ele"),
+      nb::arg("pele"),
+      nb::arg("delim"),
+      R"""(No docstring available.
+)"""
+  );
+  m.def(
+      "parser2_add_superimpose",
+      [](LatStruct &lat, EleStruct &super_ele_in, ParserEleStruct &pele, LatStruct *in_lat) {
+        auto fn = static_cast<
+            void (*)(LatStruct &, EleStruct &, ParserEleStruct &, optional_ref<LatStruct>)>(
+            &Bmad::parser2_add_superimpose
+        );
+        return fn(lat, super_ele_in, pele, ptr_to_opt_ref(in_lat));
+      },
+      nb::arg("lat"),
+      nb::arg("super_ele_in"),
+      nb::arg("pele"),
+      nb::arg("in_lat") = nb::none(),
+      R"""(Wrapper for Fortran routine parser2_add_superimpose
+
+Parameters
+----------
+lat : LatStruct
+
+super_ele_in : EleStruct
+
+pele : ParserEleStruct
+
+in_lat : LatStruct, optional
+)"""
+  );
+  m.def(
+      "parser_add_branch",
+      &Bmad::parser_add_branch,
+      nb::arg("fork_ele"),
+      nb::arg("lat"),
+      nb::arg("sequence"),
+      nb::arg("seq_name"),
+      nb::arg("seq_indexx"),
+      nb::arg("no_end_marker"),
+      nb::arg("in_lat"),
+      nb::arg("plat"),
+      nb::arg("created_new_branch"),
+      nb::arg("new_branch_name") = nb::none(),
+      R"""(                                 seq_name, seq_indexx, no_end_marker, in_lat, plat, created_new_branch)
+
+Subroutine to do line expansion.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  m.def(
       "parser_add_constant",
       &Bmad::parser_add_constant,
-      py::arg("word"),
-      py::arg("lat"),
-      py::arg("redef_is_error"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("word"),
+      nb::arg("lat"),
+      nb::arg("redef_is_error"),
       R"""(Wrapper for Fortran routine parser_add_constant
 
 Parameters
@@ -362,48 +402,296 @@ lat : LatStruct
 redef_is_error : bool
 )"""
   );
+  nb::class_<Bmad::ParserAddLords>(m, "ParserAddLords", "parser_add_lords return type")
+      .def_ro("lat", &Bmad::ParserAddLords::lat)
+      .def_ro("check_lat", &Bmad::ParserAddLords::check_lat)
+      .def("__len__", [](const Bmad::ParserAddLords &) { return 2; })
+      .def("__getitem__", [](const Bmad::ParserAddLords &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.lat);
+        if (i == 1)
+          return nb::cast(s.check_lat);
+        throw nb::index_error();
+      });
+  m.def(
+      "parser_add_lords",
+      &Bmad::parser_add_lords,
+      nb::arg("lord_lat"),
+      nb::arg("n_ele_max"),
+      nb::arg("plat"),
+      R"""(Subroutine to add overlay, group, and girder lords to the lattice.
+For overlays and groups: If multiple elements have the same name then
+use all of them.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Parameters
+----------
+lord_lat : LatStruct
+    List of lord elements to add to lat.
+
+n_ele_max : int
+    lord elements in lord_lat are in range [1:n_ele_max].
+
+plat : ParserLatStruct
+    Extra info needed to place the lord elements
+
+Returns
+-------
+lat : LatStruct
+    Lattice to add lord elements to.
+
+check_lat : LatStruct, optional
+    If slave elements of a lord are not in lat but are in check_lat, do not issue error message about slave
+    elements not found.
+)"""
+  );
+  m.def(
+      "parser_add_superimpose",
+      &Bmad::parser_add_superimpose,
+      nb::arg("branch"),
+      nb::arg("super_ele_in"),
+      nb::arg("pele"),
+      nb::arg("in_lat"),
+      nb::arg("plat"),
+      R"""(Wrapper for Fortran routine parser_add_superimpose
+
+Parameters
+----------
+branch : BranchStruct
+
+super_ele_in : EleStruct
+
+pele : ParserEleStruct
+
+in_lat : LatStruct
+
+plat : ParserLatStruct
+)"""
+  );
   m.def(
       "parser_call_check",
       &Bmad::parser_call_check,
-      py::arg("word"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("call_found"),
-      py::arg("err_flag") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_call_check(word, ix_word, delim, delim_found, call_found, err_flag))
-
-Routine to check if there is a "call::XXX" construct in the input stream.
+      nb::arg("word"),
+      nb::arg("ix_word"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("call_found"),
+      nb::arg("err_flag") = nb::none(),
+      R"""(Routine to check if there is a "call::XXX" construct in the input stream.
 )"""
   );
-  py::class_<Bmad::ParserFastComplexRead, std::unique_ptr<Bmad::ParserFastComplexRead>>(
+  m.def(
+      "parser_debug_print_info",
+      &Bmad::parser_debug_print_info,
+      nb::arg("lat"),
+      nb::arg("debug_line"),
+      nb::arg("sequence") = nb::none(),
+      R"""(Subroutine to remove all null_ele elements.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+)"""
+  );
+  m
+      .def(
+          "parser_error",
+          [](std::string what1,
+             std::optional<std::string> what2,
+             std::optional<std::string> what3,
+             std::optional<std::string> what4,
+             SeqStruct *seq,
+             ParserEleStruct *pele,
+             std::optional<bool> stop_here,
+             std::optional<int> level,
+             std::optional<FArray1D<Real>> r_array,
+             std::optional<FArray1D<Int>> i_array) {
+            auto fn =
+                static_cast<void (*)(std::string, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, optional_ref<SeqStruct>, optional_ref<ParserEleStruct>, std::optional<bool>, std::optional<int>, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>)>(
+                    &Bmad::parser_error
+                );
+            return fn(
+                what1,
+                what2,
+                what3,
+                what4,
+                ptr_to_opt_ref(seq),
+                ptr_to_opt_ref(pele),
+                stop_here,
+                level,
+                r_array,
+                i_array
+            );
+          },
+          nb::arg("what1"),
+          nb::arg("what2") = nb::none(),
+          nb::arg("what3") = nb::none(),
+          nb::arg("what4") = nb::none(),
+          nb::arg("seq") = nb::none(),
+          nb::arg("pele") = nb::none(),
+          nb::arg("stop_here") = nb::none(),
+          nb::arg("level") = nb::none(),
+          nb::arg("r_array") = nb::none(),
+          nb::arg("i_array") = nb::none(),
+          R"""(Routine to print an error message generated when parsing a lattice.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Parameters
+----------
+what1 : str
+    First line in error message.
+
+what2 : str, optional
+    Second line in error message.
+
+what3 : str, optional
+    Third line in error message.
+
+what4 : str, optional
+    Fourth line in error message.
+
+seq : SeqStruct, optional
+    Used when error is generated during reading of a lattice file. Contains information such as file name, and
+    line number where error was detected.
+
+pele : ParserEleStruct, optional
+    Used when error is associated with a lattice element. Contains information on the lattice element.
+
+stop_here : bool, optional
+    If present and True then immediately stop. Used with severe errors.
+
+level : int, optional
+    Possibilities are:
+
+r_array : 1D array of float, optional
+    Real numbers to be encoded in error message. See out_io doc.
+
+i_array : 1D array of int, optional
+    Integer numbers to be encoded in error message. See out_io doc.
+)"""
+      );
+  nb::class_<Bmad::ParserExpandLine>(m, "ParserExpandLine", "parser_expand_line return type")
+      .def_ro("n_ele_expand", &Bmad::ParserExpandLine::n_ele_expand)
+      .def_ro("expanded_line", &Bmad::ParserExpandLine::expanded_line)
+      .def("__len__", [](const Bmad::ParserExpandLine &) { return 2; })
+      .def("__getitem__", [](const Bmad::ParserExpandLine &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.n_ele_expand);
+        if (i == 1)
+          return nb::cast(s.expanded_line);
+        throw nb::index_error();
+      });
+  m.def(
+      "parser_expand_line",
+      [](int i_lev,
+         std::string line_name,
+         SeqStructAlloc1D sequence,
+         CharacterAlloc1D &seq_name,
+         IntAlloc1D &seq_indexx,
+         bool no_end_marker,
+         LatStruct *lat,
+         LatStruct *in_lat) {
+        auto fn = static_cast<
+            Bmad::
+                ParserExpandLine (*)(int, std::string, SeqStructAlloc1D, CharacterAlloc1D &, IntAlloc1D &, bool, optional_ref<LatStruct>, optional_ref<LatStruct>)>(
+            &Bmad::parser_expand_line
+        );
+        return fn(
+            i_lev,
+            line_name,
+            sequence,
+            seq_name,
+            seq_indexx,
+            no_end_marker,
+            ptr_to_opt_ref(lat),
+            ptr_to_opt_ref(in_lat)
+        );
+      },
+      nb::arg("i_lev"),
+      nb::arg("line_name"),
+      nb::arg("sequence"),
+      nb::arg("seq_name"),
+      nb::arg("seq_indexx"),
+      nb::arg("no_end_marker"),
+      nb::arg("lat") = nb::none(),
+      nb::arg("in_lat") = nb::none(),
+      R"""(              seq_name, seq_indexx, no_end_marker, n_ele_expand, lat, in_lat, expanded_line)
+
+Subroutine to do line expansion.
+
+This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Note: Either lat and in_lat must be present or expanded_line must be present.
+
+Parameters
+----------
+i_lev : int
+    Subsequence level. 1 => Root level.
+
+line_name : str
+    Root line to expand.
+
+sequence : 1D array of SeqStruct
+    Array of sequencies.
+
+seq_name : 1D array of str
+    Array of sequence names.
+
+seq_indexx : 1D array of int
+    Index array for the sequence names.
+
+no_end_marker : bool
+    Put a marker named "end" at the end of the branch?
+
+lat : LatStruct, optional
+    Lattice to put the expanded line
+    This parameter is an input/output and is modified in-place.
+    As an output, lat: Lattice with new line. Except if expanded_line is present.
+
+in_lat : LatStruct, optional
+    Lattice with array of defined elements.
+
+Returns
+-------
+n_ele_expand : int
+    Number of elements in the finished line.
+
+expanded_line : 1D array of BaseLineEleStruct, optional
+    If present, lat argument will be ignored and the expanded line will be put into expanded_line.
+)"""
+  );
+  nb::class_<Bmad::ParserFastComplexRead>(
       m,
       "ParserFastComplexRead",
       "parser_fast_complex_read return type"
   )
-      .def_readonly("delim", &Bmad::ParserFastComplexRead::delim)
-      .def_readonly("is_ok", &Bmad::ParserFastComplexRead::is_ok)
+      .def_ro("delim", &Bmad::ParserFastComplexRead::delim)
+      .def_ro("is_ok", &Bmad::ParserFastComplexRead::is_ok)
       .def("__len__", [](const Bmad::ParserFastComplexRead &) { return 2; })
-      .def("__getitem__", [](const Bmad::ParserFastComplexRead &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ParserFastComplexRead &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 1)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "parser_fast_complex_read",
       &Bmad::parser_fast_complex_read,
-      py::arg("cmplx_vec"),
-      py::arg("ele"),
-      py::arg("err_str"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parser_fast_complex_read (cmplx_vec, ele, delim, err_str)  result (is_ok)
-
-Routine to read an array of complex numbers.
+      nb::arg("cmplx_vec"),
+      nb::arg("ele"),
+      nb::arg("err_str"),
+      R"""(Routine to read an array of complex numbers.
 
 This routine assumes that the array values are pure numbers in the form "<re>" or "(<re> <im>)"
 where <re> and <im> are real numbers (not expressions) and there are no commas except possibly
@@ -432,46 +720,38 @@ is_ok : bool
   m.def(
       "parser_fast_integer_read",
       &Bmad::parser_fast_integer_read,
-      py::arg("int_vec"),
-      py::arg("ele"),
-      py::arg("delim_wanted"),
-      py::arg("err_str"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parser_fast_integer_read (int_vec, ele, delim_wanted, err_str)  result (is_ok)
+      nb::arg("int_vec"),
+      nb::arg("ele"),
+      nb::arg("delim_wanted"),
+      nb::arg("err_str"),
+      R"""(No docstring available.
 )"""
   );
-  py::class_<Bmad::ParserFastRealRead, std::unique_ptr<Bmad::ParserFastRealRead>>(
-      m,
-      "ParserFastRealRead",
-      "parser_fast_real_read return type"
-  )
-      .def_readonly("delim", &Bmad::ParserFastRealRead::delim)
-      .def_readonly("n_real", &Bmad::ParserFastRealRead::n_real)
-      .def_readonly("is_ok", &Bmad::ParserFastRealRead::is_ok)
+  nb::class_<Bmad::ParserFastRealRead>(m, "ParserFastRealRead", "parser_fast_real_read return type")
+      .def_ro("delim", &Bmad::ParserFastRealRead::delim)
+      .def_ro("n_real", &Bmad::ParserFastRealRead::n_real)
+      .def_ro("is_ok", &Bmad::ParserFastRealRead::is_ok)
       .def("__len__", [](const Bmad::ParserFastRealRead &) { return 3; })
-      .def("__getitem__", [](const Bmad::ParserFastRealRead &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ParserFastRealRead &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 1)
-          return py::cast(s.n_real);
+          return nb::cast(s.n_real);
         if (i == 2)
-          return py::cast(s.is_ok);
-        throw py::index_error();
+          return nb::cast(s.is_ok);
+        throw nb::index_error();
       });
   m.def(
       "parser_fast_real_read",
       &Bmad::parser_fast_real_read,
-      py::arg("real_vec"),
-      py::arg("ele"),
-      py::arg("end_delims"),
-      py::arg("err_str"),
-      py::arg("exact_size") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function parser_fast_real_read (real_vec, ele, end_delims, delim, err_str, exact_size, n_real)  result (is_ok)
-
-Routine to read an array of real numbers.
+      nb::arg("real_vec"),
+      nb::arg("ele"),
+      nb::arg("end_delims"),
+      nb::arg("err_str"),
+      nb::arg("exact_size") = nb::none(),
+      R"""(Routine to read an array of real numbers.
 
 This routine assumes that the array values are pure numbers in the form "<re1> <re2> ...,"
 where <re1>, <re2>, etc. are real numbers (not expressions) and there are no commas except possibly,
@@ -511,16 +791,13 @@ n_real : int, optional
   m.def(
       "parser_file_stack",
       &Bmad::parser_file_stack,
-      py::arg("how"),
-      py::arg("file_name_in") = py::none(),
-      py::arg("finished") = py::none(),
-      py::arg("err") = py::none(),
-      py::arg("open_file") = py::none(),
-      py::arg("abort_on_open_error") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_file_stack (how, file_name_in, finished, err, open_file, abort_on_open_error)
-
-Subroutine to keep track of the files that are opened for reading.
+      nb::arg("how"),
+      nb::arg("file_name_in") = nb::none(),
+      nb::arg("finished") = nb::none(),
+      nb::arg("err") = nb::none(),
+      nb::arg("open_file") = nb::none(),
+      nb::arg("abort_on_open_error") = nb::none(),
+      R"""(Subroutine to keep track of the files that are opened for reading.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 )"""
@@ -528,15 +805,14 @@ This subroutine is not intended for general use.
   m.def(
       "parser_get_integer",
       &Bmad::parser_get_integer,
-      py::arg("int_val"),
-      py::arg("word"),
-      py::arg("ix_word"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err"),
-      py::arg("str1") = py::none(),
-      py::arg("str2") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("int_val"),
+      nb::arg("word"),
+      nb::arg("ix_word"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err"),
+      nb::arg("str1") = nb::none(),
+      nb::arg("str2") = nb::none(),
       R"""(Wrapper for Fortran routine parser_get_integer
 
 Parameters
@@ -561,13 +837,12 @@ str2 : str, optional
   m.def(
       "parser_get_logical",
       &Bmad::parser_get_logical,
-      py::arg("attrib_name"),
-      py::arg("this_logic"),
-      py::arg("ele_name"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("attrib_name"),
+      nb::arg("this_logic"),
+      nb::arg("ele_name"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine parser_get_logical
 
 Parameters
@@ -588,11 +863,8 @@ err : bool
   m.def(
       "parser_identify_fork_to_element",
       &Bmad::parser_identify_fork_to_element,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_identify_fork_to_element (lat)
-
-Routine to identify the elements the forks in a lattice are branching to.
+      nb::arg("lat"),
+      R"""(Routine to identify the elements the forks in a lattice are branching to.
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
@@ -601,33 +873,26 @@ This subroutine is not intended for general use.
   m.def(
       "parser_init_custom_elements",
       &Bmad::parser_init_custom_elements,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_init_custom_elements (lat)
+      nb::arg("lat"),
+      R"""(No docstring available.
 )"""
   );
   m.def(
       "parser_print_line",
       &Bmad::parser_print_line,
-      py::arg("lat"),
-      py::arg("end_of_file"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_print_line(end_of_file)
-
-This routine is called when a print statement is found in the lattice file.
+      nb::arg("lat"),
+      nb::arg("end_of_file"),
+      R"""(This routine is called when a print statement is found in the lattice file.
 )"""
   );
   m.def(
       "parser_read_lr_wake",
       &Bmad::parser_read_lr_wake,
-      py::arg("ele"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_read_lr_wake (ele, delim, delim_found, err_flag)
-
-Subroutine to read in a long-range wake field from an external file.
+      nb::arg("ele"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to read in a long-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -641,12 +906,9 @@ ele : EleStruct
   m.def(
       "parser_read_old_format_lr_wake",
       &Bmad::parser_read_old_format_lr_wake,
-      py::arg("ele"),
-      py::arg("lr_file_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_read_old_format_lr_wake (ele, lr_file_name)
-
-Subroutine to read in a long-range wake field from an external file.
+      nb::arg("ele"),
+      nb::arg("lr_file_name"),
+      R"""(Subroutine to read in a long-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -663,12 +925,9 @@ lr_file_name : str
   m.def(
       "parser_read_old_format_sr_wake",
       &Bmad::parser_read_old_format_sr_wake,
-      py::arg("ele"),
-      py::arg("sr_file_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_read_old_format_sr_wake (ele, sr_file_name)
-
-Subroutine to read in a short-range wake field from an external file.
+      nb::arg("ele"),
+      nb::arg("sr_file_name"),
+      R"""(Subroutine to read in a short-range wake field from an external file.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -685,14 +944,11 @@ sr_file_name : str
   m.def(
       "parser_read_sr_wake",
       &Bmad::parser_read_sr_wake,
-      py::arg("ele"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_read_sr_wake (ele, delim, delim_found, err_flag)
-
-Subroutine to read in a short-range wake field.
+      nb::arg("ele"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to read in a short-range wake field.
 This subroutine is used by bmad_parser and bmad_parser2.
 
 Parameters
@@ -703,16 +959,83 @@ ele : EleStruct
     As an output, ele: Element with wake information.
 )"""
   );
+  nb::class_<Bmad::ParserSetAttribute>(m, "ParserSetAttribute", "parser_set_attribute return type")
+      .def_ro("delim", &Bmad::ParserSetAttribute::delim)
+      .def_ro("delim_found", &Bmad::ParserSetAttribute::delim_found)
+      .def_ro("err_flag", &Bmad::ParserSetAttribute::err_flag)
+      .def_ro("pele", &Bmad::ParserSetAttribute::pele)
+      .def("__len__", [](const Bmad::ParserSetAttribute &) { return 4; })
+      .def("__getitem__", [](const Bmad::ParserSetAttribute &s, int i) -> nb::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return nb::cast(s.delim);
+        if (i == 1)
+          return nb::cast(s.delim_found);
+        if (i == 2)
+          return nb::cast(s.err_flag);
+        if (i == 3)
+          return nb::cast(s.pele);
+        throw nb::index_error();
+      });
+  m.def(
+      "parser_set_attribute",
+      &Bmad::parser_set_attribute,
+      nb::arg("how"),
+      nb::arg("ele"),
+      nb::arg("check_free") = nb::none(),
+      nb::arg("heterogeneous_ele_list") = nb::none(),
+      nb::arg("set_field_master") = nb::none(),
+      R"""(                                                                heterogeneous_ele_list, set_field_master)
+
+Subroutine used by bmad_parser and bmad_parser2 to get the value of
+an attribute from the input file and set the appropriate value in an element.
+
+This subroutine is not intended for general use.
+
+Parameters
+----------
+how : int
+    Either def$ if the element is being construct from scratch or redef$ if the element has already been
+    formed and this is part of a "ele_name[attrib_name] = value" construct.
+
+ele : EleStruct
+    Element whose attribute this is.
+
+check_free : bool, optional
+    If present and True then an error will be generated if the attribute is not free to vary. Used by
+    bmad_parser2.
+
+heterogeneous_ele_list : bool, optional
+    If True (default = False), we are parsing something like something like "*[tracking_method] =
+    runge_kutta". In this case, runge_kutta may not be valid for this ele but this is not an error.
+
+set_field_master : bool, optional
+    If True (the default) set ele.field_master = T if the attribute to be set is something like DB_FIELD. If
+    this routine is being called post lattice parsing, setting ele.field_master is *not* wanted.
+
+Returns
+-------
+delim : str
+    Delimiter found where the parsing of the input line stops.
+
+delim_found : bool
+    Delimiter found? False if end of input command.
+
+err_flag : bool
+    Set True if there is a problem parsing the input.
+
+pele : ParserEleStruct, optional
+    Structure to hold additional information that cannot be stored in the ele argument.
+)"""
+  );
   m.def(
       "parser_transfer_control_struct",
       &Bmad::parser_transfer_control_struct,
-      py::arg("con_in"),
-      py::arg("lord"),
-      py::arg("ix_var"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine parser_transfer_control_struct (con_in, con_out, lord, ix_var)
-
-Routine to transfer the information from an input control_struct (which stores
+      nb::arg("con_in"),
+      nb::arg("lord"),
+      nb::arg("ix_var"),
+      R"""(Routine to transfer the information from an input control_struct (which stores
 the user input parameters) to a control_struct that will be stored in the lat%control
 or lord%control%ramp for a ramper.
 
@@ -737,15 +1060,12 @@ con_out : ControlStruct
   m.def(
       "particle_in_global_frame",
       &Bmad::particle_in_global_frame,
-      py::arg("orb"),
-      py::arg("branch"),
-      py::arg("in_time_coordinates") = py::none(),
-      py::arg("in_body_frame") = py::none(),
-      py::arg("w_mat_out") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function particle_in_global_frame (orb, in_time_coordinates, in_body_frame, w_mat_out) result (particle)
-
-Returns the particle in global time coordinates given is coordinates orb in lattice lat.
+      nb::arg("orb"),
+      nb::arg("branch"),
+      nb::arg("in_time_coordinates") = nb::none(),
+      nb::arg("in_body_frame") = nb::none(),
+      nb::arg("w_mat_out") = nb::none(),
+      R"""(Returns the particle in global time coordinates given is coordinates orb in lattice lat.
 
 Parameters
 ----------
@@ -770,8 +1090,7 @@ particle : CoordStruct
   m.def(
       "particle_is_moving_backwards",
       &Bmad::particle_is_moving_backwards,
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
       R"""(Wrapper for Fortran routine particle_is_moving_backwards
 
 Parameters
@@ -788,9 +1107,8 @@ is_moving_backwards : bool
   m.def(
       "particle_is_moving_forward",
       &Bmad::particle_is_moving_forward,
-      py::arg("orbit"),
-      py::arg("dir") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("dir") = nb::none(),
       R"""(Wrapper for Fortran routine particle_is_moving_forward
 
 Parameters
@@ -810,14 +1128,13 @@ is_moving_forward : bool
   m.def(
       "particle_rf_time",
       &Bmad::particle_rf_time,
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("reference_active_edge") = py::none(),
-      py::arg("s_rel") = py::none(),
-      py::arg("time_coords") = py::none(),
-      py::arg("rf_freq") = py::none(),
-      py::arg("abs_time") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("reference_active_edge") = nb::none(),
+      nb::arg("s_rel") = nb::none(),
+      nb::arg("time_coords") = nb::none(),
+      nb::arg("rf_freq") = nb::none(),
+      nb::arg("abs_time") = nb::none(),
       R"""(Wrapper for Fortran routine particle_rf_time
 
 Parameters
@@ -856,9 +1173,8 @@ time : float
   m.def(
       "patch_flips_propagation_direction",
       &Bmad::patch_flips_propagation_direction,
-      py::arg("x_pitch"),
-      py::arg("y_pitch"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x_pitch"),
+      nb::arg("y_pitch"),
       R"""(Wrapper for Fortran routine patch_flips_propagation_direction
 
 Parameters
@@ -878,9 +1194,8 @@ is_flip : bool
   m.def(
       "patch_length",
       &Bmad::patch_length,
-      py::arg("patch"),
-      py::arg("ref_coords") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("patch"),
+      nb::arg("ref_coords") = nb::none(),
       R"""(Wrapper for Fortran routine patch_length
 
 Parameters
@@ -897,37 +1212,32 @@ length : float
     Length of patch.
 )"""
   );
-  py::class_<
-      Bmad::PhotonAbsorptionAndPhaseShift,
-      std::unique_ptr<Bmad::PhotonAbsorptionAndPhaseShift>>(
+  nb::class_<Bmad::PhotonAbsorptionAndPhaseShift>(
       m,
       "PhotonAbsorptionAndPhaseShift",
       "photon_absorption_and_phase_shift return type"
   )
-      .def_readonly("absorption", &Bmad::PhotonAbsorptionAndPhaseShift::absorption)
-      .def_readonly("phase_shift", &Bmad::PhotonAbsorptionAndPhaseShift::phase_shift)
-      .def_readonly("err_flag", &Bmad::PhotonAbsorptionAndPhaseShift::err_flag)
+      .def_ro("absorption", &Bmad::PhotonAbsorptionAndPhaseShift::absorption)
+      .def_ro("phase_shift", &Bmad::PhotonAbsorptionAndPhaseShift::phase_shift)
+      .def_ro("err_flag", &Bmad::PhotonAbsorptionAndPhaseShift::err_flag)
       .def("__len__", [](const Bmad::PhotonAbsorptionAndPhaseShift &) { return 3; })
-      .def("__getitem__", [](const Bmad::PhotonAbsorptionAndPhaseShift &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PhotonAbsorptionAndPhaseShift &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.absorption);
+          return nb::cast(s.absorption);
         if (i == 1)
-          return py::cast(s.phase_shift);
+          return nb::cast(s.phase_shift);
         if (i == 2)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "photon_absorption_and_phase_shift",
       &Bmad::photon_absorption_and_phase_shift,
-      py::arg("material"),
-      py::arg("Energy"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_absorption_and_phase_shift (material, Energy, absorption, phase_shift, err_flag)
-
-Routine to calcualte the absorption and phase shift values for a photon with a given
+      nb::arg("material"),
+      nb::arg("Energy"),
+      R"""(Routine to calcualte the absorption and phase shift values for a photon with a given
 energy going through a particular material.
 
 Parameters
@@ -950,36 +1260,38 @@ err_flag : bool
     Set true if material not recognized.
 )"""
   );
-  py::class_<
-      Bmad::PhotonAddToDetectorStatistics,
-      std::unique_ptr<Bmad::PhotonAddToDetectorStatistics>>(
+  nb::class_<Bmad::PhotonAddToDetectorStatistics>(
       m,
       "PhotonAddToDetectorStatistics",
       "photon_add_to_detector_statistics return type"
   )
-      .def_readonly("ix_pt", &Bmad::PhotonAddToDetectorStatistics::ix_pt)
-      .def_readonly("iy_pt", &Bmad::PhotonAddToDetectorStatistics::iy_pt)
+      .def_ro("ix_pt", &Bmad::PhotonAddToDetectorStatistics::ix_pt)
+      .def_ro("iy_pt", &Bmad::PhotonAddToDetectorStatistics::iy_pt)
       .def("__len__", [](const Bmad::PhotonAddToDetectorStatistics &) { return 2; })
-      .def("__getitem__", [](const Bmad::PhotonAddToDetectorStatistics &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PhotonAddToDetectorStatistics &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ix_pt);
+          return nb::cast(s.ix_pt);
         if (i == 1)
-          return py::cast(s.iy_pt);
-        throw py::index_error();
+          return nb::cast(s.iy_pt);
+        throw nb::index_error();
       });
   m.def(
       "photon_add_to_detector_statistics",
-      &Bmad::photon_add_to_detector_statistics,
-      py::arg("orbit0"),
-      py::arg("orbit"),
-      py::arg("ele"),
-      py::arg("pixel_pt") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_add_to_detector_statistics (orbit0, orbit, ele, ix_pt, iy_pt, pixel_pt)
-
-Routine to add photon statistics to the appropriate pixel of a "detector" grid.
+      [](CoordStruct &orbit0, CoordStruct &orbit, EleStruct &ele, PixelPtStruct *pixel_pt) {
+        auto fn = static_cast<
+            Bmad::
+                PhotonAddToDetectorStatistics (*)(CoordStruct &, CoordStruct &, EleStruct &, optional_ref<PixelPtStruct>)>(
+            &Bmad::photon_add_to_detector_statistics
+        );
+        return fn(orbit0, orbit, ele, ptr_to_opt_ref(pixel_pt));
+      },
+      nb::arg("orbit0"),
+      nb::arg("orbit"),
+      nb::arg("ele"),
+      nb::arg("pixel_pt") = nb::none(),
+      R"""(Routine to add photon statistics to the appropriate pixel of a "detector" grid.
 
 It is assumed that track_to_surface has been called so that the photon is at the
 detector surface and that orbit%vec(1) and %vec(3) are in surface coords (needed for curved detectors).
@@ -1012,33 +1324,99 @@ iy_pt : int, optional
     argument is present.
 )"""
   );
-  py::class_<Bmad::PhotonReflection, std::unique_ptr<Bmad::PhotonReflection>>(
+  nb::class_<Bmad::PhotonDiffuseScattering>(
       m,
-      "PhotonReflection",
-      "photon_reflection return type"
+      "PhotonDiffuseScattering",
+      "photon_diffuse_scattering return type"
   )
-      .def_readonly("graze_angle_out", &Bmad::PhotonReflection::graze_angle_out)
-      .def_readonly("phi_out", &Bmad::PhotonReflection::phi_out)
+      .def_ro("graze_angle_out", &Bmad::PhotonDiffuseScattering::graze_angle_out)
+      .def_ro("phi_out", &Bmad::PhotonDiffuseScattering::phi_out)
+      .def_ro("diffuse_param", &Bmad::PhotonDiffuseScattering::diffuse_param)
+      .def("__len__", [](const Bmad::PhotonDiffuseScattering &) { return 3; })
+      .def("__getitem__", [](const Bmad::PhotonDiffuseScattering &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.graze_angle_out);
+        if (i == 1)
+          return nb::cast(s.phi_out);
+        if (i == 2)
+          return nb::cast(s.diffuse_param);
+        throw nb::index_error();
+      });
+  m.def(
+      "photon_diffuse_scattering",
+      &Bmad::photon_diffuse_scattering,
+      nb::arg("graze_angle_in"),
+      nb::arg("energy"),
+      nb::arg("surface"),
+      R"""(Routine to simulate the diffuse scattering of photons. The outgoing angles are
+choosen using the Dugan distribution.
+
+Also see: photon_reflection.
+Use photon_reflection_std_surface_init or read_surface_reflection_file to get surface info.
+
+Parameters
+----------
+graze_angle_in : float
+    Incident grazing (not polar) angle in radians.
+
+energy : float
+    Photon energy in eV.
+
+surface : PhotonReflectSurfaceStruct
+    surface info
+
+Returns
+-------
+graze_angle_out : float
+    graze_angle in radians.
+
+phi_out : float
+    Azimuthal angle in radians.
+
+diffuse_param : DiffuseParamStruct, optional
+    Internal parameters used in the calculation. This is used for diagnostics and is not used in standard
+    simulations.
+)"""
+  );
+  m.def(
+      "photon_read_spline",
+      &Bmad::photon_read_spline,
+      nb::arg("spline_dir"),
+      R"""(Routine to initialize a photon using a set of spline fits.
+
+Parameters
+----------
+spline_dir : str
+    Root directory for the spline fits.
+
+Returns
+-------
+splines : PhotonInitSplinesStruct
+    Spline structure
+)"""
+  );
+  nb::class_<Bmad::PhotonReflection>(m, "PhotonReflection", "photon_reflection return type")
+      .def_ro("graze_angle_out", &Bmad::PhotonReflection::graze_angle_out)
+      .def_ro("phi_out", &Bmad::PhotonReflection::phi_out)
       .def("__len__", [](const Bmad::PhotonReflection &) { return 2; })
-      .def("__getitem__", [](const Bmad::PhotonReflection &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PhotonReflection &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.graze_angle_out);
+          return nb::cast(s.graze_angle_out);
         if (i == 1)
-          return py::cast(s.phi_out);
-        throw py::index_error();
+          return nb::cast(s.phi_out);
+        throw nb::index_error();
       });
   m.def(
       "photon_reflection",
       &Bmad::photon_reflection,
-      py::arg("graze_angle_in"),
-      py::arg("energy"),
-      py::arg("surface"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_reflection (graze_angle_in, energy, surface, graze_angle_out, phi_out)
-
-Routine to reflect a photon from a surface including both diffuse and specular reflections.
+      nb::arg("graze_angle_in"),
+      nb::arg("energy"),
+      nb::arg("surface"),
+      R"""(Routine to reflect a photon from a surface including both diffuse and specular reflections.
 
 Parameters
 ----------
@@ -1063,10 +1441,7 @@ phi_out : float
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_reflection_std_surface_init (surface)
-
-Routine to initialize the standard proton reflection probability tables.
+      R"""(Routine to initialize the standard proton reflection probability tables.
 The standard tables are for 10 nm C film on Al substrate.
 The surface roughness for diffuse scattering is 200 nm and the
 the surface roughness correlation length is 5.5 um.
@@ -1077,33 +1452,26 @@ surface : PhotonReflectSurfaceStruct
     photon_reflect_surface_struct
 )"""
   );
-  py::class_<Bmad::PhotonReflectivity, std::unique_ptr<Bmad::PhotonReflectivity>>(
-      m,
-      "PhotonReflectivity",
-      "photon_reflectivity return type"
-  )
-      .def_readonly("p_reflect", &Bmad::PhotonReflectivity::p_reflect)
-      .def_readonly("rel_p_specular", &Bmad::PhotonReflectivity::rel_p_specular)
+  nb::class_<Bmad::PhotonReflectivity>(m, "PhotonReflectivity", "photon_reflectivity return type")
+      .def_ro("p_reflect", &Bmad::PhotonReflectivity::p_reflect)
+      .def_ro("rel_p_specular", &Bmad::PhotonReflectivity::rel_p_specular)
       .def("__len__", [](const Bmad::PhotonReflectivity &) { return 2; })
-      .def("__getitem__", [](const Bmad::PhotonReflectivity &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PhotonReflectivity &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.p_reflect);
+          return nb::cast(s.p_reflect);
         if (i == 1)
-          return py::cast(s.rel_p_specular);
-        throw py::index_error();
+          return nb::cast(s.rel_p_specular);
+        throw nb::index_error();
       });
   m.def(
       "photon_reflectivity",
       &Bmad::photon_reflectivity,
-      py::arg("angle"),
-      py::arg("energy"),
-      py::arg("surface"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_reflectivity (angle, energy, surface, p_reflect, rel_p_specular)
-
-Routine to evaluate the photon reflectivity.
+      nb::arg("angle"),
+      nb::arg("energy"),
+      nb::arg("surface"),
+      R"""(Routine to evaluate the photon reflectivity.
   probability of absorption          = 1 - p_reflect
   probability of reflection          = p_reflect
   probability of specular reflection = p_reflect * rel_p_specular
@@ -1134,15 +1502,12 @@ rel_p_specular : float
   m.def(
       "photon_target_corner_calc",
       &Bmad::photon_target_corner_calc,
-      py::arg("aperture_ele"),
-      py::arg("x_lim"),
-      py::arg("y_lim"),
-      py::arg("z_lim"),
-      py::arg("source_ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_target_corner_calc (aperture_ele, x_lim, y_lim, z_lim, source_ele, corner)
-
-Routine to calculate the corner coords in the source_ele ref frame.
+      nb::arg("aperture_ele"),
+      nb::arg("x_lim"),
+      nb::arg("y_lim"),
+      nb::arg("z_lim"),
+      nb::arg("source_ele"),
+      R"""(Routine to calculate the corner coords in the source_ele ref frame.
 
 Parameters
 ----------
@@ -1167,11 +1532,8 @@ corner : TargetPointStruct
   m.def(
       "photon_target_setup",
       &Bmad::photon_target_setup,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine photon_target_setup (ele)
-
-Routine to calculate and store the parmeters needed for photon targeting.
+      nb::arg("ele"),
+      R"""(Routine to calculate and store the parmeters needed for photon targeting.
 This routine is called by Bmad parsing routines and is not meant for general use.
 
 Photon initialization with targeting is done by the routine init_photon_from_a_photon_init_ele
@@ -1188,11 +1550,8 @@ ele : EleStruct
   m.def(
       "photon_type",
       &Bmad::photon_type,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function photon_type (ele) result (e_type)
-
-Routine to return the type of photon to be tracked: coherent$ or incoherent$.
+      nb::arg("ele"),
+      R"""(Routine to return the type of photon to be tracked: coherent$ or incoherent$.
 
 Parameters
 ----------
@@ -1208,11 +1567,10 @@ e_type : int
   m.def(
       "physical_ele_end",
       &Bmad::physical_ele_end,
-      py::arg("track_end"),
-      py::arg("orbit"),
-      py::arg("ele_orientation"),
-      py::arg("return_stream_end") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("track_end"),
+      nb::arg("orbit"),
+      nb::arg("ele_orientation"),
+      nb::arg("return_stream_end") = nb::none(),
       R"""(Wrapper for Fortran routine physical_ele_end
 
 Parameters
@@ -1239,16 +1597,13 @@ physical_end : int
   m.def(
       "point_photon_emission",
       &Bmad::point_photon_emission,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("orbit"),
-      py::arg("direction"),
-      py::arg("max_target_area"),
-      py::arg("w_to_surface") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine point_photon_emission (ele, param, orbit, direction, max_target_area, w_to_surface)
-
-Routine to emit a photon from a point that may be on a surface.
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("orbit"),
+      nb::arg("direction"),
+      nb::arg("max_target_area"),
+      nb::arg("w_to_surface") = nb::none(),
+      R"""(Routine to emit a photon from a point that may be on a surface.
 If there is a downstream target, the emission calc will take this into account.
 
 Parameters
@@ -1275,14 +1630,69 @@ w_to_surface : 2D array of float (shape: 3,3), optional
     Rotation matrix for curved surface.
 )"""
   );
+  nb::class_<Bmad::PointerToAttribute>(m, "PointerToAttribute", "pointer_to_attribute return type")
+      .def_ro("a_ptr", &Bmad::PointerToAttribute::a_ptr)
+      .def_ro("err_flag", &Bmad::PointerToAttribute::err_flag)
+      .def_ro("ix_attrib", &Bmad::PointerToAttribute::ix_attrib)
+      .def("__len__", [](const Bmad::PointerToAttribute &) { return 3; })
+      .def("__getitem__", [](const Bmad::PointerToAttribute &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.a_ptr);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        if (i == 2)
+          return nb::cast(s.ix_attrib);
+        throw nb::index_error();
+      });
+  m.def(
+      "pointer_to_attribute",
+      &Bmad::pointer_to_attribute,
+      nb::arg("ele"),
+      nb::arg("attrib_name"),
+      nb::arg("do_allocation"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("do_unlink") = nb::none(),
+      R"""(Wrapper for Fortran routine pointer_to_attribute
+
+Parameters
+----------
+ele : EleStruct
+    After this routine finishes Ptr_attrib will point to a variable within this element.
+
+attrib_name : str
+    Name of attribute. Must be uppercase. For example: "HKICK".
+
+do_allocation : bool
+    If True then do an allocation if needed. EG: The multipole An and Bn arrays need to be allocated before
+    their use.
+
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message on error.
+
+do_unlink : bool, optional
+    Default False. If True and applicable, unlink the structure containing the attribute. See above for
+    details.
+
+Returns
+-------
+a_ptr : AllPointerStruct
+    Pointer to the attribute.
+
+err_flag : bool
+    Set True if attribtute not found. False otherwise.
+
+ix_attrib : int, optional
+    If applicable, this is the index to the attribute in the ele.value(:), ele.control.var(:), ele.a_pole(:)
+    or ele.b_pole(:) arrays. Set to 0 if not in any of these arrays.
+)"""
+  );
   m.def(
       "pointer_to_branch",
-      py::overload_cast<EleStruct &>(&Bmad::pointer_to_branch),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_branch
-
-Routine to return a pointer to the lattice branch associated with a given name
+      nb::overload_cast<EleStruct &>(&Bmad::pointer_to_branch),
+      nb::arg("ele"),
+      R"""(Routine to return a pointer to the lattice branch associated with a given name
 or a given element.
 
 This routine is an overloaded name for:
@@ -1311,17 +1721,14 @@ branch_ptr : BranchStruct, optional
   );
   m.def(
       "pointer_to_branch",
-      py::overload_cast<std::string, LatStruct &, std::optional<bool>, std::optional<int>>(
+      nb::overload_cast<std::string, LatStruct &, std::optional<bool>, std::optional<int>>(
           &Bmad::pointer_to_branch
       ),
-      py::arg("branch_name"),
-      py::arg("lat"),
-      py::arg("parameter_is_branch0") = py::none(),
-      py::arg("blank_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_branch
-
-Routine to return a pointer to the lattice branch associated with a given name
+      nb::arg("branch_name"),
+      nb::arg("lat"),
+      nb::arg("parameter_is_branch0") = nb::none(),
+      nb::arg("blank_branch") = nb::none(),
+      R"""(Routine to return a pointer to the lattice branch associated with a given name
 or a given element.
 
 This routine is an overloaded name for:
@@ -1359,14 +1766,11 @@ branch_ptr : BranchStruct, optional
   );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatStruct &, int, std::optional<int>>(&Bmad::pointer_to_ele),
-      py::arg("lat"),
-      py::arg("ix_ele"),
-      py::arg("ix_branch") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_ele (...)
-
-Routine to return a pointer to an element.
+      nb::overload_cast<LatStruct &, int, std::optional<int>>(&Bmad::pointer_to_ele),
+      nb::arg("lat"),
+      nb::arg("ix_ele"),
+      nb::arg("ix_branch") = nb::none(),
+      R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
@@ -1404,13 +1808,10 @@ ele_ptr : EleStruct, optional
   );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatStruct &, LatEleLocStruct &>(&Bmad::pointer_to_ele),
-      py::arg("lat"),
-      py::arg("ele_loc"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_ele (...)
-
-Routine to return a pointer to an element.
+      nb::overload_cast<LatStruct &, LatEleLocStruct &>(&Bmad::pointer_to_ele),
+      nb::arg("lat"),
+      nb::arg("ele_loc"),
+      R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
@@ -1445,13 +1846,10 @@ ele_ptr : EleStruct, optional
   );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatStruct &, std::string>(&Bmad::pointer_to_ele),
-      py::arg("lat"),
-      py::arg("ele_name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_ele (...)
-
-Routine to return a pointer to an element.
+      nb::overload_cast<LatStruct &, std::string>(&Bmad::pointer_to_ele),
+      nb::arg("lat"),
+      nb::arg("ele_name"),
+      R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
@@ -1486,13 +1884,10 @@ ele_ptr : EleStruct, optional
   );
   m.def(
       "pointer_to_ele",
-      py::overload_cast<LatStruct &, EleStruct &>(&Bmad::pointer_to_ele),
-      py::arg("lat"),
-      py::arg("foreign_ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_ele (...)
-
-Routine to return a pointer to an element.
+      nb::overload_cast<LatStruct &, EleStruct &>(&Bmad::pointer_to_ele),
+      nb::arg("lat"),
+      nb::arg("foreign_ele"),
+      R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
@@ -1525,40 +1920,37 @@ ele_ptr : EleStruct, optional
     Pointer to the element. Nullified if no match or error.
 )"""
   );
-  py::class_<Bmad::PointerToElementAtS, std::unique_ptr<Bmad::PointerToElementAtS>>(
+  nb::class_<Bmad::PointerToElementAtS>(
       m,
       "PointerToElementAtS",
       "pointer_to_element_at_s return type"
   )
-      .def_readonly("err_flag", &Bmad::PointerToElementAtS::err_flag)
-      .def_readonly("s_eff", &Bmad::PointerToElementAtS::s_eff)
-      .def_readonly("position", &Bmad::PointerToElementAtS::position)
-      .def_readonly("ele", &Bmad::PointerToElementAtS::ele)
+      .def_ro("err_flag", &Bmad::PointerToElementAtS::err_flag)
+      .def_ro("s_eff", &Bmad::PointerToElementAtS::s_eff)
+      .def_ro("position", &Bmad::PointerToElementAtS::position)
+      .def_ro("ele", &Bmad::PointerToElementAtS::ele)
       .def("__len__", [](const Bmad::PointerToElementAtS &) { return 4; })
-      .def("__getitem__", [](const Bmad::PointerToElementAtS &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToElementAtS &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.s_eff);
+          return nb::cast(s.s_eff);
         if (i == 2)
-          return py::cast(s.position);
+          return nb::cast(s.position);
         if (i == 3)
-          return py::cast(s.ele);
-        throw py::index_error();
+          return nb::cast(s.ele);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_element_at_s",
       &Bmad::pointer_to_element_at_s,
-      py::arg("branch"),
-      py::arg("s"),
-      py::arg("choose_max"),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_element_at_s (branch, s, choose_max, err_flag, s_eff, position) result (ele)
-
-Function to return a pointer to the element at position s.
+      nb::arg("branch"),
+      nb::arg("s"),
+      nb::arg("choose_max"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Function to return a pointer to the element at position s.
 That is, return ele => branch%ele(ix_ele) such that:
 If choose_max = True:
     If s = branch%ele(ix_end_of_branch): ix_ele = ix_end_of_branch
@@ -1613,8 +2005,7 @@ ele : EleStruct, optional
   m.def(
       "pointer_to_fibre",
       &Bmad::pointer_to_fibre,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine pointer_to_fibre
 
 Parameters
@@ -1628,29 +2019,24 @@ assoc_fibre : Fibre, optional
     Pointer to the associated fibre.
 )"""
   );
-  py::class_<Bmad::PointerToFieldEle, std::unique_ptr<Bmad::PointerToFieldEle>>(
-      m,
-      "PointerToFieldEle",
-      "pointer_to_field_ele return type"
-  )
-      .def_readonly("dz_offset", &Bmad::PointerToFieldEle::dz_offset)
-      .def_readonly("field_ele", &Bmad::PointerToFieldEle::field_ele)
+  nb::class_<Bmad::PointerToFieldEle>(m, "PointerToFieldEle", "pointer_to_field_ele return type")
+      .def_ro("dz_offset", &Bmad::PointerToFieldEle::dz_offset)
+      .def_ro("field_ele", &Bmad::PointerToFieldEle::field_ele)
       .def("__len__", [](const Bmad::PointerToFieldEle &) { return 2; })
-      .def("__getitem__", [](const Bmad::PointerToFieldEle &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToFieldEle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.dz_offset);
+          return nb::cast(s.dz_offset);
         if (i == 1)
-          return py::cast(s.field_ele);
-        throw py::index_error();
+          return nb::cast(s.field_ele);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_field_ele",
       &Bmad::pointer_to_field_ele,
-      py::arg("ele"),
-      py::arg("ix_field_ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("ix_field_ele"),
       R"""(Wrapper for Fortran routine pointer_to_field_ele
 
 Parameters
@@ -1670,28 +2056,23 @@ field_ele : EleStruct, optional
     Pointer to the field element with index ix_field_ele. Will point to null if ix_field_ele is out of range.
 )"""
   );
-  py::class_<Bmad::PointerToGirder, std::unique_ptr<Bmad::PointerToGirder>>(
-      m,
-      "PointerToGirder",
-      "pointer_to_girder return type"
-  )
-      .def_readonly("ix_slave_back", &Bmad::PointerToGirder::ix_slave_back)
-      .def_readonly("girder", &Bmad::PointerToGirder::girder)
+  nb::class_<Bmad::PointerToGirder>(m, "PointerToGirder", "pointer_to_girder return type")
+      .def_ro("ix_slave_back", &Bmad::PointerToGirder::ix_slave_back)
+      .def_ro("girder", &Bmad::PointerToGirder::girder)
       .def("__len__", [](const Bmad::PointerToGirder &) { return 2; })
-      .def("__getitem__", [](const Bmad::PointerToGirder &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToGirder &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ix_slave_back);
+          return nb::cast(s.ix_slave_back);
         if (i == 1)
-          return py::cast(s.girder);
-        throw py::index_error();
+          return nb::cast(s.girder);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_girder",
       &Bmad::pointer_to_girder,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine pointer_to_girder
 
 Parameters
@@ -1709,39 +2090,84 @@ girder : EleStruct, optional
     : Pointer to the girder. Null if ele is not girder supported.
 )"""
   );
-  py::class_<Bmad::PointerToLord, std::unique_ptr<Bmad::PointerToLord>>(
+  nb::class_<Bmad::PointerToIndexedAttribute>(
       m,
-      "PointerToLord",
-      "pointer_to_lord return type"
+      "PointerToIndexedAttribute",
+      "pointer_to_indexed_attribute return type"
   )
-      .def_readonly("control", &Bmad::PointerToLord::control)
-      .def_readonly("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
-      .def_readonly("ix_control", &Bmad::PointerToLord::ix_control)
-      .def_readonly("ix_ic", &Bmad::PointerToLord::ix_ic)
-      .def_readonly("lord_ptr", &Bmad::PointerToLord::lord_ptr)
+      .def_ro("a_ptr", &Bmad::PointerToIndexedAttribute::a_ptr)
+      .def_ro("err_flag", &Bmad::PointerToIndexedAttribute::err_flag)
+      .def("__len__", [](const Bmad::PointerToIndexedAttribute &) { return 2; })
+      .def("__getitem__", [](const Bmad::PointerToIndexedAttribute &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.a_ptr);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
+  m.def(
+      "pointer_to_indexed_attribute",
+      &Bmad::pointer_to_indexed_attribute,
+      nb::arg("ele"),
+      nb::arg("ix_attrib"),
+      nb::arg("do_allocation"),
+      nb::arg("err_print_flag") = nb::none(),
+      R"""(Wrapper for Fortran routine pointer_to_indexed_attribute
+
+Parameters
+----------
+ele : EleStruct
+    After this routine finishes A_ptr will point to a variable within this element.
+
+ix_attrib : int
+    Integer, Attribute index.
+
+do_allocation : bool
+    If True then do an allocation if needed. EG: The multipole An and Bn arrays need to be allocated before
+    their use.
+
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message on error.
+
+Returns
+-------
+a_ptr : AllPointerStruct
+    Pointer to the attribute.
+
+err_flag : bool
+    Set True if attribtute not found. False otherwise.
+)"""
+  );
+  nb::class_<Bmad::PointerToLord>(m, "PointerToLord", "pointer_to_lord return type")
+      .def_ro("control", &Bmad::PointerToLord::control)
+      .def_ro("ix_slave_back", &Bmad::PointerToLord::ix_slave_back)
+      .def_ro("ix_control", &Bmad::PointerToLord::ix_control)
+      .def_ro("ix_ic", &Bmad::PointerToLord::ix_ic)
+      .def_ro("lord_ptr", &Bmad::PointerToLord::lord_ptr)
       .def("__len__", [](const Bmad::PointerToLord &) { return 5; })
-      .def("__getitem__", [](const Bmad::PointerToLord &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToLord &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.control);
+          return nb::cast(s.control);
         if (i == 1)
-          return py::cast(s.ix_slave_back);
+          return nb::cast(s.ix_slave_back);
         if (i == 2)
-          return py::cast(s.ix_control);
+          return nb::cast(s.ix_control);
         if (i == 3)
-          return py::cast(s.ix_ic);
+          return nb::cast(s.ix_ic);
         if (i == 4)
-          return py::cast(s.lord_ptr);
-        throw py::index_error();
+          return nb::cast(s.lord_ptr);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_lord",
       &Bmad::pointer_to_lord,
-      py::arg("slave"),
-      py::arg("ix_lord"),
-      py::arg("lord_type") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("slave"),
+      nb::arg("ix_lord"),
+      nb::arg("lord_type") = nb::none(),
       R"""(Wrapper for Fortran routine pointer_to_lord
 
 Parameters
@@ -1775,31 +2201,30 @@ lord_ptr : EleStruct, optional
     Pointer to the lord. Nullified if there is an error.
 )"""
   );
-  py::class_<Bmad::PointerToMultipassLord, std::unique_ptr<Bmad::PointerToMultipassLord>>(
+  nb::class_<Bmad::PointerToMultipassLord>(
       m,
       "PointerToMultipassLord",
       "pointer_to_multipass_lord return type"
   )
-      .def_readonly("ix_pass", &Bmad::PointerToMultipassLord::ix_pass)
-      .def_readonly("super_lord", &Bmad::PointerToMultipassLord::super_lord)
-      .def_readonly("multi_lord", &Bmad::PointerToMultipassLord::multi_lord)
+      .def_ro("ix_pass", &Bmad::PointerToMultipassLord::ix_pass)
+      .def_ro("super_lord", &Bmad::PointerToMultipassLord::super_lord)
+      .def_ro("multi_lord", &Bmad::PointerToMultipassLord::multi_lord)
       .def("__len__", [](const Bmad::PointerToMultipassLord &) { return 3; })
-      .def("__getitem__", [](const Bmad::PointerToMultipassLord &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToMultipassLord &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.ix_pass);
+          return nb::cast(s.ix_pass);
         if (i == 1)
-          return py::cast(s.super_lord);
+          return nb::cast(s.super_lord);
         if (i == 2)
-          return py::cast(s.multi_lord);
-        throw py::index_error();
+          return nb::cast(s.multi_lord);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_multipass_lord",
       &Bmad::pointer_to_multipass_lord,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine pointer_to_multipass_lord
 
 Parameters
@@ -1824,12 +2249,11 @@ multi_lord : EleStruct, optional
   m.def(
       "pointer_to_next_ele",
       &Bmad::pointer_to_next_ele,
-      py::arg("this_ele"),
-      py::arg("offset") = py::none(),
-      py::arg("skip_beginning") = py::none(),
-      py::arg("follow_fork") = py::none(),
-      py::arg("ix_multipass") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("this_ele"),
+      nb::arg("offset") = nb::none(),
+      nb::arg("skip_beginning") = nb::none(),
+      nb::arg("follow_fork") = nb::none(),
+      nb::arg("ix_multipass") = nb::none(),
       R"""(Wrapper for Fortran routine pointer_to_next_ele
 
 Parameters
@@ -1855,42 +2279,35 @@ next_ele : EleStruct, optional
     Element after this_ele (if offset = 1). Nullified if there is an error. EG bad this_ele.
 )"""
   );
-  py::class_<Bmad::PointerToSlave, std::unique_ptr<Bmad::PointerToSlave>>(
-      m,
-      "PointerToSlave",
-      "pointer_to_slave return type"
-  )
-      .def_readonly("control", &Bmad::PointerToSlave::control)
-      .def_readonly("ix_lord_back", &Bmad::PointerToSlave::ix_lord_back)
-      .def_readonly("ix_control", &Bmad::PointerToSlave::ix_control)
-      .def_readonly("ix_ic", &Bmad::PointerToSlave::ix_ic)
-      .def_readonly("slave_ptr", &Bmad::PointerToSlave::slave_ptr)
+  nb::class_<Bmad::PointerToSlave>(m, "PointerToSlave", "pointer_to_slave return type")
+      .def_ro("control", &Bmad::PointerToSlave::control)
+      .def_ro("ix_lord_back", &Bmad::PointerToSlave::ix_lord_back)
+      .def_ro("ix_control", &Bmad::PointerToSlave::ix_control)
+      .def_ro("ix_ic", &Bmad::PointerToSlave::ix_ic)
+      .def_ro("slave_ptr", &Bmad::PointerToSlave::slave_ptr)
       .def("__len__", [](const Bmad::PointerToSlave &) { return 5; })
-      .def("__getitem__", [](const Bmad::PointerToSlave &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToSlave &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.control);
+          return nb::cast(s.control);
         if (i == 1)
-          return py::cast(s.ix_lord_back);
+          return nb::cast(s.ix_lord_back);
         if (i == 2)
-          return py::cast(s.ix_control);
+          return nb::cast(s.ix_control);
         if (i == 3)
-          return py::cast(s.ix_ic);
+          return nb::cast(s.ix_ic);
         if (i == 4)
-          return py::cast(s.slave_ptr);
-        throw py::index_error();
+          return nb::cast(s.slave_ptr);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_slave",
       &Bmad::pointer_to_slave,
-      py::arg("lord"),
-      py::arg("ix_slave"),
-      py::arg("slave_type") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_slave (lord, ix_slave, control, slave_type, ix_lord_back, ix_control, ix_ic) result (slave_ptr)
-
-Function to point to a slave of a lord.
+      nb::arg("lord"),
+      nb::arg("ix_slave"),
+      nb::arg("slave_type") = nb::none(),
+      R"""(Function to point to a slave of a lord.
 Note: Ramper lords do not have any associated slaves (slaves are assigned dynamically at run time).
 
 If slave_type = all$ (the default) the range for ix_slave is:
@@ -1936,38 +2353,33 @@ slave_ptr : EleStruct, optional
     Pointer to the slave. Nullified if there is an error.
 )"""
   );
-  py::class_<Bmad::PointerToSuperLord, std::unique_ptr<Bmad::PointerToSuperLord>>(
-      m,
-      "PointerToSuperLord",
-      "pointer_to_super_lord return type"
-  )
-      .def_readonly("control", &Bmad::PointerToSuperLord::control)
-      .def_readonly("ix_slave_back", &Bmad::PointerToSuperLord::ix_slave_back)
-      .def_readonly("ix_control", &Bmad::PointerToSuperLord::ix_control)
-      .def_readonly("ix_ic", &Bmad::PointerToSuperLord::ix_ic)
-      .def_readonly("lord_ptr", &Bmad::PointerToSuperLord::lord_ptr)
+  nb::class_<Bmad::PointerToSuperLord>(m, "PointerToSuperLord", "pointer_to_super_lord return type")
+      .def_ro("control", &Bmad::PointerToSuperLord::control)
+      .def_ro("ix_slave_back", &Bmad::PointerToSuperLord::ix_slave_back)
+      .def_ro("ix_control", &Bmad::PointerToSuperLord::ix_control)
+      .def_ro("ix_ic", &Bmad::PointerToSuperLord::ix_ic)
+      .def_ro("lord_ptr", &Bmad::PointerToSuperLord::lord_ptr)
       .def("__len__", [](const Bmad::PointerToSuperLord &) { return 5; })
-      .def("__getitem__", [](const Bmad::PointerToSuperLord &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToSuperLord &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.control);
+          return nb::cast(s.control);
         if (i == 1)
-          return py::cast(s.ix_slave_back);
+          return nb::cast(s.ix_slave_back);
         if (i == 2)
-          return py::cast(s.ix_control);
+          return nb::cast(s.ix_control);
         if (i == 3)
-          return py::cast(s.ix_ic);
+          return nb::cast(s.ix_ic);
         if (i == 4)
-          return py::cast(s.lord_ptr);
-        throw py::index_error();
+          return nb::cast(s.lord_ptr);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_super_lord",
       &Bmad::pointer_to_super_lord,
-      py::arg("slave"),
-      py::arg("lord_type") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("slave"),
+      nb::arg("lord_type") = nb::none(),
       R"""(Wrapper for Fortran routine pointer_to_super_lord
 
 Parameters
@@ -1998,46 +2410,41 @@ lord_ptr : EleStruct, optional
     Pointer to the lord.
 )"""
   );
-  py::class_<
-      Bmad::PointerToSurfaceDisplacementPt,
-      std::unique_ptr<Bmad::PointerToSurfaceDisplacementPt>>(
+  nb::class_<Bmad::PointerToSurfaceDisplacementPt>(
       m,
       "PointerToSurfaceDisplacementPt",
       "pointer_to_surface_displacement_pt return type"
   )
-      .def_readonly("ix", &Bmad::PointerToSurfaceDisplacementPt::ix)
-      .def_readonly("iy", &Bmad::PointerToSurfaceDisplacementPt::iy)
-      .def_readonly("xx", &Bmad::PointerToSurfaceDisplacementPt::xx)
-      .def_readonly("yy", &Bmad::PointerToSurfaceDisplacementPt::yy)
-      .def_readonly("pt", &Bmad::PointerToSurfaceDisplacementPt::pt)
+      .def_ro("ix", &Bmad::PointerToSurfaceDisplacementPt::ix)
+      .def_ro("iy", &Bmad::PointerToSurfaceDisplacementPt::iy)
+      .def_ro("xx", &Bmad::PointerToSurfaceDisplacementPt::xx)
+      .def_ro("yy", &Bmad::PointerToSurfaceDisplacementPt::yy)
+      .def_ro("pt", &Bmad::PointerToSurfaceDisplacementPt::pt)
       .def("__len__", [](const Bmad::PointerToSurfaceDisplacementPt &) { return 5; })
-      .def("__getitem__", [](const Bmad::PointerToSurfaceDisplacementPt &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToSurfaceDisplacementPt &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.ix);
+          return nb::cast(s.ix);
         if (i == 1)
-          return py::cast(s.iy);
+          return nb::cast(s.iy);
         if (i == 2)
-          return py::cast(s.xx);
+          return nb::cast(s.xx);
         if (i == 3)
-          return py::cast(s.yy);
+          return nb::cast(s.yy);
         if (i == 4)
-          return py::cast(s.pt);
-        throw py::index_error();
+          return nb::cast(s.pt);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_surface_displacement_pt",
       &Bmad::pointer_to_surface_displacement_pt,
-      py::arg("ele"),
-      py::arg("nearest"),
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("extend_grid") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_surface_displacement_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
-
-Routine to point to the grid point struct associated with point (x,y).
+      nb::arg("ele"),
+      nb::arg("nearest"),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("extend_grid") = nb::none(),
+      R"""(Routine to point to the grid point struct associated with point (x,y).
 
 Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
 
@@ -2079,44 +2486,41 @@ pt : SurfaceDisplacementPtStruct, optional
     Pointer to grid point. Will not be associated if (x,y) outside the grid.
 )"""
   );
-  py::class_<Bmad::PointerToSurfaceSegmentedPt, std::unique_ptr<Bmad::PointerToSurfaceSegmentedPt>>(
+  nb::class_<Bmad::PointerToSurfaceSegmentedPt>(
       m,
       "PointerToSurfaceSegmentedPt",
       "pointer_to_surface_segmented_pt return type"
   )
-      .def_readonly("ix", &Bmad::PointerToSurfaceSegmentedPt::ix)
-      .def_readonly("iy", &Bmad::PointerToSurfaceSegmentedPt::iy)
-      .def_readonly("xx", &Bmad::PointerToSurfaceSegmentedPt::xx)
-      .def_readonly("yy", &Bmad::PointerToSurfaceSegmentedPt::yy)
-      .def_readonly("pt", &Bmad::PointerToSurfaceSegmentedPt::pt)
+      .def_ro("ix", &Bmad::PointerToSurfaceSegmentedPt::ix)
+      .def_ro("iy", &Bmad::PointerToSurfaceSegmentedPt::iy)
+      .def_ro("xx", &Bmad::PointerToSurfaceSegmentedPt::xx)
+      .def_ro("yy", &Bmad::PointerToSurfaceSegmentedPt::yy)
+      .def_ro("pt", &Bmad::PointerToSurfaceSegmentedPt::pt)
       .def("__len__", [](const Bmad::PointerToSurfaceSegmentedPt &) { return 5; })
-      .def("__getitem__", [](const Bmad::PointerToSurfaceSegmentedPt &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToSurfaceSegmentedPt &s, int i) -> nb::object {
         if (i < 0)
           i += 5;
         if (i == 0)
-          return py::cast(s.ix);
+          return nb::cast(s.ix);
         if (i == 1)
-          return py::cast(s.iy);
+          return nb::cast(s.iy);
         if (i == 2)
-          return py::cast(s.xx);
+          return nb::cast(s.xx);
         if (i == 3)
-          return py::cast(s.yy);
+          return nb::cast(s.yy);
         if (i == 4)
-          return py::cast(s.pt);
-        throw py::index_error();
+          return nb::cast(s.pt);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_surface_segmented_pt",
       &Bmad::pointer_to_surface_segmented_pt,
-      py::arg("ele"),
-      py::arg("nearest"),
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("extend_grid") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_surface_segmented_pt (ele, nearest, x, y, ix, iy, extend_grid, xx, yy) result (pt)
-
-Routine to point to the grid point struct associated with point (x,y).
+      nb::arg("ele"),
+      nb::arg("nearest"),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("extend_grid") = nb::none(),
+      R"""(Routine to point to the grid point struct associated with point (x,y).
 
 Note: If nearest = True, the grid boundary is a length dr/2 from the boundary grid points.
 
@@ -2158,28 +2562,23 @@ pt : SurfaceSegmentedPtStruct, optional
     Pointer to grid point. Will not be associated if (x,y) outside the grid.
 )"""
   );
-  py::class_<Bmad::PointerToWakeEle, std::unique_ptr<Bmad::PointerToWakeEle>>(
-      m,
-      "PointerToWakeEle",
-      "pointer_to_wake_ele return type"
-  )
-      .def_readonly("delta_s", &Bmad::PointerToWakeEle::delta_s)
-      .def_readonly("wake_ele", &Bmad::PointerToWakeEle::wake_ele)
+  nb::class_<Bmad::PointerToWakeEle>(m, "PointerToWakeEle", "pointer_to_wake_ele return type")
+      .def_ro("delta_s", &Bmad::PointerToWakeEle::delta_s)
+      .def_ro("wake_ele", &Bmad::PointerToWakeEle::wake_ele)
       .def("__len__", [](const Bmad::PointerToWakeEle &) { return 2; })
-      .def("__getitem__", [](const Bmad::PointerToWakeEle &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToWakeEle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.delta_s);
+          return nb::cast(s.delta_s);
         if (i == 1)
-          return py::cast(s.wake_ele);
-        throw py::index_error();
+          return nb::cast(s.wake_ele);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_wake_ele",
       &Bmad::pointer_to_wake_ele,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine pointer_to_wake_ele
 
 Parameters
@@ -2196,35 +2595,28 @@ wake_ele : EleStruct, optional
     Element having the associated wake. wake_ele will be nullified if there is no associated wake.
 )"""
   );
-  py::class_<Bmad::PointerToWall3d, std::unique_ptr<Bmad::PointerToWall3d>>(
-      m,
-      "PointerToWall3d",
-      "pointer_to_wall3d return type"
-  )
-      .def_readonly("ds_offset", &Bmad::PointerToWall3d::ds_offset)
-      .def_readonly("is_branch_wall", &Bmad::PointerToWall3d::is_branch_wall)
-      .def_readonly("wall3d", &Bmad::PointerToWall3d::wall3d)
+  nb::class_<Bmad::PointerToWall3d>(m, "PointerToWall3d", "pointer_to_wall3d return type")
+      .def_ro("ds_offset", &Bmad::PointerToWall3d::ds_offset)
+      .def_ro("is_branch_wall", &Bmad::PointerToWall3d::is_branch_wall)
+      .def_ro("wall3d", &Bmad::PointerToWall3d::wall3d)
       .def("__len__", [](const Bmad::PointerToWall3d &) { return 3; })
-      .def("__getitem__", [](const Bmad::PointerToWall3d &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PointerToWall3d &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.ds_offset);
+          return nb::cast(s.ds_offset);
         if (i == 1)
-          return py::cast(s.is_branch_wall);
+          return nb::cast(s.is_branch_wall);
         if (i == 2)
-          return py::cast(s.wall3d);
-        throw py::index_error();
+          return nb::cast(s.wall3d);
+        throw nb::index_error();
       });
   m.def(
       "pointer_to_wall3d",
       &Bmad::pointer_to_wall3d,
-      py::arg("ele"),
-      py::arg("ix_wall") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pointer_to_wall3d (ele, ix_wall, ds_offset, is_branch_wall) result (wall3d)
-
-Function to return a pointer to a wall3d structure associated
+      nb::arg("ele"),
+      nb::arg("ix_wall") = nb::none(),
+      R"""(Function to return a pointer to a wall3d structure associated
 with a given lattice element.
 
 Note: The wall associated with a the vacuum chamber is the branch%wall3d.
@@ -2249,11 +2641,80 @@ wall3d : Wall3dStruct, optional
     Pointer to the associated wall structure. Will be nullified if there is no associated wall.
 )"""
   );
+  nb::class_<Bmad::PointersToAttribute>(
+      m,
+      "PointersToAttribute",
+      "pointers_to_attribute return type"
+  )
+      .def_ro("ptr_array", &Bmad::PointersToAttribute::ptr_array)
+      .def_ro("err_flag", &Bmad::PointersToAttribute::err_flag)
+      .def_ro("eles", &Bmad::PointersToAttribute::eles)
+      .def_ro("ix_attrib", &Bmad::PointersToAttribute::ix_attrib)
+      .def("__len__", [](const Bmad::PointersToAttribute &) { return 4; })
+      .def("__getitem__", [](const Bmad::PointersToAttribute &s, int i) -> nb::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return nb::cast(s.ptr_array);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        if (i == 2)
+          return nb::cast(s.eles);
+        if (i == 3)
+          return nb::cast(s.ix_attrib);
+        throw nb::index_error();
+      });
+  m.def(
+      "pointers_to_attribute",
+      &Bmad::pointers_to_attribute,
+      nb::arg("lat"),
+      nb::arg("ele_name"),
+      nb::arg("attrib_name"),
+      nb::arg("do_allocation"),
+      nb::arg("err_print_flag") = nb::none(),
+      nb::arg("do_unlink") = nb::none(),
+      R"""(Wrapper for Fortran routine pointers_to_attribute
+
+Parameters
+----------
+lat : LatStruct
+    Lattice.
+
+ele_name : str
+    Element name. Must be uppercase
+
+attrib_name : str
+    Attribute name. Must be uppercase. For example: "HKICK".
+
+do_allocation : bool
+    If True then do an allocation if needed. EG: The multipole An and Bn arrays need to be allocated before
+    their use.
+
+err_print_flag : bool, optional
+    If present and False then suppress printing of an error message on error.
+
+do_unlink : bool, optional
+
+Returns
+-------
+ptr_array : 1D array of AllPointerStruct
+    Pointer to the attribute. Size of ptr_array will be set to 0 if there is a problem.
+
+err_flag : bool
+    Set True if attribtute not found.
+
+eles : 1D array of ElePointerStruct, optional
+    Array of element pointers. size(eles) = size(ptr_array). If there are no associated lattice elements (EG
+    if ele_name = 'PARTICLE_START'), eles(i).ele will be null.
+
+ix_attrib : int, optional
+    If applicable then this is the index to the attribute in the ele.value(:) array.
+)"""
+  );
   m.def(
       "polar_to_spinor",
       &Bmad::polar_to_spinor,
-      py::arg("polar"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("polar"),
       R"""(Wrapper for Fortran routine polar_to_spinor
 
 Parameters
@@ -2270,8 +2731,7 @@ spinor : 1D array of complex (shape: 2)
   m.def(
       "polar_to_vec",
       &Bmad::polar_to_vec,
-      py::arg("polar"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("polar"),
       R"""(Wrapper for Fortran routine polar_to_vec
 
 Parameters
@@ -2285,36 +2745,54 @@ vec : 1D array of float (shape: 3)
     Real(3)
 )"""
   );
-  py::class_<Bmad::ProjectEmitToXyz, std::unique_ptr<Bmad::ProjectEmitToXyz>>(
-      m,
-      "ProjectEmitToXyz",
-      "project_emit_to_xyz return type"
-  )
-      .def_readonly("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
-      .def_readonly("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
-      .def_readonly("sigma_z", &Bmad::ProjectEmitToXyz::sigma_z)
+  m.def(
+      "print_mesh3d",
+      &Bmad::print_mesh3d,
+      nb::arg("mesh3d"),
+      R"""(Wrapper for Fortran routine print_mesh3d
+
+Parameters
+----------
+mesh3d : Mesh3dStruct
+)"""
+  );
+  m.def(
+      "prob_x_diffuse",
+      &Bmad::prob_x_diffuse,
+      nb::arg("x"),
+      nb::arg("d_param"),
+      nb::arg("surface"),
+      R"""(Contained routine to calculate integrated probability distribution in x = sin(graze_angle_out).
+
+Parameters
+----------
+x : float
+    sin(graze_angle_out)
+)"""
+  );
+  nb::class_<Bmad::ProjectEmitToXyz>(m, "ProjectEmitToXyz", "project_emit_to_xyz return type")
+      .def_ro("sigma_x", &Bmad::ProjectEmitToXyz::sigma_x)
+      .def_ro("sigma_y", &Bmad::ProjectEmitToXyz::sigma_y)
+      .def_ro("sigma_z", &Bmad::ProjectEmitToXyz::sigma_z)
       .def("__len__", [](const Bmad::ProjectEmitToXyz &) { return 3; })
-      .def("__getitem__", [](const Bmad::ProjectEmitToXyz &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::ProjectEmitToXyz &s, int i) -> nb::object {
         if (i < 0)
           i += 3;
         if (i == 0)
-          return py::cast(s.sigma_x);
+          return nb::cast(s.sigma_x);
         if (i == 1)
-          return py::cast(s.sigma_y);
+          return nb::cast(s.sigma_y);
         if (i == 2)
-          return py::cast(s.sigma_z);
-        throw py::index_error();
+          return nb::cast(s.sigma_z);
+        throw nb::index_error();
       });
   m.def(
       "project_emit_to_xyz",
       &Bmad::project_emit_to_xyz,
-      py::arg("ring"),
-      py::arg("ix"),
-      py::arg("mode"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine project_emit_to_xyz(ring, ix, mode, sigma_x, sigma_y, sigma_z)
-
-Obtains the projected x, y, and z beamsizes by building the sigma matrix
+      nb::arg("ring"),
+      nb::arg("ix"),
+      nb::arg("mode"),
+      R"""(Obtains the projected x, y, and z beamsizes by building the sigma matrix
 from the normal mode emittances and 1-turn transfer matrix.
 These projectes beamsize are what would be seen by instrumentation.
 
@@ -2351,15 +2829,38 @@ sigma_z : float
 )"""
   );
   m.def(
+      "propagate_part_way",
+      &Bmad::propagate_part_way,
+      nb::arg("orb_start"),
+      nb::arg("param"),
+      nb::arg("pt"),
+      nb::arg("info"),
+      nb::arg("z_here"),
+      nb::arg("runt"),
+      R"""(Wrapper for Fortran routine propagate_part_way
+
+Parameters
+----------
+orb_start : CoordStruct
+
+param : LatParamStruct
+
+pt : RadIntTrackPointStruct
+
+info : RadIntInfoStruct
+
+z_here : float
+
+runt : EleStruct
+)"""
+  );
+  m.def(
       "psi_prime_sca",
       &Bmad::psi_prime_sca,
-      py::arg("t"),
-      py::arg("p"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine psi_prime_sca(t, p, dpdt, args)
-
-This wraps the array-valued psi_prime function as a scalar.
+      nb::arg("t"),
+      nb::arg("p"),
+      nb::arg("args"),
+      R"""(This wraps the array-valued psi_prime function as a scalar.
 
 See psi_prime comments for details.
 
@@ -2383,8 +2884,7 @@ dpdt : float
   m.def(
       "ptc_bookkeeper",
       &Bmad::ptc_bookkeeper,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine ptc_bookkeeper
 
 Parameters
@@ -2395,19 +2895,41 @@ lat : LatStruct
   );
   m.def(
       "ptc_calculate_tracking_step_size",
-      &Bmad::ptc_calculate_tracking_step_size,
-      py::arg("ptc_layout"),
-      py::arg("kl_max"),
-      py::arg("ds_max") = py::none(),
-      py::arg("even_steps") = py::none(),
-      py::arg("r_typical") = py::none(),
-      py::arg("dx_tol_bend") = py::none(),
-      py::arg("use_2nd_order") = py::none(),
-      py::arg("crossover") = py::none(),
-      py::arg("crossover_wiggler") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_calculate_tracking_step_size (ptc_layout, kl_max, ds_max,
-                                even_steps, r_typical, dx_tol_bend, use_2nd_order)
+      [](Layout &ptc_layout,
+         double kl_max,
+         std::optional<double> ds_max,
+         BoolAlloc1D *even_steps,
+         std::optional<double> r_typical,
+         std::optional<double> dx_tol_bend,
+         std::optional<bool> use_2nd_order,
+         std::optional<FixedArray1D<Int, 2>> crossover,
+         std::optional<FixedArray1D<Int, 2>> crossover_wiggler) {
+        auto fn = static_cast<
+            void (*)(Layout &, double, std::optional<double>, optional_ref<BoolAlloc1D>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Int, 2>>, std::optional<FixedArray1D<Int, 2>>)>(
+            &Bmad::ptc_calculate_tracking_step_size
+        );
+        return fn(
+            ptc_layout,
+            kl_max,
+            ds_max,
+            ptr_to_opt_ref(even_steps),
+            r_typical,
+            dx_tol_bend,
+            use_2nd_order,
+            crossover,
+            crossover_wiggler
+        );
+      },
+      nb::arg("ptc_layout"),
+      nb::arg("kl_max"),
+      nb::arg("ds_max") = nb::none(),
+      nb::arg("even_steps") = nb::none(),
+      nb::arg("r_typical") = nb::none(),
+      nb::arg("dx_tol_bend") = nb::none(),
+      nb::arg("use_2nd_order") = nb::none(),
+      nb::arg("crossover") = nb::none(),
+      nb::arg("crossover_wiggler") = nb::none(),
+      R"""(                                even_steps, r_typical, dx_tol_bend, use_2nd_order)
 
 Routine to calculate the optimum number of tracking steps and order
 of the integrator (2, 4, or 6) for each fibre in a layout.
@@ -2445,31 +2967,28 @@ crossover_wiggler : 1D array of int (shape: 2), optional
     crossover points for wigglers. Default is [30, 60].
 )"""
   );
-  py::class_<Bmad::PtcCheckForLostParticle, std::unique_ptr<Bmad::PtcCheckForLostParticle>>(
+  nb::class_<Bmad::PtcCheckForLostParticle>(
       m,
       "PtcCheckForLostParticle",
       "ptc_check_for_lost_particle return type"
   )
-      .def_readonly("state", &Bmad::PtcCheckForLostParticle::state)
-      .def_readonly("ptc_fibre", &Bmad::PtcCheckForLostParticle::ptc_fibre)
+      .def_ro("state", &Bmad::PtcCheckForLostParticle::state)
+      .def_ro("ptc_fibre", &Bmad::PtcCheckForLostParticle::ptc_fibre)
       .def("__len__", [](const Bmad::PtcCheckForLostParticle &) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcCheckForLostParticle &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PtcCheckForLostParticle &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.state);
+          return nb::cast(s.state);
         if (i == 1)
-          return py::cast(s.ptc_fibre);
-        throw py::index_error();
+          return nb::cast(s.ptc_fibre);
+        throw nb::index_error();
       });
   m.def(
       "ptc_check_for_lost_particle",
       &Bmad::ptc_check_for_lost_particle,
-      py::arg("do_reset"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_check_for_lost_particle (state, ptc_fibre, do_reset)
-
-Routine to check if a particle has been lost when tracking with PTC.
+      nb::arg("do_reset"),
+      R"""(Routine to check if a particle has been lost when tracking with PTC.
 
 Parameters
 ----------
@@ -2488,12 +3007,9 @@ ptc_fibre : Fibre, optional
   m.def(
       "ptc_closed_orbit_calc",
       &Bmad::ptc_closed_orbit_calc,
-      py::arg("branch"),
-      py::arg("radiation_damping_on") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_closed_orbit_calc (branch, closed_orbit, radiation_damping_on)
-
-Routine to calculate the closed orbit of a lattice branch using PTC.
+      nb::arg("branch"),
+      nb::arg("radiation_damping_on") = nb::none(),
+      R"""(Routine to calculate the closed orbit of a lattice branch using PTC.
 This routine assumes the associated PTC layout has been crated
 with lat_to_ptc_layout.
 
@@ -2512,32 +3028,25 @@ closed_orbit : 1D array of CoordStruct
     closed_orbit
 )"""
   );
-  py::class_<Bmad::PtcEmitCalc, std::unique_ptr<Bmad::PtcEmitCalc>>(
-      m,
-      "PtcEmitCalc",
-      "ptc_emit_calc return type"
-  )
-      .def_readonly("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
-      .def_readonly("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
+  nb::class_<Bmad::PtcEmitCalc>(m, "PtcEmitCalc", "ptc_emit_calc return type")
+      .def_ro("norm_mode", &Bmad::PtcEmitCalc::norm_mode)
+      .def_ro("closed_orb", &Bmad::PtcEmitCalc::closed_orb)
       .def("__len__", [](const Bmad::PtcEmitCalc &) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcEmitCalc &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PtcEmitCalc &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.norm_mode);
+          return nb::cast(s.norm_mode);
         if (i == 1)
-          return py::cast(s.closed_orb);
-        throw py::index_error();
+          return nb::cast(s.closed_orb);
+        throw nb::index_error();
       });
   m.def(
       "ptc_emit_calc",
       &Bmad::ptc_emit_calc,
-      py::arg("ele"),
-      py::arg("sigma_mat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_emit_calc (ele, norm_mode, sigma_mat, closed_orb)
-
-Routine to calculate emittances, etc.
+      nb::arg("ele"),
+      nb::arg("sigma_mat"),
+      R"""(Routine to calculate emittances, etc.
 
 Note: This routine calls the PTC init_all routine.
 
@@ -2556,19 +3065,31 @@ closed_orb : CoordStruct
 )"""
   );
   m.def(
+      "ptc_kill_map_with_radiation",
+      &Bmad::ptc_kill_map_with_radiation,
+      nb::arg("rad_map"),
+      R"""(Routine to kill a binary file containing a ptc_rad_map_struct map
+
+Parameters
+----------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+    This parameter is an input/output and is modified in-place.
+    As an output, rad_map: Deallocated map.
+)"""
+  );
+  m.def(
       "ptc_layouts_resplit",
       &Bmad::ptc_layouts_resplit,
-      py::arg("dKL_max"),
-      py::arg("l_max"),
-      py::arg("l_max_drift_only"),
-      py::arg("bend_dorb"),
-      py::arg("sex_dx"),
-      py::arg("even") = py::none(),
-      py::arg("crossover") = py::none(),
-      py::arg("crossover_wiggler") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_layouts_resplit (dKL_max, l_max, l_max_drift_only, bend_dorb, sex_dx,
-                                                          even, crossover, crossover_wiggler)
+      nb::arg("dKL_max"),
+      nb::arg("l_max"),
+      nb::arg("l_max_drift_only"),
+      nb::arg("bend_dorb"),
+      nb::arg("sex_dx"),
+      nb::arg("even") = nb::none(),
+      nb::arg("crossover") = nb::none(),
+      nb::arg("crossover_wiggler") = nb::none(),
+      R"""(                                                          even, crossover, crossover_wiggler)
 
 Routine to resplit (that is, recalculate the number of integration steps for an element)
 For the fibres in all layouts. After doing a resplit, the tune (and any other relavent
@@ -2613,14 +3134,28 @@ crossover_wiggler : 1D array of int (shape: 2), optional
 )"""
   );
   m.def(
+      "ptc_linear_isf_calc",
+      &Bmad::ptc_linear_isf_calc,
+      nb::arg("branch"),
+      R"""(Wrapper for Fortran routine ptc_linear_isf_calc
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch to analyze.
+
+Returns
+-------
+ele_isf : 1D array of LinearEleIsfStruct
+    ISF at every element.
+)"""
+  );
+  m.def(
       "ptc_one_turn_mat_and_closed_orbit_calc",
       &Bmad::ptc_one_turn_mat_and_closed_orbit_calc,
-      py::arg("branch"),
-      py::arg("pz") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_one_turn_mat_and_closed_orbit_calc (branch, pz)
-
-Routine to compute the transfer matrices for the individual elements and closed orbit
+      nb::arg("branch"),
+      nb::arg("pz") = nb::none(),
+      R"""(Routine to compute the transfer matrices for the individual elements and closed orbit
 for a lattice branch with closed geometry.
 
 Note: PTC itself does not compute Twiss parameters. Use twiss_from_mat6 to compute this.
@@ -2639,8 +3174,7 @@ pz : float, optional
   m.def(
       "ptc_ran_seed_put",
       &Bmad::ptc_ran_seed_put,
-      py::arg("iseed"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("iseed"),
       R"""(Wrapper for Fortran routine ptc_ran_seed_put
 
 Parameters
@@ -2649,30 +3183,25 @@ iseed : int
     0 -> Use system clock.
 )"""
   );
-  py::class_<Bmad::PtcReadFlatFile, std::unique_ptr<Bmad::PtcReadFlatFile>>(
-      m,
-      "PtcReadFlatFile",
-      "ptc_read_flat_file return type"
-  )
-      .def_readonly("err_flag", &Bmad::PtcReadFlatFile::err_flag)
-      .def_readonly("lat", &Bmad::PtcReadFlatFile::lat)
+  nb::class_<Bmad::PtcReadFlatFile>(m, "PtcReadFlatFile", "ptc_read_flat_file return type")
+      .def_ro("err_flag", &Bmad::PtcReadFlatFile::err_flag)
+      .def_ro("lat", &Bmad::PtcReadFlatFile::lat)
       .def("__len__", [](const Bmad::PtcReadFlatFile &) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcReadFlatFile &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PtcReadFlatFile &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.err_flag);
+          return nb::cast(s.err_flag);
         if (i == 1)
-          return py::cast(s.lat);
-        throw py::index_error();
+          return nb::cast(s.lat);
+        throw nb::index_error();
       });
   m.def(
       "ptc_read_flat_file",
       &Bmad::ptc_read_flat_file,
-      py::arg("flat_file"),
-      py::arg("create_end_marker") = py::none(),
-      py::arg("from_mad") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("flat_file"),
+      nb::arg("create_end_marker") = nb::none(),
+      nb::arg("from_mad") = nb::none(),
       R"""(Wrapper for Fortran routine ptc_read_flat_file
 
 Parameters
@@ -2696,11 +3225,56 @@ lat : LatStruct, optional
     If present then setup a Bmad lattice.
 )"""
   );
+  nb::class_<Bmad::PtcReadMapWithRadiation>(
+      m,
+      "PtcReadMapWithRadiation",
+      "ptc_read_map_with_radiation return type"
+  )
+      .def_ro("rad_map", &Bmad::PtcReadMapWithRadiation::rad_map)
+      .def_ro("err_flag", &Bmad::PtcReadMapWithRadiation::err_flag)
+      .def("__len__", [](const Bmad::PtcReadMapWithRadiation &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcReadMapWithRadiation &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.rad_map);
+        if (i == 1)
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
+  m.def(
+      "ptc_read_map_with_radiation",
+      &Bmad::ptc_read_map_with_radiation,
+      nb::arg("file_name") = nb::none(),
+      nb::arg("file_unit") = nb::none(),
+      R"""(Routine to read a binary file containing a ptc_rad_map_struct map
+
+Either file_name or file_unit must be present but not both.
+File_unit is used when there are multiple maps in a file.
+If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+and to close the file afterwards.
+
+Parameters
+----------
+file_name : str, optional
+    Name of binary file.
+
+file_unit : int, optional
+    File unit number read from.
+
+Returns
+-------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+err_flag : bool
+    Set True if there is a read error.
+)"""
+  );
   m.def(
       "ptc_set_rf_state_for_c_normal",
       &Bmad::ptc_set_rf_state_for_c_normal,
-      py::arg("nocavity"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("nocavity"),
       R"""(Wrapper for Fortran routine ptc_set_rf_state_for_c_normal
 
 Parameters
@@ -2712,39 +3286,119 @@ nocavity : bool
   m.def(
       "ptc_set_taylor_order_if_needed",
       &Bmad::ptc_set_taylor_order_if_needed,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_set_taylor_order_if_needed()
-
-Routine to see if the taylor_order for PTC needs to be set/changed.
+      R"""(Routine to see if the taylor_order for PTC needs to be set/changed.
 For example, for a change in bmad_com%taylor_order.
 )"""
   );
-  py::class_<Bmad::PtcSpinCalc, std::unique_ptr<Bmad::PtcSpinCalc>>(
+  nb::class_<Bmad::PtcSetupMapWithRadiation>(
       m,
-      "PtcSpinCalc",
-      "ptc_spin_calc return type"
+      "PtcSetupMapWithRadiation",
+      "ptc_setup_map_with_radiation return type"
   )
-      .def_readonly("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
-      .def_readonly("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
-      .def("__len__", [](const Bmad::PtcSpinCalc &) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcSpinCalc &s, int i) -> py::object {
+      .def_ro("rad_map", &Bmad::PtcSetupMapWithRadiation::rad_map)
+      .def_ro("err_flag", &Bmad::PtcSetupMapWithRadiation::err_flag)
+      .def("__len__", [](const Bmad::PtcSetupMapWithRadiation &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcSetupMapWithRadiation &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.norm_mode);
+          return nb::cast(s.rad_map);
         if (i == 1)
-          return py::cast(s.closed_orb);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
+  m.def(
+      "ptc_setup_map_with_radiation",
+      [](EleStruct &ele1,
+         EleStruct *ele2,
+         std::optional<int> map_order,
+         std::optional<bool> include_damping,
+         std::optional<bool> create_symplectic_map,
+         CoordStruct *orbit1) {
+        auto fn = static_cast<
+            Bmad::
+                PtcSetupMapWithRadiation (*)(EleStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, optional_ref<CoordStruct>)>(
+            &Bmad::ptc_setup_map_with_radiation
+        );
+        return fn(
+            ele1,
+            ptr_to_opt_ref(ele2),
+            map_order,
+            include_damping,
+            create_symplectic_map,
+            ptr_to_opt_ref(orbit1)
+        );
+      },
+      nb::arg("ele1"),
+      nb::arg("ele2") = nb::none(),
+      nb::arg("map_order") = nb::none(),
+      nb::arg("include_damping") = nb::none(),
+      nb::arg("create_symplectic_map") = nb::none(),
+      nb::arg("orbit1") = nb::none(),
+      R"""(                                                                         create_symplectic_map, orbit1, err_flag)
+
+Routine to construct a map including radiation damping and excitation.
+Note: The setting of bmad_com%radiation_damping_on will determine if damping is included in the map.
+
+ele1/ele2 must have an associated PTC layout (which can be constructed by calling lat_to_ptc_layout).
+
+To track after calling this routine track by calling ptc_track_with_radiation.
+To cleanup memory after using, call ptc_kill_map_with_radiation.
+To save a map call ptc_write_map_with_radiation.
+To read a saved map call ptc_read_map_with_radiation.
+To set the random number seed call: ptc_ran_seed_put.
+
+Parameters
+----------
+ele1 : EleStruct
+    The map starts at the exit end of ele1.
+
+ele2 : EleStruct, optional
+    The map ends at the exit end of ele2. If not present, the 1-turn map will be constructed.
+
+map_order : int, optional
+    Order of the map. If not present or less than 1, the currently set order is used.
+
+include_damping : bool, optional
+    If True (default), the map will be constructed with radiation damping included. If False, the map will not
+    be constructed with radiation dampling included.
+
+create_symplectic_map : bool, optional
+    If False (default), create a Taylor map. If True, create a partially inverted map which can be
+    symplecitally tracked.
+
+orbit1 : CoordStruct, optional
+    Orbit at ele1 about which the map is constructed. If not present then the orbit will be computed using PTC
+    tracking.
+
+Returns
+-------
+rad_map : PtcRadMapStruct
+    Transport map.
+
+err_flag : bool, optional
+    Set True if there is an error such as not associated PTC layout.
+)"""
+  );
+  nb::class_<Bmad::PtcSpinCalc>(m, "PtcSpinCalc", "ptc_spin_calc return type")
+      .def_ro("norm_mode", &Bmad::PtcSpinCalc::norm_mode)
+      .def_ro("closed_orb", &Bmad::PtcSpinCalc::closed_orb)
+      .def("__len__", [](const Bmad::PtcSpinCalc &) { return 2; })
+      .def("__getitem__", [](const Bmad::PtcSpinCalc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.norm_mode);
+        if (i == 1)
+          return nb::cast(s.closed_orb);
+        throw nb::index_error();
       });
   m.def(
       "ptc_spin_calc",
       &Bmad::ptc_spin_calc,
-      py::arg("ele"),
-      py::arg("sigma_mat"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_spin_calc (ele, norm_mode, sigma_mat, closed_orb)
-
-Routine to equilibrium polarizations, etc.
+      nb::arg("ele"),
+      nb::arg("sigma_mat"),
+      R"""(Routine to equilibrium polarizations, etc.
 
 Parameters
 ----------
@@ -2760,32 +3414,42 @@ closed_orb : CoordStruct
     Closed orbit at ele (Bmad coordinates). Notice: This closed orbit is the closed orbit with radiation on.
 )"""
   );
-  py::class_<Bmad::PtcTrackAll, std::unique_ptr<Bmad::PtcTrackAll>>(
-      m,
-      "PtcTrackAll",
-      "ptc_track_all return type"
-  )
-      .def_readonly("track_state", &Bmad::PtcTrackAll::track_state)
-      .def_readonly("err_flag", &Bmad::PtcTrackAll::err_flag)
+  m.def(
+      "ptc_spin_matching_calc",
+      &Bmad::ptc_spin_matching_calc,
+      nb::arg("branch"),
+      R"""(Wrapper for Fortran routine ptc_spin_matching_calc
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch to analyze.
+
+Returns
+-------
+match_info : 1D array of SpinMatchingStruct
+    G-matrix and other stuff. The array will be allocated by this routine.
+)"""
+  );
+  nb::class_<Bmad::PtcTrackAll>(m, "PtcTrackAll", "ptc_track_all return type")
+      .def_ro("track_state", &Bmad::PtcTrackAll::track_state)
+      .def_ro("err_flag", &Bmad::PtcTrackAll::err_flag)
       .def("__len__", [](const Bmad::PtcTrackAll &) { return 2; })
-      .def("__getitem__", [](const Bmad::PtcTrackAll &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::PtcTrackAll &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.track_state);
+          return nb::cast(s.track_state);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "ptc_track_all",
       &Bmad::ptc_track_all,
-      py::arg("branch"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ptc_track_all (branch, orbit, track_state, err_flag)
-
-Routine to track from the start to the end of a lattice branch.
+      nb::arg("branch"),
+      nb::arg("orbit"),
+      R"""(Routine to track from the start to the end of a lattice branch.
 
 Parameters
 ----------
@@ -2807,17 +3471,51 @@ err_flag : bool, optional
 )"""
   );
   m.def(
+      "ptc_track_map_with_radiation",
+      &Bmad::ptc_track_map_with_radiation,
+      nb::arg("orbit"),
+      nb::arg("rad_map"),
+      nb::arg("rad_damp") = nb::none(),
+      nb::arg("rad_fluct") = nb::none(),
+      R"""(Routine to track through a map that includes radiation.
+
+NOTE! Tracking without damping when the map was made with radiation (and vice versa)
+will not give good results. So avoid this situation unless testing.
+
+To construct the map, use the routine ptc_setup_map_with_radiation.
+To cleanup memory after using, call ptc_kill_map_with_radiation.
+To save a map call ptc_write_map_with_radiation.
+To read a saved map call ptc_read_map_with_radiation.
+To set the random number seed call: ptc_ran_seed_put.
+
+Parameters
+----------
+orbit : CoordStruct
+    Starting orbit.
+    This parameter is an input/output and is modified in-place.
+    As an output, orbit: Ending orbit after tracking through the map.
+
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+rad_damp : bool, optional
+    Override the setting of bmad_com.radiation_damping_on.
+
+rad_fluct : bool, optional
+    Override the setting of bmad_com.radiation_fluctuations_on
+)"""
+  );
+  m.def(
       "ptc_transfer_map_with_spin",
       &Bmad::ptc_transfer_map_with_spin,
-      py::arg("branch"),
-      py::arg("t_map"),
-      py::arg("s_map"),
-      py::arg("orb0"),
-      py::arg("ix1") = py::none(),
-      py::arg("ix2") = py::none(),
-      py::arg("one_turn") = py::none(),
-      py::arg("unit_start") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("branch"),
+      nb::arg("t_map"),
+      nb::arg("s_map"),
+      nb::arg("orb0"),
+      nb::arg("ix1") = nb::none(),
+      nb::arg("ix2") = nb::none(),
+      nb::arg("one_turn") = nb::none(),
+      nb::arg("unit_start") = nb::none(),
       R"""(Wrapper for Fortran routine ptc_transfer_map_with_spin
 
 Parameters
@@ -2858,16 +3556,52 @@ err_flag : bool
 )"""
   );
   m.def(
+      "ptc_write_map_with_radiation",
+      &Bmad::ptc_write_map_with_radiation,
+      nb::arg("rad_map"),
+      nb::arg("file_name") = nb::none(),
+      nb::arg("file_unit") = nb::none(),
+      R"""(Routine to create or append to a binary file containing a ptc_rad_map_struct map.
+
+Either file_name or file_unit must be present but not both.
+If file_unit is present, it is the responsibility of the calling routine to open the file beforehand
+and to close the file afterwards.
+
+Parameters
+----------
+rad_map : PtcRadMapStruct
+    Map with radiation included.
+
+file_name : str, optional
+    Name of binary file to create.
+
+file_unit : int, optional
+    File unit number to append to.
+)"""
+  );
+  m.def(
+      "ptwo",
+      &Bmad::ptwo,
+      nb::arg("sigma"),
+      nb::arg("t"),
+      nb::arg("phi"),
+      nb::arg("d_param"),
+      R"""(unnormalized two-dimensional probability distribution in x and phi
+polar angles relative to surface normal
+azimuthal angle relative to plane of incidence (plane of incoming ray and surface normal)
+1/y suppressed
+
+Private routine.
+)"""
+  );
+  m.def(
       "pwd_mat",
       &Bmad::pwd_mat,
-      py::arg("lat"),
-      py::arg("t6"),
-      py::arg("inductance"),
-      py::arg("sig_z"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function pwd_mat(t6, inductance, sig_z) result (t6_pwd)
-
-Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
+      nb::arg("lat"),
+      nb::arg("t6"),
+      nb::arg("inductance"),
+      nb::arg("sig_z"),
+      R"""(Calculates potential well distortion as RF defocusing.  Calculates t6_pwd=t6.Mpwd,
 where Mpwd is identity with 65 element proportional to the inductance.
 
 Vpwd = -inductance * lat%param%n_part * e_charge * c_light**3 / SQRT(twopi) / sig_z**3 / omega_RF  !effective RF voltage from PWD

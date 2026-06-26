@@ -14,6 +14,22 @@
 using namespace Bmad;
 
 using json = nlohmann::json;
+std::string SimUtils::all_pointer_to_string(AllPointerStruct &a_ptr, std::optional<bool> err) {
+  bool err_lvalue;
+  auto *_err{&err_lvalue};
+  if (err.has_value()) {
+    err_lvalue = err.value();
+  } else {
+    _err = nullptr;
+  }
+  char _str[4096];
+  fortran_all_pointer_to_string(
+      /* void* */ a_ptr.get_fortran_ptr(),
+      /* bool* */ _err,
+      /* const char* */ _str
+  );
+  return _str;
+}
 void SimUtils::allocate_thread_states() { fortran_allocate_thread_states(); }
 double SimUtils::anomalous_moment_of(int species) {
   double _moment{};
@@ -237,6 +253,221 @@ SimUtils::bicubic_cmplx_eval(double x_norm, double y_norm, BicubicCmplxCoefStruc
   );
   return BicubicCmplxEval{_df_dx, _df_dy, _f_val};
 }
+SimUtils::BicubicEval
+SimUtils::bicubic_eval(double x_norm, double y_norm, BicubicCoefStruct &bi_coef) {
+  double _df_dx{};
+  double _df_dy{};
+  double _f_val{};
+  fortran_bicubic_eval(
+      /* double& */ x_norm,
+      /* double& */ y_norm,
+      /* void* */ bi_coef.get_fortran_ptr(),
+      /* double& */ _df_dx,
+      /* double& */ _df_dy,
+      /* double& */ _f_val
+  );
+  return BicubicEval{_df_dx, _df_dy, _f_val};
+}
+BicubicCmplxCoefStruct SimUtils::bicubic_interpolation_cmplx_coefs(
+    CmplxFieldAt2dBoxStruct &field_at_box
+) {
+  BicubicCmplxCoefStruct _bi_coef;
+  fortran_bicubic_interpolation_cmplx_coefs(
+      /* void* */ field_at_box.get_fortran_ptr(),
+      /* void* */ _bi_coef.get_fortran_ptr()
+  );
+  return std::move(_bi_coef);
+}
+BicubicCoefStruct SimUtils::bicubic_interpolation_coefs(FieldAt2dBoxStruct &field_at_box) {
+  BicubicCoefStruct _bi_coef;
+  fortran_bicubic_interpolation_coefs(
+      /* void* */ field_at_box.get_fortran_ptr(),
+      /* void* */ _bi_coef.get_fortran_ptr()
+  );
+  return std::move(_bi_coef);
+}
+GeneralBinStruct SimUtils::bin_2d(
+    FArray1D<Real> &data1,
+    FArray1D<Real> &data2,
+    std::optional<FArray1D<Real>> weight,
+    std::optional<double> min1,
+    std::optional<double> max1,
+    std::optional<double> min2,
+    std::optional<double> max2,
+    std::optional<int> n_bins1,
+    std::optional<int> n_bins2
+) {
+  // data1: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data1_desc;
+  _data1_desc.rank = 1;
+  _data1_desc.data_ptr = data1.data();
+  _data1_desc.dims[0] = data1.size();
+  // data2: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data2_desc;
+  _data2_desc.rank = 1;
+  _data2_desc.data_ptr = data2.data();
+  _data2_desc.dims[0] = data2.size();
+  // weight: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _weight_desc;
+  _weight_desc.rank = 1;
+  if (weight.has_value()) {
+    _weight_desc.data_ptr = weight->data();
+    _weight_desc.dims[0] = weight->size();
+  } else {
+    _weight_desc.data_ptr = nullptr;
+    _weight_desc.dims[0] = 0;
+  }
+  double min1_lvalue;
+  auto *_min1{&min1_lvalue};
+  if (min1.has_value()) {
+    min1_lvalue = min1.value();
+  } else {
+    _min1 = nullptr;
+  }
+  double max1_lvalue;
+  auto *_max1{&max1_lvalue};
+  if (max1.has_value()) {
+    max1_lvalue = max1.value();
+  } else {
+    _max1 = nullptr;
+  }
+  double min2_lvalue;
+  auto *_min2{&min2_lvalue};
+  if (min2.has_value()) {
+    min2_lvalue = min2.value();
+  } else {
+    _min2 = nullptr;
+  }
+  double max2_lvalue;
+  auto *_max2{&max2_lvalue};
+  if (max2.has_value()) {
+    max2_lvalue = max2.value();
+  } else {
+    _max2 = nullptr;
+  }
+  int n_bins1_lvalue;
+  auto *_n_bins1{&n_bins1_lvalue};
+  if (n_bins1.has_value()) {
+    n_bins1_lvalue = n_bins1.value();
+  } else {
+    _n_bins1 = nullptr;
+  }
+  int n_bins2_lvalue;
+  auto *_n_bins2{&n_bins2_lvalue};
+  if (n_bins2.has_value()) {
+    n_bins2_lvalue = n_bins2.value();
+  } else {
+    _n_bins2 = nullptr;
+  }
+  GeneralBinStruct _bin_data;
+  fortran_bin_2d(
+      /* Bmad::array_descriptor_t& */ _data1_desc,
+      /* Bmad::array_descriptor_t& */ _data2_desc,
+      /* Bmad::array_descriptor_t& */ _weight_desc,
+      /* double* */ _min1,
+      /* double* */ _max1,
+      /* double* */ _min2,
+      /* double* */ _max2,
+      /* int* */ _n_bins1,
+      /* int* */ _n_bins2,
+      /* void* */ _bin_data.get_fortran_ptr()
+  );
+  return std::move(_bin_data);
+}
+BinStruct SimUtils::bin_data(
+    FArray1D<Real> &data,
+    std::optional<FArray1D<Real>> weight,
+    std::optional<double> min,
+    std::optional<double> max,
+    std::optional<int> n_bins
+) {
+  // data: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _data_desc;
+  _data_desc.rank = 1;
+  _data_desc.data_ptr = data.data();
+  _data_desc.dims[0] = data.size();
+  // weight: in NOT (CppWrapperGeneralArgumentArray) ([':'])
+  Bmad::array_descriptor_t _weight_desc;
+  _weight_desc.rank = 1;
+  if (weight.has_value()) {
+    _weight_desc.data_ptr = weight->data();
+    _weight_desc.dims[0] = weight->size();
+  } else {
+    _weight_desc.data_ptr = nullptr;
+    _weight_desc.dims[0] = 0;
+  }
+  double min_lvalue;
+  auto *_min{&min_lvalue};
+  if (min.has_value()) {
+    min_lvalue = min.value();
+  } else {
+    _min = nullptr;
+  }
+  double max_lvalue;
+  auto *_max{&max_lvalue};
+  if (max.has_value()) {
+    max_lvalue = max.value();
+  } else {
+    _max = nullptr;
+  }
+  int n_bins_lvalue;
+  auto *_n_bins{&n_bins_lvalue};
+  if (n_bins.has_value()) {
+    n_bins_lvalue = n_bins.value();
+  } else {
+    _n_bins = nullptr;
+  }
+  BinStruct _binned_data;
+  fortran_bin_data(
+      /* Bmad::array_descriptor_t& */ _data_desc,
+      /* Bmad::array_descriptor_t& */ _weight_desc,
+      /* double* */ _min,
+      /* double* */ _max,
+      /* int* */ _n_bins,
+      /* void* */ _binned_data.get_fortran_ptr()
+  );
+  return std::move(_binned_data);
+}
+double SimUtils::bin_data_density(BinStruct &bin_data, double x, std::optional<int> order) {
+  int order_lvalue;
+  auto *_order{&order_lvalue};
+  if (order.has_value()) {
+    order_lvalue = order.value();
+  } else {
+    _order = nullptr;
+  }
+  double _r{};
+  fortran_bin_data_density(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* double& */ x,
+      /* int* */ _order,
+      /* double& */ _r
+  );
+  return _r;
+}
+double SimUtils::bin_data_density_2d(
+    GeneralBinStruct &bin_data,
+    double x,
+    double y,
+    std::optional<int> order
+) {
+  int order_lvalue;
+  auto *_order{&order_lvalue};
+  if (order.has_value()) {
+    order_lvalue = order.value();
+  } else {
+    _order = nullptr;
+  }
+  double _r0{};
+  fortran_bin_data_density_2d(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* double& */ x,
+      /* double& */ y,
+      /* int* */ _order,
+      /* double& */ _r0
+  );
+  return _r0;
+}
 int SimUtils::bin_index(double x, double bin1_x_min, double bin_delta) {
   int _ix_bin{};
   fortran_bin_index(
@@ -388,6 +619,15 @@ double SimUtils::cosc(double x, std::optional<int> nd) {
   double _y{};
   fortran_cosc(/* double& */ x, /* int* */ _nd, /* double& */ _y);
   return _y;
+}
+double SimUtils::count_at_index(BinStruct &bin_data, int index) {
+  double _c{};
+  fortran_count_at_index(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* int& */ index,
+      /* double& */ _c
+  );
+  return _c;
 }
 SplineStruct
 SimUtils::create_a_spline(FArray1D<Real> &r0, FArray1D<Real> &r1, double slope0, double slope1) {
@@ -677,9 +917,11 @@ int SimUtils::find_location(FArray1D<Int> &arr, int value) {
 int SimUtils::find_location(BoolAlloc1D &arr, bool value) {
   // intent=inout allocatable general array
   int _ix_match{};
-  fortran_find_location_logic(/* void* */ arr.get_fortran_ptr(),
-                              /* bool& */ value,
-                              /* int& */ _ix_match);
+  fortran_find_location_logic(
+      /* void* */ arr.get_fortran_ptr(),
+      /* bool& */ value,
+      /* int& */ _ix_match
+  );
   return _ix_match;
 }
 int SimUtils::find_location(FArray1D<Real> &arr, double value) {
@@ -700,9 +942,11 @@ int SimUtils::find_location(CharacterAlloc1D &arr, std::string value) {
   // intent=inout character array container
   auto _value = value.c_str();
   int _ix_match{};
-  fortran_find_location_str(/* void* */ arr.get_fortran_ptr(),
-                            /* const char* */ _value,
-                            /* int& */ _ix_match);
+  fortran_find_location_str(
+      /* void* */ arr.get_fortran_ptr(),
+      /* const char* */ _value,
+      /* int& */ _ix_match
+  );
   return _ix_match;
 }
 double SimUtils::fine_frequency_estimate(FArray1D<Real> &data) {
@@ -773,6 +1017,96 @@ double SimUtils::gen_complete_elliptic(
       /* double& */ _value
   );
   return _value;
+}
+double SimUtils::general_bin_count(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2,
+    std::optional<int> ix3
+) {
+  int ix2_lvalue;
+  auto *_ix2{&ix2_lvalue};
+  if (ix2.has_value()) {
+    ix2_lvalue = ix2.value();
+  } else {
+    _ix2 = nullptr;
+  }
+  int ix3_lvalue;
+  auto *_ix3{&ix3_lvalue};
+  if (ix3.has_value()) {
+    ix3_lvalue = ix3.value();
+  } else {
+    _ix3 = nullptr;
+  }
+  double _count{};
+  fortran_general_bin_count(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* int& */ ix1,
+      /* int* */ _ix2,
+      /* int* */ _ix3,
+      /* double& */ _count
+  );
+  return _count;
+}
+int SimUtils::general_bin_index(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2,
+    std::optional<int> ix3
+) {
+  int ix2_lvalue;
+  auto *_ix2{&ix2_lvalue};
+  if (ix2.has_value()) {
+    ix2_lvalue = ix2.value();
+  } else {
+    _ix2 = nullptr;
+  }
+  int ix3_lvalue;
+  auto *_ix3{&ix3_lvalue};
+  if (ix3.has_value()) {
+    ix3_lvalue = ix3.value();
+  } else {
+    _ix3 = nullptr;
+  }
+  int _index{};
+  fortran_general_bin_index(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* int& */ ix1,
+      /* int* */ _ix2,
+      /* int* */ _ix3,
+      /* int& */ _index
+  );
+  return _index;
+}
+bool SimUtils::general_bin_index_in_bounds(
+    GeneralBinStruct &bin_data,
+    int ix1,
+    std::optional<int> ix2,
+    std::optional<int> ix3
+) {
+  int ix2_lvalue;
+  auto *_ix2{&ix2_lvalue};
+  if (ix2.has_value()) {
+    ix2_lvalue = ix2.value();
+  } else {
+    _ix2 = nullptr;
+  }
+  int ix3_lvalue;
+  auto *_ix3{&ix3_lvalue};
+  if (ix3.has_value()) {
+    ix3_lvalue = ix3.value();
+  } else {
+    _ix3 = nullptr;
+  }
+  bool _in_bounds{};
+  fortran_general_bin_index_in_bounds(
+      /* void* */ bin_data.get_fortran_ptr(),
+      /* int& */ ix1,
+      /* int* */ _ix2,
+      /* int* */ _ix3,
+      /* bool& */ _in_bounds
+  );
+  return _in_bounds;
 }
 std::string SimUtils::get_a_char(bool wait, optional_ref<CharacterAlloc1D> ignore_this) {
   char _this_char[4096];
@@ -1255,6 +1589,16 @@ double SimUtils::modulo2_sp(double x, double amp) {
   fortran_modulo2_sp(/* double& */ x, /* double& */ amp, /* double& */ _mod2);
   return _mod2;
 }
+MolecularComponentStructAlloc1D SimUtils::molecular_components(std::string molecule) {
+  auto _molecule = molecule.c_str();
+  // intent=out allocatable type array
+  auto component{MolecularComponentStructAlloc1D()};
+  fortran_molecular_components(
+      /* const char* */ _molecule,
+      /* void* */ component.get_fortran_ptr()
+  );
+  return std::move(component);
+}
 int SimUtils::n_bins_automatic(int n_data) {
   int _n{};
   fortran_n_bins_automatic(/* int& */ n_data, /* int& */ _n);
@@ -1339,9 +1683,11 @@ void SimUtils::naff(
 }
 void SimUtils::nametable_add(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_add(/* void* */ nametable.get_fortran_ptr(),
-                        /* const char* */ _name,
-                        /* int& */ ix_name);
+  fortran_nametable_add(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int& */ ix_name
+  );
 }
 int SimUtils::nametable_bracket_indexx(
     NametableStruct &nametable,
@@ -1357,17 +1703,21 @@ int SimUtils::nametable_bracket_indexx(
     _n_match = nullptr;
   }
   int _ix_max{};
-  fortran_nametable_bracket_indexx(/* void* */ nametable.get_fortran_ptr(),
-                                   /* const char* */ _name,
-                                   /* int* */ _n_match,
-                                   /* int& */ _ix_max);
+  fortran_nametable_bracket_indexx(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int* */ _n_match,
+      /* int& */ _ix_max
+  );
   return _ix_max;
 }
 void SimUtils::nametable_change1(NametableStruct &nametable, std::string name, int ix_name) {
   auto _name = name.c_str();
-  fortran_nametable_change1(/* void* */ nametable.get_fortran_ptr(),
-                            /* const char* */ _name,
-                            /* int& */ ix_name);
+  fortran_nametable_change1(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* const char* */ _name,
+      /* int& */ ix_name
+  );
 }
 void SimUtils::nametable_init(
     NametableStruct &nametable,
@@ -1388,9 +1738,11 @@ void SimUtils::nametable_init(
   } else {
     _n_max = nullptr;
   }
-  fortran_nametable_init(/* void* */ nametable.get_fortran_ptr(),
-                         /* int* */ _n_min,
-                         /* int* */ _n_max);
+  fortran_nametable_init(
+      /* void* */ nametable.get_fortran_ptr(),
+      /* int* */ _n_min,
+      /* int* */ _n_max
+  );
 }
 void SimUtils::nametable_remove(NametableStruct &nametable, int ix_name) {
   fortran_nametable_remove(/* void* */ nametable.get_fortran_ptr(), /* int& */ ix_name);
@@ -1690,6 +2042,53 @@ void SimUtils::out_io(
       /* double& */ r_num,
       /* bool* */ _insert_tag_line
   );
+}
+OutIoOutputDirectStruct SimUtils::output_direct(
+    std::optional<int> file_unit,
+    std::optional<bool> print_and_capture,
+    std::optional<int> min_level,
+    std::optional<int> max_level,
+    optional_ref<OutIoOutputDirectStruct> set
+) {
+  int file_unit_lvalue;
+  auto *_file_unit{&file_unit_lvalue};
+  if (file_unit.has_value()) {
+    file_unit_lvalue = file_unit.value();
+  } else {
+    _file_unit = nullptr;
+  }
+  bool print_and_capture_lvalue;
+  auto *_print_and_capture{&print_and_capture_lvalue};
+  if (print_and_capture.has_value()) {
+    print_and_capture_lvalue = print_and_capture.value();
+  } else {
+    _print_and_capture = nullptr;
+  }
+  int min_level_lvalue;
+  auto *_min_level{&min_level_lvalue};
+  if (min_level.has_value()) {
+    min_level_lvalue = min_level.value();
+  } else {
+    _min_level = nullptr;
+  }
+  int max_level_lvalue;
+  auto *_max_level{&max_level_lvalue};
+  if (max_level.has_value()) {
+    max_level_lvalue = max_level.value();
+  } else {
+    _max_level = nullptr;
+  }
+  auto *_set = set.has_value() ? set->get().get_fortran_ptr() : nullptr; // input, optional
+  OutIoOutputDirectStruct _get;
+  fortran_output_direct(
+      /* int* */ _file_unit,
+      /* bool* */ _print_and_capture,
+      /* int* */ _min_level,
+      /* int* */ _max_level,
+      /* void* */ _set,
+      /* void* */ _get.get_fortran_ptr()
+  );
+  return std::move(_get);
 }
 void SimUtils::parse_fortran_format(
     std::string format_str,
@@ -2248,9 +2647,11 @@ std::string SimUtils::quoten(CharacterAlloc1D &str, std::optional<std::string> d
   // intent=inout character array container
   const char *_delim = delim.has_value() ? delim->c_str() : nullptr;
   char _q_str[4096];
-  fortran_quoten(/* void* */ str.get_fortran_ptr(),
-                 /* const char* */ _delim,
-                 /* const char* */ _q_str);
+  fortran_quoten(
+      /* void* */ str.get_fortran_ptr(),
+      /* const char* */ _delim,
+      /* const char* */ _q_str
+  );
   return _q_str;
 }
 RandomStateStruct SimUtils::ran_default_state(optional_ref<RandomStateStruct> set_state) {
@@ -2547,10 +2948,12 @@ void SimUtils::reallocate_spline(
   } else {
     _exact = nullptr;
   }
-  fortran_reallocate_spline(/* void* */ spline.get_fortran_ptr(),
-                            /* int& */ n,
-                            /* int* */ _n_min,
-                            /* bool* */ _exact);
+  fortran_reallocate_spline(
+      /* void* */ spline.get_fortran_ptr(),
+      /* int& */ n,
+      /* int* */ _n_min,
+      /* bool* */ _exact
+  );
 }
 void SimUtils::relbd(double phi, double phic, double mc, double b, double d) {
   fortran_relbd(
@@ -2685,6 +3088,33 @@ SimUtils::Serbd SimUtils::serbd(double y, double m) {
   double _d{};
   fortran_serbd(/* double& */ y, /* double& */ m, /* double& */ _b, /* double& */ _d);
   return Serbd{_b, _d};
+}
+void SimUtils::set_all_ptr(
+    AllPointerStruct &a_ptr,
+    double value,
+    std::optional<bool> delta,
+    std::optional<double> value_set
+) {
+  bool delta_lvalue;
+  auto *_delta{&delta_lvalue};
+  if (delta.has_value()) {
+    delta_lvalue = delta.value();
+  } else {
+    _delta = nullptr;
+  }
+  double value_set_lvalue;
+  auto *_value_set{&value_set_lvalue};
+  if (value_set.has_value()) {
+    value_set_lvalue = value_set.value();
+  } else {
+    _value_set = nullptr;
+  }
+  fortran_set_all_ptr(
+      /* void* */ a_ptr.get_fortran_ptr(),
+      /* double& */ value,
+      /* bool* */ _delta,
+      /* double* */ _value_set
+  );
 }
 void SimUtils::set_env(std::string env_name, std::string env_value, bool err_flag) {
   auto _env_name = env_name.c_str();
@@ -2860,10 +3290,12 @@ double SimUtils::spline1(SplineStruct &a_spline, double x, std::optional<int> n)
     _n = nullptr;
   }
   double _y{};
-  fortran_spline1(/* void* */ a_spline.get_fortran_ptr(),
-                  /* double& */ x,
-                  /* int* */ _n,
-                  /* double& */ _y);
+  fortran_spline1(
+      /* void* */ a_spline.get_fortran_ptr(),
+      /* double& */ x,
+      /* int* */ _n,
+      /* double& */ _y
+  );
   return _y;
 }
 bool SimUtils::spline_akima(SplineStructArray1D spline) {
@@ -3356,6 +3788,42 @@ SimUtils::TricubicCmplxEval SimUtils::tricubic_cmplx_eval(
   );
   return TricubicCmplxEval{_df_dx, _df_dy, _df_dz, _f_val};
 }
+SimUtils::TricubicEval
+SimUtils::tricubic_eval(double x_norm, double y_norm, double z_norm, TricubicCoefStruct &tri_coef) {
+  double _df_dx{};
+  double _df_dy{};
+  double _df_dz{};
+  double _f_val{};
+  fortran_tricubic_eval(
+      /* double& */ x_norm,
+      /* double& */ y_norm,
+      /* double& */ z_norm,
+      /* void* */ tri_coef.get_fortran_ptr(),
+      /* double& */ _df_dx,
+      /* double& */ _df_dy,
+      /* double& */ _df_dz,
+      /* double& */ _f_val
+  );
+  return TricubicEval{_df_dx, _df_dy, _df_dz, _f_val};
+}
+TricubicCmplxCoefStruct SimUtils::tricubic_interpolation_cmplx_coefs(
+    CmplxFieldAt3dBoxStruct &field_at_box
+) {
+  TricubicCmplxCoefStruct _tri_coef;
+  fortran_tricubic_interpolation_cmplx_coefs(
+      /* void* */ field_at_box.get_fortran_ptr(),
+      /* void* */ _tri_coef.get_fortran_ptr()
+  );
+  return std::move(_tri_coef);
+}
+TricubicCoefStruct SimUtils::tricubic_interpolation_coefs(FieldAt3dBoxStruct &field_at_box) {
+  TricubicCoefStruct _tri_coef;
+  fortran_tricubic_interpolation_coefs(
+      /* void* */ field_at_box.get_fortran_ptr(),
+      /* void* */ _tri_coef.get_fortran_ptr()
+  );
+  return std::move(_tri_coef);
+}
 void SimUtils::type_this_file(std::string filename) {
   auto _filename = filename.c_str();
   fortran_type_this_file(/* const char* */ _filename);
@@ -3363,6 +3831,11 @@ void SimUtils::type_this_file(std::string filename) {
 void SimUtils::upcase_string(std::string string) {
   auto _string = string.c_str();
   fortran_upcase_string(/* const char* */ _string);
+}
+double SimUtils::value_of_all_ptr(AllPointerStruct &a_ptr) {
+  double _value{};
+  fortran_value_of_all_ptr(/* void* */ a_ptr.get_fortran_ptr(), /* double& */ _value);
+  return _value;
 }
 int SimUtils::virtual_memory_usage() {
   int _usage{};

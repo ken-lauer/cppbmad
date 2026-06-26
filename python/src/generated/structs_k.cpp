@@ -7,27 +7,29 @@
 #include "bmad/generated/to_string.hpp"
 #include "bmad/to_string.hpp"
 #include "pybmad/arrays.hpp"
+#include "pybmad/util.hpp"
 
 using namespace Pybmad;
-namespace py = pybind11;
+namespace nb = nanobind;
 
 // =============================================================================
 // kv_beam_init_struct
-void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) {
+void init_kv_beam_init_struct(nb::module_ &m, nb::class_<KvBeamInitStruct> &cls) {
   cls.def(
-         py::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<double>>(),
-         py::arg("part_per_phi") = py::none(),
-         py::arg("n_I2") = py::none(),
-         py::arg("A") = py::none()
+         nb::init<std::optional<std::vector<int>>, std::optional<int>, std::optional<double>>(),
+         nb::arg("part_per_phi") = nb::none(),
+         nb::arg("n_I2") = nb::none(),
+         nb::arg("A") = nb::none()
   )
-      .def_property(
+      .def_prop_rw(
           "part_per_phi",
-          py::cpp_function(&KvBeamInitStruct::part_per_phi, py::keep_alive<0, 1>()),
+          &KvBeamInitStruct::part_per_phi,
           &KvBeamInitStruct::set_part_per_phi,
+          nb::for_getter(nb::keep_alive<0, 1>()),
           "number of particles per angle variable."
       )
-      .def_property("n_I2", &KvBeamInitStruct::n_I2, &KvBeamInitStruct::set_n_I2, "number of I2")
-      .def_property("A", &KvBeamInitStruct::A, &KvBeamInitStruct::set_A, "A = I1/e")
+      .def_prop_rw("n_I2", &KvBeamInitStruct::n_I2, &KvBeamInitStruct::set_n_I2, "number of I2")
+      .def_prop_rw("A", &KvBeamInitStruct::A, &KvBeamInitStruct::set_A, "A = I1/e")
 
       .def("__repr__", [](const KvBeamInitStruct &self) { return to_string(self); })
 
@@ -39,21 +41,20 @@ void init_kv_beam_init_struct(py::module &m, py::class_<KvBeamInitStruct> &cls) 
       )
       .def(
           "__deepcopy__",
-          [](const KvBeamInitStruct &self, py::dict &memo) { return KvBeamInitStruct(self); }
+          [](const KvBeamInitStruct &self, nb::dict &memo) { return KvBeamInitStruct(self); }
       )
       .def(
           "__eq__",
           [](const KvBeamInitStruct &self, const KvBeamInitStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
-          py::is_operator()
+          nb::is_operator()
       )
       .def(
           "__hash__",
           [](const KvBeamInitStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
+            return std::hash<std::uintptr_t>{
+            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
           }
       )
 

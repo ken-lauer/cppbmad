@@ -689,6 +689,9 @@ def find_structs(
             elif lower_split[1] not in {"procedure"}:
                 logger.debug(f"Skipping module line: {lower_split}")
         elif lower_split[0] == "private":
+            # TODO: 'private' alone can set the default visibility for the module;
+            # right now this only supports the typical bmad way of doing things.
+            # That is, implicitly public unless specified as private.
             names = " ".join(lower_split[1:]).replace(",", " ").split()
             private_structs[file_line] = names
         elif lower_split[0] == "type" or lower_split[0].startswith("type,"):

@@ -3,14 +3,12 @@ cmake_minimum_required(VERSION 3.16...4.3)
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(PYBIND_LIBNAME _pybmad)
 
-find_package(pybind11 CONFIG REQUIRED)
-
 file(GLOB GENERATED_SOURCES
     CONFIGURE_DEPENDS
     "src/generated/*.cpp"
 )
 
-pybind11_add_module(${PYBIND_LIBNAME} MODULE
+nanobind_add_module(${PYBIND_LIBNAME}
     ${GENERATED_SOURCES}
     src/arrays.cpp
     src/common_structs.cpp
@@ -39,10 +37,13 @@ target_compile_definitions(${PYBIND_LIBNAME} PRIVATE VERSION_INFO=${PROJECT_VERS
 
 # Large reused header(s) should be precompiled:
 target_precompile_headers(${PYBIND_LIBNAME} PRIVATE
-  <pybind11/pybind11.h>
-  <pybind11/stl.h>
-  <pybind11/numpy.h>
-  <pybind11/complex.h>
+  <nanobind/nanobind.h>
+  <nanobind/stl/array.h>
+  <nanobind/stl/string.h>
+  <nanobind/stl/vector.h>
+  <nanobind/stl/optional.h>
+  <nanobind/stl/complex.h>
+  <nanobind/ndarray.h>
   "${CMAKE_CURRENT_SOURCE_DIR}/../include/bmad/generated/proxy.hpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/../include/bmad/generated/to_string.hpp"
 )
@@ -79,35 +80,26 @@ else()
   )
 endif()
 
-# Only run this if we have the pybind11-stubgen tool available
-find_program(STUBGEN pybind11-stubgen)
+# Stub generation using nanobind's built-in stubgen
+set(EXISTING_PYTHONPATH "$ENV{PYTHONPATH}")
 
-if(STUBGEN)
-  set(EXISTING_PYTHONPATH "$ENV{PYTHONPATH}")
-
-  if(EXISTING_PYTHONPATH)
-    set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>:${EXISTING_PYTHONPATH}")
-  else()
-    set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>")
-  endif()
-
-  set(GEN_STUBS_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/generate_stubs.sh")
-
-  add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E env
-    "PYTHONPATH=${PYTHONPATH}"
-    "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
-    "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
-
-    "${GEN_STUBS_SCRIPT}"
-    "${PYBIND_LIBNAME}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/pybmad"
-    "${STUBGEN}"
-
-    COMMENT "Generating and processing Python Stubs for ${PYBIND_LIBNAME}"
-    VERBATIM
-)
+if(EXISTING_PYTHONPATH)
+  set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>:${EXISTING_PYTHONPATH}")
+else()
+  set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>")
 endif()
+
+add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E env
+  "PYTHONPATH=${PYTHONPATH}"
+  "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
+  "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
+
+  "${Python_EXECUTABLE}" -m nanobind.stubgen -r -m "${PYBIND_LIBNAME}" -O "${CMAKE_CURRENT_SOURCE_DIR}/pybmad"
+
+  COMMENT "Generating Python stubs for ${PYBIND_LIBNAME}"
+  VERBATIM
+)
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/"
         DESTINATION pybmad

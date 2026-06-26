@@ -1,20 +1,17 @@
 #include "pybmad/generated/Bmad_routines_g.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_g(py::module &m) {
+void init_Bmad_routines_g(nb::module_ &m) {
   m.def(
       "g_bend_from_em_field",
       &Bmad::g_bend_from_em_field,
-      py::arg("b"),
-      py::arg("e"),
-      py::arg("orbit"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function g_bend_from_em_field (B, E, orbit) result (g_bend)
-
-Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
+      nb::arg("b"),
+      nb::arg("e"),
+      nb::arg("orbit"),
+      R"""(Routine to calculate the bending strength (1/bending_radius) for a given particle for a given field.
 This will include the dipole bending field of an sbend.
 
 Parameters
@@ -34,32 +31,31 @@ g_bend : 1D array of float (shape: 3)
     bending strength vector.
 )"""
   );
-  py::class_<Bmad::GBendingStrengthFromEmField, std::unique_ptr<Bmad::GBendingStrengthFromEmField>>(
+  nb::class_<Bmad::GBendingStrengthFromEmField>(
       m,
       "GBendingStrengthFromEmField",
       "g_bending_strength_from_em_field return type"
   )
-      .def_readonly("g", &Bmad::GBendingStrengthFromEmField::g)
-      .def_readonly("dg", &Bmad::GBendingStrengthFromEmField::dg)
+      .def_ro("g", &Bmad::GBendingStrengthFromEmField::g)
+      .def_ro("dg", &Bmad::GBendingStrengthFromEmField::dg)
       .def("__len__", [](const Bmad::GBendingStrengthFromEmField &) { return 2; })
-      .def("__getitem__", [](const Bmad::GBendingStrengthFromEmField &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::GBendingStrengthFromEmField &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.g);
+          return nb::cast(s.g);
         if (i == 1)
-          return py::cast(s.dg);
-        throw py::index_error();
+          return nb::cast(s.dg);
+        throw nb::index_error();
       });
   m.def(
       "g_bending_strength_from_em_field",
       &Bmad::g_bending_strength_from_em_field,
-      py::arg("ele"),
-      py::arg("param"),
-      py::arg("s_rel"),
-      py::arg("orbit"),
-      py::arg("local_ref_frame"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("s_rel"),
+      nb::arg("orbit"),
+      nb::arg("local_ref_frame"),
       R"""(Wrapper for Fortran routine g_bending_strength_from_em_field
 
 Parameters
@@ -92,8 +88,7 @@ dg : 2D array of float (shape: 3,3), optional
   m.def(
       "g_integrals_calc",
       &Bmad::g_integrals_calc,
-      py::arg("lat"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
       R"""(Wrapper for Fortran routine g_integrals_calc
 
 Parameters
@@ -105,8 +100,7 @@ lat : LatStruct
   m.def(
       "gamma_ref",
       &Bmad::gamma_ref,
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine gamma_ref
 
 Parameters
@@ -123,10 +117,9 @@ gamma : float
   m.def(
       "gen_grad1_to_gg_taylor",
       &Bmad::gen_grad1_to_gg_taylor,
-      py::arg("ele"),
-      py::arg("gen_grad"),
-      py::arg("iz"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("gen_grad"),
+      nb::arg("iz"),
       R"""(Wrapper for Fortran routine gen_grad1_to_gg_taylor
 
 Parameters
@@ -149,10 +142,9 @@ gg_taylor : 1D array of GgTaylorStruct (shape: 3)
   m.def(
       "gen_grad_at_s_to_gg_taylor",
       &Bmad::gen_grad_at_s_to_gg_taylor,
-      py::arg("ele"),
-      py::arg("gen_grad"),
-      py::arg("s_pos"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("gen_grad"),
+      nb::arg("s_pos"),
       R"""(Wrapper for Fortran routine gen_grad_at_s_to_gg_taylor
 
 Parameters
@@ -175,11 +167,10 @@ gg_taylor : 1D array of GgTaylorStruct (shape: 3)
   m.def(
       "gen_grad_field",
       &Bmad::gen_grad_field,
-      py::arg("deriv"),
-      py::arg("gg"),
-      py::arg("rho"),
-      py::arg("theta"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("deriv"),
+      nb::arg("gg"),
+      nb::arg("rho"),
+      nb::arg("theta"),
       R"""(Wrapper for Fortran routine gen_grad_field
 
 Parameters
@@ -197,15 +188,62 @@ Returns
 field : 1D array of float (shape: 3)
 )"""
   );
+  nb::class_<Bmad::GetAstraFieldgridNameAndScaling>(
+      m,
+      "GetAstraFieldgridNameAndScaling",
+      "get_astra_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetAstraFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetAstraFieldgridNameAndScaling::field_scale)
+      .def("__len__", [](const Bmad::GetAstraFieldgridNameAndScaling &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetAstraFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_astra_fieldgrid_name_and_scaling",
+      &Bmad::get_astra_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("name_indexx"),
+      nb::arg("dimensions") = nb::none(),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_astra_field_grid_file.
+  If the field grid file does not exist, it is written.
+
+  Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+dimensions : int, optional
+    1 or 3 dimensions. Default: 1
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
+)"""
+  );
   m.def(
       "get_bl_from_fwhm",
       &Bmad::get_bl_from_fwhm,
-      py::arg("bound"),
-      py::arg("args"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_bl_from_fwhm(bound,args,sigma)
-
-Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
+      nb::arg("bound"),
+      nb::arg("args"),
+      R"""(Calculate bunch length as fwhm * c_light / TwoRtTwoLnTwo.
 Where fwhm is full width at half max of solution to dpsi/dt.
 
 Parameters
@@ -225,10 +263,9 @@ sigma : float
   m.def(
       "get_called_file",
       &Bmad::get_called_file,
-      py::arg("delim"),
-      py::arg("call_file"),
-      py::arg("err"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("delim"),
+      nb::arg("call_file"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine get_called_file
 
 Parameters
@@ -240,32 +277,29 @@ call_file : str
 err : bool
 )"""
   );
-  py::class_<Bmad::GetEmitFromSigmaMat, std::unique_ptr<Bmad::GetEmitFromSigmaMat>>(
+  nb::class_<Bmad::GetEmitFromSigmaMat>(
       m,
       "GetEmitFromSigmaMat",
       "get_emit_from_sigma_mat return type"
   )
-      .def_readonly("normal", &Bmad::GetEmitFromSigmaMat::normal)
-      .def_readonly("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
+      .def_ro("normal", &Bmad::GetEmitFromSigmaMat::normal)
+      .def_ro("err_flag", &Bmad::GetEmitFromSigmaMat::err_flag)
       .def("__len__", [](const Bmad::GetEmitFromSigmaMat &) { return 2; })
-      .def("__getitem__", [](const Bmad::GetEmitFromSigmaMat &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::GetEmitFromSigmaMat &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.normal);
+          return nb::cast(s.normal);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "get_emit_from_sigma_mat",
       &Bmad::get_emit_from_sigma_mat,
-      py::arg("sigma_mat"),
-      py::arg("Nmat") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_emit_from_sigma_mat(sigma_mat, normal, Nmat, err_flag)
-
-Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
+      nb::arg("sigma_mat"),
+      nb::arg("Nmat") = nb::none(),
+      R"""(Given a beam envelop sigma matrix sigma_mat, this returns the 3 normal mode
 emittances.
 
 The normal mode emittance of the sigma matrix are the eigenvalues of
@@ -299,56 +333,102 @@ err_flag : bool
     Set to true if something went wrong.  Otherwise set to false.
 )"""
   );
+  nb::class_<Bmad::GetGptFieldgridNameAndScaling>(
+      m,
+      "GetGptFieldgridNameAndScaling",
+      "get_gpt_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetGptFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetGptFieldgridNameAndScaling::field_scale)
+      .def_ro("ref_time", &Bmad::GetGptFieldgridNameAndScaling::ref_time)
+      .def("__len__", [](const Bmad::GetGptFieldgridNameAndScaling &) { return 3; })
+      .def("__getitem__", [](const Bmad::GetGptFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        if (i == 2)
+          return nb::cast(s.ref_time);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_gpt_fieldgrid_name_and_scaling",
+      &Bmad::get_gpt_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("name_indexx"),
+      nb::arg("dimensions") = nb::none(),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_gpt_field_grid_file.
+  If the field grid file does not exist, it is written.
+
+  Note: This is very similar to get_opal_fieldgrid_name_and_scaling
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+dimensions : int, optional
+    1, 2, or 3 dimensions.
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
+
+ref_time : float
+    time that the field was evaluated at
+)"""
+  );
   m.def(
       "get_list_of_names",
       &Bmad::get_list_of_names,
-      py::arg("ele"),
-      py::arg("err_str"),
-      py::arg("name_list"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_list_of_names (ele, err_str, delim, delim_found)
-
-This subroutine is used by bmad_parser and bmad_parser2.
+      nb::arg("ele"),
+      nb::arg("err_str"),
+      nb::arg("name_list"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
+      R"""(This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 )"""
   );
-  py::class_<Bmad::GetNextWord, std::unique_ptr<Bmad::GetNextWord>>(
-      m,
-      "GetNextWord",
-      "get_next_word return type"
-  )
-      .def_readonly("ix_word", &Bmad::GetNextWord::ix_word)
-      .def_readonly("delim", &Bmad::GetNextWord::delim)
-      .def_readonly("delim_found", &Bmad::GetNextWord::delim_found)
-      .def_readonly("err_flag", &Bmad::GetNextWord::err_flag)
+  nb::class_<Bmad::GetNextWord>(m, "GetNextWord", "get_next_word return type")
+      .def_ro("ix_word", &Bmad::GetNextWord::ix_word)
+      .def_ro("delim", &Bmad::GetNextWord::delim)
+      .def_ro("delim_found", &Bmad::GetNextWord::delim_found)
+      .def_ro("err_flag", &Bmad::GetNextWord::err_flag)
       .def("__len__", [](const Bmad::GetNextWord &) { return 4; })
-      .def("__getitem__", [](const Bmad::GetNextWord &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::GetNextWord &s, int i) -> nb::object {
         if (i < 0)
           i += 4;
         if (i == 0)
-          return py::cast(s.ix_word);
+          return nb::cast(s.ix_word);
         if (i == 1)
-          return py::cast(s.delim);
+          return nb::cast(s.delim);
         if (i == 2)
-          return py::cast(s.delim_found);
+          return nb::cast(s.delim_found);
         if (i == 3)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "get_next_word",
       &Bmad::get_next_word,
-      py::arg("word"),
-      py::arg("delim_list"),
-      py::arg("upper_case_word") = py::none(),
-      py::arg("call_check") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_next_word (word, ix_word, delim_list, delim, delim_found, upper_case_word, call_check, err_flag)
-
-Subroutine to get the next word from the input stream.
+      nb::arg("word"),
+      nb::arg("delim_list"),
+      nb::arg("upper_case_word") = nb::none(),
+      nb::arg("call_check") = nb::none(),
+      R"""(Subroutine to get the next word from the input stream.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 
@@ -381,43 +461,125 @@ err_flag : bool, optional
     Set True if there is an error. False otherwise.
 )"""
   );
+  nb::class_<Bmad::GetOpalFieldgridNameAndScaling>(
+      m,
+      "GetOpalFieldgridNameAndScaling",
+      "get_opal_fieldgrid_name_and_scaling return type"
+  )
+      .def_ro("output_name", &Bmad::GetOpalFieldgridNameAndScaling::output_name)
+      .def_ro("field_scale", &Bmad::GetOpalFieldgridNameAndScaling::field_scale)
+      .def("__len__", [](const Bmad::GetOpalFieldgridNameAndScaling &) { return 2; })
+      .def("__getitem__", [](const Bmad::GetOpalFieldgridNameAndScaling &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.output_name);
+        if (i == 1)
+          return nb::cast(s.field_scale);
+        throw nb::index_error();
+      });
+  m.def(
+      "get_opal_fieldgrid_name_and_scaling",
+      &Bmad::get_opal_fieldgrid_name_and_scaling,
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("name_indexx"),
+      R"""(Subroutine to get a field grid filename and its scaling. Calls write_opal_field_grid_file.
+  If the field grid file does not exist, it is written
+
+Parameters
+----------
+ele : EleStruct
+    element to make map
+
+param : LatParamStruct
+    Contains lattice information
+
+name_indexx : StrIndexStruct
+    contains field grid filenames
+    This parameter is an input/output and is modified in-place.
+    As an output, name_indexx: updated if new name is added
+
+Returns
+-------
+output_name : str
+    output filename.
+
+field_scale : float
+    the scaling of the field grid
+)"""
+  );
+  m.def(
+      "get_overlay_group_names",
+      [](EleStruct &ele,
+         LatStruct &lat,
+         ParserEleStruct &pele,
+         std::string delim,
+         bool delim_found,
+         bool is_control_var_list,
+         bool err_flag,
+         CharacterAlloc1D *names_out) {
+        auto fn = static_cast<
+            void (*)(EleStruct &, LatStruct &, ParserEleStruct &, std::string, bool, bool, bool, optional_ref<CharacterAlloc1D>)>(
+            &Bmad::get_overlay_group_names
+        );
+        return fn(
+            ele,
+            lat,
+            pele,
+            delim,
+            delim_found,
+            is_control_var_list,
+            err_flag,
+            ptr_to_opt_ref(names_out)
+        );
+      },
+      nb::arg("ele"),
+      nb::arg("lat"),
+      nb::arg("pele"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("is_control_var_list"),
+      nb::arg("err_flag"),
+      nb::arg("names_out") = nb::none(),
+      R"""(This subroutine is used by bmad_parser and bmad_parser2.
+This subroutine is not intended for general use.
+
+Parameters
+----------
+is_control_var_list : bool
+    If True then parsing "var = {...}" list. If False then parsing "group/overlay/girder = {...}" list.
+)"""
+  );
   m.def(
       "get_sequence_args",
       &Bmad::get_sequence_args,
-      py::arg("seq_name"),
-      py::arg("arg_list"),
-      py::arg("delim"),
-      py::arg("err_flag"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine get_sequence_args (seq_name, arg_list, delim, err_flag)
-
-Subroutine to get the argument list for a replacement_line or a list.
+      nb::arg("seq_name"),
+      nb::arg("arg_list"),
+      nb::arg("delim"),
+      nb::arg("err_flag"),
+      R"""(Subroutine to get the argument list for a replacement_line or a list.
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 )"""
   );
-  py::class_<Bmad::GetSlaveList, std::unique_ptr<Bmad::GetSlaveList>>(
-      m,
-      "GetSlaveList",
-      "get_slave_list return type"
-  )
-      .def_readonly("slaves", &Bmad::GetSlaveList::slaves)
-      .def_readonly("n_slave", &Bmad::GetSlaveList::n_slave)
+  nb::class_<Bmad::GetSlaveList>(m, "GetSlaveList", "get_slave_list return type")
+      .def_ro("slaves", &Bmad::GetSlaveList::slaves)
+      .def_ro("n_slave", &Bmad::GetSlaveList::n_slave)
       .def("__len__", [](const Bmad::GetSlaveList &) { return 2; })
-      .def("__getitem__", [](const Bmad::GetSlaveList &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::GetSlaveList &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.slaves);
+          return nb::cast(s.slaves);
         if (i == 1)
-          return py::cast(s.n_slave);
-        throw py::index_error();
+          return nb::cast(s.n_slave);
+        throw nb::index_error();
       });
   m.def(
       "get_slave_list",
       &Bmad::get_slave_list,
-      py::arg("lord"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lord"),
       R"""(Wrapper for Fortran routine get_slave_list
 
 Parameters
@@ -437,14 +599,13 @@ n_slave : int
   m.def(
       "get_switch",
       &Bmad::get_switch,
-      py::arg("name"),
-      py::arg("name_list"),
-      py::arg("switch_"),
-      py::arg("err"),
-      py::arg("ele"),
-      py::arg("delim"),
-      py::arg("delim_found"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("name"),
+      nb::arg("name_list"),
+      nb::arg("switch_"),
+      nb::arg("err"),
+      nb::arg("ele"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
       R"""(Wrapper for Fortran routine get_switch
 
 Parameters
@@ -465,9 +626,8 @@ delim_found : bool
   m.def(
       "gg_taylor_equal_gg_taylor",
       &Bmad::gg_taylor_equal_gg_taylor,
-      py::arg("gg_taylor1"),
-      py::arg("gg_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("gg_taylor1"),
+      nb::arg("gg_taylor2"),
       R"""(Wrapper for Fortran routine gg_taylor_equal_gg_taylor
 
 Parameters
@@ -480,9 +640,8 @@ gg_taylor2 : GgTaylorStruct
   m.def(
       "gg_taylors_equal_gg_taylors",
       &Bmad::gg_taylors_equal_gg_taylors,
-      py::arg("gg_taylor1"),
-      py::arg("gg_taylor2"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("gg_taylor1"),
+      nb::arg("gg_taylor2"),
       R"""(Wrapper for Fortran routine gg_taylors_equal_gg_taylors
 
 Parameters
@@ -495,11 +654,10 @@ gg_taylor2 : 1D array of GgTaylorStruct
   m.def(
       "gpt_field_grid_scaling",
       &Bmad::gpt_field_grid_scaling,
-      py::arg("ele"),
-      py::arg("dimensions"),
-      py::arg("field_scale"),
-      py::arg("ref_time"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("dimensions"),
+      nb::arg("field_scale"),
+      nb::arg("ref_time"),
       R"""(Wrapper for Fortran routine gpt_field_grid_scaling
 
 Parameters
@@ -516,9 +674,8 @@ ref_time : float
   m.def(
       "gpt_max_field_reference",
       &Bmad::gpt_max_field_reference,
-      py::arg("pt0"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("pt0"),
+      nb::arg("ele"),
       R"""(Wrapper for Fortran routine gpt_max_field_reference
 
 Parameters
@@ -532,32 +689,25 @@ Returns
 field_value : float
 )"""
   );
-  py::class_<Bmad::GptToParticleBunch, std::unique_ptr<Bmad::GptToParticleBunch>>(
-      m,
-      "GptToParticleBunch",
-      "gpt_to_particle_bunch return type"
-  )
-      .def_readonly("bunch", &Bmad::GptToParticleBunch::bunch)
-      .def_readonly("err_flag", &Bmad::GptToParticleBunch::err_flag)
+  nb::class_<Bmad::GptToParticleBunch>(m, "GptToParticleBunch", "gpt_to_particle_bunch return type")
+      .def_ro("bunch", &Bmad::GptToParticleBunch::bunch)
+      .def_ro("err_flag", &Bmad::GptToParticleBunch::err_flag)
       .def("__len__", [](const Bmad::GptToParticleBunch &) { return 2; })
-      .def("__getitem__", [](const Bmad::GptToParticleBunch &s, int i) -> py::object {
+      .def("__getitem__", [](const Bmad::GptToParticleBunch &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.bunch);
+          return nb::cast(s.bunch);
         if (i == 1)
-          return py::cast(s.err_flag);
-        throw py::index_error();
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
       });
   m.def(
       "gpt_to_particle_bunch",
       &Bmad::gpt_to_particle_bunch,
-      py::arg("gpt_file"),
-      py::arg("ele"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine gpt_to_particle_bunch (gpt_file, ele, bunch, err_flag)
-
-Routine to initialize a bunch of particles from a GPT screen file.
+      nb::arg("gpt_file"),
+      nb::arg("ele"),
+      R"""(Routine to initialize a bunch of particles from a GPT screen file.
 
 Parameters
 ----------
@@ -579,9 +729,8 @@ err_flag : bool
   m.def(
       "gradient_shift_sr_wake",
       &Bmad::gradient_shift_sr_wake,
-      py::arg("ele"),
-      py::arg("param"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("ele"),
+      nb::arg("param"),
       R"""(Wrapper for Fortran routine gradient_shift_sr_wake
 
 Parameters
@@ -601,18 +750,16 @@ grad_shift : float
   m.def(
       "grid_field_interpolate",
       &Bmad::grid_field_interpolate,
-      py::arg("ele"),
-      py::arg("orbit"),
-      py::arg("grid"),
-      py::arg("err_flag"),
-      py::arg("x1"),
-      py::arg("x2") = py::none(),
-      py::arg("x3") = py::none(),
-      py::arg("allow_s_out_of_bounds") = py::none(),
-      py::arg("print_err") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine grid_field_interpolate (ele, orbit, grid, field, err_flag, x1, x2, x3, &
-                                                             allow_s_out_of_bounds, print_err)
+      nb::arg("ele"),
+      nb::arg("orbit"),
+      nb::arg("grid"),
+      nb::arg("err_flag"),
+      nb::arg("x1"),
+      nb::arg("x2") = nb::none(),
+      nb::arg("x3") = nb::none(),
+      nb::arg("allow_s_out_of_bounds") = nb::none(),
+      nb::arg("print_err") = nb::none(),
+      R"""(                                                             allow_s_out_of_bounds, print_err)
 
 Subroutine to interpolate the E and B fields on a rectilinear grid.
 

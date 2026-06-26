@@ -103,6 +103,8 @@ def _generate_project_page(
     source_dir: pathlib.Path,
     upstream: UpstreamInfo,
     upstream_url: str,
+    namespace_to_submodule: dict[str, str],
+    namespace_top_level: dict[str, bool],
 ) -> str:
     """Generate a markdown page for a single project."""
     info = project_info.get(project)
@@ -131,12 +133,19 @@ def _generate_project_page(
 
         for name in sorted(grouped):
             variants = grouped[name]
+            namespace = variants[0].cpp_namespace
+            submodule = namespace_to_submodule.get(namespace)
+            qualified = f"pybmad.{submodule}.{name}" if submodule else f"pybmad.{name}"
+            top_level = namespace_top_level.get(namespace, True)
             src_links = [
                 _source_link(r.start_line.filename, r.start_line.lineno, source_dir, upstream, upstream_url)
                 for r in variants
             ]
             lines.append(f"### {name}")
             lines.append("")
+            if submodule and not top_level:
+                lines.append(f"Not exposed at the top level — import as `pybmad.{submodule}.{name}`.")
+                lines.append("")
             if len(variants) == 1:
                 lines.append(f"Fortran source: {src_links[0]}")
             else:
@@ -145,7 +154,7 @@ def _generate_project_page(
                 for r, src in zip(variants, src_links, strict=True):
                     lines.append(f"- `{r.name}`: {src}")
             lines.append("")
-            lines.append(f"::: pybmad.{name}")
+            lines.append(f"::: {qualified}")
             lines.append("    options:")
             lines.append("      show_root_heading: false")
             lines.append("      show_root_toc_entry: false")
@@ -267,6 +276,10 @@ def generate_docs(
     """
     api_dir = DOCS_SOURCE / "api"
     namespace_to_project = {p.cpp_namespace: p.name for p in config.projects if p.cpp_namespace}
+    namespace_to_submodule = {
+        r.cpp_namespace: r.python_submodule for r in config.routines if r.python_submodule
+    }
+    namespace_top_level = {r.cpp_namespace: r.python_top_level for r in config.routines if r.python_submodule}
     project_info = {p.name: p for p in config.projects}
     known_projects = set(project_info.keys())
     if upstream is None:
@@ -311,6 +324,8 @@ def generate_docs(
             source_dir,
             upstream,
             upstream_url,
+            namespace_to_submodule,
+            namespace_top_level,
         )
         files[api_dir / f"{project}.md"] = page
         logger.info(

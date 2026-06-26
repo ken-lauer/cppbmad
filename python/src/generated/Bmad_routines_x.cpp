@@ -1,17 +1,16 @@
 #include "pybmad/generated/Bmad_routines_x.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_Bmad_routines_x(py::module &m) {
+void init_Bmad_routines_x(nb::module_ &m) {
   m.def(
       "xlafun",
       &Bmad::xlafun,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
       R"""(Wrapper for Fortran routine xlafun
 
 Parameters
@@ -30,11 +29,8 @@ res : float
   m.def(
       "xraylib_nist_compound",
       &Bmad::xraylib_nist_compound,
-      py::arg("name"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function xraylib_nist_compound (name) result (indx)
-
-Routine to return the xraylib index for a given NIST compound.
+      nb::arg("name"),
+      R"""(Routine to return the xraylib index for a given NIST compound.
 Taken from file xraylib/include/xraylib-nist_compounds.h
 
 Parameters

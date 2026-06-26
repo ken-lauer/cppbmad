@@ -1149,7 +1149,7 @@ def generate_accessor_code(
         raise ValueError(f"Unsupported type: {full_type}") from ex
 
     to_replace = {
-        "structname": struct_name,
+        "structname": struct_name.lower(),
         "fattrname": arg.f_name,
         "cattrname": arg.c_name,
         "fortrantype": STANDARD_TYPES[full_type.type].fortran_type,
@@ -1676,14 +1676,15 @@ class ${class_name} : public FortranProxy<${class_name}> {
         # Dispatch-based scalar accessors
         dispatch_groups = group_dispatch_fields(struct)
         dispatched_fields: dict[str, tuple[ArgumentType, int]] = {}
+        dispatch_struct_name = struct.f_name.lower()
         for type_name, fields in sorted(dispatch_groups.items()):
             info = STANDARD_TYPES[type_name]
             c_forward_declarations.append(
-                f"    void {struct.f_name}_get_{type_name}"
+                f"    void {dispatch_struct_name}_get_{type_name}"
                 f"(const void* struct_obj, int field_id, {info.c_type}* value_out);"
             )
             c_forward_declarations.append(
-                f"    void {struct.f_name}_set_{type_name}"
+                f"    void {dispatch_struct_name}_set_{type_name}"
                 f"(void* struct_obj, int field_id, {info.c_type} value_in);"
             )
             for field_id, arg in fields:
@@ -1698,7 +1699,7 @@ class ${class_name} : public FortranProxy<${class_name}> {
                 info = STANDARD_TYPES[type_name]
                 c_type = info.c_type
                 c_name = arg.c_name
-                struct_name = struct.f_name
+                struct_name = dispatch_struct_name
 
                 getter_body = (
                     f"    {c_type} {c_name}() const {{\n"

@@ -54,11 +54,22 @@ add_library(${LIBNAME} SHARED
   src/test_struct_defs.f90
   src/tests/routines/cppbmad_tests.f90
   src/generated/cppbmad_test_routines.f90
+  src/generated/cppbmad_extra_routines.f90
   src/array_desc.f90
+  src/extra/ele_misalignments.f90
 
   src/common_structs.cpp
+)
+
+set(CPPBMAD_DOLLAR_OK_SOURCES
+  src/extra/ele_misalignments.f90
+)
+
+# Re-open the library target so any source list below stays consistent.
+target_sources(${LIBNAME} PRIVATE
   src/generated/proxy.cpp
   src/generated/cppbmad_test_routines.cpp
+  src/generated/cppbmad_extra_routines.cpp
   src/generated/bmad_routines.cpp
   src/generated/sim_utils_routines.cpp
   src/generated/bsim_routines.cpp
@@ -71,6 +82,10 @@ add_library(${LIBNAME} SHARED
 
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   message(STATUS "Configuring gfortran options for ${LIBNAME}")
+
+  set_source_files_properties(${CPPBMAD_DOLLAR_OK_SOURCES}
+    PROPERTIES COMPILE_OPTIONS "-fdollar-ok"
+  )
 
   # This strange syntax add compiler options just for Fortran source files:
   target_compile_options(${LIBNAME} PRIVATE
@@ -207,16 +222,41 @@ enable_testing()
 add_test(NAME cppbmad_tests COMMAND cppbmad_tests)
 
 # Python / pybmad
-find_package(pybind11 QUIET)
+find_package(Python 3.10 COMPONENTS Interpreter Development.Module QUIET)
 
-if(pybind11_FOUND)
+if(Python_FOUND)
+  # nanobind stores its cmake config inside the Python package
+  execute_process(
+    COMMAND "${Python_EXECUTABLE}" -m nanobind --cmake_dir
+    OUTPUT_VARIABLE _nanobind_cmake_dir
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+    RESULT_VARIABLE _nanobind_result
+  )
+  if(_nanobind_result EQUAL 0 AND _nanobind_cmake_dir)
+    find_package(nanobind QUIET PATHS "${_nanobind_cmake_dir}" NO_DEFAULT_PATH)
+  endif()
+endif()
+
+if(nanobind_FOUND)
   set(_default_build_pybmad ON)
 else()
-  # pybind11 not found; default BUILD_PYBMAD to OFF
   set(_default_build_pybmad OFF)
 endif()
 option(BUILD_PYBMAD "Build the Bmad Python bindings" ${_default_build_pybmad})
 
 if(BUILD_PYBMAD OR SKBUILD)
+  if(NOT Python_FOUND)
+    find_package(Python 3.10 REQUIRED COMPONENTS Interpreter Development.Module)
+  endif()
+  if(NOT nanobind_FOUND)
+    execute_process(
+      COMMAND "${Python_EXECUTABLE}" -m nanobind --cmake_dir
+      OUTPUT_VARIABLE _nanobind_cmake_dir
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      COMMAND_ERROR_IS_FATAL ANY
+    )
+    find_package(nanobind CONFIG REQUIRED PATHS "${_nanobind_cmake_dir}" NO_DEFAULT_PATH)
+  endif()
   add_subdirectory(python)
 endif()

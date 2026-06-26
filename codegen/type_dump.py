@@ -24,6 +24,7 @@ from .proxy import (
 from .proxy import (
     templates as proxy_templates,
 )
+from .py import generate_member_property_binding
 from .routines import FortranRoutine, RoutineArg
 from .struct_parser.parser import StructureMember, TypeInformation
 from .struct_parser.util import FileLine
@@ -259,19 +260,9 @@ def generate_struct_member_code(
     result["C++ class declarations (proxy.hpp)"] = "\n".join(header_lines)
     result["C++ implementation (proxy.cpp)"] = "\n\n".join(impl_lines)
 
-    # Python binding (TODO duplicated)
+    # Python binding — reuse the real generator so this can't drift.
     tpl = proxy_templates[ft]
-    getter = f"&{EXAMPLE_CLASS}::{EXAMPLE_MEMBER}"
-    if arg.needs_python_keepalive:
-        getter_fn = f"py::cpp_function({getter}, py::keep_alive<0, 1>())"
-    else:
-        getter_fn = getter
-
-    if tpl.fortran_setter:
-        setter = f"&{EXAMPLE_CLASS}::set_{EXAMPLE_MEMBER}"
-        result["Python binding (pybind11)"] = f'    .def_property("{EXAMPLE_MEMBER}", {getter_fn}, {setter})'
-    else:
-        result["Python binding (pybind11)"] = f'    .def_property_readonly("{EXAMPLE_MEMBER}", {getter_fn})'
+    result["Python binding (nanobind)"] = f"    {generate_member_property_binding(EXAMPLE_CLASS, arg, tpl)}"
 
     return result
 

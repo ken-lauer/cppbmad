@@ -1,18 +1,20 @@
 #include "pybmad/generated/SimUtils_routines_r.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_r(py::module &m) {
+void init_SimUtils_routines_r(nb::module_ &m) {
   m.def(
       "ran_default_state",
-      &SimUtils::ran_default_state,
-      py::arg("set_state") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_default_state (set_state, get_state)
-
-Routine to set or get the state of the default random number generator.
+      [](RandomStateStruct *set_state) {
+        auto fn = static_cast<RandomStateStruct (*)(optional_ref<RandomStateStruct>)>(
+            &SimUtils::ran_default_state
+        );
+        return fn(ptr_to_opt_ref(set_state));
+      },
+      nb::arg("set_state") = nb::none(),
+      R"""(Routine to set or get the state of the default random number generator.
 See the ran_seed_put documentation for more details
 
 Parameters
@@ -28,14 +30,19 @@ get_state : RandomStateStruct, optional
   );
   m.def(
       "ran_engine",
-      &SimUtils::ran_engine,
-      py::arg("set") = py::none(),
-      py::arg("get") = py::none(),
-      py::arg("ran_state") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_engine (set, get, ran_state)
-
-Routine to set what random number generator algorithm is used.
+      [](std::optional<std::string> set,
+         std::optional<std::string> get,
+         RandomStateStruct *ran_state) {
+        auto fn = static_cast<
+            void (*)(std::optional<std::string>, std::optional<std::string>, optional_ref<RandomStateStruct>)>(
+            &SimUtils::ran_engine
+        );
+        return fn(set, get, ptr_to_opt_ref(ran_state));
+      },
+      nb::arg("set") = nb::none(),
+      nb::arg("get") = nb::none(),
+      nb::arg("ran_state") = nb::none(),
+      R"""(Routine to set what random number generator algorithm is used.
 If this routine is never called then pseudo_random$ is used.
 With sobseq quasi-random numbers the maximum dimension is 6.
 
@@ -52,33 +59,35 @@ ran_state : RandomStateStruct, optional
     Internal state. See the ran_seed_put documentation for more details.
 )"""
   );
-  py::class_<SimUtils::RanGaussConverter, std::unique_ptr<SimUtils::RanGaussConverter>>(
-      m,
-      "RanGaussConverter",
-      "ran_gauss_converter return type"
-  )
-      .def_readonly("get", &SimUtils::RanGaussConverter::get)
-      .def_readonly("get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
+  nb::class_<SimUtils::RanGaussConverter>(m, "RanGaussConverter", "ran_gauss_converter return type")
+      .def_ro("get", &SimUtils::RanGaussConverter::get)
+      .def_ro("get_sigma_cut", &SimUtils::RanGaussConverter::get_sigma_cut)
       .def("__len__", [](const SimUtils::RanGaussConverter &) { return 2; })
-      .def("__getitem__", [](const SimUtils::RanGaussConverter &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::RanGaussConverter &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.get);
+          return nb::cast(s.get);
         if (i == 1)
-          return py::cast(s.get_sigma_cut);
-        throw py::index_error();
+          return nb::cast(s.get_sigma_cut);
+        throw nb::index_error();
       });
   m.def(
       "ran_gauss_converter",
-      &SimUtils::ran_gauss_converter,
-      py::arg("set") = py::none(),
-      py::arg("set_sigma_cut") = py::none(),
-      py::arg("ran_state") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_gauss_converter (set, set_sigma_cut, get, get_sigma_cut, ran_state)
-
-Routine to set what conversion routine is used for converting
+      [](std::optional<std::string> set,
+         std::optional<double> set_sigma_cut,
+         RandomStateStruct *ran_state) {
+        auto fn = static_cast<
+            SimUtils::
+                RanGaussConverter (*)(std::optional<std::string>, std::optional<double>, optional_ref<RandomStateStruct>)>(
+            &SimUtils::ran_gauss_converter
+        );
+        return fn(set, set_sigma_cut, ptr_to_opt_ref(ran_state));
+      },
+      nb::arg("set") = nb::none(),
+      nb::arg("set_sigma_cut") = nb::none(),
+      nb::arg("ran_state") = nb::none(),
+      R"""(Routine to set what conversion routine is used for converting
 uniformly distributed random numbers to Gaussian distributed random numbers.
 
 If this routine is not called then exact_gaussian$ is used.
@@ -118,14 +127,19 @@ get_sigma_cut : float, optional
   );
   m.def(
       "ran_gauss_scalar",
-      &SimUtils::ran_gauss_scalar,
-      py::arg("ran_state") = py::none(),
-      py::arg("sigma_cut") = py::none(),
-      py::arg("index_quasi") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
-
-Routine to return a gaussian distributed random number with unit sigma.
+      [](RandomStateStruct *ran_state,
+         std::optional<double> sigma_cut,
+         std::optional<int> index_quasi) {
+        auto fn = static_cast<
+            double (*)(optional_ref<RandomStateStruct>, std::optional<double>, std::optional<int>)>(
+            &SimUtils::ran_gauss_scalar
+        );
+        return fn(ptr_to_opt_ref(ran_state), sigma_cut, index_quasi);
+      },
+      nb::arg("ran_state") = nb::none(),
+      nb::arg("sigma_cut") = nb::none(),
+      nb::arg("index_quasi") = nb::none(),
+      R"""(Routine to return a gaussian distributed random number with unit sigma.
 This routine uses the same algorithm as gasdev from Numerical Recipes.
 
 Note: ran_gauss is an overloaded name for:
@@ -153,14 +167,17 @@ harvest : float
   );
   m.def(
       "ran_gauss_vector",
-      &SimUtils::ran_gauss_vector,
-      py::arg("harvest"),
-      py::arg("ran_state") = py::none(),
-      py::arg("sigma_cut") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_gauss (harvest, ran_state, sigma_cut)
-
-Routine to return a gaussian distributed random number with unit sigma.
+      [](FArray1D<Real> &harvest, RandomStateStruct *ran_state, std::optional<double> sigma_cut) {
+        auto fn = static_cast<
+            void (*)(FArray1D<Real> &, optional_ref<RandomStateStruct>, std::optional<double>)>(
+            &SimUtils::ran_gauss_vector
+        );
+        return fn(harvest, ptr_to_opt_ref(ran_state), sigma_cut);
+      },
+      nb::arg("harvest"),
+      nb::arg("ran_state") = nb::none(),
+      nb::arg("sigma_cut") = nb::none(),
+      R"""(Routine to return a gaussian distributed random number with unit sigma.
 This routine uses the same algorithm as gasdev from Numerical Recipes.
 
 Note: ran_gauss is an overloaded name for:
@@ -187,10 +204,7 @@ sigma_cut : float, optional
   m.def(
       "ran_seed_get",
       &SimUtils::ran_seed_get,
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_seed_get (seed)
-
-Routine to return the seed used for the random number generator.
+      R"""(Routine to return the seed used for the random number generator.
 
 Parameters
 ----------
@@ -204,12 +218,9 @@ seed : int
   m.def(
       "ran_seed_put",
       &SimUtils::ran_seed_put,
-      py::arg("seed"),
-      py::arg("mpi_offset") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_seed_put (seed, mpi_offset)
-
-Routine to seed a random number generator.
+      nb::arg("seed"),
+      nb::arg("mpi_offset") = nb::none(),
+      R"""(Routine to seed a random number generator.
 
 If a program never calls ran_seed_put, or ran_seed_put is called with seed = 0,
 the system clock will be used to generate the seed.
@@ -230,15 +241,15 @@ mpi_offset : int, optional
   );
   m.def(
       "ran_uniform",
-      py::overload_cast<optional_ref<RandomStateStruct>, std::optional<int>>(
-          &SimUtils::ran_uniform
-      ),
-      py::arg("ran_state") = py::none(),
-      py::arg("index_quasi") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_uniform (harvest, ran_state)
-
-Routine to return a random number uniformly distributed in the
+      [](RandomStateStruct *ran_state, std::optional<int> index_quasi) {
+        auto fn = static_cast<double (*)(optional_ref<RandomStateStruct>, std::optional<int>)>(
+            &SimUtils::ran_uniform
+        );
+        return fn(ptr_to_opt_ref(ran_state), index_quasi);
+      },
+      nb::arg("ran_state") = nb::none(),
+      nb::arg("index_quasi") = nb::none(),
+      R"""(Routine to return a random number uniformly distributed in the
 interval [0, 1]. This routine uses the same algorithm as ran or sobseq
 from Numberical Recipes in Fortran90.
 See ran_engine.
@@ -264,13 +275,15 @@ harvest : float
   );
   m.def(
       "ran_uniform",
-      py::overload_cast<FArray1D<Real> &, optional_ref<RandomStateStruct>>(&SimUtils::ran_uniform),
-      py::arg("harvest"),
-      py::arg("ran_state") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine ran_uniform (harvest, ran_state)
-
-Routine to return a random number uniformly distributed in the
+      [](FArray1D<Real> &harvest, RandomStateStruct *ran_state) {
+        auto fn = static_cast<void (*)(FArray1D<Real> &, optional_ref<RandomStateStruct>)>(
+            &SimUtils::ran_uniform
+        );
+        return fn(harvest, ptr_to_opt_ref(ran_state));
+      },
+      nb::arg("harvest"),
+      nb::arg("ran_state") = nb::none(),
+      R"""(Routine to return a random number uniformly distributed in the
 interval [0, 1]. This routine uses the same algorithm as ran or sobseq
 from Numberical Recipes in Fortran90.
 See ran_engine.
@@ -295,10 +308,9 @@ ran_state : RandomStateStruct, optional
   m.def(
       "rcelbd",
       &SimUtils::rcelbd,
-      py::arg("mc"),
-      py::arg("elb"),
-      py::arg("eld"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("mc"),
+      nb::arg("elb"),
+      nb::arg("eld"),
       R"""(Wrapper for Fortran routine rcelbd
 
 Parameters
@@ -313,15 +325,12 @@ eld : float
   m.def(
       "read_a_line",
       &SimUtils::read_a_line,
-      py::arg("prompt"),
-      py::arg("trim_prompt") = py::none(),
-      py::arg("prompt_color") = py::none(),
-      py::arg("prompt_bold") = py::none(),
-      py::arg("history_file") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine read_a_line (prompt, line_out, trim_prompt, prompt_color, prompt_bold, history_file)
-
-Subroutine to read a line of input from the terminal.
+      nb::arg("prompt"),
+      nb::arg("trim_prompt") = nb::none(),
+      nb::arg("prompt_color") = nb::none(),
+      nb::arg("prompt_bold") = nb::none(),
+      nb::arg("history_file") = nb::none(),
+      R"""(Subroutine to read a line of input from the terminal.
 The line is also add to the history buffer so that the up-arrow
 and down-arrow keys can be used to recall past commands.
 
@@ -361,11 +370,8 @@ line_out : str
   m.def(
       "readline_read_history",
       &SimUtils::readline_read_history,
-      py::arg("history_file"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine readline_read_history (history_file, status)
-
-Routine to add the contents of a file to the readline history list.
+      nb::arg("history_file"),
+      R"""(Routine to add the contents of a file to the readline history list.
 Use this routine with the read_a_line routine.
 
 Parameters
@@ -382,11 +388,8 @@ status : int
   m.def(
       "readline_write_history",
       &SimUtils::readline_write_history,
-      py::arg("history_file"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine readline_write_history (history_file, status)
-
-Routine to write the contents of the readline history list to a file.
+      nb::arg("history_file"),
+      R"""(Routine to write the contents of the readline history list to a file.
 Use this routine with the read_a_line routine.
 
 Parameters
@@ -403,10 +406,9 @@ status : int
   m.def(
       "real_num_fortran_format",
       &SimUtils::real_num_fortran_format,
-      py::arg("number"),
-      py::arg("width"),
-      py::arg("n_blanks") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("number"),
+      nb::arg("width"),
+      nb::arg("n_blanks") = nb::none(),
       R"""(Wrapper for Fortran routine real_num_fortran_format
 
 Parameters
@@ -425,9 +427,8 @@ fmt_str : str
   m.def(
       "real_path",
       &SimUtils::real_path,
-      py::arg("path_in"),
-      py::arg("path_out"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("path_in"),
+      nb::arg("path_out"),
       R"""(Wrapper for Fortran routine real_path
 
 Parameters
@@ -444,10 +445,9 @@ is_ok : bool
   m.def(
       "real_str",
       &SimUtils::real_str,
-      py::arg("r_num"),
-      py::arg("n_signif") = py::none(),
-      py::arg("n_decimal") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("r_num"),
+      nb::arg("n_signif") = nb::none(),
+      nb::arg("n_decimal") = nb::none(),
       R"""(Wrapper for Fortran routine real_str
 
 Parameters
@@ -466,11 +466,10 @@ str : str
   m.def(
       "real_to_string",
       &SimUtils::real_to_string,
-      py::arg("real_num"),
-      py::arg("width"),
-      py::arg("n_signif") = py::none(),
-      py::arg("n_decimal") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("real_num"),
+      nb::arg("width"),
+      nb::arg("n_signif") = nb::none(),
+      nb::arg("n_decimal") = nb::none(),
       R"""(Wrapper for Fortran routine real_to_string
 
 Parameters
@@ -491,14 +490,11 @@ str : str
   m.def(
       "reallocate_spline",
       &SimUtils::reallocate_spline,
-      py::arg("spline"),
-      py::arg("n"),
-      py::arg("n_min") = py::none(),
-      py::arg("exact") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine reallocate_spline (spline, n, n_min, exact)
-
-Subroutine to allocate an allocatable spline_struct array.
+      nb::arg("spline"),
+      nb::arg("n"),
+      nb::arg("n_min") = nb::none(),
+      nb::arg("exact") = nb::none(),
+      R"""(Subroutine to allocate an allocatable spline_struct array.
 The data of the array is preserved but data at the end of the
 array will be lost if n is less than the original size of the array
 
@@ -522,12 +518,11 @@ exact : bool, optional
   m.def(
       "relbd",
       &SimUtils::relbd,
-      py::arg("phi"),
-      py::arg("phic"),
-      py::arg("mc"),
-      py::arg("b"),
-      py::arg("d"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("phi"),
+      nb::arg("phic"),
+      nb::arg("mc"),
+      nb::arg("b"),
+      nb::arg("d"),
       R"""(Wrapper for Fortran routine relbd
 
 Parameters
@@ -546,11 +541,10 @@ d : float
   m.def(
       "relcbd",
       &SimUtils::relcbd,
-      py::arg("c0"),
-      py::arg("mc"),
-      py::arg("b"),
-      py::arg("dx"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("c0"),
+      nb::arg("mc"),
+      nb::arg("b"),
+      nb::arg("dx"),
       R"""(Wrapper for Fortran routine relcbd
 
 Parameters
@@ -567,11 +561,10 @@ dx : float
   m.def(
       "relsbd",
       &SimUtils::relsbd,
-      py::arg("s0"),
-      py::arg("mc"),
-      py::arg("b"),
-      py::arg("d"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("s0"),
+      nb::arg("mc"),
+      nb::arg("b"),
+      nb::arg("d"),
       R"""(Wrapper for Fortran routine relsbd
 
 Parameters
@@ -588,11 +581,10 @@ d : float
   m.def(
       "rgelbd",
       &SimUtils::rgelbd,
-      py::arg("phi"),
-      py::arg("mc"),
-      py::arg("elb"),
-      py::arg("eld"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("phi"),
+      nb::arg("mc"),
+      nb::arg("elb"),
+      nb::arg("eld"),
       R"""(Wrapper for Fortran routine rgelbd
 
 Parameters
@@ -606,29 +598,29 @@ elb : float
 eld : float
 )"""
   );
-  py::class_<SimUtils::RmsValue, std::unique_ptr<SimUtils::RmsValue>>(
-      m,
-      "RmsValue",
-      "rms_value return type"
-  )
-      .def_readonly("ave_val", &SimUtils::RmsValue::ave_val)
-      .def_readonly("rms_val", &SimUtils::RmsValue::rms_val)
+  nb::class_<SimUtils::RmsValue>(m, "RmsValue", "rms_value return type")
+      .def_ro("ave_val", &SimUtils::RmsValue::ave_val)
+      .def_ro("rms_val", &SimUtils::RmsValue::rms_val)
       .def("__len__", [](const SimUtils::RmsValue &) { return 2; })
-      .def("__getitem__", [](const SimUtils::RmsValue &s, int i) -> py::object {
+      .def("__getitem__", [](const SimUtils::RmsValue &s, int i) -> nb::object {
         if (i < 0)
           i += 2;
         if (i == 0)
-          return py::cast(s.ave_val);
+          return nb::cast(s.ave_val);
         if (i == 1)
-          return py::cast(s.rms_val);
-        throw py::index_error();
+          return nb::cast(s.rms_val);
+        throw nb::index_error();
       });
   m.def(
       "rms_value",
-      &SimUtils::rms_value,
-      py::arg("val_arr"),
-      py::arg("good_val") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      [](FArray1D<Real> &val_arr, BoolAlloc1D *good_val) {
+        auto fn = static_cast<SimUtils::RmsValue (*)(FArray1D<Real> &, optional_ref<BoolAlloc1D>)>(
+            &SimUtils::rms_value
+        );
+        return fn(val_arr, ptr_to_opt_ref(good_val));
+      },
+      nb::arg("val_arr"),
+      nb::arg("good_val") = nb::none(),
       R"""(Wrapper for Fortran routine rms_value
 
 Parameters
@@ -651,9 +643,8 @@ ave_val : float, optional
   m.def(
       "rot_2d",
       &SimUtils::rot_2d,
-      py::arg("vec_in"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("vec_in"),
+      nb::arg("angle"),
       R"""(Wrapper for Fortran routine rot_2d
 
 Parameters
@@ -673,13 +664,10 @@ vec_out : 1D array of float (shape: 2)
   m.def(
       "rotate_vec",
       &SimUtils::rotate_vec,
-      py::arg("vec"),
-      py::arg("axis"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Subroutine rotate_vec (vec, axis, angle)
-
-Basic routine to rotate vector components around the x, y, or z axis.
+      nb::arg("vec"),
+      nb::arg("axis"),
+      nb::arg("angle"),
+      R"""(Basic routine to rotate vector components around the x, y, or z axis.
 
 Parameters
 ----------
@@ -698,13 +686,10 @@ angle : float
   m.def(
       "rotate_vec_given_axis_angle",
       &SimUtils::rotate_vec_given_axis_angle,
-      py::arg("vec_in"),
-      py::arg("axis"),
-      py::arg("angle"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function rotate_vec_given_axis_angle (vec_in, axis, angle) result (vec_out)
-
-Routine to rotate a vector.
+      nb::arg("vec_in"),
+      nb::arg("axis"),
+      nb::arg("angle"),
+      R"""(Routine to rotate a vector.
 
 Parameters
 ----------
@@ -726,11 +711,8 @@ vec_out : 1D array of float (shape: 3)
   m.def(
       "rp8",
       &SimUtils::rp8,
-      py::arg("int_in"),
-      py::call_guard<py::gil_scoped_release>(),
-      R"""(Function rp8(int_in) result (re_out)
-
-Routine to convert from integer to real of type rp.
+      nb::arg("int_in"),
+      R"""(Routine to convert from integer to real of type rp.
 This routine is used to avoid the implicit integer to single precision that happens when
 multiplying int*real(rp).
 
@@ -748,11 +730,10 @@ re_out : float
   m.def(
       "rserbd",
       &SimUtils::rserbd,
-      py::arg("y"),
-      py::arg("m"),
-      py::arg("b"),
-      py::arg("d"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("y"),
+      nb::arg("m"),
+      nb::arg("b"),
+      nb::arg("d"),
       R"""(Wrapper for Fortran routine rserbd
 
 Parameters
@@ -769,10 +750,9 @@ d : float
   m.def(
       "run_timer",
       &SimUtils::run_timer,
-      py::arg("command"),
-      py::arg("time") = py::none(),
-      py::arg("time0") = py::none(),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("command"),
+      nb::arg("time") = nb::none(),
+      nb::arg("time0") = nb::none(),
       R"""(Wrapper for Fortran routine run_timer
 
 Parameters

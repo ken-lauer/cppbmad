@@ -22,9 +22,6 @@ All attributes may be passed to the initializer as arguments:
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `DIR` | int |  |
-| `PREVIOUS` | [Fibre](forest.md#fibre) |  |
-| `NEXT` | [Fibre](forest.md#fibre) | POINTING TO PARENT LAYOUT AND PARENT FIBRE DATA |
-| `PARENT_LAYOUT` | [Layout](forest.md#layout) |  |
 | `pos` | int | POSITION IN LAYOUT NEW STUFF.... |
 | `BETA0` | float | ,P0C |
 | `GAMMA0I` | float | ,P0C |
@@ -32,8 +29,6 @@ All attributes may be passed to the initializer as arguments:
 | `MASS` | float | ,P0C |
 | `CHARGE` | float |  |
 | `AG` | float | spin g-2 TO TIE LAYOUTS |
-| `P` | [Fibre](forest.md#fibre) | tying them in the so-called database universe M_u |
-| `N` | [Fibre](forest.md#fibre) |  |
 | `loc` | int |  |
 
 ::: pybmad.Layout
@@ -61,10 +56,3 @@ All attributes may be passed to the initializer as arguments:
 | `NTHIN` | int | NUMBER IF THIN LENSES IN COLLECTION  (FOR SPEED ESTIMATES) |
 | `THIN` | float | PARAMETER USED FOR AUTOMATIC CUTTING INTO THIN LENS POINTERS OF LINK LAYOUT |
 | `LASTPOS` | int | POSITION OF LAST VISITED |
-| `LAST` | [Fibre](forest.md#fibre) | LAST VISITED |
-| `END` | [Fibre](forest.md#fibre) |  |
-| `START` | [Fibre](forest.md#fibre) |  |
-| `START_GROUND` | [Fibre](forest.md#fibre) | STORE THE GROUNDED VALUE OF START DURING CIRCULAR SCANNING |
-| `END_GROUND` | [Fibre](forest.md#fibre) | STORE THE GROUNDED VALUE OF END DURING CIRCULAR SCANNING |
-| `NEXT` | [Layout](forest.md#layout) |  |
-| `PREVIOUS` | [Layout](forest.md#layout) |  |

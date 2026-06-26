@@ -1,13 +1,13 @@
 #pragma once
 
 #include <bmad/common_structs.hpp>
-#include <pybind11/complex.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+#include <nanobind/nanobind.h>
+#include <nanobind/stl/complex.h>
+#include <nanobind/stl/string.h>
 
-namespace py = pybind11;
+namespace nb = nanobind;
 
 namespace Pybmad {
 
-void init_common_structs(py::module &m);
+void init_common_structs(nb::module_ &m);
 }; // namespace Pybmad

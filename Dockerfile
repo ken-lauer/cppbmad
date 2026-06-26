@@ -57,7 +57,7 @@ ENV LD_LIBRARY_PATH=/opt/bmad-lib
 RUN python -m pip install /tmp/pybmad-0.0.0-py3-none-any.whl
 
 # Install docs dependencies (same as CI action)
-RUN python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions pybind11-stubgen
+RUN python -m pip install mkdocs mkdocstrings[python] mkdocs-autorefs pymdown-extensions nanobind
 
 RUN python -c "import pybmad; print('pybmad OK')"
 

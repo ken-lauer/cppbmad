@@ -1,15 +1,16 @@
 #pragma once
-#include <pybind11/complex.h>
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+#include <nanobind/nanobind.h>
+#include <nanobind/stl/complex.h>
+#include <nanobind/stl/optional.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
 
 #include "pybmad/arrays.hpp"
 #include "pybmad/util.hpp"
 
-namespace py = pybind11;
+namespace nb = nanobind;
 
-void init_Bmad_routines_t(py::module &m);
+void init_Bmad_routines_t(nb::module_ &m);
 
 struct PyTargetMinMaxCalc {
   double y_min;

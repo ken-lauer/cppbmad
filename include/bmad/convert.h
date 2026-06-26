@@ -89,7 +89,7 @@ void operator<<(Bmad::FixedArray3D<T, DIM1, DIM2, DIM3> &arr, const T *ptr) {
   for (size_t i = 0; i < DIM1; i++) {
     for (size_t j = 0; j < DIM2; j++) {
       for (size_t k = 0; k < DIM3; k++) {
-        arr[i][j][k] = ptr[i * DIM2 * DIM3 + j * DIM2 + k];
+        arr[i][j][k] = ptr[i * DIM2 * DIM3 + j * DIM3 + k];
       }
     }
   }
@@ -283,7 +283,7 @@ std::ostream &operator<<(std::ostream &os, const Bmad::FixedArray3D<T, DIM1, DIM
     for (size_t j = 0; j < DIM2; ++j) {
       for (size_t k = 0; k < DIM3; ++k) {
         os << "(" << i << "," << j << "," << k << ")=" << obj[i][j][k];
-        if (k < DIM2 - 1) {
+        if (k < DIM3 - 1) {
           os << ", ";
         }
       }

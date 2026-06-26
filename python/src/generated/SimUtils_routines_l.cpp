@@ -1,21 +1,20 @@
 #include "pybmad/generated/SimUtils_routines_l.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_l(py::module &m) {
+void init_SimUtils_routines_l(nb::module_ &m) {
   m.def(
       "linear_fit",
       &SimUtils::linear_fit,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("n_data"),
-      py::arg("a"),
-      py::arg("b"),
-      py::arg("sig_a"),
-      py::arg("sig_b"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("n_data"),
+      nb::arg("a"),
+      nb::arg("b"),
+      nb::arg("sig_a"),
+      nb::arg("sig_b"),
       R"""(Wrapper for Fortran routine linear_fit
 
 Parameters
@@ -38,10 +37,9 @@ sig_b : float
   m.def(
       "linear_fit_2d",
       &SimUtils::linear_fit_2d,
-      py::arg("x"),
-      py::arg("y"),
-      py::arg("z"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
       R"""(Wrapper for Fortran routine linear_fit_2d
 
 Parameters
@@ -64,8 +62,7 @@ coef : 1D array of float (shape: 3)
   m.def(
       "logic_str",
       &SimUtils::logic_str,
-      py::arg("logic"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("logic"),
       R"""(Wrapper for Fortran routine logic_str
 
 Parameters
@@ -80,7 +77,6 @@ str : str
   m.def(
       "lunget",
       &SimUtils::lunget,
-      py::call_guard<py::gil_scoped_release>(),
       R"""(Wrapper for Fortran routine lunget
 
 Parameters

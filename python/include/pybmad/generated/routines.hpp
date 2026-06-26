@@ -23,6 +23,7 @@
 #include "pybmad/generated/Bmad_routines_x.hpp"
 #include "pybmad/generated/Bmad_routines_y.hpp"
 #include "pybmad/generated/Bmad_routines_z.hpp"
+#include "pybmad/generated/CppBmadExtra_routines_s.hpp"
 #include "pybmad/generated/CppBmadTest_routines_t.hpp"
 #include "pybmad/generated/SimUtils_routines_a.hpp"
 #include "pybmad/generated/SimUtils_routines_b.hpp"

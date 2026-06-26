@@ -5,35 +5,6 @@
 // TODO: some issue where clang-format is rearranging these
 
 namespace Bmad {
-std::string to_string(const SplineStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SplineStruct",
-      {std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"x1", to_string(self.x1())},
-       std::pair{"coef", to_string(self.coef())}}
-  );
-}
-std::string to_string(const SpinPolarStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SpinPolarStruct",
-      {std::pair{"polarization", to_string(self.polarization())},
-       std::pair{"theta", to_string(self.theta())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"xi", to_string(self.xi())}}
-  );
-}
-std::string to_string(const AcKickerTimeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "AcKickerTimeStruct",
-      {std::pair{"amp", to_string(self.amp())},
-       std::pair{"time", to_string(self.time())},
-       std::pair{"spline", to_string(self.spline())}}
-  );
-}
 std::string to_string(const AcKickerFreqStruct &self) {
   return repr(
       self.get_fortran_ptr(),
@@ -50,2538 +21,13 @@ std::string to_string(const AcKickerStruct &self) {
       {std::pair{"amp_vs_time", "[...]"}, std::pair{"frequency", "[...]"}}
   );
 }
-std::string to_string(const Interval1CoefStruct &self) {
+std::string to_string(const AcKickerTimeStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "Interval1CoefStruct",
-      {std::pair{"c0", to_string(self.c0())},
-       std::pair{"c1", to_string(self.c1())},
-       std::pair{"n_exp", to_string(self.n_exp())}}
-  );
-}
-std::string to_string(const PhotonReflectTableStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PhotonReflectTableStruct",
-      {std::pair{"angle", to_string(self.angle())},
-       std::pair{"energy", to_string(self.energy())},
-       std::pair{"int1", "[...]"},
-       std::pair{"p_reflect", to_string(self.p_reflect())},
-       std::pair{"max_energy", to_string(self.max_energy())},
-       std::pair{"p_reflect_scratch", to_string(self.p_reflect_scratch())},
-       std::pair{"bragg_angle", to_string(self.bragg_angle())}}
-  );
-}
-std::string to_string(const PhotonReflectSurfaceStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PhotonReflectSurfaceStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"description", self.description()},
-       std::pair{"reflectivity_file", self.reflectivity_file()},
-       std::pair{"table", "[...]"},
-       std::pair{"surface_roughness_rms", to_string(self.surface_roughness_rms())},
-       std::pair{"roughness_correlation_len", to_string(self.roughness_correlation_len())},
-       std::pair{"ix_surface", to_string(self.ix_surface())}}
-  );
-}
-std::string to_string(const CoordStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CoordStruct",
-      {std::pair{"vec", to_string(self.vec())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"t", to_string(self.t())},
-       std::pair{"spin", to_string(self.spin())},
-       std::pair{"field", to_string(self.field())},
-       std::pair{"phase", to_string(self.phase())},
-       std::pair{"charge", to_string(self.charge())},
-       std::pair{"dt_ref", to_string(self.dt_ref())},
-       std::pair{"r", to_string(self.r())},
-       std::pair{"p0c", to_string(self.p0c())},
-       std::pair{"E_potential", to_string(self.E_potential())},
-       std::pair{"beta", to_string(self.beta())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_turn", to_string(self.ix_turn())},
-       std::pair{"ix_user", to_string(self.ix_user())},
-       std::pair{"state", to_string(self.state())},
-       std::pair{"direction", to_string(self.direction())},
-       std::pair{"time_dir", to_string(self.time_dir())},
-       std::pair{"species", to_string(self.species())},
-       std::pair{"location", to_string(self.location())}}
-  );
-}
-std::string to_string(const CoordArrayStruct &self) {
-  return repr(self.get_fortran_ptr(), "CoordArrayStruct", {std::pair{"orbit", "[...]"}});
-}
-std::string to_string(const BpmPhaseCouplingStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BpmPhaseCouplingStruct",
-      {std::pair{"K_22a", to_string(self.K_22a())},
-       std::pair{"K_12a", to_string(self.K_12a())},
-       std::pair{"K_11b", to_string(self.K_11b())},
-       std::pair{"K_12b", to_string(self.K_12b())},
-       std::pair{"Cbar22_a", to_string(self.Cbar22_a())},
-       std::pair{"Cbar12_a", to_string(self.Cbar12_a())},
-       std::pair{"Cbar11_b", to_string(self.Cbar11_b())},
-       std::pair{"Cbar12_b", to_string(self.Cbar12_b())},
-       std::pair{"phi_a", to_string(self.phi_a())},
-       std::pair{"phi_b", to_string(self.phi_b())}}
-  );
-}
-std::string to_string(const ExpressionAtomStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ExpressionAtomStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"type", to_string(self.type())},
-       std::pair{"value", to_string(self.value())}}
-  );
-}
-std::string to_string(const WakeSrZLongStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeSrZLongStruct",
-      {std::pair{"w", to_string(self.w())},
-       std::pair{"fw", to_string(self.fw())},
-       std::pair{"fbunch", to_string(self.fbunch())},
-       std::pair{"w_out", to_string(self.w_out())},
-       std::pair{"dz", to_string(self.dz())},
-       std::pair{"z0", to_string(self.z0())},
-       std::pair{"smoothing_sigma", to_string(self.smoothing_sigma())},
-       std::pair{"position_dependence", to_string(self.position_dependence())},
-       std::pair{"time_based", to_string(self.time_based())}}
-  );
-}
-std::string to_string(const WakeSrModeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeSrModeStruct",
+      "AcKickerTimeStruct",
       {std::pair{"amp", to_string(self.amp())},
-       std::pair{"damp", to_string(self.damp())},
-       std::pair{"k", to_string(self.k())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"b_sin", to_string(self.b_sin())},
-       std::pair{"b_cos", to_string(self.b_cos())},
-       std::pair{"a_sin", to_string(self.a_sin())},
-       std::pair{"a_cos", to_string(self.a_cos())},
-       std::pair{"polarization", to_string(self.polarization())},
-       std::pair{"position_dependence", to_string(self.position_dependence())}}
-  );
-}
-std::string to_string(const WakeSrStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeSrStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"z_long", to_string(self.z_long())},
-       std::pair{"long_wake", "[...]"},
-       std::pair{"trans_wake", "[...]"},
-       std::pair{"z_ref_long", to_string(self.z_ref_long())},
-       std::pair{"z_ref_trans", to_string(self.z_ref_trans())},
-       std::pair{"z_max", to_string(self.z_max())},
-       std::pair{"amp_scale", to_string(self.amp_scale())},
-       std::pair{"z_scale", to_string(self.z_scale())},
-       std::pair{"scale_with_length", to_string(self.scale_with_length())}}
-  );
-}
-std::string to_string(const WakeLrModeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeLrModeStruct",
-      {std::pair{"freq", to_string(self.freq())},
-       std::pair{"freq_in", to_string(self.freq_in())},
-       std::pair{"R_over_Q", to_string(self.R_over_Q())},
-       std::pair{"Q", to_string(self.Q())},
-       std::pair{"damp", to_string(self.damp())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"angle", to_string(self.angle())},
-       std::pair{"b_sin", to_string(self.b_sin())},
-       std::pair{"b_cos", to_string(self.b_cos())},
-       std::pair{"a_sin", to_string(self.a_sin())},
-       std::pair{"a_cos", to_string(self.a_cos())},
-       std::pair{"m", to_string(self.m())},
-       std::pair{"polarized", to_string(self.polarized())}}
-  );
-}
-std::string to_string(const WakeLrStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeLrStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"mode", "[...]"},
-       std::pair{"t_ref", to_string(self.t_ref())},
-       std::pair{"freq_spread", to_string(self.freq_spread())},
-       std::pair{"amp_scale", to_string(self.amp_scale())},
-       std::pair{"time_scale", to_string(self.time_scale())},
-       std::pair{"self_wake_on", to_string(self.self_wake_on())}}
-  );
-}
-std::string to_string(const LatEleLocStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "LatEleLocStruct",
-      {std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_branch", to_string(self.ix_branch())}}
-  );
-}
-std::string to_string(const WakeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "WakeStruct",
-      {std::pair{"sr", to_string(self.sr())}, std::pair{"lr", to_string(self.lr())}}
-  );
-}
-std::string to_string(const TaylorTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaylorTermStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
-  );
-}
-std::string to_string(const TaylorStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaylorStruct",
-      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const GgTaylorTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GgTaylorTermStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
-  );
-}
-std::string to_string(const GgTaylorStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GgTaylorStruct",
-      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const CartesianMapTerm1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CartesianMapTerm1Struct",
-      {std::pair{"coef", to_string(self.coef())},
-       std::pair{"kx", to_string(self.kx())},
-       std::pair{"ky", to_string(self.ky())},
-       std::pair{"kz", to_string(self.kz())},
-       std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"phi_z", to_string(self.phi_z())},
-       std::pair{"family", to_string(self.family())},
-       std::pair{"form", to_string(self.form())}}
-  );
-}
-std::string to_string(const CartesianMapTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CartesianMapTermStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"n_link", to_string(self.n_link())},
-       std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const CartesianMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CartesianMapStruct",
-      {std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"master_parameter", to_string(self.master_parameter())},
-       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
-       std::pair{"field_type", to_string(self.field_type())},
-       std::pair{"ptr", to_string(self.ptr())}}
-  );
-}
-std::string to_string(const CylindricalMapTerm1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CylindricalMapTerm1Struct",
-      {std::pair{"e_coef", to_string(self.e_coef())}, std::pair{"b_coef", to_string(self.b_coef())}}
-  );
-}
-std::string to_string(const CylindricalMapTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CylindricalMapTermStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"n_link", to_string(self.n_link())},
-       std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const CylindricalMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "CylindricalMapStruct",
-      {std::pair{"m", to_string(self.m())},
-       std::pair{"harmonic", to_string(self.harmonic())},
-       std::pair{"phi0_fieldmap", to_string(self.phi0_fieldmap())},
-       std::pair{"theta0_azimuth", to_string(self.theta0_azimuth())},
-       std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"master_parameter", to_string(self.master_parameter())},
-       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
-       std::pair{"dz", to_string(self.dz())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"ptr", to_string(self.ptr())}}
-  );
-}
-std::string to_string(const BicubicCmplxCoefStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BicubicCmplxCoefStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
-  );
-}
-std::string to_string(const TricubicCmplxCoefStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TricubicCmplxCoefStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
-  );
-}
-std::string to_string(const GridFieldPt1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GridFieldPt1Struct",
-      {std::pair{"E", to_string(self.E())}, std::pair{"B", to_string(self.B())}}
-  );
-}
-std::string to_string(const GridFieldPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GridFieldPtStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"n_link", to_string(self.n_link())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const GridFieldStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GridFieldStruct",
-      {std::pair{"geometry", to_string(self.geometry())},
-       std::pair{"harmonic", to_string(self.harmonic())},
-       std::pair{"phi0_fieldmap", to_string(self.phi0_fieldmap())},
-       std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"field_type", to_string(self.field_type())},
-       std::pair{"master_parameter", to_string(self.master_parameter())},
-       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
-       std::pair{"interpolation_order", to_string(self.interpolation_order())},
-       std::pair{"dr", to_string(self.dr())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())},
-       std::pair{"ptr", to_string(self.ptr())},
-       std::pair{"bi_coef", "[...]"},
-       std::pair{"tri_coef", "[...]"}}
-  );
-}
-std::string to_string(const FloorPositionStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "FloorPositionStruct",
-      {std::pair{"r", to_string(self.r())},
-       std::pair{"w", to_string(self.w())},
-       std::pair{"theta", to_string(self.theta())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"psi", to_string(self.psi())}}
-  );
-}
-std::string to_string(const HighEnergySpaceChargeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "HighEnergySpaceChargeStruct",
-      {std::pair{"closed_orb", to_string(self.closed_orb())},
-       std::pair{"kick_const", to_string(self.kick_const())},
-       std::pair{"sig_x", to_string(self.sig_x())},
-       std::pair{"sig_y", to_string(self.sig_y())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"sin_phi", to_string(self.sin_phi())},
-       std::pair{"cos_phi", to_string(self.cos_phi())},
-       std::pair{"sig_z", to_string(self.sig_z())}}
-  );
-}
-std::string to_string(const XyDispStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "XyDispStruct",
-      {std::pair{"eta", to_string(self.eta())},
-       std::pair{"etap", to_string(self.etap())},
-       std::pair{"deta_ds", to_string(self.deta_ds())},
-       std::pair{"sigma", to_string(self.sigma())},
-       std::pair{"deta_dpz", to_string(self.deta_dpz())},
-       std::pair{"detap_dpz", to_string(self.detap_dpz())}}
-  );
-}
-std::string to_string(const TwissStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TwissStruct",
-      {std::pair{"beta", to_string(self.beta())},
-       std::pair{"alpha", to_string(self.alpha())},
-       std::pair{"gamma", to_string(self.gamma())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"eta", to_string(self.eta())},
-       std::pair{"etap", to_string(self.etap())},
-       std::pair{"deta_ds", to_string(self.deta_ds())},
-       std::pair{"sigma", to_string(self.sigma())},
-       std::pair{"sigma_p", to_string(self.sigma_p())},
-       std::pair{"emit", to_string(self.emit())},
-       std::pair{"norm_emit", to_string(self.norm_emit())},
-       std::pair{"chrom", to_string(self.chrom())},
-       std::pair{"dbeta_dpz", to_string(self.dbeta_dpz())},
-       std::pair{"dalpha_dpz", to_string(self.dalpha_dpz())},
-       std::pair{"deta_dpz", to_string(self.deta_dpz())},
-       std::pair{"detap_dpz", to_string(self.detap_dpz())}}
-  );
-}
-std::string to_string(const Mode3Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Mode3Struct",
-      {std::pair{"v", to_string(self.v())},
-       std::pair{"a", to_string(self.a())},
-       std::pair{"b", to_string(self.b())},
-       std::pair{"c", to_string(self.c())},
-       std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())}}
-  );
-}
-std::string to_string(const BookkeepingStateStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BookkeepingStateStruct",
-      {std::pair{"attributes", to_string(self.attributes())},
-       std::pair{"control", to_string(self.control())},
-       std::pair{"floor_position", to_string(self.floor_position())},
-       std::pair{"s_position", to_string(self.s_position())},
-       std::pair{"ref_energy", to_string(self.ref_energy())},
-       std::pair{"mat6", to_string(self.mat6())},
-       std::pair{"rad_int", to_string(self.rad_int())},
-       std::pair{"ptc", to_string(self.ptc())},
-       std::pair{"has_misalign", to_string(self.has_misalign())}}
-  );
-}
-std::string to_string(const RadMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RadMapStruct",
-      {std::pair{"ref_orb", to_string(self.ref_orb())},
-       std::pair{"damp_dmat", to_string(self.damp_dmat())},
-       std::pair{"xfer_damp_vec", to_string(self.xfer_damp_vec())},
-       std::pair{"xfer_damp_mat", to_string(self.xfer_damp_mat())},
-       std::pair{"stoc_mat", to_string(self.stoc_mat())}}
-  );
-}
-std::string to_string(const RadMapEleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RadMapEleStruct",
-      {std::pair{"rm0", to_string(self.rm0())},
-       std::pair{"rm1", to_string(self.rm1())},
-       std::pair{"stale", to_string(self.stale())}}
-  );
-}
-std::string to_string(const GenGrad1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GenGrad1Struct",
-      {std::pair{"m", to_string(self.m())},
-       std::pair{"sincos", to_string(self.sincos())},
-       std::pair{"n_deriv_max", to_string(self.n_deriv_max())},
-       std::pair{"deriv", to_string(self.deriv())}}
-  );
-}
-std::string to_string(const GenGradMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GenGradMapStruct",
-      {std::pair{"file", self.file()},
-       std::pair{"gg", "[...]"},
-       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
-       std::pair{"field_type", to_string(self.field_type())},
-       std::pair{"iz0", to_string(self.iz0())},
-       std::pair{"iz1", to_string(self.iz1())},
-       std::pair{"dz", to_string(self.dz())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"master_parameter", to_string(self.master_parameter())},
-       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())}}
-  );
-}
-std::string to_string(const SurfaceSegmentedPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceSegmentedPtStruct",
-      {std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"z0", to_string(self.z0())},
-       std::pair{"dz_dx", to_string(self.dz_dx())},
-       std::pair{"dz_dy", to_string(self.dz_dy())}}
-  );
-}
-std::string to_string(const SurfaceSegmentedStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceSegmentedStruct",
-      {std::pair{"active", to_string(self.active())},
-       std::pair{"dr", to_string(self.dr())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const SurfaceHMisalignPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceHMisalignPtStruct",
-      {std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"rot_y", to_string(self.rot_y())},
-       std::pair{"rot_t", to_string(self.rot_t())},
-       std::pair{"rot_y_rms", to_string(self.rot_y_rms())},
-       std::pair{"rot_t_rms", to_string(self.rot_t_rms())}}
-  );
-}
-std::string to_string(const SurfaceHMisalignStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceHMisalignStruct",
-      {std::pair{"active", to_string(self.active())},
-       std::pair{"dr", to_string(self.dr())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const SurfaceDisplacementPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceDisplacementPtStruct",
-      {std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"z0", to_string(self.z0())},
-       std::pair{"dz_dx", to_string(self.dz_dx())},
-       std::pair{"dz_dy", to_string(self.dz_dy())},
-       std::pair{"d2z_dxdy", to_string(self.d2z_dxdy())}}
-  );
-}
-std::string to_string(const SurfaceDisplacementStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceDisplacementStruct",
-      {std::pair{"active", to_string(self.active())},
-       std::pair{"dr", to_string(self.dr())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const TargetPointStruct &self) {
-  return repr(self.get_fortran_ptr(), "TargetPointStruct", {std::pair{"r", to_string(self.r())}});
-}
-std::string to_string(const SurfaceCurvatureStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SurfaceCurvatureStruct",
-      {std::pair{"xy", to_string(self.xy())},
-       std::pair{"spherical", to_string(self.spherical())},
-       std::pair{"elliptical", to_string(self.elliptical())},
-       std::pair{"has_curvature", to_string(self.has_curvature())}}
-  );
-}
-std::string to_string(const PhotonTargetStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PhotonTargetStruct",
-      {std::pair{"type", to_string(self.type())},
-       std::pair{"n_corner", to_string(self.n_corner())},
-       std::pair{"ele_loc", to_string(self.ele_loc())},
-       std::pair{"corner", "[...]"},
-       std::pair{"center", to_string(self.center())}}
-  );
-}
-std::string to_string(const PhotonMaterialStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PhotonMaterialStruct",
-      {std::pair{"f0_m1", to_string(self.f0_m1())},
-       std::pair{"f0_m2", to_string(self.f0_m2())},
-       std::pair{"f_0", to_string(self.f_0())},
-       std::pair{"f_h", to_string(self.f_h())},
-       std::pair{"f_hbar", to_string(self.f_hbar())},
-       std::pair{"f_hkl", to_string(self.f_hkl())},
-       std::pair{"h_norm", to_string(self.h_norm())},
-       std::pair{"l_ref", to_string(self.l_ref())}}
-  );
-}
-std::string to_string(const PixelPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PixelPtStruct",
-      {std::pair{"n_photon", to_string(self.n_photon())},
-       std::pair{"E_x", to_string(self.E_x())},
-       std::pair{"E_y", to_string(self.E_y())},
-       std::pair{"intensity_x", to_string(self.intensity_x())},
-       std::pair{"intensity_y", to_string(self.intensity_y())},
-       std::pair{"intensity", to_string(self.intensity())},
-       std::pair{"orbit", to_string(self.orbit())},
-       std::pair{"orbit_rms", to_string(self.orbit_rms())},
-       std::pair{"init_orbit", to_string(self.init_orbit())},
-       std::pair{"init_orbit_rms", to_string(self.init_orbit_rms())}}
-  );
-}
-std::string to_string(const PixelDetecStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PixelDetecStruct",
-      {std::pair{"dr", to_string(self.dr())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"n_track_tot", to_string(self.n_track_tot())},
-       std::pair{"n_hit_detec", to_string(self.n_hit_detec())},
-       std::pair{"n_hit_pixel", to_string(self.n_hit_pixel())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const PhotonElementStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PhotonElementStruct",
-      {std::pair{"curvature", to_string(self.curvature())},
-       std::pair{"target", to_string(self.target())},
-       std::pair{"material", to_string(self.material())},
-       std::pair{"segmented", to_string(self.segmented())},
-       std::pair{"h_misalign", to_string(self.h_misalign())},
-       std::pair{"displacement", to_string(self.displacement())},
-       std::pair{"pixel", to_string(self.pixel())},
-       std::pair{"reflectivity_table_type", to_string(self.reflectivity_table_type())},
-       std::pair{"reflectivity_table_sigma", to_string(self.reflectivity_table_sigma())},
-       std::pair{"reflectivity_table_pi", to_string(self.reflectivity_table_pi())},
-       std::pair{"init_energy_prob", "[...]"},
-       std::pair{"integrated_init_energy_prob", to_string(self.integrated_init_energy_prob())}}
-  );
-}
-std::string to_string(const Wall3dVertexStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Wall3dVertexStruct",
-      {std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"radius_x", to_string(self.radius_x())},
-       std::pair{"radius_y", to_string(self.radius_y())},
-       std::pair{"tilt", to_string(self.tilt())},
-       std::pair{"angle", to_string(self.angle())},
-       std::pair{"x0", to_string(self.x0())},
-       std::pair{"y0", to_string(self.y0())},
-       std::pair{"type", to_string(self.type())}}
-  );
-}
-std::string to_string(const Wall3dSectionStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Wall3dSectionStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"material", self.material()},
-       std::pair{"v", "[...]"},
-       std::pair{"surface", to_string(self.surface())},
-       std::pair{"type", to_string(self.type())},
-       std::pair{"n_vertex_input", to_string(self.n_vertex_input())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"vertices_state", to_string(self.vertices_state())},
-       std::pair{"patch_in_region", to_string(self.patch_in_region())},
-       std::pair{"thickness", to_string(self.thickness())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"r0", to_string(self.r0())},
-       std::pair{"dx0_ds", to_string(self.dx0_ds())},
-       std::pair{"dy0_ds", to_string(self.dy0_ds())},
-       std::pair{"x0_coef", to_string(self.x0_coef())},
-       std::pair{"y0_coef", to_string(self.y0_coef())},
-       std::pair{"dr_ds", to_string(self.dr_ds())},
-       std::pair{"p1_coef", to_string(self.p1_coef())},
-       std::pair{"p2_coef", to_string(self.p2_coef())}}
-  );
-}
-std::string to_string(const Wall3dStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Wall3dStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"type", to_string(self.type())},
-       std::pair{"ix_wall3d", to_string(self.ix_wall3d())},
-       std::pair{"n_link", to_string(self.n_link())},
-       std::pair{"thickness", to_string(self.thickness())},
-       std::pair{"clear_material", self.clear_material()},
-       std::pair{"opaque_material", self.opaque_material()},
-       std::pair{"superimpose", to_string(self.superimpose())},
-       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
-       std::pair{"section", "[...]"}}
-  );
-}
-std::string to_string(const RamperLordStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RamperLordStruct",
-      {std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_con", to_string(self.ix_con())},
-       std::pair{"attrib_ptr", to_string(self.attrib_ptr())}}
-  );
-}
-std::string to_string(const ControlStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ControlStruct",
-      {std::pair{"value", to_string(self.value())},
-       std::pair{"y_knot", to_string(self.y_knot())},
-       std::pair{"stack", "[...]"},
-       std::pair{"slave", to_string(self.slave())},
-       std::pair{"lord", to_string(self.lord())},
-       std::pair{"slave_name", self.slave_name()},
-       std::pair{"attribute", self.attribute()},
-       std::pair{"ix_attrib", to_string(self.ix_attrib())}}
-  );
-}
-std::string to_string(const ControlVar1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ControlVar1Struct",
-      {std::pair{"name", self.name()},
-       std::pair{"value", to_string(self.value())},
-       std::pair{"old_value", to_string(self.old_value())}}
-  );
-}
-std::string to_string(const ControlRamp1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ControlRamp1Struct",
-      {std::pair{"y_knot", to_string(self.y_knot())},
-       std::pair{"stack", "[...]"},
-       std::pair{"attribute", self.attribute()},
-       std::pair{"slave_name", self.slave_name()},
-       std::pair{"is_controller", to_string(self.is_controller())}}
-  );
-}
-std::string to_string(const ControllerStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ControllerStruct",
-      {std::pair{"var", "[...]"},
-       std::pair{"ramp", "[...]"},
-       std::pair{"ramper_lord", "[...]"},
-       std::pair{"x_knot", to_string(self.x_knot())}}
-  );
-}
-std::string to_string(const EllipseBeamInitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "EllipseBeamInitStruct",
-      {std::pair{"part_per_ellipse", to_string(self.part_per_ellipse())},
-       std::pair{"n_ellipse", to_string(self.n_ellipse())},
-       std::pair{"sigma_cutoff", to_string(self.sigma_cutoff())}}
-  );
-}
-std::string to_string(const KvBeamInitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "KvBeamInitStruct",
-      {std::pair{"part_per_phi", to_string(self.part_per_phi())},
-       std::pair{"n_I2", to_string(self.n_I2())},
-       std::pair{"A", to_string(self.A())}}
-  );
-}
-std::string to_string(const GridBeamInitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GridBeamInitStruct",
-      {std::pair{"n_x", to_string(self.n_x())},
-       std::pair{"n_px", to_string(self.n_px())},
-       std::pair{"x_min", to_string(self.x_min())},
-       std::pair{"x_max", to_string(self.x_max())},
-       std::pair{"px_min", to_string(self.px_min())},
-       std::pair{"px_max", to_string(self.px_max())}}
-  );
-}
-std::string to_string(const BeamInitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BeamInitStruct",
-      {std::pair{"position_file", self.position_file()},
-       std::pair{"distribution_type", to_string(self.distribution_type())},
-       std::pair{"spin", to_string(self.spin())},
-       std::pair{"ellipse", "[...]"},
-       std::pair{"KV", to_string(self.KV())},
-       std::pair{"grid", "[...]"},
-       std::pair{"center_jitter", to_string(self.center_jitter())},
-       std::pair{"emit_jitter", to_string(self.emit_jitter())},
-       std::pair{"sig_z_jitter", to_string(self.sig_z_jitter())},
-       std::pair{"sig_pz_jitter", to_string(self.sig_pz_jitter())},
-       std::pair{"n_particle", to_string(self.n_particle())},
-       std::pair{"renorm_center", to_string(self.renorm_center())},
-       std::pair{"renorm_sigma", to_string(self.renorm_sigma())},
-       std::pair{"random_engine", self.random_engine()},
-       std::pair{"random_gauss_converter", self.random_gauss_converter()},
-       std::pair{"random_sigma_cutoff", to_string(self.random_sigma_cutoff())},
-       std::pair{"a_norm_emit", to_string(self.a_norm_emit())},
-       std::pair{"b_norm_emit", to_string(self.b_norm_emit())},
-       std::pair{"a_emit", to_string(self.a_emit())},
-       std::pair{"b_emit", to_string(self.b_emit())},
-       std::pair{"dPz_dz", to_string(self.dPz_dz())},
-       std::pair{"center", to_string(self.center())},
-       std::pair{"t_offset", to_string(self.t_offset())},
-       std::pair{"dt_bunch", to_string(self.dt_bunch())},
-       std::pair{"sig_z", to_string(self.sig_z())},
-       std::pair{"sig_pz", to_string(self.sig_pz())},
-       std::pair{"bunch_charge", to_string(self.bunch_charge())},
-       std::pair{"n_bunch", to_string(self.n_bunch())},
-       std::pair{"ix_turn", to_string(self.ix_turn())},
-       std::pair{"species", self.species()},
-       std::pair{"full_6D_coupling_calc", to_string(self.full_6D_coupling_calc())},
-       std::pair{"use_particle_start", to_string(self.use_particle_start())},
-       std::pair{"use_t_coords", to_string(self.use_t_coords())},
-       std::pair{"use_z_as_t", to_string(self.use_z_as_t())},
-       std::pair{"file_name", self.file_name()}}
-  );
-}
-std::string to_string(const LatParamStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "LatParamStruct",
-      {std::pair{"n_part", to_string(self.n_part())},
-       std::pair{"total_length", to_string(self.total_length())},
-       std::pair{"unstable_factor", to_string(self.unstable_factor())},
-       std::pair{"t1_with_RF", to_string(self.t1_with_RF())},
-       std::pair{"t1_no_RF", to_string(self.t1_no_RF())},
-       std::pair{"spin_tune", to_string(self.spin_tune())},
-       std::pair{"particle", to_string(self.particle())},
-       std::pair{"default_tracking_species", to_string(self.default_tracking_species())},
-       std::pair{"geometry", to_string(self.geometry())},
-       std::pair{"ixx", to_string(self.ixx())},
-       std::pair{"stable", to_string(self.stable())},
-       std::pair{"live_branch", to_string(self.live_branch())},
-       std::pair{"g1_integral", to_string(self.g1_integral())},
-       std::pair{"g2_integral", to_string(self.g2_integral())},
-       std::pair{"g3_integral", to_string(self.g3_integral())},
-       std::pair{"bookkeeping_state", to_string(self.bookkeeping_state())},
-       std::pair{"beam_init", to_string(self.beam_init())}}
-  );
-}
-std::string to_string(const ModeInfoStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ModeInfoStruct",
-      {std::pair{"stable", to_string(self.stable())},
-       std::pair{"tune", to_string(self.tune())},
-       std::pair{"emit", to_string(self.emit())},
-       std::pair{"chrom", to_string(self.chrom())},
-       std::pair{"sigma", to_string(self.sigma())},
-       std::pair{"sigmap", to_string(self.sigmap())}}
-  );
-}
-std::string to_string(const PreTrackerStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PreTrackerStruct",
-      {std::pair{"who", to_string(self.who())},
-       std::pair{"ix_ele_start", to_string(self.ix_ele_start())},
-       std::pair{"ix_ele_end", to_string(self.ix_ele_end())},
-       std::pair{"input_file", self.input_file()}}
-  );
-}
-std::string to_string(const AnormalModeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "AnormalModeStruct",
-      {std::pair{"emittance", to_string(self.emittance())},
-       std::pair{"emittance_no_vert", to_string(self.emittance_no_vert())},
-       std::pair{"synch_int", to_string(self.synch_int())},
-       std::pair{"j_damp", to_string(self.j_damp())},
-       std::pair{"alpha_damp", to_string(self.alpha_damp())},
-       std::pair{"chrom", to_string(self.chrom())},
-       std::pair{"tune", to_string(self.tune())}}
-  );
-}
-std::string to_string(const LinacNormalModeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "LinacNormalModeStruct",
-      {std::pair{"i2_E4", to_string(self.i2_E4())},
-       std::pair{"i3_E7", to_string(self.i3_E7())},
-       std::pair{"i5a_E6", to_string(self.i5a_E6())},
-       std::pair{"i5b_E6", to_string(self.i5b_E6())},
-       std::pair{"sig_E1", to_string(self.sig_E1())},
-       std::pair{"a_emittance_end", to_string(self.a_emittance_end())},
-       std::pair{"b_emittance_end", to_string(self.b_emittance_end())}}
-  );
-}
-std::string to_string(const NormalModesStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "NormalModesStruct",
-      {std::pair{"synch_int", to_string(self.synch_int())},
-       std::pair{"sigE_E", to_string(self.sigE_E())},
-       std::pair{"sig_z", to_string(self.sig_z())},
-       std::pair{"e_loss", to_string(self.e_loss())},
-       std::pair{"rf_voltage", to_string(self.rf_voltage())},
-       std::pair{"pz_aperture", to_string(self.pz_aperture())},
-       std::pair{"pz_average", to_string(self.pz_average())},
-       std::pair{"momentum_compaction", to_string(self.momentum_compaction())},
-       std::pair{"dpz_damp", to_string(self.dpz_damp())},
-       std::pair{"a", to_string(self.a())},
-       std::pair{"b", to_string(self.b())},
-       std::pair{"z", to_string(self.z())},
-       std::pair{"lin", to_string(self.lin())}}
-  );
-}
-std::string to_string(const EmFieldStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "EmFieldStruct",
-      {std::pair{"E", to_string(self.E())},
-       std::pair{"B", to_string(self.B())},
-       std::pair{"dE", to_string(self.dE())},
-       std::pair{"dB", to_string(self.dB())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"phi_B", to_string(self.phi_B())},
-       std::pair{"A", to_string(self.A())}}
-  );
-}
-std::string to_string(const StrongBeamStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "StrongBeamStruct",
-      {std::pair{"ix_slice", to_string(self.ix_slice())},
-       std::pair{"x_center", to_string(self.x_center())},
-       std::pair{"y_center", to_string(self.y_center())},
-       std::pair{"x_sigma", to_string(self.x_sigma())},
-       std::pair{"y_sigma", to_string(self.y_sigma())},
-       std::pair{"dx", to_string(self.dx())},
-       std::pair{"dy", to_string(self.dy())}}
-  );
-}
-std::string to_string(const TrackPointStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TrackPointStruct",
-      {std::pair{"s_lab", to_string(self.s_lab())},
-       std::pair{"s_body", to_string(self.s_body())},
-       std::pair{"orb", to_string(self.orb())},
-       std::pair{"field", to_string(self.field())},
-       std::pair{"strong_beam", to_string(self.strong_beam())},
-       std::pair{"vec0", to_string(self.vec0())},
-       std::pair{"mat6", to_string(self.mat6())}}
-  );
-}
-std::string to_string(const TrackStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TrackStruct",
-      {std::pair{"pt", "[...]"},
-       std::pair{"ds_save", to_string(self.ds_save())},
-       std::pair{"n_pt", to_string(self.n_pt())},
-       std::pair{"n_bad", to_string(self.n_bad())},
-       std::pair{"n_ok", to_string(self.n_ok())}}
-  );
-}
-std::string to_string(const SpaceChargeCommonStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SpaceChargeCommonStruct",
-      {std::pair{"ds_track_step", to_string(self.ds_track_step())},
-       std::pair{"dt_track_step", to_string(self.dt_track_step())},
-       std::pair{"cathode_strength_cutoff", to_string(self.cathode_strength_cutoff())},
-       std::pair{"rel_tol_tracking", to_string(self.rel_tol_tracking())},
-       std::pair{"abs_tol_tracking", to_string(self.abs_tol_tracking())},
-       std::pair{"beam_chamber_height", to_string(self.beam_chamber_height())},
-       std::pair{"lsc_sigma_cutoff", to_string(self.lsc_sigma_cutoff())},
-       std::pair{"particle_sigma_cutoff", to_string(self.particle_sigma_cutoff())},
-       std::pair{"mesh_growth_factor", to_string(self.mesh_growth_factor())},
-       std::pair{"mesh_shrink_factor", to_string(self.mesh_shrink_factor())},
-       std::pair{"space_charge_mesh_size", to_string(self.space_charge_mesh_size())},
-       std::pair{"csr3d_mesh_size", to_string(self.csr3d_mesh_size())},
-       std::pair{"n_bin", to_string(self.n_bin())},
-       std::pair{"particle_bin_span", to_string(self.particle_bin_span())},
-       std::pair{"n_shield_images", to_string(self.n_shield_images())},
-       std::pair{"sc_min_in_bin", to_string(self.sc_min_in_bin())},
-       std::pair{
-           "lsc_kick_transverse_dependence",
-           to_string(self.lsc_kick_transverse_dependence())
-       },
-       std::pair{"debug", to_string(self.debug())},
-       std::pair{"diagnostic_output_file", self.diagnostic_output_file()}}
-  );
-}
-std::string to_string(const BmadCommonStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BmadCommonStruct",
-      {std::pair{"max_aperture_limit", to_string(self.max_aperture_limit())},
-       std::pair{"d_orb", to_string(self.d_orb())},
-       std::pair{"default_ds_step", to_string(self.default_ds_step())},
-       std::pair{"significant_length", to_string(self.significant_length())},
-       std::pair{"rel_tol_tracking", to_string(self.rel_tol_tracking())},
-       std::pair{"abs_tol_tracking", to_string(self.abs_tol_tracking())},
-       std::pair{"rel_tol_adaptive_tracking", to_string(self.rel_tol_adaptive_tracking())},
-       std::pair{"abs_tol_adaptive_tracking", to_string(self.abs_tol_adaptive_tracking())},
-       std::pair{"init_ds_adaptive_tracking", to_string(self.init_ds_adaptive_tracking())},
-       std::pair{"min_ds_adaptive_tracking", to_string(self.min_ds_adaptive_tracking())},
-       std::pair{"fatal_ds_adaptive_tracking", to_string(self.fatal_ds_adaptive_tracking())},
-       std::pair{"autoscale_amp_abs_tol", to_string(self.autoscale_amp_abs_tol())},
-       std::pair{"autoscale_amp_rel_tol", to_string(self.autoscale_amp_rel_tol())},
-       std::pair{"autoscale_phase_tol", to_string(self.autoscale_phase_tol())},
-       std::pair{"electric_dipole_moment", to_string(self.electric_dipole_moment())},
-       std::pair{"synch_rad_scale", to_string(self.synch_rad_scale())},
-       std::pair{"sad_eps_scale", to_string(self.sad_eps_scale())},
-       std::pair{"sad_amp_max", to_string(self.sad_amp_max())},
-       std::pair{"sad_n_div_max", to_string(self.sad_n_div_max())},
-       std::pair{"taylor_order", to_string(self.taylor_order())},
-       std::pair{"runge_kutta_order", to_string(self.runge_kutta_order())},
-       std::pair{"default_integ_order", to_string(self.default_integ_order())},
-       std::pair{"max_num_runge_kutta_step", to_string(self.max_num_runge_kutta_step())},
-       std::pair{"rf_phase_below_transition_ref", to_string(self.rf_phase_below_transition_ref())},
-       std::pair{"sr_wakes_on", to_string(self.sr_wakes_on())},
-       std::pair{"lr_wakes_on", to_string(self.lr_wakes_on())},
-       std::pair{"auto_bookkeeper", to_string(self.auto_bookkeeper())},
-       std::pair{"high_energy_space_charge_on", to_string(self.high_energy_space_charge_on())},
-       std::pair{
-           "high_energy_space_charge_linear",
-           to_string(self.high_energy_space_charge_linear())
-       },
-       std::pair{"csr_and_space_charge_on", to_string(self.csr_and_space_charge_on())},
-       std::pair{"spin_tracking_on", to_string(self.spin_tracking_on())},
-       std::pair{
-           "spin_sokolov_ternov_flipping_on",
-           to_string(self.spin_sokolov_ternov_flipping_on())
-       },
-       std::pair{"radiation_damping_on", to_string(self.radiation_damping_on())},
-       std::pair{"radiation_zero_average", to_string(self.radiation_zero_average())},
-       std::pair{"radiation_fluctuations_on", to_string(self.radiation_fluctuations_on())},
-       std::pair{"conserve_taylor_maps", to_string(self.conserve_taylor_maps())},
-       std::pair{"absolute_time_tracking", to_string(self.absolute_time_tracking())},
-       std::pair{"absolute_time_ref_shift", to_string(self.absolute_time_ref_shift())},
-       std::pair{"convert_to_kinetic_momentum", to_string(self.convert_to_kinetic_momentum())},
-       std::pair{"normalize_twiss", to_string(self.normalize_twiss())},
-       std::pair{"aperture_limit_on", to_string(self.aperture_limit_on())},
-       std::pair{"spin_n0_direction_user_set", to_string(self.spin_n0_direction_user_set())},
-       std::pair{"debug", to_string(self.debug())}}
-  );
-}
-std::string to_string(const RadInt1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RadInt1Struct",
-      {std::pair{"i0", to_string(self.i0())},
-       std::pair{"i1", to_string(self.i1())},
-       std::pair{"i2", to_string(self.i2())},
-       std::pair{"i3", to_string(self.i3())},
-       std::pair{"i4a", to_string(self.i4a())},
-       std::pair{"i4b", to_string(self.i4b())},
-       std::pair{"i4z", to_string(self.i4z())},
-       std::pair{"i5a", to_string(self.i5a())},
-       std::pair{"i5b", to_string(self.i5b())},
-       std::pair{"i6b", to_string(self.i6b())},
-       std::pair{"lin_i2_E4", to_string(self.lin_i2_E4())},
-       std::pair{"lin_i3_E7", to_string(self.lin_i3_E7())},
-       std::pair{"lin_i5a_E6", to_string(self.lin_i5a_E6())},
-       std::pair{"lin_i5b_E6", to_string(self.lin_i5b_E6())},
-       std::pair{"lin_norm_emit_a", to_string(self.lin_norm_emit_a())},
-       std::pair{"lin_norm_emit_b", to_string(self.lin_norm_emit_b())},
-       std::pair{"lin_sig_E", to_string(self.lin_sig_E())},
-       std::pair{"n_steps", to_string(self.n_steps())}}
-  );
-}
-std::string to_string(const RadIntBranchStruct &self) {
-  return repr(self.get_fortran_ptr(), "RadIntBranchStruct", {std::pair{"ele", "[...]"}});
-}
-std::string to_string(const RadIntAllEleStruct &self) {
-  return repr(self.get_fortran_ptr(), "RadIntAllEleStruct", {std::pair{"branch", "[...]"}});
-}
-std::string to_string(const RfStairStepStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RfStairStepStruct",
-      {std::pair{"E_tot0", to_string(self.E_tot0())},
-       std::pair{"E_tot1", to_string(self.E_tot1())},
-       std::pair{"p0c", to_string(self.p0c())},
-       std::pair{"p1c", to_string(self.p1c())},
-       std::pair{"scale", to_string(self.scale())},
        std::pair{"time", to_string(self.time())},
-       std::pair{"s0", to_string(self.s0())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"ix_step", to_string(self.ix_step())}}
-  );
-}
-std::string to_string(const RfEleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RfEleStruct",
-      {std::pair{"steps", "[...]"}, std::pair{"ds_step", to_string(self.ds_step())}}
-  );
-}
-std::string to_string(const EleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "EleStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_ele", to_string(self.ix_ele())}}
-  );
-}
-std::string to_string(const ComplexTaylorTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ComplexTaylorTermStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
-  );
-}
-std::string to_string(const ComplexTaylorStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ComplexTaylorStruct",
-      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const BranchStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BranchStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_from_branch", to_string(self.ix_from_branch())},
-       std::pair{"ix_from_ele", to_string(self.ix_from_ele())},
-       std::pair{"ix_to_ele", to_string(self.ix_to_ele())},
-       std::pair{"ix_fixer", to_string(self.ix_fixer())},
-       std::pair{"n_ele_track", to_string(self.n_ele_track())},
-       std::pair{"n_ele_max", to_string(self.n_ele_max())},
-       std::pair{"lat", to_string(self.lat())},
-       std::pair{"a", to_string(self.a())},
-       std::pair{"b", to_string(self.b())},
-       std::pair{"z", to_string(self.z())},
-       std::pair{"ele", "[...]"},
-       std::pair{"param", to_string(self.param())},
-       std::pair{"particle_start", to_string(self.particle_start())},
-       std::pair{"wall3d", "[...]"}}
-  );
-}
-std::string to_string(const LatStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "LatStruct",
-      {std::pair{"use_name", self.use_name()},
-       std::pair{"#branch", to_string(self.branch().size())}}
-  );
-}
-std::string to_string(const BunchStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BunchStruct",
-      {std::pair{"particle", "[...]"},
-       std::pair{"ix_z", to_string(self.ix_z())},
-       std::pair{"charge_tot", to_string(self.charge_tot())},
-       std::pair{"charge_live", to_string(self.charge_live())},
-       std::pair{"z_center", to_string(self.z_center())},
-       std::pair{"t_center", to_string(self.t_center())},
-       std::pair{"t0", to_string(self.t0())},
-       std::pair{"drift_between_t_and_s", to_string(self.drift_between_t_and_s())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_bunch", to_string(self.ix_bunch())},
-       std::pair{"ix_turn", to_string(self.ix_turn())},
-       std::pair{"n_live", to_string(self.n_live())},
-       std::pair{"n_good", to_string(self.n_good())},
-       std::pair{"n_bad", to_string(self.n_bad())}}
-  );
-}
-std::string to_string(const BunchParamsStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BunchParamsStruct",
-      {std::pair{"centroid", to_string(self.centroid())},
-       std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"z", to_string(self.z())},
-       std::pair{"a", to_string(self.a())},
-       std::pair{"b", to_string(self.b())},
-       std::pair{"c", to_string(self.c())},
-       std::pair{"sigma", to_string(self.sigma())},
-       std::pair{"rel_max", to_string(self.rel_max())},
-       std::pair{"rel_min", to_string(self.rel_min())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"t", to_string(self.t())},
-       std::pair{"sigma_t", to_string(self.sigma_t())},
-       std::pair{"charge_live", to_string(self.charge_live())},
-       std::pair{"charge_tot", to_string(self.charge_tot())},
-       std::pair{"n_particle_tot", to_string(self.n_particle_tot())},
-       std::pair{"n_particle_live", to_string(self.n_particle_live())},
-       std::pair{"n_particle_lost_in_ele", to_string(self.n_particle_lost_in_ele())},
-       std::pair{"n_good_steps", to_string(self.n_good_steps())},
-       std::pair{"n_bad_steps", to_string(self.n_bad_steps())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"location", to_string(self.location())},
-       std::pair{"twiss_valid", to_string(self.twiss_valid())}}
-  );
-}
-std::string to_string(const BeamStruct &self) {
-  return repr(self.get_fortran_ptr(), "BeamStruct", {std::pair{"bunch", "[...]"}});
-}
-std::string to_string(const AperturePointStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "AperturePointStruct",
-      {std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"plane", to_string(self.plane())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"i_turn", to_string(self.i_turn())}}
-  );
-}
-std::string to_string(const ApertureParamStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ApertureParamStruct",
-      {std::pair{"min_angle", to_string(self.min_angle())},
-       std::pair{"max_angle", to_string(self.max_angle())},
-       std::pair{"n_angle", to_string(self.n_angle())},
-       std::pair{"n_turn", to_string(self.n_turn())},
-       std::pair{"x_init", to_string(self.x_init())},
-       std::pair{"y_init", to_string(self.y_init())},
-       std::pair{"rel_accuracy", to_string(self.rel_accuracy())},
-       std::pair{"abs_accuracy", to_string(self.abs_accuracy())},
-       std::pair{"start_ele", self.start_ele()}}
-  );
-}
-std::string to_string(const ApertureScanStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ApertureScanStruct",
-      {std::pair{"point", "[...]"},
-       std::pair{"ref_orb", to_string(self.ref_orb())},
-       std::pair{"pz_start", to_string(self.pz_start())}}
-  );
-}
-std::string to_string(const ElePointerStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ElePointerStruct",
-      {std::pair{"ele", to_string(self.ele())},
-       std::pair{"loc", to_string(self.loc())},
-       std::pair{"id", to_string(self.id())}}
-  );
-}
-std::string to_string(const ExpressionTreeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ExpressionTreeStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"type", to_string(self.type())},
-       std::pair{"value", to_string(self.value())},
-       std::pair{"node", "[...]"}}
-  );
-}
-std::string to_string(const NametableStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "NametableStruct",
-      {std::pair{"name", to_string(self.name())},
-       std::pair{"index", to_string(self.index())},
-       std::pair{"n_min", to_string(self.n_min())},
-       std::pair{"n_max", to_string(self.n_max())}}
-  );
-}
-std::string to_string(const TaoSpinDnDpzStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoSpinDnDpzStruct",
-      {std::pair{"vec", to_string(self.vec())},
-       std::pair{"partial", to_string(self.partial())},
-       std::pair{"partial2", to_string(self.partial2())}}
-  );
-}
-std::string to_string(const ResonanceHStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "ResonanceHStruct",
-      {std::pair{"id", self.id()}, std::pair{"c_val", to_string(self.c_val())}}
-  );
-}
-std::string to_string(const SpinOrbitMap1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SpinOrbitMap1Struct",
-      {std::pair{"orb_mat", to_string(self.orb_mat())},
-       std::pair{"vec0", to_string(self.vec0())},
-       std::pair{"spin_q", to_string(self.spin_q())}}
-  );
-}
-std::string to_string(const SpinAxisStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SpinAxisStruct",
-      {std::pair{"l", to_string(self.l())},
-       std::pair{"n0", to_string(self.n0())},
-       std::pair{"m", to_string(self.m())}}
-  );
-}
-std::string to_string(const PtcNormalFormStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "PtcNormalFormStruct",
-      {std::pair{"ele_origin", to_string(self.ele_origin())},
-       std::pair{"orb0", to_string(self.orb0())},
-       std::pair{"valid_map", to_string(self.valid_map())}}
-  );
-}
-std::string to_string(const BmadNormalFormStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BmadNormalFormStruct",
-      {std::pair{"ele_origin", to_string(self.ele_origin())},
-       std::pair{"M", "[...]"},
-       std::pair{"A", "[...]"},
-       std::pair{"A_inv", "[...]"},
-       std::pair{"dhdj", "[...]"},
-       std::pair{"F", "[...]"},
-       std::pair{"L", "[...]"},
-       std::pair{"h", "[...]"}}
-  );
-}
-std::string to_string(const BunchTrackStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BunchTrackStruct",
-      {std::pair{"pt", "[...]"},
-       std::pair{"ds_save", to_string(self.ds_save())},
-       std::pair{"n_pt", to_string(self.n_pt())}}
-  );
-}
-std::string to_string(const SummationRdtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "SummationRdtStruct",
-      {std::pair{"h11001", to_string(self.h11001())}, std::pair{"h00111", to_string(self.h00111())},
-       std::pair{"h20001", to_string(self.h20001())}, std::pair{"h00201", to_string(self.h00201())},
-       std::pair{"h10002", to_string(self.h10002())}, std::pair{"h21000", to_string(self.h21000())},
-       std::pair{"h30000", to_string(self.h30000())}, std::pair{"h10110", to_string(self.h10110())},
-       std::pair{"h10020", to_string(self.h10020())}, std::pair{"h10200", to_string(self.h10200())},
-       std::pair{"h31000", to_string(self.h31000())}, std::pair{"h40000", to_string(self.h40000())},
-       std::pair{"h20110", to_string(self.h20110())}, std::pair{"h11200", to_string(self.h11200())},
-       std::pair{"h20020", to_string(self.h20020())}, std::pair{"h20200", to_string(self.h20200())},
-       std::pair{"h00310", to_string(self.h00310())}, std::pair{"h00400", to_string(self.h00400())},
-       std::pair{"h22000", to_string(self.h22000())}, std::pair{"h00220", to_string(self.h00220())},
-       std::pair{"h11110", to_string(self.h11110())}}
-  );
-}
-std::string to_string(const TaoEleShapeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoEleShapeStruct",
-      {std::pair{"ele_id", self.ele_id()},
-       std::pair{"shape", self.shape()},
-       std::pair{"color", self.color()},
-       std::pair{"size", to_string(self.size())},
-       std::pair{"label", self.label()},
-       std::pair{"draw", to_string(self.draw())},
-       std::pair{"multi", to_string(self.multi())},
-       std::pair{"line_width", to_string(self.line_width())},
-       std::pair{"offset", to_string(self.offset())},
-       std::pair{"ix_key", to_string(self.ix_key())},
-       std::pair{"name_ele", self.name_ele()},
-       std::pair{"uni", "[...]"}}
-  );
-}
-std::string to_string(const TaoElePointerStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoElePointerStruct",
-      {std::pair{"eles", "[...]"}, std::pair{"n_loc", to_string(self.n_loc())}}
-  );
-}
-std::string to_string(const TaoCurveStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoCurveStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"data_source", self.data_source()},
-       std::pair{"data_index", self.data_index()},
-       std::pair{"data_type_x", self.data_type_x()},
-       std::pair{"data_type", self.data_type()},
-       std::pair{"ele_ref_name", self.ele_ref_name()},
-       std::pair{"legend_text", self.legend_text()},
-       std::pair{"message_text", self.message_text()},
-       std::pair{"component", self.component()},
-       std::pair{"why_invalid", self.why_invalid()},
-       std::pair{"g", "..."},
-       std::pair{"hist", to_string(self.hist())},
-       std::pair{"z_color", to_string(self.z_color())},
-       std::pair{"x_line", to_string(self.x_line())},
-       std::pair{"y_line", to_string(self.y_line())},
-       std::pair{"y2_line", to_string(self.y2_line())},
-       std::pair{"ix_line", to_string(self.ix_line())},
-       std::pair{"x_symb", to_string(self.x_symb())},
-       std::pair{"y_symb", to_string(self.y_symb())},
-       std::pair{"z_symb", to_string(self.z_symb())},
-       std::pair{"err_symb", to_string(self.err_symb())},
-       std::pair{"symb_size", to_string(self.symb_size())},
-       std::pair{"ix_symb", to_string(self.ix_symb())},
-       std::pair{"y_axis_scale_factor", to_string(self.y_axis_scale_factor())},
-       std::pair{"line", to_string(self.line())},
-       std::pair{"symbol", to_string(self.symbol())},
-       std::pair{"orbit", to_string(self.orbit())},
-       std::pair{"ix_universe", to_string(self.ix_universe())},
-       std::pair{"symbol_every", to_string(self.symbol_every())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_bunch", to_string(self.ix_bunch())},
-       std::pair{"n_turn", to_string(self.n_turn())},
-       std::pair{"use_y2", to_string(self.use_y2())},
-       std::pair{"draw_line", to_string(self.draw_line())},
-       std::pair{"draw_symbols", to_string(self.draw_symbols())},
-       std::pair{"draw_symbol_index", to_string(self.draw_symbol_index())},
-       std::pair{"draw_error_bars", to_string(self.draw_error_bars())},
-       std::pair{"smooth_line_calc", to_string(self.smooth_line_calc())},
-       std::pair{"valid", to_string(self.valid())}}
-  );
-}
-std::string to_string(const TaoCurveColorStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoCurveColorStruct",
-      {std::pair{"data_type", self.data_type()},
-       std::pair{"is_on", to_string(self.is_on())},
-       std::pair{"min", to_string(self.min())},
-       std::pair{"max", to_string(self.max())},
-       std::pair{"autoscale", to_string(self.autoscale())}}
-  );
-}
-std::string to_string(const TaoCurveOrbitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoCurveOrbitStruct",
-      {std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"t", to_string(self.t())}}
-  );
-}
-std::string to_string(const TaoHistogramStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoHistogramStruct",
-      {std::pair{"density_normalized", to_string(self.density_normalized())},
-       std::pair{"weight_by_charge", to_string(self.weight_by_charge())},
-       std::pair{"minimum", to_string(self.minimum())},
-       std::pair{"maximum", to_string(self.maximum())},
-       std::pair{"width", to_string(self.width())},
-       std::pair{"center", to_string(self.center())},
-       std::pair{"number", to_string(self.number())}}
-  );
-}
-std::string to_string(const LatEleOrder1Struct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "LatEleOrder1Struct",
-      {std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_order", to_string(self.ix_order())}}
-  );
-}
-std::string to_string(const LatEleOrderArrayStruct &self) {
-  return repr(self.get_fortran_ptr(), "LatEleOrderArrayStruct", {std::pair{"ele", "[...]"}});
-}
-std::string to_string(const TaoLatSigmaStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoLatSigmaStruct",
-      {std::pair{"mat", to_string(self.mat())}}
-  );
-}
-std::string to_string(const TaoSpinEleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoSpinEleStruct",
-      {std::pair{"dn_dpz", to_string(self.dn_dpz())},
-       std::pair{"orb_eigen_val", to_string(self.orb_eigen_val())},
-       std::pair{"orb_eigen_vec", to_string(self.orb_eigen_vec())},
-       std::pair{"spin_eigen_vec", to_string(self.spin_eigen_vec())},
-       std::pair{"valid", to_string(self.valid())}}
-  );
-}
-std::string to_string(const TaoPlotCacheStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoPlotCacheStruct",
-      {std::pair{"ele_to_s", to_string(self.ele_to_s())},
-       std::pair{"orbit", to_string(self.orbit())},
-       std::pair{"err", to_string(self.err())}}
-  );
-}
-std::string to_string(const TaoSpinPolarizationStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoSpinPolarizationStruct",
-      {std::pair{"tune", to_string(self.tune())},
-       std::pair{"pol_limit_st", to_string(self.pol_limit_st())},
-       std::pair{"pol_limit_dk", to_string(self.pol_limit_dk())},
-       std::pair{"pol_limit_dk_partial", to_string(self.pol_limit_dk_partial())},
-       std::pair{"pol_limit_dk_partial2", to_string(self.pol_limit_dk_partial2())},
-       std::pair{"pol_rate_bks", to_string(self.pol_rate_bks())},
-       std::pair{"depol_rate", to_string(self.depol_rate())},
-       std::pair{"depol_rate_partial", to_string(self.depol_rate_partial())},
-       std::pair{"depol_rate_partial2", to_string(self.depol_rate_partial2())},
-       std::pair{"integral_bn", to_string(self.integral_bn())},
-       std::pair{"integral_bdn", to_string(self.integral_bdn())},
-       std::pair{"integral_1ns", to_string(self.integral_1ns())},
-       std::pair{"integral_dn2", to_string(self.integral_dn2())},
-       std::pair{"valid", to_string(self.valid())},
-       std::pair{"q_1turn", to_string(self.q_1turn())},
-       std::pair{"q_ele", "[...]"}}
-  );
-}
-std::string to_string(const TaoLatticeBranchStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoLatticeBranchStruct",
-      {std::pair{"tao_lat", "..."},
-       std::pair{"lat_sigma", "[...]"},
-       std::pair{"spin_ele", "[...]"},
-       std::pair{"bunch_params", "[...]"},
-       std::pair{"bunch_params_comb", "[...]"},
-       std::pair{"orbit", "[...]"},
-       std::pair{"plot_cache", "[...]"},
-       std::pair{"spin", to_string(self.spin())},
-       std::pair{"srdt", to_string(self.srdt())},
-       std::pair{"orb0", to_string(self.orb0())},
-       std::pair{"modes_ri", to_string(self.modes_ri())},
-       std::pair{"modes_6d", to_string(self.modes_6d())},
-       std::pair{"ptc_normal_form", to_string(self.ptc_normal_form())},
-       std::pair{"bmad_normal_form", to_string(self.bmad_normal_form())},
-       std::pair{"high_E_orb", "[...]"},
-       std::pair{"low_E_orb", "[...]"},
-       std::pair{"taylor_save", "[...]"},
-       std::pair{"cache_x_min", to_string(self.cache_x_min())},
-       std::pair{"cache_x_max", to_string(self.cache_x_max())},
-       std::pair{"comb_ds_save", to_string(self.comb_ds_save())},
-       std::pair{"ix_ref_taylor", to_string(self.ix_ref_taylor())},
-       std::pair{"ix_ele_taylor", to_string(self.ix_ele_taylor())},
-       std::pair{"track_state", to_string(self.track_state())},
-       std::pair{"cache_n_pts", to_string(self.cache_n_pts())},
-       std::pair{"ix_rad_int_cache", to_string(self.ix_rad_int_cache())},
-       std::pair{"has_open_match_element", to_string(self.has_open_match_element())},
-       std::pair{"plot_cache_valid", to_string(self.plot_cache_valid())},
-       std::pair{"spin_map_valid", to_string(self.spin_map_valid())},
-       std::pair{"twiss_valid", to_string(self.twiss_valid())},
-       std::pair{"mode_flip_here", to_string(self.mode_flip_here())},
-       std::pair{"chrom_calc_ok", to_string(self.chrom_calc_ok())},
-       std::pair{"rad_int_calc_ok", to_string(self.rad_int_calc_ok())},
-       std::pair{"emit_6d_calc_ok", to_string(self.emit_6d_calc_ok())},
-       std::pair{"sigma_track_ok", to_string(self.sigma_track_ok())}}
-  );
-}
-std::string to_string(const TaoModelElementStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoModelElementStruct",
-      {std::pair{"beam", to_string(self.beam())},
-       std::pair{"save_beam_internally", to_string(self.save_beam_internally())},
-       std::pair{"save_beam_to_file", to_string(self.save_beam_to_file())}}
-  );
-}
-std::string to_string(const TaoBeamBranchStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBeamBranchStruct",
-      {std::pair{"beam_at_start", to_string(self.beam_at_start())},
-       std::pair{"beam_init", to_string(self.beam_init())},
-       std::pair{"beam_init_used", to_string(self.beam_init_used())},
-       std::pair{"init_starting_distribution", to_string(self.init_starting_distribution())},
-       std::pair{"track_start", self.track_start()},
-       std::pair{"track_end", self.track_end()},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_track_start", to_string(self.ix_track_start())},
-       std::pair{"ix_track_end", to_string(self.ix_track_end())}}
-  );
-}
-std::string to_string(const TaoD1DataStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoD1DataStruct",
-      {std::pair{"name", self.name()}, std::pair{"d2", "..."}, std::pair{"d", "[...]"}}
-  );
-}
-std::string to_string(const TaoD2DataStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoD2DataStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"data_file_name", self.data_file_name()},
-       std::pair{"ref_file_name", self.ref_file_name()},
-       std::pair{"data_date", self.data_date()},
-       std::pair{"ref_date", self.ref_date()},
-       std::pair{"descrip", to_string(self.descrip())},
-       std::pair{"d1", "[...]"},
-       std::pair{"ix_universe", to_string(self.ix_universe())},
-       std::pair{"ix_d2_data", to_string(self.ix_d2_data())},
-       std::pair{"ix_ref", to_string(self.ix_ref())},
-       std::pair{"data_read_in", to_string(self.data_read_in())},
-       std::pair{"ref_read_in", to_string(self.ref_read_in())}}
-  );
-}
-std::string to_string(const TaoDataVarComponentStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoDataVarComponentStruct",
-      {std::pair{"name", self.name()}, std::pair{"sign", to_string(self.sign())}}
-  );
-}
-std::string to_string(const TaoGraphStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoGraphStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"type", self.type()},
-       std::pair{"title", self.title()},
-       std::pair{"title_suffix", self.title_suffix()},
-       std::pair{"text_legend", to_string(self.text_legend())},
-       std::pair{"text_legend_out", to_string(self.text_legend_out())},
-       std::pair{"why_invalid", self.why_invalid()},
-       std::pair{"curve", "[...]"},
-       std::pair{"p", "..."},
-       std::pair{"floor_plan", to_string(self.floor_plan())},
-       std::pair{"text_legend_origin", to_string(self.text_legend_origin())},
-       std::pair{"curve_legend_origin", to_string(self.curve_legend_origin())},
-       std::pair{"curve_legend", to_string(self.curve_legend())},
-       std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"x2", to_string(self.x2())},
-       std::pair{"y2", to_string(self.y2())},
-       std::pair{"margin", to_string(self.margin())},
-       std::pair{"scale_margin", to_string(self.scale_margin())},
-       std::pair{"x_axis_scale_factor", to_string(self.x_axis_scale_factor())},
-       std::pair{"symbol_size_scale", to_string(self.symbol_size_scale())},
-       std::pair{"box", to_string(self.box())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_universe", to_string(self.ix_universe())},
-       std::pair{"clip", to_string(self.clip())},
-       std::pair{"y2_mirrors_y", to_string(self.y2_mirrors_y())},
-       std::pair{"limited", to_string(self.limited())},
-       std::pair{"draw_axes", to_string(self.draw_axes())},
-       std::pair{"draw_curve_legend", to_string(self.draw_curve_legend())},
-       std::pair{"draw_grid", to_string(self.draw_grid())},
-       std::pair{"draw_title", to_string(self.draw_title())},
-       std::pair{
-           "draw_only_good_user_data_or_vars",
-           to_string(self.draw_only_good_user_data_or_vars())
-       },
-       std::pair{"allow_wrap_around", to_string(self.allow_wrap_around())},
-       std::pair{"is_valid", to_string(self.is_valid())}}
-  );
-}
-std::string to_string(const TaoPlotStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoPlotStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"description", self.description()},
-       std::pair{"graph", "[...]"},
-       std::pair{"r", "..."},
-       std::pair{"ix_plot", to_string(self.ix_plot())},
-       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
-       std::pair{"type", self.type()},
-       std::pair{"x_axis_type", self.x_axis_type()},
-       std::pair{"autoscale_x", to_string(self.autoscale_x())},
-       std::pair{"autoscale_y", to_string(self.autoscale_y())},
-       std::pair{"autoscale_gang_x", to_string(self.autoscale_gang_x())},
-       std::pair{"autoscale_gang_y", to_string(self.autoscale_gang_y())},
-       std::pair{"list_with_show_plot_command", to_string(self.list_with_show_plot_command())},
-       std::pair{"phantom", to_string(self.phantom())},
-       std::pair{"default_plot", to_string(self.default_plot())}}
-  );
-}
-std::string to_string(const TaoPlotRegionStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoPlotRegionStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"plot", to_string(self.plot())},
-       std::pair{"location", to_string(self.location())},
-       std::pair{"visible", to_string(self.visible())},
-       std::pair{"list_with_show_plot_command", to_string(self.list_with_show_plot_command())},
-       std::pair{"setup_done", to_string(self.setup_done())}}
-  );
-}
-std::string to_string(const TaoUniversePointerStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoUniversePointerStruct",
-      {std::pair{"u", to_string(self.u())}}
-  );
-}
-std::string to_string(const TaoSuperUniverseStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoSuperUniverseStruct",
-      {std::pair{"global", to_string(self.global())},
-       std::pair{"init", to_string(self.init())},
-       std::pair{"com", to_string(self.com())},
-       std::pair{"plot_page", to_string(self.plot_page())},
-       std::pair{"v1_var", "[...]"},
-       std::pair{"var", "[...]"},
-       std::pair{"u", "[...]"},
-       std::pair{"key", to_string(self.key())},
-       std::pair{"building_wall", to_string(self.building_wall())},
-       std::pair{"wave", to_string(self.wave())},
-       std::pair{"n_var_used", to_string(self.n_var_used())},
-       std::pair{"n_v1_var_used", to_string(self.n_v1_var_used())},
-       std::pair{"history", "[...]"},
-       std::pair{"initialized", to_string(self.initialized())}}
-  );
-}
-std::string to_string(const TaoVarStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoVarStruct",
-      {std::pair{"ele_name", self.ele_name()},
-       std::pair{"attrib_name", self.attrib_name()},
-       std::pair{"id", self.id()},
-       std::pair{"slave", "[...]"},
-       std::pair{"ix_v1", to_string(self.ix_v1())},
-       std::pair{"ix_var", to_string(self.ix_var())},
-       std::pair{"ix_dvar", to_string(self.ix_dvar())},
-       std::pair{"ix_attrib", to_string(self.ix_attrib())},
-       std::pair{"ix_key_table", to_string(self.ix_key_table())},
-       std::pair{"model_value", to_string(self.model_value())},
-       std::pair{"base_value", to_string(self.base_value())},
-       std::pair{"design_value", to_string(self.design_value())},
-       std::pair{"scratch_value", to_string(self.scratch_value())},
-       std::pair{"old_value", to_string(self.old_value())},
-       std::pair{"meas_value", to_string(self.meas_value())},
-       std::pair{"ref_value", to_string(self.ref_value())},
-       std::pair{"correction_value", to_string(self.correction_value())},
-       std::pair{"high_lim", to_string(self.high_lim())},
-       std::pair{"low_lim", to_string(self.low_lim())},
-       std::pair{"step", to_string(self.step())},
-       std::pair{"weight", to_string(self.weight())},
-       std::pair{"delta_merit", to_string(self.delta_merit())},
-       std::pair{"merit", to_string(self.merit())},
-       std::pair{"dMerit_dVar", to_string(self.dMerit_dVar())},
-       std::pair{"key_val0", to_string(self.key_val0())},
-       std::pair{"key_delta", to_string(self.key_delta())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"extend_val", to_string(self.extend_val())},
-       std::pair{"merit_type", self.merit_type()},
-       std::pair{"exists", to_string(self.exists())},
-       std::pair{"good_var", to_string(self.good_var())},
-       std::pair{"good_user", to_string(self.good_user())},
-       std::pair{"good_opt", to_string(self.good_opt())},
-       std::pair{"good_plot", to_string(self.good_plot())},
-       std::pair{"useit_opt", to_string(self.useit_opt())},
-       std::pair{"useit_plot", to_string(self.useit_plot())},
-       std::pair{"key_bound", to_string(self.key_bound())},
-       std::pair{"v1", "..."}}
-  );
-}
-std::string to_string(const TaoVarSlaveStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoVarSlaveStruct",
-      {std::pair{"ix_uni", to_string(self.ix_uni())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"model_value", to_string(self.model_value())},
-       std::pair{"base_value", to_string(self.base_value())}}
-  );
-}
-std::string to_string(const TaoLatticeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoLatticeStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"lat", to_string(self.lat())},
-       std::pair{"high_E_lat", to_string(self.high_E_lat())},
-       std::pair{"low_E_lat", to_string(self.low_E_lat())},
-       std::pair{"rad_int_by_ele_ri", to_string(self.rad_int_by_ele_ri())},
-       std::pair{"rad_int_by_ele_6d", to_string(self.rad_int_by_ele_6d())},
-       std::pair{"tao_branch", "[...]"}}
-  );
-}
-std::string to_string(const TaoBeamUniStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBeamUniStruct",
-      {std::pair{"saved_at", self.saved_at()},
-       std::pair{"dump_file", self.dump_file()},
-       std::pair{"dump_at", self.dump_at()},
-       std::pair{"track_beam_in_universe", to_string(self.track_beam_in_universe())},
-       std::pair{"always_reinit", to_string(self.always_reinit())}}
-  );
-}
-std::string to_string(const TaoDynamicApertureStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoDynamicApertureStruct",
-      {std::pair{"param", to_string(self.param())},
-       std::pair{"scan", "[...]"},
-       std::pair{"pz", to_string(self.pz())},
-       std::pair{"ellipse_scale", to_string(self.ellipse_scale())},
-       std::pair{"a_emit", to_string(self.a_emit())},
-       std::pair{"b_emit", to_string(self.b_emit())}}
-  );
-}
-std::string to_string(const TaoModelBranchStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoModelBranchStruct",
-      {std::pair{"ele", "[...]"}, std::pair{"beam", to_string(self.beam())}}
-  );
-}
-std::string to_string(const TaoSpinMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoSpinMapStruct",
-      {std::pair{"valid", to_string(self.valid())},
-       std::pair{"map1", to_string(self.map1())},
-       std::pair{"axis_input", to_string(self.axis_input())},
-       std::pair{"axis0", to_string(self.axis0())},
-       std::pair{"axis1", to_string(self.axis1())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_ref", to_string(self.ix_ref())},
-       std::pair{"ix_uni", to_string(self.ix_uni())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"mat8", to_string(self.mat8())}}
-  );
-}
-std::string to_string(const TaoDataStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoDataStruct",
-      {std::pair{"ele_name", self.ele_name()},
-       std::pair{"ele_start_name", self.ele_start_name()},
-       std::pair{"ele_ref_name", self.ele_ref_name()},
-       std::pair{"data_type", self.data_type()},
-       std::pair{"merit_type", self.merit_type()},
-       std::pair{"id", self.id()},
-       std::pair{"data_source", self.data_source()},
-       std::pair{"why_invalid", self.why_invalid()},
-       std::pair{"ix_uni", to_string(self.ix_uni())},
-       std::pair{"ix_bunch", to_string(self.ix_bunch())},
-       std::pair{"ix_branch", to_string(self.ix_branch())},
-       std::pair{"ix_ele", to_string(self.ix_ele())},
-       std::pair{"ix_ele_start", to_string(self.ix_ele_start())},
-       std::pair{"ix_ele_ref", to_string(self.ix_ele_ref())},
-       std::pair{"ix_ele_merit", to_string(self.ix_ele_merit())},
-       std::pair{"ix_d1", to_string(self.ix_d1())},
-       std::pair{"ix_data", to_string(self.ix_data())},
-       std::pair{"ix_dModel", to_string(self.ix_dModel())},
-       std::pair{"eval_point", to_string(self.eval_point())},
-       std::pair{"meas_value", to_string(self.meas_value())},
-       std::pair{"ref_value", to_string(self.ref_value())},
-       std::pair{"model_value", to_string(self.model_value())},
-       std::pair{"design_value", to_string(self.design_value())},
-       std::pair{"old_value", to_string(self.old_value())},
-       std::pair{"base_value", to_string(self.base_value())},
-       std::pair{"error_rms", to_string(self.error_rms())},
-       std::pair{"delta_merit", to_string(self.delta_merit())},
-       std::pair{"weight", to_string(self.weight())},
-       std::pair{"invalid_value", to_string(self.invalid_value())},
-       std::pair{"merit", to_string(self.merit())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"s_offset", to_string(self.s_offset())},
-       std::pair{"ref_s_offset", to_string(self.ref_s_offset())},
-       std::pair{"err_message_printed", to_string(self.err_message_printed())},
-       std::pair{"exists", to_string(self.exists())},
-       std::pair{"good_model", to_string(self.good_model())},
-       std::pair{"good_base", to_string(self.good_base())},
-       std::pair{"good_design", to_string(self.good_design())},
-       std::pair{"good_meas", to_string(self.good_meas())},
-       std::pair{"good_ref", to_string(self.good_ref())},
-       std::pair{"good_user", to_string(self.good_user())},
-       std::pair{"good_opt", to_string(self.good_opt())},
-       std::pair{"good_plot", to_string(self.good_plot())},
-       std::pair{"useit_plot", to_string(self.useit_plot())},
-       std::pair{"useit_opt", to_string(self.useit_opt())},
-       std::pair{"spin_map", to_string(self.spin_map())},
-       std::pair{"d1", "..."}}
-  );
-}
-std::string to_string(const TaoPingScaleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoPingScaleStruct",
-      {std::pair{"a_mode_meas", to_string(self.a_mode_meas())},
-       std::pair{"a_mode_ref", to_string(self.a_mode_ref())},
-       std::pair{"b_mode_meas", to_string(self.b_mode_meas())},
-       std::pair{"b_mode_ref", to_string(self.b_mode_ref())}}
-  );
-}
-std::string to_string(const TaoUniverseCalcStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoUniverseCalcStruct",
-      {std::pair{"srdt_for_data", to_string(self.srdt_for_data())},
-       std::pair{"rad_int_for_data", to_string(self.rad_int_for_data())},
-       std::pair{"rad_int_for_plotting", to_string(self.rad_int_for_plotting())},
-       std::pair{"chrom_for_data", to_string(self.chrom_for_data())},
-       std::pair{"chrom_for_plotting", to_string(self.chrom_for_plotting())},
-       std::pair{"lat_sigma_for_data", to_string(self.lat_sigma_for_data())},
-       std::pair{"lat_sigma_for_plotting", to_string(self.lat_sigma_for_plotting())},
-       std::pair{"dynamic_aperture", to_string(self.dynamic_aperture())},
-       std::pair{"one_turn_map", to_string(self.one_turn_map())},
-       std::pair{"lattice", to_string(self.lattice())},
-       std::pair{"twiss", to_string(self.twiss())},
-       std::pair{"track", to_string(self.track())},
-       std::pair{"spin_matrices", to_string(self.spin_matrices())}}
-  );
-}
-std::string to_string(const LatEleOrderStruct &self) {
-  return repr(self.get_fortran_ptr(), "LatEleOrderStruct", {std::pair{"branch", "[...]"}});
-}
-std::string to_string(const TaoExpressionInfoStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoExpressionInfoStruct",
-      {std::pair{"good", to_string(self.good())},
-       std::pair{"ele", to_string(self.ele())},
-       std::pair{"s", to_string(self.s())}}
-  );
-}
-std::string to_string(const TaoEvalNodeStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoEvalNodeStruct",
-      {std::pair{"type", to_string(self.type())},
-       std::pair{"name", self.name()},
-       std::pair{"scale", to_string(self.scale())},
-       std::pair{"value", to_string(self.value())},
-       std::pair{"info", "[...]"},
-       std::pair{"node", "[...]"}}
-  );
-}
-std::string to_string(const TaoTitleStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoTitleStruct",
-      {std::pair{"string", self.string()},
-       std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"units", self.units()},
-       std::pair{"justify", self.justify()},
-       std::pair{"draw_it", to_string(self.draw_it())}}
-  );
-}
-std::string to_string(const QpRectStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpRectStruct",
-      {std::pair{"x1", to_string(self.x1())},
-       std::pair{"x2", to_string(self.x2())},
-       std::pair{"y1", to_string(self.y1())},
-       std::pair{"y2", to_string(self.y2())},
-       std::pair{"units", self.units()}}
-  );
-}
-std::string to_string(const TaoDrawingStruct &self) {
-  return repr(self.get_fortran_ptr(), "TaoDrawingStruct", {std::pair{"ele_shape", "[...]"}});
-}
-std::string to_string(const TaoShapePatternStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoShapePatternStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"line", to_string(self.line())},
-       std::pair{"pt", "[...]"}}
-  );
-}
-std::string to_string(const TaoShapePatternPointStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoShapePatternPointStruct",
-      {std::pair{"s", to_string(self.s())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"radius", to_string(self.radius())}}
-  );
-}
-std::string to_string(const QpAxisStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpAxisStruct",
-      {std::pair{"label", self.label()},
-       std::pair{"min", to_string(self.min())},
-       std::pair{"max", to_string(self.max())},
-       std::pair{"tick_min", to_string(self.tick_min())},
-       std::pair{"tick_max", to_string(self.tick_max())},
-       std::pair{"eval_min", to_string(self.eval_min())},
-       std::pair{"eval_max", to_string(self.eval_max())},
-       std::pair{"dtick", to_string(self.dtick())},
-       std::pair{"number_offset", to_string(self.number_offset())},
-       std::pair{"label_offset", to_string(self.label_offset())},
-       std::pair{"major_tick_len", to_string(self.major_tick_len())},
-       std::pair{"minor_tick_len", to_string(self.minor_tick_len())},
-       std::pair{"label_color", self.label_color()},
-       std::pair{"major_div", to_string(self.major_div())},
-       std::pair{"major_div_nominal", to_string(self.major_div_nominal())},
-       std::pair{"minor_div", to_string(self.minor_div())},
-       std::pair{"minor_div_max", to_string(self.minor_div_max())},
-       std::pair{"places", to_string(self.places())},
-       std::pair{"type", self.type()},
-       std::pair{"bounds", self.bounds()},
-       std::pair{"tick_side", to_string(self.tick_side())},
-       std::pair{"number_side", to_string(self.number_side())},
-       std::pair{"draw_label", to_string(self.draw_label())},
-       std::pair{"draw_numbers", to_string(self.draw_numbers())}}
-  );
-}
-std::string to_string(const QpLegendStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpLegendStruct",
-      {std::pair{"row_spacing", to_string(self.row_spacing())},
-       std::pair{"line_length", to_string(self.line_length())},
-       std::pair{"text_offset", to_string(self.text_offset())},
-       std::pair{"draw_line", to_string(self.draw_line())},
-       std::pair{"draw_symbol", to_string(self.draw_symbol())},
-       std::pair{"draw_text", to_string(self.draw_text())}}
-  );
-}
-std::string to_string(const QpPointStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpPointStruct",
-      {std::pair{"x", to_string(self.x())},
-       std::pair{"y", to_string(self.y())},
-       std::pair{"units", self.units()}}
-  );
-}
-std::string to_string(const QpLineStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpLineStruct",
-      {std::pair{"width", to_string(self.width())},
-       std::pair{"color", self.color()},
-       std::pair{"pattern", self.pattern()}}
-  );
-}
-std::string to_string(const QpSymbolStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "QpSymbolStruct",
-      {std::pair{"type", self.type()},
-       std::pair{"height", to_string(self.height())},
-       std::pair{"color", self.color()},
-       std::pair{"fill_pattern", self.fill_pattern()},
-       std::pair{"line_width", to_string(self.line_width())}}
-  );
-}
-std::string to_string(const TaoFloorPlanStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoFloorPlanStruct",
-      {std::pair{"view", self.view()},
-       std::pair{"rotation", to_string(self.rotation())},
-       std::pair{"correct_distortion", to_string(self.correct_distortion())},
-       std::pair{"flip_label_side", to_string(self.flip_label_side())},
-       std::pair{"size_is_absolute", to_string(self.size_is_absolute())},
-       std::pair{"draw_only_first_pass", to_string(self.draw_only_first_pass())},
-       std::pair{"draw_building_wall", to_string(self.draw_building_wall())},
-       std::pair{"orbit_scale", to_string(self.orbit_scale())},
-       std::pair{"orbit_color", self.orbit_color()},
-       std::pair{"orbit_pattern", self.orbit_pattern()},
-       std::pair{"orbit_lattice", self.orbit_lattice()},
-       std::pair{"orbit_width", to_string(self.orbit_width())}}
-  );
-}
-std::string to_string(const TaoV1VarStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoV1VarStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"ix_v1_var", to_string(self.ix_v1_var())},
-       std::pair{"v", "[...]"}}
-  );
-}
-std::string to_string(const TaoGlobalStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoGlobalStruct",
-      {std::pair{"beam_dead_cutoff", to_string(self.beam_dead_cutoff())},
-       std::pair{"lm_opt_deriv_reinit", to_string(self.lm_opt_deriv_reinit())},
-       std::pair{"de_lm_step_ratio", to_string(self.de_lm_step_ratio())},
-       std::pair{"de_var_to_population_factor", to_string(self.de_var_to_population_factor())},
-       std::pair{"lmdif_eps", to_string(self.lmdif_eps())},
-       std::pair{"lmdif_negligible_merit", to_string(self.lmdif_negligible_merit())},
-       std::pair{"svd_cutoff", to_string(self.svd_cutoff())},
-       std::pair{"unstable_penalty", to_string(self.unstable_penalty())},
-       std::pair{"merit_stop_value", to_string(self.merit_stop_value())},
-       std::pair{"dmerit_stop_value", to_string(self.dmerit_stop_value())},
-       std::pair{"random_sigma_cutoff", to_string(self.random_sigma_cutoff())},
-       std::pair{"delta_e_chrom", to_string(self.delta_e_chrom())},
-       std::pair{"max_plot_time", to_string(self.max_plot_time())},
-       std::pair{"default_universe", to_string(self.default_universe())},
-       std::pair{"default_branch", to_string(self.default_branch())},
-       std::pair{"n_opti_cycles", to_string(self.n_opti_cycles())},
-       std::pair{"n_opti_loops", to_string(self.n_opti_loops())},
-       std::pair{"n_threads", to_string(self.n_threads())},
-       std::pair{"phase_units", to_string(self.phase_units())},
-       std::pair{"bunch_to_plot", to_string(self.bunch_to_plot())},
-       std::pair{"random_seed", to_string(self.random_seed())},
-       std::pair{"n_top10_merit", to_string(self.n_top10_merit())},
-       std::pair{"srdt_gen_n_slices", to_string(self.srdt_gen_n_slices())},
-       std::pair{"datum_err_messages_max", to_string(self.datum_err_messages_max())},
-       std::pair{"srdt_sxt_n_slices", to_string(self.srdt_sxt_n_slices())},
-       std::pair{"srdt_use_cache", to_string(self.srdt_use_cache())},
-       std::pair{"quiet", self.quiet()},
-       std::pair{"random_engine", self.random_engine()},
-       std::pair{"random_gauss_converter", self.random_gauss_converter()},
-       std::pair{"track_type", self.track_type()},
-       std::pair{"lat_sigma_calc_uses_emit_from", self.lat_sigma_calc_uses_emit_from()},
-       std::pair{"prompt_string", self.prompt_string()},
-       std::pair{"prompt_color", self.prompt_color()},
-       std::pair{"optimizer", self.optimizer()},
-       std::pair{"print_command", self.print_command()},
-       std::pair{"var_out_file", self.var_out_file()},
-       std::pair{"history_file", self.history_file()},
-       std::pair{"beam_timer_on", to_string(self.beam_timer_on())},
-       std::pair{"box_plots", to_string(self.box_plots())},
-       std::pair{"blank_line_between_commands", to_string(self.blank_line_between_commands())},
-       std::pair{"cmd_file_abort_on_error", to_string(self.cmd_file_abort_on_error())},
-       std::pair{"concatenate_maps", to_string(self.concatenate_maps())},
-       std::pair{"derivative_recalc", to_string(self.derivative_recalc())},
-       std::pair{"derivative_uses_design", to_string(self.derivative_uses_design())},
-       std::pair{"disable_smooth_line_calc", to_string(self.disable_smooth_line_calc())},
-       std::pair{"draw_curve_off_scale_warn", to_string(self.draw_curve_off_scale_warn())},
-       std::pair{"external_plotting", to_string(self.external_plotting())},
-       std::pair{"label_lattice_elements", to_string(self.label_lattice_elements())},
-       std::pair{"label_keys", to_string(self.label_keys())},
-       std::pair{"lattice_calc_on", to_string(self.lattice_calc_on())},
-       std::pair{"only_limit_opt_vars", to_string(self.only_limit_opt_vars())},
-       std::pair{"opt_with_ref", to_string(self.opt_with_ref())},
-       std::pair{"opt_with_base", to_string(self.opt_with_base())},
-       std::pair{"opt_match_auto_recalc", to_string(self.opt_match_auto_recalc())},
-       std::pair{"opti_write_var_file", to_string(self.opti_write_var_file())},
-       std::pair{"optimizer_allow_user_abort", to_string(self.optimizer_allow_user_abort())},
-       std::pair{"optimizer_var_limit_warn", to_string(self.optimizer_var_limit_warn())},
-       std::pair{"plot_on", to_string(self.plot_on())},
-       std::pair{"rad_int_user_calc_on", to_string(self.rad_int_user_calc_on())},
-       std::pair{"rf_on", to_string(self.rf_on())},
-       std::pair{"single_step", to_string(self.single_step())},
-       std::pair{"stop_on_error", to_string(self.stop_on_error())},
-       std::pair{"svd_retreat_on_merit_increase", to_string(self.svd_retreat_on_merit_increase())},
-       std::pair{"var_limits_on", to_string(self.var_limits_on())},
-       std::pair{"wait_for_CR_in_single_mode", to_string(self.wait_for_CR_in_single_mode())},
-       std::pair{"symbol_import", to_string(self.symbol_import())},
-       std::pair{"debug_on", to_string(self.debug_on())},
-       std::pair{"expression_tree_on", to_string(self.expression_tree_on())},
-       std::pair{"verbose_on", to_string(self.verbose_on())}}
-  );
-}
-std::string to_string(const TaoInitStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoInitStruct",
-      {std::pair{"parse_cmd_args", to_string(self.parse_cmd_args())},
-       std::pair{"debug_switch", to_string(self.debug_switch())},
-       std::pair{"external_plotting_switch", to_string(self.external_plotting_switch())},
-       std::pair{"init_name", self.init_name()},
-       std::pair{"hook_init_file", self.hook_init_file()},
-       std::pair{"hook_lat_file", self.hook_lat_file()},
-       std::pair{"hook_beam_file", self.hook_beam_file()},
-       std::pair{"hook_data_file", self.hook_data_file()},
-       std::pair{"hook_plot_file", self.hook_plot_file()},
-       std::pair{"hook_startup_file", self.hook_startup_file()},
-       std::pair{"hook_var_file", self.hook_var_file()},
-       std::pair{"hook_building_wall_file", self.hook_building_wall_file()},
-       std::pair{"init_file_arg_path", self.init_file_arg_path()},
-       std::pair{"lattice_file_arg", self.lattice_file_arg()},
-       std::pair{"hook_init_file_arg", self.hook_init_file_arg()},
-       std::pair{"init_file_arg", self.init_file_arg()},
-       std::pair{"beam_file_arg", self.beam_file_arg()},
-       std::pair{"beam_init_position_file_arg", self.beam_init_position_file_arg()},
-       std::pair{"command_arg", self.command_arg()},
-       std::pair{"data_file_arg", self.data_file_arg()},
-       std::pair{"plot_file_arg", self.plot_file_arg()},
-       std::pair{"startup_file_arg", self.startup_file_arg()},
-       std::pair{"var_file_arg", self.var_file_arg()},
-       std::pair{"building_wall_file_arg", self.building_wall_file_arg()},
-       std::pair{"geometry_arg", self.geometry_arg()},
-       std::pair{"slice_lattice_arg", self.slice_lattice_arg()},
-       std::pair{"start_branch_at_arg", self.start_branch_at_arg()},
-       std::pair{"log_startup_arg", self.log_startup_arg()},
-       std::pair{"no_stopping_arg", self.no_stopping_arg()},
-       std::pair{"noplot_arg", self.noplot_arg()},
-       std::pair{"no_rad_int_arg", self.no_rad_int_arg()},
-       std::pair{"reverse_arg", self.reverse_arg()},
-       std::pair{"debug_arg", self.debug_arg()},
-       std::pair{"disable_smooth_line_calc_arg", self.disable_smooth_line_calc_arg()},
-       std::pair{"rf_on_arg", self.rf_on_arg()},
-       std::pair{"prompt_color_arg", self.prompt_color_arg()},
-       std::pair{"quiet_arg", self.quiet_arg()},
-       std::pair{"noinit_arg", self.noinit_arg()},
-       std::pair{"nostartup_arg", self.nostartup_arg()},
-       std::pair{"symbol_import_arg", self.symbol_import_arg()},
-       std::pair{"unique_name_suffix", self.unique_name_suffix()}}
-  );
-}
-std::string to_string(const TaoCommonStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoCommonStruct",
-      {std::pair{"plot_place_buffer", "[...]"},
-       std::pair{"covar", to_string(self.covar())},
-       std::pair{"alpha", to_string(self.alpha())},
-       std::pair{"dummy_target", to_string(self.dummy_target())},
-       std::pair{"n_alias", to_string(self.n_alias())},
-       std::pair{"cmd_file_level", to_string(self.cmd_file_level())},
-       std::pair{"ix_key_bank", to_string(self.ix_key_bank())},
-       std::pair{"ix_history", to_string(self.ix_history())},
-       std::pair{"n_history", to_string(self.n_history())},
-       std::pair{"lev_loop", to_string(self.lev_loop())},
-       std::pair{"n_err_messages_printed", to_string(self.n_err_messages_printed())},
-       std::pair{"n_universes", to_string(self.n_universes())},
-       std::pair{"ix_beam_track_active_element", to_string(self.ix_beam_track_active_element())},
-       std::pair{"cmd_file_paused", to_string(self.cmd_file_paused())},
-       std::pair{"use_cmd_here", to_string(self.use_cmd_here())},
-       std::pair{"cmd_from_cmd_file", to_string(self.cmd_from_cmd_file())},
-       std::pair{"use_saved_beam_in_tracking", to_string(self.use_saved_beam_in_tracking())},
-       std::pair{"single_mode", to_string(self.single_mode())},
-       std::pair{
-           "combine_consecutive_elements_of_like_name",
-           to_string(self.combine_consecutive_elements_of_like_name())
-       },
-       std::pair{"have_tracked_beam", to_string(self.have_tracked_beam())},
-       std::pair{"init_plot_needed", to_string(self.init_plot_needed())},
-       std::pair{"init_beam", to_string(self.init_beam())},
-       std::pair{"init_var", to_string(self.init_var())},
-       std::pair{"init_read_lat_info", to_string(self.init_read_lat_info())},
-       std::pair{"optimizer_running", to_string(self.optimizer_running())},
-       std::pair{"have_datums_using_expressions", to_string(self.have_datums_using_expressions())},
-       std::pair{"print_to_terminal", to_string(self.print_to_terminal())},
-       std::pair{"lattice_calc_done", to_string(self.lattice_calc_done())},
-       std::pair{"add_measurement_noise", to_string(self.add_measurement_noise())},
-       std::pair{"is_err_message_printed", to_string(self.is_err_message_printed())},
-       std::pair{"command_arg_has_been_executed", to_string(self.command_arg_has_been_executed())},
-       std::pair{"all_merit_weights_positive", to_string(self.all_merit_weights_positive())},
-       std::pair{"multi_turn_orbit_is_plotted", to_string(self.multi_turn_orbit_is_plotted())},
-       std::pair{"force_chrom_calc", to_string(self.force_chrom_calc())},
-       std::pair{"force_rad_int_calc", to_string(self.force_rad_int_calc())},
-       std::pair{"rad_int_ri_calc_on", to_string(self.rad_int_ri_calc_on())},
-       std::pair{"rad_int_6d_calc_on", to_string(self.rad_int_6d_calc_on())},
-       std::pair{"valid_plot_who", to_string(self.valid_plot_who())},
-       std::pair{"single_mode_buffer", self.single_mode_buffer()},
-       std::pair{"cmd", self.cmd()}}
-  );
-}
-std::string to_string(const TaoPlotPageStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoPlotPageStruct",
-      {std::pair{"title", to_string(self.title())},
-       std::pair{"subtitle", to_string(self.subtitle())},
-       std::pair{"border", to_string(self.border())},
-       std::pair{"floor_plan", to_string(self.floor_plan())},
-       std::pair{"lat_layout", to_string(self.lat_layout())},
-       std::pair{"pattern", "[...]"},
-       std::pair{"template_", "[...]"},
-       std::pair{"region", "[...]"},
-       std::pair{"plot_display_type", self.plot_display_type()},
-       std::pair{"size", to_string(self.size())},
-       std::pair{"text_height", to_string(self.text_height())},
-       std::pair{"main_title_text_scale", to_string(self.main_title_text_scale())},
-       std::pair{"graph_title_text_scale", to_string(self.graph_title_text_scale())},
-       std::pair{"axis_number_text_scale", to_string(self.axis_number_text_scale())},
-       std::pair{"axis_label_text_scale", to_string(self.axis_label_text_scale())},
-       std::pair{"legend_text_scale", to_string(self.legend_text_scale())},
-       std::pair{"key_table_text_scale", to_string(self.key_table_text_scale())},
-       std::pair{"floor_plan_shape_scale", to_string(self.floor_plan_shape_scale())},
-       std::pair{"floor_plan_text_scale", to_string(self.floor_plan_text_scale())},
-       std::pair{"lat_layout_shape_scale", to_string(self.lat_layout_shape_scale())},
-       std::pair{"lat_layout_text_scale", to_string(self.lat_layout_text_scale())},
-       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
-       std::pair{"id_window", to_string(self.id_window())},
-       std::pair{"delete_overlapping_plots", to_string(self.delete_overlapping_plots())},
-       std::pair{"draw_graph_title_suffix", to_string(self.draw_graph_title_suffix())}}
-  );
-}
-std::string to_string(const TaoBuildingWallStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBuildingWallStruct",
-      {std::pair{"orientation", to_string(self.orientation())}, std::pair{"section", "[...]"}}
-  );
-}
-std::string to_string(const TaoBuildingWallOrientationStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBuildingWallOrientationStruct",
-      {std::pair{"theta", to_string(self.theta())},
-       std::pair{"x_offset", to_string(self.x_offset())},
-       std::pair{"z_offset", to_string(self.z_offset())}}
-  );
-}
-std::string to_string(const TaoBuildingWallSectionStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBuildingWallSectionStruct",
-      {std::pair{"name", self.name()},
-       std::pair{"constraint", self.constraint()},
-       std::pair{"point", "[...]"}}
-  );
-}
-std::string to_string(const TaoBuildingWallPointStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoBuildingWallPointStruct",
-      {std::pair{"z", to_string(self.z())},
-       std::pair{"x", to_string(self.x())},
-       std::pair{"radius", to_string(self.radius())},
-       std::pair{"z_center", to_string(self.z_center())},
-       std::pair{"x_center", to_string(self.x_center())}}
-  );
-}
-std::string to_string(const TaoWaveStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoWaveStruct",
-      {std::pair{"data_type", self.data_type()},
-       std::pair{"rms_rel_a", to_string(self.rms_rel_a())},
-       std::pair{"rms_rel_b", to_string(self.rms_rel_b())},
-       std::pair{"rms_rel_as", to_string(self.rms_rel_as())},
-       std::pair{"rms_rel_bs", to_string(self.rms_rel_bs())},
-       std::pair{"rms_rel_ar", to_string(self.rms_rel_ar())},
-       std::pair{"rms_rel_br", to_string(self.rms_rel_br())},
-       std::pair{"rms_rel_k", to_string(self.rms_rel_k())},
-       std::pair{"rms_rel_ks", to_string(self.rms_rel_ks())},
-       std::pair{"rms_rel_kr", to_string(self.rms_rel_kr())},
-       std::pair{"rms_phi", to_string(self.rms_phi())},
-       std::pair{"rms_phi_s", to_string(self.rms_phi_s())},
-       std::pair{"rms_phi_r", to_string(self.rms_phi_r())},
-       std::pair{"amp_ba_s", to_string(self.amp_ba_s())},
-       std::pair{"amp_ba_r", to_string(self.amp_ba_r())},
-       std::pair{"chi_a", to_string(self.chi_a())},
-       std::pair{"chi_c", to_string(self.chi_c())},
-       std::pair{"chi_ba", to_string(self.chi_ba())},
-       std::pair{"amp_a", to_string(self.amp_a())},
-       std::pair{"amp_b", to_string(self.amp_b())},
-       std::pair{"amp_ba", to_string(self.amp_ba())},
-       std::pair{"coef_a", to_string(self.coef_a())},
-       std::pair{"coef_b", to_string(self.coef_b())},
-       std::pair{"coef_ba", to_string(self.coef_ba())},
-       std::pair{"n_func", to_string(self.n_func())},
-       std::pair{"ix_a1", to_string(self.ix_a1())},
-       std::pair{"ix_a2", to_string(self.ix_a2())},
-       std::pair{"ix_b1", to_string(self.ix_b1())},
-       std::pair{"ix_b2", to_string(self.ix_b2())},
-       std::pair{"i_a1", to_string(self.i_a1())},
-       std::pair{"i_a2", to_string(self.i_a2())},
-       std::pair{"i_b1", to_string(self.i_b1())},
-       std::pair{"i_b2", to_string(self.i_b2())},
-       std::pair{"n_a", to_string(self.n_a())},
-       std::pair{"n_b", to_string(self.n_b())},
-       std::pair{"i_curve_wrap_pt", to_string(self.i_curve_wrap_pt())},
-       std::pair{"ix_data", to_string(self.ix_data())},
-       std::pair{"n_kick", to_string(self.n_kick())},
-       std::pair{"kick", "[...]"},
-       std::pair{"base_graph", to_string(self.base_graph())},
-       std::pair{"region", to_string(self.region())},
-       std::pair{"d1_dat", to_string(self.d1_dat())}}
-  );
-}
-std::string to_string(const TaoWaveKickPtStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoWaveKickPtStruct",
-      {std::pair{"phi_s", to_string(self.phi_s())},
-       std::pair{"phi_r", to_string(self.phi_r())},
-       std::pair{"phi", to_string(self.phi())},
-       std::pair{"amp", to_string(self.amp())},
-       std::pair{"s", to_string(self.s())},
-       std::pair{"ix_dat_before_kick", to_string(self.ix_dat_before_kick())},
-       std::pair{"ele", to_string(self.ele())}}
-  );
-}
-std::string to_string(const TaoCmdHistoryStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoCmdHistoryStruct",
-      {std::pair{"cmd", self.cmd()}, std::pair{"ix", to_string(self.ix())}}
-  );
-}
-std::string to_string(const TaoUniverseStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "TaoUniverseStruct",
-      {std::pair{"model", to_string(self.model())},
-       std::pair{"design", to_string(self.design())},
-       std::pair{"base", to_string(self.base())},
-       std::pair{"beam", to_string(self.beam())},
-       std::pair{"dynamic_aperture", to_string(self.dynamic_aperture())},
-       std::pair{"model_branch", "[...]"},
-       std::pair{"d2_data", "[...]"},
-       std::pair{"data", "[...]"},
-       std::pair{"ping_scale", to_string(self.ping_scale())},
-       std::pair{"scratch_lat", to_string(self.scratch_lat())},
-       std::pair{"calc", to_string(self.calc())},
-       std::pair{"ele_order", to_string(self.ele_order())},
-       std::pair{"spin_map", to_string(self.spin_map())},
-       std::pair{"dModel_dVar", to_string(self.dModel_dVar())},
-       std::pair{"ix_uni", to_string(self.ix_uni())},
-       std::pair{"n_d2_data_used", to_string(self.n_d2_data_used())},
-       std::pair{"n_data_used", to_string(self.n_data_used())},
-       std::pair{"is_on", to_string(self.is_on())},
-       std::pair{"design_same_as_previous", to_string(self.design_same_as_previous())},
-       std::pair{"picked_uni", to_string(self.picked_uni())}}
-  );
-}
-std::string to_string(const MadEnergyStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "MadEnergyStruct",
-      {std::pair{"total", to_string(self.total())},
-       std::pair{"beta", to_string(self.beta())},
-       std::pair{"gamma", to_string(self.gamma())},
-       std::pair{"kinetic", to_string(self.kinetic())},
-       std::pair{"p0c", to_string(self.p0c())},
-       std::pair{"particle", to_string(self.particle())}}
-  );
-}
-std::string to_string(const MadMapStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "MadMapStruct",
-      {std::pair{"k", to_string(self.k())},
-       std::pair{"r", to_string(self.r())},
-       std::pair{"t", to_string(self.t())}}
-  );
-}
-std::string to_string(const RandomStateStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "RandomStateStruct",
-      {std::pair{"ix", to_string(self.ix())},
-       std::pair{"iy", to_string(self.iy())},
-       std::pair{"number_stored", to_string(self.number_stored())},
-       std::pair{"h_saved", to_string(self.h_saved())},
-       std::pair{"engine", to_string(self.engine())},
-       std::pair{"seed", to_string(self.seed())},
-       std::pair{"am", to_string(self.am())},
-       std::pair{"gauss_converter", to_string(self.gauss_converter())},
-       std::pair{"gauss_sigma_cut", to_string(self.gauss_sigma_cut())},
-       std::pair{"in_sobseq", to_string(self.in_sobseq())},
-       std::pair{"ix_sobseq", to_string(self.ix_sobseq())},
-       std::pair{"x_sobseq", to_string(self.x_sobseq())}}
-  );
-}
-std::string to_string(const BbuStageStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BbuStageStruct",
-      {std::pair{"ix_ele_lr_wake", to_string(self.ix_ele_lr_wake())},
-       std::pair{"ix_ele_stage_end", to_string(self.ix_ele_stage_end())},
-       std::pair{"ix_pass", to_string(self.ix_pass())},
-       std::pair{"ix_stage_pass1", to_string(self.ix_stage_pass1())},
-       std::pair{"ix_head_bunch", to_string(self.ix_head_bunch())},
-       std::pair{"ix_hom_max", to_string(self.ix_hom_max())},
-       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
-       std::pair{"time_at_wake_ele", to_string(self.time_at_wake_ele())},
-       std::pair{"ave_orb", to_string(self.ave_orb())},
-       std::pair{"rms_orb", to_string(self.rms_orb())},
-       std::pair{"min_orb", to_string(self.min_orb())},
-       std::pair{"max_orb", to_string(self.max_orb())},
-       std::pair{"n_orb", to_string(self.n_orb())}}
-  );
-}
-std::string to_string(const BbuBeamStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BbuBeamStruct",
-      {std::pair{"bunch", "[...]"},
-       std::pair{"stage", "[...]"},
-       std::pair{"ix_ele_bunch", to_string(self.ix_ele_bunch())},
-       std::pair{"ix_bunch_head", to_string(self.ix_bunch_head())},
-       std::pair{"ix_bunch_end", to_string(self.ix_bunch_end())},
-       std::pair{"n_bunch_in_lat", to_string(self.n_bunch_in_lat())},
-       std::pair{"ix_stage_voltage_max", to_string(self.ix_stage_voltage_max())},
-       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
-       std::pair{"time_now", to_string(self.time_now())},
-       std::pair{"one_turn_time", to_string(self.one_turn_time())},
-       std::pair{"rf_wavelength_max", to_string(self.rf_wavelength_max())}}
-  );
-}
-std::string to_string(const BbuParamStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "BbuParamStruct",
-      {std::pair{"lat_filename", self.lat_filename()},
-       std::pair{"lat2_filename", self.lat2_filename()},
-       std::pair{"bunch_by_bunch_info_file", self.bunch_by_bunch_info_file()},
-       std::pair{"hybridize", to_string(self.hybridize())},
-       std::pair{"write_digested_hybrid_lat", to_string(self.write_digested_hybrid_lat())},
-       std::pair{"write_voltage_vs_time_dat", to_string(self.write_voltage_vs_time_dat())},
-       std::pair{"keep_overlays_and_groups", to_string(self.keep_overlays_and_groups())},
-       std::pair{"keep_all_lcavities", to_string(self.keep_all_lcavities())},
-       std::pair{"use_taylor_for_hybrids", to_string(self.use_taylor_for_hybrids())},
-       std::pair{"stable_orbit_anal", to_string(self.stable_orbit_anal())},
-       std::pair{"limit_factor", to_string(self.limit_factor())},
-       std::pair{"simulation_turns_max", to_string(self.simulation_turns_max())},
-       std::pair{"bunch_freq", to_string(self.bunch_freq())},
-       std::pair{"init_particle_offset", to_string(self.init_particle_offset())},
-       std::pair{"current", to_string(self.current())},
-       std::pair{"rel_tol", to_string(self.rel_tol())},
-       std::pair{"drscan", to_string(self.drscan())},
-       std::pair{"use_interpolated_threshold", to_string(self.use_interpolated_threshold())},
-       std::pair{"write_hom_info", to_string(self.write_hom_info())},
-       std::pair{"elindex", to_string(self.elindex())},
-       std::pair{"elname", self.elname()},
-       std::pair{"nstep", to_string(self.nstep())},
-       std::pair{"begdr", to_string(self.begdr())},
-       std::pair{"enddr", to_string(self.enddr())},
-       std::pair{"nrep", to_string(self.nrep())},
-       std::pair{"ran_seed", to_string(self.ran_seed())},
-       std::pair{"hom_order_cutoff", to_string(self.hom_order_cutoff())},
-       std::pair{"ran_gauss_sigma_cut", to_string(self.ran_gauss_sigma_cut())},
-       std::pair{"ele_track_end", self.ele_track_end()},
-       std::pair{"ix_ele_track_end", to_string(self.ix_ele_track_end())},
-       std::pair{"regression", to_string(self.regression())},
-       std::pair{"normalize_z_to_rf", to_string(self.normalize_z_to_rf())},
-       std::pair{"ramp_on", to_string(self.ramp_on())},
-       std::pair{"ramp_pattern", to_string(self.ramp_pattern())},
-       std::pair{"ramp_n_start", to_string(self.ramp_n_start())},
-       std::pair{"n_ramp_pattern", to_string(self.n_ramp_pattern())}}
-  );
-}
-std::string to_string(const Fibre &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Fibre",
-      {std::pair{"DIR", to_string(self.DIR())},
-       std::pair{"PREVIOUS", to_string(self.PREVIOUS())},
-       std::pair{"NEXT", "..."},
-       std::pair{"PARENT_LAYOUT", to_string(self.PARENT_LAYOUT())},
-       std::pair{"pos", to_string(self.pos())},
-       std::pair{"BETA0", to_string(self.BETA0())},
-       std::pair{"GAMMA0I", to_string(self.GAMMA0I())},
-       std::pair{"GAMBET", to_string(self.GAMBET())},
-       std::pair{"MASS", to_string(self.MASS())},
-       std::pair{"CHARGE", to_string(self.CHARGE())},
-       std::pair{"AG", to_string(self.AG())},
-       std::pair{"P", to_string(self.P())},
-       std::pair{"N", to_string(self.N())},
-       std::pair{"loc", to_string(self.loc())}}
-  );
-}
-std::string to_string(const Layout &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "Layout",
-      {std::pair{"NAME", self.NAME()},
-       std::pair{"INDEX", to_string(self.INDEX())},
-       std::pair{"HARMONIC_NUMBER", to_string(self.HARMONIC_NUMBER())},
-       std::pair{"CLOSED", to_string(self.CLOSED())},
-       std::pair{"N", to_string(self.N())},
-       std::pair{"NTHIN", to_string(self.NTHIN())},
-       std::pair{"THIN", to_string(self.THIN())},
-       std::pair{"LASTPOS", to_string(self.LASTPOS())},
-       std::pair{"LAST", to_string(self.LAST())},
-       std::pair{"END", to_string(self.END())},
-       std::pair{"START", to_string(self.START())},
-       std::pair{"START_GROUND", to_string(self.START_GROUND())},
-       std::pair{"END_GROUND", to_string(self.END_GROUND())},
-       std::pair{"NEXT", to_string(self.NEXT())},
-       std::pair{"PREVIOUS", to_string(self.PREVIOUS())}}
+       std::pair{"spline", to_string(self.spline())}}
   );
 }
 std::string to_string(const AllEncompassingStruct &self) {
@@ -2662,6 +108,3422 @@ std::string to_string(const AllEncompassingStruct &self) {
        std::pair{"type_3d_alloc", "[...]"}}
   );
 }
+std::string to_string(const AllPointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "AllPointerStruct",
+      {std::pair{"r", to_string(self.r())},
+       std::pair{"q", to_string(self.q())},
+       std::pair{"i", to_string(self.i())},
+       std::pair{"l", to_string(self.l())},
+       std::pair{"r1", to_string(self.r1())},
+       std::pair{"i1", to_string(self.i1())}}
+  );
+}
+std::string to_string(const AnormalModeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "AnormalModeStruct",
+      {std::pair{"emittance", to_string(self.emittance())},
+       std::pair{"emittance_no_vert", to_string(self.emittance_no_vert())},
+       std::pair{"synch_int", to_string(self.synch_int())},
+       std::pair{"j_damp", to_string(self.j_damp())},
+       std::pair{"alpha_damp", to_string(self.alpha_damp())},
+       std::pair{"chrom", to_string(self.chrom())},
+       std::pair{"tune", to_string(self.tune())}}
+  );
+}
+std::string to_string(const ApertureParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ApertureParamStruct",
+      {std::pair{"min_angle", to_string(self.min_angle())},
+       std::pair{"max_angle", to_string(self.max_angle())},
+       std::pair{"n_angle", to_string(self.n_angle())},
+       std::pair{"n_turn", to_string(self.n_turn())},
+       std::pair{"x_init", to_string(self.x_init())},
+       std::pair{"y_init", to_string(self.y_init())},
+       std::pair{"rel_accuracy", to_string(self.rel_accuracy())},
+       std::pair{"abs_accuracy", to_string(self.abs_accuracy())},
+       std::pair{"start_ele", self.start_ele()}}
+  );
+}
+std::string to_string(const AperturePointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "AperturePointStruct",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"plane", to_string(self.plane())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"i_turn", to_string(self.i_turn())}}
+  );
+}
+std::string to_string(const ApertureScanStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ApertureScanStruct",
+      {std::pair{"point", "[...]"},
+       std::pair{"ref_orb", to_string(self.ref_orb())},
+       std::pair{"pz_start", to_string(self.pz_start())}}
+  );
+}
+std::string to_string(const AstraLatticeParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "AstraLatticeParamStruct",
+      {std::pair{"fieldmap_dimension", to_string(self.fieldmap_dimension())}}
+  );
+}
+std::string to_string(const BaseLineEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BaseLineEleStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"tag", self.tag()},
+       std::pair{"ix_multi", to_string(self.ix_multi())},
+       std::pair{"orientation", to_string(self.orientation())},
+       std::pair{"ix_ele_in_in_lat", to_string(self.ix_ele_in_in_lat())},
+       std::pair{"ele_order_reflect", to_string(self.ele_order_reflect())}}
+  );
+}
+std::string to_string(const BbuBeamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuBeamStruct",
+      {std::pair{"bunch", "[...]"},
+       std::pair{"stage", "[...]"},
+       std::pair{"ix_ele_bunch", to_string(self.ix_ele_bunch())},
+       std::pair{"ix_bunch_head", to_string(self.ix_bunch_head())},
+       std::pair{"ix_bunch_end", to_string(self.ix_bunch_end())},
+       std::pair{"n_bunch_in_lat", to_string(self.n_bunch_in_lat())},
+       std::pair{"ix_stage_voltage_max", to_string(self.ix_stage_voltage_max())},
+       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
+       std::pair{"time_now", to_string(self.time_now())},
+       std::pair{"one_turn_time", to_string(self.one_turn_time())},
+       std::pair{"rf_wavelength_max", to_string(self.rf_wavelength_max())}}
+  );
+}
+std::string to_string(const BbuParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuParamStruct",
+      {std::pair{"lat_filename", self.lat_filename()},
+       std::pair{"lat2_filename", self.lat2_filename()},
+       std::pair{"bunch_by_bunch_info_file", self.bunch_by_bunch_info_file()},
+       std::pair{"hybridize", to_string(self.hybridize())},
+       std::pair{"write_digested_hybrid_lat", to_string(self.write_digested_hybrid_lat())},
+       std::pair{"write_voltage_vs_time_dat", to_string(self.write_voltage_vs_time_dat())},
+       std::pair{"keep_overlays_and_groups", to_string(self.keep_overlays_and_groups())},
+       std::pair{"keep_all_lcavities", to_string(self.keep_all_lcavities())},
+       std::pair{"use_taylor_for_hybrids", to_string(self.use_taylor_for_hybrids())},
+       std::pair{"stable_orbit_anal", to_string(self.stable_orbit_anal())},
+       std::pair{"limit_factor", to_string(self.limit_factor())},
+       std::pair{"simulation_turns_max", to_string(self.simulation_turns_max())},
+       std::pair{"bunch_freq", to_string(self.bunch_freq())},
+       std::pair{"init_particle_offset", to_string(self.init_particle_offset())},
+       std::pair{"current", to_string(self.current())},
+       std::pair{"rel_tol", to_string(self.rel_tol())},
+       std::pair{"drscan", to_string(self.drscan())},
+       std::pair{"use_interpolated_threshold", to_string(self.use_interpolated_threshold())},
+       std::pair{"write_hom_info", to_string(self.write_hom_info())},
+       std::pair{"elindex", to_string(self.elindex())},
+       std::pair{"elname", self.elname()},
+       std::pair{"nstep", to_string(self.nstep())},
+       std::pair{"begdr", to_string(self.begdr())},
+       std::pair{"enddr", to_string(self.enddr())},
+       std::pair{"nrep", to_string(self.nrep())},
+       std::pair{"ran_seed", to_string(self.ran_seed())},
+       std::pair{"hom_order_cutoff", to_string(self.hom_order_cutoff())},
+       std::pair{"ran_gauss_sigma_cut", to_string(self.ran_gauss_sigma_cut())},
+       std::pair{"ele_track_end", self.ele_track_end()},
+       std::pair{"ix_ele_track_end", to_string(self.ix_ele_track_end())},
+       std::pair{"regression", to_string(self.regression())},
+       std::pair{"normalize_z_to_rf", to_string(self.normalize_z_to_rf())},
+       std::pair{"ramp_on", to_string(self.ramp_on())},
+       std::pair{"ramp_pattern", to_string(self.ramp_pattern())},
+       std::pair{"ramp_n_start", to_string(self.ramp_n_start())},
+       std::pair{"n_ramp_pattern", to_string(self.n_ramp_pattern())}}
+  );
+}
+std::string to_string(const BbuStageStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BbuStageStruct",
+      {std::pair{"ix_ele_lr_wake", to_string(self.ix_ele_lr_wake())},
+       std::pair{"ix_ele_stage_end", to_string(self.ix_ele_stage_end())},
+       std::pair{"ix_pass", to_string(self.ix_pass())},
+       std::pair{"ix_stage_pass1", to_string(self.ix_stage_pass1())},
+       std::pair{"ix_head_bunch", to_string(self.ix_head_bunch())},
+       std::pair{"ix_hom_max", to_string(self.ix_hom_max())},
+       std::pair{"hom_voltage_max", to_string(self.hom_voltage_max())},
+       std::pair{"time_at_wake_ele", to_string(self.time_at_wake_ele())},
+       std::pair{"ave_orb", to_string(self.ave_orb())},
+       std::pair{"rms_orb", to_string(self.rms_orb())},
+       std::pair{"min_orb", to_string(self.min_orb())},
+       std::pair{"max_orb", to_string(self.max_orb())},
+       std::pair{"n_orb", to_string(self.n_orb())}}
+  );
+}
+std::string to_string(const BeamInitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BeamInitStruct",
+      {std::pair{"position_file", self.position_file()},
+       std::pair{"distribution_type", to_string(self.distribution_type())},
+       std::pair{"spin", to_string(self.spin())},
+       std::pair{"ellipse", "[...]"},
+       std::pair{"KV", to_string(self.KV())},
+       std::pair{"grid", "[...]"},
+       std::pair{"center_jitter", to_string(self.center_jitter())},
+       std::pair{"emit_jitter", to_string(self.emit_jitter())},
+       std::pair{"sig_z_jitter", to_string(self.sig_z_jitter())},
+       std::pair{"sig_pz_jitter", to_string(self.sig_pz_jitter())},
+       std::pair{"n_particle", to_string(self.n_particle())},
+       std::pair{"renorm_center", to_string(self.renorm_center())},
+       std::pair{"renorm_sigma", to_string(self.renorm_sigma())},
+       std::pair{"random_engine", self.random_engine()},
+       std::pair{"random_gauss_converter", self.random_gauss_converter()},
+       std::pair{"random_sigma_cutoff", to_string(self.random_sigma_cutoff())},
+       std::pair{"a_norm_emit", to_string(self.a_norm_emit())},
+       std::pair{"b_norm_emit", to_string(self.b_norm_emit())},
+       std::pair{"a_emit", to_string(self.a_emit())},
+       std::pair{"b_emit", to_string(self.b_emit())},
+       std::pair{"dPz_dz", to_string(self.dPz_dz())},
+       std::pair{"center", to_string(self.center())},
+       std::pair{"t_offset", to_string(self.t_offset())},
+       std::pair{"dt_bunch", to_string(self.dt_bunch())},
+       std::pair{"sig_z", to_string(self.sig_z())},
+       std::pair{"sig_pz", to_string(self.sig_pz())},
+       std::pair{"bunch_charge", to_string(self.bunch_charge())},
+       std::pair{"n_bunch", to_string(self.n_bunch())},
+       std::pair{"ix_turn", to_string(self.ix_turn())},
+       std::pair{"species", self.species()},
+       std::pair{"full_6D_coupling_calc", to_string(self.full_6D_coupling_calc())},
+       std::pair{"use_particle_start", to_string(self.use_particle_start())},
+       std::pair{"use_t_coords", to_string(self.use_t_coords())},
+       std::pair{"use_z_as_t", to_string(self.use_z_as_t())},
+       std::pair{"file_name", self.file_name()}}
+  );
+}
+std::string to_string(const BeamStruct &self) {
+  return repr(self.get_fortran_ptr(), "BeamStruct", {std::pair{"bunch", "[...]"}});
+}
+std::string to_string(const BicubicCmplxCoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BicubicCmplxCoefStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const BicubicCoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BicubicCoefStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const BinStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BinStruct",
+      {std::pair{"count", to_string(self.count())},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"delta", to_string(self.delta())},
+       std::pair{"n", to_string(self.n())}}
+  );
+}
+std::string to_string(const BmadCommonStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BmadCommonStruct",
+      {std::pair{"max_aperture_limit", to_string(self.max_aperture_limit())},
+       std::pair{"d_orb", to_string(self.d_orb())},
+       std::pair{"default_ds_step", to_string(self.default_ds_step())},
+       std::pair{"significant_length", to_string(self.significant_length())},
+       std::pair{"rel_tol_tracking", to_string(self.rel_tol_tracking())},
+       std::pair{"abs_tol_tracking", to_string(self.abs_tol_tracking())},
+       std::pair{"rel_tol_adaptive_tracking", to_string(self.rel_tol_adaptive_tracking())},
+       std::pair{"abs_tol_adaptive_tracking", to_string(self.abs_tol_adaptive_tracking())},
+       std::pair{"init_ds_adaptive_tracking", to_string(self.init_ds_adaptive_tracking())},
+       std::pair{"min_ds_adaptive_tracking", to_string(self.min_ds_adaptive_tracking())},
+       std::pair{"fatal_ds_adaptive_tracking", to_string(self.fatal_ds_adaptive_tracking())},
+       std::pair{"autoscale_amp_abs_tol", to_string(self.autoscale_amp_abs_tol())},
+       std::pair{"autoscale_amp_rel_tol", to_string(self.autoscale_amp_rel_tol())},
+       std::pair{"autoscale_phase_tol", to_string(self.autoscale_phase_tol())},
+       std::pair{"electric_dipole_moment", to_string(self.electric_dipole_moment())},
+       std::pair{"synch_rad_scale", to_string(self.synch_rad_scale())},
+       std::pair{"sad_eps_scale", to_string(self.sad_eps_scale())},
+       std::pair{"sad_amp_max", to_string(self.sad_amp_max())},
+       std::pair{"sad_n_div_max", to_string(self.sad_n_div_max())},
+       std::pair{"taylor_order", to_string(self.taylor_order())},
+       std::pair{"runge_kutta_order", to_string(self.runge_kutta_order())},
+       std::pair{"default_integ_order", to_string(self.default_integ_order())},
+       std::pair{"max_num_runge_kutta_step", to_string(self.max_num_runge_kutta_step())},
+       std::pair{"rf_phase_below_transition_ref", to_string(self.rf_phase_below_transition_ref())},
+       std::pair{"sr_wakes_on", to_string(self.sr_wakes_on())},
+       std::pair{"lr_wakes_on", to_string(self.lr_wakes_on())},
+       std::pair{"auto_bookkeeper", to_string(self.auto_bookkeeper())},
+       std::pair{"high_energy_space_charge_on", to_string(self.high_energy_space_charge_on())},
+       std::pair{
+           "high_energy_space_charge_linear",
+           to_string(self.high_energy_space_charge_linear())
+       },
+       std::pair{"csr_and_space_charge_on", to_string(self.csr_and_space_charge_on())},
+       std::pair{"spin_tracking_on", to_string(self.spin_tracking_on())},
+       std::pair{
+           "spin_sokolov_ternov_flipping_on",
+           to_string(self.spin_sokolov_ternov_flipping_on())
+       },
+       std::pair{"radiation_damping_on", to_string(self.radiation_damping_on())},
+       std::pair{"radiation_zero_average", to_string(self.radiation_zero_average())},
+       std::pair{"radiation_fluctuations_on", to_string(self.radiation_fluctuations_on())},
+       std::pair{"conserve_taylor_maps", to_string(self.conserve_taylor_maps())},
+       std::pair{"absolute_time_tracking", to_string(self.absolute_time_tracking())},
+       std::pair{"absolute_time_ref_shift", to_string(self.absolute_time_ref_shift())},
+       std::pair{"convert_to_kinetic_momentum", to_string(self.convert_to_kinetic_momentum())},
+       std::pair{"normalize_twiss", to_string(self.normalize_twiss())},
+       std::pair{"aperture_limit_on", to_string(self.aperture_limit_on())},
+       std::pair{"spin_n0_direction_user_set", to_string(self.spin_n0_direction_user_set())},
+       std::pair{"debug", to_string(self.debug())}}
+  );
+}
+std::string to_string(const BmadNormalFormStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BmadNormalFormStruct",
+      {std::pair{"ele_origin", to_string(self.ele_origin())},
+       std::pair{"M", "[...]"},
+       std::pair{"A", "[...]"},
+       std::pair{"A_inv", "[...]"},
+       std::pair{"dhdj", "[...]"},
+       std::pair{"F", "[...]"},
+       std::pair{"L", "[...]"},
+       std::pair{"h", "[...]"}}
+  );
+}
+std::string to_string(const BookkeepingStateStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BookkeepingStateStruct",
+      {std::pair{"attributes", to_string(self.attributes())},
+       std::pair{"control", to_string(self.control())},
+       std::pair{"floor_position", to_string(self.floor_position())},
+       std::pair{"s_position", to_string(self.s_position())},
+       std::pair{"ref_energy", to_string(self.ref_energy())},
+       std::pair{"mat6", to_string(self.mat6())},
+       std::pair{"rad_int", to_string(self.rad_int())},
+       std::pair{"ptc", to_string(self.ptc())},
+       std::pair{"has_misalign", to_string(self.has_misalign())}}
+  );
+}
+std::string to_string(const BpmPhaseCouplingStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BpmPhaseCouplingStruct",
+      {std::pair{"K_22a", to_string(self.K_22a())},
+       std::pair{"K_12a", to_string(self.K_12a())},
+       std::pair{"K_11b", to_string(self.K_11b())},
+       std::pair{"K_12b", to_string(self.K_12b())},
+       std::pair{"Cbar22_a", to_string(self.Cbar22_a())},
+       std::pair{"Cbar12_a", to_string(self.Cbar12_a())},
+       std::pair{"Cbar11_b", to_string(self.Cbar11_b())},
+       std::pair{"Cbar12_b", to_string(self.Cbar12_b())},
+       std::pair{"phi_a", to_string(self.phi_a())},
+       std::pair{"phi_b", to_string(self.phi_b())}}
+  );
+}
+std::string to_string(const BranchPointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BranchPointerStruct",
+      {std::pair{"branch", to_string(self.branch())}}
+  );
+}
+std::string to_string(const BranchStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BranchStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_from_branch", to_string(self.ix_from_branch())},
+       std::pair{"ix_from_ele", to_string(self.ix_from_ele())},
+       std::pair{"ix_to_ele", to_string(self.ix_to_ele())},
+       std::pair{"ix_fixer", to_string(self.ix_fixer())},
+       std::pair{"n_ele_track", to_string(self.n_ele_track())},
+       std::pair{"n_ele_max", to_string(self.n_ele_max())},
+       std::pair{"lat", to_string(self.lat())},
+       std::pair{"a", to_string(self.a())},
+       std::pair{"b", to_string(self.b())},
+       std::pair{"z", to_string(self.z())},
+       std::pair{"ele", "[...]"},
+       std::pair{"param", to_string(self.param())},
+       std::pair{"particle_start", to_string(self.particle_start())},
+       std::pair{"wall3d", "[...]"},
+       std::pair{"ptc", to_string(self.ptc())}}
+  );
+}
+std::string to_string(const BunchParamsStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BunchParamsStruct",
+      {std::pair{"centroid", to_string(self.centroid())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"z", to_string(self.z())},
+       std::pair{"a", to_string(self.a())},
+       std::pair{"b", to_string(self.b())},
+       std::pair{"c", to_string(self.c())},
+       std::pair{"sigma", to_string(self.sigma())},
+       std::pair{"rel_max", to_string(self.rel_max())},
+       std::pair{"rel_min", to_string(self.rel_min())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"t", to_string(self.t())},
+       std::pair{"sigma_t", to_string(self.sigma_t())},
+       std::pair{"charge_live", to_string(self.charge_live())},
+       std::pair{"charge_tot", to_string(self.charge_tot())},
+       std::pair{"n_particle_tot", to_string(self.n_particle_tot())},
+       std::pair{"n_particle_live", to_string(self.n_particle_live())},
+       std::pair{"n_particle_lost_in_ele", to_string(self.n_particle_lost_in_ele())},
+       std::pair{"n_good_steps", to_string(self.n_good_steps())},
+       std::pair{"n_bad_steps", to_string(self.n_bad_steps())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"location", to_string(self.location())},
+       std::pair{"twiss_valid", to_string(self.twiss_valid())}}
+  );
+}
+std::string to_string(const BunchStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BunchStruct",
+      {std::pair{"particle", "[...]"},
+       std::pair{"ix_z", to_string(self.ix_z())},
+       std::pair{"charge_tot", to_string(self.charge_tot())},
+       std::pair{"charge_live", to_string(self.charge_live())},
+       std::pair{"z_center", to_string(self.z_center())},
+       std::pair{"t_center", to_string(self.t_center())},
+       std::pair{"t0", to_string(self.t0())},
+       std::pair{"drift_between_t_and_s", to_string(self.drift_between_t_and_s())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_bunch", to_string(self.ix_bunch())},
+       std::pair{"ix_turn", to_string(self.ix_turn())},
+       std::pair{"n_live", to_string(self.n_live())},
+       std::pair{"n_good", to_string(self.n_good())},
+       std::pair{"n_bad", to_string(self.n_bad())}}
+  );
+}
+std::string to_string(const BunchTrackStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "BunchTrackStruct",
+      {std::pair{"pt", "[...]"},
+       std::pair{"ds_save", to_string(self.ds_save())},
+       std::pair{"n_pt", to_string(self.n_pt())}}
+  );
+}
+std::string to_string(const CartesianMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CartesianMapStruct",
+      {std::pair{"field_scale", to_string(self.field_scale())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"master_parameter", to_string(self.master_parameter())},
+       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
+       std::pair{"field_type", to_string(self.field_type())},
+       std::pair{"ptr", to_string(self.ptr())}}
+  );
+}
+std::string to_string(const CartesianMapTerm1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CartesianMapTerm1Struct",
+      {std::pair{"coef", to_string(self.coef())},
+       std::pair{"kx", to_string(self.kx())},
+       std::pair{"ky", to_string(self.ky())},
+       std::pair{"kz", to_string(self.kz())},
+       std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"phi_z", to_string(self.phi_z())},
+       std::pair{"family", to_string(self.family())},
+       std::pair{"form", to_string(self.form())}}
+  );
+}
+std::string to_string(const CartesianMapTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CartesianMapTermStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"n_link", to_string(self.n_link())},
+       std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const CmplxField1At2dPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CmplxField1At2dPtStruct",
+      {std::pair{"f", to_string(self.f())},
+       std::pair{"df_dx", to_string(self.df_dx())},
+       std::pair{"df_dy", to_string(self.df_dy())},
+       std::pair{"d2f_dxdy", to_string(self.d2f_dxdy())}}
+  );
+}
+std::string to_string(const CmplxField1At3dPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CmplxField1At3dPtStruct",
+      {std::pair{"f", to_string(self.f())},
+       std::pair{"df_dx", to_string(self.df_dx())},
+       std::pair{"df_dy", to_string(self.df_dy())},
+       std::pair{"df_dz", to_string(self.df_dz())},
+       std::pair{"d2f_dxdy", to_string(self.d2f_dxdy())},
+       std::pair{"d2f_dxdz", to_string(self.d2f_dxdz())},
+       std::pair{"d2f_dydz", to_string(self.d2f_dydz())},
+       std::pair{"d3f_dxdydz", to_string(self.d3f_dxdydz())}}
+  );
+}
+std::string to_string(const CmplxFieldAt2dBoxStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CmplxFieldAt2dBoxStruct",
+      {std::pair{"pt", "[...]"}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const CmplxFieldAt3dBoxStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CmplxFieldAt3dBoxStruct",
+      {std::pair{"pt", "[...]"}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const ComplexTaylorStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ComplexTaylorStruct",
+      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const ComplexTaylorTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ComplexTaylorTermStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
+  );
+}
+std::string to_string(const ControlRamp1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ControlRamp1Struct",
+      {std::pair{"y_knot", to_string(self.y_knot())},
+       std::pair{"stack", "[...]"},
+       std::pair{"attribute", self.attribute()},
+       std::pair{"slave_name", self.slave_name()},
+       std::pair{"is_controller", to_string(self.is_controller())}}
+  );
+}
+std::string to_string(const ControlStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ControlStruct",
+      {std::pair{"value", to_string(self.value())},
+       std::pair{"y_knot", to_string(self.y_knot())},
+       std::pair{"stack", "[...]"},
+       std::pair{"slave", to_string(self.slave())},
+       std::pair{"lord", to_string(self.lord())},
+       std::pair{"slave_name", self.slave_name()},
+       std::pair{"attribute", self.attribute()},
+       std::pair{"ix_attrib", to_string(self.ix_attrib())}}
+  );
+}
+std::string to_string(const ControlVar1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ControlVar1Struct",
+      {std::pair{"name", self.name()},
+       std::pair{"value", to_string(self.value())},
+       std::pair{"old_value", to_string(self.old_value())}}
+  );
+}
+std::string to_string(const ControllerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ControllerStruct",
+      {std::pair{"var", "[...]"},
+       std::pair{"ramp", "[...]"},
+       std::pair{"ramper_lord", "[...]"},
+       std::pair{"x_knot", to_string(self.x_knot())}}
+  );
+}
+std::string to_string(const ConverterDir1dStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterDir1dStruct",
+      {std::pair{"pc_out", to_string(self.pc_out())}, std::pair{"poly", to_string(self.poly())}}
+  );
+}
+std::string to_string(const ConverterDir2dStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterDir2dStruct",
+      {std::pair{"k", to_string(self.k())}, std::pair{"poly", to_string(self.poly())}}
+  );
+}
+std::string to_string(const ConverterDirCoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterDirCoefStruct",
+      {std::pair{"fit_1d_r", "[...]"},
+       std::pair{"fit_2d_r", to_string(self.fit_2d_r())},
+       std::pair{"fit_2d_pc", to_string(self.fit_2d_pc())},
+       std::pair{"c0", to_string(self.c0())}}
+  );
+}
+std::string to_string(const ConverterDirectionOutStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterDirectionOutStruct",
+      {std::pair{"beta", to_string(self.beta())},
+       std::pair{"alpha_x", to_string(self.alpha_x())},
+       std::pair{"alpha_y", to_string(self.alpha_y())},
+       std::pair{"dxds_min", to_string(self.dxds_min())},
+       std::pair{"dxds_max", to_string(self.dxds_max())},
+       std::pair{"dyds_max", to_string(self.dyds_max())},
+       std::pair{"c_x", to_string(self.c_x())}}
+  );
+}
+std::string to_string(const ConverterDistributionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterDistributionStruct",
+      {std::pair{"thickness", to_string(self.thickness())}, std::pair{"sub_dist", "[...]"}}
+  );
+}
+std::string to_string(const ConverterProbPcRStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterProbPcRStruct",
+      {std::pair{"pc_out", to_string(self.pc_out())},
+       std::pair{"r", to_string(self.r())},
+       std::pair{"prob", to_string(self.prob())},
+       std::pair{"spin_z", to_string(self.spin_z())},
+       std::pair{"pc_out_min", to_string(self.pc_out_min())},
+       std::pair{"pc_out_max", to_string(self.pc_out_max())},
+       std::pair{"integrated_prob", to_string(self.integrated_prob())},
+       std::pair{"p_norm", to_string(self.p_norm())},
+       std::pair{"integ_pc_out", to_string(self.integ_pc_out())},
+       std::pair{"integ_r", to_string(self.integ_r())},
+       std::pair{"integ_r_ave", to_string(self.integ_r_ave())}}
+  );
+}
+std::string to_string(const ConverterStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterStruct",
+      {std::pair{"species_out", to_string(self.species_out())},
+       std::pair{"material_type", self.material_type()},
+       std::pair{"dist", "[...]"}}
+  );
+}
+std::string to_string(const ConverterSubDistributionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ConverterSubDistributionStruct",
+      {std::pair{"pc_in", to_string(self.pc_in())},
+       std::pair{"spin_in", to_string(self.spin_in())},
+       std::pair{"prob_pc_r", to_string(self.prob_pc_r())},
+       std::pair{"dir_out", to_string(self.dir_out())}}
+  );
+}
+std::string to_string(const CoordArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "CoordArrayStruct", {std::pair{"orbit", "[...]"}});
+}
+std::string to_string(const CoordStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CoordStruct",
+      {std::pair{"vec", to_string(self.vec())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"t", to_string(self.t())},
+       std::pair{"spin", to_string(self.spin())},
+       std::pair{"field", to_string(self.field())},
+       std::pair{"phase", to_string(self.phase())},
+       std::pair{"charge", to_string(self.charge())},
+       std::pair{"dt_ref", to_string(self.dt_ref())},
+       std::pair{"r", to_string(self.r())},
+       std::pair{"p0c", to_string(self.p0c())},
+       std::pair{"E_potential", to_string(self.E_potential())},
+       std::pair{"beta", to_string(self.beta())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_turn", to_string(self.ix_turn())},
+       std::pair{"ix_user", to_string(self.ix_user())},
+       std::pair{"state", to_string(self.state())},
+       std::pair{"direction", to_string(self.direction())},
+       std::pair{"time_dir", to_string(self.time_dir())},
+       std::pair{"species", to_string(self.species())},
+       std::pair{"location", to_string(self.location())}}
+  );
+}
+std::string to_string(const CrystalParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CrystalParamStruct",
+      {std::pair{"cap_gamma", to_string(self.cap_gamma())},
+       std::pair{"dtheta_sin_2theta", to_string(self.dtheta_sin_2theta())},
+       std::pair{"b_eff", to_string(self.b_eff())},
+       std::pair{"wavelength", to_string(self.wavelength())},
+       std::pair{"old_vvec", to_string(self.old_vvec())},
+       std::pair{"new_vvec", to_string(self.new_vvec())}}
+  );
+}
+std::string to_string(const CsrBunchSliceStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CsrBunchSliceStruct",
+      {std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"z0_edge", to_string(self.z0_edge())},
+       std::pair{"z1_edge", to_string(self.z1_edge())},
+       std::pair{"z_center", to_string(self.z_center())},
+       std::pair{"sig_x", to_string(self.sig_x())},
+       std::pair{"sig_y", to_string(self.sig_y())},
+       std::pair{"charge", to_string(self.charge())},
+       std::pair{"dcharge_density_dz", to_string(self.dcharge_density_dz())},
+       std::pair{"edge_dcharge_density_dz", to_string(self.edge_dcharge_density_dz())},
+       std::pair{"kick_csr", to_string(self.kick_csr())},
+       std::pair{"coef_lsc_plus", to_string(self.coef_lsc_plus())},
+       std::pair{"coef_lsc_minus", to_string(self.coef_lsc_minus())},
+       std::pair{"kick_lsc", to_string(self.kick_lsc())},
+       std::pair{"n_particle", to_string(self.n_particle())}}
+  );
+}
+std::string to_string(const CsrEleInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CsrEleInfoStruct",
+      {std::pair{"ele", to_string(self.ele())},
+       std::pair{"orbit0", to_string(self.orbit0())},
+       std::pair{"orbit1", to_string(self.orbit1())},
+       std::pair{"floor0", to_string(self.floor0())},
+       std::pair{"floor1", to_string(self.floor1())},
+       std::pair{"ref_floor0", to_string(self.ref_floor0())},
+       std::pair{"ref_floor1", to_string(self.ref_floor1())},
+       std::pair{"spline", to_string(self.spline())},
+       std::pair{"theta_chord", to_string(self.theta_chord())},
+       std::pair{"L_chord", to_string(self.L_chord())},
+       std::pair{"dL_s", to_string(self.dL_s())}}
+  );
+}
+std::string to_string(const CsrKick1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CsrKick1Struct",
+      {std::pair{"I_csr", to_string(self.I_csr())},
+       std::pair{"I_int_csr", to_string(self.I_int_csr())},
+       std::pair{"image_kick_csr", to_string(self.image_kick_csr())},
+       std::pair{"L_vec", to_string(self.L_vec())},
+       std::pair{"L", to_string(self.L())},
+       std::pair{"dL", to_string(self.dL())},
+       std::pair{"dz_particles", to_string(self.dz_particles())},
+       std::pair{"s_chord_source", to_string(self.s_chord_source())},
+       std::pair{"theta_L", to_string(self.theta_L())},
+       std::pair{"theta_sl", to_string(self.theta_sl())},
+       std::pair{"theta_lk", to_string(self.theta_lk())},
+       std::pair{"ix_ele_source", to_string(self.ix_ele_source())},
+       std::pair{"floor_s", to_string(self.floor_s())}}
+  );
+}
+std::string to_string(const CsrParticlePositionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CsrParticlePositionStruct",
+      {std::pair{"r", to_string(self.r())}, std::pair{"charge", to_string(self.charge())}}
+  );
+}
+std::string to_string(const CsrStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CsrStruct",
+      {std::pair{"gamma", to_string(self.gamma())},
+       std::pair{"gamma2", to_string(self.gamma2())},
+       std::pair{"rel_mass", to_string(self.rel_mass())},
+       std::pair{"beta", to_string(self.beta())},
+       std::pair{"dz_slice", to_string(self.dz_slice())},
+       std::pair{"ds_track_step", to_string(self.ds_track_step())},
+       std::pair{"s_kick", to_string(self.s_kick())},
+       std::pair{"s_chord_kick", to_string(self.s_chord_kick())},
+       std::pair{"y_source", to_string(self.y_source())},
+       std::pair{"kick_factor", to_string(self.kick_factor())},
+       std::pair{"actual_track_step", to_string(self.actual_track_step())},
+       std::pair{"x0_bunch", to_string(self.x0_bunch())},
+       std::pair{"y0_bunch", to_string(self.y0_bunch())},
+       std::pair{"floor_k", to_string(self.floor_k())},
+       std::pair{"species", to_string(self.species())},
+       std::pair{"ix_ele_kick", to_string(self.ix_ele_kick())},
+       std::pair{"slice", "[...]"},
+       std::pair{"kick1", "[...]"},
+       std::pair{"eleinfo", "[...]"},
+       std::pair{"kick_ele", to_string(self.kick_ele())},
+       std::pair{"mesh3d", to_string(self.mesh3d())},
+       std::pair{"position", "[...]"}}
+  );
+}
+std::string to_string(const CylindricalMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CylindricalMapStruct",
+      {std::pair{"m", to_string(self.m())},
+       std::pair{"harmonic", to_string(self.harmonic())},
+       std::pair{"phi0_fieldmap", to_string(self.phi0_fieldmap())},
+       std::pair{"theta0_azimuth", to_string(self.theta0_azimuth())},
+       std::pair{"field_scale", to_string(self.field_scale())},
+       std::pair{"master_parameter", to_string(self.master_parameter())},
+       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
+       std::pair{"dz", to_string(self.dz())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"ptr", to_string(self.ptr())}}
+  );
+}
+std::string to_string(const CylindricalMapTerm1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CylindricalMapTerm1Struct",
+      {std::pair{"e_coef", to_string(self.e_coef())}, std::pair{"b_coef", to_string(self.b_coef())}}
+  );
+}
+std::string to_string(const CylindricalMapTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "CylindricalMapTermStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"n_link", to_string(self.n_link())},
+       std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const DiffuseParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "DiffuseParamStruct",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"lambda", to_string(self.lambda())},
+       std::pair{"c_norm", to_string(self.c_norm())},
+       std::pair{"chx_norm", to_string(self.chx_norm())},
+       std::pair{"prob_spline", "[...]"},
+       std::pair{"n_pt_spline", to_string(self.n_pt_spline())}}
+  );
+}
+std::string to_string(const DoLoopStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "DoLoopStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"start", to_string(self.start())},
+       std::pair{"end", to_string(self.end())},
+       std::pair{"step", to_string(self.step())},
+       std::pair{"n_line_start", to_string(self.n_line_start())},
+       std::pair{"n_line_end", to_string(self.n_line_end())},
+       std::pair{"value", to_string(self.value())}}
+  );
+}
+std::string to_string(const EleAttributeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EleAttributeStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"state", to_string(self.state())},
+       std::pair{"kind", to_string(self.kind())},
+       std::pair{"units", self.units()},
+       std::pair{"ix_attrib", to_string(self.ix_attrib())},
+       std::pair{"value", to_string(self.value())}}
+  );
+}
+std::string to_string(const ElePointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ElePointerStruct",
+      {std::pair{"ele", to_string(self.ele())},
+       std::pair{"loc", to_string(self.loc())},
+       std::pair{"id", to_string(self.id())}}
+  );
+}
+std::string to_string(const EleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EleStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_ele", to_string(self.ix_ele())}}
+  );
+}
+std::string to_string(const EllipseBeamInitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EllipseBeamInitStruct",
+      {std::pair{"part_per_ellipse", to_string(self.part_per_ellipse())},
+       std::pair{"n_ellipse", to_string(self.n_ellipse())},
+       std::pair{"sigma_cutoff", to_string(self.sigma_cutoff())}}
+  );
+}
+std::string to_string(const EmFieldStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EmFieldStruct",
+      {std::pair{"E", to_string(self.E())},
+       std::pair{"B", to_string(self.B())},
+       std::pair{"dE", to_string(self.dE())},
+       std::pair{"dB", to_string(self.dB())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"phi_B", to_string(self.phi_B())},
+       std::pair{"A", to_string(self.A())}}
+  );
+}
+std::string to_string(const ExpressionAtomStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ExpressionAtomStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"value", to_string(self.value())}}
+  );
+}
+std::string to_string(const ExpressionTreeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ExpressionTreeStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"value", to_string(self.value())},
+       std::pair{"node", "[...]"}}
+  );
+}
+std::string to_string(const ExtraParsingInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ExtraParsingInfoStruct",
+      {std::pair{"ran_state", to_string(self.ran_state())},
+       std::pair{"ran_seed", to_string(self.ran_seed())},
+       std::pair{
+           "undeterministic_ran_function_called",
+           to_string(self.undeterministic_ran_function_called())
+       },
+       std::pair{"d_orb_set", to_string(self.d_orb_set())},
+       std::pair{"max_aperture_limit_set", to_string(self.max_aperture_limit_set())},
+       std::pair{"default_ds_step_set", to_string(self.default_ds_step_set())},
+       std::pair{"significant_length_set", to_string(self.significant_length_set())},
+       std::pair{"rel_tol_tracking_set", to_string(self.rel_tol_tracking_set())},
+       std::pair{"abs_tol_tracking_set", to_string(self.abs_tol_tracking_set())},
+       std::pair{"rel_tol_adaptive_tracking_set", to_string(self.rel_tol_adaptive_tracking_set())},
+       std::pair{"abs_tol_adaptive_tracking_set", to_string(self.abs_tol_adaptive_tracking_set())},
+       std::pair{"init_ds_adaptive_tracking_set", to_string(self.init_ds_adaptive_tracking_set())},
+       std::pair{"min_ds_adaptive_tracking_set", to_string(self.min_ds_adaptive_tracking_set())},
+       std::pair{
+           "fatal_ds_adaptive_tracking_set",
+           to_string(self.fatal_ds_adaptive_tracking_set())
+       },
+       std::pair{"synch_rad_scale_set", to_string(self.synch_rad_scale_set())},
+       std::pair{"autoscale_amp_abs_tol_set", to_string(self.autoscale_amp_abs_tol_set())},
+       std::pair{"autoscale_amp_rel_tol_set", to_string(self.autoscale_amp_rel_tol_set())},
+       std::pair{"autoscale_phase_tol_set", to_string(self.autoscale_phase_tol_set())},
+       std::pair{
+           "rf_phase_below_transition_ref_set",
+           to_string(self.rf_phase_below_transition_ref_set())
+       },
+       std::pair{"electric_dipole_moment_set", to_string(self.electric_dipole_moment_set())},
+       std::pair{"taylor_order_set", to_string(self.taylor_order_set())},
+       std::pair{"runge_kutta_order_set", to_string(self.runge_kutta_order_set())},
+       std::pair{"default_integ_order_set", to_string(self.default_integ_order_set())},
+       std::pair{"sr_wakes_on_set", to_string(self.sr_wakes_on_set())},
+       std::pair{"lr_wakes_on_set", to_string(self.lr_wakes_on_set())},
+       std::pair{
+           "high_energy_space_charge_on_set",
+           to_string(self.high_energy_space_charge_on_set())
+       },
+       std::pair{
+           "high_energy_space_charge_linear_set",
+           to_string(self.high_energy_space_charge_linear_set())
+       },
+       std::pair{"csr_and_space_charge_on_set", to_string(self.csr_and_space_charge_on_set())},
+       std::pair{"spin_tracking_on_set", to_string(self.spin_tracking_on_set())},
+       std::pair{
+           "spin_sokolov_ternov_flipping_on_set",
+           to_string(self.spin_sokolov_ternov_flipping_on_set())
+       },
+       std::pair{"radiation_damping_on_set", to_string(self.radiation_damping_on_set())},
+       std::pair{"radiation_zero_average_set", to_string(self.radiation_zero_average_set())},
+       std::pair{"radiation_fluctuations_on_set", to_string(self.radiation_fluctuations_on_set())},
+       std::pair{"conserve_taylor_maps_set", to_string(self.conserve_taylor_maps_set())},
+       std::pair{"absolute_time_tracking_set", to_string(self.absolute_time_tracking_set())},
+       std::pair{"absolute_time_ref_shift_set", to_string(self.absolute_time_ref_shift_set())},
+       std::pair{
+           "convert_to_kinetic_momentum_set",
+           to_string(self.convert_to_kinetic_momentum_set())
+       },
+       std::pair{"aperture_limit_on_set", to_string(self.aperture_limit_on_set())},
+       std::pair{"normalize_twiss_set", to_string(self.normalize_twiss_set())},
+       std::pair{"sad_eps_scale_set", to_string(self.sad_eps_scale_set())},
+       std::pair{"sad_amp_max_set", to_string(self.sad_amp_max_set())},
+       std::pair{"sad_n_div_max_set", to_string(self.sad_n_div_max_set())},
+       std::pair{"max_num_runge_kutta_step_set", to_string(self.max_num_runge_kutta_step_set())},
+       std::pair{
+           "spin_n0_direction_user_set_set",
+           to_string(self.spin_n0_direction_user_set_set())
+       },
+       std::pair{"debug_set", to_string(self.debug_set())},
+       std::pair{"ds_track_step_set", to_string(self.ds_track_step_set())},
+       std::pair{"dt_track_step_set", to_string(self.dt_track_step_set())},
+       std::pair{"cathode_strength_cutoff_set", to_string(self.cathode_strength_cutoff_set())},
+       std::pair{"sc_rel_tol_tracking_set", to_string(self.sc_rel_tol_tracking_set())},
+       std::pair{"sc_abs_tol_tracking_set", to_string(self.sc_abs_tol_tracking_set())},
+       std::pair{"beam_chamber_height_set", to_string(self.beam_chamber_height_set())},
+       std::pair{"lsc_sigma_cutoff_set", to_string(self.lsc_sigma_cutoff_set())},
+       std::pair{"particle_sigma_cutoff_set", to_string(self.particle_sigma_cutoff_set())},
+       std::pair{"space_charge_mesh_size_set", to_string(self.space_charge_mesh_size_set())},
+       std::pair{"csr3d_mesh_size_set", to_string(self.csr3d_mesh_size_set())},
+       std::pair{"n_bin_set", to_string(self.n_bin_set())},
+       std::pair{"particle_bin_span_set", to_string(self.particle_bin_span_set())},
+       std::pair{"n_shield_images_set", to_string(self.n_shield_images_set())},
+       std::pair{"sc_min_in_bin_set", to_string(self.sc_min_in_bin_set())},
+       std::pair{
+           "lsc_kick_transverse_dependence_set",
+           to_string(self.lsc_kick_transverse_dependence_set())
+       },
+       std::pair{"sc_debug_set", to_string(self.sc_debug_set())},
+       std::pair{"diagnostic_output_file_set", to_string(self.diagnostic_output_file_set())},
+       std::pair{"old_integrator_set", to_string(self.old_integrator_set())},
+       std::pair{"use_orientation_patches_set", to_string(self.use_orientation_patches_set())},
+       std::pair{"print_info_messages_set", to_string(self.print_info_messages_set())},
+       std::pair{"max_fringe_order_set", to_string(self.max_fringe_order_set())},
+       std::pair{"exact_model_set", to_string(self.exact_model_set())},
+       std::pair{"exact_misalign_set", to_string(self.exact_misalign_set())},
+       std::pair{"vertical_kick_set", to_string(self.vertical_kick_set())},
+       std::pair{"cut_factor_set", to_string(self.cut_factor_set())},
+       std::pair{"translate_patch_drift_time_set", to_string(self.translate_patch_drift_time_set())}
+      }
+  );
+}
+std::string to_string(const Fibre &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Fibre",
+      {std::pair{"DIR", to_string(self.DIR())},
+       std::pair{"pos", to_string(self.pos())},
+       std::pair{"BETA0", to_string(self.BETA0())},
+       std::pair{"GAMMA0I", to_string(self.GAMMA0I())},
+       std::pair{"GAMBET", to_string(self.GAMBET())},
+       std::pair{"MASS", to_string(self.MASS())},
+       std::pair{"CHARGE", to_string(self.CHARGE())},
+       std::pair{"AG", to_string(self.AG())},
+       std::pair{"loc", to_string(self.loc())}}
+  );
+}
+std::string to_string(const Field1At2dPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Field1At2dPtStruct",
+      {std::pair{"f", to_string(self.f())},
+       std::pair{"df_dx", to_string(self.df_dx())},
+       std::pair{"df_dy", to_string(self.df_dy())},
+       std::pair{"d2f_dxdy", to_string(self.d2f_dxdy())}}
+  );
+}
+std::string to_string(const Field1At3dPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Field1At3dPtStruct",
+      {std::pair{"f", to_string(self.f())},
+       std::pair{"df_dx", to_string(self.df_dx())},
+       std::pair{"df_dy", to_string(self.df_dy())},
+       std::pair{"df_dz", to_string(self.df_dz())},
+       std::pair{"d2f_dxdy", to_string(self.d2f_dxdy())},
+       std::pair{"d2f_dxdz", to_string(self.d2f_dxdz())},
+       std::pair{"d2f_dydz", to_string(self.d2f_dydz())},
+       std::pair{"d3f_dxdydz", to_string(self.d3f_dxdydz())}}
+  );
+}
+std::string to_string(const FieldAt2dBoxStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "FieldAt2dBoxStruct",
+      {std::pair{"pt", "[...]"}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const FieldAt3dBoxStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "FieldAt3dBoxStruct",
+      {std::pair{"pt", "[...]"}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const FloorPositionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "FloorPositionStruct",
+      {std::pair{"r", to_string(self.r())},
+       std::pair{"w", to_string(self.w())},
+       std::pair{"theta", to_string(self.theta())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"psi", to_string(self.psi())}}
+  );
+}
+std::string to_string(const FoilStruct &self) {
+  return repr(self.get_fortran_ptr(), "FoilStruct", {std::pair{"material", "[...]"}});
+}
+std::string to_string(const FringeFieldInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "FringeFieldInfoStruct",
+      {std::pair{"hard_ele", to_string(self.hard_ele())},
+       std::pair{"s_edge_hard", to_string(self.s_edge_hard())},
+       std::pair{"ds_edge", to_string(self.ds_edge())},
+       std::pair{"particle_at", to_string(self.particle_at())},
+       std::pair{"hard_location", to_string(self.hard_location())},
+       std::pair{"location", to_string(self.location())},
+       std::pair{"has_fringe", to_string(self.has_fringe())}}
+  );
+}
+std::string to_string(const GenGrad1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GenGrad1Struct",
+      {std::pair{"m", to_string(self.m())},
+       std::pair{"sincos", to_string(self.sincos())},
+       std::pair{"n_deriv_max", to_string(self.n_deriv_max())},
+       std::pair{"deriv", to_string(self.deriv())}}
+  );
+}
+std::string to_string(const GenGradMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GenGradMapStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"gg", "[...]"},
+       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
+       std::pair{"field_type", to_string(self.field_type())},
+       std::pair{"iz0", to_string(self.iz0())},
+       std::pair{"iz1", to_string(self.iz1())},
+       std::pair{"dz", to_string(self.dz())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"field_scale", to_string(self.field_scale())},
+       std::pair{"master_parameter", to_string(self.master_parameter())},
+       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())}}
+  );
+}
+std::string to_string(const GeneralBinStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GeneralBinStruct",
+      {std::pair{"count", to_string(self.count())},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"delta", to_string(self.delta())},
+       std::pair{"dim", to_string(self.dim())},
+       std::pair{"n", to_string(self.n())}}
+  );
+}
+std::string to_string(const GgTaylorStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GgTaylorStruct",
+      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const GgTaylorTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GgTaylorTermStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
+  );
+}
+std::string to_string(const GptLatParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GptLatParamStruct",
+      {std::pair{"fieldmap_dimension", to_string(self.fieldmap_dimension())},
+       std::pair{
+           "only_write_autophase_parameters",
+           to_string(self.only_write_autophase_parameters())
+       },
+       std::pair{"gpt_filename", self.gpt_filename()},
+       std::pair{"header_file_name", self.header_file_name()},
+       std::pair{"tracking_end_element", self.tracking_end_element()}}
+  );
+}
+std::string to_string(const GridBeamInitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GridBeamInitStruct",
+      {std::pair{"n_x", to_string(self.n_x())},
+       std::pair{"n_px", to_string(self.n_px())},
+       std::pair{"x_min", to_string(self.x_min())},
+       std::pair{"x_max", to_string(self.x_max())},
+       std::pair{"px_min", to_string(self.px_min())},
+       std::pair{"px_max", to_string(self.px_max())}}
+  );
+}
+std::string to_string(const GridFieldPt1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GridFieldPt1Struct",
+      {std::pair{"E", to_string(self.E())}, std::pair{"B", to_string(self.B())}}
+  );
+}
+std::string to_string(const GridFieldPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GridFieldPtStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"n_link", to_string(self.n_link())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const GridFieldStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "GridFieldStruct",
+      {std::pair{"geometry", to_string(self.geometry())},
+       std::pair{"harmonic", to_string(self.harmonic())},
+       std::pair{"phi0_fieldmap", to_string(self.phi0_fieldmap())},
+       std::pair{"field_scale", to_string(self.field_scale())},
+       std::pair{"field_type", to_string(self.field_type())},
+       std::pair{"master_parameter", to_string(self.master_parameter())},
+       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
+       std::pair{"interpolation_order", to_string(self.interpolation_order())},
+       std::pair{"dr", to_string(self.dr())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())},
+       std::pair{"ptr", to_string(self.ptr())},
+       std::pair{"bi_coef", "[...]"},
+       std::pair{"tri_coef", "[...]"}}
+  );
+}
+std::string to_string(const HighEnergySpaceChargeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "HighEnergySpaceChargeStruct",
+      {std::pair{"closed_orb", to_string(self.closed_orb())},
+       std::pair{"kick_const", to_string(self.kick_const())},
+       std::pair{"sig_x", to_string(self.sig_x())},
+       std::pair{"sig_y", to_string(self.sig_y())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"sin_phi", to_string(self.sin_phi())},
+       std::pair{"cos_phi", to_string(self.cos_phi())},
+       std::pair{"sig_z", to_string(self.sig_z())}}
+  );
+}
+std::string to_string(const IbsLifetimeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "IbsLifetimeStruct",
+      {std::pair{"Tlx", to_string(self.Tlx())},
+       std::pair{"Tly", to_string(self.Tly())},
+       std::pair{"Tlp", to_string(self.Tlp())}}
+  );
+}
+std::string to_string(const IbsMaxratioStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "IbsMaxratioStruct",
+      {std::pair{"rx", to_string(self.rx())},
+       std::pair{"ry", to_string(self.ry())},
+       std::pair{"r_p", to_string(self.r_p())}}
+  );
+}
+std::string to_string(const IbsSimParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "IbsSimParamStruct",
+      {std::pair{"tau_a", to_string(self.tau_a())},
+       std::pair{"clog_to_use", to_string(self.clog_to_use())},
+       std::pair{"set_dispersion", to_string(self.set_dispersion())},
+       std::pair{"eta_set", to_string(self.eta_set())},
+       std::pair{"etap_set", to_string(self.etap_set())},
+       std::pair{"do_pwd", to_string(self.do_pwd())},
+       std::pair{"inductance", to_string(self.inductance())},
+       std::pair{"formula", self.formula()}}
+  );
+}
+std::string to_string(const IbsStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "IbsStruct",
+      {std::pair{"inv_Ta", to_string(self.inv_Ta())},
+       std::pair{"inv_Tb", to_string(self.inv_Tb())},
+       std::pair{"inv_Tz", to_string(self.inv_Tz())}}
+  );
+}
+std::string to_string(const Interval1CoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Interval1CoefStruct",
+      {std::pair{"c0", to_string(self.c0())},
+       std::pair{"c1", to_string(self.c1())},
+       std::pair{"n_exp", to_string(self.n_exp())}}
+  );
+}
+std::string to_string(const KvBeamInitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "KvBeamInitStruct",
+      {std::pair{"part_per_phi", to_string(self.part_per_phi())},
+       std::pair{"n_I2", to_string(self.n_I2())},
+       std::pair{"A", to_string(self.A())}}
+  );
+}
+std::string to_string(const LatEleLocStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LatEleLocStruct",
+      {std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_branch", to_string(self.ix_branch())}}
+  );
+}
+std::string to_string(const LatEleOrder1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LatEleOrder1Struct",
+      {std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_order", to_string(self.ix_order())}}
+  );
+}
+std::string to_string(const LatEleOrderArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "LatEleOrderArrayStruct", {std::pair{"ele", "[...]"}});
+}
+std::string to_string(const LatEleOrderStruct &self) {
+  return repr(self.get_fortran_ptr(), "LatEleOrderStruct", {std::pair{"branch", "[...]"}});
+}
+std::string to_string(const LatParamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LatParamStruct",
+      {std::pair{"n_part", to_string(self.n_part())},
+       std::pair{"total_length", to_string(self.total_length())},
+       std::pair{"unstable_factor", to_string(self.unstable_factor())},
+       std::pair{"t1_with_RF", to_string(self.t1_with_RF())},
+       std::pair{"t1_no_RF", to_string(self.t1_no_RF())},
+       std::pair{"spin_tune", to_string(self.spin_tune())},
+       std::pair{"particle", to_string(self.particle())},
+       std::pair{"default_tracking_species", to_string(self.default_tracking_species())},
+       std::pair{"geometry", to_string(self.geometry())},
+       std::pair{"ixx", to_string(self.ixx())},
+       std::pair{"stable", to_string(self.stable())},
+       std::pair{"live_branch", to_string(self.live_branch())},
+       std::pair{"g1_integral", to_string(self.g1_integral())},
+       std::pair{"g2_integral", to_string(self.g2_integral())},
+       std::pair{"g3_integral", to_string(self.g3_integral())},
+       std::pair{"bookkeeping_state", to_string(self.bookkeeping_state())},
+       std::pair{"beam_init", to_string(self.beam_init())}}
+  );
+}
+std::string to_string(const LatPointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LatPointerStruct",
+      {std::pair{"lat", to_string(self.lat())}}
+  );
+}
+std::string to_string(const LatStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LatStruct",
+      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
+      }
+  );
+}
+std::string to_string(const Layout &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Layout",
+      {std::pair{"NAME", self.NAME()},
+       std::pair{"INDEX", to_string(self.INDEX())},
+       std::pair{"HARMONIC_NUMBER", to_string(self.HARMONIC_NUMBER())},
+       std::pair{"CLOSED", to_string(self.CLOSED())},
+       std::pair{"N", to_string(self.N())},
+       std::pair{"NTHIN", to_string(self.NTHIN())},
+       std::pair{"THIN", to_string(self.THIN())},
+       std::pair{"LASTPOS", to_string(self.LASTPOS())}}
+  );
+}
+std::string to_string(const LinacNormalModeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LinacNormalModeStruct",
+      {std::pair{"i2_E4", to_string(self.i2_E4())},
+       std::pair{"i3_E7", to_string(self.i3_E7())},
+       std::pair{"i5a_E6", to_string(self.i5a_E6())},
+       std::pair{"i5b_E6", to_string(self.i5b_E6())},
+       std::pair{"sig_E1", to_string(self.sig_E1())},
+       std::pair{"a_emittance_end", to_string(self.a_emittance_end())},
+       std::pair{"b_emittance_end", to_string(self.b_emittance_end())}}
+  );
+}
+std::string to_string(const LinearEleIsfStruct &self) {
+  return repr(self.get_fortran_ptr(), "LinearEleIsfStruct", {std::pair{"node", "[...]"}});
+}
+std::string to_string(const LinearIsf1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "LinearIsf1Struct",
+      {std::pair{"orb0", to_string(self.orb0())},
+       std::pair{"isf", to_string(self.isf())},
+       std::pair{"s", to_string(self.s())}}
+  );
+}
+std::string to_string(const MadEnergyStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MadEnergyStruct",
+      {std::pair{"total", to_string(self.total())},
+       std::pair{"beta", to_string(self.beta())},
+       std::pair{"gamma", to_string(self.gamma())},
+       std::pair{"kinetic", to_string(self.kinetic())},
+       std::pair{"p0c", to_string(self.p0c())},
+       std::pair{"particle", to_string(self.particle())}}
+  );
+}
+std::string to_string(const MadMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MadMapStruct",
+      {std::pair{"k", to_string(self.k())},
+       std::pair{"r", to_string(self.r())},
+       std::pair{"t", to_string(self.t())}}
+  );
+}
+std::string to_string(const MaterialStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MaterialStruct",
+      {std::pair{"species", to_string(self.species())},
+       std::pair{"number", to_string(self.number())},
+       std::pair{"density", to_string(self.density())},
+       std::pair{"density_used", to_string(self.density_used())},
+       std::pair{"area_density", to_string(self.area_density())},
+       std::pair{"area_density_used", to_string(self.area_density_used())},
+       std::pair{"radiation_length", to_string(self.radiation_length())},
+       std::pair{"radiation_length_used", to_string(self.radiation_length_used())}}
+  );
+}
+std::string to_string(const Mesh3dStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Mesh3dStruct",
+      {std::pair{"nlo", to_string(self.nlo())},
+       std::pair{"nhi", to_string(self.nhi())},
+       std::pair{"npad", to_string(self.npad())},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"delta", to_string(self.delta())},
+       std::pair{"gamma", to_string(self.gamma())},
+       std::pair{"charge", to_string(self.charge())},
+       std::pair{"rho", to_string(self.rho())},
+       std::pair{"phi", to_string(self.phi())}}
+  );
+}
+std::string to_string(const Mode3Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Mode3Struct",
+      {std::pair{"v", to_string(self.v())},
+       std::pair{"a", to_string(self.a())},
+       std::pair{"b", to_string(self.b())},
+       std::pair{"c", to_string(self.c())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())}}
+  );
+}
+std::string to_string(const ModeInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ModeInfoStruct",
+      {std::pair{"stable", to_string(self.stable())},
+       std::pair{"tune", to_string(self.tune())},
+       std::pair{"emit", to_string(self.emit())},
+       std::pair{"chrom", to_string(self.chrom())},
+       std::pair{"sigma", to_string(self.sigma())},
+       std::pair{"sigmap", to_string(self.sigmap())}}
+  );
+}
+std::string to_string(const MolecularComponentStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MolecularComponentStruct",
+      {std::pair{"atom", self.atom()}, std::pair{"number", to_string(self.number())}}
+  );
+}
+std::string to_string(const MomentumApertureStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MomentumApertureStruct",
+      {std::pair{"s", to_string(self.s())},
+       std::pair{"pos", to_string(self.pos())},
+       std::pair{"neg", to_string(self.neg())}}
+  );
+}
+std::string to_string(const MultipassAllInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MultipassAllInfoStruct",
+      {std::pair{"lord", "[...]"}, std::pair{"branch", "[...]"}}
+  );
+}
+std::string to_string(const MultipassBranchInfoStruct &self) {
+  return repr(self.get_fortran_ptr(), "MultipassBranchInfoStruct", {std::pair{"ele", "[...]"}});
+}
+std::string to_string(const MultipassEleInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MultipassEleInfoStruct",
+      {std::pair{"multipass", to_string(self.multipass())},
+       std::pair{"ix_pass", to_string(self.ix_pass())},
+       std::pair{"ix_lord", to_string(self.ix_lord())},
+       std::pair{"ix_super", to_string(self.ix_super())}}
+  );
+}
+std::string to_string(const MultipassLordInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MultipassLordInfoStruct",
+      {std::pair{"lord", to_string(self.lord())},
+       std::pair{"n_pass", to_string(self.n_pass())},
+       std::pair{"n_super_slave", to_string(self.n_super_slave())},
+       std::pair{"super_lord", "[...]"},
+       std::pair{"slave", "[...]"}}
+  );
+}
+std::string to_string(const MultipassRegionBranchStruct &self) {
+  return repr(self.get_fortran_ptr(), "MultipassRegionBranchStruct", {std::pair{"ele", "[...]"}});
+}
+std::string to_string(const MultipassRegionEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MultipassRegionEleStruct",
+      {std::pair{"ix_region", to_string(self.ix_region())},
+       std::pair{"region_start_pt", to_string(self.region_start_pt())},
+       std::pair{"region_stop_pt", to_string(self.region_stop_pt())}}
+  );
+}
+std::string to_string(const MultipassRegionLatStruct &self) {
+  return repr(self.get_fortran_ptr(), "MultipassRegionLatStruct", {std::pair{"branch", "[...]"}});
+}
+std::string to_string(const MultipoleCacheStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "MultipoleCacheStruct",
+      {std::pair{"a_pole_mag", to_string(self.a_pole_mag())},
+       std::pair{"b_pole_mag", to_string(self.b_pole_mag())},
+       std::pair{"a_kick_mag", to_string(self.a_kick_mag())},
+       std::pair{"b_kick_mag", to_string(self.b_kick_mag())},
+       std::pair{"ix_pole_mag_max", to_string(self.ix_pole_mag_max())},
+       std::pair{"ix_kick_mag_max", to_string(self.ix_kick_mag_max())},
+       std::pair{"mag_valid", to_string(self.mag_valid())},
+       std::pair{"a_pole_elec", to_string(self.a_pole_elec())},
+       std::pair{"b_pole_elec", to_string(self.b_pole_elec())},
+       std::pair{"a_kick_elec", to_string(self.a_kick_elec())},
+       std::pair{"b_kick_elec", to_string(self.b_kick_elec())},
+       std::pair{"ix_pole_elec_max", to_string(self.ix_pole_elec_max())},
+       std::pair{"ix_kick_elec_max", to_string(self.ix_kick_elec_max())},
+       std::pair{"elec_valid", to_string(self.elec_valid())}}
+  );
+}
+std::string to_string(const NamedNumberStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "NamedNumberStruct",
+      {std::pair{"name", self.name()}, std::pair{"value", to_string(self.value())}}
+  );
+}
+std::string to_string(const NametableStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "NametableStruct",
+      {std::pair{"name", to_string(self.name())},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"n_min", to_string(self.n_min())},
+       std::pair{"n_max", to_string(self.n_max())}}
+  );
+}
+std::string to_string(const NormalModesStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "NormalModesStruct",
+      {std::pair{"synch_int", to_string(self.synch_int())},
+       std::pair{"sigE_E", to_string(self.sigE_E())},
+       std::pair{"sig_z", to_string(self.sig_z())},
+       std::pair{"e_loss", to_string(self.e_loss())},
+       std::pair{"rf_voltage", to_string(self.rf_voltage())},
+       std::pair{"pz_aperture", to_string(self.pz_aperture())},
+       std::pair{"pz_average", to_string(self.pz_average())},
+       std::pair{"momentum_compaction", to_string(self.momentum_compaction())},
+       std::pair{"dpz_damp", to_string(self.dpz_damp())},
+       std::pair{"a", to_string(self.a())},
+       std::pair{"b", to_string(self.b())},
+       std::pair{"z", to_string(self.z())},
+       std::pair{"lin", to_string(self.lin())}}
+  );
+}
+std::string to_string(const OutIoOutputDirectStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "OutIoOutputDirectStruct",
+      {std::pair{"print_and_capture", to_string(self.print_and_capture())},
+       std::pair{"file_unit", to_string(self.file_unit())}}
+  );
+}
+std::string to_string(const ParserControllerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ParserControllerStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"attrib_name", self.attrib_name()},
+       std::pair{"stack", "[...]"},
+       std::pair{"y_knot", to_string(self.y_knot())},
+       std::pair{"n_stk", to_string(self.n_stk())}}
+  );
+}
+std::string to_string(const ParserEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ParserEleStruct",
+      {std::pair{"control", "[...]"},
+       std::pair{"field_overlaps", to_string(self.field_overlaps())},
+       std::pair{"ref_name", self.ref_name()},
+       std::pair{"ix_super_ref_multipass", to_string(self.ix_super_ref_multipass())},
+       std::pair{"ele_name", self.ele_name()},
+       std::pair{"names1", to_string(self.names1())},
+       std::pair{"names2", to_string(self.names2())},
+       std::pair{"lat_file", self.lat_file()},
+       std::pair{"offset", to_string(self.offset())},
+       std::pair{"ix_line_in_file", to_string(self.ix_line_in_file())},
+       std::pair{"ix_count", to_string(self.ix_count())},
+       std::pair{"ele_pt", to_string(self.ele_pt())},
+       std::pair{"ref_pt", to_string(self.ref_pt())},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"superposition_command_here", to_string(self.superposition_command_here())},
+       std::pair{"superposition_has_been_set", to_string(self.superposition_has_been_set())},
+       std::pair{"wrap_superimpose", to_string(self.wrap_superimpose())},
+       std::pair{"create_jumbo_slave", to_string(self.create_jumbo_slave())},
+       std::pair{"is_range", to_string(self.is_range())},
+       std::pair{"default_attrib", self.default_attrib()}}
+  );
+}
+std::string to_string(const ParserLatStruct &self) {
+  return repr(self.get_fortran_ptr(), "ParserLatStruct", {std::pair{"ele", "[...]"}});
+}
+std::string to_string(const PhotonCoordStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonCoordStruct",
+      {std::pair{"orb", to_string(self.orb())},
+       std::pair{"track_len", to_string(self.track_len())},
+       std::pair{"ix_section", to_string(self.ix_section())}}
+  );
+}
+std::string to_string(const PhotonElementStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonElementStruct",
+      {std::pair{"curvature", to_string(self.curvature())},
+       std::pair{"target", to_string(self.target())},
+       std::pair{"material", to_string(self.material())},
+       std::pair{"segmented", to_string(self.segmented())},
+       std::pair{"h_misalign", to_string(self.h_misalign())},
+       std::pair{"displacement", to_string(self.displacement())},
+       std::pair{"pixel", to_string(self.pixel())},
+       std::pair{"reflectivity_table_type", to_string(self.reflectivity_table_type())},
+       std::pair{"reflectivity_table_sigma", to_string(self.reflectivity_table_sigma())},
+       std::pair{"reflectivity_table_pi", to_string(self.reflectivity_table_pi())},
+       std::pair{"init_energy_prob", "[...]"},
+       std::pair{"integrated_init_energy_prob", to_string(self.integrated_init_energy_prob())}}
+  );
+}
+std::string to_string(const PhotonInitSplinesStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonInitSplinesStruct",
+      {std::pair{"source_type", self.source_type()},
+       std::pair{"spline_space_dimensions", to_string(self.spline_space_dimensions())},
+       std::pair{"energy_prob", "[...]"},
+       std::pair{"y_angle", "[...]"}}
+  );
+}
+std::string to_string(const PhotonInitXAngleSplineStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonInitXAngleSplineStruct",
+      {std::pair{"prob", "[...]"},
+       std::pair{"pl", "[...]"},
+       std::pair{"pc", "[...]"},
+       std::pair{"pl45", "[...]"}}
+  );
+}
+std::string to_string(const PhotonInitYAngleSplineStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonInitYAngleSplineStruct",
+      {std::pair{"prob", "[...]"},
+       std::pair{"pl", "[...]"},
+       std::pair{"pc", "[...]"},
+       std::pair{"pl45", "[...]"},
+       std::pair{"x_angle", "[...]"}}
+  );
+}
+std::string to_string(const PhotonMaterialStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonMaterialStruct",
+      {std::pair{"f0_m1", to_string(self.f0_m1())},
+       std::pair{"f0_m2", to_string(self.f0_m2())},
+       std::pair{"f_0", to_string(self.f_0())},
+       std::pair{"f_h", to_string(self.f_h())},
+       std::pair{"f_hbar", to_string(self.f_hbar())},
+       std::pair{"f_hkl", to_string(self.f_hkl())},
+       std::pair{"h_norm", to_string(self.h_norm())},
+       std::pair{"l_ref", to_string(self.l_ref())}}
+  );
+}
+std::string to_string(const PhotonReflectSurfaceStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonReflectSurfaceStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"description", self.description()},
+       std::pair{"reflectivity_file", self.reflectivity_file()},
+       std::pair{"table", "[...]"},
+       std::pair{"surface_roughness_rms", to_string(self.surface_roughness_rms())},
+       std::pair{"roughness_correlation_len", to_string(self.roughness_correlation_len())},
+       std::pair{"ix_surface", to_string(self.ix_surface())}}
+  );
+}
+std::string to_string(const PhotonReflectTableStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonReflectTableStruct",
+      {std::pair{"angle", to_string(self.angle())},
+       std::pair{"energy", to_string(self.energy())},
+       std::pair{"int1", "[...]"},
+       std::pair{"p_reflect", to_string(self.p_reflect())},
+       std::pair{"max_energy", to_string(self.max_energy())},
+       std::pair{"p_reflect_scratch", to_string(self.p_reflect_scratch())},
+       std::pair{"bragg_angle", to_string(self.bragg_angle())}}
+  );
+}
+std::string to_string(const PhotonTargetStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonTargetStruct",
+      {std::pair{"type", to_string(self.type())},
+       std::pair{"n_corner", to_string(self.n_corner())},
+       std::pair{"ele_loc", to_string(self.ele_loc())},
+       std::pair{"corner", "[...]"},
+       std::pair{"center", to_string(self.center())}}
+  );
+}
+std::string to_string(const PhotonTrackStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PhotonTrackStruct",
+      {std::pair{"old", to_string(self.old())}, std::pair{"now", to_string(self.now())}}
+  );
+}
+std::string to_string(const PixelDetecStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PixelDetecStruct",
+      {std::pair{"dr", to_string(self.dr())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"n_track_tot", to_string(self.n_track_tot())},
+       std::pair{"n_hit_detec", to_string(self.n_hit_detec())},
+       std::pair{"n_hit_pixel", to_string(self.n_hit_pixel())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const PixelPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PixelPtStruct",
+      {std::pair{"n_photon", to_string(self.n_photon())},
+       std::pair{"E_x", to_string(self.E_x())},
+       std::pair{"E_y", to_string(self.E_y())},
+       std::pair{"intensity_x", to_string(self.intensity_x())},
+       std::pair{"intensity_y", to_string(self.intensity_y())},
+       std::pair{"intensity", to_string(self.intensity())},
+       std::pair{"orbit", to_string(self.orbit())},
+       std::pair{"orbit_rms", to_string(self.orbit_rms())},
+       std::pair{"init_orbit", to_string(self.init_orbit())},
+       std::pair{"init_orbit_rms", to_string(self.init_orbit_rms())}}
+  );
+}
+std::string to_string(const PmdHeaderStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PmdHeaderStruct",
+      {std::pair{"openPMD", self.openPMD()},
+       std::pair{"openPMDextension", self.openPMDextension()},
+       std::pair{"basePath", self.basePath()},
+       std::pair{"particlesPath", self.particlesPath()},
+       std::pair{"meshesPath", self.meshesPath()},
+       std::pair{"author", self.author()},
+       std::pair{"software", self.software()},
+       std::pair{"softwareVersion", self.softwareVersion()},
+       std::pair{"date", self.date()},
+       std::pair{"latticeFile", self.latticeFile()},
+       std::pair{"latticeName", self.latticeName()}}
+  );
+}
+std::string to_string(const PreTrackerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PreTrackerStruct",
+      {std::pair{"who", to_string(self.who())},
+       std::pair{"ix_ele_start", to_string(self.ix_ele_start())},
+       std::pair{"ix_ele_end", to_string(self.ix_ele_end())},
+       std::pair{"input_file", self.input_file()}}
+  );
+}
+std::string to_string(const PtcBranch1Struct &self) {
+  return repr(self.get_fortran_ptr(), "PtcBranch1Struct", {std::pair{"m_u_layout", "[...]"}});
+}
+std::string to_string(const PtcLayoutPointerStruct &self) {
+  return repr(self.get_fortran_ptr(), "PtcLayoutPointerStruct", {});
+}
+std::string to_string(const PtcNormalFormStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PtcNormalFormStruct",
+      {std::pair{"ele_origin", to_string(self.ele_origin())},
+       std::pair{"orb0", to_string(self.orb0())},
+       std::pair{"valid_map", to_string(self.valid_map())}}
+  );
+}
+std::string to_string(const PtcRadMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "PtcRadMapStruct",
+      {std::pair{"lattice_file", self.lattice_file()},
+       std::pair{"dref_time", to_string(self.dref_time())},
+       std::pair{"p0c_start", to_string(self.p0c_start())},
+       std::pair{"p0c_end", to_string(self.p0c_end())},
+       std::pair{"s_end", to_string(self.s_end())},
+       std::pair{"map_order", to_string(self.map_order())},
+       std::pair{"radiation_damping_on", to_string(self.radiation_damping_on())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_ele_start", to_string(self.ix_ele_start())},
+       std::pair{"ix_ele_end", to_string(self.ix_ele_end())},
+       std::pair{"nodamp_mat", to_string(self.nodamp_mat())},
+       std::pair{"damp_mat", to_string(self.damp_mat())},
+       std::pair{"stoc_mat", to_string(self.stoc_mat())},
+       std::pair{"ref0", to_string(self.ref0())},
+       std::pair{"ref1", to_string(self.ref1())}}
+  );
+}
+std::string to_string(const QpAxisStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpAxisStruct",
+      {std::pair{"label", self.label()},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"tick_min", to_string(self.tick_min())},
+       std::pair{"tick_max", to_string(self.tick_max())},
+       std::pair{"eval_min", to_string(self.eval_min())},
+       std::pair{"eval_max", to_string(self.eval_max())},
+       std::pair{"dtick", to_string(self.dtick())},
+       std::pair{"number_offset", to_string(self.number_offset())},
+       std::pair{"label_offset", to_string(self.label_offset())},
+       std::pair{"major_tick_len", to_string(self.major_tick_len())},
+       std::pair{"minor_tick_len", to_string(self.minor_tick_len())},
+       std::pair{"label_color", self.label_color()},
+       std::pair{"major_div", to_string(self.major_div())},
+       std::pair{"major_div_nominal", to_string(self.major_div_nominal())},
+       std::pair{"minor_div", to_string(self.minor_div())},
+       std::pair{"minor_div_max", to_string(self.minor_div_max())},
+       std::pair{"places", to_string(self.places())},
+       std::pair{"type", self.type()},
+       std::pair{"bounds", self.bounds()},
+       std::pair{"tick_side", to_string(self.tick_side())},
+       std::pair{"number_side", to_string(self.number_side())},
+       std::pair{"draw_label", to_string(self.draw_label())},
+       std::pair{"draw_numbers", to_string(self.draw_numbers())}}
+  );
+}
+std::string to_string(const QpLegendStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpLegendStruct",
+      {std::pair{"row_spacing", to_string(self.row_spacing())},
+       std::pair{"line_length", to_string(self.line_length())},
+       std::pair{"text_offset", to_string(self.text_offset())},
+       std::pair{"draw_line", to_string(self.draw_line())},
+       std::pair{"draw_symbol", to_string(self.draw_symbol())},
+       std::pair{"draw_text", to_string(self.draw_text())}}
+  );
+}
+std::string to_string(const QpLineStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpLineStruct",
+      {std::pair{"width", to_string(self.width())},
+       std::pair{"color", self.color()},
+       std::pair{"pattern", self.pattern()}}
+  );
+}
+std::string to_string(const QpPointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpPointStruct",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"units", self.units()}}
+  );
+}
+std::string to_string(const QpRectStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpRectStruct",
+      {std::pair{"x1", to_string(self.x1())},
+       std::pair{"x2", to_string(self.x2())},
+       std::pair{"y1", to_string(self.y1())},
+       std::pair{"y2", to_string(self.y2())},
+       std::pair{"units", self.units()}}
+  );
+}
+std::string to_string(const QpSymbolStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "QpSymbolStruct",
+      {std::pair{"type", self.type()},
+       std::pair{"height", to_string(self.height())},
+       std::pair{"color", self.color()},
+       std::pair{"fill_pattern", self.fill_pattern()},
+       std::pair{"line_width", to_string(self.line_width())}}
+  );
+}
+std::string to_string(const RadInt1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadInt1Struct",
+      {std::pair{"i0", to_string(self.i0())},
+       std::pair{"i1", to_string(self.i1())},
+       std::pair{"i2", to_string(self.i2())},
+       std::pair{"i3", to_string(self.i3())},
+       std::pair{"i4a", to_string(self.i4a())},
+       std::pair{"i4b", to_string(self.i4b())},
+       std::pair{"i4z", to_string(self.i4z())},
+       std::pair{"i5a", to_string(self.i5a())},
+       std::pair{"i5b", to_string(self.i5b())},
+       std::pair{"i6b", to_string(self.i6b())},
+       std::pair{"lin_i2_E4", to_string(self.lin_i2_E4())},
+       std::pair{"lin_i3_E7", to_string(self.lin_i3_E7())},
+       std::pair{"lin_i5a_E6", to_string(self.lin_i5a_E6())},
+       std::pair{"lin_i5b_E6", to_string(self.lin_i5b_E6())},
+       std::pair{"lin_norm_emit_a", to_string(self.lin_norm_emit_a())},
+       std::pair{"lin_norm_emit_b", to_string(self.lin_norm_emit_b())},
+       std::pair{"lin_sig_E", to_string(self.lin_sig_E())},
+       std::pair{"n_steps", to_string(self.n_steps())}}
+  );
+}
+std::string to_string(const RadIntAllEleStruct &self) {
+  return repr(self.get_fortran_ptr(), "RadIntAllEleStruct", {std::pair{"branch", "[...]"}});
+}
+std::string to_string(const RadIntBranchStruct &self) {
+  return repr(self.get_fortran_ptr(), "RadIntBranchStruct", {std::pair{"ele", "[...]"}});
+}
+std::string to_string(const RadIntCache1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadIntCache1Struct",
+      {std::pair{"pt", "[...]"},
+       std::pair{"n_pt", to_string(self.n_pt())},
+       std::pair{"cache_type", to_string(self.cache_type())}}
+  );
+}
+std::string to_string(const RadIntInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadIntInfoStruct",
+      {std::pair{"branch", to_string(self.branch())},
+       std::pair{"ele", to_string(self.ele())},
+       std::pair{"orbit", "[...]"},
+       std::pair{"a", to_string(self.a())},
+       std::pair{"b", to_string(self.b())},
+       std::pair{"cache_ele", to_string(self.cache_ele())},
+       std::pair{"eta_a", to_string(self.eta_a())},
+       std::pair{"eta_b", to_string(self.eta_b())},
+       std::pair{"g", to_string(self.g())},
+       std::pair{"g2", to_string(self.g2())},
+       std::pair{"g_x", to_string(self.g_x())},
+       std::pair{"g_y", to_string(self.g_y())},
+       std::pair{"dg2_x", to_string(self.dg2_x())},
+       std::pair{"dg2_y", to_string(self.dg2_y())}}
+  );
+}
+std::string to_string(const RadIntTrackPointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadIntTrackPointStruct",
+      {std::pair{"s_body", to_string(self.s_body())},
+       std::pair{"mat6", to_string(self.mat6())},
+       std::pair{"vec0", to_string(self.vec0())},
+       std::pair{"ref_orb_in", to_string(self.ref_orb_in())},
+       std::pair{"ref_orb_out", to_string(self.ref_orb_out())},
+       std::pair{"g_x0", to_string(self.g_x0())},
+       std::pair{"g_y0", to_string(self.g_y0())},
+       std::pair{"dgx_dx", to_string(self.dgx_dx())},
+       std::pair{"dgx_dy", to_string(self.dgx_dy())},
+       std::pair{"dgy_dx", to_string(self.dgy_dx())},
+       std::pair{"dgy_dy", to_string(self.dgy_dy())}}
+  );
+}
+std::string to_string(const RadMapEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadMapEleStruct",
+      {std::pair{"rm0", to_string(self.rm0())},
+       std::pair{"rm1", to_string(self.rm1())},
+       std::pair{"stale", to_string(self.stale())}}
+  );
+}
+std::string to_string(const RadMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RadMapStruct",
+      {std::pair{"ref_orb", to_string(self.ref_orb())},
+       std::pair{"damp_dmat", to_string(self.damp_dmat())},
+       std::pair{"xfer_damp_vec", to_string(self.xfer_damp_vec())},
+       std::pair{"xfer_damp_mat", to_string(self.xfer_damp_mat())},
+       std::pair{"stoc_mat", to_string(self.stoc_mat())}}
+  );
+}
+std::string to_string(const RamperLordStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RamperLordStruct",
+      {std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_con", to_string(self.ix_con())},
+       std::pair{"attrib_ptr", to_string(self.attrib_ptr())}}
+  );
+}
+std::string to_string(const RandomStateStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RandomStateStruct",
+      {std::pair{"ix", to_string(self.ix())},
+       std::pair{"iy", to_string(self.iy())},
+       std::pair{"number_stored", to_string(self.number_stored())},
+       std::pair{"h_saved", to_string(self.h_saved())},
+       std::pair{"engine", to_string(self.engine())},
+       std::pair{"seed", to_string(self.seed())},
+       std::pair{"am", to_string(self.am())},
+       std::pair{"gauss_converter", to_string(self.gauss_converter())},
+       std::pair{"gauss_sigma_cut", to_string(self.gauss_sigma_cut())},
+       std::pair{"in_sobseq", to_string(self.in_sobseq())},
+       std::pair{"ix_sobseq", to_string(self.ix_sobseq())},
+       std::pair{"x_sobseq", to_string(self.x_sobseq())}}
+  );
+}
+std::string to_string(const ResonanceHStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "ResonanceHStruct",
+      {std::pair{"id", self.id()}, std::pair{"c_val", to_string(self.c_val())}}
+  );
+}
+std::string to_string(const RfEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RfEleStruct",
+      {std::pair{"steps", "[...]"}, std::pair{"ds_step", to_string(self.ds_step())}}
+  );
+}
+std::string to_string(const RfStairStepStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "RfStairStepStruct",
+      {std::pair{"E_tot0", to_string(self.E_tot0())},
+       std::pair{"E_tot1", to_string(self.E_tot1())},
+       std::pair{"p0c", to_string(self.p0c())},
+       std::pair{"p1c", to_string(self.p1c())},
+       std::pair{"scale", to_string(self.scale())},
+       std::pair{"time", to_string(self.time())},
+       std::pair{"s0", to_string(self.s0())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"ix_step", to_string(self.ix_step())}}
+  );
+}
+std::string to_string(const SeqEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SeqEleStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"actual_arg", to_string(self.actual_arg())},
+       std::pair{"tag", self.tag()},
+       std::pair{"slice_start", self.slice_start()},
+       std::pair{"slice_end", self.slice_end()},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_arg", to_string(self.ix_arg())},
+       std::pair{"rep_count", to_string(self.rep_count())},
+       std::pair{"ele_order_reflect", to_string(self.ele_order_reflect())},
+       std::pair{"ele_orientation", to_string(self.ele_orientation())}}
+  );
+}
+std::string to_string(const SeqStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SeqStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"ele", "[...]"},
+       std::pair{"dummy_arg", to_string(self.dummy_arg())},
+       std::pair{"corresponding_actual_arg", to_string(self.corresponding_actual_arg())},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"ix_list", to_string(self.ix_list())},
+       std::pair{"list_upcount", to_string(self.list_upcount())},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"file_name", self.file_name()},
+       std::pair{"ix_file_line", to_string(self.ix_file_line())},
+       std::pair{"multipass", to_string(self.multipass())},
+       std::pair{"ptc_layout", to_string(self.ptc_layout())},
+       std::pair{"active", to_string(self.active())}}
+  );
+}
+std::string to_string(const SpaceChargeCommonStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpaceChargeCommonStruct",
+      {std::pair{"ds_track_step", to_string(self.ds_track_step())},
+       std::pair{"dt_track_step", to_string(self.dt_track_step())},
+       std::pair{"cathode_strength_cutoff", to_string(self.cathode_strength_cutoff())},
+       std::pair{"rel_tol_tracking", to_string(self.rel_tol_tracking())},
+       std::pair{"abs_tol_tracking", to_string(self.abs_tol_tracking())},
+       std::pair{"beam_chamber_height", to_string(self.beam_chamber_height())},
+       std::pair{"lsc_sigma_cutoff", to_string(self.lsc_sigma_cutoff())},
+       std::pair{"particle_sigma_cutoff", to_string(self.particle_sigma_cutoff())},
+       std::pair{"mesh_growth_factor", to_string(self.mesh_growth_factor())},
+       std::pair{"mesh_shrink_factor", to_string(self.mesh_shrink_factor())},
+       std::pair{"space_charge_mesh_size", to_string(self.space_charge_mesh_size())},
+       std::pair{"csr3d_mesh_size", to_string(self.csr3d_mesh_size())},
+       std::pair{"n_bin", to_string(self.n_bin())},
+       std::pair{"particle_bin_span", to_string(self.particle_bin_span())},
+       std::pair{"n_shield_images", to_string(self.n_shield_images())},
+       std::pair{"sc_min_in_bin", to_string(self.sc_min_in_bin())},
+       std::pair{
+           "lsc_kick_transverse_dependence",
+           to_string(self.lsc_kick_transverse_dependence())
+       },
+       std::pair{"debug", to_string(self.debug())},
+       std::pair{"diagnostic_output_file", self.diagnostic_output_file()}}
+  );
+}
+std::string to_string(const SpinAxisStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpinAxisStruct",
+      {std::pair{"l", to_string(self.l())},
+       std::pair{"n0", to_string(self.n0())},
+       std::pair{"m", to_string(self.m())}}
+  );
+}
+std::string to_string(const SpinEigenStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpinEigenStruct",
+      {std::pair{"vec", to_string(self.vec())}, std::pair{"val", to_string(self.val())}}
+  );
+}
+std::string to_string(const SpinMatchingStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpinMatchingStruct",
+      {std::pair{"axis", to_string(self.axis())},
+       std::pair{"eigen", "[...]"},
+       std::pair{"dn_dpz", to_string(self.dn_dpz())},
+       std::pair{"alpha", to_string(self.alpha())},
+       std::pair{"beta", to_string(self.beta())},
+       std::pair{"orb0", to_string(self.orb0())},
+       std::pair{"M_1turn", to_string(self.M_1turn())},
+       std::pair{"M_ele", to_string(self.M_ele())},
+       std::pair{"sq_ele", to_string(self.sq_ele())},
+       std::pair{"sq_1turn", to_string(self.sq_1turn())},
+       std::pair{"valid", to_string(self.valid())}}
+  );
+}
+std::string to_string(const SpinOrbitMap1Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpinOrbitMap1Struct",
+      {std::pair{"orb_mat", to_string(self.orb_mat())},
+       std::pair{"vec0", to_string(self.vec0())},
+       std::pair{"spin_q", to_string(self.spin_q())}}
+  );
+}
+std::string to_string(const SpinPolarStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SpinPolarStruct",
+      {std::pair{"polarization", to_string(self.polarization())},
+       std::pair{"theta", to_string(self.theta())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"xi", to_string(self.xi())}}
+  );
+}
+std::string to_string(const SplineStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SplineStruct",
+      {std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"x1", to_string(self.x1())},
+       std::pair{"coef", to_string(self.coef())}}
+  );
+}
+std::string to_string(const StrIndexStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "StrIndexStruct",
+      {std::pair{"name", "[...]"},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"n_min", to_string(self.n_min())},
+       std::pair{"n_max", to_string(self.n_max())}}
+  );
+}
+std::string to_string(const StrongBeamStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "StrongBeamStruct",
+      {std::pair{"ix_slice", to_string(self.ix_slice())},
+       std::pair{"x_center", to_string(self.x_center())},
+       std::pair{"y_center", to_string(self.y_center())},
+       std::pair{"x_sigma", to_string(self.x_sigma())},
+       std::pair{"y_sigma", to_string(self.y_sigma())},
+       std::pair{"dx", to_string(self.dx())},
+       std::pair{"dy", to_string(self.dy())}}
+  );
+}
+std::string to_string(const SummationRdtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SummationRdtStruct",
+      {std::pair{"h11001", to_string(self.h11001())}, std::pair{"h00111", to_string(self.h00111())},
+       std::pair{"h20001", to_string(self.h20001())}, std::pair{"h00201", to_string(self.h00201())},
+       std::pair{"h10002", to_string(self.h10002())}, std::pair{"h21000", to_string(self.h21000())},
+       std::pair{"h30000", to_string(self.h30000())}, std::pair{"h10110", to_string(self.h10110())},
+       std::pair{"h10020", to_string(self.h10020())}, std::pair{"h10200", to_string(self.h10200())},
+       std::pair{"h31000", to_string(self.h31000())}, std::pair{"h40000", to_string(self.h40000())},
+       std::pair{"h20110", to_string(self.h20110())}, std::pair{"h11200", to_string(self.h11200())},
+       std::pair{"h20020", to_string(self.h20020())}, std::pair{"h20200", to_string(self.h20200())},
+       std::pair{"h00310", to_string(self.h00310())}, std::pair{"h00400", to_string(self.h00400())},
+       std::pair{"h22000", to_string(self.h22000())}, std::pair{"h00220", to_string(self.h00220())},
+       std::pair{"h11110", to_string(self.h11110())}}
+  );
+}
+std::string to_string(const SurfaceCurvatureStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceCurvatureStruct",
+      {std::pair{"xy", to_string(self.xy())},
+       std::pair{"spherical", to_string(self.spherical())},
+       std::pair{"elliptical", to_string(self.elliptical())},
+       std::pair{"has_curvature", to_string(self.has_curvature())}}
+  );
+}
+std::string to_string(const SurfaceDisplacementPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceDisplacementPtStruct",
+      {std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"z0", to_string(self.z0())},
+       std::pair{"dz_dx", to_string(self.dz_dx())},
+       std::pair{"dz_dy", to_string(self.dz_dy())},
+       std::pair{"d2z_dxdy", to_string(self.d2z_dxdy())}}
+  );
+}
+std::string to_string(const SurfaceDisplacementStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceDisplacementStruct",
+      {std::pair{"active", to_string(self.active())},
+       std::pair{"dr", to_string(self.dr())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const SurfaceHMisalignPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceHMisalignPtStruct",
+      {std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"rot_y", to_string(self.rot_y())},
+       std::pair{"rot_t", to_string(self.rot_t())},
+       std::pair{"rot_y_rms", to_string(self.rot_y_rms())},
+       std::pair{"rot_t_rms", to_string(self.rot_t_rms())}}
+  );
+}
+std::string to_string(const SurfaceHMisalignStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceHMisalignStruct",
+      {std::pair{"active", to_string(self.active())},
+       std::pair{"dr", to_string(self.dr())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const SurfaceSegmentedPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceSegmentedPtStruct",
+      {std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"z0", to_string(self.z0())},
+       std::pair{"dz_dx", to_string(self.dz_dx())},
+       std::pair{"dz_dy", to_string(self.dz_dy())}}
+  );
+}
+std::string to_string(const SurfaceSegmentedStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "SurfaceSegmentedStruct",
+      {std::pair{"active", to_string(self.active())},
+       std::pair{"dr", to_string(self.dr())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const TaoAliasStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoAliasStruct",
+      {std::pair{"name", self.name()}, std::pair{"expanded_str", self.expanded_str()}}
+  );
+}
+std::string to_string(const TaoBeamBranchStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBeamBranchStruct",
+      {std::pair{"beam_at_start", to_string(self.beam_at_start())},
+       std::pair{"beam_init", to_string(self.beam_init())},
+       std::pair{"beam_init_used", to_string(self.beam_init_used())},
+       std::pair{"init_starting_distribution", to_string(self.init_starting_distribution())},
+       std::pair{"track_start", self.track_start()},
+       std::pair{"track_end", self.track_end()},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_track_start", to_string(self.ix_track_start())},
+       std::pair{"ix_track_end", to_string(self.ix_track_end())}}
+  );
+}
+std::string to_string(const TaoBeamUniStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBeamUniStruct",
+      {std::pair{"saved_at", self.saved_at()},
+       std::pair{"dump_file", self.dump_file()},
+       std::pair{"dump_at", self.dump_at()},
+       std::pair{"track_beam_in_universe", to_string(self.track_beam_in_universe())},
+       std::pair{"always_reinit", to_string(self.always_reinit())}}
+  );
+}
+std::string to_string(const TaoBuildingWallOrientationStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallOrientationStruct",
+      {std::pair{"theta", to_string(self.theta())},
+       std::pair{"x_offset", to_string(self.x_offset())},
+       std::pair{"z_offset", to_string(self.z_offset())}}
+  );
+}
+std::string to_string(const TaoBuildingWallPointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallPointStruct",
+      {std::pair{"z", to_string(self.z())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"radius", to_string(self.radius())},
+       std::pair{"z_center", to_string(self.z_center())},
+       std::pair{"x_center", to_string(self.x_center())}}
+  );
+}
+std::string to_string(const TaoBuildingWallSectionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallSectionStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"constraint", self.constraint()},
+       std::pair{"point", "[...]"}}
+  );
+}
+std::string to_string(const TaoBuildingWallStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoBuildingWallStruct",
+      {std::pair{"orientation", to_string(self.orientation())}, std::pair{"section", "[...]"}}
+  );
+}
+std::string to_string(const TaoCmdHistoryStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCmdHistoryStruct",
+      {std::pair{"cmd", self.cmd()}, std::pair{"ix", to_string(self.ix())}}
+  );
+}
+std::string to_string(const TaoCommandFileStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCommandFileStruct",
+      {std::pair{"full_name", self.full_name()},
+       std::pair{"dir", self.dir()},
+       std::pair{"ix_unit", to_string(self.ix_unit())},
+       std::pair{"cmd_arg", to_string(self.cmd_arg())},
+       std::pair{"quiet", self.quiet()},
+       std::pair{"paused", to_string(self.paused())},
+       std::pair{"n_line", to_string(self.n_line())},
+       std::pair{"reset_at_end", to_string(self.reset_at_end())},
+       std::pair{"lattice_calc_save", to_string(self.lattice_calc_save())},
+       std::pair{"plot_save", to_string(self.plot_save())},
+       std::pair{"multi_cmd", self.multi_cmd()}}
+  );
+}
+std::string to_string(const TaoCommonStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCommonStruct",
+      {std::pair{"alias", "[...]"},
+       std::pair{"key", "[...]"},
+       std::pair{"cmd_file", "[...]"},
+       std::pair{"symbolic_num", "[...]"},
+       std::pair{"plot_place_buffer", "[...]"},
+       std::pair{"do_loop", "[...]"},
+       std::pair{"covar", to_string(self.covar())},
+       std::pair{"alpha", to_string(self.alpha())},
+       std::pair{"dummy_target", to_string(self.dummy_target())},
+       std::pair{"n_alias", to_string(self.n_alias())},
+       std::pair{"cmd_file_level", to_string(self.cmd_file_level())},
+       std::pair{"ix_key_bank", to_string(self.ix_key_bank())},
+       std::pair{"ix_history", to_string(self.ix_history())},
+       std::pair{"n_history", to_string(self.n_history())},
+       std::pair{"lev_loop", to_string(self.lev_loop())},
+       std::pair{"n_err_messages_printed", to_string(self.n_err_messages_printed())},
+       std::pair{"n_universes", to_string(self.n_universes())},
+       std::pair{"ix_beam_track_active_element", to_string(self.ix_beam_track_active_element())},
+       std::pair{"cmd_file_paused", to_string(self.cmd_file_paused())},
+       std::pair{"use_cmd_here", to_string(self.use_cmd_here())},
+       std::pair{"cmd_from_cmd_file", to_string(self.cmd_from_cmd_file())},
+       std::pair{"use_saved_beam_in_tracking", to_string(self.use_saved_beam_in_tracking())},
+       std::pair{"single_mode", to_string(self.single_mode())},
+       std::pair{
+           "combine_consecutive_elements_of_like_name",
+           to_string(self.combine_consecutive_elements_of_like_name())
+       },
+       std::pair{"have_tracked_beam", to_string(self.have_tracked_beam())},
+       std::pair{"init_plot_needed", to_string(self.init_plot_needed())},
+       std::pair{"init_beam", to_string(self.init_beam())},
+       std::pair{"init_var", to_string(self.init_var())},
+       std::pair{"init_read_lat_info", to_string(self.init_read_lat_info())},
+       std::pair{"optimizer_running", to_string(self.optimizer_running())},
+       std::pair{"have_datums_using_expressions", to_string(self.have_datums_using_expressions())},
+       std::pair{"print_to_terminal", to_string(self.print_to_terminal())},
+       std::pair{"lattice_calc_done", to_string(self.lattice_calc_done())},
+       std::pair{"add_measurement_noise", to_string(self.add_measurement_noise())},
+       std::pair{"is_err_message_printed", to_string(self.is_err_message_printed())},
+       std::pair{"command_arg_has_been_executed", to_string(self.command_arg_has_been_executed())},
+       std::pair{"all_merit_weights_positive", to_string(self.all_merit_weights_positive())},
+       std::pair{"multi_turn_orbit_is_plotted", to_string(self.multi_turn_orbit_is_plotted())},
+       std::pair{"force_chrom_calc", to_string(self.force_chrom_calc())},
+       std::pair{"force_rad_int_calc", to_string(self.force_rad_int_calc())},
+       std::pair{"rad_int_ri_calc_on", to_string(self.rad_int_ri_calc_on())},
+       std::pair{"rad_int_6d_calc_on", to_string(self.rad_int_6d_calc_on())},
+       std::pair{"valid_plot_who", to_string(self.valid_plot_who())},
+       std::pair{"single_mode_buffer", self.single_mode_buffer()},
+       std::pair{"cmd", self.cmd()}}
+  );
+}
+std::string to_string(const TaoCurveArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoCurveArrayStruct", {std::pair{"c", to_string(self.c())}});
+}
+std::string to_string(const TaoCurveColorStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCurveColorStruct",
+      {std::pair{"data_type", self.data_type()},
+       std::pair{"is_on", to_string(self.is_on())},
+       std::pair{"min", to_string(self.min())},
+       std::pair{"max", to_string(self.max())},
+       std::pair{"autoscale", to_string(self.autoscale())}}
+  );
+}
+std::string to_string(const TaoCurveOrbitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCurveOrbitStruct",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"t", to_string(self.t())}}
+  );
+}
+std::string to_string(const TaoCurveStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoCurveStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"data_source", self.data_source()},
+       std::pair{"data_index", self.data_index()},
+       std::pair{"data_type_x", self.data_type_x()},
+       std::pair{"data_type", self.data_type()},
+       std::pair{"ele_ref_name", self.ele_ref_name()},
+       std::pair{"legend_text", self.legend_text()},
+       std::pair{"message_text", self.message_text()},
+       std::pair{"component", self.component()},
+       std::pair{"why_invalid", self.why_invalid()},
+       std::pair{"g", "..."},
+       std::pair{"hist", to_string(self.hist())},
+       std::pair{"z_color", to_string(self.z_color())},
+       std::pair{"x_line", to_string(self.x_line())},
+       std::pair{"y_line", to_string(self.y_line())},
+       std::pair{"y2_line", to_string(self.y2_line())},
+       std::pair{"ix_line", to_string(self.ix_line())},
+       std::pair{"x_symb", to_string(self.x_symb())},
+       std::pair{"y_symb", to_string(self.y_symb())},
+       std::pair{"z_symb", to_string(self.z_symb())},
+       std::pair{"err_symb", to_string(self.err_symb())},
+       std::pair{"symb_size", to_string(self.symb_size())},
+       std::pair{"ix_symb", to_string(self.ix_symb())},
+       std::pair{"y_axis_scale_factor", to_string(self.y_axis_scale_factor())},
+       std::pair{"line", to_string(self.line())},
+       std::pair{"symbol", to_string(self.symbol())},
+       std::pair{"orbit", to_string(self.orbit())},
+       std::pair{"ix_universe", to_string(self.ix_universe())},
+       std::pair{"symbol_every", to_string(self.symbol_every())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_bunch", to_string(self.ix_bunch())},
+       std::pair{"n_turn", to_string(self.n_turn())},
+       std::pair{"use_y2", to_string(self.use_y2())},
+       std::pair{"draw_line", to_string(self.draw_line())},
+       std::pair{"draw_symbols", to_string(self.draw_symbols())},
+       std::pair{"draw_symbol_index", to_string(self.draw_symbol_index())},
+       std::pair{"draw_error_bars", to_string(self.draw_error_bars())},
+       std::pair{"smooth_line_calc", to_string(self.smooth_line_calc())},
+       std::pair{"valid", to_string(self.valid())}}
+  );
+}
+std::string to_string(const TaoD1DataArrayStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoD1DataArrayStruct",
+      {std::pair{"d1", to_string(self.d1())}}
+  );
+}
+std::string to_string(const TaoD1DataStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoD1DataStruct",
+      {std::pair{"name", self.name()}, std::pair{"d2", "..."}, std::pair{"d", "[...]"}}
+  );
+}
+std::string to_string(const TaoD2DataArrayStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoD2DataArrayStruct",
+      {std::pair{"d2", to_string(self.d2())}}
+  );
+}
+std::string to_string(const TaoD2DataStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoD2DataStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"data_file_name", self.data_file_name()},
+       std::pair{"ref_file_name", self.ref_file_name()},
+       std::pair{"data_date", self.data_date()},
+       std::pair{"ref_date", self.ref_date()},
+       std::pair{"descrip", to_string(self.descrip())},
+       std::pair{"d1", "[...]"},
+       std::pair{"ix_universe", to_string(self.ix_universe())},
+       std::pair{"ix_d2_data", to_string(self.ix_d2_data())},
+       std::pair{"ix_ref", to_string(self.ix_ref())},
+       std::pair{"data_read_in", to_string(self.data_read_in())},
+       std::pair{"ref_read_in", to_string(self.ref_read_in())}}
+  );
+}
+std::string to_string(const TaoDataArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoDataArrayStruct", {std::pair{"d", to_string(self.d())}});
+}
+std::string to_string(const TaoDataStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoDataStruct",
+      {std::pair{"ele_name", self.ele_name()},
+       std::pair{"ele_start_name", self.ele_start_name()},
+       std::pair{"ele_ref_name", self.ele_ref_name()},
+       std::pair{"data_type", self.data_type()},
+       std::pair{"merit_type", self.merit_type()},
+       std::pair{"id", self.id()},
+       std::pair{"data_source", self.data_source()},
+       std::pair{"why_invalid", self.why_invalid()},
+       std::pair{"ix_uni", to_string(self.ix_uni())},
+       std::pair{"ix_bunch", to_string(self.ix_bunch())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_ele_start", to_string(self.ix_ele_start())},
+       std::pair{"ix_ele_ref", to_string(self.ix_ele_ref())},
+       std::pair{"ix_ele_merit", to_string(self.ix_ele_merit())},
+       std::pair{"ix_d1", to_string(self.ix_d1())},
+       std::pair{"ix_data", to_string(self.ix_data())},
+       std::pair{"ix_dModel", to_string(self.ix_dModel())},
+       std::pair{"eval_point", to_string(self.eval_point())},
+       std::pair{"meas_value", to_string(self.meas_value())},
+       std::pair{"ref_value", to_string(self.ref_value())},
+       std::pair{"model_value", to_string(self.model_value())},
+       std::pair{"design_value", to_string(self.design_value())},
+       std::pair{"old_value", to_string(self.old_value())},
+       std::pair{"base_value", to_string(self.base_value())},
+       std::pair{"error_rms", to_string(self.error_rms())},
+       std::pair{"delta_merit", to_string(self.delta_merit())},
+       std::pair{"weight", to_string(self.weight())},
+       std::pair{"invalid_value", to_string(self.invalid_value())},
+       std::pair{"merit", to_string(self.merit())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"s_offset", to_string(self.s_offset())},
+       std::pair{"ref_s_offset", to_string(self.ref_s_offset())},
+       std::pair{"err_message_printed", to_string(self.err_message_printed())},
+       std::pair{"exists", to_string(self.exists())},
+       std::pair{"good_model", to_string(self.good_model())},
+       std::pair{"good_base", to_string(self.good_base())},
+       std::pair{"good_design", to_string(self.good_design())},
+       std::pair{"good_meas", to_string(self.good_meas())},
+       std::pair{"good_ref", to_string(self.good_ref())},
+       std::pair{"good_user", to_string(self.good_user())},
+       std::pair{"good_opt", to_string(self.good_opt())},
+       std::pair{"good_plot", to_string(self.good_plot())},
+       std::pair{"useit_plot", to_string(self.useit_plot())},
+       std::pair{"useit_opt", to_string(self.useit_opt())},
+       std::pair{"spin_map", to_string(self.spin_map())},
+       std::pair{"d1", "..."}}
+  );
+}
+std::string to_string(const TaoDataVarComponentStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoDataVarComponentStruct",
+      {std::pair{"name", self.name()}, std::pair{"sign", to_string(self.sign())}}
+  );
+}
+std::string to_string(const TaoDrawingStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoDrawingStruct", {std::pair{"ele_shape", "[...]"}});
+}
+std::string to_string(const TaoDynamicApertureStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoDynamicApertureStruct",
+      {std::pair{"param", to_string(self.param())},
+       std::pair{"scan", "[...]"},
+       std::pair{"pz", to_string(self.pz())},
+       std::pair{"ellipse_scale", to_string(self.ellipse_scale())},
+       std::pair{"a_emit", to_string(self.a_emit())},
+       std::pair{"b_emit", to_string(self.b_emit())}}
+  );
+}
+std::string to_string(const TaoElePointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoElePointerStruct",
+      {std::pair{"eles", "[...]"}, std::pair{"n_loc", to_string(self.n_loc())}}
+  );
+}
+std::string to_string(const TaoEleShapeInput &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoEleShapeInput",
+      {std::pair{"ele_id", self.ele_id()},
+       std::pair{"shape", self.shape()},
+       std::pair{"color", self.color()},
+       std::pair{"size", to_string(self.size())},
+       std::pair{"label", self.label()},
+       std::pair{"draw", to_string(self.draw())},
+       std::pair{"multi", to_string(self.multi())},
+       std::pair{"line_width", to_string(self.line_width())},
+       std::pair{"offset", to_string(self.offset())}}
+  );
+}
+std::string to_string(const TaoEleShapeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoEleShapeStruct",
+      {std::pair{"ele_id", self.ele_id()},
+       std::pair{"shape", self.shape()},
+       std::pair{"color", self.color()},
+       std::pair{"size", to_string(self.size())},
+       std::pair{"label", self.label()},
+       std::pair{"draw", to_string(self.draw())},
+       std::pair{"multi", to_string(self.multi())},
+       std::pair{"line_width", to_string(self.line_width())},
+       std::pair{"offset", to_string(self.offset())},
+       std::pair{"ix_key", to_string(self.ix_key())},
+       std::pair{"name_ele", self.name_ele()},
+       std::pair{"uni", "[...]"}}
+  );
+}
+std::string to_string(const TaoEvalNodeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoEvalNodeStruct",
+      {std::pair{"type", to_string(self.type())},
+       std::pair{"name", self.name()},
+       std::pair{"scale", to_string(self.scale())},
+       std::pair{"value", to_string(self.value())},
+       std::pair{"info", "[...]"},
+       std::pair{"value_ptr", "[...]"},
+       std::pair{"node", "[...]"}}
+  );
+}
+std::string to_string(const TaoExpressionInfoStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoExpressionInfoStruct",
+      {std::pair{"good", to_string(self.good())},
+       std::pair{"ele", to_string(self.ele())},
+       std::pair{"s", to_string(self.s())}}
+  );
+}
+std::string to_string(const TaoFloorPlanStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoFloorPlanStruct",
+      {std::pair{"view", self.view()},
+       std::pair{"rotation", to_string(self.rotation())},
+       std::pair{"correct_distortion", to_string(self.correct_distortion())},
+       std::pair{"flip_label_side", to_string(self.flip_label_side())},
+       std::pair{"size_is_absolute", to_string(self.size_is_absolute())},
+       std::pair{"draw_only_first_pass", to_string(self.draw_only_first_pass())},
+       std::pair{"draw_building_wall", to_string(self.draw_building_wall())},
+       std::pair{"orbit_scale", to_string(self.orbit_scale())},
+       std::pair{"orbit_color", self.orbit_color()},
+       std::pair{"orbit_pattern", self.orbit_pattern()},
+       std::pair{"orbit_lattice", self.orbit_lattice()},
+       std::pair{"orbit_width", to_string(self.orbit_width())}}
+  );
+}
+std::string to_string(const TaoGlobalStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoGlobalStruct",
+      {std::pair{"beam_dead_cutoff", to_string(self.beam_dead_cutoff())},
+       std::pair{"lm_opt_deriv_reinit", to_string(self.lm_opt_deriv_reinit())},
+       std::pair{"de_lm_step_ratio", to_string(self.de_lm_step_ratio())},
+       std::pair{"de_var_to_population_factor", to_string(self.de_var_to_population_factor())},
+       std::pair{"lmdif_eps", to_string(self.lmdif_eps())},
+       std::pair{"lmdif_negligible_merit", to_string(self.lmdif_negligible_merit())},
+       std::pair{"svd_cutoff", to_string(self.svd_cutoff())},
+       std::pair{"unstable_penalty", to_string(self.unstable_penalty())},
+       std::pair{"merit_stop_value", to_string(self.merit_stop_value())},
+       std::pair{"dmerit_stop_value", to_string(self.dmerit_stop_value())},
+       std::pair{"random_sigma_cutoff", to_string(self.random_sigma_cutoff())},
+       std::pair{"delta_e_chrom", to_string(self.delta_e_chrom())},
+       std::pair{"max_plot_time", to_string(self.max_plot_time())},
+       std::pair{"default_universe", to_string(self.default_universe())},
+       std::pair{"default_branch", to_string(self.default_branch())},
+       std::pair{"n_opti_cycles", to_string(self.n_opti_cycles())},
+       std::pair{"n_opti_loops", to_string(self.n_opti_loops())},
+       std::pair{"n_threads", to_string(self.n_threads())},
+       std::pair{"phase_units", to_string(self.phase_units())},
+       std::pair{"bunch_to_plot", to_string(self.bunch_to_plot())},
+       std::pair{"random_seed", to_string(self.random_seed())},
+       std::pair{"n_top10_merit", to_string(self.n_top10_merit())},
+       std::pair{"srdt_gen_n_slices", to_string(self.srdt_gen_n_slices())},
+       std::pair{"datum_err_messages_max", to_string(self.datum_err_messages_max())},
+       std::pair{"srdt_sxt_n_slices", to_string(self.srdt_sxt_n_slices())},
+       std::pair{"srdt_use_cache", to_string(self.srdt_use_cache())},
+       std::pair{"quiet", self.quiet()},
+       std::pair{"random_engine", self.random_engine()},
+       std::pair{"random_gauss_converter", self.random_gauss_converter()},
+       std::pair{"track_type", self.track_type()},
+       std::pair{"lat_sigma_calc_uses_emit_from", self.lat_sigma_calc_uses_emit_from()},
+       std::pair{"prompt_string", self.prompt_string()},
+       std::pair{"prompt_color", self.prompt_color()},
+       std::pair{"optimizer", self.optimizer()},
+       std::pair{"print_command", self.print_command()},
+       std::pair{"var_out_file", self.var_out_file()},
+       std::pair{"history_file", self.history_file()},
+       std::pair{"beam_timer_on", to_string(self.beam_timer_on())},
+       std::pair{"box_plots", to_string(self.box_plots())},
+       std::pair{"blank_line_between_commands", to_string(self.blank_line_between_commands())},
+       std::pair{"cmd_file_abort_on_error", to_string(self.cmd_file_abort_on_error())},
+       std::pair{"concatenate_maps", to_string(self.concatenate_maps())},
+       std::pair{"derivative_recalc", to_string(self.derivative_recalc())},
+       std::pair{"derivative_uses_design", to_string(self.derivative_uses_design())},
+       std::pair{"disable_smooth_line_calc", to_string(self.disable_smooth_line_calc())},
+       std::pair{"draw_curve_off_scale_warn", to_string(self.draw_curve_off_scale_warn())},
+       std::pair{"external_plotting", to_string(self.external_plotting())},
+       std::pair{"label_lattice_elements", to_string(self.label_lattice_elements())},
+       std::pair{"label_keys", to_string(self.label_keys())},
+       std::pair{"lattice_calc_on", to_string(self.lattice_calc_on())},
+       std::pair{"only_limit_opt_vars", to_string(self.only_limit_opt_vars())},
+       std::pair{"opt_with_ref", to_string(self.opt_with_ref())},
+       std::pair{"opt_with_base", to_string(self.opt_with_base())},
+       std::pair{"opt_match_auto_recalc", to_string(self.opt_match_auto_recalc())},
+       std::pair{"opti_write_var_file", to_string(self.opti_write_var_file())},
+       std::pair{"optimizer_allow_user_abort", to_string(self.optimizer_allow_user_abort())},
+       std::pair{"optimizer_var_limit_warn", to_string(self.optimizer_var_limit_warn())},
+       std::pair{"plot_on", to_string(self.plot_on())},
+       std::pair{"rad_int_user_calc_on", to_string(self.rad_int_user_calc_on())},
+       std::pair{"rf_on", to_string(self.rf_on())},
+       std::pair{"single_step", to_string(self.single_step())},
+       std::pair{"stop_on_error", to_string(self.stop_on_error())},
+       std::pair{"svd_retreat_on_merit_increase", to_string(self.svd_retreat_on_merit_increase())},
+       std::pair{"var_limits_on", to_string(self.var_limits_on())},
+       std::pair{"wait_for_CR_in_single_mode", to_string(self.wait_for_CR_in_single_mode())},
+       std::pair{"symbol_import", to_string(self.symbol_import())},
+       std::pair{"debug_on", to_string(self.debug_on())},
+       std::pair{"expression_tree_on", to_string(self.expression_tree_on())},
+       std::pair{"verbose_on", to_string(self.verbose_on())}}
+  );
+}
+std::string to_string(const TaoGraphArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoGraphArrayStruct", {std::pair{"g", to_string(self.g())}});
+}
+std::string to_string(const TaoGraphStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoGraphStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"type", self.type()},
+       std::pair{"title", self.title()},
+       std::pair{"title_suffix", self.title_suffix()},
+       std::pair{"text_legend", to_string(self.text_legend())},
+       std::pair{"text_legend_out", to_string(self.text_legend_out())},
+       std::pair{"why_invalid", self.why_invalid()},
+       std::pair{"curve", "[...]"},
+       std::pair{"p", "..."},
+       std::pair{"floor_plan", to_string(self.floor_plan())},
+       std::pair{"text_legend_origin", to_string(self.text_legend_origin())},
+       std::pair{"curve_legend_origin", to_string(self.curve_legend_origin())},
+       std::pair{"curve_legend", to_string(self.curve_legend())},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"x2", to_string(self.x2())},
+       std::pair{"y2", to_string(self.y2())},
+       std::pair{"margin", to_string(self.margin())},
+       std::pair{"scale_margin", to_string(self.scale_margin())},
+       std::pair{"x_axis_scale_factor", to_string(self.x_axis_scale_factor())},
+       std::pair{"symbol_size_scale", to_string(self.symbol_size_scale())},
+       std::pair{"box", to_string(self.box())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_universe", to_string(self.ix_universe())},
+       std::pair{"clip", to_string(self.clip())},
+       std::pair{"y2_mirrors_y", to_string(self.y2_mirrors_y())},
+       std::pair{"limited", to_string(self.limited())},
+       std::pair{"draw_axes", to_string(self.draw_axes())},
+       std::pair{"draw_curve_legend", to_string(self.draw_curve_legend())},
+       std::pair{"draw_grid", to_string(self.draw_grid())},
+       std::pair{"draw_title", to_string(self.draw_title())},
+       std::pair{
+           "draw_only_good_user_data_or_vars",
+           to_string(self.draw_only_good_user_data_or_vars())
+       },
+       std::pair{"allow_wrap_around", to_string(self.allow_wrap_around())},
+       std::pair{"is_valid", to_string(self.is_valid())}}
+  );
+}
+std::string to_string(const TaoHistogramStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoHistogramStruct",
+      {std::pair{"density_normalized", to_string(self.density_normalized())},
+       std::pair{"weight_by_charge", to_string(self.weight_by_charge())},
+       std::pair{"minimum", to_string(self.minimum())},
+       std::pair{"maximum", to_string(self.maximum())},
+       std::pair{"width", to_string(self.width())},
+       std::pair{"center", to_string(self.center())},
+       std::pair{"number", to_string(self.number())}}
+  );
+}
+std::string to_string(const TaoInitStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoInitStruct",
+      {std::pair{"parse_cmd_args", to_string(self.parse_cmd_args())},
+       std::pair{"debug_switch", to_string(self.debug_switch())},
+       std::pair{"external_plotting_switch", to_string(self.external_plotting_switch())},
+       std::pair{"init_name", self.init_name()},
+       std::pair{"hook_init_file", self.hook_init_file()},
+       std::pair{"hook_lat_file", self.hook_lat_file()},
+       std::pair{"hook_beam_file", self.hook_beam_file()},
+       std::pair{"hook_data_file", self.hook_data_file()},
+       std::pair{"hook_plot_file", self.hook_plot_file()},
+       std::pair{"hook_startup_file", self.hook_startup_file()},
+       std::pair{"hook_var_file", self.hook_var_file()},
+       std::pair{"hook_building_wall_file", self.hook_building_wall_file()},
+       std::pair{"init_file_arg_path", self.init_file_arg_path()},
+       std::pair{"lattice_file_arg", self.lattice_file_arg()},
+       std::pair{"hook_init_file_arg", self.hook_init_file_arg()},
+       std::pair{"init_file_arg", self.init_file_arg()},
+       std::pair{"beam_file_arg", self.beam_file_arg()},
+       std::pair{"beam_init_position_file_arg", self.beam_init_position_file_arg()},
+       std::pair{"command_arg", self.command_arg()},
+       std::pair{"data_file_arg", self.data_file_arg()},
+       std::pair{"plot_file_arg", self.plot_file_arg()},
+       std::pair{"startup_file_arg", self.startup_file_arg()},
+       std::pair{"var_file_arg", self.var_file_arg()},
+       std::pair{"building_wall_file_arg", self.building_wall_file_arg()},
+       std::pair{"geometry_arg", self.geometry_arg()},
+       std::pair{"slice_lattice_arg", self.slice_lattice_arg()},
+       std::pair{"start_branch_at_arg", self.start_branch_at_arg()},
+       std::pair{"log_startup_arg", self.log_startup_arg()},
+       std::pair{"no_stopping_arg", self.no_stopping_arg()},
+       std::pair{"noplot_arg", self.noplot_arg()},
+       std::pair{"no_rad_int_arg", self.no_rad_int_arg()},
+       std::pair{"reverse_arg", self.reverse_arg()},
+       std::pair{"debug_arg", self.debug_arg()},
+       std::pair{"disable_smooth_line_calc_arg", self.disable_smooth_line_calc_arg()},
+       std::pair{"rf_on_arg", self.rf_on_arg()},
+       std::pair{"prompt_color_arg", self.prompt_color_arg()},
+       std::pair{"quiet_arg", self.quiet_arg()},
+       std::pair{"noinit_arg", self.noinit_arg()},
+       std::pair{"nostartup_arg", self.nostartup_arg()},
+       std::pair{"symbol_import_arg", self.symbol_import_arg()},
+       std::pair{"unique_name_suffix", self.unique_name_suffix()}}
+  );
+}
+std::string to_string(const TaoIntegerArrayStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoIntegerArrayStruct",
+      {std::pair{"i", to_string(self.i())}}
+  );
+}
+std::string to_string(const TaoLatSigmaStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoLatSigmaStruct",
+      {std::pair{"mat", to_string(self.mat())}}
+  );
+}
+std::string to_string(const TaoLatticeBranchStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoLatticeBranchStruct",
+      {std::pair{"tao_lat", "..."},
+       std::pair{"lat_sigma", "[...]"},
+       std::pair{"spin_ele", "[...]"},
+       std::pair{"bunch_params", "[...]"},
+       std::pair{"bunch_params_comb", "[...]"},
+       std::pair{"orbit", "[...]"},
+       std::pair{"plot_cache", "[...]"},
+       std::pair{"spin", to_string(self.spin())},
+       std::pair{"srdt", to_string(self.srdt())},
+       std::pair{"orb0", to_string(self.orb0())},
+       std::pair{"modes_ri", to_string(self.modes_ri())},
+       std::pair{"modes_6d", to_string(self.modes_6d())},
+       std::pair{"ptc_normal_form", to_string(self.ptc_normal_form())},
+       std::pair{"bmad_normal_form", to_string(self.bmad_normal_form())},
+       std::pair{"high_E_orb", "[...]"},
+       std::pair{"low_E_orb", "[...]"},
+       std::pair{"taylor_save", "[...]"},
+       std::pair{"cache_x_min", to_string(self.cache_x_min())},
+       std::pair{"cache_x_max", to_string(self.cache_x_max())},
+       std::pair{"comb_ds_save", to_string(self.comb_ds_save())},
+       std::pair{"ix_ref_taylor", to_string(self.ix_ref_taylor())},
+       std::pair{"ix_ele_taylor", to_string(self.ix_ele_taylor())},
+       std::pair{"track_state", to_string(self.track_state())},
+       std::pair{"cache_n_pts", to_string(self.cache_n_pts())},
+       std::pair{"ix_rad_int_cache", to_string(self.ix_rad_int_cache())},
+       std::pair{"has_open_match_element", to_string(self.has_open_match_element())},
+       std::pair{"plot_cache_valid", to_string(self.plot_cache_valid())},
+       std::pair{"spin_map_valid", to_string(self.spin_map_valid())},
+       std::pair{"twiss_valid", to_string(self.twiss_valid())},
+       std::pair{"mode_flip_here", to_string(self.mode_flip_here())},
+       std::pair{"chrom_calc_ok", to_string(self.chrom_calc_ok())},
+       std::pair{"rad_int_calc_ok", to_string(self.rad_int_calc_ok())},
+       std::pair{"emit_6d_calc_ok", to_string(self.emit_6d_calc_ok())},
+       std::pair{"sigma_track_ok", to_string(self.sigma_track_ok())}}
+  );
+}
+std::string to_string(const TaoLatticeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoLatticeStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"lat", to_string(self.lat())},
+       std::pair{"high_E_lat", to_string(self.high_E_lat())},
+       std::pair{"low_E_lat", to_string(self.low_E_lat())},
+       std::pair{"u", "..."},
+       std::pair{"rad_int_by_ele_ri", to_string(self.rad_int_by_ele_ri())},
+       std::pair{"rad_int_by_ele_6d", to_string(self.rad_int_by_ele_6d())},
+       std::pair{"tao_branch", "[...]"}}
+  );
+}
+std::string to_string(const TaoLogicalArrayStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoLogicalArrayStruct",
+      {std::pair{"l", to_string(self.l())}}
+  );
+}
+std::string to_string(const TaoModelBranchStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoModelBranchStruct",
+      {std::pair{"ele", "[...]"}, std::pair{"beam", to_string(self.beam())}}
+  );
+}
+std::string to_string(const TaoModelElementStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoModelElementStruct",
+      {std::pair{"beam", to_string(self.beam())},
+       std::pair{"save_beam_internally", to_string(self.save_beam_internally())},
+       std::pair{"save_beam_to_file", to_string(self.save_beam_to_file())}}
+  );
+}
+std::string to_string(const TaoPingScaleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPingScaleStruct",
+      {std::pair{"a_mode_meas", to_string(self.a_mode_meas())},
+       std::pair{"a_mode_ref", to_string(self.a_mode_ref())},
+       std::pair{"b_mode_meas", to_string(self.b_mode_meas())},
+       std::pair{"b_mode_ref", to_string(self.b_mode_ref())}}
+  );
+}
+std::string to_string(const TaoPlotArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoPlotArrayStruct", {std::pair{"p", to_string(self.p())}});
+}
+std::string to_string(const TaoPlotCacheStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotCacheStruct",
+      {std::pair{"ele_to_s", to_string(self.ele_to_s())},
+       std::pair{"orbit", to_string(self.orbit())},
+       std::pair{"err", to_string(self.err())}}
+  );
+}
+std::string to_string(const TaoPlotPageInput &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotPageInput",
+      {std::pair{"title", to_string(self.title())},
+       std::pair{"subtitle", to_string(self.subtitle())},
+       std::pair{"border", to_string(self.border())},
+       std::pair{"plot_display_type", self.plot_display_type()},
+       std::pair{"size", to_string(self.size())},
+       std::pair{"text_height", to_string(self.text_height())},
+       std::pair{"main_title_text_scale", to_string(self.main_title_text_scale())},
+       std::pair{"graph_title_text_scale", to_string(self.graph_title_text_scale())},
+       std::pair{"axis_number_text_scale", to_string(self.axis_number_text_scale())},
+       std::pair{"axis_label_text_scale", to_string(self.axis_label_text_scale())},
+       std::pair{"legend_text_scale", to_string(self.legend_text_scale())},
+       std::pair{"key_table_text_scale", to_string(self.key_table_text_scale())},
+       std::pair{"floor_plan_shape_scale", to_string(self.floor_plan_shape_scale())},
+       std::pair{"floor_plan_text_scale", to_string(self.floor_plan_text_scale())},
+       std::pair{"lat_layout_shape_scale", to_string(self.lat_layout_shape_scale())},
+       std::pair{"lat_layout_text_scale", to_string(self.lat_layout_text_scale())},
+       std::pair{"curve_legend_line_len", to_string(self.curve_legend_line_len())},
+       std::pair{"curve_legend_text_offset", to_string(self.curve_legend_text_offset())},
+       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
+       std::pair{"delete_overlapping_plots", to_string(self.delete_overlapping_plots())},
+       std::pair{"draw_graph_title_suffix", to_string(self.draw_graph_title_suffix())}}
+  );
+}
+std::string to_string(const TaoPlotPageStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotPageStruct",
+      {std::pair{"title", to_string(self.title())},
+       std::pair{"subtitle", to_string(self.subtitle())},
+       std::pair{"border", to_string(self.border())},
+       std::pair{"floor_plan", to_string(self.floor_plan())},
+       std::pair{"lat_layout", to_string(self.lat_layout())},
+       std::pair{"pattern", "[...]"},
+       std::pair{"template_", "[...]"},
+       std::pair{"region", "[...]"},
+       std::pair{"plot_display_type", self.plot_display_type()},
+       std::pair{"size", to_string(self.size())},
+       std::pair{"text_height", to_string(self.text_height())},
+       std::pair{"main_title_text_scale", to_string(self.main_title_text_scale())},
+       std::pair{"graph_title_text_scale", to_string(self.graph_title_text_scale())},
+       std::pair{"axis_number_text_scale", to_string(self.axis_number_text_scale())},
+       std::pair{"axis_label_text_scale", to_string(self.axis_label_text_scale())},
+       std::pair{"legend_text_scale", to_string(self.legend_text_scale())},
+       std::pair{"key_table_text_scale", to_string(self.key_table_text_scale())},
+       std::pair{"floor_plan_shape_scale", to_string(self.floor_plan_shape_scale())},
+       std::pair{"floor_plan_text_scale", to_string(self.floor_plan_text_scale())},
+       std::pair{"lat_layout_shape_scale", to_string(self.lat_layout_shape_scale())},
+       std::pair{"lat_layout_text_scale", to_string(self.lat_layout_text_scale())},
+       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
+       std::pair{"id_window", to_string(self.id_window())},
+       std::pair{"delete_overlapping_plots", to_string(self.delete_overlapping_plots())},
+       std::pair{"draw_graph_title_suffix", to_string(self.draw_graph_title_suffix())}}
+  );
+}
+std::string to_string(const TaoPlotRegionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotRegionStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"plot", to_string(self.plot())},
+       std::pair{"location", to_string(self.location())},
+       std::pair{"visible", to_string(self.visible())},
+       std::pair{"list_with_show_plot_command", to_string(self.list_with_show_plot_command())},
+       std::pair{"setup_done", to_string(self.setup_done())}}
+  );
+}
+std::string to_string(const TaoPlotStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoPlotStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"description", self.description()},
+       std::pair{"graph", "[...]"},
+       std::pair{"r", "..."},
+       std::pair{"ix_plot", to_string(self.ix_plot())},
+       std::pair{"n_curve_pts", to_string(self.n_curve_pts())},
+       std::pair{"type", self.type()},
+       std::pair{"x_axis_type", self.x_axis_type()},
+       std::pair{"autoscale_x", to_string(self.autoscale_x())},
+       std::pair{"autoscale_y", to_string(self.autoscale_y())},
+       std::pair{"autoscale_gang_x", to_string(self.autoscale_gang_x())},
+       std::pair{"autoscale_gang_y", to_string(self.autoscale_gang_y())},
+       std::pair{"list_with_show_plot_command", to_string(self.list_with_show_plot_command())},
+       std::pair{"phantom", to_string(self.phantom())},
+       std::pair{"default_plot", to_string(self.default_plot())}}
+  );
+}
+std::string to_string(const TaoRealPointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoRealPointerStruct",
+      {std::pair{"r", to_string(self.r())},
+       std::pair{"good_value", to_string(self.good_value())},
+       std::pair{"good_user", to_string(self.good_user())}}
+  );
+}
+std::string to_string(const TaoShapePatternPointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoShapePatternPointStruct",
+      {std::pair{"s", to_string(self.s())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"radius", to_string(self.radius())}}
+  );
+}
+std::string to_string(const TaoShapePatternStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoShapePatternStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"line", to_string(self.line())},
+       std::pair{"pt", "[...]"}}
+  );
+}
+std::string to_string(const TaoSpinDnDpzStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoSpinDnDpzStruct",
+      {std::pair{"vec", to_string(self.vec())},
+       std::pair{"partial", to_string(self.partial())},
+       std::pair{"partial2", to_string(self.partial2())}}
+  );
+}
+std::string to_string(const TaoSpinEleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoSpinEleStruct",
+      {std::pair{"dn_dpz", to_string(self.dn_dpz())},
+       std::pair{"orb_eigen_val", to_string(self.orb_eigen_val())},
+       std::pair{"orb_eigen_vec", to_string(self.orb_eigen_vec())},
+       std::pair{"spin_eigen_vec", to_string(self.spin_eigen_vec())},
+       std::pair{"valid", to_string(self.valid())}}
+  );
+}
+std::string to_string(const TaoSpinMapStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoSpinMapStruct",
+      {std::pair{"valid", to_string(self.valid())},
+       std::pair{"map1", to_string(self.map1())},
+       std::pair{"axis_input", to_string(self.axis_input())},
+       std::pair{"axis0", to_string(self.axis0())},
+       std::pair{"axis1", to_string(self.axis1())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_ref", to_string(self.ix_ref())},
+       std::pair{"ix_uni", to_string(self.ix_uni())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"mat8", to_string(self.mat8())}}
+  );
+}
+std::string to_string(const TaoSpinPolarizationStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoSpinPolarizationStruct",
+      {std::pair{"tune", to_string(self.tune())},
+       std::pair{"pol_limit_st", to_string(self.pol_limit_st())},
+       std::pair{"pol_limit_dk", to_string(self.pol_limit_dk())},
+       std::pair{"pol_limit_dk_partial", to_string(self.pol_limit_dk_partial())},
+       std::pair{"pol_limit_dk_partial2", to_string(self.pol_limit_dk_partial2())},
+       std::pair{"pol_rate_bks", to_string(self.pol_rate_bks())},
+       std::pair{"depol_rate", to_string(self.depol_rate())},
+       std::pair{"depol_rate_partial", to_string(self.depol_rate_partial())},
+       std::pair{"depol_rate_partial2", to_string(self.depol_rate_partial2())},
+       std::pair{"integral_bn", to_string(self.integral_bn())},
+       std::pair{"integral_bdn", to_string(self.integral_bdn())},
+       std::pair{"integral_1ns", to_string(self.integral_1ns())},
+       std::pair{"integral_dn2", to_string(self.integral_dn2())},
+       std::pair{"valid", to_string(self.valid())},
+       std::pair{"q_1turn", to_string(self.q_1turn())},
+       std::pair{"q_ele", "[...]"}}
+  );
+}
+std::string to_string(const TaoStringArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoStringArrayStruct", {std::pair{"s", self.s()}});
+}
+std::string to_string(const TaoSuperUniverseStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoSuperUniverseStruct",
+      {std::pair{"global", to_string(self.global())},
+       std::pair{"init", to_string(self.init())},
+       std::pair{"com", to_string(self.com())},
+       std::pair{"plot_page", to_string(self.plot_page())},
+       std::pair{"v1_var", "[...]"},
+       std::pair{"var", "[...]"},
+       std::pair{"u", "[...]"},
+       std::pair{"key", to_string(self.key())},
+       std::pair{"building_wall", to_string(self.building_wall())},
+       std::pair{"wave", to_string(self.wave())},
+       std::pair{"n_var_used", to_string(self.n_var_used())},
+       std::pair{"n_v1_var_used", to_string(self.n_v1_var_used())},
+       std::pair{"history", "[...]"},
+       std::pair{"initialized", to_string(self.initialized())}}
+  );
+}
+std::string to_string(const TaoTitleStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoTitleStruct",
+      {std::pair{"string", self.string()},
+       std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"units", self.units()},
+       std::pair{"justify", self.justify()},
+       std::pair{"draw_it", to_string(self.draw_it())}}
+  );
+}
+std::string to_string(const TaoTop10Struct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoTop10Struct",
+      {std::pair{"name", self.name()},
+       std::pair{"value", to_string(self.value())},
+       std::pair{"index", to_string(self.index())},
+       std::pair{"valid", to_string(self.valid())}}
+  );
+}
+std::string to_string(const TaoUniverseCalcStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoUniverseCalcStruct",
+      {std::pair{"srdt_for_data", to_string(self.srdt_for_data())},
+       std::pair{"rad_int_for_data", to_string(self.rad_int_for_data())},
+       std::pair{"rad_int_for_plotting", to_string(self.rad_int_for_plotting())},
+       std::pair{"chrom_for_data", to_string(self.chrom_for_data())},
+       std::pair{"chrom_for_plotting", to_string(self.chrom_for_plotting())},
+       std::pair{"lat_sigma_for_data", to_string(self.lat_sigma_for_data())},
+       std::pair{"lat_sigma_for_plotting", to_string(self.lat_sigma_for_plotting())},
+       std::pair{"dynamic_aperture", to_string(self.dynamic_aperture())},
+       std::pair{"one_turn_map", to_string(self.one_turn_map())},
+       std::pair{"lattice", to_string(self.lattice())},
+       std::pair{"twiss", to_string(self.twiss())},
+       std::pair{"track", to_string(self.track())},
+       std::pair{"spin_matrices", to_string(self.spin_matrices())}}
+  );
+}
+std::string to_string(const TaoUniversePointerStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoUniversePointerStruct",
+      {std::pair{"u", to_string(self.u())}}
+  );
+}
+std::string to_string(const TaoUniverseStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoUniverseStruct",
+      {std::pair{"model", to_string(self.model())},
+       std::pair{"design", to_string(self.design())},
+       std::pair{"base", to_string(self.base())},
+       std::pair{"beam", to_string(self.beam())},
+       std::pair{"dynamic_aperture", to_string(self.dynamic_aperture())},
+       std::pair{"model_branch", "[...]"},
+       std::pair{"d2_data", "[...]"},
+       std::pair{"data", "[...]"},
+       std::pair{"ping_scale", to_string(self.ping_scale())},
+       std::pair{"scratch_lat", to_string(self.scratch_lat())},
+       std::pair{"calc", to_string(self.calc())},
+       std::pair{"ele_order", to_string(self.ele_order())},
+       std::pair{"spin_map", to_string(self.spin_map())},
+       std::pair{"dModel_dVar", to_string(self.dModel_dVar())},
+       std::pair{"ix_uni", to_string(self.ix_uni())},
+       std::pair{"n_d2_data_used", to_string(self.n_d2_data_used())},
+       std::pair{"n_data_used", to_string(self.n_data_used())},
+       std::pair{"is_on", to_string(self.is_on())},
+       std::pair{"design_same_as_previous", to_string(self.design_same_as_previous())},
+       std::pair{"picked_uni", to_string(self.picked_uni())}}
+  );
+}
+std::string to_string(const TaoV1VarArrayStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoV1VarArrayStruct",
+      {std::pair{"v1", to_string(self.v1())}}
+  );
+}
+std::string to_string(const TaoV1VarStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoV1VarStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"ix_v1_var", to_string(self.ix_v1_var())},
+       std::pair{"v", "[...]"}}
+  );
+}
+std::string to_string(const TaoVarArrayStruct &self) {
+  return repr(self.get_fortran_ptr(), "TaoVarArrayStruct", {std::pair{"v", to_string(self.v())}});
+}
+std::string to_string(const TaoVarSlaveStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoVarSlaveStruct",
+      {std::pair{"ix_uni", to_string(self.ix_uni())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"model_value", to_string(self.model_value())},
+       std::pair{"base_value", to_string(self.base_value())}}
+  );
+}
+std::string to_string(const TaoVarStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoVarStruct",
+      {std::pair{"ele_name", self.ele_name()},
+       std::pair{"attrib_name", self.attrib_name()},
+       std::pair{"id", self.id()},
+       std::pair{"slave", "[...]"},
+       std::pair{"ix_v1", to_string(self.ix_v1())},
+       std::pair{"ix_var", to_string(self.ix_var())},
+       std::pair{"ix_dvar", to_string(self.ix_dvar())},
+       std::pair{"ix_attrib", to_string(self.ix_attrib())},
+       std::pair{"ix_key_table", to_string(self.ix_key_table())},
+       std::pair{"model_value", to_string(self.model_value())},
+       std::pair{"base_value", to_string(self.base_value())},
+       std::pair{"design_value", to_string(self.design_value())},
+       std::pair{"scratch_value", to_string(self.scratch_value())},
+       std::pair{"old_value", to_string(self.old_value())},
+       std::pair{"meas_value", to_string(self.meas_value())},
+       std::pair{"ref_value", to_string(self.ref_value())},
+       std::pair{"correction_value", to_string(self.correction_value())},
+       std::pair{"high_lim", to_string(self.high_lim())},
+       std::pair{"low_lim", to_string(self.low_lim())},
+       std::pair{"step", to_string(self.step())},
+       std::pair{"weight", to_string(self.weight())},
+       std::pair{"delta_merit", to_string(self.delta_merit())},
+       std::pair{"merit", to_string(self.merit())},
+       std::pair{"dMerit_dVar", to_string(self.dMerit_dVar())},
+       std::pair{"key_val0", to_string(self.key_val0())},
+       std::pair{"key_delta", to_string(self.key_delta())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"extend_val", to_string(self.extend_val())},
+       std::pair{"merit_type", self.merit_type()},
+       std::pair{"exists", to_string(self.exists())},
+       std::pair{"good_var", to_string(self.good_var())},
+       std::pair{"good_user", to_string(self.good_user())},
+       std::pair{"good_opt", to_string(self.good_opt())},
+       std::pair{"good_plot", to_string(self.good_plot())},
+       std::pair{"useit_opt", to_string(self.useit_opt())},
+       std::pair{"useit_plot", to_string(self.useit_plot())},
+       std::pair{"key_bound", to_string(self.key_bound())},
+       std::pair{"v1", "..."}}
+  );
+}
+std::string to_string(const TaoWaveKickPtStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoWaveKickPtStruct",
+      {std::pair{"phi_s", to_string(self.phi_s())},
+       std::pair{"phi_r", to_string(self.phi_r())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"amp", to_string(self.amp())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"ix_dat_before_kick", to_string(self.ix_dat_before_kick())},
+       std::pair{"ele", to_string(self.ele())}}
+  );
+}
+std::string to_string(const TaoWaveStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaoWaveStruct",
+      {std::pair{"data_type", self.data_type()},
+       std::pair{"rms_rel_a", to_string(self.rms_rel_a())},
+       std::pair{"rms_rel_b", to_string(self.rms_rel_b())},
+       std::pair{"rms_rel_as", to_string(self.rms_rel_as())},
+       std::pair{"rms_rel_bs", to_string(self.rms_rel_bs())},
+       std::pair{"rms_rel_ar", to_string(self.rms_rel_ar())},
+       std::pair{"rms_rel_br", to_string(self.rms_rel_br())},
+       std::pair{"rms_rel_k", to_string(self.rms_rel_k())},
+       std::pair{"rms_rel_ks", to_string(self.rms_rel_ks())},
+       std::pair{"rms_rel_kr", to_string(self.rms_rel_kr())},
+       std::pair{"rms_phi", to_string(self.rms_phi())},
+       std::pair{"rms_phi_s", to_string(self.rms_phi_s())},
+       std::pair{"rms_phi_r", to_string(self.rms_phi_r())},
+       std::pair{"amp_ba_s", to_string(self.amp_ba_s())},
+       std::pair{"amp_ba_r", to_string(self.amp_ba_r())},
+       std::pair{"chi_a", to_string(self.chi_a())},
+       std::pair{"chi_c", to_string(self.chi_c())},
+       std::pair{"chi_ba", to_string(self.chi_ba())},
+       std::pair{"amp_a", to_string(self.amp_a())},
+       std::pair{"amp_b", to_string(self.amp_b())},
+       std::pair{"amp_ba", to_string(self.amp_ba())},
+       std::pair{"coef_a", to_string(self.coef_a())},
+       std::pair{"coef_b", to_string(self.coef_b())},
+       std::pair{"coef_ba", to_string(self.coef_ba())},
+       std::pair{"n_func", to_string(self.n_func())},
+       std::pair{"ix_a1", to_string(self.ix_a1())},
+       std::pair{"ix_a2", to_string(self.ix_a2())},
+       std::pair{"ix_b1", to_string(self.ix_b1())},
+       std::pair{"ix_b2", to_string(self.ix_b2())},
+       std::pair{"i_a1", to_string(self.i_a1())},
+       std::pair{"i_a2", to_string(self.i_a2())},
+       std::pair{"i_b1", to_string(self.i_b1())},
+       std::pair{"i_b2", to_string(self.i_b2())},
+       std::pair{"n_a", to_string(self.n_a())},
+       std::pair{"n_b", to_string(self.n_b())},
+       std::pair{"i_curve_wrap_pt", to_string(self.i_curve_wrap_pt())},
+       std::pair{"ix_data", to_string(self.ix_data())},
+       std::pair{"n_kick", to_string(self.n_kick())},
+       std::pair{"kick", "[...]"},
+       std::pair{"base_graph", to_string(self.base_graph())},
+       std::pair{"region", to_string(self.region())},
+       std::pair{"d1_dat", to_string(self.d1_dat())}}
+  );
+}
+std::string to_string(const TargetPointStruct &self) {
+  return repr(self.get_fortran_ptr(), "TargetPointStruct", {std::pair{"r", to_string(self.r())}});
+}
+std::string to_string(const TaylorStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaylorStruct",
+      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const TaylorTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TaylorTermStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
+  );
+}
 std::string to_string(const TestSubStruct &self) {
   return repr(self.get_fortran_ptr(), "TestSubStruct", {std::pair{"sr", to_string(self.sr())}});
 }
@@ -2674,6 +3536,224 @@ std::string to_string(const TestSubSubStruct &self) {
        std::pair{"file", self.file()},
        std::pair{"t_ref", to_string(self.t_ref())},
        std::pair{"freq_spread", to_string(self.freq_spread())}}
+  );
+}
+std::string to_string(const TrackPointStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TrackPointStruct",
+      {std::pair{"s_lab", to_string(self.s_lab())},
+       std::pair{"s_body", to_string(self.s_body())},
+       std::pair{"orb", to_string(self.orb())},
+       std::pair{"field", to_string(self.field())},
+       std::pair{"strong_beam", to_string(self.strong_beam())},
+       std::pair{"vec0", to_string(self.vec0())},
+       std::pair{"mat6", to_string(self.mat6())}}
+  );
+}
+std::string to_string(const TrackStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TrackStruct",
+      {std::pair{"pt", "[...]"},
+       std::pair{"ds_save", to_string(self.ds_save())},
+       std::pair{"n_pt", to_string(self.n_pt())},
+       std::pair{"n_bad", to_string(self.n_bad())},
+       std::pair{"n_ok", to_string(self.n_ok())}}
+  );
+}
+std::string to_string(const TricubicCmplxCoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TricubicCmplxCoefStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const TricubicCoefStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TricubicCoefStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"i_box", to_string(self.i_box())}}
+  );
+}
+std::string to_string(const TwissStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "TwissStruct",
+      {std::pair{"beta", to_string(self.beta())},
+       std::pair{"alpha", to_string(self.alpha())},
+       std::pair{"gamma", to_string(self.gamma())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"eta", to_string(self.eta())},
+       std::pair{"etap", to_string(self.etap())},
+       std::pair{"deta_ds", to_string(self.deta_ds())},
+       std::pair{"sigma", to_string(self.sigma())},
+       std::pair{"sigma_p", to_string(self.sigma_p())},
+       std::pair{"emit", to_string(self.emit())},
+       std::pair{"norm_emit", to_string(self.norm_emit())},
+       std::pair{"chrom", to_string(self.chrom())},
+       std::pair{"dbeta_dpz", to_string(self.dbeta_dpz())},
+       std::pair{"dalpha_dpz", to_string(self.dalpha_dpz())},
+       std::pair{"deta_dpz", to_string(self.deta_dpz())},
+       std::pair{"detap_dpz", to_string(self.detap_dpz())}}
+  );
+}
+std::string to_string(const VarLengthStringStruct &self) {
+  return repr(self.get_fortran_ptr(), "VarLengthStringStruct", {std::pair{"str", self.str()}});
+}
+std::string to_string(const WakeLrModeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeLrModeStruct",
+      {std::pair{"freq", to_string(self.freq())},
+       std::pair{"freq_in", to_string(self.freq_in())},
+       std::pair{"R_over_Q", to_string(self.R_over_Q())},
+       std::pair{"Q", to_string(self.Q())},
+       std::pair{"damp", to_string(self.damp())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"angle", to_string(self.angle())},
+       std::pair{"b_sin", to_string(self.b_sin())},
+       std::pair{"b_cos", to_string(self.b_cos())},
+       std::pair{"a_sin", to_string(self.a_sin())},
+       std::pair{"a_cos", to_string(self.a_cos())},
+       std::pair{"m", to_string(self.m())},
+       std::pair{"polarized", to_string(self.polarized())}}
+  );
+}
+std::string to_string(const WakeLrStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeLrStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"mode", "[...]"},
+       std::pair{"t_ref", to_string(self.t_ref())},
+       std::pair{"freq_spread", to_string(self.freq_spread())},
+       std::pair{"amp_scale", to_string(self.amp_scale())},
+       std::pair{"time_scale", to_string(self.time_scale())},
+       std::pair{"self_wake_on", to_string(self.self_wake_on())}}
+  );
+}
+std::string to_string(const WakeSrModeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeSrModeStruct",
+      {std::pair{"amp", to_string(self.amp())},
+       std::pair{"damp", to_string(self.damp())},
+       std::pair{"k", to_string(self.k())},
+       std::pair{"phi", to_string(self.phi())},
+       std::pair{"b_sin", to_string(self.b_sin())},
+       std::pair{"b_cos", to_string(self.b_cos())},
+       std::pair{"a_sin", to_string(self.a_sin())},
+       std::pair{"a_cos", to_string(self.a_cos())},
+       std::pair{"polarization", to_string(self.polarization())},
+       std::pair{"position_dependence", to_string(self.position_dependence())}}
+  );
+}
+std::string to_string(const WakeSrStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeSrStruct",
+      {std::pair{"file", self.file()},
+       std::pair{"z_long", to_string(self.z_long())},
+       std::pair{"long_wake", "[...]"},
+       std::pair{"trans_wake", "[...]"},
+       std::pair{"z_ref_long", to_string(self.z_ref_long())},
+       std::pair{"z_ref_trans", to_string(self.z_ref_trans())},
+       std::pair{"z_max", to_string(self.z_max())},
+       std::pair{"amp_scale", to_string(self.amp_scale())},
+       std::pair{"z_scale", to_string(self.z_scale())},
+       std::pair{"scale_with_length", to_string(self.scale_with_length())}}
+  );
+}
+std::string to_string(const WakeSrZLongStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeSrZLongStruct",
+      {std::pair{"w", to_string(self.w())},
+       std::pair{"fw", to_string(self.fw())},
+       std::pair{"fbunch", to_string(self.fbunch())},
+       std::pair{"w_out", to_string(self.w_out())},
+       std::pair{"dz", to_string(self.dz())},
+       std::pair{"z0", to_string(self.z0())},
+       std::pair{"smoothing_sigma", to_string(self.smoothing_sigma())},
+       std::pair{"position_dependence", to_string(self.position_dependence())},
+       std::pair{"time_based", to_string(self.time_based())}}
+  );
+}
+std::string to_string(const WakeStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "WakeStruct",
+      {std::pair{"sr", to_string(self.sr())}, std::pair{"lr", to_string(self.lr())}}
+  );
+}
+std::string to_string(const Wall3dSectionStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Wall3dSectionStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"material", self.material()},
+       std::pair{"v", "[...]"},
+       std::pair{"surface", to_string(self.surface())},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"n_vertex_input", to_string(self.n_vertex_input())},
+       std::pair{"ix_ele", to_string(self.ix_ele())},
+       std::pair{"ix_branch", to_string(self.ix_branch())},
+       std::pair{"vertices_state", to_string(self.vertices_state())},
+       std::pair{"patch_in_region", to_string(self.patch_in_region())},
+       std::pair{"thickness", to_string(self.thickness())},
+       std::pair{"s", to_string(self.s())},
+       std::pair{"r0", to_string(self.r0())},
+       std::pair{"dx0_ds", to_string(self.dx0_ds())},
+       std::pair{"dy0_ds", to_string(self.dy0_ds())},
+       std::pair{"x0_coef", to_string(self.x0_coef())},
+       std::pair{"y0_coef", to_string(self.y0_coef())},
+       std::pair{"dr_ds", to_string(self.dr_ds())},
+       std::pair{"p1_coef", to_string(self.p1_coef())},
+       std::pair{"p2_coef", to_string(self.p2_coef())}}
+  );
+}
+std::string to_string(const Wall3dStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Wall3dStruct",
+      {std::pair{"name", self.name()},
+       std::pair{"type", to_string(self.type())},
+       std::pair{"ix_wall3d", to_string(self.ix_wall3d())},
+       std::pair{"n_link", to_string(self.n_link())},
+       std::pair{"thickness", to_string(self.thickness())},
+       std::pair{"clear_material", self.clear_material()},
+       std::pair{"opaque_material", self.opaque_material()},
+       std::pair{"superimpose", to_string(self.superimpose())},
+       std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
+       std::pair{"section", "[...]"}}
+  );
+}
+std::string to_string(const Wall3dVertexStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "Wall3dVertexStruct",
+      {std::pair{"x", to_string(self.x())},
+       std::pair{"y", to_string(self.y())},
+       std::pair{"radius_x", to_string(self.radius_x())},
+       std::pair{"radius_y", to_string(self.radius_y())},
+       std::pair{"tilt", to_string(self.tilt())},
+       std::pair{"angle", to_string(self.angle())},
+       std::pair{"x0", to_string(self.x0())},
+       std::pair{"y0", to_string(self.y0())},
+       std::pair{"type", to_string(self.type())}}
+  );
+}
+std::string to_string(const XyDispStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "XyDispStruct",
+      {std::pair{"eta", to_string(self.eta())},
+       std::pair{"etap", to_string(self.etap())},
+       std::pair{"deta_ds", to_string(self.deta_ds())},
+       std::pair{"sigma", to_string(self.sigma())},
+       std::pair{"deta_dpz", to_string(self.deta_dpz())},
+       std::pair{"detap_dpz", to_string(self.detap_dpz())}}
   );
 }
 std::string to_string(const Bmad::AbMultipoleKick &self) {
@@ -2801,6 +3881,15 @@ std::string to_string(const SimUtils::BicubicCmplxEval &self) {
        std::pair{"f_val", to_string(self.f_val)}}
   );
 }
+std::string to_string(const SimUtils::BicubicEval &self) {
+  return repr(
+      &self,
+      "SimUtils::BicubicEval",
+      {std::pair{"df_dx", to_string(self.df_dx)},
+       std::pair{"df_dy", to_string(self.df_dy)},
+       std::pair{"f_val", to_string(self.f_val)}}
+  );
+}
 std::string to_string(const Bmad::BmadParser &self) {
   return repr(
       &self,
@@ -2834,6 +3923,14 @@ std::string to_string(const Bmad::CalcEmittancesAndTwissFromSigmaMatrix &self) {
       {std::pair{"bunch_params", to_string(self.bunch_params)},
        std::pair{"error", to_string(self.error)},
        std::pair{"n_mat", to_string(self.n_mat)}}
+  );
+}
+std::string to_string(const Bmad::CalcNextFringeEdge &self) {
+  return repr(
+      &self,
+      "Bmad::CalcNextFringeEdge",
+      {std::pair{"s_edge_body", to_string(self.s_edge_body)},
+       std::pair{"fringe_info", to_string(self.fringe_info)}}
   );
 }
 std::string to_string(const Bmad::CalcWallRadius &self) {
@@ -3017,6 +4114,16 @@ std::string to_string(const Bmad::CreatePlanarWigglerModel &self) {
       &self,
       "Bmad::CreatePlanarWigglerModel",
       {std::pair{"lat", to_string(self.lat)}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::CrystalDiffractionFieldCalc &self) {
+  return repr(
+      &self,
+      "Bmad::CrystalDiffractionFieldCalc",
+      {std::pair{"e_field", to_string(self.e_field)},
+       std::pair{"e_phase", to_string(self.e_phase)},
+       std::pair{"orbit_state", to_string(self.orbit_state)},
+       std::pair{"dr", to_string(self.dr)}}
   );
 }
 std::string to_string(const Bmad::CustomEleAttribNameList &self) {
@@ -3274,11 +4381,28 @@ std::string to_string(const SimUtils::Gelbd &self) {
       {std::pair{"elb", to_string(self.elb)}, std::pair{"eld", to_string(self.eld)}}
   );
 }
+std::string to_string(const Bmad::GetAstraFieldgridNameAndScaling &self) {
+  return repr(
+      &self,
+      "Bmad::GetAstraFieldgridNameAndScaling",
+      {std::pair{"output_name", self.output_name},
+       std::pair{"field_scale", to_string(self.field_scale)}}
+  );
+}
 std::string to_string(const Bmad::GetEmitFromSigmaMat &self) {
   return repr(
       &self,
       "Bmad::GetEmitFromSigmaMat",
       {std::pair{"normal", to_string(self.normal)}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::GetGptFieldgridNameAndScaling &self) {
+  return repr(
+      &self,
+      "Bmad::GetGptFieldgridNameAndScaling",
+      {std::pair{"output_name", self.output_name},
+       std::pair{"field_scale", to_string(self.field_scale)},
+       std::pair{"ref_time", to_string(self.ref_time)}}
   );
 }
 std::string to_string(const Bmad::GetNextWord &self) {
@@ -3289,6 +4413,14 @@ std::string to_string(const Bmad::GetNextWord &self) {
        std::pair{"delim", self.delim},
        std::pair{"delim_found", to_string(self.delim_found)},
        std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::GetOpalFieldgridNameAndScaling &self) {
+  return repr(
+      &self,
+      "Bmad::GetOpalFieldgridNameAndScaling",
+      {std::pair{"output_name", self.output_name},
+       std::pair{"field_scale", to_string(self.field_scale)}}
   );
 }
 std::string to_string(const Bmad::GetSlaveList &self) {
@@ -3303,6 +4435,15 @@ std::string to_string(const Bmad::GptToParticleBunch &self) {
       &self,
       "Bmad::GptToParticleBunch",
       {std::pair{"bunch", to_string(self.bunch)}, std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::IbsDeltaCalc &self) {
+  return repr(
+      &self,
+      "Bmad::IbsDeltaCalc",
+      {std::pair{"delta_sigma_energy", to_string(self.delta_sigma_energy)},
+       std::pair{"delta_emit_a", to_string(self.delta_emit_a)},
+       std::pair{"delta_emit_b", to_string(self.delta_emit_b)}}
   );
 }
 std::string to_string(const Bmad::InitBeamDistribution &self) {
@@ -3329,6 +4470,13 @@ std::string to_string(const Bmad::InitPhotonIntegProb &self) {
       "Bmad::InitPhotonIntegProb",
       {std::pair{"E_photon", to_string(self.E_photon)},
        std::pair{"integ_prob", to_string(self.integ_prob)}}
+  );
+}
+std::string to_string(const Bmad::InterpolateField &self) {
+  return repr(
+      &self,
+      "Bmad::InterpolateField",
+      {std::pair{"E", to_string(self.E)}, std::pair{"B", to_string(self.B)}}
   );
 }
 std::string to_string(const Bmad::KickVectorCalc &self) {
@@ -3632,6 +4780,20 @@ std::string to_string(const Bmad::ParseRealList2 &self) {
        std::pair{"is_ok", to_string(self.is_ok)}}
   );
 }
+std::string to_string(const Bmad::ParserAddLords &self) {
+  return repr(
+      &self,
+      "Bmad::ParserAddLords",
+      {std::pair{"lat", to_string(self.lat)}, std::pair{"check_lat", to_string(self.check_lat)}}
+  );
+}
+std::string to_string(const Bmad::ParserExpandLine &self) {
+  return repr(
+      &self,
+      "Bmad::ParserExpandLine",
+      {std::pair{"n_ele_expand", to_string(self.n_ele_expand)}, std::pair{"expanded_line", "[...]"}}
+  );
+}
 std::string to_string(const Bmad::ParserFastComplexRead &self) {
   return repr(
       &self,
@@ -3646,6 +4808,16 @@ std::string to_string(const Bmad::ParserFastRealRead &self) {
       {std::pair{"delim", self.delim},
        std::pair{"n_real", to_string(self.n_real)},
        std::pair{"is_ok", to_string(self.is_ok)}}
+  );
+}
+std::string to_string(const Bmad::ParserSetAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::ParserSetAttribute",
+      {std::pair{"delim", self.delim},
+       std::pair{"delim_found", to_string(self.delim_found)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"pele", to_string(self.pele)}}
   );
 }
 std::string to_string(const Bmad::PhotonAbsorptionAndPhaseShift &self) {
@@ -3664,6 +4836,15 @@ std::string to_string(const Bmad::PhotonAddToDetectorStatistics &self) {
       {std::pair{"ix_pt", to_string(self.ix_pt)}, std::pair{"iy_pt", to_string(self.iy_pt)}}
   );
 }
+std::string to_string(const Bmad::PhotonDiffuseScattering &self) {
+  return repr(
+      &self,
+      "Bmad::PhotonDiffuseScattering",
+      {std::pair{"graze_angle_out", to_string(self.graze_angle_out)},
+       std::pair{"phi_out", to_string(self.phi_out)},
+       std::pair{"diffuse_param", to_string(self.diffuse_param)}}
+  );
+}
 std::string to_string(const Bmad::PhotonReflection &self) {
   return repr(
       &self,
@@ -3678,6 +4859,15 @@ std::string to_string(const Bmad::PhotonReflectivity &self) {
       "Bmad::PhotonReflectivity",
       {std::pair{"p_reflect", to_string(self.p_reflect)},
        std::pair{"rel_p_specular", to_string(self.rel_p_specular)}}
+  );
+}
+std::string to_string(const Bmad::PointerToAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToAttribute",
+      {std::pair{"a_ptr", to_string(self.a_ptr)},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"ix_attrib", to_string(self.ix_attrib)}}
   );
 }
 std::string to_string(const Bmad::PointerToElementAtS &self) {
@@ -3704,6 +4894,13 @@ std::string to_string(const Bmad::PointerToGirder &self) {
       "Bmad::PointerToGirder",
       {std::pair{"ix_slave_back", to_string(self.ix_slave_back)},
        std::pair{"girder", to_string(self.girder)}}
+  );
+}
+std::string to_string(const Bmad::PointerToIndexedAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointerToIndexedAttribute",
+      {std::pair{"a_ptr", to_string(self.a_ptr)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::PointerToLord &self) {
@@ -3787,6 +4984,16 @@ std::string to_string(const Bmad::PointerToWall3d &self) {
        std::pair{"wall3d", to_string(self.wall3d)}}
   );
 }
+std::string to_string(const Bmad::PointersToAttribute &self) {
+  return repr(
+      &self,
+      "Bmad::PointersToAttribute",
+      {std::pair{"ptr_array", "[...]"},
+       std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"eles", "[...]"},
+       std::pair{"ix_attrib", to_string(self.ix_attrib)}}
+  );
+}
 std::string to_string(const Bmad::ProjectEmitToXyz &self) {
   return repr(
       &self,
@@ -3816,6 +5023,22 @@ std::string to_string(const Bmad::PtcReadFlatFile &self) {
       &self,
       "Bmad::PtcReadFlatFile",
       {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"lat", to_string(self.lat)}}
+  );
+}
+std::string to_string(const Bmad::PtcReadMapWithRadiation &self) {
+  return repr(
+      &self,
+      "Bmad::PtcReadMapWithRadiation",
+      {std::pair{"rad_map", to_string(self.rad_map)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::PtcSetupMapWithRadiation &self) {
+  return repr(
+      &self,
+      "Bmad::PtcSetupMapWithRadiation",
+      {std::pair{"rad_map", to_string(self.rad_map)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::PtcSpinCalc &self) {
@@ -3945,11 +5168,26 @@ std::string to_string(const SimUtils::RmsValue &self) {
       {std::pair{"ave_val", to_string(self.ave_val)}, std::pair{"rms_val", to_string(self.rms_val)}}
   );
 }
+std::string to_string(const Bmad::SSourceCalc &self) {
+  return repr(
+      &self,
+      "Bmad::SSourceCalc",
+      {std::pair{"err_flag", to_string(self.err_flag)},
+       std::pair{"s_source", to_string(self.s_source)}}
+  );
+}
 std::string to_string(const SimUtils::Serbd &self) {
   return repr(
       &self,
       "SimUtils::Serbd",
       {std::pair{"b", to_string(self.b)}, std::pair{"d", to_string(self.d)}}
+  );
+}
+std::string to_string(const Bmad::SetBranchAndEleForOmp &self) {
+  return repr(
+      &self,
+      "Bmad::SetBranchAndEleForOmp",
+      {std::pair{"branch", to_string(self.branch)}, std::pair{"ele0", to_string(self.ele0)}}
   );
 }
 std::string to_string(const Bmad::SetEleAttribute &self) {
@@ -4200,11 +5438,49 @@ std::string to_string(const Tao::TaoEvaluateTree &self) {
       {std::pair{"value", to_string(self.value)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Tao::TaoFindData &self) {
+  return repr(
+      &self,
+      "Tao::TaoFindData",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"d2_array", "[...]"},
+       std::pair{"d1_array", "[...]"},
+       std::pair{"d_array", "[...]"},
+       std::pair{"re_array", "[...]"},
+       std::pair{"log_array", "[...]"},
+       std::pair{"str_array", "[...]"},
+       std::pair{"int_array", "[...]"},
+       std::pair{"component", self.component}}
+  );
+}
 std::string to_string(const Tao::TaoFindPlotRegion &self) {
   return repr(
       &self,
       "Tao::TaoFindPlotRegion",
       {std::pair{"err", to_string(self.err)}, std::pair{"region", to_string(self.region)}}
+  );
+}
+std::string to_string(const Tao::TaoFindPlots &self) {
+  return repr(
+      &self,
+      "Tao::TaoFindPlots",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"plot", "[...]"},
+       std::pair{"graph", "[...]"},
+       std::pair{"curve", "[...]"}}
+  );
+}
+std::string to_string(const Tao::TaoFindVar &self) {
+  return repr(
+      &self,
+      "Tao::TaoFindVar",
+      {std::pair{"err", to_string(self.err)},
+       std::pair{"v1_array", "[...]"},
+       std::pair{"v_array", "[...]"},
+       std::pair{"re_array", "[...]"},
+       std::pair{"log_array", "[...]"},
+       std::pair{"str_array", "[...]"},
+       std::pair{"component", self.component}}
   );
 }
 std::string to_string(const Tao::TaoFloorToScreen &self) {
@@ -4356,6 +5632,15 @@ std::string to_string(const Tao::TaoPickUniverse &self) {
        std::pair{"err", to_string(self.err)},
        std::pair{"ix_uni", to_string(self.ix_uni)},
        std::pair{"explicit_uni", to_string(self.explicit_uni)}}
+  );
+}
+std::string to_string(const Tao::TaoPointerToBranches &self) {
+  return repr(
+      &self,
+      "Tao::TaoPointerToBranches",
+      {std::pair{"branches", "[...]"},
+       std::pair{"unis", "[...]"},
+       std::pair{"err", to_string(self.err)}}
   );
 }
 std::string to_string(const Tao::TaoPointerToDatumEle &self) {
@@ -4752,6 +6037,16 @@ std::string to_string(const SimUtils::TricubicCmplxEval &self) {
        std::pair{"f_val", to_string(self.f_val)}}
   );
 }
+std::string to_string(const SimUtils::TricubicEval &self) {
+  return repr(
+      &self,
+      "SimUtils::TricubicEval",
+      {std::pair{"df_dx", to_string(self.df_dx)},
+       std::pair{"df_dy", to_string(self.df_dy)},
+       std::pair{"df_dz", to_string(self.df_dz)},
+       std::pair{"f_val", to_string(self.f_val)}}
+  );
+}
 std::string to_string(const Bmad::Twiss1Propagate &self) {
   return repr(
       &self,
@@ -4892,8 +6187,8 @@ std::string to_string(const Bmad::WriteLatticeScibmadFormat &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeScibmadFormat",
-      {std::pair{"scibmad_file", self.scibmad_file},
-       std::pair{"err_flag", to_string(self.err_flag)}}
+      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
+      }
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

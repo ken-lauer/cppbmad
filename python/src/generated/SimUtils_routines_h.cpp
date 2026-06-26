@@ -1,16 +1,15 @@
 #include "pybmad/generated/SimUtils_routines_h.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_SimUtils_routines_h(py::module &m) {
+void init_SimUtils_routines_h(nb::module_ &m) {
   m.def(
       "hanhan",
       &SimUtils::hanhan,
-      py::arg("N"),
-      py::arg("hh"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("N"),
+      nb::arg("hh"),
       R"""(Wrapper for Fortran routine hanhan
 
 Parameters

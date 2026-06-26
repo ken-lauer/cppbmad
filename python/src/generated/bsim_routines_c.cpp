@@ -1,16 +1,15 @@
 #include "pybmad/generated/bsim_routines_c.hpp"
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+namespace nb = nanobind;
+using namespace nanobind::literals;
 using namespace Pybmad;
 
-void init_bsim_routines_c(py::module &m) {
+void init_bsim_routines_c(nb::module_ &m) {
   m.def(
       "check_rf_freq",
       &bsim::check_rf_freq,
-      py::arg("lat"),
-      py::arg("fb"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("lat"),
+      nb::arg("fb"),
       R"""(Wrapper for Fortran routine check_rf_freq
 
 Parameters
@@ -23,8 +22,7 @@ fb : float
   m.def(
       "count_lines_in_file",
       &bsim::count_lines_in_file,
-      py::arg("file_name"),
-      py::call_guard<py::gil_scoped_release>(),
+      nb::arg("file_name"),
       R"""(Wrapper for Fortran routine count_lines_in_file
 
 Parameters

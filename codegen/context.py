@@ -39,6 +39,8 @@ class RoutineSettings(pydantic.BaseModel):
     fortran_output_filename: str
     cpp_output_filename: str
     cpp_namespace: str
+    python_submodule: str = ""
+    python_top_level: bool = True
     # interface_path: pathlib.Path | None
     source_paths: list[NormalizedPath]
     skip_files: set[str]
@@ -177,7 +179,7 @@ class ConfigContext:
     @property
     def codegen_structs_by_name(self) -> dict[str, CodegenStructure]:
         assert len(self.codegen_structs)
-        return {struct.f_name: struct for struct in self.codegen_structs}
+        return {struct.f_name.lower(): struct for struct in self.codegen_structs}
 
 
 config_context: contextvars.ContextVar[ConfigContext] = contextvars.ContextVar("config_context")
