@@ -971,6 +971,25 @@ __all__ = [
     """
 
 
+def expected_stub_files(
+    config: CodegenConfig,
+    routines_by_name: dict[str, FortranRoutine],
+) -> list[pathlib.Path]:
+    """
+    Paths of the ``.pyi`` stubs that ``nanobind.stubgen`` will emit at build time.
+    """
+    namespaces = {rt.cpp_namespace for rt in routines_by_name.values() if rt.usable}
+    submodule_names: set[str] = {
+        r.python_submodule for r in config.routines if r.python_submodule and r.cpp_namespace in namespaces
+    }
+
+    package_dir = PYBMAD_LIB / config.python_module_name
+    return [
+        package_dir / "__init__.pyi",
+        *[package_dir / f"{sub}.pyi" for sub in sorted(submodule_names)],
+    ]
+
+
 def generate_pybmad(
     config: CodegenConfig,
     structs: list[CodegenStructure],

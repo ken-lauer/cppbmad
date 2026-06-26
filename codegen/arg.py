@@ -133,13 +133,18 @@ class Argument:
         if keyword.iskeyword(python_name):
             python_name = f"{python_name}_"
 
+        kind = member.kind or ""
+        if type_.lower() == "type":
+            # all structs are lowercase for us
+            kind = kind.lower()
+
         return cls(
             is_component=True,
             f_name=member.name,
             c_name=c_name,
             python_name=python_name,
             type=type_.lower(),
-            kind=member.kind or "",
+            kind=kind,
             pointer_type=pointer_type,
             array=member.dimension.replace(" ", "").split(",") if member.dimension else [],
             init_value=str(member.default) if member.default else None,

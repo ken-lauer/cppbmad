@@ -179,7 +179,7 @@ class ConfigContext:
     @property
     def codegen_structs_by_name(self) -> dict[str, CodegenStructure]:
         assert len(self.codegen_structs)
-        return {struct.f_name: struct for struct in self.codegen_structs}
+        return {struct.f_name.lower(): struct for struct in self.codegen_structs}
 
 
 config_context: contextvars.ContextVar[ConfigContext] = contextvars.ContextVar("config_context")
