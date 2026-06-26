@@ -226,27 +226,30 @@ void bind_1D_array_pair(
       .def(
           "__getitem__",
           [](AllocClass &self, int i) -> T {
+            auto &v = self.view();
             if (i < 0)
-              i += self.size();
-            return self.view().at(i);
+              i += v.size();
+            return v.at(i);
           }
       )
       .def(
           "__setitem__",
           [](AllocClass &self, int i, T val) {
+            auto &v = self.view();
             if (i < 0)
-              i += self.size();
-            self.view().at(i) = val;
+              i += v.size();
+            v.at(i) = val;
           }
       )
       .def("__setitem__", [](AllocClass &self, nb::slice slice, nb::sequence val) {
-        auto [start, stop, step, slicelength] = slice.compute(self.size());
+        auto &v = self.view();
+        auto [start, stop, step, slicelength] = slice.compute(v.size());
         if (nb::len(val) != slicelength)
           throw nb::value_error(
               "Left and right hand size of slice assignment have different sizes"
           );
         for (size_t i = 0; i < slicelength; ++i) {
-          self.view().at(start + i * step) = nb::cast<T>(val[i]);
+          v.at(start + i * step) = nb::cast<T>(val[i]);
         }
       });
 
@@ -268,10 +271,11 @@ void bind_1D_array_pair(
     });
   } else {
     alloc_cls.def("__getitem__", [](AllocClass &self, nb::slice slice) {
-      auto [start, stop, step, slicelength] = slice.compute(self.size());
+      auto &v = self.view();
+      auto [start, stop, step, slicelength] = slice.compute(v.size());
       nb::list ret;
       for (size_t i = 0; i < slicelength; ++i)
-        ret.append(static_cast<bool>(self.view().at(start + i * step)));
+        ret.append(static_cast<bool>(v.at(start + i * step)));
       return ret;
     });
   }
@@ -543,10 +547,10 @@ void bind_1d_type_array_pair(
       .def(
           "__getitem__",
           [](AllocClass &self, int i) {
+            auto &v = self.view();
             if (i < 0)
-              i += self.size();
-            // .view() refreshes pointers if underlying realloc happened
-            return self.view().at(i);
+              i += v.size();
+            return v.at(i);
           },
           nb::keep_alive<0, 1>()
       )
@@ -584,12 +588,8 @@ void bind_1d_type_array_pair(
   alloc_cls.def(
       "__iter__",
       [](AllocClass &self) {
-        return nb::make_iterator(
-            nb::type<AllocClass>(),
-            "TypeAlloc1DIterator",
-            self.view().begin(),
-            self.view().end()
-        );
+        auto &v = self.view();
+        return nb::make_iterator(nb::type<AllocClass>(), "TypeAlloc1DIterator", v.begin(), v.end());
       },
       nb::keep_alive<0, 1>()
   );

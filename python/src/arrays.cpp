@@ -21,21 +21,25 @@ void bind_FCharAlloc1D(nb::module_ &m) {
       .def(
           "__getitem__",
           [](CharacterAlloc1D &self, int i) -> std::string {
+            auto &v = self.view();
+            int n = v.size();
             if (i < 0)
-              i += self.size();
-            if (i < 0 || i >= self.size())
+              i += n;
+            if (i < 0 || i >= n)
               throw nb::index_error();
-            return self.view()[i];
+            return v[i];
           }
       )
       .def(
           "__setitem__",
           [](CharacterAlloc1D &self, int i, const std::string &val) {
+            auto &v = self.view();
+            int n = v.size();
             if (i < 0)
-              i += self.size();
-            if (i < 0 || i >= self.size())
+              i += n;
+            if (i < 0 || i >= n)
               throw nb::index_error();
-            self.view()[i] = val;
+            v[i] = val;
           }
       )
       .def(
