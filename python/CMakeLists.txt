@@ -95,7 +95,7 @@ add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
   "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
   "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
 
-  "${Python_EXECUTABLE}" -m nanobind.stubgen -r -m "${PYBIND_LIBNAME}"
+  "${Python_EXECUTABLE}" -m nanobind.stubgen -r -m "${PYBIND_LIBNAME}" -O "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/_pybmad"
 
   COMMENT "Generating Python stubs for ${PYBIND_LIBNAME}"
   VERBATIM
