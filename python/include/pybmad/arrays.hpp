@@ -8,6 +8,7 @@
 #include <nanobind/stl/string.h>
 #include <nanobind/stl/vector.h>
 
+#include <cstring>
 #include <string>
 
 #include "bmad/fortran_arrays.hpp"
@@ -20,6 +21,32 @@ using namespace Bmad;
 namespace Pybmad {
 
 inline int normalize_index(int i, int size);
+
+// numpy 2.x calls __array__(dtype=None, copy=None). Returns true only when a
+// guaranteed copy was explicitly requested (e.g. np.array(x), copy=True). For
+// copy=False/None we may hand back a zero-copy view into the Fortran memory.
+inline bool array_copy_requested(const nb::kwargs &kwargs) {
+  if (kwargs.contains("copy")) {
+    nb::object c = kwargs["copy"];
+    if (!c.is_none())
+      return nb::cast<bool>(c);
+  }
+  return false;
+}
+
+// Build a numpy array that owns its own copy of the data, so mutations do not
+// propagate back into the Fortran-managed buffer. ArrT is the (ranked) ndarray
+// return type, so the copy and zero-copy paths share one type.
+template <typename ArrT, typename T>
+ArrT make_numpy_copy(const T *src, size_t ndim, const size_t *shape, char order = 'C') {
+  size_t total = 1;
+  for (size_t i = 0; i < ndim; ++i)
+    total *= shape[i];
+  T *buf = new T[total];
+  std::memcpy(buf, src, total * sizeof(T));
+  nb::capsule owner(buf, [](void *p) noexcept { delete[] static_cast<T *>(p); });
+  return ArrT(buf, ndim, shape, owner, nullptr, nb::dtype<T>(), nb::device::cpu::value, 0, order);
+}
 
 // =============================================================================
 // Unified Binder: View (FArray1D) + Allocator (FAlloc1D) + std::vector
@@ -65,17 +92,6 @@ void bind_1D_array_pair(
           }
       )
       .def(
-          "__getitem__",
-          [](ViewClass &self, nb::slice slice) {
-            auto [start, stop, step, slicelength] = slice.compute(self.size());
-            nb::list ret;
-            for (size_t i = 0; i < slicelength; ++i) {
-              ret.append(nb::cast(self.at(start + i * step)));
-            }
-            return ret;
-          }
-      )
-      .def(
           "__setitem__",
           [](ViewClass &self, int i, T val) {
             if (i < 0)
@@ -93,6 +109,33 @@ void bind_1D_array_pair(
           self.at(start + i * step) = nb::cast<T>(val[i]);
         }
       });
+
+  // Slice read: zero-copy strided numpy view for numeric dtypes (matches numpy
+  // slicing semantics). Fortran logical is 4 bytes/elem, so bool falls back to
+  // a list copy.
+  if constexpr (!is_bool) {
+    view_cls.def("__getitem__", [](nb::handle_t<ViewClass> self_py, nb::slice slice) {
+      auto &self = nb::cast<ViewClass &>(self_py);
+      auto [start, stop, step, slicelength] = slice.compute(self.size());
+      size_t shape[1] = {(size_t)slicelength};
+      int64_t strides[1] = {(int64_t)step};
+      return nb::ndarray<nb::numpy, T, nb::ndim<1>>(
+          self.data() + start,
+          1,
+          shape,
+          nb::handle(self_py),
+          strides
+      );
+    });
+  } else {
+    view_cls.def("__getitem__", [](ViewClass &self, nb::slice slice) {
+      auto [start, stop, step, slicelength] = slice.compute(self.size());
+      nb::list ret;
+      for (size_t i = 0; i < slicelength; ++i)
+        ret.append(static_cast<bool>(self.at(start + i * step)));
+      return ret;
+    });
+  }
 
   view_cls.def("to_list", &ViewClass::to_vector);
 
@@ -116,11 +159,14 @@ void bind_1D_array_pair(
 
   if constexpr (!is_bool) {
     view_cls.def("__array__", [](nb::handle_t<ViewClass> self, nb::kwargs kwargs) {
+      using Ret = nb::ndarray<nb::numpy, T, nb::ndim<1>>;
       auto &a = nb::cast<ViewClass &>(self);
       if (!a.is_valid())
         throw std::runtime_error("Invalid Fortran array access");
       size_t shape[1] = {(size_t)a.size()};
-      return nb::ndarray<nb::numpy, T>(a.data(), 1, shape, nb::handle(self));
+      if (array_copy_requested(kwargs))
+        return make_numpy_copy<Ret>(a.data(), 1, shape);
+      return Ret(a.data(), 1, shape, nb::handle(self));
     });
   }
 
@@ -153,12 +199,15 @@ void bind_1D_array_pair(
     );
 
     alloc_cls.def("__array__", [](nb::handle_t<AllocClass> self, nb::kwargs kwargs) {
+      using Ret = nb::ndarray<nb::numpy, T, nb::ndim<1>>;
       auto &a = nb::cast<AllocClass &>(self);
       auto &v = a.view();
       if (!v.is_valid())
         throw std::runtime_error("Invalid Fortran array access");
       size_t shape[1] = {(size_t)v.size()};
-      return nb::ndarray<nb::numpy, T>(v.data(), 1, shape, nb::handle(self));
+      if (array_copy_requested(kwargs))
+        return make_numpy_copy<Ret>(v.data(), 1, shape);
+      return Ret(v.data(), 1, shape, nb::handle(self));
     });
   } else {
     alloc_cls.def("__iter__", [](AllocClass &self) {
@@ -183,17 +232,6 @@ void bind_1D_array_pair(
           }
       )
       .def(
-          "__getitem__",
-          [](AllocClass &self, nb::slice slice) {
-            auto [start, stop, step, slicelength] = slice.compute(self.size());
-            nb::list ret;
-            for (size_t i = 0; i < slicelength; ++i) {
-              ret.append(nb::cast(self.view().at(start + i * step)));
-            }
-            return ret;
-          }
-      )
-      .def(
           "__setitem__",
           [](AllocClass &self, int i, T val) {
             if (i < 0)
@@ -211,6 +249,32 @@ void bind_1D_array_pair(
           self.view().at(start + i * step) = nb::cast<T>(val[i]);
         }
       });
+
+  // Slice read: zero-copy strided numpy view for numeric dtypes, list for bool.
+  if constexpr (!is_bool) {
+    alloc_cls.def("__getitem__", [](nb::handle_t<AllocClass> self_py, nb::slice slice) {
+      auto &self = nb::cast<AllocClass &>(self_py);
+      auto &v = self.view();
+      auto [start, stop, step, slicelength] = slice.compute(v.size());
+      size_t shape[1] = {(size_t)slicelength};
+      int64_t strides[1] = {(int64_t)step};
+      return nb::ndarray<nb::numpy, T, nb::ndim<1>>(
+          v.data() + start,
+          1,
+          shape,
+          nb::handle(self_py),
+          strides
+      );
+    });
+  } else {
+    alloc_cls.def("__getitem__", [](AllocClass &self, nb::slice slice) {
+      auto [start, stop, step, slicelength] = slice.compute(self.size());
+      nb::list ret;
+      for (size_t i = 0; i < slicelength; ++i)
+        ret.append(static_cast<bool>(self.view().at(start + i * step)));
+      return ret;
+    });
+  }
 
   // --------------------------------------------------------
   // 3. Implicit Conversations & Interop
@@ -280,6 +344,9 @@ void bind_FArrayND(nb::module_ &m, const std::string &name) {
   // Zero-copy __array__ is only safe for types with matching element sizes.
   if constexpr (!std::is_same_v<T, bool>) {
     cls.def("__array__", [](nb::handle_t<Class> self, nb::kwargs kwargs) {
+      // Fortran arrays are column-major and contiguous (non-contiguous arrays
+      // are reported as invalid by the access layer), hence ndim<Rank>/f_contig.
+      using Ret = nb::ndarray<nb::numpy, T, nb::ndim<Rank>, nb::f_contig>;
       auto &a = nb::cast<Class &>(self);
       if (!a.is_valid()) {
         throw std::runtime_error("Attempted to access invalid FArray");
@@ -291,8 +358,9 @@ void bind_FArrayND(nb::module_ &m, const std::string &name) {
         shape[i] = bmad_sizes[i];
       }
 
-      // Fortran arrays are column-major
-      return nb::ndarray<nb::numpy, T>(
+      if (array_copy_requested(kwargs))
+        return make_numpy_copy<Ret>(a.data(), Rank, shape, 'F');
+      return Ret(
           a.data(),
           Rank,
           shape,
