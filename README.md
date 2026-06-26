@@ -2,7 +2,7 @@
 
 `cppbmad`: C++ interface to lower level [Bmad](https://github.com/bmad-sim/bmad-ecosystem) and Tao structures and routines.
 
-`pybmad`: cppbmad wrapped for Python using pybind11.
+`pybmad`: cppbmad wrapped for Python using [nanobind](https://github.com/wjakob/nanobind).
 
 ## Code Generation Overview
 
@@ -13,7 +13,7 @@
 3. C++ enum equivalents of Bmad constants. For example, the `proton$` parameter
    on the Fortran side is translated to `PROTON` on the C++ side, while element
    attributes get special treatment with the `enum class` `EleAttribute`.
-4. Pybind11 wrappers for proxy classes, enums, routines, and Python-only
+4. Nanobind wrappers for proxy classes, enums, routines, and Python-only
    return-value structures (due to immutability of Python booleans and such).
 
 ## Wrapping other codebases?
