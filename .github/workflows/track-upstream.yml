@@ -25,7 +25,7 @@ jobs:
       new_release: ${{ steps.check.outputs.new_release }}
       upstream_tag: ${{ steps.check.outputs.upstream_tag }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -66,7 +66,7 @@ jobs:
       run:
         shell: bash -eo pipefail -l {0}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           token: ${{ secrets.AUTOGENERATE_PAT }}
