@@ -61,7 +61,14 @@ runs:
         lib_path="$ACC_ROOT_DIR/$BMAD_BUILD_TYPE/lib"
         echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
 
-    - name: Run Python tests
+    - name: Run Python examples
       if: inputs.run_tests == 'true'
       shell: bash -eo pipefail -l {0}
-      run: python python/examples/parse.py
+      working-directory: python/examples
+      run: bash run_examples.sh
+
+    - name: Run Python test suite
+      if: inputs.run_tests == 'true'
+      shell: bash -eo pipefail -l {0}
+      working-directory: python/examples
+      run: python -m pytest python/tests/

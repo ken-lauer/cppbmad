@@ -34,6 +34,5 @@ runs:
     - name: Run C++ tests
       if: inputs.run_tests == 'true'
       shell: bash -eo pipefail -l {0}
-      working-directory: ${{ inputs.build_type }}
       run: |
-        ./cppbmad_tests
+        "${{ inputs.build_type }}/"cppbmad_tests
