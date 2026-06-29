@@ -12,38 +12,32 @@ permissions:
 
 jobs:
   build-conda:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.target }} / ${{ matrix.platform.name }}
+    runs-on: ${{ matrix.platform.os }}
     defaults:
       run:
         shell: bash
+    # Constants shared by every matrix entry; override per-platform below.
+    env:
+      SHARED: Y
+      BMAD_REF: main
+      BUILD_TYPE: release
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: ubuntu-single-core
+        target: [cppbmad, pybmad]
+        platform:
+          - name: linux
             os: ubuntu-latest
-            shared: Y
             openmp_mpi: N
-            bmad_ref: main
-            build_type: release
-            target: pybmad
             upload_wheel: true
-          - name: macos-single-core
+          - name: macos
             os: macos-latest
-            shared: Y
             openmp_mpi: N
-            bmad_ref: main
-            build_type: release
-            target: pybmad
             upload_wheel: false
-          - name: ubuntu-openmp
+          - name: linux-openmp-mpi
             os: ubuntu-latest
-            shared: Y
             openmp_mpi: Y
-            bmad_ref: main
-            build_type: release
-            target: cppbmad
             upload_wheel: false
 
     steps:
@@ -51,31 +45,30 @@ jobs:
 
       - uses: ./.github/actions/build-bmad
         with:
-          bmad_ref: ${{ matrix.bmad_ref }}
-          shared: ${{ matrix.shared }}
-          openmp_mpi: ${{ matrix.openmp_mpi }}
-          build_type: ${{ matrix.build_type }}
+          bmad_ref: ${{ env.BMAD_REF }}
+          shared: ${{ env.SHARED }}
+          openmp_mpi: ${{ matrix.platform.openmp_mpi }}
+          build_type: ${{ env.BUILD_TYPE }}
 
       - uses: ./.github/actions/build-cppbmad
         if: matrix.target == 'cppbmad'
         with:
-          build_type: ${{ matrix.build_type }}
+          build_type: ${{ env.BUILD_TYPE }}
 
       - uses: ./.github/actions/build-pybmad
         if: matrix.target == 'pybmad'
         with:
-          build_type: ${{ matrix.build_type }}
-          upload_wheel: ${{ matrix.upload_wheel && 'true' || 'false' }}
+          build_type: ${{ env.BUILD_TYPE }}
+          upload_wheel: ${{ matrix.platform.upload_wheel && 'true' || 'false' }}
 
-      # Build docs in the same job that uploaded the wheel (pybmad already installed)
       - uses: ./.github/actions/build-docs
         id: docs
-        if: matrix.upload_wheel
+        if: matrix.target == 'pybmad' && matrix.platform.upload_wheel
         with:
           output_dir: ${{ github.workspace }}/docs-site
 
       - name: Upload docs artifact
-        if: matrix.upload_wheel && steps.docs.outputs.success == 'true'
+        if: matrix.target == 'pybmad' && matrix.platform.upload_wheel && steps.docs.outputs.success == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs-site
