@@ -1,0 +1,39 @@
+name: Build cppbmad
+description: >
+  Regenerate bindings, build the cppbmad C++ library, and run the C++ tests.
+  Requires a prior build-bmad step in the same job (conda env activated and
+  ACC_ROOT_DIR exported).
+
+inputs:
+  build_type:
+    description: "CMake build type (release or debug)"
+    required: false
+    default: release
+  run_tests:
+    description: "Run C++ tests after building"
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Install build dependencies
+      shell: bash -eo pipefail -l {0}
+      run: conda install -y cmake pydantic clang-format
+
+    - name: Regenerate bindings
+      shell: bash -eo pipefail -l {0}
+      run: python -m codegen
+
+    - name: Build cppbmad
+      shell: bash -eo pipefail -l {0}
+      run: |
+        cmake -DCMAKE_BUILD_TYPE="${{ inputs.build_type }}" -B "${{ inputs.build_type }}" .
+        cmake --build "${{ inputs.build_type }}"
+
+    - name: Run C++ tests
+      if: inputs.run_tests == 'true'
+      shell: bash -eo pipefail -l {0}
+      working-directory: ${{ inputs.build_type }}
+      run: |
+        ./cppbmad_tests

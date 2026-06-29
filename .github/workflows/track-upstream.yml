@@ -25,7 +25,7 @@ jobs:
       new_release: ${{ steps.check.outputs.new_release }}
       upstream_tag: ${{ steps.check.outputs.upstream_tag }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -55,6 +55,8 @@ jobs:
     if: needs.check-release.outputs.new_release == 'true'
     runs-on: ubuntu-latest
     environment: auto-regen
+    env:
+      UPSTREAM_TAG: ${{ needs.check-release.outputs.upstream_tag }}
     permissions:
       contents: write
       pull-requests: read
@@ -64,7 +66,7 @@ jobs:
       run:
         shell: bash -eo pipefail -l {0}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           token: ${{ secrets.AUTOGENERATE_PAT }}
@@ -73,11 +75,18 @@ jobs:
         with:
           bmad_ref: ${{ needs.check-release.outputs.upstream_tag }}
           build_type: release
+
+      - uses: ./.github/actions/build-cppbmad
+        with:
+          build_type: release
+
+      - uses: ./.github/actions/build-pybmad
+        with:
+          build_type: release
           upload_wheel: "true"
 
       - name: Commit regenerated files, tag, and release
         env:
-          UPSTREAM_TAG: ${{ needs.check-release.outputs.upstream_tag }}
           GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"

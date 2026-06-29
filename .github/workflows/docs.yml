@@ -23,7 +23,7 @@ jobs:
   build-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Try to download a pre-built wheel from a prior job/workflow
       - name: Download pybmad wheel
@@ -39,6 +39,10 @@ jobs:
         if: steps.wheel.outcome != 'success'
         with:
           bmad_ref: ${{ inputs.bmad_ref || 'main' }}
+
+      - uses: ./.github/actions/build-pybmad
+        if: steps.wheel.outcome != 'success'
+        with:
           run_tests: "false"
 
       # If wheel was downloaded, just set up Python and install it
