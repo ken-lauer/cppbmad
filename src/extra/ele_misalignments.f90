@@ -48,8 +48,12 @@ contains
 !
 ! Input:
 !   ele         -- ele_struct: Element to modify.
-!   x_offset, y_offset, z_offset, x_pitch, y_pitch, tilt
-!               -- real(rp): Values to write.  Tilt is 'roll' only for bends.
+!   x_offset    -- real(rp): the x-offset.
+!   y_offset    -- real(rp): the y-offset.
+!   z_offset    -- real(rp): the z-offset.
+!   x_pitch     -- real(rp): the horizontal pitch.
+!   y_pitch     -- real(rp): the vertical pitch.
+!   tilt        -- real(rp): the tilt (or roll, for bends).
 !   check_free  -- logical, optional: Default .true.. If true, validate slot
 !                  layout and attribute freeness before any write.
 !
