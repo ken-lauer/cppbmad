@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import pathlib
+import re
 import string
 import subprocess
 import textwrap
@@ -847,6 +848,41 @@ def _generate_main_module_file(
     files[PYBMAD_LIB / "_enums.py"] = generate_enum_wrapper_code(enums)
 
 
+def _normalize_pep440(raw: str) -> str:
+    """
+    Upstream release tag or ``git describe`` string into a PEP 440 version.
+
+    We need PEP440 for scikit-build-core.
+
+    Notes:
+    * bmad release tag: ``YYYYMMDD-N`` (the ``N``-th Bmad release that day)
+    * cppbmad release tags: ``YYYYMMDD-N[.B]``(optional ``.B`` is a cppbmad bugfix bump.)
+    * ``git describe`` has a ``-(commits)-g(hash)`` suffix on dev builds past the tag.
+
+    So:
+
+    Flatten the date/release/bugfix into dotted release segments.
+    (``20260625-0.1`` -> ``20260625.0.1``) and stash any git-describe distance
+    and hash in a local-version label (``+33.g2b35e99``).
+    """
+    # `git describe` suffixes a tag with "-<commits>-g<hash>" once HEAD moves
+    # past it (see `git help describe`); peel that off into a local-version label.
+    local = ""
+    m = re.search(r"-(\d+)-g([0-9a-f]+)$", raw)
+    if m:
+        local = f"+{m.group(1)}.g{m.group(2)}"
+        raw = raw[: m.start()]
+
+    nums = []
+    for part in re.split(r"[-_.]+", raw):
+        if part.isdigit():
+            nums.append(part)
+        else:
+            break
+    release = ".".join(nums) if nums else "0"
+    return f"{release}{local}"
+
+
 def _pybmad_version() -> str:
     """Version for the generated package.
 
@@ -855,16 +891,16 @@ def _pybmad_version() -> str:
     ``git describe`` of this repo.
     """
     tag = os.environ.get("UPSTREAM_TAG")
-    if tag:
-        return tag
-    try:
-        return subprocess.check_output(
-            ["git", "describe", "--tags", "--no-dirty"],
-            cwd=CODEGEN_ROOT,
-            text=True,
-        ).strip()
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return "0.0.0"
+    if not tag:
+        try:
+            tag = subprocess.check_output(
+                ["git", "describe", "--tags", "--no-dirty"],
+                cwd=CODEGEN_ROOT,
+                text=True,
+            ).strip()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            tag = "0.0.0"
+    return _normalize_pep440(tag)
 
 
 def generate_init_dot_py(
