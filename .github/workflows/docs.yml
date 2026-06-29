@@ -39,6 +39,10 @@ jobs:
         if: steps.wheel.outcome != 'success'
         with:
           bmad_ref: ${{ inputs.bmad_ref || 'main' }}
+
+      - uses: ./.github/actions/build-pybmad
+        if: steps.wheel.outcome != 'success'
+        with:
           run_tests: "false"
 
       # If wheel was downloaded, just set up Python and install it

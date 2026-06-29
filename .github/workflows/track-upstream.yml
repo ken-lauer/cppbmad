@@ -75,6 +75,14 @@ jobs:
         with:
           bmad_ref: ${{ needs.check-release.outputs.upstream_tag }}
           build_type: release
+
+      - uses: ./.github/actions/build-cppbmad
+        with:
+          build_type: release
+
+      - uses: ./.github/actions/build-pybmad
+        with:
+          build_type: release
           upload_wheel: "true"
 
       - name: Commit regenerated files, tag, and release

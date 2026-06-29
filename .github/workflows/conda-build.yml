@@ -27,6 +27,7 @@ jobs:
             openmp_mpi: N
             bmad_ref: main
             build_type: release
+            target: pybmad
             upload_wheel: true
           - name: macos-single-core
             os: macos-latest
@@ -34,6 +35,7 @@ jobs:
             openmp_mpi: N
             bmad_ref: main
             build_type: release
+            target: pybmad
             upload_wheel: false
           - name: ubuntu-openmp
             os: ubuntu-latest
@@ -41,6 +43,7 @@ jobs:
             openmp_mpi: Y
             bmad_ref: main
             build_type: release
+            target: cppbmad
             upload_wheel: false
 
     steps:
@@ -51,6 +54,16 @@ jobs:
           bmad_ref: ${{ matrix.bmad_ref }}
           shared: ${{ matrix.shared }}
           openmp_mpi: ${{ matrix.openmp_mpi }}
+          build_type: ${{ matrix.build_type }}
+
+      - uses: ./.github/actions/build-cppbmad
+        if: matrix.target == 'cppbmad'
+        with:
+          build_type: ${{ matrix.build_type }}
+
+      - uses: ./.github/actions/build-pybmad
+        if: matrix.target == 'pybmad'
+        with:
           build_type: ${{ matrix.build_type }}
           upload_wheel: ${{ matrix.upload_wheel && 'true' || 'false' }}
 
