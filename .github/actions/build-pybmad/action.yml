@@ -66,5 +66,5 @@ runs:
     - name: Run Python test suite
       if: inputs.run_tests == 'true'
       shell: bash -eo pipefail -l {0}
-      working-directory: python/examples
-      run: python -m pytest python/tests/
+      working-directory: python
+      run: python -m pytest tests/
