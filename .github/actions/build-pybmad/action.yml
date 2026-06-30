@@ -24,7 +24,7 @@ runs:
   steps:
     - name: Install build dependencies
       shell: bash -eo pipefail -l {0}
-      run: conda install -y cmake pydantic clang-format
+      run: conda install -y cmake pydantic clang-format pytest
 
     - name: Regenerate bindings
       shell: bash -eo pipefail -l {0}
