@@ -136,11 +136,8 @@ void bind_standard_arrays(nb::module_ &m) {
   //    between them and python lists (std::vector).
   bind_1D_array_pair<double, RealAlloc1D>(m, "RealArray1D", "RealAlloc1D");
 
-#ifdef __FLOAT128__
-  bind_1D_array_pair<__float128, Real16Alloc1D>(m, "Real16Array1D", "Real16Alloc1D");
-#else
-  bind_1D_array_pair<long double, Real16Alloc1D>(m, "Real16Array1D", "Real16Alloc1D");
-#endif
+  // real16 (quad) has no allocatable container: it is scalar-only (e.g.
+  // coord_struct%t) and quad arrays have no portable C/numpy representation.
 
   bind_1D_array_pair<int, IntAlloc1D>(m, "IntArray1D", "IntAlloc1D");
   bind_1D_array_pair<int64_t, Int8Alloc1D>(m, "Int8Array1D", "Int8Alloc1D");

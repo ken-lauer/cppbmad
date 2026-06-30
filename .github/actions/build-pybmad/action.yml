@@ -24,7 +24,7 @@ runs:
   steps:
     - name: Install build dependencies
       shell: bash -eo pipefail -l {0}
-      run: conda install -y cmake pydantic clang-format
+      run: conda install -y cmake pydantic clang-format pytest
 
     - name: Regenerate bindings
       shell: bash -eo pipefail -l {0}
@@ -33,11 +33,7 @@ runs:
     - name: Build pybmad wheel
       shell: bash -eo pipefail -l {0}
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then
-          CMAKE_BUILD_PARALLEL_LEVEL=1 python -m pip wheel --no-deps -w dist .
-        else
-          python -m pip wheel -vv --no-deps -w dist .
-        fi
+        python -m pip wheel -vv --no-deps -w dist .
 
     - name: Install pybmad from wheel
       shell: bash -eo pipefail -l {0}
@@ -61,7 +57,14 @@ runs:
         lib_path="$ACC_ROOT_DIR/$BMAD_BUILD_TYPE/lib"
         echo "LD_LIBRARY_PATH=$lib_path:$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
 
-    - name: Run Python tests
+    - name: Run Python examples
       if: inputs.run_tests == 'true'
       shell: bash -eo pipefail -l {0}
-      run: python python/examples/parse.py
+      working-directory: python/examples
+      run: bash run_examples.sh
+
+    - name: Run Python test suite
+      if: inputs.run_tests == 'true'
+      shell: bash -eo pipefail -l {0}
+      working-directory: python/tests
+      run: python -m pytest -v

@@ -197,31 +197,6 @@ def test_real16_scalar(use_in_opt: bool, use_inout_opt: bool):
 
 
 @optionals
-@pytest.mark.xfail(reason="float128 isn't supported on clang/macos", condition=sys.platform == "darwin")
-def test_real16_array(use_in_opt: bool, use_inout_opt: bool):
-    """Note: mapped to Real16Alloc1D in types description provided."""
-    arr_in = container_create(pybmad.Real16Alloc1D, [1.0])
-    arr_inout = container_create(pybmad.Real16Alloc1D, [2.0])
-    inopt = container_create(pybmad.Real16Alloc1D, [0.5])
-    inout_opt = container_create(pybmad.Real16Alloc1D, [3.0])
-
-    kw = {"arr_in": arr_in.view(), "arr_inout": arr_inout.view()}
-    if use_in_opt:
-        kw["arr_in_opt"] = inopt.view()
-    if use_inout_opt:
-        kw["arr_inout_opt"] = inout_opt.view()
-
-    res = pybmad.test.test_real16_array(**kw)
-
-    out = res.arr_out[0]
-    expected = 1.0 + (0.5 if use_in_opt else 0.0)
-    assert out == pytest.approx(expected)
-
-    inout = arr_inout[0]
-    assert inout == pytest.approx(3.0)  # 2.0 + 1.0
-
-
-@optionals
 def test_complex_array(use_in_opt: bool, use_inout_opt: bool):
     val_in = [complex(1, 2), complex(3, 4)]
     arr_in = container_create(pybmad.ComplexAlloc1D, val_in)

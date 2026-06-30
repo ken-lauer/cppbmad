@@ -80,26 +80,28 @@ else()
   )
 endif()
 
-# Stub generation using nanobind's built-in stubgen
-set(EXISTING_PYTHONPATH "$ENV{PYTHONPATH}")
+option(STUBGEN "Generate Python stubs with nanobind.stubgen at build time" ON)
+if(STUBGEN)
+  set(EXISTING_PYTHONPATH "$ENV{PYTHONPATH}")
 
-if(EXISTING_PYTHONPATH)
-  set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>:${EXISTING_PYTHONPATH}")
-else()
-  set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>")
+  if(EXISTING_PYTHONPATH)
+    set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>:${EXISTING_PYTHONPATH}")
+  else()
+    set(PYTHONPATH "$<TARGET_FILE_DIR:${PYBIND_LIBNAME}>")
+  endif()
+
+  add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env
+    "PYTHONPATH=${PYTHONPATH}"
+    "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
+    "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
+
+    "${Python_EXECUTABLE}" -m nanobind.stubgen -r -m "${PYBIND_LIBNAME}" -O "${CMAKE_CURRENT_SOURCE_DIR}/pybmad"
+
+    COMMENT "Generating Python stubs for ${PYBIND_LIBNAME}"
+    VERBATIM
+  )
 endif()
-
-add_custom_command(TARGET ${PYBIND_LIBNAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E env
-  "PYTHONPATH=${PYTHONPATH}"
-  "LD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{LD_LIBRARY_PATH}" # Linux
-  "DYLD_LIBRARY_PATH=$<TARGET_FILE_DIR:cppbmad>:$ENV{DYLD_LIBRARY_PATH}" # MacOS
-
-  "${Python_EXECUTABLE}" -m nanobind.stubgen -r -m "${PYBIND_LIBNAME}" -O "${CMAKE_CURRENT_SOURCE_DIR}/pybmad"
-
-  COMMENT "Generating Python stubs for ${PYBIND_LIBNAME}"
-  VERBATIM
-)
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pybmad/"
         DESTINATION pybmad

@@ -98,7 +98,6 @@ def tao_draw_floor_plan_orbit(graph: TaoGraphStruct, tao_lat, ax: matplotlib.axe
     """
     Draw the particle orbit.
     """
-    return
     lat = tao_lat.lat
 
     for branch in lat.branch:
