@@ -228,40 +228,6 @@ contains
     end if
   end subroutine test_real16_scalar
 
-  subroutine test_real16_array(arr_in, arr_inout, arr_out, &
-                               opt_status, arr_in_opt, arr_inout_opt)
-    real(qp), dimension(:), intent(in) :: arr_in
-    real(qp), dimension(:), intent(inout) :: arr_inout
-    real(qp), dimension(:), intent(out), allocatable :: arr_out
-    integer, intent(out) :: opt_status(2)
-    real(qp), dimension(:), optional, intent(in) :: arr_in_opt
-    real(qp), dimension(:), optional, intent(inout) :: arr_inout_opt
-
-    if (allocated(arr_out)) deallocate(arr_out)
-    allocate(arr_out(lbound(arr_in, 1):ubound(arr_in, 1)))
-
-    if (size(arr_out) == size(arr_in) .and. size(arr_in) > 0) then
-        arr_out = arr_in
-    end if
-    if (size(arr_inout) > 0) then
-        arr_inout = arr_inout + 1.0_qp
-    end if
-
-    opt_status = 0
-    if (present(arr_in_opt)) then
-        opt_status(1) = 1
-         if (size(arr_in_opt) == size(arr_out) .and. size(arr_out) > 0) then
-            arr_out = arr_out + arr_in_opt
-        end if
-    end if
-    if (present(arr_inout_opt)) then
-        opt_status(2) = 1
-        if (size(arr_inout_opt) > 0) then
-            arr_inout_opt = arr_inout_opt + 1.0_qp
-        end if
-    end if
-  end subroutine test_real16_array
-
 
   ! ======================================================================
   ! COMPLEX TESTS

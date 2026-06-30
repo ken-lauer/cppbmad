@@ -397,7 +397,8 @@ STANDARD_TYPES: dict[ArgumentType, TypeInfo] = {
         cpp_call_arr="long double*",
         python_type="float",
         fortran_native_type="real(16)",
-        allocatable_container="Real16Alloc1D",
+        # No allocatable container: real16 is scalar-only (e.g. coord_struct%t).
+        # Quad arrays have no portable C/numpy representation, so they are not wrapped.
     ),
     "complex": TypeInfo(
         name="complex",
@@ -463,13 +464,6 @@ native_type_containers = [
         fortran_type="real(rp)",
         fortran_container_struct="real_container_alloc",
     ),
-    ContainerTypeInfo(
-        name="real16",
-        cpp_type="long double",
-        cpp_container_name="Real16Alloc1D",
-        fortran_type="real(qp)",
-        fortran_container_struct="real16_container_alloc",
-    ),  # std::float128_t in C++23
     ContainerTypeInfo(
         name="integer",
         cpp_type="int",
