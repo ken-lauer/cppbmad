@@ -1,4 +1,4 @@
-"""Tests for the hand-written Bmad tracking hooks (``pybmad.bmad.set_*_hook``).
+"""Tests for the hand-written Bmad tracking hooks (``pybmad.bmad.hooks``).
 
 Only the hooks that can be triggered from a plain single-particle / single-bunch
 track through a simple lattice are exercised here. ``wall_hit_handler_custom``
@@ -37,7 +37,7 @@ def clear_hooks():
     """Guarantee every hook is cleared after each test (they are global state)."""
     yield
     for name in ALL_HOOKS:
-        getattr(bmad, f"clear_{name}_hook")()
+        setattr(bmad.hooks, name, None)
 
 
 @pytest.fixture
@@ -75,7 +75,7 @@ def test_track1_postprocess_fires_with_live_proxies(lat):
         logger.info(f"\nHook: {start_orb=} {ele=} {param=} {end_orb=}")
         seen.append((ele.name, float(end_orb.vec[0])))
 
-    bmad.set_track1_postprocess_hook(hook)
+    bmad.hooks.track1_postprocess = hook
     result = pybmad.track1(orbit[0], branch.ele[1], branch.param)
 
     assert len(seen) == 1
@@ -83,7 +83,8 @@ def test_track1_postprocess_fires_with_live_proxies(lat):
     assert seen[0][1] == pytest.approx(float(result.end_orb.vec[0]))
 
 
-def test_clear_stops_the_hook_firing(lat):
+def test_assignment_readback_and_none_clears(lat):
+    """The property reads back the current callable and clears when set to None."""
     branch = lat.branch[0]
     orbit = make_orbit(lat)
     calls = []
@@ -91,11 +92,15 @@ def test_clear_stops_the_hook_firing(lat):
     def postprocess_hook(*_):
         calls.append(1)
 
-    bmad.set_track1_postprocess_hook(postprocess_hook)
+    assert bmad.hooks.track1_postprocess is None
+    bmad.hooks.track1_postprocess = postprocess_hook
+    assert bmad.hooks.track1_postprocess is postprocess_hook
+
     pybmad.track1(orbit[0], branch.ele[1], branch.param)
     assert len(calls) == 1
 
-    bmad.clear_track1_postprocess_hook()
+    bmad.hooks.track1_postprocess = None
+    assert bmad.hooks.track1_postprocess is None
     pybmad.track1(orbit[0], branch.ele[1], branch.param)
     assert len(calls) == 1
 
@@ -111,7 +116,7 @@ def test_exception_in_hook_does_not_crash(lat):
         calls.append(1)
         raise ValueError("intentional")
 
-    bmad.set_track1_postprocess_hook(hook)
+    bmad.hooks.track1_postprocess = hook
     result = pybmad.track1(orbit[0], branch.ele[1], branch.param)  # must not crash
     assert len(calls) == 1
     assert result.end_orb is not None
@@ -128,7 +133,7 @@ def test_track1_preprocess_fires_and_optional_track_is_none(lat):
         )
         seen.append((ele.name, track))
 
-    bmad.set_track1_preprocess_hook(hook)
+    bmad.hooks.track1_preprocess = hook
     pybmad.track1(orbit[0], branch.ele[1], branch.param)
 
     assert len(seen) == 1
@@ -148,7 +153,7 @@ def test_track1_custom_replaces_tracking_and_writes_back(lat):
         orb.vec[0] = 0.00123  # this element "tracked" the particle to here
         return (False, True)  # err_flag=False, finished=True (hook did the tracking)
 
-    bmad.set_track1_custom_hook(hook)
+    bmad.hooks.track1_custom = hook
     result = pybmad.track1(orbit[0], ele, branch.param)
 
     assert float(result.end_orb.vec[0]) == pytest.approx(0.00123)
@@ -167,7 +172,7 @@ def test_track1_spin_custom_fires(lat):
         seen.append((e.name, make_quaternion))
         return False  # err_flag
 
-    bmad.set_track1_spin_custom_hook(hook)
+    bmad.hooks.track1_spin_custom = hook
     pybmad.track1(orbit[0], ele, branch.param)
 
     assert len(seen) == 1
@@ -189,7 +194,7 @@ def test_track_many_receives_live_coord_array_view(lat):
         captured["ix_branch"] = ix_branch
         return False  # not finished: let Bmad do the actual tracking
 
-    bmad.set_track_many_hook(hook)
+    bmad.hooks.track_many = hook
     pybmad.track_many(lat, orbit.view(), 0, branch.n_ele_track, 1)
 
     assert captured["n"] == branch.n_ele_track + 1
@@ -208,7 +213,7 @@ def test_track1_bunch_fires(lat):
         seen.append((ele.name, centroid, direction, bunch_track, len(b.particle)))
         return (False, True)  # err=False, finished=True
 
-    bmad.set_track1_bunch_hook(hook)
+    bmad.hooks.track1_bunch = hook
     pybmad.track1_bunch(bunch, branch.ele[1])
 
     assert len(seen) == 1
