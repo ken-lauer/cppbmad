@@ -98,7 +98,7 @@ class CodegenConfig(pydantic.BaseModel):
     projects: list[ProjectSettings] = []
     routines: list[RoutineSettings] = []
     enum_filenames: list[NormalizedPath] = []
-    python_imports: list[str] = []
+    python_imports: dict[str, list[str]] = {}
     python_module_name: str = "_pybmad"
 
     @classmethod

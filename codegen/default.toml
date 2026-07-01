@@ -456,7 +456,8 @@ skips = [
 
 ]
 
-python_imports = [
+[python_imports]
+"_pybmad" = [
   "get_bmad_com",
   "get_space_charge_com",
   "get_super_universe",
@@ -473,6 +474,28 @@ python_imports = [
   "Int8Array1D",
   "IntArray1D",
   "RealArray1D",
+]
+
+# Bmad hooks
+"_pybmad.bmad" = [
+  "set_time_runge_kutta_periodic_kick_hook",
+  "clear_time_runge_kutta_periodic_kick_hook",
+  "set_track1_bunch_hook",
+  "clear_track1_bunch_hook",
+  "set_track1_custom_hook",
+  "clear_track1_custom_hook",
+  "set_track_many_hook",
+  "clear_track_many_hook",
+  "set_track1_postprocess_hook",
+  "clear_track1_postprocess_hook",
+  "set_track1_preprocess_hook",
+  "clear_track1_preprocess_hook",
+  "set_track1_spin_custom_hook",
+  "clear_track1_spin_custom_hook",
+  "set_track1_wake_hook",
+  "clear_track1_wake_hook",
+  "set_wall_hit_handler_custom_hook",
+  "clear_wall_hit_handler_custom_hook",
 ]
 
 # Translations on C++ side to avoid clash with reserved words

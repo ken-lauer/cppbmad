@@ -939,8 +939,9 @@ def generate_init_dot_py(
 
     imports.append("# Globals")
     all_.append("    # Globals")
-    for name in config.python_imports:
-        add_name(name)
+    for mod, names in config.python_imports.items():
+        for name in names:
+            add_name(name, mod=mod)
 
     imports.append("# Classes")
     all_.append("    # Classes")
