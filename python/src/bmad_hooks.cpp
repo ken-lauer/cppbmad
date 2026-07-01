@@ -44,7 +44,16 @@ struct BmadHooks {
 } // namespace
 
 void Pybmad::init_bmad_hooks(nb::module_ &m) {
-  nb::class_<BmadHooks> cls(m, "BmadHooks", "Registry of Bmad tracking-hook callbacks.");
+  nb::class_<BmadHooks> cls(
+      m,
+      "BmadHooks",
+      "Registry of Bmad tracking-hook callbacks.\n\n"
+      "Assign a callable to a property to install a hook, assign None to clear it, "
+      "and read the property to get the current callback (or None). Proxy/array "
+      "arguments are live, non-owning views valid only for the duration of the "
+      "call; do not stash them. Exceptions raised in a callback are reported and "
+      "swallowed (they never propagate into Fortran)."
+  );
 
   cls.def_prop_rw(
       "time_runge_kutta_periodic_kick",
@@ -75,7 +84,14 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called during time Runge-Kutta tracking to apply a periodic (e.g. RF) kick.
+
+Signature:
+    fn(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       stop_time: float, init_needed: int) -> tuple[float, int] | None
+
+Return ``(stop_time, init_needed)`` to update them, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -112,7 +128,17 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called by track1_bunch before the standard single-element bunch tracking.
+Return finished=True to have the callback fully replace it.
+
+Signature:
+    fn(bunch: BunchStruct, ele: EleStruct, err: bool,
+       centroid: CoordStructArray1D | None, direction: int | None,
+       finished: bool, bunch_track: BunchTrackStruct | None)
+       -> tuple[bool, bool] | None
+
+Return ``(err, finished)``, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -146,7 +172,17 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called by track1 to track an element whose tracking_method is `custom`
+(or a custom element). The callback performs the tracking: the first argument
+is in/out -- mutate it in place to the exit coordinates.
+
+Signature:
+    fn(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       err_flag: bool, finished: bool, track: TrackStruct | None)
+       -> tuple[bool, bool] | None
+
+Return ``(err_flag, finished)``, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -181,7 +217,16 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called at the start of track_many (tracking through a range of elements).
+Return finished=True to have the callback fully replace the tracking.
+
+Signature:
+    fn(finished: bool, lat: LatStruct, orbit: CoordStructArray1D,
+       ix_start: int, ix_end: int, direction: int,
+       ix_branch: int | None, track_state: int | None) -> bool | None
+
+`orbit` is a live array view. Return finished, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -207,7 +252,13 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called after every track1, once an element has been tracked. `end_orb` is
+a live proxy -- mutate it to adjust the exit coordinates.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       end_orb: CoordStruct) -> None)"
   );
 
   cls.def_prop_rw(
@@ -250,7 +301,16 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called at the start of every track1, before the element is tracked.
+Return finished=True to have the callback fully replace the tracking.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       err_flag: bool, finished: bool, radiation_included: bool,
+       track: TrackStruct | None) -> tuple[bool, bool, bool] | None
+
+Return ``(err_flag, finished, radiation_included)``, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -290,7 +350,15 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called by track1 to track spin when spin_tracking_method is `custom`.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       end_orb: CoordStruct, err_flag: bool, make_quaternion: bool | None)
+       -> bool | tuple[bool, bool] | None
+
+Return err_flag, or ``(err_flag, make_quaternion)``, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -315,7 +383,14 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
               }
             }
         );
-      }
+      },
+      R"(Called during bunch tracking to apply wakefields for an element.
+Return finished=True to have the callback fully replace the standard wake.
+
+Signature:
+    fn(bunch: BunchStruct, ele: EleStruct, finished: bool) -> bool | None
+
+Return finished, or None to leave unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -338,7 +413,12 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
               }
             }
         );
-      }
+      },
+      R"(Called during Runge-Kutta / time tracking when a particle hits the chamber
+wall, at longitudinal position `s`.
+
+Signature:
+    fn(orb: CoordStruct, ele: EleStruct, s: float) -> None)"
   );
 
   m.attr("hooks") = nb::cast(BmadHooks{});

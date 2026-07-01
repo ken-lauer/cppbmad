@@ -36,7 +36,16 @@ struct TaoHooks {
 } // namespace
 
 void Pybmad::init_tao_hooks(nb::module_ &m) {
-  nb::class_<TaoHooks> cls(m, "TaoHooks", "Registry of Tao hook callbacks.");
+  nb::class_<TaoHooks> cls(
+      m,
+      "TaoHooks",
+      "Registry of Tao hook callbacks.\n\n"
+      "Assign a callable to a property to install a hook, assign None to clear it, "
+      "and read the property to get the current callback (or None). Proxy arguments "
+      "are live, non-owning views valid only for the duration of the call; do not "
+      "stash them. Exceptions raised in a callback are reported and swallowed (they "
+      "never propagate into Fortran)."
+  );
 
   cls.def_prop_rw(
       "lattice_calc",
@@ -57,7 +66,13 @@ void Pybmad::init_tao_hooks(nb::module_ &m) {
             return calc_ok;
           }
         });
-      }
+      },
+      R"(Called in place of Tao's standard lattice calculation.
+
+Signature:
+    fn(calc_ok: bool) -> bool | None
+
+Return calc_ok, or None to leave it unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -79,7 +94,13 @@ void Pybmad::init_tao_hooks(nb::module_ &m) {
             return abort;
           }
         });
-      }
+      },
+      R"(Called by Tao to run a custom optimizer step.
+
+Signature:
+    fn(abort: bool) -> bool | None
+
+Return abort (True to stop optimizing), or None to leave it unchanged.)"
   );
 
   cls.def_prop_rw(
@@ -100,7 +121,12 @@ void Pybmad::init_tao_hooks(nb::module_ &m) {
             report_error(e);
           }
         });
-      }
+      },
+      R"(Called while evaluating the merit function to adjust a variable's contribution.
+`var` is a live proxy -- mutate it to affect the merit calculation.
+
+Signature:
+    fn(i_uni: int, j_var: int, var: TaoVarStruct) -> None)"
   );
 
   cls.def_prop_rw(
@@ -124,7 +150,15 @@ void Pybmad::init_tao_hooks(nb::module_ &m) {
               }
             }
         );
-      }
+      },
+      R"(Called while evaluating the merit function to adjust a datum's contribution.
+`datum` is a live proxy -- mutate it to affect the merit calculation.
+
+Signature:
+    fn(i_uni: int, j_data: int, datum: TaoDataStruct, valid_value_set: bool)
+       -> bool | None
+
+Return valid_value_set, or None to leave it unchanged.)"
   );
 
   m.attr("hooks") = nb::cast(TaoHooks{});
