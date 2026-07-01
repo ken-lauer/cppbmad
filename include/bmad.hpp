@@ -6,6 +6,5 @@
 #include "bmad/generated/proxy.hpp"
 #include "bmad/generated/to_string.hpp"
 #include "bmad/routines.hpp"
-#include "bmad/tao_index.hpp"
 #include "bmad/to_string.hpp"
 #include "bmad/types.hpp"

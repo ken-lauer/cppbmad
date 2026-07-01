@@ -75,7 +75,6 @@ target_sources(${LIBNAME} PRIVATE
   src/generated/bsim_routines.cpp
   src/generated/tao_routines.cpp
   src/generated/to_string.cpp
-  src/tao_index.cpp
   src/proxy_base.cpp
   src/to_string.cpp
 )
