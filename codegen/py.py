@@ -830,6 +830,10 @@ def _generate_main_module_file(
         // Routine submodules (one per C++ namespace)
         {newline.join(f"    {s}" for s in submodule_decls)}
 
+        // Hand-written submodule bindings
+        init_tao_hooks(m_tao);
+        init_bmad_hooks(m_bmad);
+
         // Routine initializers
         {newline.join(f"    {s}" for s in routine_inits)}
     """).strip()

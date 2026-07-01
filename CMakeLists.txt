@@ -51,6 +51,9 @@ add_library(${LIBNAME} SHARED
   src/generated/tao_routines.f90
   src/generated/bsim_routines.f90
   src/tao_proxy_helpers.f90
+  src/hooks/hook_helpers.f90
+  src/hooks/tao_hooks.f90
+  src/hooks/bmad_hooks.f90
   src/test_struct_defs.f90
   src/tests/routines/cppbmad_tests.f90
   src/generated/cppbmad_test_routines.f90
@@ -59,6 +62,8 @@ add_library(${LIBNAME} SHARED
   src/extra/ele_misalignments.f90
 
   src/common_structs.cpp
+  src/hooks/tao_hooks.cpp
+  src/hooks/bmad_hooks.cpp
 )
 
 set(CPPBMAD_DOLLAR_OK_SOURCES
