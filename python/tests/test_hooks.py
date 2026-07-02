@@ -9,6 +9,10 @@ track through a simple lattice are exercised here. ``wall_hit_handler_custom``
 from __future__ import annotations
 
 import logging
+import os
+import pathlib
+import subprocess
+import sys
 
 import pybmad
 import pytest
@@ -230,3 +234,27 @@ def test_track1_bunch_fires(lat):
     assert centroid is None
     assert bunch_track is None  # optional arguments absent
     assert n_particle == 1
+
+
+def test_installed_hook_survives_interpreter_shutdown():
+    """Regression: a hook left installed at exit must not crash the process during
+    interpreter finalization.
+
+    The Python callable is captured by an owning ``nb::object`` in a C++ file-static
+    ``std::function``; if not released before ``Py_Finalize`` it segfaults at exit.
+    Installing a hook is enough to arm this -- no tracking is needed.
+    """
+    code = (
+        "import pybmad\n"
+        "from pybmad import bmad, tao\n"
+        "bmad.hooks.track1_postprocess = lambda *a: None\n"
+        "tao.hooks.lattice_calc = lambda ok: None\n"
+    )
+    pybmad_parent = str(pathlib.Path(pybmad.__file__).resolve().parents[1])
+    proc = subprocess.run(
+        [sys.executable, "-c", code],
+        env={**os.environ, "PYTHONPATH": pybmad_parent},
+        capture_output=True,
+        check=False,
+    )
+    assert proc.returncode == 0, proc.stderr.decode()

@@ -446,4 +446,21 @@ Signature:
   );
 
   m.attr("hooks") = nb::cast(BmadHooks{});
+
+  // A Python callable installed as a hook is captured by an owning nb::object in a
+  // C++ file-static std::function (the Bmad::g_* slots). If a hook is still
+  // installed at interpreter shutdown it would be released during C++ static
+  // destruction -- after Py_Finalize -- and decref'ing it crashes. Clear every
+  // slot via atexit, which runs while the interpreter is still alive.
+  nb::module_::import_("atexit").attr("register")(nb::cpp_function([]() {
+    Bmad::clear_time_runge_kutta_periodic_kick_hook();
+    Bmad::clear_track1_bunch_hook();
+    Bmad::clear_track1_custom_hook();
+    Bmad::clear_track_many_hook();
+    Bmad::clear_track1_postprocess_hook();
+    Bmad::clear_track1_preprocess_hook();
+    Bmad::clear_track1_spin_custom_hook();
+    Bmad::clear_track1_wake_hook();
+    Bmad::clear_wall_hit_handler_custom_hook();
+  }));
 }

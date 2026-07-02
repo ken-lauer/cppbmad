@@ -175,4 +175,14 @@ Return valid_value_set, or None to leave it unchanged.)"
   );
 
   m.attr("hooks") = nb::cast(TaoHooks{});
+
+  // See bmad_hooks.cpp: clear the C++-side std::function slots (which capture an
+  // owning nb::object) via atexit, before the interpreter finalizes, so leaving a
+  // hook installed does not crash at process shutdown.
+  nb::module_::import_("atexit").attr("register")(nb::cpp_function([]() {
+    Tao::clear_lattice_calc_hook();
+    Tao::clear_optimizer_hook();
+    Tao::clear_merit_var_hook();
+    Tao::clear_merit_data_hook();
+  }));
 }
