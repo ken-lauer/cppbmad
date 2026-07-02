@@ -25,6 +25,7 @@ from .arg import Argument, CodegenStructure
 from .context import CodegenConfig, ConfigContext, UpstreamInfo, config_context
 from .docs import generate_docs
 from .enums import get_enum_code, parse_all_enums
+from .hooks import generate_hooks
 from .paths import (
     CODEGEN_ROOT,
     CPPBMAD_INCLUDE,
@@ -274,6 +275,8 @@ def generate(
             logger.warning(f"Removing stale file from previous generation: {fn}")
             fn.unlink()
 
+    hook_files = generate_hooks(ctx.params, ctx.routines_by_name)
+
     file_and_contents = [
         (PYBMAD_ROOT / "docs" / "source" / "coverage.html", ctx.report_html),
         (CPPBMAD_INCLUDE / "bmad" / "generated" / "enums.hpp", enum_code),
@@ -281,6 +284,7 @@ def generate(
         (CPPBMAD_SRC / "generated" / "to_string.cpp", to_string_code),
         *list(ctx.proxy_files.items()),
         *list(ctx.routine_files.items()),
+        *list(hook_files.items()),
     ]
 
     if pybmad:

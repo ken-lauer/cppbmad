@@ -51,6 +51,7 @@ add_library(${LIBNAME} SHARED
   src/generated/tao_routines.f90
   src/generated/bsim_routines.f90
   src/tao_proxy_helpers.f90
+  src/generated/hook_interfaces.f90
   src/hooks/hook_helpers.f90
   src/hooks/tao_hooks.f90
   src/hooks/bmad_hooks.f90

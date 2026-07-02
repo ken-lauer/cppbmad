@@ -20,26 +20,9 @@ using Bmad::make_fortran_proxy;
 using Bmad::hooks::log_hook_error;
 using Bmad::hooks::make_coord_view;
 
-// --- Fortran registration entry points -------------------------------------
-extern "C" {
-void bmad_hook_register_time_runge_kutta_periodic_kick(
-    void (*)(void *, void *, void *, double *, int *)
-);
-void bmad_hook_register_track1_bunch(
-    void (*)(void *, void *, int *, void *, int, int, std::size_t, void *, int *, void *)
-);
-void bmad_hook_register_track1_custom(void (*)(void *, void *, void *, int *, int *, void *));
-void bmad_hook_register_track_many(
-    void (*)(int *, void *, void *, int, int, std::size_t, int, int, int, void *, void *)
-);
-void bmad_hook_register_track1_postprocess(void (*)(void *, void *, void *, void *));
-void bmad_hook_register_track1_preprocess(
-    void (*)(void *, void *, void *, int *, int *, int *, void *)
-);
-void bmad_hook_register_track1_spin_custom(void (*)(void *, void *, void *, void *, int *, void *));
-void bmad_hook_register_track1_wake(void (*)(void *, void *, int *));
-void bmad_hook_register_wall_hit_handler_custom(void (*)(void *, void *, double));
-}
+// The extern "C" bmad_hook_register_* prototypes are generated into
+// bmad/generated/hook_abi.hpp (included via bmad/bmad_hooks.hpp) alongside the
+// Fortran ci_* interfaces, so the two ABI descriptions cannot drift.
 
 namespace {
 

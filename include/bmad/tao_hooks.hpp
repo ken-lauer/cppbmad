@@ -11,29 +11,12 @@
 //
 // This layer has no nanobind dependency and is part of libcppbmad. The Python
 // bindings (python/src/tao_hooks.cpp) build on top of it.
+//
+// The `std::function` typedefs (e.g. Tao::MeritDataHook) and the set_<x>_hook /
+// clear_<x>_hook declarations are generated from the [[hooks]] spec
+// (codegen/hooks.py) into bmad/generated/hook_abi.hpp, together with the
+// matching Fortran ci_<name> interfaces, so the C ABI cannot drift. The Tao
+// hooks receive the current value and return the new one (calc_ok / abort /
+// valid_value_set).
 
-#include <functional>
-
-#include "bmad/generated/proxy.hpp"
-
-namespace Tao {
-
-// Receives the current value; returns the new `calc_ok` / `abort` value.
-using LatticeCalcHook = std::function<bool(bool)>;
-void set_lattice_calc_hook(LatticeCalcHook fn);
-void clear_lattice_calc_hook();
-
-using OptimizerHook = std::function<bool(bool)>;
-void set_optimizer_hook(OptimizerHook fn);
-void clear_optimizer_hook();
-
-using MeritVarHook = std::function<void(int, int, Bmad::TaoVarStruct &)>;
-void set_merit_var_hook(MeritVarHook fn);
-void clear_merit_var_hook();
-
-// Receives (i_uni, j_data, datum, current valid_value_set); returns new value.
-using MeritDataHook = std::function<bool(int, int, Bmad::TaoDataStruct &, bool)>;
-void set_merit_data_hook(MeritDataHook fn);
-void clear_merit_data_hook();
-
-} // namespace Tao
+#include "bmad/generated/hook_abi.hpp"

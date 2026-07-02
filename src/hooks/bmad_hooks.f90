@@ -25,6 +25,7 @@ module bmad_c_hook_interface
   use, intrinsic :: iso_c_binding
   use bmad_routine_interface
   use hook_helpers
+  use hook_c_interfaces
 
   implicit none
 
@@ -50,7 +51,7 @@ contains
     type(lat_param_struct) :: param
     real(rp) :: stop_time
     integer :: init_needed
-    procedure(ci_ppp_di), pointer :: cproc
+    procedure(ci_time_runge_kutta_periodic_kick), pointer :: cproc
     real(c_double) :: cst
     integer(c_int) :: cin
     call c_f_procpointer(cb_time_rk, cproc)
@@ -232,7 +233,7 @@ contains
     type(coord_struct) :: start_orb, end_orb
     type(ele_struct) :: ele
     type(lat_param_struct) :: param
-    procedure(ci_p4), pointer :: cproc
+    procedure(ci_track1_postprocess), pointer :: cproc
     call c_f_procpointer(cb_track1_postprocess, cproc)
     call cproc(cloc_coord(start_orb), cloc_ele(ele), cloc_lat_param(param), cloc_coord(end_orb))
   end subroutine
@@ -301,7 +302,7 @@ contains
     type(lat_param_struct) :: param
     logical :: err_flag
     logical, optional :: make_quaternion
-    procedure(ci_track1_spin), pointer :: cproc
+    procedure(ci_track1_spin_custom), pointer :: cproc
     integer(c_int) :: ce
     integer(c_int), target :: cmq
     type(c_ptr) :: mqp
@@ -339,7 +340,7 @@ contains
     type(bunch_struct) :: bunch
     type(ele_struct) :: ele
     logical :: finished
-    procedure(ci_pp_i), pointer :: cproc
+    procedure(ci_track1_wake), pointer :: cproc
     integer(c_int) :: cf
     call c_f_procpointer(cb_track1_wake, cproc)
     ! finished is a hook output; default it to false (see tramp_track1_bunch).
@@ -366,7 +367,7 @@ contains
     type(coord_struct) :: orb
     type(ele_struct) :: ele
     real(rp) :: s
-    procedure(ci_pp_d), pointer :: cproc
+    procedure(ci_wall_hit_handler_custom), pointer :: cproc
     call c_f_procpointer(cb_wall_hit, cproc)
     call cproc(cloc_coord(orb), cloc_ele(ele), real(s, c_double))
   end subroutine

@@ -616,3 +616,81 @@ python_top_level = false
 source_paths = ["src/extra"]
 skip_files = []
 skip_procedures = []
+
+# ---------------------------------------------------------------------------
+# Callback hooks: the C ABI contract (Fortran ci_<name> interface + C++ extern
+# "C" register prototype + std::function typedef + set/clear decls) is generated
+# so the two language descriptions of the ABI cannot drift. Each hook's argument
+# list is read from the parsed `def_name` abstract interface (tracking upstream
+# Bmad); only the metadata below is specified by hand. The trampolines
+# (src/hooks/*) and nanobind marshalling (python/src/*_hooks.cpp) remain
+# hand-written but are compiler-checked against the generated interfaces.
+#
+# `def_name` defaults to "<name>_def" (bmad) / "tao_hook_<name>_def" (tao).
+# `inout_scalars` lists real/integer args the hook writes back -- the Bmad
+# interfaces omit `intent`, so these cannot be inferred. `returns` names args the
+# C++ callback returns by value (instead of writing through a by-ref out-param);
+# with none, the callback returns void. See codegen/hooks.py.
+# ---------------------------------------------------------------------------
+
+[[hooks]]
+project = "bmad"
+name = "time_runge_kutta_periodic_kick"
+def_name = "time_runge_kutta_periodic_kick_hook_def"
+type_name = "TimeRungeKuttaHook"
+inout_scalars = ["stop_time", "init_needed"]
+
+[[hooks]]
+project = "bmad"
+name = "track1_bunch"
+def_name = "track1_bunch_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "track1_custom"
+
+[[hooks]]
+project = "bmad"
+name = "track_many"
+def_name = "track_many_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "track1_postprocess"
+
+[[hooks]]
+project = "bmad"
+name = "track1_preprocess"
+
+[[hooks]]
+project = "bmad"
+name = "track1_spin_custom"
+
+[[hooks]]
+project = "bmad"
+name = "track1_wake"
+def_name = "track1_wake_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "wall_hit_handler_custom"
+type_name = "WallHitHook"
+
+[[hooks]]
+project = "tao"
+name = "lattice_calc"
+returns = ["calc_ok"]
+
+[[hooks]]
+project = "tao"
+name = "optimizer"
+returns = ["abort"]
+
+[[hooks]]
+project = "tao"
+name = "merit_var"
+
+[[hooks]]
+project = "tao"
+name = "merit_data"
+returns = ["valid_value_set"]

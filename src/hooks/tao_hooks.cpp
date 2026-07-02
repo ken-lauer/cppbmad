@@ -18,13 +18,9 @@
 using Bmad::make_fortran_proxy;
 using Bmad::hooks::log_hook_error;
 
-// --- Fortran registration entry points -------------------------------------
-extern "C" {
-void tao_hook_register_lattice_calc(void (*)(int *));
-void tao_hook_register_optimizer(void (*)(int *));
-void tao_hook_register_merit_var(void (*)(int, int, void *));
-void tao_hook_register_merit_data(void (*)(int, int, void *, int *));
-}
+// The extern "C" tao_hook_register_* prototypes are generated into
+// bmad/generated/hook_abi.hpp (included via bmad/tao_hooks.hpp) alongside the
+// Fortran ci_* interfaces, so the two ABI descriptions cannot drift.
 
 namespace {
 

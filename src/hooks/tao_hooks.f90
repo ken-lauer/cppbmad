@@ -20,6 +20,7 @@ module tao_c_hook_interface
   use bmad
   use tao_interface
   use hook_helpers
+  use hook_c_interfaces
 
   implicit none
 
@@ -32,7 +33,7 @@ contains
 
   subroutine tramp_lattice_calc(calc_ok)
     logical :: calc_ok
-    procedure(ci_i), pointer :: cproc
+    procedure(ci_lattice_calc), pointer :: cproc
     integer(c_int) :: cok
     call c_f_procpointer(cb_lattice_calc, cproc)
     cok = merge(1_c_int, 0_c_int, calc_ok)
@@ -52,7 +53,7 @@ contains
 
   subroutine tramp_optimizer(abort)
     logical :: abort
-    procedure(ci_i), pointer :: cproc
+    procedure(ci_optimizer), pointer :: cproc
     integer(c_int) :: cabort
     call c_f_procpointer(cb_optimizer, cproc)
     ! abort is a hook output; Bmad passes it uninitialized, so default it to false --
@@ -76,7 +77,7 @@ contains
   subroutine tramp_merit_var(i_uni, j_var, var)
     integer, intent(in) :: i_uni, j_var
     type(tao_var_struct) :: var
-    procedure(ci_iip), pointer :: cproc
+    procedure(ci_merit_var), pointer :: cproc
     call c_f_procpointer(cb_merit_var, cproc)
     call cproc(int(i_uni, c_int), int(j_var, c_int), cloc_tao_var(var))
   end subroutine
@@ -95,7 +96,7 @@ contains
     integer, intent(in) :: i_uni, j_data
     type(tao_data_struct) :: data
     logical :: valid_value_set
-    procedure(ci_iipi), pointer :: cproc
+    procedure(ci_merit_data), pointer :: cproc
     integer(c_int) :: cvalid
     call c_f_procpointer(cb_merit_data, cproc)
     cvalid = merge(1_c_int, 0_c_int, valid_value_set)

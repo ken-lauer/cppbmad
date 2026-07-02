@@ -57,6 +57,48 @@ class RoutineSettings(pydantic.BaseModel):
         return pathlib.Path(self.cpp_output_filename).with_suffix(".hpp").name
 
 
+class HookSpec(pydantic.BaseModel):
+    """A single Bmad/Tao callback hook whose C ABI contract is generated.
+
+    The argument list (names, types, structs, optionality, array-ness) is taken
+    from the parsed ``<def_routine_name>`` abstract interface -- not hand-copied
+    -- so it tracks upstream Bmad. Only the non-derivable metadata lives here:
+    the interface name, the C++ type alias, which args the callback returns by
+    value (``returns``), and any numeric out-parameters (``inout_scalars``).
+    Upstream Bmad omits ``intent`` on the hook interfaces, so the parser reports
+    every scalar as ``in``: logicals are treated as by-reference out-parameters
+    unless named in ``returns``.
+
+    Generates the Fortran ``ci_<name>`` interface and the C++ ``extern "C"``
+    register prototype (which must agree byte-for-byte) plus the
+    ``std::function`` typedef and set/clear declarations. The trampolines and
+    nanobind marshalling stay hand-written but are compiler-checked against these.
+    """
+
+    project: str  # "bmad" or "tao" -- selects the C++ namespace
+    name: str  # full hook name, e.g. "track1_wake"
+    type_name: str = ""  # C++ std::function alias; default snake_to_camel(name) + "Hook"
+    def_name: str = ""  # parsed abstract-interface name; default below
+    inout_scalars: list[str] = []  # real/integer args the hook writes (cross by reference)
+    returns: list[
+        str
+    ] = []  # args the C++ callback returns by value (default: none -> void, out-params by ref)
+
+    @property
+    def cpp_namespace(self) -> str:
+        return {"bmad": "Bmad", "tao": "Tao"}[self.project]
+
+    @property
+    def register_c_name(self) -> str:
+        return f"{self.project}_hook_register_{self.name}"
+
+    @property
+    def def_routine_name(self) -> str:
+        if self.def_name:
+            return self.def_name
+        return f"tao_hook_{self.name}_def" if self.project == "tao" else f"{self.name}_def"
+
+
 @dataclass
 class UpstreamInfo:
     """Git version info for the upstream Bmad source."""
@@ -97,6 +139,7 @@ class CodegenConfig(pydantic.BaseModel):
     upstream_source_url: str = ""
     projects: list[ProjectSettings] = []
     routines: list[RoutineSettings] = []
+    hooks: list[HookSpec] = []
     enum_filenames: list[NormalizedPath] = []
     python_imports: dict[str, list[str]] = {}
     python_module_name: str = "_pybmad"
