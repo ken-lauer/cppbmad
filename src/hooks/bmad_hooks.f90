@@ -89,8 +89,11 @@ contains
     type(c_ptr) :: cdata, dirp, btp
     integer(c_int), target :: cdir
     call c_f_procpointer(cb_track1_bunch, cproc)
-    cerr = merge(1_c_int, 0_c_int, err)
-    cfin = merge(1_c_int, 0_c_int, finished)
+    ! err/finished are hook outputs (Bmad may pass them uninitialized). Default them
+    ! to false so a callback returning None (leave unchanged) observes safely rather
+    ! than inheriting an uninitialized value that aborts/replaces the tracking.
+    cerr = 0
+    cfin = 0
     cdata = c_null_ptr
     clb = 0
     cub = -1
@@ -143,8 +146,9 @@ contains
     integer(c_int) :: ce, cf
     type(c_ptr) :: tp
     call c_f_procpointer(cb_track1_custom, cproc)
-    ce = merge(1_c_int, 0_c_int, err_flag)
-    cf = merge(1_c_int, 0_c_int, finished)
+    ! err_flag/finished are hook outputs; default them to false (see tramp_track1_bunch).
+    ce = 0
+    cf = 0
     if (present(track)) then
       tp = cloc_track(track)
     else
@@ -181,7 +185,8 @@ contains
     type(c_ptr) :: odata, ixbp, tsp
     integer(c_int), target :: cixb, cts
     call c_f_procpointer(cb_track_many, cproc)
-    cfin = merge(1_c_int, 0_c_int, finished)
+    ! finished is a hook output; default it to false (see tramp_track1_bunch).
+    cfin = 0
     olb = lbound(orbit, 1)
     oub = ubound(orbit, 1)
     if (size(orbit) > 0) then
@@ -257,9 +262,13 @@ contains
     integer(c_int) :: ce, cf, cr
     type(c_ptr) :: tp
     call c_f_procpointer(cb_track1_preprocess, cproc)
-    ce = merge(1_c_int, 0_c_int, err_flag)
-    cf = merge(1_c_int, 0_c_int, finished)
-    cr = merge(1_c_int, 0_c_int, radiation_included)
+    ! err_flag/finished/radiation_included are hook outputs; Bmad passes err_flag
+    ! uninitialized here, so default them to false (see tramp_track1_bunch). Without
+    ! this, an observer returning None inherits a garbage err_flag and track1 aborts
+    ! before tracking the element (and before track1_postprocess).
+    ce = 0
+    cf = 0
+    cr = 0
     if (present(track)) then
       tp = cloc_track(track)
     else
@@ -297,7 +306,9 @@ contains
     integer(c_int), target :: cmq
     type(c_ptr) :: mqp
     call c_f_procpointer(cb_track1_spin_custom, cproc)
-    ce = merge(1_c_int, 0_c_int, err_flag)
+    ! err_flag is a hook output; default it to false (see tramp_track1_bunch).
+    ! make_quaternion is an input the hook reads, so keep its incoming value.
+    ce = 0
     if (present(make_quaternion)) then
       cmq = merge(1_c_int, 0_c_int, make_quaternion)
       mqp = c_loc(cmq)
@@ -331,7 +342,8 @@ contains
     procedure(ci_pp_i), pointer :: cproc
     integer(c_int) :: cf
     call c_f_procpointer(cb_track1_wake, cproc)
-    cf = merge(1_c_int, 0_c_int, finished)
+    ! finished is a hook output; default it to false (see tramp_track1_bunch).
+    cf = 0
     call cproc(cloc_bunch(bunch), cloc_ele(ele), cf)
     finished = (cf /= 0)
   end subroutine

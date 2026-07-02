@@ -55,7 +55,10 @@ contains
     procedure(ci_i), pointer :: cproc
     integer(c_int) :: cabort
     call c_f_procpointer(cb_optimizer, cproc)
-    cabort = merge(1_c_int, 0_c_int, abort)
+    ! abort is a hook output; Bmad passes it uninitialized, so default it to false --
+    ! a callback returning None then leaves the optimizer running rather than
+    ! inheriting a garbage abort flag.
+    cabort = 0
     call cproc(cabort)
     abort = (cabort /= 0)
   end subroutine
