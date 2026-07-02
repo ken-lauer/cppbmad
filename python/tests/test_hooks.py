@@ -34,10 +34,17 @@ ALL_HOOKS = (
 
 @pytest.fixture(autouse=True)
 def clear_hooks():
-    """Guarantee every hook is cleared after each test (they are global state)."""
+    """Restore global state (hooks + ``bmad_com``) after each test.
+
+    Hooks and ``bmad_com`` are process-global singletons, so a test that installs
+    a hook or flips e.g. ``spin_tracking_on`` would otherwise leak into every
+    later test.
+    """
+    spin_tracking_on = pybmad.get_bmad_com().spin_tracking_on
     yield
     for name in ALL_HOOKS:
         setattr(bmad.hooks, name, None)
+    pybmad.get_bmad_com().spin_tracking_on = spin_tracking_on
 
 
 @pytest.fixture

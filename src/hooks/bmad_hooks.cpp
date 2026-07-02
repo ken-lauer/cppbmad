@@ -91,6 +91,7 @@ extern "C" void tramp_track1_bunch(
     *finished = f ? 1 : 0;
   } catch (...) {
     log_hook_error("track1_bunch");
+    *err = 1;
   }
 }
 
@@ -122,6 +123,7 @@ extern "C" void tramp_track1_custom(
     *finished = f ? 1 : 0;
   } catch (...) {
     log_hook_error("track1_custom");
+    *err_flag = 1;
   }
 }
 
@@ -236,6 +238,7 @@ extern "C" void tramp_track1_spin_custom(
       *mq_i = mq_storage ? 1 : 0;
   } catch (...) {
     log_hook_error("track1_spin_custom");
+    *err_flag = 1;
   }
 }
 

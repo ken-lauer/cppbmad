@@ -82,6 +82,8 @@ void Pybmad::init_bmad_hooks(nb::module_ &m) {
             }
           } catch (nb::python_error &e) {
             report_error(e);
+          } catch (const std::exception &e) {
+            report_error("time_runge_kutta_periodic_kick", e);
           }
         });
       },
@@ -126,6 +128,10 @@ Return ``(stop_time, init_needed)`` to update them, or None to leave unchanged.)
             }
           } catch (nb::python_error &e) {
             report_error(e);
+            err = true;
+          } catch (const std::exception &e) {
+            report_error("track1_bunch", e);
+            err = true;
           }
         });
       },
@@ -170,6 +176,10 @@ Return ``(err, finished)``, or None to leave unchanged.)"
             }
           } catch (nb::python_error &e) {
             report_error(e);
+            err_flag = true;
+          } catch (const std::exception &e) {
+            report_error("track1_custom", e);
+            err_flag = true;
           }
         });
       },
@@ -215,6 +225,8 @@ Return ``(err_flag, finished)``, or None to leave unchanged.)"
               finished = nb::cast<bool>(r);
           } catch (nb::python_error &e) {
             report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track_many", e);
           }
         });
       },
@@ -250,6 +262,8 @@ Signature:
             fn(ref(start_orb), ref(ele), ref(param), ref(end_orb));
           } catch (nb::python_error &e) {
             report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track1_postprocess", e);
           }
         });
       },
@@ -299,6 +313,8 @@ Signature:
             }
           } catch (nb::python_error &e) {
             report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track1_preprocess", e);
           }
         });
       },
@@ -348,6 +364,10 @@ Return ``(err_flag, finished, radiation_included)``, or None to leave unchanged.
             }
           } catch (nb::python_error &e) {
             report_error(e);
+            err_flag = true;
+          } catch (const std::exception &e) {
+            report_error("track1_spin_custom", e);
+            err_flag = true;
           }
         });
       },
@@ -380,6 +400,8 @@ Return err_flag, or ``(err_flag, make_quaternion)``, or None to leave unchanged.
                   finished = nb::cast<bool>(r);
               } catch (nb::python_error &e) {
                 report_error(e);
+              } catch (const std::exception &e) {
+                report_error("track1_wake", e);
               }
             }
         );
@@ -410,6 +432,8 @@ Return finished, or None to leave unchanged.)"
                 fn(ref(orb), ref(ele), s);
               } catch (nb::python_error &e) {
                 report_error(e);
+              } catch (const std::exception &e) {
+                report_error("wall_hit_handler_custom", e);
               }
             }
         );

@@ -19,7 +19,6 @@
 
 #include "pybmad/hook_util.hpp"
 
-using Pybmad::hooks::obj_to_bool;
 using Pybmad::hooks::ref;
 using Pybmad::hooks::report_error;
 
@@ -60,9 +59,13 @@ void Pybmad::init_tao_hooks(nb::module_ &m) {
         Tao::set_lattice_calc_hook([fn](bool calc_ok) -> bool {
           nb::gil_scoped_acquire acq;
           try {
-            return obj_to_bool(fn(calc_ok));
+            nb::object r = fn(calc_ok);
+            return r.is_none() ? calc_ok : nb::cast<bool>(r);
           } catch (nb::python_error &e) {
             report_error(e);
+            return calc_ok;
+          } catch (const std::exception &e) {
+            report_error("lattice_calc", e);
             return calc_ok;
           }
         });
@@ -88,9 +91,13 @@ Return calc_ok, or None to leave it unchanged.)"
         Tao::set_optimizer_hook([fn](bool abort) -> bool {
           nb::gil_scoped_acquire acq;
           try {
-            return obj_to_bool(fn(abort));
+            nb::object r = fn(abort);
+            return r.is_none() ? abort : nb::cast<bool>(r);
           } catch (nb::python_error &e) {
             report_error(e);
+            return abort;
+          } catch (const std::exception &e) {
+            report_error("optimizer", e);
             return abort;
           }
         });
@@ -119,6 +126,8 @@ Return abort (True to stop optimizing), or None to leave it unchanged.)"
             fn(i_uni, j_var, ref(var));
           } catch (nb::python_error &e) {
             report_error(e);
+          } catch (const std::exception &e) {
+            report_error("merit_var", e);
           }
         });
       },
@@ -143,9 +152,13 @@ Signature:
             [fn](int i_uni, int j_data, Bmad::TaoDataStruct &datum, bool valid_value_set) -> bool {
               nb::gil_scoped_acquire acq;
               try {
-                return obj_to_bool(fn(i_uni, j_data, ref(datum), valid_value_set));
+                nb::object r = fn(i_uni, j_data, ref(datum), valid_value_set);
+                return r.is_none() ? valid_value_set : nb::cast<bool>(r);
               } catch (nb::python_error &e) {
                 report_error(e);
+                return valid_value_set;
+              } catch (const std::exception &e) {
+                report_error("merit_data", e);
                 return valid_value_set;
               }
             }

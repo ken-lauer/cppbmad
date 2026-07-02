@@ -8,7 +8,8 @@ namespace nb = nanobind;
 
 namespace Pybmad {
 
-// Registers `tao.set_<x>_hook` / `tao.clear_<x>_hook` on the given (tao) module.
+// Binds the `tao.hooks` registry (a TaoHooks instance whose properties install
+// or clear each Tao hook) onto the given (tao) module.
 void init_tao_hooks(nb::module_ &m);
 
 }; // namespace Pybmad
