@@ -29,8 +29,6 @@ def particle_track(
         raise RuntimeError(f"Failed to parse lattice: {lat_file}")
     lat = parsed.lat
 
-    branch = lat.branch[0]
-
     # Set bmad_com parameters (after parsing, so these override lattice settings).
     bmad_com = pybmad.get_bmad_com()
     bmad_com.radiation_damping_on = True
