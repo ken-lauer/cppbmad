@@ -212,6 +212,7 @@ add_executable(cppbmad_tests
   src/tests/test_enums.cpp
   src/tests/test_to_string.cpp
   src/tests/test_exceptions.cpp
+  src/tests/test_hooks.cpp
 )
 target_include_directories(cppbmad_tests PRIVATE
   "./include"
@@ -224,6 +225,14 @@ set_property(TARGET cppbmad_tests PROPERTY CXX_STANDARD 17)
 # Enable CTest
 enable_testing()
 add_test(NAME cppbmad_tests COMMAND cppbmad_tests)
+
+foreach(_example simple_track_all hook_track_all)
+  add_executable(${_example} src/examples/${_example}.cpp)
+  target_include_directories(${_example} PRIVATE "./include")
+  target_link_directories(${_example} PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
+  target_link_libraries(${_example} PRIVATE ${LIBNAME})
+  set_property(TARGET ${_example} PROPERTY CXX_STANDARD 17)
+endforeach()
 
 # Python / pybmad
 find_package(Python 3.10 COMPONENTS Interpreter Development.Module QUIET)

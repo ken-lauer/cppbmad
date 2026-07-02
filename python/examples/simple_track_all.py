@@ -42,8 +42,6 @@ def particle_track(
 
     pybmad.init_coord(orbit[0], start_vec, branch.ele[0], pybmad.DOWNSTREAM_END, spin=start_spin)
 
-    pybmad.lattice_bookkeeper(lat)
-
     result = pybmad.track_all(lat, orbit, ix_branch)
     track_state = result.track_state
 
