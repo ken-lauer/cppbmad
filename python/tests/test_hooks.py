@@ -152,6 +152,42 @@ def test_track1_preprocess_fires_and_optional_track_is_none(lat):
     assert seen[0][1] is None  # `track` argument was absent
 
 
+def test_track1_preprocess_none_return_does_not_abort_tracking(lat):
+    branch = lat.branch[0]
+    orbit = make_orbit(lat)
+    pre, post = [], []
+
+    def preprocess(
+        start_orb: pybmad.CoordStruct,
+        ele: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        err_flag: bool,
+        finished: bool,
+        radiation_included: bool,
+        track: pybmad.TrackStruct | None,
+    ) -> None:
+        logger.info(
+            f"\npre: {start_orb=} {ele=} {param=} {err_flag=} {finished=} {radiation_included=} {track=}"
+        )
+        pre.append(ele.name)
+
+    def postprocess(
+        start_orb: pybmad.CoordStruct,
+        ele: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        end_orb: pybmad.CoordStruct,
+    ) -> None:
+        logger.info(f"\npost: {start_orb=} {ele=} {param=} {end_orb=}")
+        post.append(ele.name)
+
+    bmad.hooks.track1_preprocess = preprocess
+    bmad.hooks.track1_postprocess = postprocess
+    pybmad.track1(orbit[0], branch.ele[1], branch.param)
+
+    assert pre == [branch.ele[1].name]
+    assert post == [branch.ele[1].name]
+
+
 def test_track1_custom_replaces_tracking_and_writes_back(lat):
     """A custom-tracking element routes track1 through the hook; the orbit proxy
     is inout, so mutating it propagates back into the track1 result."""
