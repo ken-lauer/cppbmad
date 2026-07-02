@@ -226,7 +226,7 @@ set_property(TARGET cppbmad_tests PROPERTY CXX_STANDARD 17)
 enable_testing()
 add_test(NAME cppbmad_tests COMMAND cppbmad_tests)
 
-foreach(_example simple_track_all hook_track_all)
+foreach(_example simple_track_all hook_track_all csr)
   add_executable(${_example} src/examples/${_example}.cpp)
   target_include_directories(${_example} PRIVATE "./include")
   target_link_directories(${_example} PRIVATE "$ENV{ACC_ROOT_DIR}/${BUILD_TYPE}/lib")
