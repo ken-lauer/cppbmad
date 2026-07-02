@@ -112,6 +112,7 @@ def test_assignment_readback_and_none_clears(lat):
     assert len(calls) == 1
 
 
+@pytest.mark.filterwarnings("ignore::pytest.PytestUnraisableExceptionWarning")
 def test_exception_in_hook_does_not_crash(lat):
     """A raising callback is reported, not propagated into Fortran."""
     branch = lat.branch[0]
