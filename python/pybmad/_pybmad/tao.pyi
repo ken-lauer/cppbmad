@@ -6,6 +6,72 @@ from typing import overload
 import _pybmad
 
 
+class TaoHooks:
+    """
+    Registry of Tao hook callbacks.
+
+    Assign a callable to a property to install a hook, assign None to clear it, and read the property to get the current callback (or None). Proxy arguments are live, non-owning views valid only for the duration of the call; do not stash them. Exceptions raised in a callback are reported and swallowed (they never propagate into Fortran).
+    """
+
+    @property
+    def lattice_calc(self) -> object:
+        """
+        Called in place of Tao's standard lattice calculation.
+
+        Signature:
+            fn(calc_ok: bool) -> bool | None
+
+        Return calc_ok, or None to leave it unchanged.
+        """
+
+    @lattice_calc.setter
+    def lattice_calc(self, arg: object | None) -> None: ...
+
+    @property
+    def optimizer(self) -> object:
+        """
+        Called by Tao to run a custom optimizer step.
+
+        Signature:
+            fn(abort: bool) -> bool | None
+
+        Return abort (True to stop optimizing), or None to leave it unchanged.
+        """
+
+    @optimizer.setter
+    def optimizer(self, arg: object | None) -> None: ...
+
+    @property
+    def merit_var(self) -> object:
+        """
+        Called while evaluating the merit function to adjust a variable's contribution.
+        `var` is a live proxy -- mutate it to affect the merit calculation.
+
+        Signature:
+            fn(i_uni: int, j_var: int, var: TaoVarStruct) -> None
+        """
+
+    @merit_var.setter
+    def merit_var(self, arg: object | None) -> None: ...
+
+    @property
+    def merit_data(self) -> object:
+        """
+        Called while evaluating the merit function to adjust a datum's contribution.
+        `datum` is a live proxy -- mutate it to affect the merit calculation.
+
+        Signature:
+            fn(i_uni: int, j_data: int, datum: TaoDataStruct, valid_value_set: bool)
+               -> bool | None
+
+        Return valid_value_set, or None to leave it unchanged.
+        """
+
+    @merit_data.setter
+    def merit_data(self, arg: object | None) -> None: ...
+
+hooks: TaoHooks = ...
+
 def integrate_max(ix_start: int, ix_ele: int, datum_value: float, ix_m: int, branch: _pybmad.BranchStruct, vec: _pybmad.RealArray1D, datum: _pybmad.TaoDataStruct) -> None:
     """
     Wrapper for Fortran routine integrate_max

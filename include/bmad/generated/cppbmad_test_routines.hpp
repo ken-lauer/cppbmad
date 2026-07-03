@@ -226,24 +226,6 @@ CppBmadTest::TestLogicalScalar test_logical_scalar(
     std::optional<bool> val_in_opt = std::nullopt,
     optional_ref<bool> val_inout_opt = std::nullopt
 );
-extern "C" void fortran_test_real16_array(
-    void *arr_in /* 1D_ALLOC_real16 in */,
-    void *arr_inout /* 1D_ALLOC_real16 inout */,
-    void *arr_out /* 1D_ALLOC_real16 out */,
-    Bmad::array_descriptor_t &opt_status /* 1D_NOT_integer out */,
-    void *arr_in_opt /* 1D_ALLOC_real16 in */,
-    void *arr_inout_opt /* 1D_ALLOC_real16 inout */
-);
-struct TestReal16Array {
-  Real16Alloc1D arr_out;
-  FixedArray1D<Int, 2> opt_status;
-};
-CppBmadTest::TestReal16Array test_real16_array(
-    Real16Alloc1D &arr_in,
-    Real16Alloc1D &arr_inout,
-    optional_ref<Real16Alloc1D> arr_in_opt = std::nullopt,
-    optional_ref<Real16Alloc1D> arr_inout_opt = std::nullopt
-);
 extern "C" void fortran_test_real16_scalar(
     long double &val_in /* 0D_NOT_real16 in */,
     long double &val_inout /* 0D_NOT_real16 inout */,

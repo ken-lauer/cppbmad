@@ -10,8 +10,8 @@ use bmad_struct_proxy_mod
 use cppbmad_test_mod, only: test_bunch_struct_array, test_bunch_struct_scalar, &
     test_character_array, test_character_scalar, test_complex_array, test_complex_scalar, &
     test_integer8_array, test_integer8_scalar, test_integer_array, test_integer_scalar, &
-    test_logical_array, test_logical_scalar, test_real16_array, test_real16_scalar, &
-    test_real_array, test_real_scalar
+    test_logical_array, test_logical_scalar, test_real16_scalar, test_real_array, &
+    test_real_scalar
 
 
 use, intrinsic :: iso_c_binding
@@ -887,54 +887,6 @@ subroutine fortran_test_logical_scalar (val_in, val_inout, val_out, opt_status, 
     f_val_inout_opt_ptr = f_val_inout_opt_native
   else
     ! f_val_inout_opt unset
-  endif
-end subroutine
-subroutine fortran_test_real16_array (arr_in, arr_inout, arr_out, opt_status, arr_in_opt, &
-    arr_inout_opt) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), intent(in), value :: arr_in
-  type(real16_container_alloc), pointer :: f_arr_in
-  type(c_ptr), intent(in), value :: arr_in_opt
-  type(real16_container_alloc), pointer :: f_arr_in_opt
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: arr_out
-  type(real16_container_alloc), pointer :: f_arr_out
-  type(array_descriptor_t), intent(in) :: opt_status
-  integer :: f_opt_status(2)
-  integer(c_int), pointer :: f_opt_status_ptr(:)
-  ! ** Inout parameters **
-  type(c_ptr), intent(in), value :: arr_inout
-  type(real16_container_alloc), pointer :: f_arr_inout
-  type(c_ptr), intent(in), value :: arr_inout_opt
-  type(real16_container_alloc), pointer :: f_arr_inout_opt
-  ! ** End of parameters **
-  !! container general array (1D_ALLOC_real16)
-  if (c_associated(arr_in))   call c_f_pointer(arr_in, f_arr_in)
-  !! container general array (1D_ALLOC_real16)
-  if (c_associated(arr_inout))   call c_f_pointer(arr_inout, f_arr_inout)
-  !! container general array (1D_ALLOC_real16)
-  if (c_associated(arr_out))   call c_f_pointer(arr_out, f_arr_out)
-  !! general array (1D_NOT_integer) out
-  if (c_associated(opt_status%data_ptr)) then
-    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
-    ! output-only
-  else
-    f_opt_status_ptr => null()
-  endif
-  !! container general array (1D_ALLOC_real16)
-  if (c_associated(arr_in_opt))   call c_f_pointer(arr_in_opt, f_arr_in_opt)
-  !! container general array (1D_ALLOC_real16)
-  if (c_associated(arr_inout_opt))   call c_f_pointer(arr_inout_opt, f_arr_inout_opt)
-  call test_real16_array(f_arr_in%data, f_arr_inout%data, f_arr_out%data, f_opt_status, &
-      f_arr_in_opt%data, f_arr_inout_opt%data)
-
-  ! out: f_opt_status 1D_NOT_integer
-  if (c_associated(opt_status%data_ptr)) then
-    call c_f_pointer(opt_status%data_ptr, f_opt_status_ptr, [opt_status%dims(1)])
-    f_opt_status_ptr = f_opt_status(:)
   endif
 end subroutine
 subroutine fortran_test_real16_scalar (val_in, val_inout, val_out, opt_status, val_in_opt, &

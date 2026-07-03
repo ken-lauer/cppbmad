@@ -1142,10 +1142,6 @@ module bmad_struct_proxy_mod
     real(rp), allocatable :: data(:)
   end type real_container_alloc
 
-  type :: real16_container_alloc
-    real(qp), allocatable :: data(:)
-  end type real16_container_alloc
-
   type :: integer_container_alloc
     integer, allocatable :: data(:)
   end type integer_container_alloc
@@ -1214,72 +1210,6 @@ contains
     logical(c_bool), intent(out) :: is_allocated
 
     type(real_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) then
-       is_allocated = .false.
-       return
-    endif
-
-    call c_f_pointer(container_ptr, ctr)
-
-    if (allocated(ctr%data)) then
-      is_allocated = .true.
-      bounds(1) = int(lbound(ctr%data, 1), c_int)
-      bounds(2) = int(ubound(ctr%data, 1), c_int)
-      d_ptr = c_loc(ctr%data(bounds(1)))
-    else
-      is_allocated = .false.
-      d_ptr = c_null_ptr
-      bounds = 0
-    endif
-  end subroutine
-            
-
-  function allocate_real16_container() result(ptr) bind(c)
-    implicit none
-    type(c_ptr) :: ptr
-    type(real16_container_alloc), pointer :: ctr
-    allocate(ctr)
-    ptr = c_loc(ctr)
-  end function
-
-  subroutine deallocate_real16_container(ptr) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    type(real16_container_alloc), pointer :: ctr
-    if (c_associated(ptr)) then
-      call c_f_pointer(ptr, ctr)
-      deallocate(ctr)
-    end if
-  end subroutine
-
-  subroutine reallocate_real16_container_data(container_ptr, lbound_, n) bind(c)
-    implicit none
-    type(c_ptr), value :: container_ptr
-    integer(c_int), value :: lbound_
-    integer(c_size_t), value :: n
-    type(real16_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) return
-    call c_f_pointer(container_ptr, ctr)
-
-    if (n == 0) then
-      if (allocated(ctr%data)) deallocate(ctr%data)
-    else
-      if (allocated(ctr%data)) deallocate(ctr%data)
-      allocate(ctr%data(lbound_:lbound_ + n - 1))
-    end if
-  end subroutine
-
-  subroutine access_real16_container(container_ptr, d_ptr, bounds, is_allocated) bind(c)
-    use iso_c_binding
-    implicit none
-    type(c_ptr), value :: container_ptr
-    type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-
-    type(real16_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.

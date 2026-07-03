@@ -9,8 +9,10 @@
 #include <string>
 
 #include "bmad/json.hpp"
+#include "pybmad/bmad_hooks.hpp"
 #include "pybmad/common_structs.hpp"
 #include "pybmad/generated/init.hpp"
+#include "pybmad/tao_hooks.hpp"
 #include "pybmad/util.hpp"
 
 using namespace Bmad;
@@ -1265,6 +1267,10 @@ NB_MODULE(_pybmad, m) {
   auto m_simutils = m.def_submodule("simutils", "SimUtils routines");
   auto m_tao = m.def_submodule("tao", "Tao routines");
   auto m_bsim = m.def_submodule("bsim", "bsim routines");
+
+  // Hand-written submodule bindings
+  init_tao_hooks(m_tao);
+  init_bmad_hooks(m_bmad);
 
   // Routine initializers
   init_Bmad_routines_a(m_bmad);

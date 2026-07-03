@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260625.0.1"
+__version__ = "20260625.0.1+39.ge33cf85"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -19,6 +19,7 @@ from ._pybmad import ComplexArray1D
 from ._pybmad import Int8Array1D
 from ._pybmad import IntArray1D
 from ._pybmad import RealArray1D
+from ._pybmad.bmad import hooks
 # Classes
 from ._pybmad import AcKickerFreqStruct
 from ._pybmad import AcKickerFreqStructArray1D
@@ -2927,6 +2928,7 @@ __all__ = [
     "Int8Array1D",
     "IntArray1D",
     "RealArray1D",
+    "hooks",
     # Classes
     "AcKickerFreqStruct",
     "AcKickerFreqStructArray1D",

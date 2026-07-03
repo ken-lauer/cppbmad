@@ -651,55 +651,6 @@ opt_status : 1D array of int (shape: 2)
 val_inout_opt : bool, optional
 )"""
   );
-  nb::class_<CppBmadTest::TestReal16Array>(m, "TestReal16Array", "test_real16_array return type")
-      .def_ro("arr_out", &CppBmadTest::TestReal16Array::arr_out)
-      .def_ro("opt_status", &CppBmadTest::TestReal16Array::opt_status)
-      .def("__len__", [](const CppBmadTest::TestReal16Array &) { return 2; })
-      .def("__getitem__", [](const CppBmadTest::TestReal16Array &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.arr_out);
-        if (i == 1)
-          return nb::cast(s.opt_status);
-        throw nb::index_error();
-      });
-  m.def(
-      "test_real16_array",
-      [](Real16Alloc1D &arr_in,
-         Real16Alloc1D &arr_inout,
-         Real16Alloc1D *arr_in_opt,
-         Real16Alloc1D *arr_inout_opt) {
-        auto fn = static_cast<
-            CppBmadTest::
-                TestReal16Array (*)(Real16Alloc1D &, Real16Alloc1D &, optional_ref<Real16Alloc1D>, optional_ref<Real16Alloc1D>)>(
-            &CppBmadTest::test_real16_array
-        );
-        return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
-      },
-      nb::arg("arr_in"),
-      nb::arg("arr_inout"),
-      nb::arg("arr_in_opt") = nb::none(),
-      nb::arg("arr_inout_opt") = nb::none(),
-      R"""(Wrapper for Fortran routine test_real16_array
-
-Parameters
-----------
-arr_in : 1D array of float
-
-arr_inout : 1D array of float
-
-arr_in_opt : 1D array of float, optional
-
-arr_inout_opt : 1D array of float, optional
-
-Returns
--------
-arr_out : 1D array of float
-
-opt_status : 1D array of int (shape: 2)
-)"""
-  );
   nb::class_<PyTestReal16Scalar>(m, "TestReal16Scalar", "test_real16_scalar return type")
       .def_ro("val_out", &PyTestReal16Scalar::val_out)
       .def_ro("opt_status", &PyTestReal16Scalar::opt_status)

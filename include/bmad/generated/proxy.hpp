@@ -5120,11 +5120,6 @@ void reallocate_real_container_data(void *, int, size_t) noexcept;
 void deallocate_real_container(void *) noexcept;
 void access_real_container(const void *handle, void **data, int *bounds, bool *alloc);
 
-void *allocate_real16_container();
-void reallocate_real16_container_data(void *, int, size_t) noexcept;
-void deallocate_real16_container(void *) noexcept;
-void access_real16_container(const void *handle, void **data, int *bounds, bool *alloc);
-
 void *allocate_integer_container();
 void reallocate_integer_container_data(void *, int, size_t) noexcept;
 void deallocate_integer_container(void *) noexcept;
@@ -9304,28 +9299,6 @@ struct RealAlloc1D : public FAlloc1D<double> {
             access_real_container
         ) {}
   RealAlloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
-      : Base(handle, realloc, access) {}
-};
-
-struct Real16Alloc1D : public FAlloc1D<long double> {
-  using Base = FAlloc1D<long double>;
-  using Base::Base;
-  Real16Alloc1D()
-      : Base(
-            allocate_real16_container,
-            deallocate_real16_container,
-            reallocate_real16_container_data,
-            access_real16_container
-        ) {}
-  Real16Alloc1D(int n)
-      : Base(
-            n,
-            allocate_real16_container,
-            deallocate_real16_container,
-            reallocate_real16_container_data,
-            access_real16_container
-        ) {}
-  Real16Alloc1D(void *handle, ReallocFuncPtr realloc, PrimAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
