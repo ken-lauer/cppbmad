@@ -5869,14 +5869,6 @@ std::string to_string(const CppBmadTest::TestLogicalScalar &self) {
        std::pair{"opt_status", to_string(self.opt_status)}}
   );
 }
-std::string to_string(const CppBmadTest::TestReal16Array &self) {
-  return repr(
-      &self,
-      "CppBmadTest::TestReal16Array",
-      {std::pair{"arr_out", to_string(self.arr_out)},
-       std::pair{"opt_status", to_string(self.opt_status)}}
-  );
-}
 std::string to_string(const CppBmadTest::TestReal16Scalar &self) {
   return repr(
       &self,

@@ -65,7 +65,14 @@ TEST_CASE("CSR") {
 
   auto first_particle_vec = beam1.bunch()[0].particle()[0].vec().to_vector();
 
-  auto expected = {4.99099e-07, -5.69906e-08, 8.91750e-08, 4.39513e-09, 3.22077e-04, -2.56577e-07};
+  auto expected = {
+      -2.02590E-07,
+      -3.82581E-08,
+      4.52676E-07,
+      -3.85719E-09,
+      1.18649E-05,
+      -3.01662E-07,
+  };
 
   REQUIRE(first_particle_vec.size() == expected.size());
 

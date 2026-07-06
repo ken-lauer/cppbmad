@@ -480,38 +480,6 @@ CppBmadTest::TestLogicalScalar CppBmadTest::test_logical_scalar(
   );
   return TestLogicalScalar{_val_out, _opt_status};
 }
-CppBmadTest::TestReal16Array CppBmadTest::test_real16_array(
-    Real16Alloc1D &arr_in,
-    Real16Alloc1D &arr_inout,
-    optional_ref<Real16Alloc1D> arr_in_opt,
-    optional_ref<Real16Alloc1D> arr_inout_opt
-) {
-  // intent=in allocatable general array
-  // intent=inout allocatable general array
-  // intent=out allocatable general array
-  auto arr_out{Real16Alloc1D()};
-  // opt_status: out NOT (CppWrapperGeneralArgumentArray) (['2'])
-  Bmad::array_descriptor_t _opt_status_desc;
-  _opt_status_desc.rank = 1;
-  FixedArray1D<Int, 2> _opt_status;
-  _opt_status_desc.data_ptr = _opt_status.data();
-  _opt_status_desc.dims[0] = _opt_status.size();
-  // intent=in allocatable general array
-  auto *_arr_in_opt =
-      arr_in_opt.has_value() ? arr_in_opt->get().get_fortran_ptr() : nullptr; // input, optional
-  // intent=inout allocatable general array
-  auto *_arr_inout_opt = arr_inout_opt.has_value() ? arr_inout_opt->get().get_fortran_ptr()
-                                                   : nullptr; // input, optional
-  fortran_test_real16_array(
-      /* void* */ arr_in.get_fortran_ptr(),
-      /* void* */ arr_inout.get_fortran_ptr(),
-      /* void* */ arr_out.get_fortran_ptr(),
-      /* Bmad::array_descriptor_t& */ _opt_status_desc,
-      /* void* */ _arr_in_opt,
-      /* void* */ _arr_inout_opt
-  );
-  return TestReal16Array{std::move(arr_out), _opt_status};
-}
 CppBmadTest::TestReal16Scalar CppBmadTest::test_real16_scalar(
     long double val_in,
     long double &val_inout,

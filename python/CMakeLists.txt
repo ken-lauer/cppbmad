@@ -12,6 +12,8 @@ nanobind_add_module(${PYBIND_LIBNAME}
     ${GENERATED_SOURCES}
     src/arrays.cpp
     src/common_structs.cpp
+    src/tao_hooks.cpp
+    src/bmad_hooks.cpp
 )
 
 # Include directories

@@ -531,7 +531,6 @@ std::string to_string(const CppBmadTest::TestIntegerArray &self);
 std::string to_string(const CppBmadTest::TestIntegerScalar &self);
 std::string to_string(const CppBmadTest::TestLogicalArray &self);
 std::string to_string(const CppBmadTest::TestLogicalScalar &self);
-std::string to_string(const CppBmadTest::TestReal16Array &self);
 std::string to_string(const CppBmadTest::TestReal16Scalar &self);
 std::string to_string(const CppBmadTest::TestRealArray &self);
 std::string to_string(const CppBmadTest::TestRealScalar &self);

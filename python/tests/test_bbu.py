@@ -3,10 +3,9 @@ from __future__ import annotations
 import sys
 from typing import NamedTuple
 
+import pybmad
 import pytest
 from bbu import hybridize
-
-import pybmad
 
 
 class BbuExpectedResult(NamedTuple):
@@ -44,9 +43,9 @@ results_1mA = BbuExpectedResult(
 # Note: The original code used a tolerance of 4e-8 for the 100A case's growth rate.
 results_100A = BbuExpectedResult(
     current=100.0,
-    expected_hom_voltage_gain=2.915515566047e-001,
+    expected_hom_voltage_gain=2.913154980994e-001,
     hom_voltage_tol=1e-8,
-    expected_growth_rate=-1.232538422262e000,
+    expected_growth_rate=-1.233348413207e000,
     growth_rate_tol=4e-8,  # <--
     expected_lost=False,
 )

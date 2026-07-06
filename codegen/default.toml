@@ -351,32 +351,18 @@ include_header_files = []
 
 skips = [
   "xraylib",
-  "xraylib_dummy",
-  "fortran_tao_evaluate_expression_old",
 
   # Optionally compiled in
   "fft_interface_mod",
 
-  # Abstract hooks
-  "check_aperture_limit_custom_def",
-  "distance_to_aperture_custom_def",
-  "ele_geometry_hook_def",
-  "init_custom_def",
-  "lat_make_mat6_hook_def",
-  "make_mat6_custom_def",
-  "radiation_integrals_custom_def",
-  "time_runge_kutta_periodic_kick_hook_def",
-  "track1_bunch_hook_def",
-  "track1_custom_def",
-  "track1_postprocess_def",
-  "track1_preprocess_def",
-  "track1_spin_custom_def",
-  "track1_wake_hook_def",
-  "track_many_hook_def",
-  "wall_hit_handler_custom_def",
-  "em_field_custom_def",
+  # Optionally compiled in
+  ".*_priv$",
+
+  # Abstract hooks (handled specially)
   ".*hook.*def",
   ".*custom.*def",
+  "track1_preprocess_def",
+  "track1_postprocess_def",
 
   # pointer handling
   "deallocate_ele_array_pointers",
@@ -403,8 +389,8 @@ skips = [
   "xsif_parser",
 
   # string array handling bug
-  "set_tune_via_group_knobs",
-  "spin_concat_linear_maps",
+  # "set_tune_via_group_knobs",
+  # "spin_concat_linear_maps",
 
   # sim_utils:
   # sized output
@@ -426,37 +412,10 @@ skips = [
   "tao_spin_polarization_calc",
   "tao_spin_matrix_calc",
 
-  # Tao hook functions
-  "tao_hook_branch_calc_def",
-  "tao_hook_command_def",
-  "tao_hook_curve_s_pt_def",
-  "tao_hook_data_sanity_check_def",
-  "tao_hook_draw_floor_plan_def",
-  "tao_hook_draw_graph_def",
-  "tao_hook_evaluate_a_datum_def",
-  "tao_hook_graph_postsetup_def",
-  "tao_hook_graph_setup_def",
-  "tao_hook_init1_def",
-  "tao_hook_init2_def",
-  "tao_hook_init_beam_def",
-  "tao_hook_init_data_def",
-  "tao_hook_init_global_def",
-  "tao_hook_init_lattice_post_parse_def",
-  "tao_hook_init_plotting_def",
-  "tao_hook_init_read_lattice_info_def",
-  "tao_hook_init_var_def",
-  "tao_hook_lattice_calc_def",
-  "tao_hook_merit_data_def",
-  "tao_hook_merit_var_def",
-  "tao_hook_optimizer_def",
-  "tao_hook_parse_command_args_def",
-  "tao_hook_plot_setup_def",
-  "tao_hook_post_process_data_def",
-  "tao_hook_show_cmd_def",
-
 ]
 
-python_imports = [
+[python_imports]
+"_pybmad" = [
   "get_bmad_com",
   "get_space_charge_com",
   "get_super_universe",
@@ -474,6 +433,8 @@ python_imports = [
   "IntArray1D",
   "RealArray1D",
 ]
+
+"_pybmad.bmad" = ["hooks"]
 
 # Translations on C++ side to avoid clash with reserved words
 [c_side_name_translation]
@@ -613,3 +574,81 @@ python_top_level = false
 source_paths = ["src/extra"]
 skip_files = []
 skip_procedures = []
+
+# ---------------------------------------------------------------------------
+# Callback hooks: the C ABI contract (Fortran ci_<name> interface + C++ extern
+# "C" register prototype + std::function typedef + set/clear decls) is generated
+# so the two language descriptions of the ABI cannot drift. Each hook's argument
+# list is read from the parsed `def_name` abstract interface (tracking upstream
+# Bmad); only the metadata below is specified by hand. The trampolines
+# (src/hooks/*) and nanobind marshalling (python/src/*_hooks.cpp) remain
+# hand-written but are compiler-checked against the generated interfaces.
+#
+# `def_name` defaults to "<name>_def" (bmad) / "tao_hook_<name>_def" (tao).
+# `inout_scalars` lists real/integer args the hook writes back -- the Bmad
+# interfaces omit `intent`, so these cannot be inferred. `returns` names args the
+# C++ callback returns by value (instead of writing through a by-ref out-param);
+# with none, the callback returns void. See codegen/hooks.py.
+# ---------------------------------------------------------------------------
+
+[[hooks]]
+project = "bmad"
+name = "time_runge_kutta_periodic_kick"
+def_name = "time_runge_kutta_periodic_kick_hook_def"
+type_name = "TimeRungeKuttaHook"
+inout_scalars = ["stop_time", "init_needed"]
+
+[[hooks]]
+project = "bmad"
+name = "track1_bunch"
+def_name = "track1_bunch_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "track1_custom"
+
+[[hooks]]
+project = "bmad"
+name = "track_many"
+def_name = "track_many_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "track1_postprocess"
+
+[[hooks]]
+project = "bmad"
+name = "track1_preprocess"
+
+[[hooks]]
+project = "bmad"
+name = "track1_spin_custom"
+
+[[hooks]]
+project = "bmad"
+name = "track1_wake"
+def_name = "track1_wake_hook_def"
+
+[[hooks]]
+project = "bmad"
+name = "wall_hit_handler_custom"
+type_name = "WallHitHook"
+
+[[hooks]]
+project = "tao"
+name = "lattice_calc"
+returns = ["calc_ok"]
+
+[[hooks]]
+project = "tao"
+name = "optimizer"
+returns = ["abort"]
+
+[[hooks]]
+project = "tao"
+name = "merit_var"
+
+[[hooks]]
+project = "tao"
+name = "merit_data"
+returns = ["valid_value_set"]

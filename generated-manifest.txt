@@ -7,6 +7,7 @@ include/bmad/generated/bsim_routines.hpp
 include/bmad/generated/cppbmad_extra_routines.hpp
 include/bmad/generated/cppbmad_test_routines.hpp
 include/bmad/generated/enums.hpp
+include/bmad/generated/hook_abi.hpp
 include/bmad/generated/proxy.hpp
 include/bmad/generated/sim_utils_routines.hpp
 include/bmad/generated/tao_routines.hpp
@@ -204,6 +205,7 @@ src/generated/cppbmad_extra_routines.cpp
 src/generated/cppbmad_extra_routines.f90
 src/generated/cppbmad_test_routines.cpp
 src/generated/cppbmad_test_routines.f90
+src/generated/hook_interfaces.f90
 src/generated/proxy.cpp
 src/generated/proxy_mod.f90
 src/generated/sim_utils_routines.cpp

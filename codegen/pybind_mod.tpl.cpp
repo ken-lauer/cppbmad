@@ -9,8 +9,10 @@
 #include <string>
 
 #include "bmad/json.hpp"
+#include "pybmad/bmad_hooks.hpp"
 #include "pybmad/common_structs.hpp"
 #include "pybmad/generated/init.hpp"
+#include "pybmad/tao_hooks.hpp"
 #include "pybmad/util.hpp"
 
 using namespace Bmad;

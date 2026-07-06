@@ -8,6 +8,7 @@ use_directory_urls: false
 nav:
   - Home: index.md
   - Examples: examples.md
+  - Hooks: hooks.md
   - API Reference:
       - Index: api/index.md
       - Bmad: api/bmad.md

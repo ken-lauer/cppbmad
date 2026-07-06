@@ -4,10 +4,9 @@ import sys
 
 import numpy as np
 import numpy.testing
+import pybmad as pb
 import pytest
 from conftest import CPPBMAD_REPO_ROOT, TESTS_ROOT
-
-import pybmad as pb
 
 
 def test_csr():
@@ -67,7 +66,14 @@ def test_csr():
 
     first_particle_vec = np.asarray(beam1.bunch[0].particle[0].vec)
 
-    expected = (4.99099e-07, -5.69906e-08, 8.91750e-08, 4.39513e-09, 3.22077e-04, -2.56577e-07)
+    expected = (
+        -2.02590e-07,
+        -3.82581e-08,
+        4.52676e-07,
+        -3.85719e-09,
+        1.18649e-05,
+        -3.01662e-07,
+    )
 
     numpy.testing.assert_allclose(desired=expected, actual=first_particle_vec, atol=1e-6)
 

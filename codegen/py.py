@@ -830,6 +830,10 @@ def _generate_main_module_file(
         // Routine submodules (one per C++ namespace)
         {newline.join(f"    {s}" for s in submodule_decls)}
 
+        // Hand-written submodule bindings
+        init_tao_hooks(m_tao);
+        init_bmad_hooks(m_bmad);
+
         // Routine initializers
         {newline.join(f"    {s}" for s in routine_inits)}
     """).strip()
@@ -935,8 +939,9 @@ def generate_init_dot_py(
 
     imports.append("# Globals")
     all_.append("    # Globals")
-    for name in config.python_imports:
-        add_name(name)
+    for mod, names in config.python_imports.items():
+        for name in names:
+            add_name(name, mod=mod)
 
     imports.append("# Classes")
     all_.append("    # Classes")

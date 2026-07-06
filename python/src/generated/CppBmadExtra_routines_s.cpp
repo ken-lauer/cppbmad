@@ -39,22 +39,22 @@ ele : EleStruct
     As an output, ele: Values stored and bookkeeping flags marked stale
 
 x_offset : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the x-offset.
 
 y_offset : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the y-offset.
 
 z_offset : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the z-offset.
 
 x_pitch : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the horizontal pitch.
 
 y_pitch : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the vertical pitch.
 
 tilt : float
-    Values to write.  Tilt is 'roll' only for bends.
+    the tilt (or roll, for bends).
 
 check_free : bool, optional
     Default .true.. If true, validate slot layout and attribute freeness before any write.

@@ -461,40 +461,6 @@ def test_logical_scalar(val_in: bool, val_inout: bool, val_in_opt: bool | None =
     val_inout_opt : bool, optional
     """
 
-class TestReal16Array:
-    """test_real16_array return type"""
-
-    @property
-    def arr_out(self) -> _pybmad.Real16Alloc1D: ...
-
-    @property
-    def opt_status(self) -> list[int]: ...
-
-    def __len__(self) -> int: ...
-
-    def __getitem__(self, arg: int, /) -> object: ...
-
-def test_real16_array(arr_in: _pybmad.Real16Alloc1D, arr_inout: _pybmad.Real16Alloc1D, arr_in_opt: _pybmad.Real16Alloc1D | None = None, arr_inout_opt: _pybmad.Real16Alloc1D | None = None) -> TestReal16Array:
-    """
-    Wrapper for Fortran routine test_real16_array
-
-    Parameters
-    ----------
-    arr_in : 1D array of float
-
-    arr_inout : 1D array of float
-
-    arr_in_opt : 1D array of float, optional
-
-    arr_inout_opt : 1D array of float, optional
-
-    Returns
-    -------
-    arr_out : 1D array of float
-
-    opt_status : 1D array of int (shape: 2)
-    """
-
 class TestReal16Scalar:
     """test_real16_scalar return type"""
 

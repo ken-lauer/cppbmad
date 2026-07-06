@@ -57,6 +57,39 @@ class RoutineSettings(pydantic.BaseModel):
         return pathlib.Path(self.cpp_output_filename).with_suffix(".hpp").name
 
 
+class HookSpec(pydantic.BaseModel):
+    """
+    A single Bmad/Tao callback hook whose C ABI contract is generated.
+    """
+
+    # "bmad" or "tao" -- selects the C++ namespace
+    project: str
+    # full hook name, e.g. "track1_wake"
+    name: str
+    # C++ std::function alias; default snake_to_camel(name) + "Hook"
+    type_name: str = ""
+    # parsed abstract-interface name; default below
+    def_name: str = ""
+    # real/integer args the hook writes (cross by reference)
+    inout_scalars: list[str] = []
+    # args the C++ callback returns by value (default: none -> void, out-params by ref)
+    returns: list[str] = []
+
+    @property
+    def cpp_namespace(self) -> str:
+        return {"bmad": "Bmad", "tao": "Tao"}[self.project]
+
+    @property
+    def register_c_name(self) -> str:
+        return f"{self.project}_hook_register_{self.name}"
+
+    @property
+    def def_routine_name(self) -> str:
+        if self.def_name:
+            return self.def_name
+        return f"tao_hook_{self.name}_def" if self.project == "tao" else f"{self.name}_def"
+
+
 @dataclass
 class UpstreamInfo:
     """Git version info for the upstream Bmad source."""
@@ -97,8 +130,9 @@ class CodegenConfig(pydantic.BaseModel):
     upstream_source_url: str = ""
     projects: list[ProjectSettings] = []
     routines: list[RoutineSettings] = []
+    hooks: list[HookSpec] = []
     enum_filenames: list[NormalizedPath] = []
-    python_imports: list[str] = []
+    python_imports: dict[str, list[str]] = {}
     python_module_name: str = "_pybmad"
 
     @classmethod
@@ -106,11 +140,11 @@ class CodegenConfig(pydantic.BaseModel):
         with filename.open("rb") as fp:
             return CodegenConfig.model_validate(tomllib.load(fp))
 
-    def should_skip_routine(self, name: str) -> bool:
+    def should_skip(self, name: str) -> bool:
         if name in self.skips:
             return True
 
-        patterns = [skip for skip in self.skips if "." in skip or "*" in skip]
+        patterns = [skip for skip in self.skips if "." in skip or "*" in skip or "$" in skip]
         return any(re.match(pat, name) for pat in patterns)
 
 

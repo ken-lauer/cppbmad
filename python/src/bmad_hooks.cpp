@@ -1,0 +1,466 @@
+// Hand-written nanobind bindings exposing Bmad's tracking hooks to Python as
+// read/write properties on a singleton holder: `bmad.hooks.<name> = callable`,
+// `bmad.hooks.<name> = None` to clear, and reading `bmad.hooks.<name>` returns
+// the current callable or None.
+//
+// Each property setter wraps the Python callable in a std::function that acquires
+// the GIL, hands the Fortran-owned proxies (and coord-array views) to Python as
+// non-owning references, calls the Python callable, and translates its return
+// value into the hook's out-parameters. Out-parameters are passed to Python by
+// value and written back from the callable's return value:
+//   * a callable that returns None leaves all out-parameters unchanged,
+//   * otherwise it returns the out-parameters in signature order (a tuple when
+//     there is more than one).
+// Optional arguments (absent in Fortran) are passed to Python as None.
+// Python exceptions are caught and reported so they never unwind into Fortran.
+// The proxies/views are borrowed and valid only for the duration of the call.
+
+#include "pybmad/bmad_hooks.hpp"
+
+#include <nanobind/stl/optional.h>
+#include <nanobind/stl/pair.h>
+#include <nanobind/stl/tuple.h>
+
+#include "pybmad/hook_util.hpp"
+
+using Pybmad::hooks::ref;
+using Pybmad::hooks::report_error;
+
+namespace {
+
+// Holds the current Python callable for each hook (for readback via the getter).
+struct BmadHooks {
+  nb::object time_runge_kutta_periodic_kick = nb::none();
+  nb::object track1_bunch = nb::none();
+  nb::object track1_custom = nb::none();
+  nb::object track_many = nb::none();
+  nb::object track1_postprocess = nb::none();
+  nb::object track1_preprocess = nb::none();
+  nb::object track1_spin_custom = nb::none();
+  nb::object track1_wake = nb::none();
+  nb::object wall_hit_handler_custom = nb::none();
+};
+
+} // namespace
+
+void Pybmad::init_bmad_hooks(nb::module_ &m) {
+  nb::class_<BmadHooks> cls(
+      m,
+      "BmadHooks",
+      "Registry of Bmad tracking-hook callbacks.\n\n"
+      "Assign a callable to a property to install a hook, assign None to clear it, "
+      "and read the property to get the current callback (or None). Proxy/array "
+      "arguments are live, non-owning views valid only for the duration of the "
+      "call; do not stash them. Exceptions raised in a callback are reported and "
+      "swallowed (they never propagate into Fortran)."
+  );
+
+  cls.def_prop_rw(
+      "time_runge_kutta_periodic_kick",
+      [](BmadHooks &h) { return h.time_runge_kutta_periodic_kick; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.time_runge_kutta_periodic_kick = fn;
+        if (fn.is_none()) {
+          Bmad::clear_time_runge_kutta_periodic_kick_hook();
+          return;
+        }
+        Bmad::set_time_runge_kutta_periodic_kick_hook([fn](
+                                                          Bmad::CoordStruct &orbit,
+                                                          Bmad::EleStruct &ele,
+                                                          Bmad::LatParamStruct &param,
+                                                          double &stop_time,
+                                                          int &init_needed
+                                                      ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object r = fn(ref(orbit), ref(ele), ref(param), stop_time, init_needed);
+            if (!r.is_none()) {
+              auto t = nb::cast<std::pair<double, int>>(r);
+              stop_time = t.first;
+              init_needed = t.second;
+            }
+          } catch (nb::python_error &e) {
+            report_error(e);
+          } catch (const std::exception &e) {
+            report_error("time_runge_kutta_periodic_kick", e);
+          }
+        });
+      },
+      R"(Called during time Runge-Kutta tracking to apply a periodic (e.g. RF) kick.
+
+Signature:
+    fn(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       stop_time: float, init_needed: int) -> tuple[float, int] | None
+
+Return ``(stop_time, init_needed)`` to update them, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track1_bunch",
+      [](BmadHooks &h) { return h.track1_bunch; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_bunch = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_bunch_hook();
+          return;
+        }
+        Bmad::set_track1_bunch_hook([fn](
+                                        Bmad::BunchStruct &bunch,
+                                        Bmad::EleStruct &ele,
+                                        bool &err,
+                                        Bmad::CoordStructArray1D *centroid,
+                                        int *direction,
+                                        bool &finished,
+                                        Bmad::BunchTrackStruct *bunch_track
+                                    ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object rc = centroid ? ref(*centroid) : nb::none();
+            nb::object rd = direction ? nb::cast(*direction) : nb::none();
+            nb::object rb = bunch_track ? ref(*bunch_track) : nb::none();
+            nb::object r = fn(ref(bunch), ref(ele), err, rc, rd, finished, rb);
+            if (!r.is_none()) {
+              auto t = nb::cast<std::pair<bool, bool>>(r);
+              err = t.first;
+              finished = t.second;
+            }
+          } catch (nb::python_error &e) {
+            report_error(e);
+            err = true;
+          } catch (const std::exception &e) {
+            report_error("track1_bunch", e);
+            err = true;
+          }
+        });
+      },
+      R"(Called by track1_bunch before the standard single-element bunch tracking.
+Return finished=True to have the callback fully replace it.
+
+Signature:
+    fn(bunch: BunchStruct, ele: EleStruct, err: bool,
+       centroid: CoordStructArray1D | None, direction: int | None,
+       finished: bool, bunch_track: BunchTrackStruct | None)
+       -> tuple[bool, bool] | None
+
+Return ``(err, finished)``, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track1_custom",
+      [](BmadHooks &h) { return h.track1_custom; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_custom = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_custom_hook();
+          return;
+        }
+        Bmad::set_track1_custom_hook([fn](
+                                         Bmad::CoordStruct &start_orb,
+                                         Bmad::EleStruct &ele,
+                                         Bmad::LatParamStruct &param,
+                                         bool &err_flag,
+                                         bool &finished,
+                                         Bmad::TrackStruct *track
+                                     ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object rt = track ? ref(*track) : nb::none();
+            nb::object r = fn(ref(start_orb), ref(ele), ref(param), err_flag, finished, rt);
+            if (!r.is_none()) {
+              auto t = nb::cast<std::pair<bool, bool>>(r);
+              err_flag = t.first;
+              finished = t.second;
+            }
+          } catch (nb::python_error &e) {
+            report_error(e);
+            err_flag = true;
+          } catch (const std::exception &e) {
+            report_error("track1_custom", e);
+            err_flag = true;
+          }
+        });
+      },
+      R"(Called by track1 to track an element whose tracking_method is `custom`
+(or a custom element). The callback performs the tracking: the first argument
+is in/out -- mutate it in place to the exit coordinates.
+
+Signature:
+    fn(orbit: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       err_flag: bool, finished: bool, track: TrackStruct | None)
+       -> tuple[bool, bool] | None
+
+Return ``(err_flag, finished)``, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track_many",
+      [](BmadHooks &h) { return h.track_many; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track_many = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track_many_hook();
+          return;
+        }
+        Bmad::set_track_many_hook([fn](
+                                      bool &finished,
+                                      Bmad::LatStruct &lat,
+                                      Bmad::CoordStructArray1D &orbit,
+                                      int ix_start,
+                                      int ix_end,
+                                      int direction,
+                                      int *ix_branch,
+                                      int *track_state
+                                  ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object rib = ix_branch ? nb::cast(*ix_branch) : nb::none();
+            nb::object rts = track_state ? nb::cast(*track_state) : nb::none();
+            nb::object r =
+                fn(finished, ref(lat), ref(orbit), ix_start, ix_end, direction, rib, rts);
+            if (!r.is_none())
+              finished = nb::cast<bool>(r);
+          } catch (nb::python_error &e) {
+            report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track_many", e);
+          }
+        });
+      },
+      R"(Called at the start of track_many (tracking through a range of elements).
+Return finished=True to have the callback fully replace the tracking.
+
+Signature:
+    fn(finished: bool, lat: LatStruct, orbit: CoordStructArray1D,
+       ix_start: int, ix_end: int, direction: int,
+       ix_branch: int | None, track_state: int | None) -> bool | None
+
+`orbit` is a live array view. Return finished, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track1_postprocess",
+      [](BmadHooks &h) { return h.track1_postprocess; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_postprocess = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_postprocess_hook();
+          return;
+        }
+        Bmad::set_track1_postprocess_hook([fn](
+                                              Bmad::CoordStruct &start_orb,
+                                              Bmad::EleStruct &ele,
+                                              Bmad::LatParamStruct &param,
+                                              Bmad::CoordStruct &end_orb
+                                          ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            fn(ref(start_orb), ref(ele), ref(param), ref(end_orb));
+          } catch (nb::python_error &e) {
+            report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track1_postprocess", e);
+          }
+        });
+      },
+      R"(Called after every track1, once an element has been tracked. `end_orb` is
+a live proxy -- mutate it to adjust the exit coordinates.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       end_orb: CoordStruct) -> None)"
+  );
+
+  cls.def_prop_rw(
+      "track1_preprocess",
+      [](BmadHooks &h) { return h.track1_preprocess; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_preprocess = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_preprocess_hook();
+          return;
+        }
+        Bmad::set_track1_preprocess_hook([fn](
+                                             Bmad::CoordStruct &start_orb,
+                                             Bmad::EleStruct &ele,
+                                             Bmad::LatParamStruct &param,
+                                             bool &err_flag,
+                                             bool &finished,
+                                             bool &radiation_included,
+                                             Bmad::TrackStruct *track
+                                         ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object rt = track ? ref(*track) : nb::none();
+            nb::object r =
+                fn(ref(start_orb),
+                   ref(ele),
+                   ref(param),
+                   err_flag,
+                   finished,
+                   radiation_included,
+                   rt);
+            if (!r.is_none()) {
+              auto t = nb::cast<std::tuple<bool, bool, bool>>(r);
+              err_flag = std::get<0>(t);
+              finished = std::get<1>(t);
+              radiation_included = std::get<2>(t);
+            }
+          } catch (nb::python_error &e) {
+            report_error(e);
+          } catch (const std::exception &e) {
+            report_error("track1_preprocess", e);
+          }
+        });
+      },
+      R"(Called at the start of every track1, before the element is tracked.
+Return finished=True to have the callback fully replace the tracking.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       err_flag: bool, finished: bool, radiation_included: bool,
+       track: TrackStruct | None) -> tuple[bool, bool, bool] | None
+
+Return ``(err_flag, finished, radiation_included)``, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track1_spin_custom",
+      [](BmadHooks &h) { return h.track1_spin_custom; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_spin_custom = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_spin_custom_hook();
+          return;
+        }
+        Bmad::set_track1_spin_custom_hook([fn](
+                                              Bmad::CoordStruct &start_orb,
+                                              Bmad::EleStruct &ele,
+                                              Bmad::LatParamStruct &param,
+                                              Bmad::CoordStruct &end_orb,
+                                              bool &err_flag,
+                                              bool *make_quaternion
+                                          ) {
+          nb::gil_scoped_acquire acq;
+          try {
+            nb::object rmq = make_quaternion ? nb::cast(*make_quaternion) : nb::none();
+            nb::object r = fn(ref(start_orb), ref(ele), ref(param), ref(end_orb), err_flag, rmq);
+            if (!r.is_none()) {
+              // Either err_flag alone, or (err_flag, make_quaternion).
+              if (nb::isinstance<nb::tuple>(r)) {
+                auto t = nb::cast<std::pair<bool, bool>>(r);
+                err_flag = t.first;
+                if (make_quaternion)
+                  *make_quaternion = t.second;
+              } else {
+                err_flag = nb::cast<bool>(r);
+              }
+            }
+          } catch (nb::python_error &e) {
+            report_error(e);
+            err_flag = true;
+          } catch (const std::exception &e) {
+            report_error("track1_spin_custom", e);
+            err_flag = true;
+          }
+        });
+      },
+      R"(Called by track1 to track spin when spin_tracking_method is `custom`.
+
+Signature:
+    fn(start_orb: CoordStruct, ele: EleStruct, param: LatParamStruct,
+       end_orb: CoordStruct, err_flag: bool, make_quaternion: bool | None)
+       -> bool | tuple[bool, bool] | None
+
+Return err_flag, or ``(err_flag, make_quaternion)``, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "track1_wake",
+      [](BmadHooks &h) { return h.track1_wake; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.track1_wake = fn;
+        if (fn.is_none()) {
+          Bmad::clear_track1_wake_hook();
+          return;
+        }
+        Bmad::set_track1_wake_hook(
+            [fn](Bmad::BunchStruct &bunch, Bmad::EleStruct &ele, bool &finished) {
+              nb::gil_scoped_acquire acq;
+              try {
+                nb::object r = fn(ref(bunch), ref(ele), finished);
+                if (!r.is_none())
+                  finished = nb::cast<bool>(r);
+              } catch (nb::python_error &e) {
+                report_error(e);
+              } catch (const std::exception &e) {
+                report_error("track1_wake", e);
+              }
+            }
+        );
+      },
+      R"(Called during bunch tracking to apply wakefields for an element.
+Return finished=True to have the callback fully replace the standard wake.
+
+Signature:
+    fn(bunch: BunchStruct, ele: EleStruct, finished: bool) -> bool | None
+
+Return finished, or None to leave unchanged.)"
+  );
+
+  cls.def_prop_rw(
+      "wall_hit_handler_custom",
+      [](BmadHooks &h) { return h.wall_hit_handler_custom; },
+      [](BmadHooks &h, std::optional<nb::object> value) {
+        nb::object fn = value ? *value : nb::none();
+        h.wall_hit_handler_custom = fn;
+        if (fn.is_none()) {
+          Bmad::clear_wall_hit_handler_custom_hook();
+          return;
+        }
+        Bmad::set_wall_hit_handler_custom_hook(
+            [fn](Bmad::CoordStruct &orb, Bmad::EleStruct &ele, double s) {
+              nb::gil_scoped_acquire acq;
+              try {
+                fn(ref(orb), ref(ele), s);
+              } catch (nb::python_error &e) {
+                report_error(e);
+              } catch (const std::exception &e) {
+                report_error("wall_hit_handler_custom", e);
+              }
+            }
+        );
+      },
+      R"(Called during Runge-Kutta / time tracking when a particle hits the chamber
+wall, at longitudinal position `s`.
+
+Signature:
+    fn(orb: CoordStruct, ele: EleStruct, s: float) -> None)"
+  );
+
+  m.attr("hooks") = nb::cast(BmadHooks{});
+
+  // A Python callable installed as a hook is captured by an owning nb::object in a
+  // C++ file-static std::function (the Bmad::g_* slots). If a hook is still
+  // installed at interpreter shutdown it would be released during C++ static
+  // destruction -- after Py_Finalize -- and decref'ing it crashes. Clear every
+  // slot via atexit, which runs while the interpreter is still alive.
+  nb::module_::import_("atexit").attr("register")(nb::cpp_function([]() {
+    Bmad::clear_time_runge_kutta_periodic_kick_hook();
+    Bmad::clear_track1_bunch_hook();
+    Bmad::clear_track1_custom_hook();
+    Bmad::clear_track_many_hook();
+    Bmad::clear_track1_postprocess_hook();
+    Bmad::clear_track1_preprocess_hook();
+    Bmad::clear_track1_spin_custom_hook();
+    Bmad::clear_track1_wake_hook();
+    Bmad::clear_wall_hit_handler_custom_hook();
+  }));
+}

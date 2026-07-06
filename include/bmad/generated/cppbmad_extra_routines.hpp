@@ -10,6 +10,9 @@
 using namespace Bmad;
 
 namespace CppBmadExtra {
+
+// Skipped unusable routine do_pass:
+// - Module name unset
 extern "C" bool fortran_set_ele_misalignments(
     void *ele /* 0D_NOT_type inout */,
     double &x_offset /* 0D_NOT_real in */,
