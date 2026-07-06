@@ -68,7 +68,7 @@ Tao hooks live under `pybmad.tao.hooks`.
     show_root_toc_entry: false
     members_order: source
     show_if_no_docstring: false
-<!-- prettier-ignore-end -->
 
 !!! note
-These bindings are hand-written and maintained (only function prototypes are code-generated). Not all are supported.
+    These bindings are hand-written and maintained (only function prototypes are code-generated). Not all are supported.
+<!-- prettier-ignore-end -->
