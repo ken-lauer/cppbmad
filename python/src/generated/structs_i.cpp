@@ -62,8 +62,9 @@ void init_interval1_coef_struct(nb::module_ &m, nb::class_<Interval1CoefStruct> 
       .def(
           "__hash__",
           [](const Interval1CoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -113,8 +114,9 @@ void init_ibs_lifetime_struct(nb::module_ &m, nb::class_<IbsLifetimeStruct> &cls
       .def(
           "__hash__",
           [](const IbsLifetimeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -160,8 +162,9 @@ void init_ibs_maxratio_struct(nb::module_ &m, nb::class_<IbsMaxratioStruct> &cls
       .def(
           "__hash__",
           [](const IbsMaxratioStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -268,8 +271,9 @@ void init_ibs_sim_param_struct(nb::module_ &m, nb::class_<IbsSimParamStruct> &cl
       .def(
           "__hash__",
           [](const IbsSimParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -312,8 +316,9 @@ void init_ibs_struct(nb::module_ &m, nb::class_<IbsStruct> &cls) {
       .def(
           "__hash__",
           [](const IbsStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

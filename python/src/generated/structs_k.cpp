@@ -53,8 +53,9 @@ void init_kv_beam_init_struct(nb::module_ &m, nb::class_<KvBeamInitStruct> &cls)
       .def(
           "__hash__",
           [](const KvBeamInitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

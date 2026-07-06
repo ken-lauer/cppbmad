@@ -32,16 +32,14 @@ bool CppBmadExtra::set_ele_misalignments(
     _check_free = nullptr;
   }
   bool _ok{};
-  fortran_set_ele_misalignments(
-      /* void* */ ele.get_fortran_ptr(),
-      /* double& */ x_offset,
-      /* double& */ y_offset,
-      /* double& */ z_offset,
-      /* double& */ x_pitch,
-      /* double& */ y_pitch,
-      /* double& */ tilt,
-      /* bool* */ _check_free,
-      /* bool& */ _ok
-  );
+  fortran_set_ele_misalignments(/* void* */ ele.get_fortran_ptr(),
+                                /* double& */ x_offset,
+                                /* double& */ y_offset,
+                                /* double& */ z_offset,
+                                /* double& */ x_pitch,
+                                /* double& */ y_pitch,
+                                /* double& */ tilt,
+                                /* bool* */ _check_free,
+                                /* bool& */ _ok);
   return _ok;
 }

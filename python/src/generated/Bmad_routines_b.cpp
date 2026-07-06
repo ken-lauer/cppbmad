@@ -157,11 +157,12 @@ beam2 : BeamStruct
   m.def(
       "beam_init_setup",
       [](BeamInitStruct &beam_init_in, EleStruct &ele, int species, NormalModesStruct *modes) {
-        auto fn = static_cast<
-            Bmad::
-                BeamInitSetup (*)(BeamInitStruct &, EleStruct &, int, optional_ref<NormalModesStruct>)>(
-            &Bmad::beam_init_setup
-        );
+        auto fn = static_cast<Bmad::BeamInitSetup (*)(
+            BeamInitStruct &,
+            EleStruct &,
+            int,
+            optional_ref<NormalModesStruct>
+        )>(&Bmad::beam_init_setup);
         return fn(beam_init_in, ele, species, ptr_to_opt_ref(modes));
       },
       nb::arg("beam_init_in"),
@@ -811,10 +812,14 @@ parse_lat : LatStruct, optional
          std::optional<bool> make_mats6,
          std::optional<bool> err_flag,
          LatStruct *parse_lat) {
-        auto fn = static_cast<
-            void (*)(std::string, LatStruct &, std::optional<CoordStructArray1D>, std::optional<bool>, std::optional<bool>, optional_ref<LatStruct>)>(
-            &Bmad::bmad_parser2
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            LatStruct &,
+            std::optional<CoordStructArray1D>,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<LatStruct>
+        )>(&Bmad::bmad_parser2);
         return fn(lat_file, lat, orbit, make_mats6, err_flag, ptr_to_opt_ref(parse_lat));
       },
       nb::arg("lat_file"),
@@ -857,10 +862,14 @@ parse_lat : LatStruct, optional
          bool delim_found,
          ParserEleStruct *pele,
          std::optional<std::string> str_out) {
-        auto fn = static_cast<
-            void (*)(EleStruct &, std::string, std::string, bool, optional_ref<ParserEleStruct>, std::optional<std::string>)>(
-            &Bmad::bmad_parser_string_attribute_set
-        );
+        auto fn = static_cast<void (*)(
+            EleStruct &,
+            std::string,
+            std::string,
+            bool,
+            optional_ref<ParserEleStruct>,
+            std::optional<std::string>
+        )>(&Bmad::bmad_parser_string_attribute_set);
         return fn(ele, attrib_name, delim, delim_found, ptr_to_opt_ref(pele), str_out);
       },
       nb::arg("ele"),

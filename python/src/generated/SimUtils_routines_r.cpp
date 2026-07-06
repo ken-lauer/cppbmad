@@ -33,10 +33,11 @@ get_state : RandomStateStruct, optional
       [](std::optional<std::string> set,
          std::optional<std::string> get,
          RandomStateStruct *ran_state) {
-        auto fn = static_cast<
-            void (*)(std::optional<std::string>, std::optional<std::string>, optional_ref<RandomStateStruct>)>(
-            &SimUtils::ran_engine
-        );
+        auto fn = static_cast<void (*)(
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<RandomStateStruct>
+        )>(&SimUtils::ran_engine);
         return fn(set, get, ptr_to_opt_ref(ran_state));
       },
       nb::arg("set") = nb::none(),
@@ -77,11 +78,11 @@ ran_state : RandomStateStruct, optional
       [](std::optional<std::string> set,
          std::optional<double> set_sigma_cut,
          RandomStateStruct *ran_state) {
-        auto fn = static_cast<
-            SimUtils::
-                RanGaussConverter (*)(std::optional<std::string>, std::optional<double>, optional_ref<RandomStateStruct>)>(
-            &SimUtils::ran_gauss_converter
-        );
+        auto fn = static_cast<SimUtils::RanGaussConverter (*)(
+            std::optional<std::string>,
+            std::optional<double>,
+            optional_ref<RandomStateStruct>
+        )>(&SimUtils::ran_gauss_converter);
         return fn(set, set_sigma_cut, ptr_to_opt_ref(ran_state));
       },
       nb::arg("set") = nb::none(),

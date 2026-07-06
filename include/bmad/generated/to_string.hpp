@@ -451,6 +451,7 @@ std::string to_string(const Bmad::SSourceCalc &self);
 std::string to_string(const SimUtils::Serbd &self);
 std::string to_string(const Bmad::SetBranchAndEleForOmp &self);
 std::string to_string(const Bmad::SetEleAttribute &self);
+std::string to_string(const Bmad::SpinConcatLinearMaps &self);
 std::string to_string(const Bmad::SpinDnDpzFromMat8 &self);
 std::string to_string(const Bmad::SpinDnDpzFromQmap &self);
 std::string to_string(const Bmad::SpinMat8ResonanceStrengths &self);

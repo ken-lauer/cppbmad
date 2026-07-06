@@ -111,10 +111,15 @@ has_attribs : bool
          PmdHeaderStruct *pmd_header,
          std::optional<bool> print_mom_shift_warning,
          std::optional<bool> conserve_momentum) {
-        auto fn = static_cast<
-            void (*)(std::string, BeamStruct &, bool, optional_ref<EleStruct>, optional_ref<PmdHeaderStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::hdf5_read_beam
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            BeamStruct &,
+            bool,
+            optional_ref<EleStruct>,
+            optional_ref<PmdHeaderStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::hdf5_read_beam);
         return fn(
             file_name,
             beam,
@@ -159,10 +164,14 @@ conserve_momentum : bool, optional
          bool err_flag,
          PmdHeaderStruct *pmd_header,
          std::optional<bool> combine) {
-        auto fn = static_cast<
-            void (*)(std::string, EleStruct &, GridFieldStructArray1D, bool, optional_ref<PmdHeaderStruct>, std::optional<bool>)>(
-            &Bmad::hdf5_read_grid_field
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            EleStruct &,
+            GridFieldStructArray1D,
+            bool,
+            optional_ref<PmdHeaderStruct>,
+            std::optional<bool>
+        )>(&Bmad::hdf5_read_grid_field);
         return fn(file_name, ele, g_field, err_flag, ptr_to_opt_ref(pmd_header), combine);
       },
       nb::arg("file_name"),
@@ -196,10 +205,14 @@ combine : bool, optional
          bool error,
          LatStruct *lat,
          std::optional<bool> alive_only) {
-        auto fn = static_cast<
-            void (*)(std::string, BunchStructArray1D, bool, bool, optional_ref<LatStruct>, std::optional<bool>)>(
-            &Bmad::hdf5_write_beam
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            BunchStructArray1D,
+            bool,
+            bool,
+            optional_ref<LatStruct>,
+            std::optional<bool>
+        )>(&Bmad::hdf5_write_beam);
         return fn(file_name, bunches, append, error, ptr_to_opt_ref(lat), alive_only);
       },
       nb::arg("file_name"),

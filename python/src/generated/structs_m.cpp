@@ -97,8 +97,9 @@ void init_material_struct(nb::module_ &m, nb::class_<MaterialStruct> &cls) {
       .def(
           "__hash__",
           [](const MaterialStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -200,8 +201,9 @@ void init_mode3_struct(nb::module_ &m, nb::class_<Mode3Struct> &cls) {
       .def(
           "__hash__",
           [](const Mode3Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -279,8 +281,9 @@ void init_mode_info_struct(nb::module_ &m, nb::class_<ModeInfoStruct> &cls) {
       .def(
           "__hash__",
           [](const ModeInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -322,8 +325,9 @@ void init_multipass_all_info_struct(nb::module_ &m, nb::class_<MultipassAllInfoS
       .def(
           "__hash__",
           [](const MultipassAllInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -379,8 +383,9 @@ void init_multipass_branch_info_struct(nb::module_ &m, nb::class_<MultipassBranc
       .def(
           "__hash__",
           [](const MultipassBranchInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -475,8 +480,9 @@ void init_multipass_ele_info_struct(nb::module_ &m, nb::class_<MultipassEleInfoS
       .def(
           "__hash__",
           [](const MultipassEleInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -577,8 +583,9 @@ void init_multipass_lord_info_struct(nb::module_ &m, nb::class_<MultipassLordInf
       .def(
           "__hash__",
           [](const MultipassLordInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -731,8 +738,9 @@ void init_multipole_cache_struct(nb::module_ &m, nb::class_<MultipoleCacheStruct
       .def(
           "__hash__",
           [](const MultipoleCacheStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -810,8 +818,9 @@ void init_mad_energy_struct(nb::module_ &m, nb::class_<MadEnergyStruct> &cls) {
       .def(
           "__hash__",
           [](const MadEnergyStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -878,8 +887,9 @@ void init_mad_map_struct(nb::module_ &m, nb::class_<MadMapStruct> &cls) {
       .def(
           "__hash__",
           [](const MadMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1004,8 +1014,9 @@ void init_mesh3d_struct(nb::module_ &m, nb::class_<Mesh3dStruct> &cls) {
       .def(
           "__hash__",
           [](const Mesh3dStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1070,8 +1081,9 @@ void init_molecular_component_struct(nb::module_ &m, nb::class_<MolecularCompone
       .def(
           "__hash__",
           [](const MolecularComponentStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1138,8 +1150,9 @@ void init_momentum_aperture_struct(nb::module_ &m, nb::class_<MomentumApertureSt
       .def(
           "__hash__",
           [](const MomentumApertureStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1202,8 +1215,9 @@ void init_multipass_region_branch_struct(
       .def(
           "__hash__",
           [](const MultipassRegionBranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1282,8 +1296,9 @@ void init_multipass_region_ele_struct(nb::module_ &m, nb::class_<MultipassRegion
       .def(
           "__hash__",
           [](const MultipassRegionEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1328,8 +1343,9 @@ void init_multipass_region_lat_struct(nb::module_ &m, nb::class_<MultipassRegion
       .def(
           "__hash__",
           [](const MultipassRegionLatStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

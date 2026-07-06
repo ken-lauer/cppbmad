@@ -1035,7 +1035,7 @@ FixedArray2D<Real, 2, 2>
 cbar_to_c(FixedArray2D<Real, 2, 2> cbar_mat, TwissStruct &a, TwissStruct &b);
 
 // Skipped unusable routine ccfft3d:
-// - Routine module (fft_interface_mod) in configuration skip list
+// - Routine module in configuration skip list
 
 // Skipped unusable routine ccfftam:
 // - Routine in configuration skip list
@@ -5081,7 +5081,7 @@ Bmad::MatchEleToMat6 match_ele_to_mat6(
 );
 
 // Skipped unusable routine mccfft1d:
-// - Routine module (fft_interface_mod) in configuration skip list
+// - Routine module in configuration skip list
 extern "C" bool fortran_mexp(
     double &x /* 0D_NOT_real in */,
     int &m /* 0D_NOT_integer in */,
@@ -8047,9 +8047,21 @@ bool set_tune(
     CoordStructAlloc1D orb,
     std::optional<bool> print_err = std::nullopt
 );
-
-// Skipped unusable routine set_tune_via_group_knobs:
-// - Routine in configuration skip list
+extern "C" bool fortran_set_tune_via_group_knobs(
+    Bmad::array_descriptor_t &phi_set /* 1D_NOT_real in */,
+    void *branch /* 0D_NOT_type inout */,
+    const char **group_knobs /* 1D_NOT_character in */,
+    void *orb /* 1D_ALLOC_type inout */,
+    bool *print_err /* 0D_NOT_logical in */,
+    bool &ok /* 0D_NOT_logical out */
+);
+bool set_tune_via_group_knobs(
+    FixedArray1D<Real, 2> phi_set,
+    BranchStruct &branch,
+    FixedArray1D<string, 2> group_knobs,
+    CoordStructAlloc1D orb,
+    std::optional<bool> print_err = std::nullopt
+);
 extern "C" void fortran_set_twiss(
     void *branch /* 0D_NOT_type in */,
     void *twiss_ele /* 0D_NOT_type in */,
@@ -8242,9 +8254,28 @@ void space_charge_rectpipe(
     std::optional<bool> direct_field_calc = std::nullopt,
     std::optional<bool> integrated_green_function = std::nullopt
 );
-
-// Skipped unusable routine spin_concat_linear_maps:
-// - Routine in configuration skip list
+extern "C" void fortran_spin_concat_linear_maps(
+    bool &err_flag /* 0D_NOT_logical out */,
+    void *map1 /* 0D_NOT_type out */,
+    void *branch /* 0D_NOT_type in */,
+    int &n1 /* 0D_NOT_integer in */,
+    int &n2 /* 0D_NOT_integer in */,
+    Bmad::array_descriptor_t &map1_ele /* 1D_NOT_type inout */,
+    Bmad::array_descriptor_t &orbit /* 1D_NOT_type in */,
+    const char **excite_zero /* 1D_NOT_character in */
+);
+struct SpinConcatLinearMaps {
+  bool err_flag;
+  SpinOrbitMap1Struct map1;
+};
+Bmad::SpinConcatLinearMaps spin_concat_linear_maps(
+    BranchStruct &branch,
+    int n1,
+    int n2,
+    std::optional<SpinOrbitMap1StructArray1D> map1_ele = std::nullopt,
+    std::optional<CoordStructArray1D> orbit = std::nullopt,
+    std::optional<FixedArray1D<string, 3>> excite_zero = std::nullopt
+);
 extern "C" bool fortran_spin_depolarization_rate(
     void *branch /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &match_info /* 1D_NOT_type in */,

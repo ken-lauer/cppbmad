@@ -246,10 +246,13 @@ is_time_coords : bool, optional
          BunchTrackStruct *bunch_track,
          std::optional<double> s_body,
          std::optional<bool> is_time_coords) {
-        auto fn = static_cast<
-            void (*)(EleStruct &, BunchStruct &, optional_ref<BunchTrackStruct>, std::optional<double>, std::optional<bool>)>(
-            &Bmad::save_a_bunch_step
-        );
+        auto fn = static_cast<void (*)(
+            EleStruct &,
+            BunchStruct &,
+            optional_ref<BunchTrackStruct>,
+            std::optional<double>,
+            std::optional<bool>
+        )>(&Bmad::save_a_bunch_step);
         return fn(ele, bunch, ptr_to_opt_ref(bunch_track), s_body, is_time_coords);
       },
       nb::arg("ele"),
@@ -293,10 +296,19 @@ is_time_coords : bool, optional
          std::optional<bool> make_matrix,
          std::optional<double> rf_time,
          StrongBeamStruct *strong_beam) {
-        auto fn = static_cast<
-            void (*)(TrackStruct &, EleStruct &, LatParamStruct &, bool, CoordStruct &, double, std::optional<bool>, std::optional<FixedArray2D<Real, 6, 6>>, std::optional<bool>, std::optional<double>, optional_ref<StrongBeamStruct>)>(
-            &Bmad::save_a_step
-        );
+        auto fn = static_cast<void (*)(
+            TrackStruct &,
+            EleStruct &,
+            LatParamStruct &,
+            bool,
+            CoordStruct &,
+            double,
+            std::optional<bool>,
+            std::optional<FixedArray2D<Real, 6, 6>>,
+            std::optional<bool>,
+            std::optional<double>,
+            optional_ref<StrongBeamStruct>
+        )>(&Bmad::save_a_step);
         return fn(
             track,
             ele,
@@ -1061,10 +1073,17 @@ flag : int, optional
          RealAlloc1D *saved_values,
          std::optional<std::string> attribute,
          std::optional<int> set_val) {
-        auto fn = static_cast<
-            void (*)(int, LatStruct &, int, std::optional<CoordStructArray1D>, std::optional<bool>, std::optional<int>, optional_ref<RealAlloc1D>, std::optional<std::string>, std::optional<int>)>(
-            &Bmad::set_on_off
-        );
+        auto fn = static_cast<void (*)(
+            int,
+            LatStruct &,
+            int,
+            std::optional<CoordStructArray1D>,
+            std::optional<bool>,
+            std::optional<int>,
+            optional_ref<RealAlloc1D>,
+            std::optional<std::string>,
+            std::optional<int>
+        )>(&Bmad::set_on_off);
         return fn(
             key,
             lat,
@@ -1350,6 +1369,43 @@ ok : bool
 )"""
   );
   m.def(
+      "set_tune_via_group_knobs",
+      &Bmad::set_tune_via_group_knobs,
+      nb::arg("phi_set"),
+      nb::arg("branch"),
+      nb::arg("group_knobs"),
+      nb::arg("orb"),
+      nb::arg("print_err") = nb::none(),
+      R"""(Wrapper for Fortran routine set_tune_via_group_knobs
+
+Parameters
+----------
+phi_set : 1D array of float (shape: 2)
+    Set tunes (radians).
+
+branch : BranchStruct
+    Lattice branch to tune.
+    This parameter is an input/output and is modified in-place.
+    As an output, branch: Q_tuned lattice branch
+
+group_knobs : 1D array of str (shape: 2)
+    Names of group knobs to vary.
+
+orb : 1D array of CoordStruct
+    If RF is off: Energy dE/E at which the tune is computed.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: New closed orbit.
+
+print_err : bool, optional
+    Print error message if there is a problem? Default is True.
+
+Returns
+-------
+ok : bool
+    Set True if everything is ok. False otherwise.
+)"""
+  );
+  m.def(
       "set_twiss",
       &Bmad::set_twiss,
       nb::arg("branch"),
@@ -1424,10 +1480,14 @@ This subroutine is not intended for general use.
          NormalModesStruct &mode,
          BeamInitStruct *beam_init,
          std::optional<CoordStructArray1D> closed_orb) {
-        auto fn = static_cast<
-            void (*)(bool, BranchStruct &, double, NormalModesStruct &, optional_ref<BeamInitStruct>, std::optional<CoordStructArray1D>)>(
-            &Bmad::setup_high_energy_space_charge_calc
-        );
+        auto fn = static_cast<void (*)(
+            bool,
+            BranchStruct &,
+            double,
+            NormalModesStruct &,
+            optional_ref<BeamInitStruct>,
+            std::optional<CoordStructArray1D>
+        )>(&Bmad::setup_high_energy_space_charge_calc);
         return fn(calc_on, branch, n_part, mode, ptr_to_opt_ref(beam_init), closed_orb);
       },
       nb::arg("calc_on"),
@@ -1801,6 +1861,63 @@ bpipe : float
 direct_field_calc : bool, optional
 
 integrated_green_function : bool, optional
+)"""
+  );
+  nb::class_<Bmad::SpinConcatLinearMaps>(
+      m,
+      "SpinConcatLinearMaps",
+      "spin_concat_linear_maps return type"
+  )
+      .def_ro("err_flag", &Bmad::SpinConcatLinearMaps::err_flag)
+      .def_ro("map1", &Bmad::SpinConcatLinearMaps::map1)
+      .def("__len__", [](const Bmad::SpinConcatLinearMaps &) { return 2; })
+      .def("__getitem__", [](const Bmad::SpinConcatLinearMaps &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.err_flag);
+        if (i == 1)
+          return nb::cast(s.map1);
+        throw nb::index_error();
+      });
+  m.def(
+      "spin_concat_linear_maps",
+      &Bmad::spin_concat_linear_maps,
+      nb::arg("branch"),
+      nb::arg("n1"),
+      nb::arg("n2"),
+      nb::arg("map1_ele") = nb::none(),
+      nb::arg("orbit") = nb::none(),
+      nb::arg("excite_zero") = nb::none(),
+      R"""(Wrapper for Fortran routine spin_concat_linear_maps
+
+Parameters
+----------
+branch : BranchStruct
+    Lattice branch.
+
+n1 : int
+    Starting element index. Start at element downstream end.
+
+n2 : int
+    Ending element index. End at element downstream end
+
+map1_ele : 1D array of SpinOrbitMap1Struct, optional
+    Individual spin/orbit maps.
+
+orbit : 1D array of CoordStruct, optional
+    Reference orbit used if maps must be created.
+
+excite_zero : 1D array of str (shape: 3), optional
+    Three lists of elements where ds_vec/dr_vec terms are zeroed.
+
+Returns
+-------
+err_flag : bool
+    Set True if there is an error. False otherwise.
+
+map1 : SpinOrbitMap1Struct
+    Map with element spin/orbit maps concatenated.
 )"""
   );
   m.def(

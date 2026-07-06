@@ -130,8 +130,9 @@ void init_rad_int1_struct(nb::module_ &m, nb::class_<RadInt1Struct> &cls) {
       .def(
           "__hash__",
           [](const RadInt1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -179,8 +180,9 @@ void init_rad_int_all_ele_struct(nb::module_ &m, nb::class_<RadIntAllEleStruct> 
       .def(
           "__hash__",
           [](const RadIntAllEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -239,8 +241,9 @@ void init_rad_int_branch_struct(nb::module_ &m, nb::class_<RadIntBranchStruct> &
       .def(
           "__hash__",
           [](const RadIntBranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -308,8 +311,9 @@ void init_rad_map_ele_struct(nb::module_ &m, nb::class_<RadMapEleStruct> &cls) {
       .def(
           "__hash__",
           [](const RadMapEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -394,8 +398,9 @@ void init_rad_map_struct(nb::module_ &m, nb::class_<RadMapStruct> &cls) {
       .def(
           "__hash__",
           [](const RadMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -466,8 +471,9 @@ void init_ramper_lord_struct(nb::module_ &m, nb::class_<RamperLordStruct> &cls) 
       .def(
           "__hash__",
           [](const RamperLordStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -540,8 +546,9 @@ void init_resonance_h_struct(nb::module_ &m, nb::class_<ResonanceHStruct> &cls) 
       .def(
           "__hash__",
           [](const ResonanceHStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -595,8 +602,9 @@ void init_rf_ele_struct(nb::module_ &m, nb::class_<RfEleStruct> &cls) {
       .def(
           "__hash__",
           [](const RfEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -723,8 +731,9 @@ void init_rf_stair_step_struct(nb::module_ &m, nb::class_<RfStairStepStruct> &cl
       .def(
           "__hash__",
           [](const RfStairStepStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -782,8 +791,9 @@ void init_rad_int_cache1_struct(nb::module_ &m, nb::class_<RadIntCache1Struct> &
       .def(
           "__hash__",
           [](const RadIntCache1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -936,8 +946,9 @@ void init_rad_int_info_struct(nb::module_ &m, nb::class_<RadIntInfoStruct> &cls)
       .def(
           "__hash__",
           [](const RadIntInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1092,8 +1103,9 @@ void init_rad_int_track_point_struct(nb::module_ &m, nb::class_<RadIntTrackPoint
       .def(
           "__hash__",
           [](const RadIntTrackPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1196,8 +1208,9 @@ void init_random_state_struct(nb::module_ &m, nb::class_<RandomStateStruct> &cls
       .def(
           "__hash__",
           [](const RandomStateStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

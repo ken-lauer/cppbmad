@@ -50,11 +50,15 @@ void init_Bmad_routines_r(nb::module_ &m) {
          double g2_tol,
          double g3_tol,
          EleStruct *ele0) {
-        auto fn = static_cast<
-            Bmad::
-                Rad1DampAndStocMats (*)(EleStruct &, bool, CoordStruct &, CoordStruct &, double, double, optional_ref<EleStruct>)>(
-            &Bmad::rad1_damp_and_stoc_mats
-        );
+        auto fn = static_cast<Bmad::Rad1DampAndStocMats (*)(
+            EleStruct &,
+            bool,
+            CoordStruct &,
+            CoordStruct &,
+            double,
+            double,
+            optional_ref<EleStruct>
+        )>(&Bmad::rad1_damp_and_stoc_mats);
         return fn(
             ele,
             include_opening_angle,
@@ -302,9 +306,9 @@ rad_int_by_ele : RadIntAllEleStruct, optional
   m.def(
       "radiation_map_setup",
       [](EleStruct &ele, CoordStruct *ref_orbit_in) {
-        auto fn =
-            static_cast<bool (*)(EleStruct &, optional_ref<CoordStruct>)>(&Bmad::radiation_map_setup
-            );
+        auto fn = static_cast<bool (*)(EleStruct &, optional_ref<CoordStruct>)>(
+            &Bmad::radiation_map_setup
+        );
         return fn(ele, ptr_to_opt_ref(ref_orbit_in));
       },
       nb::arg("ele"),
@@ -596,11 +600,13 @@ err_flag : bool
          EleStruct *ele,
          std::optional<bool> print_mom_shift_warning,
          std::optional<bool> conserve_momentum) {
-        auto fn = static_cast<
-            Bmad::
-                ReadBeamFile (*)(std::string, BeamInitStruct &, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::read_beam_file
-        );
+        auto fn = static_cast<Bmad::ReadBeamFile (*)(
+            std::string,
+            BeamInitStruct &,
+            optional_ref<EleStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::read_beam_file);
         return fn(
             file_name,
             beam_init,
@@ -941,7 +947,8 @@ lat : LatStruct
   );
   m.def(
       "reallocate_coord",
-      nb::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(&Bmad::reallocate_coord
+      nb::overload_cast<CoordStructAlloc1D, LatStruct &, std::optional<int>>(
+          &Bmad::reallocate_coord
       ),
       nb::arg("coord"),
       nb::arg("lat"),
@@ -1352,10 +1359,18 @@ res : float
          double dt_next,
          bool err_flag,
          EmFieldStruct *extra_field) {
-        auto fn = static_cast<
-            void (*)(EleStruct &, LatParamStruct &, CoordStruct &, int, double, double, double, double, bool, optional_ref<EmFieldStruct>)>(
-            &Bmad::rk_adaptive_time_step
-        );
+        auto fn = static_cast<void (*)(
+            EleStruct &,
+            LatParamStruct &,
+            CoordStruct &,
+            int,
+            double,
+            double,
+            double,
+            double,
+            bool,
+            optional_ref<EmFieldStruct>
+        )>(&Bmad::rk_adaptive_time_step);
         return fn(
             ele,
             param,
@@ -1416,11 +1431,18 @@ extra_field : EmFieldStruct, optional
          std::optional<FixedArray1D<Real, 10>> dr_dt,
          std::optional<bool> print_err,
          EmFieldStruct *extra_field) {
-        auto fn = static_cast<FixedArray1D<
-            Real,
-            10> (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, double, CoordStruct &, bool, std::optional<FixedArray1D<Real, 10>>, std::optional<bool>, optional_ref<EmFieldStruct>)>(
-            &Bmad::rk_time_step1
-        );
+        auto fn = static_cast<FixedArray1D<Real, 10> (*)(
+            EleStruct &,
+            LatParamStruct &,
+            double,
+            CoordStruct &,
+            double,
+            CoordStruct &,
+            bool,
+            std::optional<FixedArray1D<Real, 10>>,
+            std::optional<bool>,
+            optional_ref<EmFieldStruct>
+        )>(&Bmad::rk_time_step1);
         return fn(
             ele,
             param,

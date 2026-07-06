@@ -519,10 +519,16 @@ field_scale : float
          bool is_control_var_list,
          bool err_flag,
          CharacterAlloc1D *names_out) {
-        auto fn = static_cast<
-            void (*)(EleStruct &, LatStruct &, ParserEleStruct &, std::string, bool, bool, bool, optional_ref<CharacterAlloc1D>)>(
-            &Bmad::get_overlay_group_names
-        );
+        auto fn = static_cast<void (*)(
+            EleStruct &,
+            LatStruct &,
+            ParserEleStruct &,
+            std::string,
+            bool,
+            bool,
+            bool,
+            optional_ref<CharacterAlloc1D>
+        )>(&Bmad::get_overlay_group_names);
         return fn(
             ele,
             lat,

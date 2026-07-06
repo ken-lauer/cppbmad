@@ -526,11 +526,14 @@ ix_step : int
          std::optional<int> steps,
          std::optional<bool> for_layout,
          CoordStruct *ref_in) {
-        auto fn = static_cast<
-            Bmad::
-                EleToFibre (*)(EleStruct &, bool, std::optional<int>, std::optional<int>, std::optional<bool>, optional_ref<CoordStruct>)>(
-            &Bmad::ele_to_fibre
-        );
+        auto fn = static_cast<Bmad::EleToFibre (*)(
+            EleStruct &,
+            bool,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<bool>,
+            optional_ref<CoordStruct>
+        )>(&Bmad::ele_to_fibre);
         return fn(ele, use_offsets, integ_order, steps, for_layout, ptr_to_opt_ref(ref_in));
       },
       nb::arg("ele"),
@@ -644,11 +647,12 @@ orb0 : CoordStruct
          CoordStruct *orb0,
          std::optional<bool> taylor_map_includes_offsets,
          std::optional<bool> include_damping) {
-        auto fn = static_cast<
-            Bmad::
-                EleToTaylor (*)(EleStruct &, optional_ref<CoordStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::ele_to_taylor
-        );
+        auto fn = static_cast<Bmad::EleToTaylor (*)(
+            EleStruct &,
+            optional_ref<CoordStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::ele_to_taylor);
         return fn(ele, ptr_to_opt_ref(orb0), taylor_map_includes_offsets, include_damping);
       },
       nb::arg("ele"),
@@ -1052,12 +1056,21 @@ s_end : float, optional
          std::optional<ElePointerStructAlloc1D> used_eles,
          std::optional<bool> print_err,
          EleStruct *original_ele) {
-        auto fn =
-            static_cast<
-                Bmad::
-                    EmFieldCalc (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, bool, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<double>, std::optional<ElePointerStructAlloc1D>, std::optional<bool>, optional_ref<EleStruct>)>(
-                &Bmad::em_field_calc
-            );
+        auto fn = static_cast<Bmad::EmFieldCalc (*)(
+            EleStruct &,
+            LatParamStruct &,
+            double,
+            CoordStruct &,
+            bool,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<double>,
+            std::optional<ElePointerStructAlloc1D>,
+            std::optional<bool>,
+            optional_ref<EleStruct>
+        )>(&Bmad::em_field_calc);
         return fn(
             ele,
             param,
@@ -1200,11 +1213,15 @@ dfield : EmFieldStruct
          bool err_flag,
          std::optional<bool> print_err,
          EmFieldStruct *extra_field) {
-        auto fn = static_cast<FixedArray1D<
-            Real,
-            10> (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, bool, std::optional<bool>, optional_ref<EmFieldStruct>)>(
-            &Bmad::em_field_kick_vector_time
-        );
+        auto fn = static_cast<FixedArray1D<Real, 10> (*)(
+            EleStruct &,
+            LatParamStruct &,
+            double,
+            CoordStruct &,
+            bool,
+            std::optional<bool>,
+            optional_ref<EmFieldStruct>
+        )>(&Bmad::em_field_kick_vector_time);
         return fn(ele, param, rf_time, orbit, err_flag, print_err, ptr_to_opt_ref(extra_field));
       },
       nb::arg("ele"),
@@ -3638,11 +3655,12 @@ err_str : str
          std::optional<bool> include_root,
          std::optional<int> n_node,
          ExpressionTreeStruct *parent) {
-        auto fn = static_cast<
-            std::
-                string (*)(ExpressionTreeStruct &, std::optional<bool>, std::optional<int>, optional_ref<ExpressionTreeStruct>)>(
-            &Bmad::expression_tree_to_string
-        );
+        auto fn = static_cast<std::string (*)(
+            ExpressionTreeStruct &,
+            std::optional<bool>,
+            std::optional<int>,
+            optional_ref<ExpressionTreeStruct>
+        )>(&Bmad::expression_tree_to_string);
         return fn(tree, include_root, n_node, ptr_to_opt_ref(parent));
       },
       nb::arg("tree"),

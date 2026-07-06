@@ -134,10 +134,12 @@ err_flag : bool
          LatStruct *ref_lat,
          std::optional<std::string> except,
          std::optional<bool> err_flag) {
-        auto fn = static_cast<
-            void (*)(LatStruct &, optional_ref<LatStruct>, std::optional<std::string>, std::optional<bool>)>(
-            &Bmad::taper_mag_strengths
-        );
+        auto fn = static_cast<void (*)(
+            LatStruct &,
+            optional_ref<LatStruct>,
+            std::optional<std::string>,
+            std::optional<bool>
+        )>(&Bmad::taper_mag_strengths);
         return fn(lat, ptr_to_opt_ref(ref_lat), except, err_flag);
       },
       nb::arg("lat"),
@@ -308,10 +310,13 @@ err : bool, optional
          LatParamStruct &param,
          CoordStruct *ref_in,
          std::optional<TaylorStructArray1D> spin_taylor) {
-        auto fn = static_cast<
-            bool (*)(TaylorStructArray1D, EleStruct &, LatParamStruct &, optional_ref<CoordStruct>, std::optional<TaylorStructArray1D>)>(
-            &Bmad::taylor_propagate1
-        );
+        auto fn = static_cast<bool (*)(
+            TaylorStructArray1D,
+            EleStruct &,
+            LatParamStruct &,
+            optional_ref<CoordStruct>,
+            std::optional<TaylorStructArray1D>
+        )>(&Bmad::taylor_propagate1);
         return fn(orb_taylor, ele, param, ptr_to_opt_ref(ref_in), spin_taylor);
       },
       nb::arg("orb_taylor"),
@@ -956,11 +961,15 @@ s : float, optional
          std::optional<bool> ignore_radiation,
          std::optional<bool> make_map1,
          std::optional<bool> init_to_edge) {
-        auto fn = static_cast<
-            Bmad::
-                Track1 (*)(CoordStruct &, EleStruct &, LatParamStruct &, optional_ref<TrackStruct>, std::optional<bool>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::track1
-        );
+        auto fn = static_cast<Bmad::Track1 (*)(
+            CoordStruct &,
+            EleStruct &,
+            LatParamStruct &,
+            optional_ref<TrackStruct>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::track1);
         return fn(
             start_orb,
             ele,
@@ -1136,10 +1145,13 @@ err_flag : bool, optional
          std::optional<CoordStructArray1D> centroid,
          std::optional<int> direction,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, EleStruct &, std::optional<CoordStructArray1D>, std::optional<int>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track1_bunch
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            EleStruct &,
+            std::optional<CoordStructArray1D>,
+            std::optional<int>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track1_bunch);
         return fn(bunch, ele, centroid, direction, ptr_to_opt_ref(bunch_track));
       },
       nb::arg("bunch"),
@@ -1185,10 +1197,14 @@ err : bool
          std::optional<double> s_start,
          std::optional<double> s_end,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, EleStruct &, CoordStructArray1D, std::optional<double>, std::optional<double>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track1_bunch_csr
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            EleStruct &,
+            CoordStructArray1D,
+            std::optional<double>,
+            std::optional<double>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track1_bunch_csr);
         return fn(bunch, ele, centroid, s_start, s_end, ptr_to_opt_ref(bunch_track));
       },
       nb::arg("bunch"),
@@ -1238,10 +1254,14 @@ err : bool
          std::optional<double> s_start,
          std::optional<double> s_end,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, EleStruct &, CoordStructArray1D, std::optional<double>, std::optional<double>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track1_bunch_csr3d
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            EleStruct &,
+            CoordStructArray1D,
+            std::optional<double>,
+            std::optional<double>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track1_bunch_csr3d);
         return fn(bunch, ele, centroid, s_start, s_end, ptr_to_opt_ref(bunch_track));
       },
       nb::arg("bunch"),
@@ -1297,10 +1317,12 @@ https://github.com/ChristopherMayes/OpenCSR
          EleStruct &ele,
          std::optional<int> direction,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            void (*)(BunchStruct &, EleStruct &, std::optional<int>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track1_bunch_hom
-        );
+        auto fn = static_cast<void (*)(
+            BunchStruct &,
+            EleStruct &,
+            std::optional<int>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track1_bunch_hom);
         return fn(bunch, ele, direction, ptr_to_opt_ref(bunch_track));
       },
       nb::arg("bunch"),
@@ -1334,10 +1356,12 @@ bunch_track : BunchTrackStruct, optional
          EleStruct &ele,
          std::optional<bool> track_to_same_s,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, EleStruct &, std::optional<bool>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track1_bunch_space_charge
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            EleStruct &,
+            std::optional<bool>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track1_bunch_space_charge);
         return fn(bunch, ele, track_to_same_s, ptr_to_opt_ref(bunch_track));
       },
       nb::arg("bunch"),
@@ -2831,10 +2855,15 @@ orbit0 : 1D array of CoordStruct, optional
          std::optional<CoordStructArray1D> centroid,
          std::optional<int> direction,
          std::optional<BunchTrackStructArray1D> bunch_tracks) {
-        auto fn = static_cast<
-            bool (*)(LatStruct &, BeamStruct &, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, std::optional<int>, std::optional<BunchTrackStructArray1D>)>(
-            &Bmad::track_beam
-        );
+        auto fn = static_cast<bool (*)(
+            LatStruct &,
+            BeamStruct &,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<CoordStructArray1D>,
+            std::optional<int>,
+            std::optional<BunchTrackStructArray1D>
+        )>(&Bmad::track_beam);
         return fn(
             lat,
             beam,
@@ -2900,10 +2929,15 @@ err : bool
          std::optional<CoordStructArray1D> centroid,
          std::optional<int> direction,
          BunchTrackStruct *bunch_track) {
-        auto fn = static_cast<
-            bool (*)(LatStruct &, BunchStruct &, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, std::optional<int>, optional_ref<BunchTrackStruct>)>(
-            &Bmad::track_bunch
-        );
+        auto fn = static_cast<bool (*)(
+            LatStruct &,
+            BunchStruct &,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<CoordStructArray1D>,
+            std::optional<int>,
+            optional_ref<BunchTrackStruct>
+        )>(&Bmad::track_bunch);
         return fn(
             lat,
             bunch,
@@ -3499,10 +3533,18 @@ lat_out : LatStruct
          std::optional<bool> unit_start,
          std::optional<bool> concat_if_possible,
          std::optional<TaylorStructArray1D> spin_map) {
-        auto fn = static_cast<
-            bool (*)(LatStruct &, TaylorStructArray1D, std::optional<int>, std::optional<int>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<TaylorStructArray1D>)>(
-            &Bmad::transfer_map_calc
-        );
+        auto fn = static_cast<bool (*)(
+            LatStruct &,
+            TaylorStructArray1D,
+            std::optional<int>,
+            std::optional<int>,
+            optional_ref<CoordStruct>,
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<TaylorStructArray1D>
+        )>(&Bmad::transfer_map_calc);
         return fn(
             lat,
             orb_map,
@@ -3602,12 +3644,18 @@ err_flag : bool
          std::optional<bool> unit_start,
          std::optional<bool> concat_if_possible,
          std::optional<TaylorStructArray1D> spin_map) {
-        auto
-            fn =
-                static_cast<Bmad::
-                                TransferMapFromSToS (*)(LatStruct &, TaylorStructArray1D, std::optional<double>, std::optional<double>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, std::optional<bool>, std::optional<TaylorStructArray1D>)>(
-                    &Bmad::transfer_map_from_s_to_s
-                );
+        auto fn = static_cast<Bmad::TransferMapFromSToS (*)(
+            LatStruct &,
+            TaylorStructArray1D,
+            std::optional<double>,
+            std::optional<double>,
+            optional_ref<CoordStruct>,
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<TaylorStructArray1D>
+        )>(&Bmad::transfer_map_from_s_to_s);
         return fn(
             lat,
             t_map,
@@ -4030,10 +4078,16 @@ status : int, optional
          std::optional<int> ix_branch,
          std::optional<bool> use_last,
          std::optional<bool> compute_floor_coords) {
-        auto fn = static_cast<
-            bool (*)(LatStruct &, double, optional_ref<EleStruct>, std::optional<CoordStructArray1D>, optional_ref<CoordStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::twiss_and_track_at_s
-        );
+        auto fn = static_cast<bool (*)(
+            LatStruct &,
+            double,
+            optional_ref<EleStruct>,
+            std::optional<CoordStructArray1D>,
+            optional_ref<CoordStruct>,
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::twiss_and_track_at_s);
         return fn(
             lat,
             s,
@@ -4119,10 +4173,15 @@ err : bool, optional
          std::optional<bool> calc_chrom,
          CoordStruct *orb_start,
          std::optional<bool> use_particle_start) {
-        auto fn = static_cast<
-            int (*)(LatStruct &, CoordStructAlloc1D, std::optional<int>, std::optional<bool>, std::optional<bool>, optional_ref<CoordStruct>, std::optional<bool>)>(
-            &Bmad::twiss_and_track
-        );
+        auto fn = static_cast<int (*)(
+            LatStruct &,
+            CoordStructAlloc1D,
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<CoordStruct>,
+            std::optional<bool>
+        )>(&Bmad::twiss_and_track);
         return fn(
             lat,
             orb,
@@ -4235,11 +4294,14 @@ status : int, optional
          EleStruct *ele_start,
          std::optional<bool> compute_floor_coords,
          std::optional<bool> compute_twiss) {
-        auto fn = static_cast<
-            Bmad::
-                TwissAndTrackFromSToS (*)(BranchStruct &, CoordStruct &, double, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::twiss_and_track_from_s_to_s
-        );
+        auto fn = static_cast<Bmad::TwissAndTrackFromSToS (*)(
+            BranchStruct &,
+            CoordStruct &,
+            double,
+            optional_ref<EleStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::twiss_and_track_from_s_to_s);
         return fn(
             branch,
             orbit_start,
@@ -4321,11 +4383,20 @@ err : bool, optional
          std::optional<bool> compute_floor_coords,
          std::optional<bool> compute_twiss,
          std::optional<bool> reuse_ele_end) {
-        auto fn = static_cast<
-            Bmad::
-                TwissAndTrackIntraEle (*)(EleStruct &, LatParamStruct &, double, double, bool, bool, optional_ref<CoordStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<bool>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::twiss_and_track_intra_ele
-        );
+        auto fn = static_cast<Bmad::TwissAndTrackIntraEle (*)(
+            EleStruct &,
+            LatParamStruct &,
+            double,
+            double,
+            bool,
+            bool,
+            optional_ref<CoordStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<bool>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::twiss_and_track_intra_ele);
         return fn(
             ele,
             param,
@@ -4914,10 +4985,12 @@ n_lines : int, optional
          std::optional<int> frequency_units,
          std::optional<bool> compact_format,
          CharacterAlloc1D *lines) {
-        auto fn = static_cast<
-            int (*)(EleStruct &, std::optional<int>, std::optional<bool>, optional_ref<CharacterAlloc1D>)>(
-            &Bmad::type_twiss
-        );
+        auto fn = static_cast<int (*)(
+            EleStruct &,
+            std::optional<int>,
+            std::optional<bool>,
+            optional_ref<CharacterAlloc1D>
+        )>(&Bmad::type_twiss);
         return fn(ele, frequency_units, compact_format, ptr_to_opt_ref(lines));
       },
       nb::arg("ele"),

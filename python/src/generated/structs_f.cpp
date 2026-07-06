@@ -83,8 +83,9 @@ void init_floor_position_struct(nb::module_ &m, nb::class_<FloorPositionStruct> 
       .def(
           "__hash__",
           [](const FloorPositionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -120,8 +121,9 @@ void init_foil_struct(nb::module_ &m, nb::class_<FoilStruct> &cls) {
       .def(
           "__hash__",
           [](const FoilStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -231,8 +233,9 @@ void init_fringe_field_info_struct(nb::module_ &m, nb::class_<FringeFieldInfoStr
       .def(
           "__hash__",
           [](const FringeFieldInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -299,8 +302,9 @@ void init_field1_at_2D_pt_struct(nb::module_ &m, nb::class_<Field1At2dPtStruct> 
       .def(
           "__hash__",
           [](const Field1At2dPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -399,8 +403,9 @@ void init_field1_at_3D_pt_struct(nb::module_ &m, nb::class_<Field1At3dPtStruct> 
       .def(
           "__hash__",
           [](const Field1At3dPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -446,8 +451,9 @@ void init_field_at_2D_box_struct(nb::module_ &m, nb::class_<FieldAt2dBoxStruct> 
       .def(
           "__hash__",
           [](const FieldAt2dBoxStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -493,8 +499,9 @@ void init_field_at_3D_box_struct(nb::module_ &m, nb::class_<FieldAt3dBoxStruct> 
       .def(
           "__hash__",
           [](const FieldAt3dBoxStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -558,8 +565,9 @@ void init_fibre(nb::module_ &m, nb::class_<Fibre> &cls) {
       .def(
           "__hash__",
           [](const Fibre &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

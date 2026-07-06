@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260625.0.1+39.ge33cf85"
+__version__ = "20260703.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -1512,6 +1512,7 @@ set_species_charge = simutils.set_species_charge
 set_status_flags = bmad.set_status_flags
 set_tune = bmad.set_tune
 set_tune_3d = bsim.set_tune_3d
+set_tune_via_group_knobs = bmad.set_tune_via_group_knobs
 set_twiss = bmad.set_twiss
 set_z_tune = bmad.set_z_tune
 settable_dep_var_bookkeeping = bmad.settable_dep_var_bookkeeping
@@ -1538,6 +1539,7 @@ species_id = simutils.species_id
 species_id_from_openpmd = simutils.species_id_from_openpmd
 species_name = simutils.species_name
 species_of = simutils.species_of
+spin_concat_linear_maps = bmad.spin_concat_linear_maps
 spin_depolarization_rate = bmad.spin_depolarization_rate
 spin_dn_dpz_from_mat8 = bmad.spin_dn_dpz_from_mat8
 spin_dn_dpz_from_qmap = bmad.spin_dn_dpz_from_qmap
@@ -4421,6 +4423,7 @@ __all__ = [
     "set_status_flags",
     "set_tune",
     "set_tune_3d",
+    "set_tune_via_group_knobs",
     "set_twiss",
     "set_z_tune",
     "settable_dep_var_bookkeeping",
@@ -4447,6 +4450,7 @@ __all__ = [
     "species_id_from_openpmd",
     "species_name",
     "species_of",
+    "spin_concat_linear_maps",
     "spin_depolarization_rate",
     "spin_dn_dpz_from_mat8",
     "spin_dn_dpz_from_qmap",

@@ -84,8 +84,9 @@ void init_ele_attribute_struct(nb::module_ &m, nb::class_<EleAttributeStruct> &c
       .def(
           "__hash__",
           [](const EleAttributeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -168,8 +169,9 @@ void init_ele_pointer_struct(nb::module_ &m, nb::class_<ElePointerStruct> &cls) 
       .def(
           "__hash__",
           [](const ElePointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1026,8 +1028,9 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
       .def(
           "__hash__",
           [](const EleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1109,8 +1112,9 @@ void init_ellipse_beam_init_struct(nb::module_ &m, nb::class_<EllipseBeamInitStr
       .def(
           "__hash__",
           [](const EllipseBeamInitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1230,8 +1234,9 @@ void init_em_field_struct(nb::module_ &m, nb::class_<EmFieldStruct> &cls) {
       .def(
           "__hash__",
           [](const EmFieldStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1303,8 +1308,9 @@ void init_expression_atom_struct(nb::module_ &m, nb::class_<ExpressionAtomStruct
       .def(
           "__hash__",
           [](const ExpressionAtomStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1382,8 +1388,9 @@ void init_expression_tree_struct(nb::module_ &m, nb::class_<ExpressionTreeStruct
       .def(
           "__hash__",
           [](const ExpressionTreeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2007,8 +2014,9 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
       .def(
           "__hash__",
           [](const ExtraParsingInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

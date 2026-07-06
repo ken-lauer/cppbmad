@@ -853,8 +853,10 @@ branch : BranchStruct
   );
   m.def(
       "tao_data_sanity_check",
-      [](TaoDataStruct &datum, bool print_err, std::string default_data_type, TaoUniverseStruct *uni
-      ) {
+      [](TaoDataStruct &datum,
+         bool print_err,
+         std::string default_data_type,
+         TaoUniverseStruct *uni) {
         auto fn = static_cast<
             bool (*)(TaoDataStruct &, bool, std::string, optional_ref<TaoUniverseStruct>)>(
             &Tao::tao_data_sanity_check
@@ -1726,11 +1728,15 @@ value : float
          std::optional<std::string> dflt_component,
          std::optional<int> dflt_uni,
          std::optional<int> eval_point) {
-        auto fn = static_cast<
-            Tao::
-                TaoEvaluateElementParameters (*)(std::string, bool, std::string, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>)>(
-            &Tao::tao_evaluate_element_parameters
-        );
+        auto fn = static_cast<Tao::TaoEvaluateElementParameters (*)(
+            std::string,
+            bool,
+            std::string,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>
+        )>(&Tao::tao_evaluate_element_parameters);
         return fn(
             param_name,
             print_err,
@@ -1823,11 +1829,23 @@ info : 1D array of TaoExpressionInfoStruct, optional
          std::optional<double> dflt_s_offset,
          CoordStruct *dflt_orbit,
          TaoDataStruct *datum) {
-        auto fn =
-            static_cast<
-                Tao::TaoEvaluateExpression (*)(std::string, int, bool, std::optional<bool>, std::optional<std::string>, std::optional<std::string>, optional_ref<EleStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>, std::optional<double>, optional_ref<CoordStruct>, optional_ref<TaoDataStruct>)>(
-                &Tao::tao_evaluate_expression
-            );
+        auto fn = static_cast<Tao::TaoEvaluateExpression (*)(
+            std::string,
+            int,
+            bool,
+            std::optional<bool>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            optional_ref<CoordStruct>,
+            optional_ref<TaoDataStruct>
+        )>(&Tao::tao_evaluate_expression);
         return fn(
             expression,
             n_size,
@@ -1954,64 +1972,74 @@ stack : 1D array of TaoEvalNodeStruct, optional
           return nb::cast(s.stack);
         throw nb::index_error();
       });
-  m
-      .def(
-          "tao_evaluate_expression_new",
-          [](std::string expression,
-             int n_size,
-             bool use_good_user,
-             std::optional<bool> print_err,
-             std::optional<std::string> dflt_component,
-             std::optional<std::string> dflt_source,
-             EleStruct *dflt_ele_ref,
-             EleStruct *dflt_ele_start,
-             EleStruct *dflt_ele,
-             std::optional<std::string> dflt_dat_or_var_index,
-             std::optional<int> dflt_uni,
-             std::optional<int> dflt_eval_point,
-             std::optional<double> dflt_s_offset,
-             CoordStruct *dflt_orbit,
-             TaoDataStruct *datum) {
-            auto fn =
-                static_cast<
-                    Tao::
-                        TaoEvaluateExpressionNew (*)(std::string, int, bool, std::optional<bool>, std::optional<std::string>, std::optional<std::string>, optional_ref<EleStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>, std::optional<double>, optional_ref<CoordStruct>, optional_ref<TaoDataStruct>)>(
-                    &Tao::tao_evaluate_expression_new
-                );
-            return fn(
-                expression,
-                n_size,
-                use_good_user,
-                print_err,
-                dflt_component,
-                dflt_source,
-                ptr_to_opt_ref(dflt_ele_ref),
-                ptr_to_opt_ref(dflt_ele_start),
-                ptr_to_opt_ref(dflt_ele),
-                dflt_dat_or_var_index,
-                dflt_uni,
-                dflt_eval_point,
-                dflt_s_offset,
-                ptr_to_opt_ref(dflt_orbit),
-                ptr_to_opt_ref(datum)
-            );
-          },
-          nb::arg("expression"),
-          nb::arg("n_size"),
-          nb::arg("use_good_user"),
-          nb::arg("print_err") = nb::none(),
-          nb::arg("dflt_component") = nb::none(),
-          nb::arg("dflt_source") = nb::none(),
-          nb::arg("dflt_ele_ref") = nb::none(),
-          nb::arg("dflt_ele_start") = nb::none(),
-          nb::arg("dflt_ele") = nb::none(),
-          nb::arg("dflt_dat_or_var_index") = nb::none(),
-          nb::arg("dflt_uni") = nb::none(),
-          nb::arg("dflt_eval_point") = nb::none(),
-          nb::arg("dflt_s_offset") = nb::none(),
-          nb::arg("dflt_orbit") = nb::none(),
-          nb::arg("datum") = nb::none(),
-          R"""(Wrapper for Fortran routine tao_evaluate_expression_new
+  m.def(
+      "tao_evaluate_expression_new",
+      [](std::string expression,
+         int n_size,
+         bool use_good_user,
+         std::optional<bool> print_err,
+         std::optional<std::string> dflt_component,
+         std::optional<std::string> dflt_source,
+         EleStruct *dflt_ele_ref,
+         EleStruct *dflt_ele_start,
+         EleStruct *dflt_ele,
+         std::optional<std::string> dflt_dat_or_var_index,
+         std::optional<int> dflt_uni,
+         std::optional<int> dflt_eval_point,
+         std::optional<double> dflt_s_offset,
+         CoordStruct *dflt_orbit,
+         TaoDataStruct *datum) {
+        auto fn = static_cast<Tao::TaoEvaluateExpressionNew (*)(
+            std::string,
+            int,
+            bool,
+            std::optional<bool>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            optional_ref<CoordStruct>,
+            optional_ref<TaoDataStruct>
+        )>(&Tao::tao_evaluate_expression_new);
+        return fn(
+            expression,
+            n_size,
+            use_good_user,
+            print_err,
+            dflt_component,
+            dflt_source,
+            ptr_to_opt_ref(dflt_ele_ref),
+            ptr_to_opt_ref(dflt_ele_start),
+            ptr_to_opt_ref(dflt_ele),
+            dflt_dat_or_var_index,
+            dflt_uni,
+            dflt_eval_point,
+            dflt_s_offset,
+            ptr_to_opt_ref(dflt_orbit),
+            ptr_to_opt_ref(datum)
+        );
+      },
+      nb::arg("expression"),
+      nb::arg("n_size"),
+      nb::arg("use_good_user"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("dflt_component") = nb::none(),
+      nb::arg("dflt_source") = nb::none(),
+      nb::arg("dflt_ele_ref") = nb::none(),
+      nb::arg("dflt_ele_start") = nb::none(),
+      nb::arg("dflt_ele") = nb::none(),
+      nb::arg("dflt_dat_or_var_index") = nb::none(),
+      nb::arg("dflt_uni") = nb::none(),
+      nb::arg("dflt_eval_point") = nb::none(),
+      nb::arg("dflt_s_offset") = nb::none(),
+      nb::arg("dflt_orbit") = nb::none(),
+      nb::arg("datum") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_evaluate_expression_new
 
 Parameters
 ----------
@@ -2080,7 +2108,7 @@ stack : 1D array of TaoEvalNodeStruct, optional
     Array of nodes of variable names. This is useful to check what datums or variables are used in the
     expression.
 )"""
-      );
+  );
   nb::class_<Tao::TaoEvaluateExpressionOld>(
       m,
       "TaoEvaluateExpressionOld",
@@ -2104,64 +2132,74 @@ stack : 1D array of TaoEvalNodeStruct, optional
           return nb::cast(s.stack);
         throw nb::index_error();
       });
-  m
-      .def(
-          "tao_evaluate_expression_old",
-          [](std::string expression,
-             int n_size,
-             bool use_good_user,
-             std::optional<bool> print_err,
-             std::optional<std::string> dflt_component,
-             std::optional<std::string> dflt_source,
-             EleStruct *dflt_ele_ref,
-             EleStruct *dflt_ele_start,
-             EleStruct *dflt_ele,
-             std::optional<std::string> dflt_dat_or_var_index,
-             std::optional<int> dflt_uni,
-             std::optional<int> dflt_eval_point,
-             std::optional<double> dflt_s_offset,
-             CoordStruct *dflt_orbit,
-             TaoDataStruct *datum) {
-            auto fn =
-                static_cast<
-                    Tao::
-                        TaoEvaluateExpressionOld (*)(std::string, int, bool, std::optional<bool>, std::optional<std::string>, std::optional<std::string>, optional_ref<EleStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>, std::optional<double>, optional_ref<CoordStruct>, optional_ref<TaoDataStruct>)>(
-                    &Tao::tao_evaluate_expression_old
-                );
-            return fn(
-                expression,
-                n_size,
-                use_good_user,
-                print_err,
-                dflt_component,
-                dflt_source,
-                ptr_to_opt_ref(dflt_ele_ref),
-                ptr_to_opt_ref(dflt_ele_start),
-                ptr_to_opt_ref(dflt_ele),
-                dflt_dat_or_var_index,
-                dflt_uni,
-                dflt_eval_point,
-                dflt_s_offset,
-                ptr_to_opt_ref(dflt_orbit),
-                ptr_to_opt_ref(datum)
-            );
-          },
-          nb::arg("expression"),
-          nb::arg("n_size"),
-          nb::arg("use_good_user"),
-          nb::arg("print_err") = nb::none(),
-          nb::arg("dflt_component") = nb::none(),
-          nb::arg("dflt_source") = nb::none(),
-          nb::arg("dflt_ele_ref") = nb::none(),
-          nb::arg("dflt_ele_start") = nb::none(),
-          nb::arg("dflt_ele") = nb::none(),
-          nb::arg("dflt_dat_or_var_index") = nb::none(),
-          nb::arg("dflt_uni") = nb::none(),
-          nb::arg("dflt_eval_point") = nb::none(),
-          nb::arg("dflt_s_offset") = nb::none(),
-          nb::arg("dflt_orbit") = nb::none(),
-          nb::arg("datum") = nb::none(),
-          R"""(Wrapper for Fortran routine tao_evaluate_expression_old
+  m.def(
+      "tao_evaluate_expression_old",
+      [](std::string expression,
+         int n_size,
+         bool use_good_user,
+         std::optional<bool> print_err,
+         std::optional<std::string> dflt_component,
+         std::optional<std::string> dflt_source,
+         EleStruct *dflt_ele_ref,
+         EleStruct *dflt_ele_start,
+         EleStruct *dflt_ele,
+         std::optional<std::string> dflt_dat_or_var_index,
+         std::optional<int> dflt_uni,
+         std::optional<int> dflt_eval_point,
+         std::optional<double> dflt_s_offset,
+         CoordStruct *dflt_orbit,
+         TaoDataStruct *datum) {
+        auto fn = static_cast<Tao::TaoEvaluateExpressionOld (*)(
+            std::string,
+            int,
+            bool,
+            std::optional<bool>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            optional_ref<CoordStruct>,
+            optional_ref<TaoDataStruct>
+        )>(&Tao::tao_evaluate_expression_old);
+        return fn(
+            expression,
+            n_size,
+            use_good_user,
+            print_err,
+            dflt_component,
+            dflt_source,
+            ptr_to_opt_ref(dflt_ele_ref),
+            ptr_to_opt_ref(dflt_ele_start),
+            ptr_to_opt_ref(dflt_ele),
+            dflt_dat_or_var_index,
+            dflt_uni,
+            dflt_eval_point,
+            dflt_s_offset,
+            ptr_to_opt_ref(dflt_orbit),
+            ptr_to_opt_ref(datum)
+        );
+      },
+      nb::arg("expression"),
+      nb::arg("n_size"),
+      nb::arg("use_good_user"),
+      nb::arg("print_err") = nb::none(),
+      nb::arg("dflt_component") = nb::none(),
+      nb::arg("dflt_source") = nb::none(),
+      nb::arg("dflt_ele_ref") = nb::none(),
+      nb::arg("dflt_ele_start") = nb::none(),
+      nb::arg("dflt_ele") = nb::none(),
+      nb::arg("dflt_dat_or_var_index") = nb::none(),
+      nb::arg("dflt_uni") = nb::none(),
+      nb::arg("dflt_eval_point") = nb::none(),
+      nb::arg("dflt_s_offset") = nb::none(),
+      nb::arg("dflt_orbit") = nb::none(),
+      nb::arg("datum") = nb::none(),
+      R"""(Wrapper for Fortran routine tao_evaluate_expression_old
 
 Parameters
 ----------
@@ -2230,7 +2268,7 @@ stack : 1D array of TaoEvalNodeStruct, optional
     Array of nodes of variable names. This is useful to check what datums or variables are used in the
     expression.
 )"""
-      );
+  );
   nb::class_<Tao::TaoEvaluateLatOrBeamData>(
       m,
       "TaoEvaluateLatOrBeamData",
@@ -2260,11 +2298,18 @@ stack : 1D array of TaoEvalNodeStruct, optional
          std::optional<int> dflt_uni,
          std::optional<int> dflt_eval_point,
          std::optional<double> dflt_s_offset) {
-        auto fn = static_cast<
-            Tao::
-                TaoEvaluateLatOrBeamData (*)(std::string, bool, std::string, optional_ref<EleStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>, std::optional<double>)>(
-            &Tao::tao_evaluate_lat_or_beam_data
-        );
+        auto fn = static_cast<Tao::TaoEvaluateLatOrBeamData (*)(
+            std::string,
+            bool,
+            std::string,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>
+        )>(&Tao::tao_evaluate_lat_or_beam_data);
         return fn(
             data_name,
             print_err,
@@ -2505,11 +2550,12 @@ expression_out : str
          std::optional<bool> include_root,
          std::optional<int> n_node,
          TaoEvalNodeStruct *parent) {
-        auto fn = static_cast<
-            std::
-                string (*)(TaoEvalNodeStruct &, std::optional<bool>, std::optional<int>, optional_ref<TaoEvalNodeStruct>)>(
-            &Tao::tao_expression_tree_to_string
-        );
+        auto fn = static_cast<std::string (*)(
+            TaoEvalNodeStruct &,
+            std::optional<bool>,
+            std::optional<int>,
+            optional_ref<TaoEvalNodeStruct>
+        )>(&Tao::tao_expression_tree_to_string);
         return fn(tree, include_root, n_node, ptr_to_opt_ref(parent));
       },
       nb::arg("tree"),
@@ -3735,10 +3781,18 @@ abort : bool
          BranchStruct &branch,
          std::optional<std::string> why_invalid,
          BoolAlloc1D *good) {
-        auto fn = static_cast<
-            void (*)(FArray1D<Real> &, EleStruct &, EleStruct &, EleStruct &, double, bool, TaoDataStruct &, BranchStruct &, std::optional<std::string>, optional_ref<BoolAlloc1D>)>(
-            &Tao::tao_load_this_datum
-        );
+        auto fn = static_cast<void (*)(
+            FArray1D<Real> &,
+            EleStruct &,
+            EleStruct &,
+            EleStruct &,
+            double,
+            bool,
+            TaoDataStruct &,
+            BranchStruct &,
+            std::optional<std::string>,
+            optional_ref<BoolAlloc1D>
+        )>(&Tao::tao_load_this_datum);
         return fn(
             vec,
             ele_ref,
@@ -4241,10 +4295,25 @@ bad_datum : bool, optional
          std::optional<double> dflt_s_offset,
          CoordStruct *dflt_orbit,
          TaoDataStruct *datum) {
-        auto fn =
-            static_cast<void (*)(std::string, bool, std::string, TaoEvalNodeStruct &, bool, bool, std::optional<std::string>, std::optional<std::string>, optional_ref<EleStruct>, optional_ref<EleStruct>, optional_ref<EleStruct>, std::optional<std::string>, std::optional<int>, std::optional<int>, std::optional<double>, optional_ref<CoordStruct>, optional_ref<TaoDataStruct>)>(
-                &Tao::tao_param_value_routine
-            );
+        auto fn = static_cast<void (*)(
+            std::string,
+            bool,
+            std::string,
+            TaoEvalNodeStruct &,
+            bool,
+            bool,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            optional_ref<EleStruct>,
+            std::optional<std::string>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            optional_ref<CoordStruct>,
+            optional_ref<TaoDataStruct>
+        )>(&Tao::tao_param_value_routine);
         return fn(
             str,
             use_good_user,
@@ -5768,10 +5837,13 @@ value : str
          EleStruct *ele_ptr,
          AllPointerStruct *val_ptr,
          std::optional<std::string> who) {
-        auto fn = static_cast<
-            void (*)(TaoUniverseStruct &, std::string, optional_ref<EleStruct>, optional_ref<AllPointerStruct>, std::optional<std::string>)>(
-            &Tao::tao_set_flags_for_changed_attribute
-        );
+        auto fn = static_cast<void (*)(
+            TaoUniverseStruct &,
+            std::string,
+            optional_ref<EleStruct>,
+            optional_ref<AllPointerStruct>,
+            std::optional<std::string>
+        )>(&Tao::tao_set_flags_for_changed_attribute);
         return fn(u, ele_name, ptr_to_opt_ref(ele_ptr), ptr_to_opt_ref(val_ptr), who);
       },
       nb::arg("u"),

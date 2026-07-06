@@ -85,8 +85,9 @@ void init_parser_controller_struct(nb::module_ &m, nb::class_<ParserControllerSt
       .def(
           "__hash__",
           [](const ParserControllerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -253,8 +254,9 @@ void init_parser_ele_struct(nb::module_ &m, nb::class_<ParserEleStruct> &cls) {
       .def(
           "__hash__",
           [](const ParserEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -297,8 +299,9 @@ void init_parser_lat_struct(nb::module_ &m, nb::class_<ParserLatStruct> &cls) {
       .def(
           "__hash__",
           [](const ParserLatStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -447,8 +450,9 @@ void init_photon_element_struct(nb::module_ &m, nb::class_<PhotonElementStruct> 
       .def(
           "__hash__",
           [](const PhotonElementStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -551,8 +555,9 @@ void init_photon_material_struct(nb::module_ &m, nb::class_<PhotonMaterialStruct
       .def(
           "__hash__",
           [](const PhotonMaterialStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -639,8 +644,9 @@ void init_photon_reflect_surface_struct(
       .def(
           "__hash__",
           [](const PhotonReflectSurfaceStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -751,8 +757,9 @@ void init_photon_reflect_table_struct(nb::module_ &m, nb::class_<PhotonReflectTa
       .def(
           "__hash__",
           [](const PhotonReflectTableStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -828,8 +835,9 @@ void init_photon_target_struct(nb::module_ &m, nb::class_<PhotonTargetStruct> &c
       .def(
           "__hash__",
           [](const PhotonTargetStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -910,8 +918,9 @@ void init_pixel_detec_struct(nb::module_ &m, nb::class_<PixelDetecStruct> &cls) 
       .def(
           "__hash__",
           [](const PixelDetecStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1005,8 +1014,9 @@ void init_pixel_pt_struct(nb::module_ &m, nb::class_<PixelPtStruct> &cls) {
       .def(
           "__hash__",
           [](const PixelPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1091,8 +1101,9 @@ void init_pmd_header_struct(nb::module_ &m, nb::class_<PmdHeaderStruct> &cls) {
       .def(
           "__hash__",
           [](const PmdHeaderStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1153,8 +1164,9 @@ void init_pre_tracker_struct(nb::module_ &m, nb::class_<PreTrackerStruct> &cls) 
       .def(
           "__hash__",
           [](const PreTrackerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1193,8 +1205,9 @@ void init_ptc_branch1_struct(nb::module_ &m, nb::class_<PtcBranch1Struct> &cls) 
       .def(
           "__hash__",
           [](const PtcBranch1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1249,8 +1262,9 @@ void init_ptc_layout_pointer_struct(nb::module_ &m, nb::class_<PtcLayoutPointerS
       .def(
           "__hash__",
           [](const PtcLayoutPointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1322,8 +1336,9 @@ void init_ptc_normal_form_struct(nb::module_ &m, nb::class_<PtcNormalFormStruct>
       .def(
           "__hash__",
           [](const PtcNormalFormStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1391,8 +1406,9 @@ void init_photon_coord_struct(nb::module_ &m, nb::class_<PhotonCoordStruct> &cls
       .def(
           "__hash__",
           [](const PhotonCoordStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1449,8 +1465,9 @@ void init_photon_track_struct(nb::module_ &m, nb::class_<PhotonTrackStruct> &cls
       .def(
           "__hash__",
           [](const PhotonTrackStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1508,8 +1525,9 @@ void init_photon_init_splines_struct(nb::module_ &m, nb::class_<PhotonInitSpline
       .def(
           "__hash__",
           [](const PhotonInitSplinesStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1571,8 +1589,9 @@ void init_photon_init_x_angle_spline_struct(
       .def(
           "__hash__",
           [](const PhotonInitXAngleSplineStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1639,8 +1658,9 @@ void init_photon_init_y_angle_spline_struct(
       .def(
           "__hash__",
           [](const PhotonInitYAngleSplineStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1799,8 +1819,9 @@ void init_ptc_rad_map_struct(nb::module_ &m, nb::class_<PtcRadMapStruct> &cls) {
       .def(
           "__hash__",
           [](const PtcRadMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

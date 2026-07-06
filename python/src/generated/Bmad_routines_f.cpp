@@ -340,11 +340,10 @@ w_mat_inv : 2D array of float (shape: 3,3), optional
   m.def(
       "floor_w_mat_to_angles",
       [](FixedArray2D<Real, 3, 3> w_mat, FloorPositionStruct *floor0) {
-        auto fn = static_cast<
-            Bmad::
-                FloorWMatToAngles (*)(FixedArray2D<Real, 3, 3>, optional_ref<FloorPositionStruct>)>(
-            &Bmad::floor_w_mat_to_angles
-        );
+        auto fn = static_cast<Bmad::FloorWMatToAngles (*)(
+            FixedArray2D<Real, 3, 3>,
+            optional_ref<FloorPositionStruct>
+        )>(&Bmad::floor_w_mat_to_angles);
         return fn(w_mat, ptr_to_opt_ref(floor0));
       },
       nb::arg("w_mat"),

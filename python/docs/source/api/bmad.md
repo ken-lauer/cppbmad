@@ -10983,6 +10983,15 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/b
       show_root_heading: false
       show_root_toc_entry: false
 
+### set_tune_via_group_knobs
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/dcf69e1313411c7c12b20711dd8597cb89f2711c/bmad/modules/bmad_routine_interface.f90#L2662)
+
+::: pybmad.bmad.set_tune_via_group_knobs
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### set_twiss
 
 Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/dcf69e1313411c7c12b20711dd8597cb89f2711c/bmad/modules/bmad_routine_interface.f90#L2624)
@@ -11123,6 +11132,15 @@ Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.co
 Fortran source: [`bmad/space_charge/open_spacecharge_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/dcf69e1313411c7c12b20711dd8597cb89f2711c/bmad/space_charge/open_spacecharge_mod.f90#L111)
 
 ::: pybmad.bmad.space_charge_rectpipe
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### spin_concat_linear_maps
+
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/dcf69e1313411c7c12b20711dd8597cb89f2711c/bmad/modules/bmad_routine_interface.f90#L2711)
+
+::: pybmad.bmad.spin_concat_linear_maps
     options:
       show_root_heading: false
       show_root_toc_entry: false

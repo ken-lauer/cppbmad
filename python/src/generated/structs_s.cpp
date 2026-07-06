@@ -132,8 +132,9 @@ void init_seq_ele_struct(nb::module_ &m, nb::class_<SeqEleStruct> &cls) {
       .def(
           "__hash__",
           [](const SeqEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -261,8 +262,9 @@ void init_seq_struct(nb::module_ &m, nb::class_<SeqStruct> &cls) {
       .def(
           "__hash__",
           [](const SeqStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -460,8 +462,9 @@ void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommo
       .def(
           "__hash__",
           [](const SpaceChargeCommonStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -528,8 +531,9 @@ void init_spin_axis_struct(nb::module_ &m, nb::class_<SpinAxisStruct> &cls) {
       .def(
           "__hash__",
           [](const SpinAxisStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -595,8 +599,9 @@ void init_spin_eigen_struct(nb::module_ &m, nb::class_<SpinEigenStruct> &cls) {
       .def(
           "__hash__",
           [](const SpinEigenStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -751,8 +756,9 @@ void init_spin_matching_struct(nb::module_ &m, nb::class_<SpinMatchingStruct> &c
       .def(
           "__hash__",
           [](const SpinMatchingStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -838,8 +844,9 @@ void init_spin_orbit_map1_struct(nb::module_ &m, nb::class_<SpinOrbitMap1Struct>
       .def(
           "__hash__",
           [](const SpinOrbitMap1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -914,8 +921,9 @@ void init_spin_polar_struct(nb::module_ &m, nb::class_<SpinPolarStruct> &cls) {
       .def(
           "__hash__",
           [](const SpinPolarStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1011,8 +1019,9 @@ void init_strong_beam_struct(nb::module_ &m, nb::class_<StrongBeamStruct> &cls) 
       .def(
           "__hash__",
           [](const StrongBeamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1086,8 +1095,9 @@ void init_surface_curvature_struct(nb::module_ &m, nb::class_<SurfaceCurvatureSt
       .def(
           "__hash__",
           [](const SurfaceCurvatureStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1172,8 +1182,9 @@ void init_surface_displacement_pt_struct(
       .def(
           "__hash__",
           [](const SurfaceDisplacementPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1239,8 +1250,9 @@ void init_surface_displacement_struct(nb::module_ &m, nb::class_<SurfaceDisplace
       .def(
           "__hash__",
           [](const SurfaceDisplacementStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1330,8 +1342,9 @@ void init_surface_h_misalign_pt_struct(nb::module_ &m, nb::class_<SurfaceHMisali
       .def(
           "__hash__",
           [](const SurfaceHMisalignPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1393,8 +1406,9 @@ void init_surface_h_misalign_struct(nb::module_ &m, nb::class_<SurfaceHMisalignS
       .def(
           "__hash__",
           [](const SurfaceHMisalignStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1476,8 +1490,9 @@ void init_surface_segmented_pt_struct(nb::module_ &m, nb::class_<SurfaceSegmente
       .def(
           "__hash__",
           [](const SurfaceSegmentedPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1539,8 +1554,9 @@ void init_surface_segmented_struct(nb::module_ &m, nb::class_<SurfaceSegmentedSt
       .def(
           "__hash__",
           [](const SurfaceSegmentedStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1598,8 +1614,9 @@ void init_str_index_struct(nb::module_ &m, nb::class_<StrIndexStruct> &cls) {
       .def(
           "__hash__",
           [](const StrIndexStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1672,8 +1689,9 @@ void init_spline_struct(nb::module_ &m, nb::class_<SplineStruct> &cls) {
       .def(
           "__hash__",
           [](const SplineStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1800,8 +1818,9 @@ void init_summation_rdt_struct(nb::module_ &m, nb::class_<SummationRdtStruct> &c
       .def(
           "__hash__",
           [](const SummationRdtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

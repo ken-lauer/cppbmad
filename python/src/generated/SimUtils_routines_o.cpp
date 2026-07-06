@@ -100,71 +100,86 @@ i_num : int
 insert_tag_line : bool, optional
 )"""
   );
-  m
-      .def(
-          "out_io",
-          [](int level,
-             std::string routine_name,
-             std::string line1,
-             std::optional<std::string> line2,
-             std::optional<std::string> line3,
-             std::optional<std::string> line4,
-             std::optional<std::string> line5,
-             std::optional<std::string> line6,
-             std::optional<std::string> line7,
-             std::optional<std::string> line8,
-             std::optional<std::string> line9,
-             std::optional<std::string> line10,
-             std::optional<std::string> line11,
-             std::optional<std::string> line12,
-             std::optional<FArray1D<Real>> r_array,
-             std::optional<FArray1D<Int>> i_array,
-             BoolAlloc1D *l_array,
-             std::optional<bool> insert_tag_line) {
-            auto fn =
-                static_cast<void (*)(int, std::string, std::string, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>, optional_ref<BoolAlloc1D>, std::optional<bool>)>(
-                    &SimUtils::out_io
-                );
-            return fn(
-                level,
-                routine_name,
-                line1,
-                line2,
-                line3,
-                line4,
-                line5,
-                line6,
-                line7,
-                line8,
-                line9,
-                line10,
-                line11,
-                line12,
-                r_array,
-                i_array,
-                ptr_to_opt_ref(l_array),
-                insert_tag_line
-            );
-          },
-          nb::arg("level"),
-          nb::arg("routine_name"),
-          nb::arg("line1"),
-          nb::arg("line2") = nb::none(),
-          nb::arg("line3") = nb::none(),
-          nb::arg("line4") = nb::none(),
-          nb::arg("line5") = nb::none(),
-          nb::arg("line6") = nb::none(),
-          nb::arg("line7") = nb::none(),
-          nb::arg("line8") = nb::none(),
-          nb::arg("line9") = nb::none(),
-          nb::arg("line10") = nb::none(),
-          nb::arg("line11") = nb::none(),
-          nb::arg("line12") = nb::none(),
-          nb::arg("r_array") = nb::none(),
-          nb::arg("i_array") = nb::none(),
-          nb::arg("l_array") = nb::none(),
-          nb::arg("insert_tag_line") = nb::none(),
-          R"""(Wrapper for Fortran routine out_io_line12
+  m.def(
+      "out_io",
+      [](int level,
+         std::string routine_name,
+         std::string line1,
+         std::optional<std::string> line2,
+         std::optional<std::string> line3,
+         std::optional<std::string> line4,
+         std::optional<std::string> line5,
+         std::optional<std::string> line6,
+         std::optional<std::string> line7,
+         std::optional<std::string> line8,
+         std::optional<std::string> line9,
+         std::optional<std::string> line10,
+         std::optional<std::string> line11,
+         std::optional<std::string> line12,
+         std::optional<FArray1D<Real>> r_array,
+         std::optional<FArray1D<Int>> i_array,
+         BoolAlloc1D *l_array,
+         std::optional<bool> insert_tag_line) {
+        auto fn = static_cast<void (*)(
+            int,
+            std::string,
+            std::string,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<FArray1D<Real>>,
+            std::optional<FArray1D<Int>>,
+            optional_ref<BoolAlloc1D>,
+            std::optional<bool>
+        )>(&SimUtils::out_io);
+        return fn(
+            level,
+            routine_name,
+            line1,
+            line2,
+            line3,
+            line4,
+            line5,
+            line6,
+            line7,
+            line8,
+            line9,
+            line10,
+            line11,
+            line12,
+            r_array,
+            i_array,
+            ptr_to_opt_ref(l_array),
+            insert_tag_line
+        );
+      },
+      nb::arg("level"),
+      nb::arg("routine_name"),
+      nb::arg("line1"),
+      nb::arg("line2") = nb::none(),
+      nb::arg("line3") = nb::none(),
+      nb::arg("line4") = nb::none(),
+      nb::arg("line5") = nb::none(),
+      nb::arg("line6") = nb::none(),
+      nb::arg("line7") = nb::none(),
+      nb::arg("line8") = nb::none(),
+      nb::arg("line9") = nb::none(),
+      nb::arg("line10") = nb::none(),
+      nb::arg("line11") = nb::none(),
+      nb::arg("line12") = nb::none(),
+      nb::arg("r_array") = nb::none(),
+      nb::arg("i_array") = nb::none(),
+      nb::arg("l_array") = nb::none(),
+      nb::arg("insert_tag_line") = nb::none(),
+      R"""(Wrapper for Fortran routine out_io_line12
 
 Parameters
 ----------
@@ -204,7 +219,7 @@ l_array : 1D array of bool, optional
 
 insert_tag_line : bool, optional
 )"""
-      );
+  );
   m.def(
       "out_io",
       [](int level,
@@ -214,10 +229,15 @@ insert_tag_line : bool, optional
          std::optional<FArray1D<Int>> i_array,
          BoolAlloc1D *l_array,
          std::optional<bool> insert_tag_line) {
-        auto fn = static_cast<
-            void (*)(int, std::string, CharacterAlloc1D &, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>, optional_ref<BoolAlloc1D>, std::optional<bool>)>(
-            &SimUtils::out_io
-        );
+        auto fn = static_cast<void (*)(
+            int,
+            std::string,
+            CharacterAlloc1D &,
+            std::optional<FArray1D<Real>>,
+            std::optional<FArray1D<Int>>,
+            optional_ref<BoolAlloc1D>,
+            std::optional<bool>
+        )>(&SimUtils::out_io);
         return fn(
             level,
             routine_name,
@@ -256,7 +276,8 @@ insert_tag_line : bool, optional
   );
   m.def(
       "out_io",
-      nb::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(&SimUtils::out_io
+      nb::overload_cast<int, std::string, std::string, bool, std::optional<bool>>(
+          &SimUtils::out_io
       ),
       nb::arg("level"),
       nb::arg("routine_name"),
@@ -361,10 +382,13 @@ insert_tag_line : bool, optional
          std::optional<int> min_level,
          std::optional<int> max_level,
          OutIoOutputDirectStruct *set) {
-        auto fn = static_cast<
-            OutIoOutputDirectStruct (*)(std::optional<int>, std::optional<bool>, std::optional<int>, std::optional<int>, optional_ref<OutIoOutputDirectStruct>)>(
-            &SimUtils::output_direct
-        );
+        auto fn = static_cast<OutIoOutputDirectStruct (*)(
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<int>,
+            std::optional<int>,
+            optional_ref<OutIoOutputDirectStruct>
+        )>(&SimUtils::output_direct);
         return fn(file_unit, print_and_capture, min_level, max_level, ptr_to_opt_ref(set));
       },
       nb::arg("file_unit") = nb::none(),

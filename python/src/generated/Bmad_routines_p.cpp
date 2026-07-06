@@ -496,47 +496,54 @@ This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
 )"""
   );
-  m
-      .def(
-          "parser_error",
-          [](std::string what1,
-             std::optional<std::string> what2,
-             std::optional<std::string> what3,
-             std::optional<std::string> what4,
-             SeqStruct *seq,
-             ParserEleStruct *pele,
-             std::optional<bool> stop_here,
-             std::optional<int> level,
-             std::optional<FArray1D<Real>> r_array,
-             std::optional<FArray1D<Int>> i_array) {
-            auto fn =
-                static_cast<void (*)(std::string, std::optional<std::string>, std::optional<std::string>, std::optional<std::string>, optional_ref<SeqStruct>, optional_ref<ParserEleStruct>, std::optional<bool>, std::optional<int>, std::optional<FArray1D<Real>>, std::optional<FArray1D<Int>>)>(
-                    &Bmad::parser_error
-                );
-            return fn(
-                what1,
-                what2,
-                what3,
-                what4,
-                ptr_to_opt_ref(seq),
-                ptr_to_opt_ref(pele),
-                stop_here,
-                level,
-                r_array,
-                i_array
-            );
-          },
-          nb::arg("what1"),
-          nb::arg("what2") = nb::none(),
-          nb::arg("what3") = nb::none(),
-          nb::arg("what4") = nb::none(),
-          nb::arg("seq") = nb::none(),
-          nb::arg("pele") = nb::none(),
-          nb::arg("stop_here") = nb::none(),
-          nb::arg("level") = nb::none(),
-          nb::arg("r_array") = nb::none(),
-          nb::arg("i_array") = nb::none(),
-          R"""(Routine to print an error message generated when parsing a lattice.
+  m.def(
+      "parser_error",
+      [](std::string what1,
+         std::optional<std::string> what2,
+         std::optional<std::string> what3,
+         std::optional<std::string> what4,
+         SeqStruct *seq,
+         ParserEleStruct *pele,
+         std::optional<bool> stop_here,
+         std::optional<int> level,
+         std::optional<FArray1D<Real>> r_array,
+         std::optional<FArray1D<Int>> i_array) {
+        auto fn = static_cast<void (*)(
+            std::string,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            std::optional<std::string>,
+            optional_ref<SeqStruct>,
+            optional_ref<ParserEleStruct>,
+            std::optional<bool>,
+            std::optional<int>,
+            std::optional<FArray1D<Real>>,
+            std::optional<FArray1D<Int>>
+        )>(&Bmad::parser_error);
+        return fn(
+            what1,
+            what2,
+            what3,
+            what4,
+            ptr_to_opt_ref(seq),
+            ptr_to_opt_ref(pele),
+            stop_here,
+            level,
+            r_array,
+            i_array
+        );
+      },
+      nb::arg("what1"),
+      nb::arg("what2") = nb::none(),
+      nb::arg("what3") = nb::none(),
+      nb::arg("what4") = nb::none(),
+      nb::arg("seq") = nb::none(),
+      nb::arg("pele") = nb::none(),
+      nb::arg("stop_here") = nb::none(),
+      nb::arg("level") = nb::none(),
+      nb::arg("r_array") = nb::none(),
+      nb::arg("i_array") = nb::none(),
+      R"""(Routine to print an error message generated when parsing a lattice.
 
 This subroutine is used by bmad_parser and bmad_parser2.
 This subroutine is not intended for general use.
@@ -574,7 +581,7 @@ r_array : 1D array of float, optional
 i_array : 1D array of int, optional
     Integer numbers to be encoded in error message. See out_io doc.
 )"""
-      );
+  );
   nb::class_<Bmad::ParserExpandLine>(m, "ParserExpandLine", "parser_expand_line return type")
       .def_ro("n_ele_expand", &Bmad::ParserExpandLine::n_ele_expand)
       .def_ro("expanded_line", &Bmad::ParserExpandLine::expanded_line)
@@ -598,11 +605,16 @@ i_array : 1D array of int, optional
          bool no_end_marker,
          LatStruct *lat,
          LatStruct *in_lat) {
-        auto fn = static_cast<
-            Bmad::
-                ParserExpandLine (*)(int, std::string, SeqStructAlloc1D, CharacterAlloc1D &, IntAlloc1D &, bool, optional_ref<LatStruct>, optional_ref<LatStruct>)>(
-            &Bmad::parser_expand_line
-        );
+        auto fn = static_cast<Bmad::ParserExpandLine (*)(
+            int,
+            std::string,
+            SeqStructAlloc1D,
+            CharacterAlloc1D &,
+            IntAlloc1D &,
+            bool,
+            optional_ref<LatStruct>,
+            optional_ref<LatStruct>
+        )>(&Bmad::parser_expand_line);
         return fn(
             i_lev,
             line_name,
@@ -1280,11 +1292,12 @@ err_flag : bool
   m.def(
       "photon_add_to_detector_statistics",
       [](CoordStruct &orbit0, CoordStruct &orbit, EleStruct &ele, PixelPtStruct *pixel_pt) {
-        auto fn = static_cast<
-            Bmad::
-                PhotonAddToDetectorStatistics (*)(CoordStruct &, CoordStruct &, EleStruct &, optional_ref<PixelPtStruct>)>(
-            &Bmad::photon_add_to_detector_statistics
-        );
+        auto fn = static_cast<Bmad::PhotonAddToDetectorStatistics (*)(
+            CoordStruct &,
+            CoordStruct &,
+            EleStruct &,
+            optional_ref<PixelPtStruct>
+        )>(&Bmad::photon_add_to_detector_statistics);
         return fn(orbit0, orbit, ele, ptr_to_opt_ref(pixel_pt));
       },
       nb::arg("orbit0"),
@@ -2904,10 +2917,17 @@ lat : LatStruct
          std::optional<bool> use_2nd_order,
          std::optional<FixedArray1D<Int, 2>> crossover,
          std::optional<FixedArray1D<Int, 2>> crossover_wiggler) {
-        auto fn = static_cast<
-            void (*)(Layout &, double, std::optional<double>, optional_ref<BoolAlloc1D>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Int, 2>>, std::optional<FixedArray1D<Int, 2>>)>(
-            &Bmad::ptc_calculate_tracking_step_size
-        );
+        auto fn = static_cast<void (*)(
+            Layout &,
+            double,
+            std::optional<double>,
+            optional_ref<BoolAlloc1D>,
+            std::optional<double>,
+            std::optional<double>,
+            std::optional<bool>,
+            std::optional<FixedArray1D<Int, 2>>,
+            std::optional<FixedArray1D<Int, 2>>
+        )>(&Bmad::ptc_calculate_tracking_step_size);
         return fn(
             ptc_layout,
             kl_max,
@@ -3315,11 +3335,14 @@ For example, for a change in bmad_com%taylor_order.
          std::optional<bool> include_damping,
          std::optional<bool> create_symplectic_map,
          CoordStruct *orbit1) {
-        auto fn = static_cast<
-            Bmad::
-                PtcSetupMapWithRadiation (*)(EleStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<bool>, std::optional<bool>, optional_ref<CoordStruct>)>(
-            &Bmad::ptc_setup_map_with_radiation
-        );
+        auto fn = static_cast<Bmad::PtcSetupMapWithRadiation (*)(
+            EleStruct &,
+            optional_ref<EleStruct>,
+            std::optional<int>,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<CoordStruct>
+        )>(&Bmad::ptc_setup_map_with_radiation);
         return fn(
             ele1,
             ptr_to_opt_ref(ele2),

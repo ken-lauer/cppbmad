@@ -1099,8 +1099,10 @@ std::string to_string(const ExtraParsingInfoStruct &self) {
        std::pair{"exact_misalign_set", to_string(self.exact_misalign_set())},
        std::pair{"vertical_kick_set", to_string(self.vertical_kick_set())},
        std::pair{"cut_factor_set", to_string(self.cut_factor_set())},
-       std::pair{"translate_patch_drift_time_set", to_string(self.translate_patch_drift_time_set())}
-      }
+       std::pair{
+           "translate_patch_drift_time_set",
+           to_string(self.translate_patch_drift_time_set())
+       }}
   );
 }
 std::string to_string(const Fibre &self) {
@@ -1427,8 +1429,8 @@ std::string to_string(const LatStruct &self) {
   return repr(
       self.get_fortran_ptr(),
       "LatStruct",
-      {std::pair{"use_name", self.use_name()}, std::pair{"#branch", to_string(self.branch().size())}
-      }
+      {std::pair{"use_name", self.use_name()},
+       std::pair{"#branch", to_string(self.branch().size())}}
   );
 }
 std::string to_string(const Layout &self) {
@@ -5197,6 +5199,13 @@ std::string to_string(const Bmad::SetEleAttribute &self) {
       {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"err_id", to_string(self.err_id)}}
   );
 }
+std::string to_string(const Bmad::SpinConcatLinearMaps &self) {
+  return repr(
+      &self,
+      "Bmad::SpinConcatLinearMaps",
+      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"map1", to_string(self.map1)}}
+  );
+}
 std::string to_string(const Bmad::SpinDnDpzFromMat8 &self) {
   return repr(
       &self,
@@ -6179,8 +6188,8 @@ std::string to_string(const Bmad::WriteLatticeScibmadFormat &self) {
   return repr(
       &self,
       "Bmad::WriteLatticeScibmadFormat",
-      {std::pair{"scibmad_file", self.scibmad_file}, std::pair{"err_flag", to_string(self.err_flag)}
-      }
+      {std::pair{"scibmad_file", self.scibmad_file},
+       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

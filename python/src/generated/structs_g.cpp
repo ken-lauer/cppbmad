@@ -93,8 +93,9 @@ void init_general_bin_struct(nb::module_ &m, nb::class_<GeneralBinStruct> &cls) 
       .def(
           "__hash__",
           [](const GeneralBinStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -173,8 +174,9 @@ void init_gen_grad1_struct(nb::module_ &m, nb::class_<GenGrad1Struct> &cls) {
       .def(
           "__hash__",
           [](const GenGrad1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -309,8 +311,9 @@ void init_gen_grad_map_struct(nb::module_ &m, nb::class_<GenGradMapStruct> &cls)
       .def(
           "__hash__",
           [](const GenGradMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -369,8 +372,9 @@ void init_gg_taylor_struct(nb::module_ &m, nb::class_<GgTaylorStruct> &cls) {
       .def(
           "__hash__",
           [](const GgTaylorStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -438,8 +442,9 @@ void init_gg_taylor_term_struct(nb::module_ &m, nb::class_<GgTaylorTermStruct> &
       .def(
           "__hash__",
           [](const GgTaylorTermStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -546,8 +551,9 @@ void init_grid_beam_init_struct(nb::module_ &m, nb::class_<GridBeamInitStruct> &
       .def(
           "__hash__",
           [](const GridBeamInitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -607,8 +613,9 @@ void init_grid_field_pt1_struct(nb::module_ &m, nb::class_<GridFieldPt1Struct> &
       .def(
           "__hash__",
           [](const GridFieldPt1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -663,8 +670,9 @@ void init_grid_field_pt_struct(nb::module_ &m, nb::class_<GridFieldPtStruct> &cl
       .def(
           "__hash__",
           [](const GridFieldPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -844,8 +852,9 @@ void init_grid_field_struct(nb::module_ &m, nb::class_<GridFieldStruct> &cls) {
       .def(
           "__hash__",
           [](const GridFieldStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -929,8 +938,9 @@ void init_gpt_lat_param_struct(nb::module_ &m, nb::class_<GptLatParamStruct> &cl
       .def(
           "__hash__",
           [](const GptLatParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

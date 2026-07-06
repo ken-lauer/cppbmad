@@ -19093,6 +19093,37 @@ def set_tune(phi_a_set: float, phi_b_set: float, dk1: _pybmad.RealArray1D, eles:
         Set True if everything is ok. False otherwise.
     """
 
+def set_tune_via_group_knobs(phi_set: Sequence[float], branch: _pybmad.BranchStruct, group_knobs: Sequence[str], orb: _pybmad.CoordStructAlloc1D, print_err: bool | None = None) -> bool:
+    """
+    Wrapper for Fortran routine set_tune_via_group_knobs
+
+    Parameters
+    ----------
+    phi_set : 1D array of float (shape: 2)
+        Set tunes (radians).
+
+    branch : BranchStruct
+        Lattice branch to tune.
+        This parameter is an input/output and is modified in-place.
+        As an output, branch: Q_tuned lattice branch
+
+    group_knobs : 1D array of str (shape: 2)
+        Names of group knobs to vary.
+
+    orb : 1D array of CoordStruct
+        If RF is off: Energy dE/E at which the tune is computed.
+        This parameter is an input/output and is modified in-place.
+        As an output, orb: New closed orbit.
+
+    print_err : bool, optional
+        Print error message if there is a problem? Default is True.
+
+    Returns
+    -------
+    ok : bool
+        Set True if everything is ok. False otherwise.
+    """
+
 def set_twiss(branch: _pybmad.BranchStruct, twiss_ele: _pybmad.EleStruct, ix_ele: int, match_deta_ds: bool, err_flag: bool, print_err: bool | None = None) -> None:
     """
     Wrapper for Fortran routine set_twiss
@@ -19454,6 +19485,52 @@ def space_charge_rectpipe(mesh3d: _pybmad.Mesh3DStruct, apipe: float, bpipe: flo
     direct_field_calc : bool, optional
 
     integrated_green_function : bool, optional
+    """
+
+class SpinConcatLinearMaps:
+    """spin_concat_linear_maps return type"""
+
+    @property
+    def err_flag(self) -> bool: ...
+
+    @property
+    def map1(self) -> _pybmad.SpinOrbitMap1Struct: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def spin_concat_linear_maps(branch: _pybmad.BranchStruct, n1: int, n2: int, map1_ele: _pybmad.SpinOrbitMap1StructArray1D | None = None, orbit: _pybmad.CoordStructArray1D | None = None, excite_zero: Sequence[str] | None = None) -> SpinConcatLinearMaps:
+    """
+    Wrapper for Fortran routine spin_concat_linear_maps
+
+    Parameters
+    ----------
+    branch : BranchStruct
+        Lattice branch.
+
+    n1 : int
+        Starting element index. Start at element downstream end.
+
+    n2 : int
+        Ending element index. End at element downstream end
+
+    map1_ele : 1D array of SpinOrbitMap1Struct, optional
+        Individual spin/orbit maps.
+
+    orbit : 1D array of CoordStruct, optional
+        Reference orbit used if maps must be created.
+
+    excite_zero : 1D array of str (shape: 3), optional
+        Three lists of elements where ds_vec/dr_vec terms are zeroed.
+
+    Returns
+    -------
+    err_flag : bool
+        Set True if there is an error. False otherwise.
+
+    map1 : SpinOrbitMap1Struct
+        Map with element spin/orbit maps concatenated.
     """
 
 def spin_depolarization_rate(branch: _pybmad.BranchStruct, match_info: _pybmad.SpinMatchingStructArray1D, rad_int_by_ele: _pybmad.RadIntAllEleStruct) -> float:

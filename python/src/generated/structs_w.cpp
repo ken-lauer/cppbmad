@@ -160,8 +160,9 @@ void init_wake_lr_mode_struct(nb::module_ &m, nb::class_<WakeLrModeStruct> &cls)
       .def(
           "__hash__",
           [](const WakeLrModeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -250,8 +251,9 @@ void init_wake_lr_struct(nb::module_ &m, nb::class_<WakeLrStruct> &cls) {
       .def(
           "__hash__",
           [](const WakeLrStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -371,8 +373,9 @@ void init_wake_sr_mode_struct(nb::module_ &m, nb::class_<WakeSrModeStruct> &cls)
       .def(
           "__hash__",
           [](const WakeSrModeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -489,8 +492,9 @@ void init_wake_sr_struct(nb::module_ &m, nb::class_<WakeSrStruct> &cls) {
       .def(
           "__hash__",
           [](const WakeSrStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -606,8 +610,9 @@ void init_wake_sr_z_long_struct(nb::module_ &m, nb::class_<WakeSrZLongStruct> &c
       .def(
           "__hash__",
           [](const WakeSrZLongStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -663,8 +668,9 @@ void init_wake_struct(nb::module_ &m, nb::class_<WakeStruct> &cls) {
       .def(
           "__hash__",
           [](const WakeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -907,8 +913,9 @@ void init_wall3d_section_struct(nb::module_ &m, nb::class_<Wall3dSectionStruct> 
       .def(
           "__hash__",
           [](const Wall3dSectionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1028,8 +1035,9 @@ void init_wall3d_struct(nb::module_ &m, nb::class_<Wall3dStruct> &cls) {
       .def(
           "__hash__",
           [](const Wall3dStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1150,8 +1158,9 @@ void init_wall3d_vertex_struct(nb::module_ &m, nb::class_<Wall3dVertexStruct> &c
       .def(
           "__hash__",
           [](const Wall3dVertexStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

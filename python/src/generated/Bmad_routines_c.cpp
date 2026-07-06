@@ -67,11 +67,12 @@ cbar_mat : 2D array of float (shape: 2,2)
          std::optional<bool> print_err,
          std::optional<bool> is_time_coords,
          EleStruct *ele) {
-        auto fn = static_cast<
-            Bmad::
-                CalcBunchParams (*)(BunchStruct &, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
-            &Bmad::calc_bunch_params
-        );
+        auto fn = static_cast<Bmad::CalcBunchParams (*)(
+            BunchStruct &,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<EleStruct>
+        )>(&Bmad::calc_bunch_params);
         return fn(bunch, print_err, is_time_coords, ptr_to_opt_ref(ele));
       },
       nb::arg("bunch"),
@@ -124,10 +125,16 @@ n_mat : 2D array of float (shape: 6,6), optional
          std::optional<bool> print_err,
          std::optional<bool> is_time_coords,
          EleStruct *ele) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, BunchParamsStruct &, int, double, double, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
-            &Bmad::calc_bunch_params_slice
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            BunchParamsStruct &,
+            int,
+            double,
+            double,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<EleStruct>
+        )>(&Bmad::calc_bunch_params_slice);
         return fn(
             bunch,
             bunch_params,
@@ -187,10 +194,14 @@ err : bool
          std::optional<bool> print_err,
          std::optional<bool> is_time_coords,
          EleStruct *ele) {
-        auto fn = static_cast<
-            bool (*)(BunchStruct &, BunchParamsStruct &, FixedArray1D<Real, 2>, std::optional<bool>, std::optional<bool>, optional_ref<EleStruct>)>(
-            &Bmad::calc_bunch_params_z_slice
-        );
+        auto fn = static_cast<bool (*)(
+            BunchStruct &,
+            BunchParamsStruct &,
+            FixedArray1D<Real, 2>,
+            std::optional<bool>,
+            std::optional<bool>,
+            optional_ref<EleStruct>
+        )>(&Bmad::calc_bunch_params_z_slice);
         return fn(
             bunch,
             bunch_params,
@@ -242,10 +253,12 @@ err : bool
          FArray1D<Real> &charge,
          std::optional<bool> is_time_coords,
          EleStruct *ele) {
-        auto fn = static_cast<
-            BunchParamsStruct (*)(CoordStructArray1D, FArray1D<Real> &, std::optional<bool>, optional_ref<EleStruct>)>(
-            &Bmad::calc_bunch_sigma_matrix_etc
-        );
+        auto fn = static_cast<BunchParamsStruct (*)(
+            CoordStructArray1D,
+            FArray1D<Real> &,
+            std::optional<bool>,
+            optional_ref<EleStruct>
+        )>(&Bmad::calc_bunch_sigma_matrix_etc);
         return fn(particle, charge, is_time_coords, ptr_to_opt_ref(ele));
       },
       nb::arg("particle"),
@@ -469,10 +482,14 @@ ix_vertex : int, optional
          CoordStruct &orb,
          RadIntTrackPointStruct &pt,
          RadIntInfoStruct *info) {
-        auto fn = static_cast<
-            void (*)(EleStruct &, LatParamStruct &, double, CoordStruct &, RadIntTrackPointStruct &, optional_ref<RadIntInfoStruct>)>(
-            &Bmad::calc_wiggler_g_params
-        );
+        auto fn = static_cast<void (*)(
+            EleStruct &,
+            LatParamStruct &,
+            double,
+            CoordStruct &,
+            RadIntTrackPointStruct &,
+            optional_ref<RadIntInfoStruct>
+        )>(&Bmad::calc_wiggler_g_params);
         return fn(ele, param, s_rel, orb, pt, ptr_to_opt_ref(info));
       },
       nb::arg("ele"),
@@ -649,10 +666,14 @@ c_mat : 2D array of float (shape: 2,2)
          LatParamStruct &param,
          CoordStruct *old_orb,
          std::optional<bool> check_momentum) {
-        auto fn = static_cast<
-            void (*)(CoordStruct &, EleStruct &, int, LatParamStruct &, optional_ref<CoordStruct>, std::optional<bool>)>(
-            &Bmad::check_aperture_limit
-        );
+        auto fn = static_cast<void (*)(
+            CoordStruct &,
+            EleStruct &,
+            int,
+            LatParamStruct &,
+            optional_ref<CoordStruct>,
+            std::optional<bool>
+        )>(&Bmad::check_aperture_limit);
         return fn(orb, ele, particle_at, param, ptr_to_opt_ref(old_orb), check_momentum);
       },
       nb::arg("orb"),
@@ -1104,11 +1125,13 @@ err_flag : bool, optional
          std::optional<FArray1D<Real>> eps_rel,
          std::optional<FArray1D<Real>> eps_abs,
          CoordStruct *init_guess) {
-        auto fn = static_cast<
-            Bmad::
-                ClosedOrbitFromTracking (*)(LatStruct &, int, std::optional<FArray1D<Real>>, std::optional<FArray1D<Real>>, optional_ref<CoordStruct>)>(
-            &Bmad::closed_orbit_from_tracking
-        );
+        auto fn = static_cast<Bmad::ClosedOrbitFromTracking (*)(
+            LatStruct &,
+            int,
+            std::optional<FArray1D<Real>>,
+            std::optional<FArray1D<Real>>,
+            optional_ref<CoordStruct>
+        )>(&Bmad::closed_orbit_from_tracking);
         return fn(lat, i_dim, eps_rel, eps_abs, ptr_to_opt_ref(init_guess));
       },
       nb::arg("lat"),
@@ -2473,11 +2496,16 @@ lat : LatStruct
          bool include_downstream_end,
          EleStruct *old_slice,
          CoordStruct *orb_in) {
-        auto fn = static_cast<
-            Bmad::
-                CreateElementSlice (*)(EleStruct &, double, double, LatParamStruct &, bool, bool, optional_ref<EleStruct>, optional_ref<CoordStruct>)>(
-            &Bmad::create_element_slice
-        );
+        auto fn = static_cast<Bmad::CreateElementSlice (*)(
+            EleStruct &,
+            double,
+            double,
+            LatParamStruct &,
+            bool,
+            bool,
+            optional_ref<EleStruct>,
+            optional_ref<CoordStruct>
+        )>(&Bmad::create_element_slice);
         return fn(
             ele_in,
             l_slice,

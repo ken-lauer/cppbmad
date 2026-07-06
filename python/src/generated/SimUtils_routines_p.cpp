@@ -41,10 +41,16 @@ digits : int
          CharacterAlloc1D *names,
          std::optional<bool> exact_case,
          std::optional<bool> print_err) {
-        auto fn = static_cast<
-            void (*)(std::string, IntAlloc1D &, int, int, int, optional_ref<CharacterAlloc1D>, std::optional<bool>, std::optional<bool>)>(
-            &SimUtils::pointer_to_locations
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            IntAlloc1D &,
+            int,
+            int,
+            int,
+            optional_ref<CharacterAlloc1D>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&SimUtils::pointer_to_locations);
         return fn(string, array, num, ix_min, ix_max, ptr_to_opt_ref(names), exact_case, print_err);
       },
       nb::arg("string"),

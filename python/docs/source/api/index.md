@@ -1939,6 +1939,7 @@
 | [`set_status_flags`](bmad.md#set_status_flags) | Routine | [Bmad](bmad.md) |
 | [`set_tune`](bmad.md#set_tune) | Routine | [Bmad](bmad.md) |
 | [`set_tune_3d`](bsim.md#set_tune_3d) | Routine | [Bsim](bsim.md) |
+| [`set_tune_via_group_knobs`](bmad.md#set_tune_via_group_knobs) | Routine | [Bmad](bmad.md) |
 | [`set_twiss`](bmad.md#set_twiss) | Routine | [Bmad](bmad.md) |
 | [`set_z_tune`](bmad.md#set_z_tune) | Routine | [Bmad](bmad.md) |
 | [`settable_dep_var_bookkeeping`](bmad.md#settable_dep_var_bookkeeping) | Routine | [Bmad](bmad.md) |
@@ -1998,6 +1999,7 @@
 | `SPECIES_OUT` | Enum | [Enums](enums.md) |
 | `SPECIES_STRONG` | Enum | [Enums](enums.md) |
 | `SPHERICAL` | Enum | [Enums](enums.md) |
+| [`spin_concat_linear_maps`](bmad.md#spin_concat_linear_maps) | Routine | [Bmad](bmad.md) |
 | [`spin_depolarization_rate`](bmad.md#spin_depolarization_rate) | Routine | [Bmad](bmad.md) |
 | [`spin_dn_dpz_from_mat8`](bmad.md#spin_dn_dpz_from_mat8) | Routine | [Bmad](bmad.md) |
 | [`spin_dn_dpz_from_qmap`](bmad.md#spin_dn_dpz_from_qmap) | Routine | [Bmad](bmad.md) |

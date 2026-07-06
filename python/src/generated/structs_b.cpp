@@ -107,8 +107,9 @@ void init_bbu_beam_struct(nb::module_ &m, nb::class_<BbuBeamStruct> &cls) {
       .def(
           "__hash__",
           [](const BbuBeamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -423,8 +424,9 @@ void init_bbu_param_struct(nb::module_ &m, nb::class_<BbuParamStruct> &cls) {
       .def(
           "__hash__",
           [](const BbuParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -570,8 +572,9 @@ void init_bbu_stage_struct(nb::module_ &m, nb::class_<BbuStageStruct> &cls) {
       .def(
           "__hash__",
           [](const BbuStageStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -633,8 +636,9 @@ void init_bin_struct(nb::module_ &m, nb::class_<BinStruct> &cls) {
       .def(
           "__hash__",
           [](const BinStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -731,8 +735,9 @@ void init_base_line_ele_struct(nb::module_ &m, nb::class_<BaseLineEleStruct> &cl
       .def(
           "__hash__",
           [](const BaseLineEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1078,8 +1083,9 @@ void init_beam_init_struct(nb::module_ &m, nb::class_<BeamInitStruct> &cls) {
       .def(
           "__hash__",
           [](const BeamInitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1115,8 +1121,9 @@ void init_beam_struct(nb::module_ &m, nb::class_<BeamStruct> &cls) {
       .def(
           "__hash__",
           [](const BeamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1502,8 +1509,9 @@ void init_bmad_common_struct(nb::module_ &m, nb::class_<BmadCommonStruct> &cls) 
       .def(
           "__hash__",
           [](const BmadCommonStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1588,8 +1596,9 @@ void init_bmad_normal_form_struct(nb::module_ &m, nb::class_<BmadNormalFormStruc
       .def(
           "__hash__",
           [](const BmadNormalFormStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1703,8 +1712,9 @@ void init_bookkeeping_state_struct(nb::module_ &m, nb::class_<BookkeepingStateSt
       .def(
           "__hash__",
           [](const BookkeepingStateStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1826,8 +1836,9 @@ void init_bpm_phase_coupling_struct(nb::module_ &m, nb::class_<BpmPhaseCouplingS
       .def(
           "__hash__",
           [](const BpmPhaseCouplingStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1892,8 +1903,9 @@ void init_branch_pointer_struct(nb::module_ &m, nb::class_<BranchPointerStruct> 
       .def(
           "__hash__",
           [](const BranchPointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2087,8 +2099,9 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
       .def(
           "__hash__",
           [](const BranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2359,8 +2372,9 @@ void init_bunch_params_struct(nb::module_ &m, nb::class_<BunchParamsStruct> &cls
       .def(
           "__hash__",
           [](const BunchParamsStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2522,8 +2536,9 @@ void init_bunch_struct(nb::module_ &m, nb::class_<BunchStruct> &cls) {
       .def(
           "__hash__",
           [](const BunchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2597,8 +2612,9 @@ void init_bunch_track_struct(nb::module_ &m, nb::class_<BunchTrackStruct> &cls) 
       .def(
           "__hash__",
           [](const BunchTrackStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2662,8 +2678,9 @@ void init_bicubic_cmplx_coef_struct(nb::module_ &m, nb::class_<BicubicCmplxCoefS
       .def(
           "__hash__",
           [](const BicubicCmplxCoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2678,8 +2695,9 @@ void init_bicubic_cmplx_coef_struct(nb::module_ &m, nb::class_<BicubicCmplxCoefS
 // bicubic_coef_struct
 void init_bicubic_coef_struct(nb::module_ &m, nb::class_<BicubicCoefStruct> &cls) {
   cls.def(
-         nb::init<std::optional<std::vector<std::vector<double>>>, std::optional<std::vector<int>>>(
-         ),
+         nb::init<
+             std::optional<std::vector<std::vector<double>>>,
+             std::optional<std::vector<int>>>(),
          nb::arg("coef") = nb::none(),
          nb::arg("i_box") = nb::none()
   )
@@ -2720,8 +2738,9 @@ void init_bicubic_coef_struct(nb::module_ &m, nb::class_<BicubicCoefStruct> &cls
       .def(
           "__hash__",
           [](const BicubicCoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

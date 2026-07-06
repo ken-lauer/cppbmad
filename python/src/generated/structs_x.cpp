@@ -59,8 +59,9 @@ void init_xy_disp_struct(nb::module_ &m, nb::class_<XyDispStruct> &cls) {
       .def(
           "__hash__",
           [](const XyDispStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

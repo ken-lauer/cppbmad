@@ -152,8 +152,9 @@ void init_normal_modes_struct(nb::module_ &m, nb::class_<NormalModesStruct> &cls
       .def(
           "__hash__",
           [](const NormalModesStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -212,8 +213,9 @@ void init_named_number_struct(nb::module_ &m, nb::class_<NamedNumberStruct> &cls
       .def(
           "__hash__",
           [](const NamedNumberStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -280,8 +282,9 @@ void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &cls) {
       .def(
           "__hash__",
           [](const NametableStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

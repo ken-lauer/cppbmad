@@ -115,8 +115,9 @@ void init_cartesian_map_struct(nb::module_ &m, nb::class_<CartesianMapStruct> &c
       .def(
           "__hash__",
           [](const CartesianMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -214,8 +215,9 @@ void init_cartesian_map_term1_struct(nb::module_ &m, nb::class_<CartesianMapTerm
       .def(
           "__hash__",
           [](const CartesianMapTerm1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -276,8 +278,9 @@ void init_cartesian_map_term_struct(nb::module_ &m, nb::class_<CartesianMapTermS
       .def(
           "__hash__",
           [](const CartesianMapTermStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -332,8 +335,9 @@ void init_complex_taylor_struct(nb::module_ &m, nb::class_<ComplexTaylorStruct> 
       .def(
           "__hash__",
           [](const ComplexTaylorStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -403,8 +407,9 @@ void init_complex_taylor_term_struct(nb::module_ &m, nb::class_<ComplexTaylorTer
       .def(
           "__hash__",
           [](const ComplexTaylorTermStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -496,8 +501,9 @@ void init_control_ramp1_struct(nb::module_ &m, nb::class_<ControlRamp1Struct> &c
       .def(
           "__hash__",
           [](const ControlRamp1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -625,8 +631,9 @@ void init_control_struct(nb::module_ &m, nb::class_<ControlStruct> &cls) {
       .def(
           "__hash__",
           [](const ControlStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -691,8 +698,9 @@ void init_control_var1_struct(nb::module_ &m, nb::class_<ControlVar1Struct> &cls
       .def(
           "__hash__",
           [](const ControlVar1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -753,8 +761,9 @@ void init_controller_struct(nb::module_ &m, nb::class_<ControllerStruct> &cls) {
       .def(
           "__hash__",
           [](const ControllerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -826,8 +835,9 @@ void init_converter_dir_1D_struct(nb::module_ &m, nb::class_<ConverterDir1dStruc
       .def(
           "__hash__",
           [](const ConverterDir1dStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -882,8 +892,9 @@ void init_converter_dir_2D_struct(nb::module_ &m, nb::class_<ConverterDir2dStruc
       .def(
           "__hash__",
           [](const ConverterDir2dStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -949,8 +960,9 @@ void init_converter_dir_coef_struct(nb::module_ &m, nb::class_<ConverterDirCoefS
       .def(
           "__hash__",
           [](const ConverterDirCoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1062,8 +1074,9 @@ void init_converter_direction_out_struct(
       .def(
           "__hash__",
           [](const ConverterDirectionOutStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1132,8 +1145,9 @@ void init_converter_distribution_struct(
       .def(
           "__hash__",
           [](const ConverterDistributionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1273,8 +1287,9 @@ void init_converter_prob_pc_r_struct(nb::module_ &m, nb::class_<ConverterProbPcR
       .def(
           "__hash__",
           [](const ConverterProbPcRStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1333,8 +1348,9 @@ void init_converter_struct(nb::module_ &m, nb::class_<ConverterStruct> &cls) {
       .def(
           "__hash__",
           [](const ConverterStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1425,15 +1441,18 @@ void init_converter_sub_distribution_struct(
       )
       .def(
           "__eq__",
-          [](const ConverterSubDistributionStruct &self, const ConverterSubDistributionStruct &other
-          ) { return self.get_fortran_ptr() == other.get_fortran_ptr(); },
+          [](const ConverterSubDistributionStruct &self,
+             const ConverterSubDistributionStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
           nb::is_operator()
       )
       .def(
           "__hash__",
           [](const ConverterSubDistributionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1493,8 +1512,9 @@ void init_coord_array_struct(nb::module_ &m, nb::class_<CoordArrayStruct> &cls) 
       .def(
           "__hash__",
           [](const CoordArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1713,8 +1733,9 @@ void init_coord_struct(nb::module_ &m, nb::class_<CoordStruct> &cls) {
       .def(
           "__hash__",
           [](const CoordStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1870,8 +1891,9 @@ void init_cylindrical_map_struct(nb::module_ &m, nb::class_<CylindricalMapStruct
       .def(
           "__hash__",
           [](const CylindricalMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1944,8 +1966,9 @@ void init_cylindrical_map_term1_struct(nb::module_ &m, nb::class_<CylindricalMap
       .def(
           "__hash__",
           [](const CylindricalMapTerm1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2006,8 +2029,9 @@ void init_cylindrical_map_term_struct(nb::module_ &m, nb::class_<CylindricalMapT
       .def(
           "__hash__",
           [](const CylindricalMapTermStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2179,8 +2203,9 @@ void init_csr_bunch_slice_struct(nb::module_ &m, nb::class_<CsrBunchSliceStruct>
       .def(
           "__hash__",
           [](const CsrBunchSliceStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2351,8 +2376,9 @@ void init_csr_ele_info_struct(nb::module_ &m, nb::class_<CsrEleInfoStruct> &cls)
       .def(
           "__hash__",
           [](const CsrEleInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2524,8 +2550,9 @@ void init_csr_kick1_struct(nb::module_ &m, nb::class_<CsrKick1Struct> &cls) {
       .def(
           "__hash__",
           [](const CsrKick1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2601,8 +2628,9 @@ void init_csr_particle_position_struct(nb::module_ &m, nb::class_<CsrParticlePos
       .def(
           "__hash__",
           [](const CsrParticlePositionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2800,8 +2828,9 @@ void init_csr_struct(nb::module_ &m, nb::class_<CsrStruct> &cls) {
       .def(
           "__hash__",
           [](const CsrStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2870,8 +2899,9 @@ void init_cmplx_field1_at_2D_pt_struct(nb::module_ &m, nb::class_<CmplxField1At2
       .def(
           "__hash__",
           [](const CmplxField1At2dPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2972,8 +3002,9 @@ void init_cmplx_field1_at_3D_pt_struct(nb::module_ &m, nb::class_<CmplxField1At3
       .def(
           "__hash__",
           [](const CmplxField1At3dPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3021,8 +3052,9 @@ void init_cmplx_field_at_2D_box_struct(nb::module_ &m, nb::class_<CmplxFieldAt2d
       .def(
           "__hash__",
           [](const CmplxFieldAt2dBoxStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3070,8 +3102,9 @@ void init_cmplx_field_at_3D_box_struct(nb::module_ &m, nb::class_<CmplxFieldAt3d
       .def(
           "__hash__",
           [](const CmplxFieldAt3dBoxStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3147,8 +3180,9 @@ void init_crystal_param_struct(nb::module_ &m, nb::class_<CrystalParamStruct> &c
       .def(
           "__hash__",
           [](const CrystalParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

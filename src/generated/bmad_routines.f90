@@ -86,10 +86,11 @@ use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     save_a_bunch_step, save_a_step, sbend_body_with_k1_map, set_ele_attribute, &
     set_ele_defaults, set_ele_name, set_ele_real_attribute, set_ele_status_stale, &
     set_flags_for_changed_attribute, set_fringe_on_off, set_lords_status_stale, set_on_off, &
-    set_orbit_to_zero, set_ptc, set_ptc_base_state, set_status_flags, set_tune, set_twiss, &
-    set_z_tune, significant_difference, slice_lattice, sol_quad_mat6_calc, &
-    spin_depolarization_rate, spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, &
-    spin_map1_normalize, spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
+    set_orbit_to_zero, set_ptc, set_ptc_base_state, set_status_flags, set_tune, &
+    set_tune_via_group_knobs, set_twiss, set_z_tune, significant_difference, slice_lattice, &
+    sol_quad_mat6_calc, spin_concat_linear_maps, spin_depolarization_rate, &
+    spin_dn_dpz_from_mat8, spin_dn_dpz_from_qmap, spin_map1_normalize, &
+    spin_mat8_resonance_strengths, spin_mat_to_eigen, spin_omega, &
     spin_quat_resonance_strengths, spin_taylor_to_linear, spinor_to_polar, spinor_to_vec, &
     spline_fit_orbit, split_lat, sprint_spin_taylor_map, start_branch_at, stream_ele_end, &
     strong_beam_sigma_calc, strong_beam_strength, symp_lie_bmad, taper_mag_strengths, &
@@ -31416,6 +31417,65 @@ subroutine fortran_set_tune (phi_a_set, phi_b_set, dk1, eles, branch, orb, print
   call c_f_pointer(ok, f_ok_ptr)
   f_ok_ptr = f_ok
 end subroutine
+subroutine fortran_set_tune_via_group_knobs (phi_set, branch, group_knobs, orb, print_err, ok) &
+    bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: branch_struct, coord_struct
+  implicit none
+  ! ** In parameters **
+  type(array_descriptor_t), intent(in) :: phi_set
+  real(rp) :: f_phi_set(2)
+  real(c_double), pointer :: f_phi_set_ptr(:)
+  type(c_ptr), intent(in), value :: group_knobs
+  character(len=4096), target :: f_group_knobs
+  character(kind=c_char), pointer :: f_group_knobs_ptr(:)
+  type(c_ptr), intent(in), value :: print_err  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_print_err
+  logical, target :: f_print_err_native
+  logical, pointer :: f_print_err_native_ptr
+  logical(c_bool), pointer :: f_print_err_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ok  ! 0D_NOT_logical
+  logical :: f_ok
+  logical(c_bool), pointer :: f_ok_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: branch  ! 0D_NOT_type
+  type(branch_struct), pointer :: f_branch
+  type(c_ptr), intent(in), value :: orb
+  type(coord_struct_container_alloc), pointer :: f_orb
+  ! ** End of parameters **
+  !! general array (1D_NOT_real) in
+  if (c_associated(phi_set%data_ptr)) then
+    call c_f_pointer(phi_set%data_ptr, f_phi_set_ptr, [phi_set%dims(1)])
+    f_phi_set = f_phi_set_ptr(:)
+  else
+    f_phi_set_ptr => null()
+  endif
+  ! inout: f_branch 0D_NOT_type
+  if (.not. c_associated(branch)) return
+  call c_f_pointer(branch, f_branch)
+  ! in: f_group_knobs 1D_NOT_character
+  if (.not. c_associated(group_knobs)) return
+  call c_f_pointer(group_knobs, f_group_knobs_ptr, [huge(0)])
+  call to_f_str(f_group_knobs_ptr, f_group_knobs)
+  !! container type array (1D_ALLOC_type)
+  if (c_associated(orb))   call c_f_pointer(orb, f_orb)
+  ! in: f_print_err 0D_NOT_logical
+  if (c_associated(print_err)) then
+    call c_f_pointer(print_err, f_print_err_ptr)
+    f_print_err_native = f_print_err_ptr
+    f_print_err_native_ptr => f_print_err_native
+  else
+    f_print_err_native_ptr => null()
+  endif
+  f_ok = set_tune_via_group_knobs(f_phi_set, f_branch, f_group_knobs, f_orb%data, &
+      f_print_err_native_ptr)
+
+  ! out: f_ok 0D_NOT_logical
+  call c_f_pointer(ok, f_ok_ptr)
+  f_ok_ptr = f_ok
+end subroutine
 subroutine fortran_set_twiss (branch, twiss_ele, ix_ele, match_deta_ds, err_flag, print_err) &
     bind(c)
 
@@ -32104,6 +32164,86 @@ subroutine fortran_space_charge_rectpipe (mesh3d, apipe, bpipe, direct_field_cal
   call space_charge_rectpipe(f_mesh3d, f_apipe, f_bpipe, f_direct_field_calc_native_ptr, &
       f_integrated_green_function_native_ptr)
 
+end subroutine
+subroutine fortran_spin_concat_linear_maps (err_flag, map1, branch, n1, n2, map1_ele, orbit, &
+    excite_zero) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: branch_struct, coord_struct, spin_orbit_map1_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: branch  ! 0D_NOT_type
+  type(branch_struct), pointer :: f_branch
+  integer(c_int) :: n1  ! 0D_NOT_integer
+  integer :: f_n1
+  integer(c_int) :: n2  ! 0D_NOT_integer
+  integer :: f_n2
+  type(array_descriptor_t), intent(in) :: orbit
+  type(coord_struct), pointer :: f_orbit(:)
+  type(coord_struct), pointer :: f_orbit_ptr(:)
+  type(c_ptr), intent(in), value :: excite_zero
+  character(len=4096), target :: f_excite_zero
+  character(kind=c_char), pointer :: f_excite_zero_ptr(:)
+  character(len=4096), pointer :: f_excite_zero_call_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical :: f_err_flag
+  logical(c_bool), pointer :: f_err_flag_ptr
+  type(c_ptr), value :: map1  ! 0D_NOT_type
+  type(spin_orbit_map1_struct), pointer :: f_map1
+  ! ** Inout parameters **
+  type(array_descriptor_t), intent(in) :: map1_ele
+  type(spin_orbit_map1_struct), pointer :: f_map1_ele(:)
+  type(spin_orbit_map1_struct), pointer :: f_map1_ele_ptr(:)
+  ! ** End of parameters **
+  ! out: f_map1 0D_NOT_type
+  if (.not. c_associated(map1)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(map1, f_map1)
+  ! in: f_branch 0D_NOT_type
+  if (.not. c_associated(branch)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(branch, f_branch)
+  ! in: f_n1 0D_NOT_integer
+  f_n1 = n1
+  ! in: f_n2 0D_NOT_integer
+  f_n2 = n2
+  !! type array (1D_NOT_type)
+  if (c_associated(map1_ele%data_ptr)) then
+    call c_f_pointer(map1_ele%data_ptr, f_map1_ele_ptr, [map1_ele%dims(1)])
+    f_map1_ele(0:) => f_map1_ele_ptr
+  else
+    f_map1_ele => null()
+  endif
+  !! type array (1D_NOT_type)
+  if (c_associated(orbit%data_ptr)) then
+    call c_f_pointer(orbit%data_ptr, f_orbit_ptr, [orbit%dims(1)])
+    f_orbit(0:) => f_orbit_ptr
+  else
+    f_orbit => null()
+  endif
+  ! in: f_excite_zero 1D_NOT_character
+  if (c_associated(excite_zero)) then
+    call c_f_pointer(excite_zero, f_excite_zero_ptr, [huge(0)])
+    call to_f_str(f_excite_zero_ptr, f_excite_zero)
+    f_excite_zero_call_ptr => f_excite_zero
+  else
+    f_excite_zero_call_ptr => null()
+  endif
+  call spin_concat_linear_maps(f_err_flag, f_map1, f_branch, f_n1, f_n2, f_map1_ele, f_orbit, &
+      f_excite_zero_call_ptr)
+
+  ! out: f_err_flag 0D_NOT_logical
+  call c_f_pointer(err_flag, f_err_flag_ptr)
+  f_err_flag_ptr = f_err_flag
+  ! out: f_map1 0D_NOT_type
+  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_spin_depolarization_rate (branch, match_info, rad_int_by_ele, depol_rate) &
     bind(c)

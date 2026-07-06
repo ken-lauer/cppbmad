@@ -117,8 +117,9 @@ void init_high_energy_space_charge_struct(
       .def(
           "__hash__",
           [](const HighEnergySpaceChargeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

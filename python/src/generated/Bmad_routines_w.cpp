@@ -505,10 +505,14 @@ err : bool
          std::optional<int> file_format,
          LatStruct *lat,
          std::optional<bool> alive_only) {
-        auto fn = static_cast<
-            void (*)(std::string, BeamStruct &, std::optional<bool>, std::optional<int>, optional_ref<LatStruct>, std::optional<bool>)>(
-            &Bmad::write_beam_file
-        );
+        auto fn = static_cast<void (*)(
+            std::string,
+            BeamStruct &,
+            std::optional<bool>,
+            std::optional<int>,
+            optional_ref<LatStruct>,
+            std::optional<bool>
+        )>(&Bmad::write_beam_file);
         return fn(file_name, beam, new_file, file_format, ptr_to_opt_ref(lat), alive_only);
       },
       nb::arg("file_name"),
@@ -678,8 +682,10 @@ lat : LatStruct
   );
   m.def(
       "write_bmad_lattice_file",
-      [](std::string bmad_file, LatStruct &lat, std::optional<int> output_form, CoordStruct *orbit0
-      ) {
+      [](std::string bmad_file,
+         LatStruct &lat,
+         std::optional<int> output_form,
+         CoordStruct *orbit0) {
         auto fn = static_cast<
             bool (*)(std::string, LatStruct &, std::optional<int>, optional_ref<CoordStruct>)>(
             &Bmad::write_bmad_lattice_file
@@ -721,10 +727,13 @@ err : bool, optional
          std::optional<int> n_files,
          CharacterAlloc1D *file_names,
          ExtraParsingInfoStruct *extra) {
-        auto fn = static_cast<
-            bool (*)(std::string, LatStruct &, std::optional<int>, optional_ref<CharacterAlloc1D>, optional_ref<ExtraParsingInfoStruct>)>(
-            &Bmad::write_digested_bmad_file
-        );
+        auto fn = static_cast<bool (*)(
+            std::string,
+            LatStruct &,
+            std::optional<int>,
+            optional_ref<CharacterAlloc1D>,
+            optional_ref<ExtraParsingInfoStruct>
+        )>(&Bmad::write_digested_bmad_file);
         return fn(digested_name, lat, n_files, ptr_to_opt_ref(file_names), ptr_to_opt_ref(extra));
       },
       nb::arg("digested_name"),
@@ -765,10 +774,14 @@ err_flag : bool, optional
          int dimensions,
          StrIndexStruct *fieldgrid_names,
          std::optional<bool> only_phasing) {
-        auto fn = static_cast<
-            void (*)(int, EleStruct &, std::string, int, optional_ref<StrIndexStruct>, std::optional<bool>)>(
-            &Bmad::write_gpt_ele
-        );
+        auto fn = static_cast<void (*)(
+            int,
+            EleStruct &,
+            std::string,
+            int,
+            optional_ref<StrIndexStruct>,
+            std::optional<bool>
+        )>(&Bmad::write_gpt_ele);
         return fn(iu, ele, name, dimensions, ptr_to_opt_ref(fieldgrid_names), only_phasing);
       },
       nb::arg("iu"),
@@ -1386,10 +1399,14 @@ err : bool, optional
          std::optional<std::string> style,
          BranchStruct *branch,
          std::optional<std::string> format) {
-        auto fn = static_cast<
-            bool (*)(int, BunchStruct &, EleStruct &, std::optional<std::string>, optional_ref<BranchStruct>, std::optional<std::string>)>(
-            &Bmad::write_time_particle_distribution
-        );
+        auto fn = static_cast<bool (*)(
+            int,
+            BunchStruct &,
+            EleStruct &,
+            std::optional<std::string>,
+            optional_ref<BranchStruct>,
+            std::optional<std::string>
+        )>(&Bmad::write_time_particle_distribution);
         return fn(time_file_unit, bunch, ele, style, ptr_to_opt_ref(branch), format);
       },
       nb::arg("time_file_unit"),

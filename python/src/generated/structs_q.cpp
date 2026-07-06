@@ -203,8 +203,9 @@ void init_qp_axis_struct(nb::module_ &m, nb::class_<QpAxisStruct> &cls) {
       .def(
           "__hash__",
           [](const QpAxisStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -292,8 +293,9 @@ void init_qp_legend_struct(nb::module_ &m, nb::class_<QpLegendStruct> &cls) {
       .def(
           "__hash__",
           [](const QpLegendStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -339,8 +341,9 @@ void init_qp_line_struct(nb::module_ &m, nb::class_<QpLineStruct> &cls) {
       .def(
           "__hash__",
           [](const QpLineStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -386,8 +389,9 @@ void init_qp_point_struct(nb::module_ &m, nb::class_<QpPointStruct> &cls) {
       .def(
           "__hash__",
           [](const QpPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -442,8 +446,9 @@ void init_qp_rect_struct(nb::module_ &m, nb::class_<QpRectStruct> &cls) {
       .def(
           "__hash__",
           [](const QpRectStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -503,8 +508,9 @@ void init_qp_symbol_struct(nb::module_ &m, nb::class_<QpSymbolStruct> &cls) {
       .def(
           "__hash__",
           [](const QpSymbolStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

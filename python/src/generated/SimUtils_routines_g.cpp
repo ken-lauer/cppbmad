@@ -104,9 +104,9 @@ value : float
   m.def(
       "get_a_char",
       [](bool wait, CharacterAlloc1D *ignore_this) {
-        auto fn =
-            static_cast<std::string (*)(bool, optional_ref<CharacterAlloc1D>)>(&SimUtils::get_a_char
-            );
+        auto fn = static_cast<std::string (*)(bool, optional_ref<CharacterAlloc1D>)>(
+            &SimUtils::get_a_char
+        );
         return fn(wait, ptr_to_opt_ref(ignore_this));
       },
       nb::arg("wait"),

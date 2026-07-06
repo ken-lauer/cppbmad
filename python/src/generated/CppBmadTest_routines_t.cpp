@@ -153,11 +153,12 @@ opt_status : 1D array of int (shape: 2)
          BunchStruct &val_inout,
          BunchStruct *val_in_opt,
          BunchStruct *val_inout_opt) {
-        auto fn = static_cast<
-            CppBmadTest::
-                TestBunchStructScalar (*)(BunchStruct &, BunchStruct &, optional_ref<BunchStruct>, optional_ref<BunchStruct>)>(
-            &CppBmadTest::test_bunch_struct_scalar
-        );
+        auto fn = static_cast<CppBmadTest::TestBunchStructScalar (*)(
+            BunchStruct &,
+            BunchStruct &,
+            optional_ref<BunchStruct>,
+            optional_ref<BunchStruct>
+        )>(&CppBmadTest::test_bunch_struct_scalar);
         return fn(val_in, val_inout, ptr_to_opt_ref(val_in_opt), ptr_to_opt_ref(val_inout_opt));
       },
       nb::arg("val_in"),
@@ -206,11 +207,12 @@ opt_status : 1D array of int (shape: 2)
          CharacterAlloc1D &arr_inout,
          CharacterAlloc1D *arr_in_opt,
          CharacterAlloc1D *arr_inout_opt) {
-        auto fn = static_cast<
-            CppBmadTest::
-                TestCharacterArray (*)(CharacterAlloc1D &, CharacterAlloc1D &, optional_ref<CharacterAlloc1D>, optional_ref<CharacterAlloc1D>)>(
-            &CppBmadTest::test_character_array
-        );
+        auto fn = static_cast<CppBmadTest::TestCharacterArray (*)(
+            CharacterAlloc1D &,
+            CharacterAlloc1D &,
+            optional_ref<CharacterAlloc1D>,
+            optional_ref<CharacterAlloc1D>
+        )>(&CppBmadTest::test_character_array);
         return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
       },
       nb::arg("arr_in"),
@@ -572,11 +574,12 @@ val_inout_opt : int, optional
          BoolAlloc1D &arr_inout,
          BoolAlloc1D *arr_in_opt,
          BoolAlloc1D *arr_inout_opt) {
-        auto fn = static_cast<
-            CppBmadTest::
-                TestLogicalArray (*)(BoolAlloc1D &, BoolAlloc1D &, optional_ref<BoolAlloc1D>, optional_ref<BoolAlloc1D>)>(
-            &CppBmadTest::test_logical_array
-        );
+        auto fn = static_cast<CppBmadTest::TestLogicalArray (*)(
+            BoolAlloc1D &,
+            BoolAlloc1D &,
+            optional_ref<BoolAlloc1D>,
+            optional_ref<BoolAlloc1D>
+        )>(&CppBmadTest::test_logical_array);
         return fn(arr_in, arr_inout, ptr_to_opt_ref(arr_in_opt), ptr_to_opt_ref(arr_inout_opt));
       },
       nb::arg("arr_in"),

@@ -528,11 +528,14 @@ in attribute_mod. Not meant for general use.
          NormalModesStruct *modes,
          std::optional<bool> print_p0c_shift_warning,
          std::optional<bool> conserve_momentum) {
-        auto fn = static_cast<
-            Bmad::
-                InitBeamDistribution (*)(EleStruct &, LatParamStruct &, BeamInitStruct &, optional_ref<NormalModesStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::init_beam_distribution
-        );
+        auto fn = static_cast<Bmad::InitBeamDistribution (*)(
+            EleStruct &,
+            LatParamStruct &,
+            BeamInitStruct &,
+            optional_ref<NormalModesStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::init_beam_distribution);
         return fn(
             ele,
             param,
@@ -644,11 +647,15 @@ lat : LatStruct, optional
          NormalModesStruct *modes,
          std::optional<bool> print_p0c_shift_warning,
          std::optional<bool> conserve_momentum) {
-        auto fn = static_cast<
-            Bmad::
-                InitBunchDistribution (*)(EleStruct &, LatParamStruct &, BeamInitStruct &, int, optional_ref<NormalModesStruct>, std::optional<bool>, std::optional<bool>)>(
-            &Bmad::init_bunch_distribution
-        );
+        auto fn = static_cast<Bmad::InitBunchDistribution (*)(
+            EleStruct &,
+            LatParamStruct &,
+            BeamInitStruct &,
+            int,
+            optional_ref<NormalModesStruct>,
+            std::optional<bool>,
+            std::optional<bool>
+        )>(&Bmad::init_bunch_distribution);
         return fn(
             ele,
             param,
@@ -769,9 +776,20 @@ save : bool, optional
          std::optional<FixedArray1D<Real, 3>> spin,
          std::optional<double> s_pos,
          std::optional<bool> random_on) {
-        auto fn = static_cast<void (*)(CoordStruct &, FixedArray1D<Real, 6>, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>, std::optional<double>, std::optional<bool>)>(
-            &Bmad::init_coord
-        );
+        auto fn = static_cast<void (*)(
+            CoordStruct &,
+            FixedArray1D<Real, 6>,
+            optional_ref<EleStruct>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            std::optional<double>,
+            std::optional<bool>,
+            std::optional<FixedArray1D<Real, 3>>,
+            std::optional<double>,
+            std::optional<bool>
+        )>(&Bmad::init_coord);
         return fn(
             orb,
             vec,
@@ -877,10 +895,19 @@ random_on : bool, optional
          std::optional<FixedArray1D<Real, 3>> spin,
          std::optional<double> s_pos,
          std::optional<bool> random_on) {
-        auto fn = static_cast<
-            CoordStruct (*)(CoordStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>, std::optional<double>, std::optional<bool>)>(
-            &Bmad::init_coord
-        );
+        auto fn = static_cast<CoordStruct (*)(
+            CoordStruct &,
+            optional_ref<EleStruct>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            std::optional<double>,
+            std::optional<bool>,
+            std::optional<FixedArray1D<Real, 3>>,
+            std::optional<double>,
+            std::optional<bool>
+        )>(&Bmad::init_coord);
         return fn(
             orb_in,
             ptr_to_opt_ref(ele),
@@ -984,10 +1011,17 @@ orb_out : CoordStruct
          std::optional<double> t_offset,
          std::optional<bool> shift_vec6,
          std::optional<FixedArray1D<Real, 3>> spin) {
-        auto fn = static_cast<
-            void (*)(CoordStruct &, optional_ref<EleStruct>, std::optional<int>, std::optional<int>, std::optional<int>, std::optional<double>, std::optional<double>, std::optional<bool>, std::optional<FixedArray1D<Real, 3>>)>(
-            &Bmad::init_coord
-        );
+        auto fn = static_cast<void (*)(
+            CoordStruct &,
+            optional_ref<EleStruct>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<double>,
+            std::optional<double>,
+            std::optional<bool>,
+            std::optional<FixedArray1D<Real, 3>>
+        )>(&Bmad::init_coord);
         return fn(
             orb,
             ptr_to_opt_ref(ele),
@@ -1080,10 +1114,12 @@ lat : LatStruct
          std::optional<int> sub_key,
          std::optional<int> ix_ele,
          BranchStruct *branch) {
-        auto fn = static_cast<
-            EleStruct (*)(std::optional<int>, std::optional<int>, std::optional<int>, optional_ref<BranchStruct>)>(
-            &Bmad::init_ele
-        );
+        auto fn = static_cast<EleStruct (*)(
+            std::optional<int>,
+            std::optional<int>,
+            std::optional<int>,
+            optional_ref<BranchStruct>
+        )>(&Bmad::init_ele);
         return fn(key, sub_key, ix_ele, ptr_to_opt_ref(branch));
       },
       nb::arg("key") = nb::none(),

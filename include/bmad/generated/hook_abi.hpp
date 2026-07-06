@@ -38,8 +38,15 @@ using TimeRungeKuttaHook =
 void set_time_runge_kutta_periodic_kick_hook(TimeRungeKuttaHook fn);
 void clear_time_runge_kutta_periodic_kick_hook();
 
-using Track1BunchHook = std::function<
-    void(BunchStruct &, EleStruct &, bool &, CoordStructArray1D *, int *, bool &, BunchTrackStruct *)>;
+using Track1BunchHook = std::function<void(
+    BunchStruct &,
+    EleStruct &,
+    bool &,
+    CoordStructArray1D *,
+    int *,
+    bool &,
+    BunchTrackStruct *
+)>;
 void set_track1_bunch_hook(Track1BunchHook fn);
 void clear_track1_bunch_hook();
 

@@ -61,8 +61,9 @@ void init_target_point_struct(nb::module_ &m, nb::class_<TargetPointStruct> &cls
       .def(
           "__hash__",
           [](const TargetPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -121,8 +122,9 @@ void init_taylor_struct(nb::module_ &m, nb::class_<TaylorStruct> &cls) {
       .def(
           "__hash__",
           [](const TaylorStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -190,8 +192,9 @@ void init_taylor_term_struct(nb::module_ &m, nb::class_<TaylorTermStruct> &cls) 
       .def(
           "__hash__",
           [](const TaylorTermStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -322,8 +325,9 @@ void init_track_point_struct(nb::module_ &m, nb::class_<TrackPointStruct> &cls) 
       .def(
           "__hash__",
           [](const TrackPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -406,8 +410,9 @@ void init_track_struct(nb::module_ &m, nb::class_<TrackStruct> &cls) {
       .def(
           "__hash__",
           [](const TrackStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -495,8 +500,9 @@ void init_twiss_struct(nb::module_ &m, nb::class_<TwissStruct> &cls) {
       .def(
           "__hash__",
           [](const TwissStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -556,8 +562,9 @@ void init_tricubic_cmplx_coef_struct(nb::module_ &m, nb::class_<TricubicCmplxCoe
       .def(
           "__hash__",
           [](const TricubicCmplxCoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -615,8 +622,9 @@ void init_tricubic_coef_struct(nb::module_ &m, nb::class_<TricubicCoefStruct> &c
       .def(
           "__hash__",
           [](const TricubicCoefStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -718,8 +726,9 @@ void init_tao_ele_shape_input(nb::module_ &m, nb::class_<TaoEleShapeInput> &cls)
       .def(
           "__hash__",
           [](const TaoEleShapeInput &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -952,8 +961,9 @@ void init_tao_plot_page_input(nb::module_ &m, nb::class_<TaoPlotPageInput> &cls)
       .def(
           "__hash__",
           [](const TaoPlotPageInput &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1012,8 +1022,9 @@ void init_tao_alias_struct(nb::module_ &m, nb::class_<TaoAliasStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoAliasStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1145,8 +1156,9 @@ void init_tao_beam_branch_struct(nb::module_ &m, nb::class_<TaoBeamBranchStruct>
       .def(
           "__hash__",
           [](const TaoBeamBranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1210,8 +1222,9 @@ void init_tao_beam_uni_struct(nb::module_ &m, nb::class_<TaoBeamUniStruct> &cls)
       .def(
           "__hash__",
           [](const TaoBeamUniStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1275,8 +1288,9 @@ void init_tao_building_wall_orientation_struct(
       .def(
           "__hash__",
           [](const TaoBuildingWallOrientationStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1376,8 +1390,9 @@ void init_tao_building_wall_point_struct(
       .def(
           "__hash__",
           [](const TaoBuildingWallPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1455,8 +1470,9 @@ void init_tao_building_wall_section_struct(
       .def(
           "__hash__",
           [](const TaoBuildingWallSectionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1513,8 +1529,9 @@ void init_tao_building_wall_struct(nb::module_ &m, nb::class_<TaoBuildingWallStr
       .def(
           "__hash__",
           [](const TaoBuildingWallStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1579,8 +1596,9 @@ void init_tao_cmd_history_struct(nb::module_ &m, nb::class_<TaoCmdHistoryStruct>
       .def(
           "__hash__",
           [](const TaoCmdHistoryStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1709,8 +1727,9 @@ void init_tao_command_file_struct(nb::module_ &m, nb::class_<TaoCommandFileStruc
       .def(
           "__hash__",
           [](const TaoCommandFileStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2059,8 +2078,9 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoCommonStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2125,8 +2145,9 @@ void init_tao_curve_array_struct(nb::module_ &m, nb::class_<TaoCurveArrayStruct>
       .def(
           "__hash__",
           [](const TaoCurveArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2205,8 +2226,9 @@ void init_tao_curve_color_struct(nb::module_ &m, nb::class_<TaoCurveColorStruct>
       .def(
           "__hash__",
           [](const TaoCurveColorStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2252,8 +2274,9 @@ void init_tao_curve_orbit_struct(nb::module_ &m, nb::class_<TaoCurveOrbitStruct>
       .def(
           "__hash__",
           [](const TaoCurveOrbitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2661,8 +2684,9 @@ void init_tao_curve_struct(nb::module_ &m, nb::class_<TaoCurveStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoCurveStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2733,8 +2757,9 @@ void init_tao_d1_data_array_struct(nb::module_ &m, nb::class_<TaoD1DataArrayStru
       .def(
           "__hash__",
           [](const TaoD1DataArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2812,8 +2837,9 @@ void init_tao_d1_data_struct(nb::module_ &m, nb::class_<TaoD1DataStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoD1DataStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -2884,8 +2910,9 @@ void init_tao_d2_data_array_struct(nb::module_ &m, nb::class_<TaoD2DataArrayStru
       .def(
           "__hash__",
           [](const TaoD2DataArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3031,8 +3058,9 @@ void init_tao_d2_data_struct(nb::module_ &m, nb::class_<TaoD2DataStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoD2DataStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3101,8 +3129,9 @@ void init_tao_data_array_struct(nb::module_ &m, nb::class_<TaoDataArrayStruct> &
       .def(
           "__hash__",
           [](const TaoDataArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3569,8 +3598,9 @@ void init_tao_data_struct(nb::module_ &m, nb::class_<TaoDataStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoDataStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3648,8 +3678,9 @@ void init_tao_data_var_component_struct(
       .def(
           "__hash__",
           [](const TaoDataVarComponentStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3692,8 +3723,9 @@ void init_tao_drawing_struct(nb::module_ &m, nb::class_<TaoDrawingStruct> &cls) 
       .def(
           "__hash__",
           [](const TaoDrawingStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3782,8 +3814,9 @@ void init_tao_dynamic_aperture_struct(nb::module_ &m, nb::class_<TaoDynamicApert
       .def(
           "__hash__",
           [](const TaoDynamicApertureStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3838,8 +3871,9 @@ void init_tao_ele_pointer_struct(nb::module_ &m, nb::class_<TaoElePointerStruct>
       .def(
           "__hash__",
           [](const TaoElePointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -3987,8 +4021,9 @@ void init_tao_ele_shape_struct(nb::module_ &m, nb::class_<TaoEleShapeStruct> &cl
       .def(
           "__hash__",
           [](const TaoEleShapeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4082,8 +4117,9 @@ void init_tao_eval_node_struct(nb::module_ &m, nb::class_<TaoEvalNodeStruct> &cl
       .def(
           "__hash__",
           [](const TaoEvalNodeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4172,8 +4208,9 @@ void init_tao_expression_info_struct(nb::module_ &m, nb::class_<TaoExpressionInf
       .def(
           "__hash__",
           [](const TaoExpressionInfoStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4305,8 +4342,9 @@ void init_tao_floor_plan_struct(nb::module_ &m, nb::class_<TaoFloorPlanStruct> &
       .def(
           "__hash__",
           [](const TaoFloorPlanStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4893,8 +4931,9 @@ void init_tao_global_struct(nb::module_ &m, nb::class_<TaoGlobalStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoGlobalStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -4959,8 +4998,9 @@ void init_tao_graph_array_struct(nb::module_ &m, nb::class_<TaoGraphArrayStruct>
       .def(
           "__hash__",
           [](const TaoGraphArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5307,8 +5347,9 @@ void init_tao_graph_struct(nb::module_ &m, nb::class_<TaoGraphStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoGraphStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5391,8 +5432,9 @@ void init_tao_histogram_struct(nb::module_ &m, nb::class_<TaoHistogramStruct> &c
       .def(
           "__hash__",
           [](const TaoHistogramStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5758,8 +5800,9 @@ void init_tao_init_struct(nb::module_ &m, nb::class_<TaoInitStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoInitStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5815,8 +5858,9 @@ void init_tao_integer_array_struct(nb::module_ &m, nb::class_<TaoIntegerArrayStr
       .def(
           "__hash__",
           [](const TaoIntegerArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -5879,8 +5923,9 @@ void init_tao_lat_sigma_struct(nb::module_ &m, nb::class_<TaoLatSigmaStruct> &cl
       .def(
           "__hash__",
           [](const TaoLatSigmaStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6205,8 +6250,9 @@ void init_tao_lattice_branch_struct(nb::module_ &m, nb::class_<TaoLatticeBranchS
       .def(
           "__hash__",
           [](const TaoLatticeBranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6322,8 +6368,9 @@ void init_tao_lattice_struct(nb::module_ &m, nb::class_<TaoLatticeStruct> &cls) 
       .def(
           "__hash__",
           [](const TaoLatticeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6379,8 +6426,9 @@ void init_tao_logical_array_struct(nb::module_ &m, nb::class_<TaoLogicalArrayStr
       .def(
           "__hash__",
           [](const TaoLogicalArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6457,8 +6505,9 @@ void init_tao_model_branch_struct(nb::module_ &m, nb::class_<TaoModelBranchStruc
       .def(
           "__hash__",
           [](const TaoModelBranchStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6548,8 +6597,9 @@ void init_tao_model_element_struct(nb::module_ &m, nb::class_<TaoModelElementStr
       .def(
           "__hash__",
           [](const TaoModelElementStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6621,8 +6671,9 @@ void init_tao_ping_scale_struct(nb::module_ &m, nb::class_<TaoPingScaleStruct> &
       .def(
           "__hash__",
           [](const TaoPingScaleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6687,8 +6738,9 @@ void init_tao_plot_array_struct(nb::module_ &m, nb::class_<TaoPlotArrayStruct> &
       .def(
           "__hash__",
           [](const TaoPlotArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -6770,8 +6822,9 @@ void init_tao_plot_cache_struct(nb::module_ &m, nb::class_<TaoPlotCacheStruct> &
       .def(
           "__hash__",
           [](const TaoPlotCacheStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7027,8 +7080,9 @@ void init_tao_plot_page_struct(nb::module_ &m, nb::class_<TaoPlotPageStruct> &cl
       .def(
           "__hash__",
           [](const TaoPlotPageStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7143,8 +7197,9 @@ void init_tao_plot_region_struct(nb::module_ &m, nb::class_<TaoPlotRegionStruct>
       .def(
           "__hash__",
           [](const TaoPlotRegionStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7335,8 +7390,9 @@ void init_tao_plot_struct(nb::module_ &m, nb::class_<TaoPlotStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoPlotStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7411,8 +7467,9 @@ void init_tao_real_pointer_struct(nb::module_ &m, nb::class_<TaoRealPointerStruc
       .def(
           "__hash__",
           [](const TaoRealPointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7486,8 +7543,9 @@ void init_tao_shape_pattern_point_struct(
       .def(
           "__hash__",
           [](const TaoShapePatternPointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7507,8 +7565,11 @@ void init_tao_shape_pattern_point_struct(
 void init_tao_shape_pattern_struct(nb::module_ &m, nb::class_<TaoShapePatternStruct> &cls) {
   cls.def(
          "__init__",
-         [](TaoShapePatternStruct *self, std::optional<std::string> name, const QpLineStruct *line
-         ) { new (self) TaoShapePatternStruct(name, ptr_to_opt_ref(line)); },
+         [](TaoShapePatternStruct *self,
+            std::optional<std::string> name,
+            const QpLineStruct *line) {
+           new (self) TaoShapePatternStruct(name, ptr_to_opt_ref(line));
+         },
          nb::arg("name") = nb::none(),
          nb::arg("line") = nb::none()
   )
@@ -7561,8 +7622,9 @@ void init_tao_shape_pattern_struct(nb::module_ &m, nb::class_<TaoShapePatternStr
       .def(
           "__hash__",
           [](const TaoShapePatternStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7634,8 +7696,9 @@ void init_tao_spin_dn_dpz_struct(nb::module_ &m, nb::class_<TaoSpinDnDpzStruct> 
       .def(
           "__hash__",
           [](const TaoSpinDnDpzStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7736,8 +7799,9 @@ void init_tao_spin_ele_struct(nb::module_ &m, nb::class_<TaoSpinEleStruct> &cls)
       .def(
           "__hash__",
           [](const TaoSpinEleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -7853,8 +7917,9 @@ void init_tao_spin_map_struct(nb::module_ &m, nb::class_<TaoSpinMapStruct> &cls)
       .def(
           "__hash__",
           [](const TaoSpinMapStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8040,8 +8105,9 @@ void init_tao_spin_polarization_struct(nb::module_ &m, nb::class_<TaoSpinPolariz
       .def(
           "__hash__",
           [](const TaoSpinPolarizationStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8097,8 +8163,9 @@ void init_tao_string_array_struct(nb::module_ &m, nb::class_<TaoStringArrayStruc
       .def(
           "__hash__",
           [](const TaoStringArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8259,8 +8326,9 @@ void init_tao_super_universe_struct(nb::module_ &m, nb::class_<TaoSuperUniverseS
       .def(
           "__hash__",
           [](const TaoSuperUniverseStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8338,8 +8406,9 @@ void init_tao_title_struct(nb::module_ &m, nb::class_<TaoTitleStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoTitleStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8485,8 +8554,9 @@ void init_tao_universe_calc_struct(nb::module_ &m, nb::class_<TaoUniverseCalcStr
       .def(
           "__hash__",
           [](const TaoUniverseCalcStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8553,8 +8623,9 @@ void init_tao_universe_pointer_struct(nb::module_ &m, nb::class_<TaoUniversePoin
       .def(
           "__hash__",
           [](const TaoUniversePointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8782,8 +8853,9 @@ void init_tao_universe_struct(nb::module_ &m, nb::class_<TaoUniverseStruct> &cls
       .def(
           "__hash__",
           [](const TaoUniverseStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8852,8 +8924,9 @@ void init_tao_v1_var_array_struct(nb::module_ &m, nb::class_<TaoV1VarArrayStruct
       .def(
           "__hash__",
           [](const TaoV1VarArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -8932,8 +9005,9 @@ void init_tao_v1_var_struct(nb::module_ &m, nb::class_<TaoV1VarStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoV1VarStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9002,8 +9076,9 @@ void init_tao_var_array_struct(nb::module_ &m, nb::class_<TaoVarArrayStruct> &cl
       .def(
           "__hash__",
           [](const TaoVarArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9097,8 +9172,9 @@ void init_tao_var_slave_struct(nb::module_ &m, nb::class_<TaoVarSlaveStruct> &cl
       .def(
           "__hash__",
           [](const TaoVarSlaveStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9461,8 +9537,9 @@ void init_tao_var_struct(nb::module_ &m, nb::class_<TaoVarStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoVarStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9564,8 +9641,9 @@ void init_tao_wave_kick_pt_struct(nb::module_ &m, nb::class_<TaoWaveKickPtStruct
       .def(
           "__hash__",
           [](const TaoWaveKickPtStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9842,8 +9920,9 @@ void init_tao_wave_struct(nb::module_ &m, nb::class_<TaoWaveStruct> &cls) {
       .def(
           "__hash__",
           [](const TaoWaveStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9920,8 +9999,9 @@ void init_tao_top10_struct(nb::module_ &m, nb::class_<TaoTop10Struct> &cls) {
       .def(
           "__hash__",
           [](const TaoTop10Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -9990,8 +10070,9 @@ void init_test_sub_struct(nb::module_ &m, nb::class_<TestSubStruct> &cls) {
       .def(
           "__hash__",
           [](const TestSubStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -10061,8 +10142,9 @@ void init_test_sub_sub_struct(nb::module_ &m, nb::class_<TestSubSubStruct> &cls)
       .def(
           "__hash__",
           [](const TestSubSubStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

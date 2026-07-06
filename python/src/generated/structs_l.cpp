@@ -60,8 +60,9 @@ void init_lat_ele_loc_struct(nb::module_ &m, nb::class_<LatEleLocStruct> &cls) {
       .def(
           "__hash__",
           [](const LatEleLocStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -134,8 +135,9 @@ void init_lat_ele_order1_struct(nb::module_ &m, nb::class_<LatEleOrder1Struct> &
       .def(
           "__hash__",
           [](const LatEleOrder1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -195,8 +197,9 @@ void init_lat_ele_order_array_struct(nb::module_ &m, nb::class_<LatEleOrderArray
       .def(
           "__hash__",
           [](const LatEleOrderArrayStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -239,8 +242,9 @@ void init_lat_ele_order_struct(nb::module_ &m, nb::class_<LatEleOrderStruct> &cl
       .def(
           "__hash__",
           [](const LatEleOrderStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -438,8 +442,9 @@ void init_lat_param_struct(nb::module_ &m, nb::class_<LatParamStruct> &cls) {
       .def(
           "__hash__",
           [](const LatParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -504,8 +509,9 @@ void init_lat_pointer_struct(nb::module_ &m, nb::class_<LatPointerStruct> &cls) 
       .def(
           "__hash__",
           [](const LatPointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -824,8 +830,9 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
       .def(
           "__hash__",
           [](const LatStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -927,8 +934,9 @@ void init_linac_normal_mode_struct(nb::module_ &m, nb::class_<LinacNormalModeStr
       .def(
           "__hash__",
           [](const LinacNormalModeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -987,8 +995,9 @@ void init_linear_ele_isf_struct(nb::module_ &m, nb::class_<LinearEleIsfStruct> &
       .def(
           "__hash__",
           [](const LinearEleIsfStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1074,8 +1083,9 @@ void init_linear_isf1_struct(nb::module_ &m, nb::class_<LinearIsf1Struct> &cls) 
       .def(
           "__hash__",
           [](const LinearIsf1Struct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1150,8 +1160,9 @@ void init_layout(nb::module_ &m, nb::class_<Layout> &cls) {
       .def(
           "__hash__",
           [](const Layout &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 

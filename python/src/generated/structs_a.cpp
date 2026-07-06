@@ -47,8 +47,9 @@ void init_astra_lattice_param_struct(nb::module_ &m, nb::class_<AstraLatticePara
       .def(
           "__hash__",
           [](const AstraLatticeParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -109,8 +110,9 @@ void init_ac_kicker_freq_struct(nb::module_ &m, nb::class_<AcKickerFreqStruct> &
       .def(
           "__hash__",
           [](const AcKickerFreqStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -154,8 +156,9 @@ void init_ac_kicker_struct(nb::module_ &m, nb::class_<AcKickerStruct> &cls) {
       .def(
           "__hash__",
           [](const AcKickerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -227,8 +230,9 @@ void init_ac_kicker_time_struct(nb::module_ &m, nb::class_<AcKickerTimeStruct> &
       .def(
           "__hash__",
           [](const AcKickerTimeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -330,8 +334,9 @@ void init_anormal_mode_struct(nb::module_ &m, nb::class_<AnormalModeStruct> &cls
       .def(
           "__hash__",
           [](const AnormalModeStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -436,8 +441,9 @@ void init_aperture_param_struct(nb::module_ &m, nb::class_<ApertureParamStruct> 
       .def(
           "__hash__",
           [](const ApertureParamStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -532,8 +538,9 @@ void init_aperture_point_struct(nb::module_ &m, nb::class_<AperturePointStruct> 
       .def(
           "__hash__",
           [](const AperturePointStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -616,8 +623,9 @@ void init_aperture_scan_struct(nb::module_ &m, nb::class_<ApertureScanStruct> &c
       .def(
           "__hash__",
           [](const ApertureScanStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -704,8 +712,9 @@ void init_all_pointer_struct(nb::module_ &m, nb::class_<AllPointerStruct> &cls) 
       .def(
           "__hash__",
           [](const AllPointerStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
@@ -1322,8 +1331,9 @@ void init_all_encompassing_struct(nb::module_ &m, nb::class_<AllEncompassingStru
       .def(
           "__hash__",
           [](const AllEncompassingStruct &self) {
-            return std::hash<std::uintptr_t>{
-            }(reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr()));
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
           }
       )
 
