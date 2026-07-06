@@ -58,31 +58,22 @@ class RoutineSettings(pydantic.BaseModel):
 
 
 class HookSpec(pydantic.BaseModel):
-    """A single Bmad/Tao callback hook whose C ABI contract is generated.
-
-    The argument list (names, types, structs, optionality, array-ness) is taken
-    from the parsed ``<def_routine_name>`` abstract interface -- not hand-copied
-    -- so it tracks upstream Bmad. Only the non-derivable metadata lives here:
-    the interface name, the C++ type alias, which args the callback returns by
-    value (``returns``), and any numeric out-parameters (``inout_scalars``).
-    Upstream Bmad omits ``intent`` on the hook interfaces, so the parser reports
-    every scalar as ``in``: logicals are treated as by-reference out-parameters
-    unless named in ``returns``.
-
-    Generates the Fortran ``ci_<name>`` interface and the C++ ``extern "C"``
-    register prototype (which must agree byte-for-byte) plus the
-    ``std::function`` typedef and set/clear declarations. The trampolines and
-    nanobind marshalling stay hand-written but are compiler-checked against these.
+    """
+    A single Bmad/Tao callback hook whose C ABI contract is generated.
     """
 
-    project: str  # "bmad" or "tao" -- selects the C++ namespace
-    name: str  # full hook name, e.g. "track1_wake"
-    type_name: str = ""  # C++ std::function alias; default snake_to_camel(name) + "Hook"
-    def_name: str = ""  # parsed abstract-interface name; default below
-    inout_scalars: list[str] = []  # real/integer args the hook writes (cross by reference)
-    returns: list[
-        str
-    ] = []  # args the C++ callback returns by value (default: none -> void, out-params by ref)
+    # "bmad" or "tao" -- selects the C++ namespace
+    project: str
+    # full hook name, e.g. "track1_wake"
+    name: str
+    # C++ std::function alias; default snake_to_camel(name) + "Hook"
+    type_name: str = ""
+    # parsed abstract-interface name; default below
+    def_name: str = ""
+    # real/integer args the hook writes (cross by reference)
+    inout_scalars: list[str] = []
+    # args the C++ callback returns by value (default: none -> void, out-params by ref)
+    returns: list[str] = []
 
     @property
     def cpp_namespace(self) -> str:
@@ -149,11 +140,11 @@ class CodegenConfig(pydantic.BaseModel):
         with filename.open("rb") as fp:
             return CodegenConfig.model_validate(tomllib.load(fp))
 
-    def should_skip_routine(self, name: str) -> bool:
+    def should_skip(self, name: str) -> bool:
         if name in self.skips:
             return True
 
-        patterns = [skip for skip in self.skips if "." in skip or "*" in skip]
+        patterns = [skip for skip in self.skips if "." in skip or "*" in skip or "$" in skip]
         return any(re.match(pat, name) for pat in patterns)
 
 

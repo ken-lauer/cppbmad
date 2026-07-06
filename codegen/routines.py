@@ -597,8 +597,10 @@ class FortranRoutine:
             return [f"PYBMAD_TEST_BUILD enabled; {self.name} is skipped"]
         ctx = config_context.get()
 
-        if ctx.params.should_skip_routine(self.name.lower()):
+        if ctx.params.should_skip(self.name.lower()):
             return ["Routine in configuration skip list"]
+        if ctx.params.should_skip(self.module.lower()):
+            return ["Routine module in configuration skip list"]
         if self.module.lower() in ctx.params.skips:
             return [f"Routine module ({self.module}) in configuration skip list"]
         structs_by_name = ctx.codegen_structs_by_name
@@ -1244,7 +1246,7 @@ def load_routines(
 
         parsed_st = parsed_structs_by_name[typ]
         if (
-            parsed_st.module in config.skips
+            config.should_skip(parsed_st.module)
             or typ.lower() in config.skips
             or typ.lower() in config.component_no_translate_list  # legacy - remove?
         ):
