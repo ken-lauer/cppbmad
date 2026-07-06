@@ -82,7 +82,16 @@ def test_track1_postprocess_fires_with_live_proxies(lat):
     orbit = make_orbit(lat)
     seen = []
 
-    def hook(start_orb, ele, param, end_orb):
+    def hook(
+        start_orb: pybmad.CoordStruct,
+        ele: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        end_orb: pybmad.CoordStruct,
+    ) -> None:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(end_orb, pybmad.CoordStruct)
         logger.info(f"\nHook: {start_orb=} {ele=} {param=} {end_orb=}")
         seen.append((ele.name, float(end_orb.vec[0])))
 
@@ -123,7 +132,16 @@ def test_exception_in_hook_does_not_crash(lat):
     orbit = make_orbit(lat)
     calls = []
 
-    def hook(start_orb, ele, param, end_orb):
+    def hook(
+        start_orb: pybmad.CoordStruct,
+        ele: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        end_orb: pybmad.CoordStruct,
+    ) -> None:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(end_orb, pybmad.CoordStruct)
         logger.info("\nHook: %s %s %s %s", start_orb, ele, param, end_orb)
         calls.append(1)
         raise ValueError("intentional")
@@ -139,7 +157,22 @@ def test_track1_preprocess_fires_and_optional_track_is_none(lat):
     orbit = make_orbit(lat)
     seen = []
 
-    def hook(start_orb, ele, param, err_flag, finished, radiation_included, track):
+    def hook(
+        start_orb: pybmad.CoordStruct,
+        ele: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        err_flag: bool,
+        finished: bool,
+        radiation_included: bool,
+        track: pybmad.TrackStruct | None,
+    ) -> None:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(err_flag, bool)
+        assert isinstance(finished, bool)
+        assert isinstance(radiation_included, bool)
+        assert track is None or isinstance(track, pybmad.TrackStruct)
         logger.info(
             f"\nHook: {start_orb=} {ele=} {param=} {err_flag=} {finished=} {radiation_included=} {track=}"
         )
@@ -166,6 +199,13 @@ def test_track1_preprocess_none_return_does_not_abort_tracking(lat):
         radiation_included: bool,
         track: pybmad.TrackStruct | None,
     ) -> None:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(err_flag, bool)
+        assert isinstance(finished, bool)
+        assert isinstance(radiation_included, bool)
+        assert track is None or isinstance(track, pybmad.TrackStruct)
         logger.info(
             f"\npre: {start_orb=} {ele=} {param=} {err_flag=} {finished=} {radiation_included=} {track=}"
         )
@@ -177,6 +217,10 @@ def test_track1_preprocess_none_return_does_not_abort_tracking(lat):
         param: pybmad.LatParamStruct,
         end_orb: pybmad.CoordStruct,
     ) -> None:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(end_orb, pybmad.CoordStruct)
         logger.info(f"\npost: {start_orb=} {ele=} {param=} {end_orb=}")
         post.append(ele.name)
 
@@ -196,7 +240,20 @@ def test_track1_custom_replaces_tracking_and_writes_back(lat):
     ele.tracking_method = pybmad.CUSTOM
     orbit = make_orbit(lat)
 
-    def hook(orb, e, param, err_flag, finished, track):
+    def hook(
+        orb: pybmad.CoordStruct,
+        e: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        err_flag: bool,
+        finished: bool,
+        track: pybmad.TrackStruct | None,
+    ) -> tuple[bool, bool]:
+        assert isinstance(orb, pybmad.CoordStruct)
+        assert isinstance(e, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(err_flag, bool)
+        assert isinstance(finished, bool)
+        assert track is None or isinstance(track, pybmad.TrackStruct)
         logger.info(f"\nHook: {orb=} {e=} {param=} {err_flag=} {finished=} {track=}")
         orb.vec[0] = 0.00123  # this element "tracked" the particle to here
         return (False, True)  # err_flag=False, finished=True (hook did the tracking)
@@ -215,7 +272,20 @@ def test_track1_spin_custom_fires(lat):
     orbit = make_orbit(lat)
     seen = []
 
-    def hook(start_orb, e, param, end_orb, err_flag, make_quaternion):
+    def hook(
+        start_orb: pybmad.CoordStruct,
+        e: pybmad.EleStruct,
+        param: pybmad.LatParamStruct,
+        end_orb: pybmad.CoordStruct,
+        err_flag: bool,
+        make_quaternion: bool | None,
+    ) -> bool:
+        assert isinstance(start_orb, pybmad.CoordStruct)
+        assert isinstance(e, pybmad.EleStruct)
+        assert isinstance(param, pybmad.LatParamStruct)
+        assert isinstance(end_orb, pybmad.CoordStruct)
+        assert isinstance(err_flag, bool)
+        assert make_quaternion is None or isinstance(make_quaternion, bool)
         logger.info(f"\nHook: {start_orb=} {e=} {param=} {end_orb=} {err_flag=} {make_quaternion=}")
         seen.append((e.name, make_quaternion))
         return False  # err_flag
@@ -232,7 +302,24 @@ def test_track_many_receives_live_coord_array_view(lat):
     orbit = make_orbit(lat)
     captured = {}
 
-    def hook(finished, lat_, orbit_, ix_start, ix_end, direction, ix_branch, track_state):
+    def hook(
+        finished: bool,
+        lat_: pybmad.LatStruct,
+        orbit_: pybmad.CoordStructArray1D,
+        ix_start: int,
+        ix_end: int,
+        direction: int,
+        ix_branch: int | None,
+        track_state: int | None,
+    ) -> bool:
+        assert isinstance(finished, bool)
+        assert isinstance(lat_, pybmad.LatStruct)
+        assert isinstance(orbit_, pybmad.CoordStructArray1D)
+        assert isinstance(ix_start, int)
+        assert isinstance(ix_end, int)
+        assert isinstance(direction, int)
+        assert ix_branch is None or isinstance(ix_branch, int)
+        assert track_state is None or isinstance(track_state, int)
         logger.info(
             f"\nHook: {finished=} {lat_=} {orbit_=} {ix_start=} {ix_end=} {direction=} {ix_branch=} {track_state}"
         )
@@ -256,7 +343,22 @@ def test_track1_bunch_fires(lat):
     bunch = make_bunch(lat)
     seen = []
 
-    def hook(b, ele, err, centroid, direction, finished, bunch_track):
+    def hook(
+        b: pybmad.BunchStruct,
+        ele: pybmad.EleStruct,
+        err: bool,
+        centroid: pybmad.CoordStructArray1D | None,
+        direction: int | None,
+        finished: bool,
+        bunch_track: pybmad.BunchTrackStruct | None,
+    ) -> tuple[bool, bool]:
+        assert isinstance(b, pybmad.BunchStruct)
+        assert isinstance(ele, pybmad.EleStruct)
+        assert isinstance(err, bool)
+        assert centroid is None or isinstance(centroid, pybmad.CoordStructArray1D)
+        assert direction is None or isinstance(direction, int)
+        assert isinstance(finished, bool)
+        assert bunch_track is None or isinstance(bunch_track, pybmad.BunchTrackStruct)
         logger.info(f"\nHook: {b=} {ele=} {err=} {centroid=} {direction=} {finished=} {bunch_track}")
         seen.append((ele.name, centroid, direction, bunch_track, len(b.particle)))
         return (False, True)  # err=False, finished=True

@@ -61,7 +61,8 @@ def test_lattice_calc_hook_fires_with_current_status(tao_session):
     hook, which receives the current ``calc_ok`` status."""
     seen = []
 
-    def hook(calc_ok):
+    def hook(calc_ok: bool) -> None:
+        assert isinstance(calc_ok, bool)
         seen.append(calc_ok)
         # implicit return None - leave calc_ok unchanged
 
@@ -108,7 +109,10 @@ def test_merit_var_hook_fires_for_custom_merit_type(tao_session):
     var.merit_type = "custom_hook"
     seen = []
 
-    def hook(i_uni, j_var, var):
+    def hook(i_uni: int, j_var: int, var: pybmad.TaoVarStruct) -> None:
+        assert isinstance(i_uni, int)
+        assert isinstance(j_var, int)
+        assert isinstance(var, pybmad.TaoVarStruct)
         logger.info(f"\nHook: {i_uni=} {j_var=} {var=}")
         seen.append((i_uni, j_var, var.merit_type))
         var.delta_merit = 0.0  # the hook supplies the contribution
@@ -128,7 +132,16 @@ def test_merit_data_none_return_preserves_valid_value_set(tao_session):
     datum = _custom_merit_datum()
     received = []
 
-    def hook(i_uni, j_data, datum, valid_value_set):
+    def hook(
+        i_uni: int,
+        j_data: int,
+        datum: pybmad.TaoDataStruct,
+        valid_value_set: bool,
+    ) -> None:
+        assert isinstance(i_uni, int)
+        assert isinstance(j_data, int)
+        assert isinstance(datum, pybmad.TaoDataStruct)
+        assert isinstance(valid_value_set, bool)
         logger.info(f"\nHook: {i_uni=} {j_data=} {datum=} {valid_value_set=}")
         received.append(valid_value_set)
         # implicit return None -> leave valid_value_set unchanged
@@ -146,7 +159,16 @@ def test_merit_data_false_return_is_honored(tao_session):
     (marking the datum non-existent), confirming None is distinct from False."""
     datum = _custom_merit_datum()
 
-    def hook(i_uni, j_data, datum, valid_value_set):
+    def hook(
+        i_uni: int,
+        j_data: int,
+        datum: pybmad.TaoDataStruct,
+        valid_value_set: bool,
+    ) -> bool:
+        assert isinstance(i_uni, int)
+        assert isinstance(j_data, int)
+        assert isinstance(datum, pybmad.TaoDataStruct)
+        assert isinstance(valid_value_set, bool)
         logger.info(f"\nHook: {i_uni=} {j_data=} {datum=} {valid_value_set=}")
         return False
 
