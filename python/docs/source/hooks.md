@@ -6,20 +6,24 @@ surfaces the supported ones as **read/write properties** on a per-submodule
 registry object:
 
 ```python
-import pybmad
-from pybmad import bmad, tao
+import pybmad as pb
 
-def on_postprocess(start_orb, ele, param, end_orb):
-    # end_orb is a live proxy — mutate it to change the exit coordinates
-    print(ele.name, end_orb.vec[0])
+def postprocess(
+    start_orb: pb.CoordStruct,
+    ele: pb.EleStruct,
+    param: pb.LatParamStruct,
+    end_orb: pb.CoordStruct,
+):
+    # Observe the exit orbit after each element. end_orb is a live proxy.
+    print(f"Ele: {ele.name} Starting orbit: {start_orb.vec} Ending orbit: {end_orb.vec}")
 
-bmad.hooks.track1_postprocess = on_postprocess   # install (fires after every track1)
-current = bmad.hooks.track1_postprocess          # read back the current callback
-bmad.hooks.track1_postprocess = None             # clear
+pb.hooks.track1_postprocess = postprocess
+result = pb.track_all(lat, orbit, ix_branch)
+pb.hooks.track1_postprocess = None  # clear the hook
 ```
 
-`pybmad.hooks` is an alias for `pybmad.bmad.hooks`; Tao hooks live under
-`pybmad.tao.hooks`.
+`pybmad.hooks` is an alias for `pybmad.bmad.hooks`.
+Tao hooks live under `pybmad.tao.hooks`.
 
 ## Semantics
 
@@ -43,23 +47,28 @@ bmad.hooks.track1_postprocess = None             # clear
 `pybmad.bmad.hooks` — nine tracking / custom hooks from Bmad's
 `bmad_routine_interface`.
 
+<!-- prettier-ignore-start -->
+
 ::: pybmad.bmad.BmadHooks
   options:
     show_root_heading: false
     show_root_toc_entry: false
     members_order: source
     show_if_no_docstring: false
+<!-- prettier-ignore-end -->
 
 ## Tao hooks
 
 `pybmad.tao.hooks` — the lattice-calculation, optimizer, and merit-function hooks.
 
+<!-- prettier-ignore-start -->
 ::: pybmad.tao.TaoHooks
   options:
     show_root_heading: false
     show_root_toc_entry: false
     members_order: source
     show_if_no_docstring: false
+<!-- prettier-ignore-end -->
 
 !!! note
-These bindings are hand-written and maintained (not code-generated). Not all are supported.
+These bindings are hand-written and maintained (only function prototypes are code-generated). Not all are supported.
