@@ -12,7 +12,7 @@ use multipole_mod, only: ab_multipole_kick, ab_multipole_kicks, multipole_kick, 
 use photon_init_mod, only: absolute_photon_position, bend_photon_e_rel_init, &
     bend_photon_energy_integ_prob, bend_photon_energy_normalized_probability, bend_photon_init, &
     bend_photon_polarization_init, bend_photon_vert_angle_init, bend_vert_angle_integ_prob, &
-    e_crit_photon, init_photon_integ_prob
+    e_crit_photon, energy_func, init_photon_integ_prob, p_func, vert_angle_func
 
 use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     add_lattice_control_structs, allocate_branch_array, allocate_grid_field, &
@@ -158,8 +158,8 @@ use bookkeeper_mod, only: aperture_bookkeeper, compute_slave_coupler, makeup_con
     makeup_group_lord, makeup_multipass_slave, makeup_super_slave, makeup_super_slave1
 
 use csr_and_space_charge_mod, only: apply_fft_3d_kicks, csr_and_sc_apply_kicks, csr_bin_kicks, &
-    csr_bin_particles, dspline_len, i_csr, image_charge_kick_calc, lsc_kick_params_calc, &
-    s_ref_to_s_chord, s_source_calc, track1_bunch_csr, track1_bunch_csr3d
+    csr_bin_particles, ddz_calc_csr, dspline_len, i_csr, image_charge_kick_calc, &
+    lsc_kick_params_calc, s_ref_to_s_chord, s_source_calc, track1_bunch_csr, track1_bunch_csr3d
 
 use ptc_interface_mod, only: apply_patch_to_ptc_fibre, beambeam_fibre_setup, &
     bmad_patch_parameters_to_ptc, concat_ele_taylor, concat_taylor, ele_to_ptc_magnetic_bn_an, &
@@ -188,7 +188,8 @@ use fringe_mod, only: bend_edge_kick, exact_bend_edge_kick, hard_multipole_edge_
     sad_soft_bend_edge_kick, soft_quadrupole_edge_kick
 
 use ibs_mod, only: bl_via_mat, bl_via_vlassov, ibs1, ibs_blowup1turn, ibs_delta_calc, &
-    ibs_equib_der, ibs_equib_rlx, ibs_lifetime, ibs_rates1turn, multi_coulomb_log
+    ibs_equib_der, ibs_equib_rlx, ibs_lifetime, ibs_rates1turn, multi_coulomb_log, &
+    residual_pwd_sig_z
 
 use beam_utils, only: calc_bunch_params, calc_bunch_params_slice, calc_bunch_params_z_slice, &
     calc_bunch_sigma_matrix_etc, calc_emittances_and_twiss_from_sigma_matrix, calc_spin_params, &
@@ -201,7 +202,8 @@ use wall3d_mod, only: calc_wall_radius, create_concatenated_wall3d, mark_patch_r
 use rad_int_common, only: calc_wiggler_g_params, propagate_part_way
 
 use capillary_mod, only: capillary_photon_hit_spot_calc, capillary_propagate_photon_a_step, &
-    capillary_reflect_photon, capillary_track_photon_to_wall, track_a_capillary
+    capillary_reflect_photon, capillary_track_photon_to_wall, photon_hit_func, &
+    track_a_capillary
 
 use complex_taylor_mod, only: complex_taylor_clean, complex_taylor_coef, &
     complex_taylor_exponent_index, complex_taylor_make_unit, complex_taylor_to_mat6, &
@@ -221,7 +223,7 @@ use gpt_interface_mod, only: convert_local_cartesian_to_local_curvilinear, &
 
 use bmad_struct, only: coord_state_name, ele_finalizer, is_attribute, pointer_to_slave
 
-use photon_reflection_mod, only: cos_phi, finalize_reflectivity_table, &
+use photon_reflection_mod, only: cos_phi, cumulr, d_integral, finalize_reflectivity_table, &
     photon_diffuse_scattering, photon_reflection, photon_reflection_std_surface_init, &
     photon_reflectivity, prob_x_diffuse, ptwo, read_surface_reflection_file
 
@@ -260,7 +262,7 @@ use time_tracker_mod, only: drift_orbit_time, em_field_kick_vector_time, odeint_
     write_time_particle_distribution
 
 use space_charge_mod, only: drift_particle_to_s, drift_particle_to_t, sc_adaptive_step, &
-    sc_step, track_bunch_to_s, track_bunch_to_t
+    sc_step, track_bunch_to_s, track_bunch_to_t, track_func
 
 use dynamic_aperture_mod, only: dynamic_aperture_point, dynamic_aperture_scan, &
     set_branch_and_ele_for_omp
@@ -6037,38 +6039,31 @@ subroutine fortran_converter_distribution_parser (ele, delim, delim_found, err_f
   use array_desc_mod
   use bmad_struct, only: ele_struct
   implicit none
-  ! ** Out parameters **
+  ! ** In parameters **
   type(c_ptr), intent(in), value :: delim
   character(len=4096), target :: f_delim
   character(kind=c_char), pointer :: f_delim_ptr(:)
-  type(c_ptr), intent(in), value :: delim_found  ! 0D_NOT_logical
+  logical(c_bool) :: delim_found  ! 0D_NOT_logical
   logical :: f_delim_found
-  logical(c_bool), pointer :: f_delim_found_ptr
-  type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
+  logical(c_bool) :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
-  logical(c_bool), pointer :: f_err_flag_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
   ! inout: f_ele 0D_NOT_type
-  if (.not. c_associated(ele)) then
-    call c_f_pointer(err_flag, f_err_flag_ptr)
-    f_err_flag_ptr = .true.
-    return
-  endif
+  if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
+  ! in: f_delim 0D_NOT_character
+  if (.not. c_associated(delim)) return
+  call c_f_pointer(delim, f_delim_ptr, [huge(0)])
+  call to_f_str(f_delim_ptr, f_delim)
+  ! in: f_delim_found 0D_NOT_logical
+  f_delim_found = delim_found
+  ! in: f_err_flag 0D_NOT_logical
+  f_err_flag = err_flag
   call converter_distribution_parser(f_ele, f_delim, f_delim_found, f_err_flag)
 
-  ! out: f_delim 0D_NOT_character
-  call c_f_pointer(delim, f_delim_ptr, [len_trim(f_delim) + 1])
-  call to_c_str(f_delim, f_delim_ptr)
-  ! out: f_delim_found 0D_NOT_logical
-  call c_f_pointer(delim_found, f_delim_found_ptr)
-  f_delim_found_ptr = f_delim_found
-  ! out: f_err_flag 0D_NOT_logical
-  call c_f_pointer(err_flag, f_err_flag_ptr)
-  f_err_flag_ptr = f_err_flag
 end subroutine
 subroutine fortran_coord_equal_coord (coord1, coord2) bind(c)
 
@@ -7463,6 +7458,36 @@ subroutine fortran_csr_bin_particles (ele, particle, csr, err_flag) bind(c)
   ! out: f_csr 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
+subroutine fortran_cumulr (phi, fn, df, status) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: phi  ! 0D_NOT_real
+  real(rp) :: f_phi
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: fn  ! 0D_NOT_real
+  real(rp) :: f_fn
+  real(c_double), pointer :: f_fn_ptr
+  type(c_ptr), intent(in), value :: df  ! 0D_NOT_real
+  real(rp) :: f_df
+  real(c_double), pointer :: f_df_ptr
+  ! ** End of parameters **
+  ! in: f_phi 0D_NOT_real
+  f_phi = phi
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  call cumulr(f_phi, f_fn, f_df, f_status)
+
+  ! out: f_fn 0D_NOT_real
+  call c_f_pointer(fn, f_fn_ptr)
+  f_fn_ptr = f_fn
+  ! out: f_df 0D_NOT_real
+  call c_f_pointer(df, f_df_ptr)
+  f_df_ptr = f_df
+end subroutine
 subroutine fortran_custom_attribute_ubound_index (ele_class, ix_ubound) bind(c)
 
   use array_desc_mod
@@ -7505,6 +7530,36 @@ subroutine fortran_custom_ele_attrib_name_list (index_list, name_list) bind(c)
     if (allocated(f_name_list%data)) deallocate(f_name_list%data)
     allocate(f_name_list%data, source=f_name_list_local)
   endif
+end subroutine
+subroutine fortran_d_integral (x, fn, df, status) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: x  ! 0D_NOT_real
+  real(rp) :: f_x
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: fn  ! 0D_NOT_real
+  real(rp) :: f_fn
+  real(c_double), pointer :: f_fn_ptr
+  type(c_ptr), intent(in), value :: df  ! 0D_NOT_real
+  real(rp) :: f_df
+  real(c_double), pointer :: f_df_ptr
+  ! ** End of parameters **
+  ! in: f_x 0D_NOT_real
+  f_x = x
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  call d_integral(f_x, f_fn, f_df, f_status)
+
+  ! out: f_fn 0D_NOT_real
+  call c_f_pointer(fn, f_fn_ptr)
+  f_fn_ptr = f_fn
+  ! out: f_df 0D_NOT_real
+  call c_f_pointer(df, f_df_ptr)
+  f_df_ptr = f_df
 end subroutine
 subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) bind(c)
 
@@ -7551,6 +7606,30 @@ subroutine fortran_damping_matrix_d (gamma, g_tot, B0, B1, delta, species, mat) 
 
   ! out: f_mat 2D_NOT_real
   if (c_associated(mat%data_ptr)) f_mat_ptr = mat2vec(f_mat, product(mat%dims(1:mat%rank)))
+end subroutine
+subroutine fortran_ddz_calc_csr (s_chord_source, status, ddz_this) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: s_chord_source  ! 0D_NOT_real
+  real(rp) :: f_s_chord_source
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ddz_this  ! 0D_NOT_real
+  real(rp) :: f_ddz_this
+  real(c_double), pointer :: f_ddz_this_ptr
+  ! ** End of parameters **
+  ! in: f_s_chord_source 0D_NOT_real
+  f_s_chord_source = s_chord_source
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  f_ddz_this = ddz_calc_csr(f_s_chord_source, f_status)
+
+  ! out: f_ddz_this 0D_NOT_real
+  call c_f_pointer(ddz_this, f_ddz_this_ptr)
+  f_ddz_this_ptr = f_ddz_this
 end subroutine
 subroutine fortran_deallocate_ele_pointers (ele, nullify_only, nullify_branch, dealloc_poles) &
     bind(c)
@@ -9893,6 +9972,30 @@ subroutine fortran_emit_6d (ele_ref, include_opening_angle, mode, sigma_mat, clo
   if (c_associated(sigma_mat%data_ptr)) f_sigma_mat_ptr = mat2vec(f_sigma_mat, product(sigma_mat%dims(1:sigma_mat%rank)))
   ! out: f_rad_int_by_ele 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_energy_func (integ_prob, status, dE) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: integ_prob  ! 0D_NOT_real
+  real(rp) :: f_integ_prob
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: dE  ! 0D_NOT_real
+  real(rp) :: f_dE
+  real(c_double), pointer :: f_dE_ptr
+  ! ** End of parameters **
+  ! in: f_integ_prob 0D_NOT_real
+  f_integ_prob = integ_prob
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  f_dE = energy_func(f_integ_prob, f_status)
+
+  ! out: f_dE 0D_NOT_real
+  call c_f_pointer(dE, f_dE_ptr)
+  f_dE_ptr = f_dE
 end subroutine
 subroutine fortran_entering_element (orbit, particle_at, is_entering) bind(c)
 
@@ -16735,26 +16838,26 @@ subroutine fortran_init_photon_from_a_photon_init_ele (ele, param, orbit, random
   use bmad_struct, only: coord_struct, ele_struct, lat_param_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
-  type(c_ptr), value :: param  ! 0D_NOT_type
-  type(lat_param_struct), pointer :: f_param
   type(c_ptr), intent(in), value :: random_on  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_random_on
   logical, target :: f_random_on_native
   logical, pointer :: f_random_on_native_ptr
   logical(c_bool), pointer :: f_random_on_ptr
-  ! ** Out parameters **
+  ! ** Inout parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: param  ! 0D_NOT_type
+  type(lat_param_struct), pointer :: f_param
   type(c_ptr), value :: orbit  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit
   ! ** End of parameters **
-  ! in: f_ele 0D_NOT_type
+  ! inout: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
-  ! in: f_param 0D_NOT_type
+  ! inout: f_param 0D_NOT_type
   if (.not. c_associated(param)) return
   call c_f_pointer(param, f_param)
-  ! out: f_orbit 0D_NOT_type
+  ! inout: f_orbit 0D_NOT_type
   if (.not. c_associated(orbit)) return
   call c_f_pointer(orbit, f_orbit)
   ! in: f_random_on 0D_NOT_logical
@@ -16767,8 +16870,6 @@ subroutine fortran_init_photon_from_a_photon_init_ele (ele, param, orbit, random
   endif
   call init_photon_from_a_photon_init_ele(f_ele, f_param, f_orbit, f_random_on_native_ptr)
 
-  ! out: f_orbit 0D_NOT_type
-  ! TODO may require output conversion? 0D_NOT_type
 end subroutine
 subroutine fortran_init_photon_integ_prob (gamma, g, E_min, E_max, vert_angle_min, &
     vert_angle_max, vert_angle_symmetric, energy_integ_prob, E_photon, integ_prob) bind(c)
@@ -22840,6 +22941,26 @@ subroutine fortran_osc_write_rectpipe_grn (apipe, bpipe, delta, umin, umax, nlo,
   call osc_write_rectpipe_grn(f_apipe, f_bpipe, f_delta, f_umin, f_umax, f_nlo, f_nhi, f_gamma)
 
 end subroutine
+subroutine fortran_p_func (E_in, rr1) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: E_in  ! 0D_NOT_real
+  real(rp) :: f_E_in
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: rr1  ! 0D_NOT_real
+  real(rp) :: f_rr1
+  real(c_double), pointer :: f_rr1_ptr
+  ! ** End of parameters **
+  ! in: f_E_in 0D_NOT_real
+  f_E_in = E_in
+  f_rr1 = p_func(f_E_in)
+
+  ! out: f_rr1 0D_NOT_real
+  call c_f_pointer(rr1, f_rr1_ptr)
+  f_rr1_ptr = f_rr1
+end subroutine
 subroutine fortran_parse_cartesian_map (ct_map, ele, lat, delim, delim_found, err_flag) bind(c)
 
   use array_desc_mod
@@ -25033,6 +25154,32 @@ subroutine fortran_photon_diffuse_scattering (graze_angle_in, energy, surface, g
   f_phi_out_ptr = f_phi_out
   ! out: f_diffuse_param 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_photon_hit_func (track_len, status, d_radius) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: track_len  ! 0D_NOT_real
+  real(rp) :: f_track_len
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  type(c_ptr), intent(in), value :: d_radius  ! 0D_NOT_real
+  real(rp) :: f_d_radius
+  real(c_double), pointer :: f_d_radius_ptr
+  ! ** End of parameters **
+  ! in: f_track_len 0D_NOT_real
+  f_track_len = track_len
+  f_d_radius = photon_hit_func(f_track_len, f_status)
+
+  ! out: f_status 0D_NOT_integer
+  call c_f_pointer(status, f_status_ptr)
+  f_status_ptr = f_status
+  ! out: f_d_radius 0D_NOT_real
+  call c_f_pointer(d_radius, f_d_radius_ptr)
+  f_d_radius_ptr = f_d_radius
 end subroutine
 subroutine fortran_photon_read_spline (spline_dir, splines) bind(c)
 
@@ -29160,6 +29307,35 @@ subroutine fortran_remove_lord_slave_link (lord, slave) bind(c)
   call c_f_pointer(slave, f_slave)
   call remove_lord_slave_link(f_lord, f_slave)
 
+end subroutine
+subroutine fortran_residual_pwd_sig_z (zz, status, func_retval__) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: zz  ! 0D_NOT_real
+  real(rp) :: f_zz
+  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
+  integer(c_int) :: f_status
+  integer(c_int), pointer :: f_status_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_real
+  real(rp) :: f_func_retval__
+  real(c_double), pointer :: f_func_retval___ptr
+  ! ** End of parameters **
+  ! in: f_zz 0D_NOT_real
+  f_zz = zz
+  ! in: f_status 0D_NOT_integer
+  if (c_associated(status)) then
+    call c_f_pointer(status, f_status_ptr)
+  else
+    f_status_ptr => null()
+  endif
+  f_func_retval__ = residual_pwd_sig_z(f_zz, f_status_ptr)
+
+  ! out: f_func_retval__ 0D_NOT_real
+  call c_f_pointer(func_retval__, f_func_retval___ptr)
+  f_func_retval___ptr = f_func_retval__
 end subroutine
 subroutine fortran_reverse_lat (lat_in, lat_rev, track_antiparticle) bind(c)
 
@@ -37502,6 +37678,30 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   call c_f_pointer(track_state, f_track_state_ptr)
   f_track_state_ptr = f_track_state
 end subroutine
+subroutine fortran_track_func (s_target, status, dt) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: s_target  ! 0D_NOT_real
+  real(rp) :: f_s_target
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: dt  ! 0D_NOT_real
+  real(rp) :: f_dt
+  real(c_double), pointer :: f_dt_ptr
+  ! ** End of parameters **
+  ! in: f_s_target 0D_NOT_real
+  f_s_target = s_target
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  f_dt = track_func(f_s_target, f_status)
+
+  ! out: f_dt 0D_NOT_real
+  call c_f_pointer(dt, f_dt_ptr)
+  f_dt_ptr = f_dt
+end subroutine
 subroutine fortran_track_many (lat, orbit, ix_start, ix_end, direction, ix_branch, track_state) &
     bind(c)
 
@@ -40438,6 +40638,30 @@ subroutine fortran_verify_valid_name (name, ix_name, pure_name, include_wild, is
   ! out: f_is_valid 0D_NOT_logical
   call c_f_pointer(is_valid, f_is_valid_ptr)
   f_is_valid_ptr = f_is_valid
+end subroutine
+subroutine fortran_vert_angle_func (integ_prob, status, d_angle) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: integ_prob  ! 0D_NOT_real
+  real(rp) :: f_integ_prob
+  integer(c_int) :: status  ! 0D_NOT_integer
+  integer :: f_status
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: d_angle  ! 0D_NOT_real
+  real(rp) :: f_d_angle
+  real(c_double), pointer :: f_d_angle_ptr
+  ! ** End of parameters **
+  ! in: f_integ_prob 0D_NOT_real
+  f_integ_prob = integ_prob
+  ! in: f_status 0D_NOT_integer
+  f_status = status
+  f_d_angle = vert_angle_func(f_integ_prob, f_status)
+
+  ! out: f_d_angle 0D_NOT_real
+  call c_f_pointer(d_angle, f_d_angle_ptr)
+  f_d_angle_ptr = f_d_angle
 end subroutine
 subroutine fortran_w_mat_for_bend_angle (angle, ref_tilt, r_vec, w_mat) bind(c)
 

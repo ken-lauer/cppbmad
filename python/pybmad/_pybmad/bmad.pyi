@@ -263,11 +263,16 @@ def ab_multipole_kicks(an: _pybmad.RealArray1D, bn: _pybmad.RealArray1D, ix_pole
 
 def absolute_photon_position(e_orb: _pybmad.CoordStruct, photon_orb: _pybmad.CoordStruct) -> None:
     """
-    Routine to calculate the photon phase space coordinates given:
-      1) The phase space coords of the emitting charged particle and
-      2) The photon phase space coords relative to the emitting particle.
-         The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
-         the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
+    $OMP THREADPRIVATE(pinit_E_rel_target, pinit_va_E_rel, pinit_va_gamma, &
+    $OMP                pinit_va_vert_angle, pinit_va_invert, pinit_alpha)
+
+     Subroutine absolute_photon_position (e_orb, photon_orb)
+
+     Routine to calculate the photon phase space coordinates given:
+       1) The phase space coords of the emitting charged particle and
+       2) The photon phase space coords relative to the emitting particle.
+          The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
+          the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
 
     Parameters
     ----------
@@ -2780,7 +2785,7 @@ def chrom_calc(lat: _pybmad.LatStruct, delta_e: float, pz: float | None = None, 
         +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
         delta_e. If 0 then default of 1.0d-4 is used.
         This parameter is an input/output and is modified in-place.
-        As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+        As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
 
     pz : float, optional
         reference momentum about which to calculate. Default is 0.
@@ -2798,7 +2803,7 @@ def chrom_calc(lat: _pybmad.LatStruct, delta_e: float, pz: float | None = None, 
         +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
         delta_e. If 0 then default of 1.0d-4 is used.
         This parameter is an input/output and is modified in-place.
-        As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+        As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
 
     chrom_a : float
         a-mode chromaticity.
@@ -3596,43 +3601,19 @@ def convert_total_energy_to(E_tot: float, particle: int, print_err: bool | None 
         Set true if there is an error. False otherwise.
     """
 
-class ConverterDistributionParser:
-    """converter_distribution_parser return type"""
-
-    @property
-    def delim(self) -> str: ...
-
-    @property
-    def delim_found(self) -> bool: ...
-
-    @property
-    def err_flag(self) -> bool: ...
-
-    def __len__(self) -> int: ...
-
-    def __getitem__(self, arg: int, /) -> object: ...
-
-def converter_distribution_parser(ele: _pybmad.EleStruct) -> ConverterDistributionParser:
+def converter_distribution_parser(ele: _pybmad.EleStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """
     Wrapper for Fortran routine converter_distribution_parser
 
     Parameters
     ----------
     ele : EleStruct
-        Converter element.
-        This parameter is an input/output and is modified in-place.
-        As an output, ele: Converter element with .converter field set.
 
-    Returns
-    -------
     delim : str
-        Ending delimitor.
 
     delim_found : bool
-        Has a delimitor been found?
 
     err_flag : bool
-        Set True if there is an error. False otherwise.
     """
 
 def coord_equal_coord(coord2: _pybmad.CoordStruct) -> _pybmad.CoordStruct:
@@ -4522,6 +4503,25 @@ def csr_bin_particles(ele: _pybmad.EleStruct, particle: _pybmad.CoordStructArray
         The bin structure.
     """
 
+class Cumulr:
+    """cumulr return type"""
+
+    @property
+    def fn(self) -> float: ...
+
+    @property
+    def df(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def cumulr(phi: float, status: int) -> Cumulr:
+    """
+    Wrapper function passed to super_rtsafe by photon_diffuse_scattering.
+    Made a module procedure (not nested) to avoid a stack trampoline.
+    """
+
 def custom_attribute_ubound_index(ele_class: int) -> int:
     """
     Routine to return, for a given element class, the upper bound index for the ele%custom(:)
@@ -4569,6 +4569,25 @@ def custom_ele_attrib_name_list() -> CustomEleAttribNameList:
         List of custom attributes.
     """
 
+class DIntegral:
+    """d_integral return type"""
+
+    @property
+    def fn(self) -> float: ...
+
+    @property
+    def df(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def d_integral(x: float, status: int) -> DIntegral:
+    """
+    Wrapper function passed to super_rtsafe by photon_diffuse_scattering.
+    Made a module procedure (not nested) to avoid a stack trampoline.
+    """
+
 def damping_matrix_d(gamma: float, g_tot: float, B0: float, B1: float, delta: float, species: int) -> list[list[float]]:
     """
     Wrapper for Fortran routine damping_matrix_d
@@ -4590,6 +4609,24 @@ def damping_matrix_d(gamma: float, g_tot: float, B0: float, B1: float, delta: fl
     Returns
     -------
     mat : 2D array of float (shape: 6,6)
+    """
+
+def ddz_calc_csr(s_chord_source: float, status: int) -> float:
+    """
+    Routine to calculate the distance between the source particle and the
+    kicked particle at constant time minus the target distance.
+    Made a module procedure (not nested) to avoid a stack trampoline. State is passed
+    from s_source_calc via the csr_*_ptr / csr_dr_match module variables.
+
+    Parameters
+    ----------
+    s_chord_source : float
+        Chord distance from start of element.
+
+    Returns
+    -------
+    ddz_this : float
+        Distance between source and kick particles: Calculated - Wanted.
     """
 
 def deallocate_ele_pointers(ele: _pybmad.EleStruct, nullify_only: bool | None = None, nullify_branch: bool | None = None, dealloc_poles: bool | None = None) -> None:
@@ -6041,6 +6078,21 @@ def emit_6d(ele_ref: _pybmad.EleStruct, include_opening_angle: bool, closed_orbi
 
     rad_int_by_ele : RadIntAllEleStruct, optional
         Radiation integrals element-by-element.
+    """
+
+def energy_func(integ_prob: float, status: int) -> float:
+    """
+    Wrapper for Fortran routine energy_func
+
+    Parameters
+    ----------
+    integ_prob : float
+
+    status : int
+
+    Returns
+    -------
+    de : float
     """
 
 def entering_element(orbit: _pybmad.CoordStruct, particle_at: int) -> bool:
@@ -9401,12 +9453,15 @@ def ibs_equib_der(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStr
 
 def ibs_equib_rlx(lat: _pybmad.LatStruct, ibs_sim_params: _pybmad.IbsSimParamStruct, inmode: _pybmad.NormalModesStruct, ratio: float, initial_blow_up: Sequence[float], granularity: float) -> _pybmad.NormalModesStruct:
     """
-    Iterates to equilibrium beam conditions using relaxation method
+    $OMP THREADPRIVATE(bl_lat_ptr, bl_ibs_params_ptr, bl_mode_ptr)
 
-    This method requires that the initial beam size be larger than the equilibrium beam size.
-    An initial_blow_up of 3 to 5 is a good place to start.
+     Subroutine ibs_equib_rlx(lat,ibs_sim_params,inmode,ibsmode,ratio,initial_blow_up,granularity)
+     Iterates to equilibrium beam conditions using relaxation method
 
-    See ibs_rates subroutine for available IBS rate formulas.
+     This method requires that the initial beam size be larger than the equilibrium beam size.
+     An initial_blow_up of 3 to 5 is a good place to start.
+
+     See ibs_rates subroutine for available IBS rate formulas.
 
     Parameters
     ----------
@@ -10152,25 +10207,19 @@ def init_multipole_cache(ele: _pybmad.EleStruct) -> None:
         As an output, ele: Initalized element.
     """
 
-def init_photon_from_a_photon_init_ele(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, random_on: bool | None = None) -> _pybmad.CoordStruct:
+def init_photon_from_a_photon_init_ele(ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, orbit: _pybmad.CoordStruct, random_on: bool | None = None) -> None:
     """
     Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
     Parameters
     ----------
     ele : EleStruct
-        patch element.
 
     param : LatParamStruct
-        lat_param_struct.
+
+    orbit : CoordStruct
 
     random_on : bool, optional
-        : Default is True. If False then use zero for all random numbers needed in the calc.
-
-    Returns
-    -------
-    orbit : CoordStruct
-        Output photon coords.
     """
 
 class InitPhotonIntegProb:
@@ -13197,16 +13246,21 @@ class OdeintBmad:
 
 def odeint_bmad(orbit: _pybmad.CoordStruct, ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, s1_body: float, s2_body: float, mat6: Sequence[Sequence[float]] | None = None, make_matrix: bool | None = None) -> OdeintBmad:
     """
-    Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
-    Recipes.  See the NR book for more details.
+    $OMP THREADPRIVATE(rk_ele_ptr, rk_param_ptr, rk_orbit_ptr, rk_old_orbit_ptr, rk_s_body_ptr, &
+    $OMP                rk_old_s, rk_err_flag_ptr)
 
-    Notice that this routine has an two tolerances:
-      bmad_com%rel_tol_adaptive_tracking
-      bmad_com%abs_tol_adaptive_tracking
+     Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
 
-    Note: For elements where the reference energy is not constant (lcavity, etc.), and
-    with elements where the reference particle does not follow the reference trajectory (wigglers for example),
-    the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
+     Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+     Recipes.  See the NR book for more details.
+
+     Notice that this routine has an two tolerances:
+       bmad_com%rel_tol_adaptive_tracking
+       bmad_com%abs_tol_adaptive_tracking
+
+     Note: For elements where the reference energy is not constant (lcavity, etc.), and
+     with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+     the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
 
     Parameters
     ----------
@@ -13263,10 +13317,15 @@ class OdeintBmadTime:
 
 def odeint_bmad_time(orb: _pybmad.CoordStruct, ele: _pybmad.EleStruct, param: _pybmad.LatParamStruct, t_dir: int, rf_time: float, track: _pybmad.TrackStruct | None = None, t_end: float | None = None, extra_field: _pybmad.EmFieldStruct | None = None) -> OdeintBmadTime:
     """
-    Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
-    Recipes.  See the NR book for more details.
+    $OMP THREADPRIVATE(tt_ele_ptr, tt_param_ptr, tt_orb_ptr, tt_old_orb_ptr, tt_extra_field_ptr, &
+    $OMP                tt_old_t_ptr, tt_rf_time_ptr, tt_s_fringe_ptr, tt_vec_err_ptr)
 
-    Tracking is done until the particle is lost or exits the element.
+     Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
+
+     Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+     Recipes.  See the NR book for more details.
+
+     Tracking is done until the particle is lost or exits the element.
 
     Parameters
     ----------
@@ -13831,6 +13890,19 @@ def osc_write_rectpipe_grn(apipe: float, bpipe: float, delta: Sequence[float], u
     nhi : 1D array of int (shape: 3)
 
     gamma : float
+    """
+
+def p_func(E_in: float) -> float:
+    """
+    Wrapper for Fortran routine p_func
+
+    Parameters
+    ----------
+    E_in : float
+
+    Returns
+    -------
+    rr1 : float
     """
 
 def parse_cartesian_map(ct_map: _pybmad.CartesianMapStruct, ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
@@ -14875,6 +14947,38 @@ def photon_diffuse_scattering(graze_angle_in: float, energy: float, surface: _py
         simulations.
     """
 
+class PhotonHitFunc:
+    """photon_hit_func return type"""
+
+    @property
+    def status(self) -> int: ...
+
+    @property
+    def d_radius(self) -> float: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def photon_hit_func(track_len: float) -> PhotonHitFunc:
+    """
+    Routine to be used as an argument in zbrent in the capillary_photon_hit_spot_calc.
+    Made a module procedure (not nested) to avoid a stack trampoline.
+
+    Parameters
+    ----------
+    track_len : float
+        Place to position the photon.
+
+    Returns
+    -------
+    status : int
+        Not set.
+
+    d_radius : float
+        r_photon - r_wall
+    """
+
 def photon_read_spline(spline_dir: str) -> _pybmad.PhotonInitSplinesStruct:
     """
     Routine to initialize a photon using a set of spline fits.
@@ -14929,10 +15033,15 @@ def photon_reflection(graze_angle_in: float, energy: float, surface: _pybmad.Pho
 
 def photon_reflection_std_surface_init() -> _pybmad.PhotonReflectSurfaceStruct:
     """
-    Routine to initialize the standard proton reflection probability tables.
-    The standard tables are for 10 nm C film on Al substrate.
-    The surface roughness for diffuse scattering is 200 nm and the
-    the surface roughness correlation length is 5.5 um.
+    $OMP THREADPRIVATE(dr_d_param_ptr, dr_surface_ptr, dr_old_integral, dr_tot_integral, &
+    $OMP                dr_ran1, dr_ran2, dr_j)
+
+     Subroutine photon_reflection_std_surface_init (surface)
+
+     Routine to initialize the standard proton reflection probability tables.
+     The standard tables are for 10 nm C film on Al substrate.
+     The surface roughness for diffuse scattering is 200 nm and the
+     the surface roughness correlation length is 5.5 um.
 
     Returns
     -------
@@ -17777,6 +17886,17 @@ def remove_lord_slave_link(lord: _pybmad.EleStruct, slave: _pybmad.EleStruct) ->
         Slave element
         This parameter is an input/output and is modified in-place.
         As an output, slave: Slave element with link info removed
+    """
+
+def residual_pwd_sig_z(zz: float, status: int | None = None) -> float:
+    """
+    Wrapper for Fortran routine residual_pwd_sig_z
+
+    Parameters
+    ----------
+    zz : float
+
+    status : int, optional
     """
 
 def reverse_lat(lat_in: _pybmad.LatStruct, track_antiparticle: bool | None = None) -> _pybmad.LatStruct:
@@ -21274,7 +21394,11 @@ def track1_bunch(bunch: _pybmad.BunchStruct, ele: _pybmad.EleStruct, centroid: _
 
 def track1_bunch_csr(bunch: _pybmad.BunchStruct, ele: _pybmad.EleStruct, centroid: _pybmad.CoordStructArray1D, s_start: float | None = None, s_end: float | None = None, bunch_track: _pybmad.BunchTrackStruct | None = None) -> bool:
     """
-    Routine to track a bunch of particles through an element with csr radiation effects.
+    $OMP THREADPRIVATE(csr_kick1_ptr, csr_csr_ptr, csr_einfo_s_ptr, csr_dr_match_ptr)
+
+     Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
+
+     Routine to track a bunch of particles through an element with csr radiation effects.
 
     Parameters
     ----------
@@ -21976,7 +22100,11 @@ def track_a_bend_photon(orb: _pybmad.CoordStruct, ele: _pybmad.EleStruct, length
 
 def track_a_capillary(orb: _pybmad.CoordStruct, ele: _pybmad.EleStruct) -> None:
     """
-    Routine to track through a capillary.
+    $OMP THREADPRIVATE(cap_ele_ptr, cap_photon_ptr, cap_photon1_ptr)
+
+     Subroutine track_a_capillary (orb, ele)
+
+     Routine to track through a capillary.
 
     Parameters
     ----------
@@ -22839,6 +22967,21 @@ def track_from_s_to_s(lat: _pybmad.LatStruct, s_start: float, s_end: float, orbi
 
     track_state : int, optional
         Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+    """
+
+def track_func(s_target: float, status: int) -> float:
+    """
+    Wrapper for Fortran routine track_func
+
+    Parameters
+    ----------
+    s_target : float
+
+    status : int
+
+    Returns
+    -------
+    dt : float
     """
 
 def track_many(lat: _pybmad.LatStruct, orbit: _pybmad.CoordStructArray1D, ix_start: int, ix_end: int, direction: int, ix_branch: int | None = None) -> int:
@@ -24515,6 +24658,21 @@ def verify_valid_name(name: str, ix_name: int, pure_name: bool | None = None, in
     -------
     is_valid : bool
         True if name is well formed. False otherwise.
+    """
+
+def vert_angle_func(integ_prob: float, status: int) -> float:
+    """
+    Wrapper for Fortran routine vert_angle_func
+
+    Parameters
+    ----------
+    integ_prob : float
+
+    status : int
+
+    Returns
+    -------
+    d_angle : float
     """
 
 def w_mat_for_bend_angle(angle: float, ref_tilt: float, r_vec: Sequence[float] | None = None) -> list[list[float]]:

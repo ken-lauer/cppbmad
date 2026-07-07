@@ -4037,15 +4037,6 @@ std::string to_string(const Bmad::ConvertTotalEnergyTo &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
-std::string to_string(const Bmad::ConverterDistributionParser &self) {
-  return repr(
-      &self,
-      "Bmad::ConverterDistributionParser",
-      {std::pair{"delim", self.delim},
-       std::pair{"delim_found", to_string(self.delim_found)},
-       std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
 std::string to_string(const Bmad::CoordsBodyToLocal &self) {
   return repr(
       &self,
@@ -4128,12 +4119,26 @@ std::string to_string(const Bmad::CrystalDiffractionFieldCalc &self) {
        std::pair{"dr", to_string(self.dr)}}
   );
 }
+std::string to_string(const Bmad::Cumulr &self) {
+  return repr(
+      &self,
+      "Bmad::Cumulr",
+      {std::pair{"fn", to_string(self.fn)}, std::pair{"df", to_string(self.df)}}
+  );
+}
 std::string to_string(const Bmad::CustomEleAttribNameList &self) {
   return repr(
       &self,
       "Bmad::CustomEleAttribNameList",
       {std::pair{"index_list", to_string(self.index_list)},
        std::pair{"name_list", to_string(self.name_list)}}
+  );
+}
+std::string to_string(const Bmad::DIntegral &self) {
+  return repr(
+      &self,
+      "Bmad::DIntegral",
+      {std::pair{"fn", to_string(self.fn)}, std::pair{"df", to_string(self.df)}}
   );
 }
 std::string to_string(const Bmad::DistanceToAperture &self) {
@@ -4845,6 +4850,13 @@ std::string to_string(const Bmad::PhotonDiffuseScattering &self) {
       {std::pair{"graze_angle_out", to_string(self.graze_angle_out)},
        std::pair{"phi_out", to_string(self.phi_out)},
        std::pair{"diffuse_param", to_string(self.diffuse_param)}}
+  );
+}
+std::string to_string(const Bmad::PhotonHitFunc &self) {
+  return repr(
+      &self,
+      "Bmad::PhotonHitFunc",
+      {std::pair{"status", to_string(self.status)}, std::pair{"d_radius", to_string(self.d_radius)}}
   );
 }
 std::string to_string(const Bmad::PhotonReflection &self) {

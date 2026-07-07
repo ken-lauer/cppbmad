@@ -60,6 +60,9 @@ void integrate_min(
 // - Array bounds handling: "Enum 'NN' found in bounds 'nn' but not in provided map."
 // - Array bounds handling: "Enum 'MM' found in bounds 'mm' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine merit_wrapper:
+// - Routine module in configuration skip list
 extern "C" void fortran_tao_abort_command_file(bool *force_abort /* 0D_NOT_logical in */);
 void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
 extern "C" void fortran_tao_add_to_normal_mode_h_array(

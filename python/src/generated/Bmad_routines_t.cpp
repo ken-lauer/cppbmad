@@ -1213,7 +1213,11 @@ err : bool
       nb::arg("s_start") = nb::none(),
       nb::arg("s_end") = nb::none(),
       nb::arg("bunch_track") = nb::none(),
-      R"""(Routine to track a bunch of particles through an element with csr radiation effects.
+      R"""($OMP THREADPRIVATE(csr_kick1_ptr, csr_csr_ptr, csr_einfo_s_ptr, csr_dr_match_ptr)
+
+ Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
+
+ Routine to track a bunch of particles through an element with csr radiation effects.
 
 Parameters
 ----------
@@ -2083,7 +2087,11 @@ length : float
       &Bmad::track_a_capillary,
       nb::arg("orb"),
       nb::arg("ele"),
-      R"""(Routine to track through a capillary.
+      R"""($OMP THREADPRIVATE(cap_ele_ptr, cap_photon_ptr, cap_photon1_ptr)
+
+ Subroutine track_a_capillary (orb, ele)
+
+ Routine to track through a capillary.
 
 Parameters
 ----------
@@ -3156,6 +3164,24 @@ all_orb : 1D array of CoordStruct, optional
 
 track_state : int, optional
     Set to moving_forward$ if everything is OK. Otherwise: set to index of element where particle was lost.
+)"""
+  );
+  m.def(
+      "track_func",
+      &Bmad::track_func,
+      nb::arg("s_target"),
+      nb::arg("status"),
+      R"""(Wrapper for Fortran routine track_func
+
+Parameters
+----------
+s_target : float
+
+status : int
+
+Returns
+-------
+dt : float
 )"""
   );
   m.def(

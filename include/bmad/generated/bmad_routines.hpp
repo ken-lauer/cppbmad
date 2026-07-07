@@ -299,6 +299,9 @@ extern "C" bool fortran_astra_max_field_reference(
     double &field_value /* 0D_NOT_real out */
 );
 double astra_max_field_reference(GridFieldPt1Struct &pt0, EleStruct &ele);
+
+// Skipped unusable routine at_slice_func:
+// - Routine module in configuration skip list
 extern "C" bool fortran_at_this_ele_end(
     int &now_at /* 0D_NOT_integer in */,
     int &where_at /* 0D_NOT_integer in */,
@@ -1136,6 +1139,9 @@ Bmad::ChromCalc chrom_calc(
     std::optional<int> ix_branch = std::nullopt,
     optional_ref<CoordStruct> orb0 = std::nullopt
 );
+
+// Skipped unusable routine chrom_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_chrom_tune(
     void *lat /* 0D_NOT_type inout */,
     double &delta_e /* 0D_NOT_real inout */,
@@ -1203,6 +1209,9 @@ extern "C" bool fortran_cmplx_re_str(
     const char *str_out /* 0D_NOT_character out */
 );
 std::string cmplx_re_str(std::complex<double> cmp);
+
+// Skipped unusable routine co_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_combine_consecutive_elements(
     void *lat /* 0D_NOT_type inout */,
     bool &error /* 0D_NOT_logical out */
@@ -1493,16 +1502,16 @@ Bmad::ConvertTotalEnergyTo
 convert_total_energy_to(double E_tot, int particle, std::optional<bool> print_err = std::nullopt);
 extern "C" void fortran_converter_distribution_parser(
     void *ele /* 0D_NOT_type inout */,
-    const char *delim /* 0D_NOT_character out */,
-    bool &delim_found /* 0D_NOT_logical out */,
-    bool &err_flag /* 0D_NOT_logical out */
+    const char *delim /* 0D_NOT_character in */,
+    bool &delim_found /* 0D_NOT_logical in */,
+    bool &err_flag /* 0D_NOT_logical in */
 );
-struct ConverterDistributionParser {
-  std::string delim;
-  bool delim_found;
-  bool err_flag;
-};
-Bmad::ConverterDistributionParser converter_distribution_parser(EleStruct &ele);
+void converter_distribution_parser(
+    EleStruct &ele,
+    std::string delim,
+    bool delim_found,
+    bool err_flag
+);
 extern "C" void
 fortran_coord_equal_coord(void *coord1 /* 0D_NOT_type out */, void *coord2 /* 0D_NOT_type in */);
 CoordStruct coord_equal_coord(CoordStruct &coord2);
@@ -1852,6 +1861,17 @@ extern "C" void fortran_csr_bin_particles(
     bool &err_flag /* 0D_NOT_logical in */
 );
 CsrStruct csr_bin_particles(EleStruct &ele, CoordStructArray1D particle, bool err_flag);
+extern "C" void fortran_cumulr(
+    double &phi /* 0D_NOT_real in */,
+    double &fn /* 0D_NOT_real out */,
+    double &df /* 0D_NOT_real out */,
+    int &status /* 0D_NOT_integer in */
+);
+struct Cumulr {
+  double fn;
+  double df;
+};
+Bmad::Cumulr cumulr(double phi, int status);
 extern "C" bool fortran_custom_attribute_ubound_index(
     int &ele_class /* 0D_NOT_integer in */,
     int &ix_ubound /* 0D_NOT_integer out */
@@ -1866,6 +1886,17 @@ struct CustomEleAttribNameList {
   CharacterAlloc1D name_list;
 };
 Bmad::CustomEleAttribNameList custom_ele_attrib_name_list();
+extern "C" void fortran_d_integral(
+    double &x /* 0D_NOT_real in */,
+    double &fn /* 0D_NOT_real out */,
+    double &df /* 0D_NOT_real out */,
+    int &status /* 0D_NOT_integer in */
+);
+struct DIntegral {
+  double fn;
+  double df;
+};
+Bmad::DIntegral d_integral(double x, int status);
 
 // Skipped unusable routine damap_equal_bmad_taylor:
 // - Untranslated type: damap (0D)
@@ -1880,6 +1911,12 @@ extern "C" bool fortran_damping_matrix_d(
 );
 FixedArray2D<Real, 6, 6>
 damping_matrix_d(double gamma, double g_tot, double B0, double B1, double delta, int species);
+extern "C" bool fortran_ddz_calc_csr(
+    double &s_chord_source /* 0D_NOT_real in */,
+    int &status /* 0D_NOT_integer in */,
+    double &ddz_this /* 0D_NOT_real out */
+);
+double ddz_calc_csr(double s_chord_source, int status);
 
 // Skipped unusable routine deallocate_ele_array_pointers:
 // - Routine in configuration skip list
@@ -1969,6 +2006,9 @@ extern "C" bool fortran_dpc_given_de(
     double &dpc /* 0D_NOT_real out */
 );
 double dpc_given_de(double pc_old, double mass, double dE);
+
+// Skipped unusable routine dphase_end_minus_start:
+// - Routine module in configuration skip list
 extern "C" void fortran_drift_and_pipe_track_methods_adjustment(void *lat /* 0D_NOT_type inout */);
 void drift_and_pipe_track_methods_adjustment(LatStruct &lat);
 extern "C" void fortran_drift_multipass_name_correction(void *lat /* 0D_NOT_type inout */);
@@ -2010,6 +2050,9 @@ double dspline_len(
     SplineStruct &spline,
     std::optional<double> dtheta_ref = std::nullopt
 );
+
+// Skipped unusable routine dxds_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_dynamic_aperture_point(
     void *branch /* 0D_NOT_type in */,
     void *ele0 /* 0D_NOT_type in */,
@@ -2040,6 +2083,9 @@ ApertureScanStructAlloc1D dynamic_aperture_scan(
     LatStruct &lat,
     std::optional<bool> print_timing = std::nullopt
 );
+
+// Skipped unusable routine dz_tune_func:
+// - Routine module in configuration skip list
 extern "C" bool fortran_e_accel_field(
     void *ele /* 0D_NOT_type in */,
     int &voltage_or_gradient /* 0D_NOT_integer in */,
@@ -2057,6 +2103,9 @@ extern "C" bool fortran_e_crit_photon(
     double &E_crit /* 0D_NOT_real out */
 );
 double e_crit_photon(double gamma, double g_bend);
+
+// Skipped unusable routine e_curve_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_eigen_decomp_6mat(
     Bmad::array_descriptor_t &mat /* 2D_NOT_real in */,
     Bmad::array_descriptor_t &eval /* 1D_NOT_complex out */,
@@ -2465,6 +2514,12 @@ Bmad::Emit6d emit_6d(
     bool include_opening_angle,
     std::optional<CoordStructArray1D> closed_orbit = std::nullopt
 );
+extern "C" bool fortran_energy_func(
+    double &integ_prob /* 0D_NOT_real in */,
+    int &status /* 0D_NOT_integer in */,
+    double &dE /* 0D_NOT_real out */
+);
+double energy_func(double integ_prob, int status);
 extern "C" bool fortran_entering_element(
     void *orbit /* 0D_NOT_type in */,
     int &particle_at /* 0D_NOT_integer in */,
@@ -3555,6 +3610,9 @@ void get_list_of_names(
     bool delim_found,
     bool err_flag
 );
+
+// Skipped unusable routine get_more_text_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_get_next_word(
     const char *word /* 0D_NOT_character in */,
     int &ix_word /* 0D_NOT_integer out */,
@@ -4207,14 +4265,15 @@ LatStruct init_lat(
 extern "C" void fortran_init_multipole_cache(void *ele /* 0D_NOT_type inout */);
 void init_multipole_cache(EleStruct &ele);
 extern "C" void fortran_init_photon_from_a_photon_init_ele(
-    void *ele /* 0D_NOT_type in */,
-    void *param /* 0D_NOT_type in */,
-    void *orbit /* 0D_NOT_type out */,
+    void *ele /* 0D_NOT_type inout */,
+    void *param /* 0D_NOT_type inout */,
+    void *orbit /* 0D_NOT_type inout */,
     bool *random_on /* 0D_NOT_logical in */
 );
-CoordStruct init_photon_from_a_photon_init_ele(
+void init_photon_from_a_photon_init_ele(
     EleStruct &ele,
     LatParamStruct &param,
+    CoordStruct &orbit,
     std::optional<bool> random_on = std::nullopt
 );
 extern "C" bool fortran_init_photon_integ_prob(
@@ -5765,6 +5824,15 @@ void osc_write_rectpipe_grn(
     FixedArray1D<Int, 3> nhi,
     double gamma
 );
+
+// Skipped unusable routine p1_norm_func:
+// - Routine module in configuration skip list
+
+// Skipped unusable routine p2_norm_func:
+// - Routine module in configuration skip list
+extern "C" bool
+fortran_p_func(double &E_in /* 0D_NOT_real in */, double &rr1 /* 0D_NOT_real out */);
+double p_func(double E_in);
 extern "C" void fortran_parse_cartesian_map(
     void *ct_map /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type inout */,
@@ -6334,6 +6402,9 @@ extern "C" bool fortran_patch_length(
     double &length /* 0D_NOT_real out */
 );
 double patch_length(EleStruct &patch, std::optional<int> ref_coords = std::nullopt);
+
+// Skipped unusable routine phase_func:
+// - Routine module in configuration skip list
 extern "C" void fortran_photon_absorption_and_phase_shift(
     const char *material /* 0D_NOT_character in */,
     double &Energy /* 0D_NOT_real in */,
@@ -6366,6 +6437,9 @@ Bmad::PhotonAddToDetectorStatistics photon_add_to_detector_statistics(
     EleStruct &ele,
     optional_ref<PixelPtStruct> pixel_pt = std::nullopt
 );
+
+// Skipped unusable routine photon_depth_in_element:
+// - Routine module in configuration skip list
 extern "C" void fortran_photon_diffuse_scattering(
     double &graze_angle_in /* 0D_NOT_real in */,
     double &energy /* 0D_NOT_real in */,
@@ -6384,6 +6458,16 @@ Bmad::PhotonDiffuseScattering photon_diffuse_scattering(
     double energy,
     PhotonReflectSurfaceStruct &surface
 );
+extern "C" bool fortran_photon_hit_func(
+    double &track_len /* 0D_NOT_real in */,
+    int &status /* 0D_NOT_integer out */,
+    double &d_radius /* 0D_NOT_real out */
+);
+struct PhotonHitFunc {
+  int status;
+  double d_radius;
+};
+Bmad::PhotonHitFunc photon_hit_func(double track_len);
 extern "C" void fortran_photon_read_spline(
     const char *spline_dir /* 0D_NOT_character in */,
     void *splines /* 0D_NOT_type out */
@@ -7092,6 +7176,15 @@ extern "C" bool fortran_pwd_mat(
 FixedArray2D<Real, 6, 6>
 pwd_mat(LatStruct &lat, FixedArray2D<Real, 6, 6> t6, double inductance, double sig_z);
 
+// Skipped unusable routine pz_calc:
+// - Routine module in configuration skip list
+
+// Skipped unusable routine pz_calc_zbrent:
+// - Routine module in configuration skip list
+
+// Skipped unusable routine qfunc:
+// - Routine module in configuration skip list
+
 // Skipped unusable routine qromb_rad_int:
 // - Array bounds handling: "Enum 'NUM_INT' found in bounds 'num_int' but not in provided map."
 
@@ -7469,6 +7562,12 @@ extern "C" void fortran_remove_lord_slave_link(
     void *slave /* 0D_NOT_type inout */
 );
 void remove_lord_slave_link(EleStruct &lord, EleStruct &slave);
+extern "C" bool fortran_residual_pwd_sig_z(
+    double &zz /* 0D_NOT_real in */,
+    int *status /* 0D_NOT_integer in */,
+    double &func_retval__ /* 0D_NOT_real out */
+);
+double residual_pwd_sig_z(double zz, std::optional<int> status = std::nullopt);
 extern "C" void fortran_reverse_lat(
     void *lat_in /* 0D_NOT_type in */,
     void *lat_rev /* 0D_NOT_type out */,
@@ -8710,6 +8809,15 @@ extern "C" void fortran_taylors_equal_taylors(
     Bmad::array_descriptor_t &taylor2 /* 1D_NOT_type in */
 );
 void taylors_equal_taylors(TaylorStructArray1D taylor1, TaylorStructArray1D taylor2);
+
+// Skipped unusable routine this_bookkeeping:
+// - Routine module in configuration skip list
+
+// Skipped unusable routine this_de_track:
+// - Routine module in configuration skip list
+
+// Skipped unusable routine this_dt_track:
+// - Routine module in configuration skip list
 extern "C" void fortran_tilt_coords(
     double &tilt_val /* 0D_NOT_real in */,
     Bmad::array_descriptor_t &coord /* 1D_NOT_real inout */,
@@ -9646,6 +9754,12 @@ Bmad::TrackFromSToS track_from_s_to_s(
     std::optional<int> ix_branch = std::nullopt,
     std::optional<int> ix_ele_end = std::nullopt
 );
+extern "C" bool fortran_track_func(
+    double &s_target /* 0D_NOT_real in */,
+    int &status /* 0D_NOT_integer in */,
+    double &dt /* 0D_NOT_real out */
+);
+double track_func(double s_target, int status);
 extern "C" void fortran_track_many(
     void *lat /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &orbit /* 1D_NOT_type inout */,
@@ -9666,6 +9780,9 @@ int track_many(
 
 // Skipped unusable routine track_many_hook_def:
 // - Routine in configuration skip list
+
+// Skipped unusable routine track_this_lcavity:
+// - Routine module in configuration skip list
 extern "C" void fortran_track_to_surface(
     void *ele /* 0D_NOT_type in */,
     void *orbit /* 0D_NOT_type inout */,
@@ -10350,6 +10467,12 @@ bool verify_valid_name(
     std::optional<bool> pure_name = std::nullopt,
     std::optional<bool> include_wild = std::nullopt
 );
+extern "C" bool fortran_vert_angle_func(
+    double &integ_prob /* 0D_NOT_real in */,
+    int &status /* 0D_NOT_integer in */,
+    double &d_angle /* 0D_NOT_real out */
+);
+double vert_angle_func(double integ_prob, int status);
 extern "C" bool fortran_w_mat_for_bend_angle(
     double &angle /* 0D_NOT_real in */,
     double &ref_tilt /* 0D_NOT_real in */,

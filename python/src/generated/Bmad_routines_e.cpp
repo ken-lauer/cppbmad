@@ -1333,6 +1333,24 @@ rad_int_by_ele : RadIntAllEleStruct, optional
 )"""
   );
   m.def(
+      "energy_func",
+      &Bmad::energy_func,
+      nb::arg("integ_prob"),
+      nb::arg("status"),
+      R"""(Wrapper for Fortran routine energy_func
+
+Parameters
+----------
+integ_prob : float
+
+status : int
+
+Returns
+-------
+de : float
+)"""
+  );
+  m.def(
       "entering_element",
       &Bmad::entering_element,
       nb::arg("orbit"),

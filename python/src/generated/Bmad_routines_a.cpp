@@ -132,11 +132,16 @@ make_matrix : bool, optional
       &Bmad::absolute_photon_position,
       nb::arg("e_orb"),
       nb::arg("photon_orb"),
-      R"""(Routine to calculate the photon phase space coordinates given:
-  1) The phase space coords of the emitting charged particle and
-  2) The photon phase space coords relative to the emitting particle.
-     The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
-     the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
+      R"""($OMP THREADPRIVATE(pinit_E_rel_target, pinit_va_E_rel, pinit_va_gamma, &
+$OMP                pinit_va_vert_angle, pinit_va_invert, pinit_alpha)
+
+ Subroutine absolute_photon_position (e_orb, photon_orb)
+
+ Routine to calculate the photon phase space coordinates given:
+   1) The phase space coords of the emitting charged particle and
+   2) The photon phase space coords relative to the emitting particle.
+      The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
+      the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
 
 Parameters
 ----------

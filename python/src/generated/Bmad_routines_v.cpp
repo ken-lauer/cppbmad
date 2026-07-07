@@ -267,4 +267,22 @@ is_valid : bool
     True if name is well formed. False otherwise.
 )"""
   );
+  m.def(
+      "vert_angle_func",
+      &Bmad::vert_angle_func,
+      nb::arg("integ_prob"),
+      nb::arg("status"),
+      R"""(Wrapper for Fortran routine vert_angle_func
+
+Parameters
+----------
+integ_prob : float
+
+status : int
+
+Returns
+-------
+d_angle : float
+)"""
+  );
 }

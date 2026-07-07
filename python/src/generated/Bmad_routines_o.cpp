@@ -81,16 +81,21 @@ void init_Bmad_routines_o(nb::module_ &m) {
       nb::arg("s2_body"),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""(Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
-Recipes.  See the NR book for more details.
+      R"""($OMP THREADPRIVATE(rk_ele_ptr, rk_param_ptr, rk_orbit_ptr, rk_old_orbit_ptr, rk_s_body_ptr, &
+$OMP                rk_old_s, rk_err_flag_ptr)
 
-Notice that this routine has an two tolerances:
-  bmad_com%rel_tol_adaptive_tracking
-  bmad_com%abs_tol_adaptive_tracking
+ Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
 
-Note: For elements where the reference energy is not constant (lcavity, etc.), and
-with elements where the reference particle does not follow the reference trajectory (wigglers for example),
-the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
+ Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+ Recipes.  See the NR book for more details.
+
+ Notice that this routine has an two tolerances:
+   bmad_com%rel_tol_adaptive_tracking
+   bmad_com%abs_tol_adaptive_tracking
+
+ Note: For elements where the reference energy is not constant (lcavity, etc.), and
+ with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+ the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
 
 Parameters
 ----------
@@ -156,10 +161,15 @@ track : TrackStruct, optional
       nb::arg("track") = nb::none(),
       nb::arg("t_end") = nb::none(),
       nb::arg("extra_field") = nb::none(),
-      R"""(Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
-Recipes.  See the NR book for more details.
+      R"""($OMP THREADPRIVATE(tt_ele_ptr, tt_param_ptr, tt_orb_ptr, tt_old_orb_ptr, tt_extra_field_ptr, &
+$OMP                tt_old_t_ptr, tt_rf_time_ptr, tt_s_fringe_ptr, tt_vec_err_ptr)
 
-Tracking is done until the particle is lost or exits the element.
+ Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
+
+ Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+ Recipes.  See the NR book for more details.
+
+ Tracking is done until the particle is lost or exits the element.
 
 Parameters
 ----------

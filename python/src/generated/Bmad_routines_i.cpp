@@ -170,12 +170,15 @@ ibsmode : NormalModesStruct
       nb::arg("ratio"),
       nb::arg("initial_blow_up"),
       nb::arg("granularity"),
-      R"""(Iterates to equilibrium beam conditions using relaxation method
+      R"""($OMP THREADPRIVATE(bl_lat_ptr, bl_ibs_params_ptr, bl_mode_ptr)
 
-This method requires that the initial beam size be larger than the equilibrium beam size.
-An initial_blow_up of 3 to 5 is a good place to start.
+ Subroutine ibs_equib_rlx(lat,ibs_sim_params,inmode,ibsmode,ratio,initial_blow_up,granularity)
+ Iterates to equilibrium beam conditions using relaxation method
 
-See ibs_rates subroutine for available IBS rate formulas.
+ This method requires that the initial beam size be larger than the equilibrium beam size.
+ An initial_blow_up of 3 to 5 is a good place to start.
+
+ See ibs_rates subroutine for available IBS rate formulas.
 
 Parameters
 ----------
@@ -1244,24 +1247,19 @@ ele : EleStruct
       &Bmad::init_photon_from_a_photon_init_ele,
       nb::arg("ele"),
       nb::arg("param"),
+      nb::arg("orbit"),
       nb::arg("random_on") = nb::none(),
       R"""(Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
 Parameters
 ----------
 ele : EleStruct
-    patch element.
 
 param : LatParamStruct
-    lat_param_struct.
+
+orbit : CoordStruct
 
 random_on : bool, optional
-    : Default is True. If False then use zero for all random numbers needed in the calc.
-
-Returns
--------
-orbit : CoordStruct
-    Output photon coords.
 )"""
   );
   nb::class_<Bmad::InitPhotonIntegProb>(

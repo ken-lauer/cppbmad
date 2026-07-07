@@ -896,7 +896,7 @@ delta_e : float
     +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
     delta_e. If 0 then default of 1.0d-4 is used.
     This parameter is an input/output and is modified in-place.
-    As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+    As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
 
 pz : float, optional
     reference momentum about which to calculate. Default is 0.
@@ -914,7 +914,7 @@ delta_e : float
     +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
     delta_e. If 0 then default of 1.0d-4 is used.
     This parameter is an input/output and is modified in-place.
-    As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+    As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
 
 chrom_a : float
     a-mode chromaticity.
@@ -1908,49 +1908,24 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
-  nb::class_<Bmad::ConverterDistributionParser>(
-      m,
-      "ConverterDistributionParser",
-      "converter_distribution_parser return type"
-  )
-      .def_ro("delim", &Bmad::ConverterDistributionParser::delim)
-      .def_ro("delim_found", &Bmad::ConverterDistributionParser::delim_found)
-      .def_ro("err_flag", &Bmad::ConverterDistributionParser::err_flag)
-      .def("__len__", [](const Bmad::ConverterDistributionParser &) { return 3; })
-      .def("__getitem__", [](const Bmad::ConverterDistributionParser &s, int i) -> nb::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return nb::cast(s.delim);
-        if (i == 1)
-          return nb::cast(s.delim_found);
-        if (i == 2)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
       nb::arg("ele"),
+      nb::arg("delim"),
+      nb::arg("delim_found"),
+      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine converter_distribution_parser
 
 Parameters
 ----------
 ele : EleStruct
-    Converter element.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Converter element with .converter field set.
 
-Returns
--------
 delim : str
-    Ending delimitor.
 
 delim_found : bool
-    Has a delimitor been found?
 
 err_flag : bool
-    Set True if there is an error. False otherwise.
 )"""
   );
   m.def(
@@ -3037,6 +3012,28 @@ Returns
 -------
 csr : CsrStruct
     The bin structure.
+)"""
+  );
+  nb::class_<Bmad::Cumulr>(m, "Cumulr", "cumulr return type")
+      .def_ro("fn", &Bmad::Cumulr::fn)
+      .def_ro("df", &Bmad::Cumulr::df)
+      .def("__len__", [](const Bmad::Cumulr &) { return 2; })
+      .def("__getitem__", [](const Bmad::Cumulr &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.fn);
+        if (i == 1)
+          return nb::cast(s.df);
+        throw nb::index_error();
+      });
+  m.def(
+      "cumulr",
+      &Bmad::cumulr,
+      nb::arg("phi"),
+      nb::arg("status"),
+      R"""(Wrapper function passed to super_rtsafe by photon_diffuse_scattering.
+Made a module procedure (not nested) to avoid a stack trampoline.
 )"""
   );
   m.def(

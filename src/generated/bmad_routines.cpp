@@ -2647,15 +2647,17 @@ Bmad::convert_total_energy_to(double E_tot, int particle, std::optional<bool> pr
   );
   return ConvertTotalEnergyTo{_gamma, _kinetic, _beta, _pc, _brho, _beta1, _err_flag};
 }
-Bmad::ConverterDistributionParser Bmad::converter_distribution_parser(EleStruct &ele) {
-  char _delim[4096];
-  bool _delim_found{};
-  bool _err_flag{};
+void Bmad::converter_distribution_parser(
+    EleStruct &ele,
+    std::string delim,
+    bool delim_found,
+    bool err_flag
+) {
+  auto _delim = delim.c_str();
   fortran_converter_distribution_parser(/* void* */ ele.get_fortran_ptr(),
                                         /* const char* */ _delim,
-                                        /* bool& */ _delim_found,
-                                        /* bool& */ _err_flag);
-  return ConverterDistributionParser{_delim, _delim_found, _err_flag};
+                                        /* bool& */ delim_found,
+                                        /* bool& */ err_flag);
 }
 CoordStruct Bmad::coord_equal_coord(CoordStruct &coord2) {
   CoordStruct _coord1;
@@ -3222,6 +3224,12 @@ CsrStruct Bmad::csr_bin_particles(EleStruct &ele, CoordStructArray1D particle, b
                             /* bool& */ err_flag);
   return std::move(_csr);
 }
+Bmad::Cumulr Bmad::cumulr(double phi, int status) {
+  double _fn{};
+  double _df{};
+  fortran_cumulr(/* double& */ phi, /* double& */ _fn, /* double& */ _df, /* int& */ status);
+  return Cumulr{_fn, _df};
+}
 int Bmad::custom_attribute_ubound_index(int ele_class) {
   int _ix_ubound{};
   fortran_custom_attribute_ubound_index(/* int& */ ele_class, /* int& */ _ix_ubound);
@@ -3235,6 +3243,12 @@ Bmad::CustomEleAttribNameList Bmad::custom_ele_attrib_name_list() {
   fortran_custom_ele_attrib_name_list(/* void* */ index_list.get_fortran_ptr(),
                                       /* void* */ name_list.get_fortran_ptr());
   return CustomEleAttribNameList{std::move(index_list), std::move(name_list)};
+}
+Bmad::DIntegral Bmad::d_integral(double x, int status) {
+  double _fn{};
+  double _df{};
+  fortran_d_integral(/* double& */ x, /* double& */ _fn, /* double& */ _df, /* int& */ status);
+  return DIntegral{_fn, _df};
 }
 FixedArray2D<Real, 6, 6> Bmad::damping_matrix_d(
     double gamma,
@@ -3263,6 +3277,11 @@ FixedArray2D<Real, 6, 6> Bmad::damping_matrix_d(
   );
   vec_to_matrix(_mat_vec, mat);
   return mat;
+}
+double Bmad::ddz_calc_csr(double s_chord_source, int status) {
+  double _ddz_this{};
+  fortran_ddz_calc_csr(/* double& */ s_chord_source, /* int& */ status, /* double& */ _ddz_this);
+  return _ddz_this;
 }
 void Bmad::deallocate_ele_pointers(
     EleStruct &ele,
@@ -4302,6 +4321,11 @@ Bmad::Emit6d Bmad::emit_6d(
                   /* void* */ _rad_int_by_ele.get_fortran_ptr());
   vec_to_matrix(_sigma_mat_vec, sigma_mat);
   return Emit6d{std::move(_mode), sigma_mat, std::move(_rad_int_by_ele)};
+}
+double Bmad::energy_func(double integ_prob, int status) {
+  double _dE{};
+  fortran_energy_func(/* double& */ integ_prob, /* int& */ status, /* double& */ _dE);
+  return _dE;
 }
 bool Bmad::entering_element(CoordStruct &orbit, int particle_at) {
   bool _is_entering{};
@@ -7009,12 +7033,12 @@ LatStruct Bmad::init_lat(std::optional<int> n, std::optional<bool> init_beginnin
 void Bmad::init_multipole_cache(EleStruct &ele) {
   fortran_init_multipole_cache(/* void* */ ele.get_fortran_ptr());
 }
-CoordStruct Bmad::init_photon_from_a_photon_init_ele(
+void Bmad::init_photon_from_a_photon_init_ele(
     EleStruct &ele,
     LatParamStruct &param,
+    CoordStruct &orbit,
     std::optional<bool> random_on
 ) {
-  CoordStruct _orbit;
   bool random_on_lvalue;
   auto *_random_on{&random_on_lvalue};
   if (random_on.has_value()) {
@@ -7024,9 +7048,8 @@ CoordStruct Bmad::init_photon_from_a_photon_init_ele(
   }
   fortran_init_photon_from_a_photon_init_ele(/* void* */ ele.get_fortran_ptr(),
                                              /* void* */ param.get_fortran_ptr(),
-                                             /* void* */ _orbit.get_fortran_ptr(),
+                                             /* void* */ orbit.get_fortran_ptr(),
                                              /* bool* */ _random_on);
-  return std::move(_orbit);
 }
 Bmad::InitPhotonIntegProb Bmad::init_photon_integ_prob(
     double gamma,
@@ -9938,6 +9961,11 @@ void Bmad::osc_write_rectpipe_grn(
       /* double& */ gamma
   );
 }
+double Bmad::p_func(double E_in) {
+  double _rr1{};
+  fortran_p_func(/* double& */ E_in, /* double& */ _rr1);
+  return _rr1;
+}
 void Bmad::parse_cartesian_map(
     CartesianMapStruct &ct_map,
     EleStruct &ele,
@@ -10888,6 +10916,12 @@ Bmad::PhotonDiffuseScattering Bmad::photon_diffuse_scattering(
       /* void* */ _diffuse_param.get_fortran_ptr()
   );
   return PhotonDiffuseScattering{_graze_angle_out, _phi_out, std::move(_diffuse_param)};
+}
+Bmad::PhotonHitFunc Bmad::photon_hit_func(double track_len) {
+  int _status{};
+  double _d_radius{};
+  fortran_photon_hit_func(/* double& */ track_len, /* int& */ _status, /* double& */ _d_radius);
+  return PhotonHitFunc{_status, _d_radius};
 }
 PhotonInitSplinesStruct Bmad::photon_read_spline(std::string spline_dir) {
   auto _spline_dir = spline_dir.c_str();
@@ -12548,6 +12582,18 @@ void Bmad::remove_eles_from_lat(LatStruct &lat, std::optional<bool> check_sanity
 void Bmad::remove_lord_slave_link(EleStruct &lord, EleStruct &slave) {
   fortran_remove_lord_slave_link(/* void* */ lord.get_fortran_ptr(),
                                  /* void* */ slave.get_fortran_ptr());
+}
+double Bmad::residual_pwd_sig_z(double zz, std::optional<int> status) {
+  int status_lvalue;
+  auto *_status{&status_lvalue};
+  if (status.has_value()) {
+    status_lvalue = status.value();
+  } else {
+    _status = nullptr;
+  }
+  double _func_retval__{};
+  fortran_residual_pwd_sig_z(/* double& */ zz, /* int* */ _status, /* double& */ _func_retval__);
+  return _func_retval__;
 }
 LatStruct Bmad::reverse_lat(LatStruct &lat_in, std::optional<bool> track_antiparticle) {
   LatStruct _lat_rev;
@@ -16820,6 +16866,11 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
                             /* int* */ _ix_ele_end);
   return TrackFromSToS{std::move(_orbit_end), std::move(all_orb), _track_state};
 }
+double Bmad::track_func(double s_target, int status) {
+  double _dt{};
+  fortran_track_func(/* double& */ s_target, /* int& */ status, /* double& */ _dt);
+  return _dt;
+}
 int Bmad::track_many(
     LatStruct &lat,
     CoordStructArray1D orbit,
@@ -18267,6 +18318,11 @@ bool Bmad::verify_valid_name(
       /* bool& */ _is_valid
   );
   return _is_valid;
+}
+double Bmad::vert_angle_func(double integ_prob, int status) {
+  double _d_angle{};
+  fortran_vert_angle_func(/* double& */ integ_prob, /* int& */ status, /* double& */ _d_angle);
+  return _d_angle;
 }
 FixedArray2D<Real, 3, 3> Bmad::w_mat_for_bend_angle(
     double angle,

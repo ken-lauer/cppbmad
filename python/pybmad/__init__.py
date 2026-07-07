@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260703.0"
+__version__ = "20260707.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -792,10 +792,13 @@ crystal_type_to_crystal_params = bmad.crystal_type_to_crystal_params
 csr_and_sc_apply_kicks = bmad.csr_and_sc_apply_kicks
 csr_bin_kicks = bmad.csr_bin_kicks
 csr_bin_particles = bmad.csr_bin_particles
+cumulr = bmad.cumulr
 custom_attribute_ubound_index = bmad.custom_attribute_ubound_index
 custom_ele_attrib_name_list = bmad.custom_ele_attrib_name_list
+d_integral = bmad.d_integral
 damping_matrix_d = bmad.damping_matrix_d
 date_and_time_stamp = simutils.date_and_time_stamp
+ddz_calc_csr = bmad.ddz_calc_csr
 deallocate_ele_pointers = bmad.deallocate_ele_pointers
 deallocate_expression_tree = bmad.deallocate_expression_tree
 deallocate_lat_pointers = bmad.deallocate_lat_pointers
@@ -864,6 +867,7 @@ em_field_kick_vector_time = bmad.em_field_kick_vector_time
 em_field_plus_em_field = bmad.em_field_plus_em_field
 emit_6d = bmad.emit_6d
 end_akima_spline_calc = simutils.end_akima_spline_calc
+energy_func = bmad.energy_func
 entering_element = bmad.entering_element
 envelope_radints = bmad.envelope_radints
 envelope_radints_ibs = bmad.envelope_radints_ibs
@@ -1279,6 +1283,7 @@ out_io_buffer_reset = simutils.out_io_buffer_reset
 out_io = simutils.out_io
 out_io_print_and_capture_setup = simutils.out_io_print_and_capture_setup
 output_direct = simutils.output_direct
+p_func = bmad.p_func
 parse_cartesian_map = bmad.parse_cartesian_map
 parse_cylindrical_map = bmad.parse_cylindrical_map
 parse_fortran_format = simutils.parse_fortran_format
@@ -1323,6 +1328,7 @@ patch_length = bmad.patch_length
 photon_absorption_and_phase_shift = bmad.photon_absorption_and_phase_shift
 photon_add_to_detector_statistics = bmad.photon_add_to_detector_statistics
 photon_diffuse_scattering = bmad.photon_diffuse_scattering
+photon_hit_func = bmad.photon_hit_func
 photon_read_spline = bmad.photon_read_spline
 photon_reflection = bmad.photon_reflection
 photon_reflection_std_surface_init = bmad.photon_reflection_std_surface_init
@@ -1450,6 +1456,7 @@ remove_constant_taylor = bmad.remove_constant_taylor
 remove_dead_from_bunch = bmad.remove_dead_from_bunch
 remove_eles_from_lat = bmad.remove_eles_from_lat
 remove_lord_slave_link = bmad.remove_lord_slave_link
+residual_pwd_sig_z = bmad.residual_pwd_sig_z
 reverse_lat = bmad.reverse_lat
 rf_cav_names = bsim.rf_cav_names
 rf_coupler_kick = bmad.rf_coupler_kick
@@ -1683,6 +1690,7 @@ track_bunch_to_s = bmad.track_bunch_to_s
 track_bunch_to_t = bmad.track_bunch_to_t
 track_complex_taylor = bmad.track_complex_taylor
 track_from_s_to_s = bmad.track_from_s_to_s
+track_func = bmad.track_func
 track_many = bmad.track_many
 track_to_surface = bmad.track_to_surface
 track_until_dead = bmad.track_until_dead
@@ -1750,6 +1758,7 @@ value_to_line = bmad.value_to_line
 vec_to_polar = bmad.vec_to_polar
 vec_to_spinor = bmad.vec_to_spinor
 verify_valid_name = bmad.verify_valid_name
+vert_angle_func = bmad.vert_angle_func
 virtual_memory_usage = simutils.virtual_memory_usage
 w_mat_for_bend_angle = bmad.w_mat_for_bend_angle
 w_mat_for_tilt = bmad.w_mat_for_tilt
@@ -3703,10 +3712,13 @@ __all__ = [
     "csr_and_sc_apply_kicks",
     "csr_bin_kicks",
     "csr_bin_particles",
+    "cumulr",
     "custom_attribute_ubound_index",
     "custom_ele_attrib_name_list",
+    "d_integral",
     "damping_matrix_d",
     "date_and_time_stamp",
+    "ddz_calc_csr",
     "deallocate_ele_pointers",
     "deallocate_expression_tree",
     "deallocate_lat_pointers",
@@ -3775,6 +3787,7 @@ __all__ = [
     "em_field_plus_em_field",
     "emit_6d",
     "end_akima_spline_calc",
+    "energy_func",
     "entering_element",
     "envelope_radints",
     "envelope_radints_ibs",
@@ -4190,6 +4203,7 @@ __all__ = [
     "out_io",
     "out_io_print_and_capture_setup",
     "output_direct",
+    "p_func",
     "parse_cartesian_map",
     "parse_cylindrical_map",
     "parse_fortran_format",
@@ -4234,6 +4248,7 @@ __all__ = [
     "photon_absorption_and_phase_shift",
     "photon_add_to_detector_statistics",
     "photon_diffuse_scattering",
+    "photon_hit_func",
     "photon_read_spline",
     "photon_reflection",
     "photon_reflection_std_surface_init",
@@ -4361,6 +4376,7 @@ __all__ = [
     "remove_dead_from_bunch",
     "remove_eles_from_lat",
     "remove_lord_slave_link",
+    "residual_pwd_sig_z",
     "reverse_lat",
     "rf_cav_names",
     "rf_coupler_kick",
@@ -4594,6 +4610,7 @@ __all__ = [
     "track_bunch_to_t",
     "track_complex_taylor",
     "track_from_s_to_s",
+    "track_func",
     "track_many",
     "track_to_surface",
     "track_until_dead",
@@ -4661,6 +4678,7 @@ __all__ = [
     "vec_to_polar",
     "vec_to_spinor",
     "verify_valid_name",
+    "vert_angle_func",
     "virtual_memory_usage",
     "w_mat_for_bend_angle",
     "w_mat_for_tilt",

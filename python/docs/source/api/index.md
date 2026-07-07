@@ -457,6 +457,7 @@
 | [CsrParticlePositionStruct](bmad.md#csrparticlepositionstruct) | Struct | [Bmad](bmad.md) |
 | [CsrStruct](bmad.md#csrstruct) | Struct | [Bmad](bmad.md) |
 | `CUBIC` | Enum | [Enums](enums.md) |
+| [`cumulr`](bmad.md#cumulr) | Routine | [Bmad](bmad.md) |
 | `CURLY_BRACKETS` | Enum | [Enums](enums.md) |
 | `CURRENT` | Enum | [Enums](enums.md) |
 | `CURVATURE` | Enum | [Enums](enums.md) |
@@ -475,6 +476,7 @@
 | [CylindricalMapTermStruct](bmad.md#cylindricalmaptermstruct) | Struct | [Bmad](bmad.md) |
 | `D1_THICKNESS` | Enum | [Enums](enums.md) |
 | `D2_THICKNESS` | Enum | [Enums](enums.md) |
+| [`d_integral`](bmad.md#d_integral) | Routine | [Bmad](bmad.md) |
 | `D_SPACING` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_A` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_A_STORED` | Enum | [Enums](enums.md) |
@@ -498,6 +500,7 @@
 | `DCMAT_DPZ_12_STORED` | Enum | [Enums](enums.md) |
 | `DCMAT_DPZ_21_STORED` | Enum | [Enums](enums.md) |
 | `DCMAT_DPZ_22_STORED` | Enum | [Enums](enums.md) |
+| [`ddz_calc_csr`](bmad.md#ddz_calc_csr) | Routine | [Bmad](bmad.md) |
 | `DE_ETA_MEAS` | Enum | [Enums](enums.md) |
 | [`deallocate_ele_pointers`](bmad.md#deallocate_ele_pointers) | Routine | [Bmad](bmad.md) |
 | [`deallocate_expression_tree`](bmad.md#deallocate_expression_tree) | Routine | [Bmad](bmad.md) |
@@ -670,6 +673,7 @@
 | `END_EDGE` | Enum | [Enums](enums.md) |
 | `END_STACK` | Enum | [Enums](enums.md) |
 | `ENERGY_DISTRIBUTION` | Enum | [Enums](enums.md) |
+| [`energy_func`](bmad.md#energy_func) | Routine | [Bmad](bmad.md) |
 | `ENERGY_PROBABILITY_CURVE` | Enum | [Enums](enums.md) |
 | [`entering_element`](bmad.md#entering_element) | Routine | [Bmad](bmad.md) |
 | `ENTRANCE_END` | Enum | [Enums](enums.md) |
@@ -1495,6 +1499,7 @@
 | `P88` | Enum | [Enums](enums.md) |
 | `P89` | Enum | [Enums](enums.md) |
 | `P90` | Enum | [Enums](enums.md) |
+| [`p_func`](bmad.md#p_func) | Routine | [Bmad](bmad.md) |
 | `P_MASS` | Enum | [Enums](enums.md) |
 | `PARENS` | Enum | [Enums](enums.md) |
 | [`parse_cartesian_map`](bmad.md#parse_cartesian_map) | Routine | [Bmad](bmad.md) |
@@ -1568,6 +1573,7 @@
 | [`photon_add_to_detector_statistics`](bmad.md#photon_add_to_detector_statistics) | Routine | [Bmad](bmad.md) |
 | [`photon_diffuse_scattering`](bmad.md#photon_diffuse_scattering) | Routine | [Bmad](bmad.md) |
 | `PHOTON_FORK` | Enum | [Enums](enums.md) |
+| [`photon_hit_func`](bmad.md#photon_hit_func) | Routine | [Bmad](bmad.md) |
 | `PHOTON_INIT` | Enum | [Enums](enums.md) |
 | [`photon_read_spline`](bmad.md#photon_read_spline) | Routine | [Bmad](bmad.md) |
 | [`photon_reflection`](bmad.md#photon_reflection) | Routine | [Bmad](bmad.md) |
@@ -1829,6 +1835,7 @@
 | [`remove_eles_from_lat`](bmad.md#remove_eles_from_lat) | Routine | [Bmad](bmad.md) |
 | [`remove_lord_slave_link`](bmad.md#remove_lord_slave_link) | Routine | [Bmad](bmad.md) |
 | `REPETITION_FREQUENCY` | Enum | [Enums](enums.md) |
+| [`residual_pwd_sig_z`](bmad.md#residual_pwd_sig_z) | Routine | [Bmad](bmad.md) |
 | [ResonanceHStruct](bmad.md#resonancehstruct) | Struct | [Bmad](bmad.md) |
 | `RESTORE_STATE` | Enum | [Enums](enums.md) |
 | [`reverse_lat`](bmad.md#reverse_lat) | Routine | [Bmad](bmad.md) |
@@ -2583,6 +2590,7 @@
 | [`track_bunch_to_t`](bmad.md#track_bunch_to_t) | Routine | [Bmad](bmad.md) |
 | [`track_complex_taylor`](bmad.md#track_complex_taylor) | Routine | [Bmad](bmad.md) |
 | [`track_from_s_to_s`](bmad.md#track_from_s_to_s) | Routine | [Bmad](bmad.md) |
+| [`track_func`](bmad.md#track_func) | Routine | [Bmad](bmad.md) |
 | [`track_many`](bmad.md#track_many) | Routine | [Bmad](bmad.md) |
 | [`track_to_surface`](bmad.md#track_to_surface) | Routine | [Bmad](bmad.md) |
 | [`track_until_dead`](bmad.md#track_until_dead) | Routine | [Bmad](bmad.md) |
@@ -2709,6 +2717,7 @@
 | [`vec_to_spinor`](bmad.md#vec_to_spinor) | Routine | [Bmad](bmad.md) |
 | `VELOCITY_DISTRIBUTION` | Enum | [Enums](enums.md) |
 | [`verify_valid_name`](bmad.md#verify_valid_name) | Routine | [Bmad](bmad.md) |
+| [`vert_angle_func`](bmad.md#vert_angle_func) | Routine | [Bmad](bmad.md) |
 | `VERTICAL_BAR` | Enum | [Enums](enums.md) |
 | `VERTICAL_KICK` | Enum | [Enums](enums.md) |
 | `VERTICALLY_PURE` | Enum | [Enums](enums.md) |

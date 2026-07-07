@@ -6,6 +6,21 @@ using namespace Pybmad;
 
 void init_Bmad_routines_p(nb::module_ &m) {
   m.def(
+      "p_func",
+      &Bmad::p_func,
+      nb::arg("E_in"),
+      R"""(Wrapper for Fortran routine p_func
+
+Parameters
+----------
+E_in : float
+
+Returns
+-------
+rr1 : float
+)"""
+  );
+  m.def(
       "parse_cartesian_map",
       &Bmad::parse_cartesian_map,
       nb::arg("ct_map"),
@@ -1393,6 +1408,40 @@ diffuse_param : DiffuseParamStruct, optional
     simulations.
 )"""
   );
+  nb::class_<Bmad::PhotonHitFunc>(m, "PhotonHitFunc", "photon_hit_func return type")
+      .def_ro("status", &Bmad::PhotonHitFunc::status)
+      .def_ro("d_radius", &Bmad::PhotonHitFunc::d_radius)
+      .def("__len__", [](const Bmad::PhotonHitFunc &) { return 2; })
+      .def("__getitem__", [](const Bmad::PhotonHitFunc &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.status);
+        if (i == 1)
+          return nb::cast(s.d_radius);
+        throw nb::index_error();
+      });
+  m.def(
+      "photon_hit_func",
+      &Bmad::photon_hit_func,
+      nb::arg("track_len"),
+      R"""(Routine to be used as an argument in zbrent in the capillary_photon_hit_spot_calc.
+Made a module procedure (not nested) to avoid a stack trampoline.
+
+Parameters
+----------
+track_len : float
+    Place to position the photon.
+
+Returns
+-------
+status : int
+    Not set.
+
+d_radius : float
+    r_photon - r_wall
+)"""
+  );
   m.def(
       "photon_read_spline",
       &Bmad::photon_read_spline,
@@ -1454,10 +1503,15 @@ phi_out : float
   m.def(
       "photon_reflection_std_surface_init",
       &Bmad::photon_reflection_std_surface_init,
-      R"""(Routine to initialize the standard proton reflection probability tables.
-The standard tables are for 10 nm C film on Al substrate.
-The surface roughness for diffuse scattering is 200 nm and the
-the surface roughness correlation length is 5.5 um.
+      R"""($OMP THREADPRIVATE(dr_d_param_ptr, dr_surface_ptr, dr_old_integral, dr_tot_integral, &
+$OMP                dr_ran1, dr_ran2, dr_j)
+
+ Subroutine photon_reflection_std_surface_init (surface)
+
+ Routine to initialize the standard proton reflection probability tables.
+ The standard tables are for 10 nm C film on Al substrate.
+ The surface roughness for diffuse scattering is 200 nm and the
+ the surface roughness correlation length is 5.5 um.
 
 Returns
 -------

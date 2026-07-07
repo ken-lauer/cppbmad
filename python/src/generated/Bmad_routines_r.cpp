@@ -1195,6 +1195,20 @@ slave : EleStruct
 )"""
   );
   m.def(
+      "residual_pwd_sig_z",
+      &Bmad::residual_pwd_sig_z,
+      nb::arg("zz"),
+      nb::arg("status") = nb::none(),
+      R"""(Wrapper for Fortran routine residual_pwd_sig_z
+
+Parameters
+----------
+zz : float
+
+status : int, optional
+)"""
+  );
+  m.def(
       "reverse_lat",
       &Bmad::reverse_lat,
       nb::arg("lat_in"),
