@@ -190,7 +190,7 @@ def get_structure_definitions(
 ) -> list[CodegenStructure]:
     structs: list[CodegenStructure] = []
 
-    for name in list(params.struct_list):
+    for name in sorted(params.struct_list):
         struct = CodegenStructure(name)
         try:
             match_structure_definition(parsed_structures, struct, params)
@@ -221,7 +221,12 @@ def load_context(
 
     settings_and_routines, routine_structs = load_routines(params, parsed_structs, params)
 
+    for st in params.struct_list:
+        if st in routine_structs:
+            logger.warning(f"Structure implicitly included due to routine usage: {st}")
+
     params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
+
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
