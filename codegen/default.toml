@@ -31,10 +31,6 @@ struct_list = [
   "tao_wave_kick_pt_struct",
   "tao_cmd_history_struct",
 
-  # dark current tracker
-  "dark_current_param_struct",
-  "dark_current_tally_struct",
-
   # ptc
   "fibre",
   "layout",
