@@ -19,6 +19,7 @@ import logging
 import logging.handlers
 import pathlib
 
+from codegen.exceptions import StructureNotFoundError
 from codegen.proxy import get_proxy_classes
 
 from .arg import Argument, CodegenStructure
@@ -54,7 +55,7 @@ def match_structure_definition(
         if struct.f_name.lower() == fstruct.name.lower():
             break
     else:
-        raise RuntimeError(f"Structure not found: {struct.f_name!r}")
+        raise StructureNotFoundError(f"Structure not found: {struct.f_name!r}")
 
     struct.f_name = fstruct.name
     struct.arg = [
@@ -189,10 +190,16 @@ def get_structure_definitions(
 ) -> list[CodegenStructure]:
     structs: list[CodegenStructure] = []
 
-    for name in params.struct_list:
+    for name in list(params.struct_list):
         struct = CodegenStructure(name)
+        try:
+            match_structure_definition(parsed_structures, struct, params)
+        except StructureNotFoundError:
+            logger.error(f"Structure in struct_list not found: {name}; skipping")
+            params.struct_list.remove(name)
+            continue
+
         structs.append(struct)
-        match_structure_definition(parsed_structures, struct, params)
         struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name, params)]
         if struct.parsed and struct.parsed.filename:
             try:
