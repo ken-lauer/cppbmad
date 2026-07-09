@@ -11,3 +11,7 @@ class RenameError(Exception):
 
 class UnsupportedTypeError(Exception):
     pass
+
+
+class StructureNotFoundError(Exception):
+    pass

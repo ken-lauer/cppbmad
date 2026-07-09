@@ -19,6 +19,7 @@ import logging
 import logging.handlers
 import pathlib
 
+from codegen.exceptions import StructureNotFoundError
 from codegen.proxy import get_proxy_classes
 
 from .arg import Argument, CodegenStructure
@@ -54,7 +55,7 @@ def match_structure_definition(
         if struct.f_name.lower() == fstruct.name.lower():
             break
     else:
-        raise RuntimeError(f"Structure not found: {struct.f_name!r}")
+        raise StructureNotFoundError(f"Structure not found: {struct.f_name!r}")
 
     struct.f_name = fstruct.name
     struct.arg = [
@@ -189,10 +190,16 @@ def get_structure_definitions(
 ) -> list[CodegenStructure]:
     structs: list[CodegenStructure] = []
 
-    for name in params.struct_list:
+    for name in sorted(params.struct_list):
         struct = CodegenStructure(name)
+        try:
+            match_structure_definition(parsed_structures, struct, params)
+        except StructureNotFoundError:
+            logger.error(f"Structure in struct_list not found: {name}; skipping")
+            params.struct_list.remove(name)
+            continue
+
         structs.append(struct)
-        match_structure_definition(parsed_structures, struct, params)
         struct.arg = [arg for arg in struct.arg if arg.should_translate(struct.f_name, params)]
         if struct.parsed and struct.parsed.filename:
             try:
@@ -214,7 +221,12 @@ def load_context(
 
     settings_and_routines, routine_structs = load_routines(params, parsed_structs, params)
 
+    for st in params.struct_list:
+        if st in routine_structs:
+            logger.warning(f"Structure implicitly included due to routine usage: {st}")
+
     params.struct_list = sorted(set(routine_structs) | set(params.struct_list))
+
     structs = get_structure_definitions(params, parsed_structs)
     enums = parse_all_enums(params.enum_filenames)
 
