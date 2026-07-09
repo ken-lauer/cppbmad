@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 359;
+const int BMAD_INC_VERSION = 361;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -222,6 +222,10 @@ const int FAMILY_SQ = 4;
 const int HYPER_Y = 1;
 const int HYPER_XY = 2;
 const int HYPER_X = 3;
+// Curve kind: skew, normal, solenoid.
+const int GG_A = 1;
+const int GG_B = 2;
+const int GG_BS = 3;
 const int SUPER_OK = 0;
 const int STALE = 2;
 const int ATTRIBUTE_GROUP = 1;
@@ -872,7 +876,7 @@ const int REFERENCE = 122;
 const int CARTESIAN_MAP = 123;
 const int CYLINDRICAL_MAP = 124;
 const int GRID_FIELD = 125;
-const int GEN_GRAD_MAP = 126;
+const int GEN_GRADIENTS = 126;
 const int CREATE_JUMBO_SLAVE = 127;
 const int ACCORDION_EDGE = 128;
 const int START_EDGE = 129;

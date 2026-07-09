@@ -70,15 +70,17 @@ err_flag : bool
 )"""
   );
   m.def(
-      "parse_gen_grad_map",
-      &Bmad::parse_gen_grad_map,
+      "parse_gen_gradients",
+      &Bmad::parse_gen_gradients,
       nb::arg("gg_map"),
       nb::arg("ele"),
       nb::arg("lat"),
       nb::arg("delim"),
       nb::arg("delim_found"),
       nb::arg("err_flag"),
-      R"""(Subroutine to parse a "gen_grad_map = {}" construct
+      R"""(Subroutine to parse a "gen_gradients = {}" construct (curved-coordinate
+generalized gradients). Each curve holds one GG derivative tower a_n, b_n, or
+b_s selected by "kind = <a|b|bs>" and harmonic "n = <int>".
 )"""
   );
   m.def(

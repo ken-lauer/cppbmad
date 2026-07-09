@@ -238,7 +238,7 @@ ele : EleStruct
     Element holding the field to be matched.
 
 fm_type : int
-    Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
+    Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_gradients$, grid_field$
 
 ignore_slaves : bool, optional
     If True, ignore any multipass slaves. Default is False.

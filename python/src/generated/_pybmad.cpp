@@ -320,10 +320,16 @@ NB_MODULE(_pybmad, m) {
       "FringeFieldInfoStruct",
       "Fortran struct: fringe_field_info_struct"
   );
-  auto py_GenGrad1Struct =
-      nb::class_<GenGrad1Struct>(m, "GenGrad1Struct", "Fortran struct: gen_grad1_struct");
-  auto py_GenGradMapStruct =
-      nb::class_<GenGradMapStruct>(m, "GenGradMapStruct", "Fortran struct: gen_grad_map_struct");
+  auto py_GenGradCurveStruct = nb::class_<GenGradCurveStruct>(
+      m,
+      "GenGradCurveStruct",
+      "Fortran struct: gen_grad_curve_struct"
+  );
+  auto py_GenGradientsStruct = nb::class_<GenGradientsStruct>(
+      m,
+      "GenGradientsStruct",
+      "Fortran struct: gen_gradients_struct"
+  );
   auto py_GeneralBinStruct =
       nb::class_<GeneralBinStruct>(m, "GeneralBinStruct", "Fortran struct: general_bin_struct");
   auto py_GgTaylorStruct =
@@ -1059,8 +1065,8 @@ NB_MODULE(_pybmad, m) {
   init_floor_position_struct(m, py_FloorPositionStruct);
   init_foil_struct(m, py_FoilStruct);
   init_fringe_field_info_struct(m, py_FringeFieldInfoStruct);
-  init_gen_grad1_struct(m, py_GenGrad1Struct);
-  init_gen_grad_map_struct(m, py_GenGradMapStruct);
+  init_gen_grad_curve_struct(m, py_GenGradCurveStruct);
+  init_gen_gradients_struct(m, py_GenGradientsStruct);
   init_general_bin_struct(m, py_GeneralBinStruct);
   init_gg_taylor_struct(m, py_GgTaylorStruct);
   init_gg_taylor_term_struct(m, py_GgTaylorTermStruct);

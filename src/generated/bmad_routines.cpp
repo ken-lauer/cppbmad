@@ -4690,18 +4690,18 @@ bool Bmad::eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2) {
                             /* bool& */ _is_eq);
   return _is_eq;
 }
-bool Bmad::eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2) {
+bool Bmad::eq_gen_grad_curve(GenGradCurveStruct &f1, GenGradCurveStruct &f2) {
   bool _is_eq{};
-  fortran_eq_gen_grad1(/* void* */ f1.get_fortran_ptr(),
-                       /* void* */ f2.get_fortran_ptr(),
-                       /* bool& */ _is_eq);
+  fortran_eq_gen_grad_curve(/* void* */ f1.get_fortran_ptr(),
+                            /* void* */ f2.get_fortran_ptr(),
+                            /* bool& */ _is_eq);
   return _is_eq;
 }
-bool Bmad::eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2) {
+bool Bmad::eq_gen_gradients(GenGradientsStruct &f1, GenGradientsStruct &f2) {
   bool _is_eq{};
-  fortran_eq_gen_grad_map(/* void* */ f1.get_fortran_ptr(),
-                          /* void* */ f2.get_fortran_ptr(),
-                          /* bool& */ _is_eq);
+  fortran_eq_gen_gradients(/* void* */ f1.get_fortran_ptr(),
+                           /* void* */ f2.get_fortran_ptr(),
+                           /* bool& */ _is_eq);
   return _is_eq;
 }
 bool Bmad::eq_gg_taylor(GgTaylorStruct &f1, GgTaylorStruct &f2) {
@@ -5690,25 +5690,35 @@ double Bmad::gamma_ref(EleStruct &ele) {
   fortran_gamma_ref(/* void* */ ele.get_fortran_ptr(), /* double& */ _gamma);
   return _gamma;
 }
-GgTaylorStructArray1D
-Bmad::gen_grad1_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, int iz) {
-  // gg_taylor: GgTaylorStruct out (CppWrapperTypeArgumentArray)
-  Bmad::array_descriptor_t _gg_taylor_desc;
-  _gg_taylor_desc.rank = 1;
+Bmad::GenGradAtSToGgATaylor
+Bmad::gen_grad_at_s_to_gg_a_taylor(EleStruct &ele, GenGradientsStruct &gen_grad, double s_pos) {
+  // gg_a: GgTaylorStruct out (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _gg_a_desc;
+  _gg_a_desc.rank = 1;
   // Output-only type array
-  auto gg_taylor = GgTaylorStructAlloc1D(3);
-  _gg_taylor_desc.data_ptr = gg_taylor.get_fortran_ptr();
-  _gg_taylor_desc.dims[0] = gg_taylor.size();
+  auto gg_a = GgTaylorStructAlloc1D(3);
+  _gg_a_desc.data_ptr = gg_a.get_fortran_ptr();
+  _gg_a_desc.dims[0] = gg_a.size();
 
-  _gg_taylor_desc.strides[0] = 1;
-  fortran_gen_grad1_to_gg_taylor(/* void* */ ele.get_fortran_ptr(),
-                                 /* void* */ gen_grad.get_fortran_ptr(),
-                                 /* int& */ iz,
-                                 /* Bmad::array_descriptor_t& */ _gg_taylor_desc);
-  return std::move(std::move(gg_taylor));
+  _gg_a_desc.strides[0] = 1;
+  // gg_da_ds: GgTaylorStruct out (CppWrapperTypeArgumentArray)
+  Bmad::array_descriptor_t _gg_da_ds_desc;
+  _gg_da_ds_desc.rank = 1;
+  // Output-only type array
+  auto gg_da_ds = GgTaylorStructAlloc1D(3);
+  _gg_da_ds_desc.data_ptr = gg_da_ds.get_fortran_ptr();
+  _gg_da_ds_desc.dims[0] = gg_da_ds.size();
+
+  _gg_da_ds_desc.strides[0] = 1;
+  fortran_gen_grad_at_s_to_gg_a_taylor(/* void* */ ele.get_fortran_ptr(),
+                                       /* void* */ gen_grad.get_fortran_ptr(),
+                                       /* double& */ s_pos,
+                                       /* Bmad::array_descriptor_t& */ _gg_a_desc,
+                                       /* Bmad::array_descriptor_t& */ _gg_da_ds_desc);
+  return GenGradAtSToGgATaylor{std::move(std::move(gg_a)), std::move(std::move(gg_da_ds))};
 }
 GgTaylorStructArray1D
-Bmad::gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, double s_pos) {
+Bmad::gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradientsStruct &gen_grad, double s_pos) {
   // gg_taylor: GgTaylorStruct out (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _gg_taylor_desc;
   _gg_taylor_desc.rank = 1;
@@ -5723,28 +5733,6 @@ Bmad::gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, dou
                                      /* double& */ s_pos,
                                      /* Bmad::array_descriptor_t& */ _gg_taylor_desc);
   return std::move(std::move(gg_taylor));
-}
-FixedArray1D<Real, 3>
-Bmad::gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, double theta) {
-  // deriv: inout NOT (CppWrapperGeneralArgumentArray) (['0:'])
-  Bmad::array_descriptor_t _deriv_desc;
-  _deriv_desc.rank = 1;
-  _deriv_desc.data_ptr = deriv.data();
-  _deriv_desc.dims[0] = deriv.size();
-  // field: out NOT (CppWrapperGeneralArgumentArray) (['3'])
-  Bmad::array_descriptor_t _field_desc;
-  _field_desc.rank = 1;
-  FixedArray1D<Real, 3> _field;
-  _field_desc.data_ptr = _field.data();
-  _field_desc.dims[0] = _field.size();
-  fortran_gen_grad_field(
-      /* Bmad::array_descriptor_t& */ _deriv_desc,
-      /* void* */ gg.get_fortran_ptr(),
-      /* double& */ rho,
-      /* double& */ theta,
-      /* Bmad::array_descriptor_t& */ _field_desc
-  );
-  return _field;
 }
 Bmad::GetAstraFieldgridNameAndScaling Bmad::get_astra_fieldgrid_name_and_scaling(
     EleStruct &ele,
@@ -5988,6 +5976,21 @@ void Bmad::get_switch(
       /* bool& */ delim_found
   );
 }
+void Bmad::gg_coef_table_init() { fortran_gg_coef_table_init(); }
+void Bmad::gg_set_block_001() { fortran_gg_set_block_001(); }
+void Bmad::gg_set_block_002() { fortran_gg_set_block_002(); }
+void Bmad::gg_set_block_003() { fortran_gg_set_block_003(); }
+void Bmad::gg_set_block_004() { fortran_gg_set_block_004(); }
+void Bmad::gg_set_block_005() { fortran_gg_set_block_005(); }
+void Bmad::gg_set_block_006() { fortran_gg_set_block_006(); }
+void Bmad::gg_set_block_007() { fortran_gg_set_block_007(); }
+void Bmad::gg_set_block_008() { fortran_gg_set_block_008(); }
+void Bmad::gg_set_block_009() { fortran_gg_set_block_009(); }
+void Bmad::gg_set_block_010() { fortran_gg_set_block_010(); }
+void Bmad::gg_set_block_011() { fortran_gg_set_block_011(); }
+void Bmad::gg_set_block_012() { fortran_gg_set_block_012(); }
+void Bmad::gg_set_block_013() { fortran_gg_set_block_013(); }
+void Bmad::gg_set_block_014() { fortran_gg_set_block_014(); }
 void Bmad::gg_taylor_equal_gg_taylor(GgTaylorStruct &gg_taylor1, GgTaylorStruct &gg_taylor2) {
   fortran_gg_taylor_equal_gg_taylor(/* void* */ gg_taylor1.get_fortran_ptr(),
                                     /* void* */ gg_taylor2.get_fortran_ptr());
@@ -9999,8 +10002,8 @@ void Bmad::parse_cylindrical_map(
                                 /* bool& */ delim_found,
                                 /* bool& */ err_flag);
 }
-void Bmad::parse_gen_grad_map(
-    GenGradMapStruct &gg_map,
+void Bmad::parse_gen_gradients(
+    GenGradientsStruct &gg_map,
     EleStruct &ele,
     LatStruct &lat,
     std::string delim,
@@ -10009,12 +10012,12 @@ void Bmad::parse_gen_grad_map(
 ) {
   auto _gg_map = &gg_map; // input, required, pointer
   auto _delim = delim.c_str();
-  fortran_parse_gen_grad_map(/* void* */ &gg_map,
-                             /* void* */ ele.get_fortran_ptr(),
-                             /* void* */ lat.get_fortran_ptr(),
-                             /* const char* */ _delim,
-                             /* bool& */ delim_found,
-                             /* bool& */ err_flag);
+  fortran_parse_gen_gradients(/* void* */ &gg_map,
+                              /* void* */ ele.get_fortran_ptr(),
+                              /* void* */ lat.get_fortran_ptr(),
+                              /* const char* */ _delim,
+                              /* bool& */ delim_found,
+                              /* bool& */ err_flag);
 }
 void Bmad::parse_grid_field(
     GridFieldStruct &g_field,

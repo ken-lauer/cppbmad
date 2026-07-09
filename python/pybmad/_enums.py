@@ -401,7 +401,7 @@ class EleKey(enum.IntEnum):
     N_KEY = 70
 
 # Constants from bmad_struct.f90
-BMAD_INC_VERSION = 359
+BMAD_INC_VERSION = 361
 NONE = 1
 # maximum multipole order
 N_POLE_MAXX = 21
@@ -608,6 +608,10 @@ FAMILY_SQ = 4
 HYPER_Y = 1
 HYPER_XY = 2
 HYPER_X = 3
+# Curve kind: skew, normal, solenoid.
+GG_A = 1
+GG_B = 2
+GG_BS = 3
 SUPER_OK = 0
 STALE = 2
 ATTRIBUTE_GROUP = 1
@@ -1258,7 +1262,7 @@ REFERENCE = 122
 CARTESIAN_MAP = 123
 CYLINDRICAL_MAP = 124
 GRID_FIELD = 125
-GEN_GRAD_MAP = 126
+GEN_GRADIENTS = 126
 CREATE_JUMBO_SLAVE = 127
 ACCORDION_EDGE = 128
 START_EDGE = 129

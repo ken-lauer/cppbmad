@@ -1604,7 +1604,7 @@ void ele_struct_get_cylindrical_map_info(
     size_t *el_size
 );
 
-void ele_struct_get_gen_grad_map_info(
+void ele_struct_get_gen_gradients_info(
     const void *s,
     void **d,
     int *bounds,
@@ -1819,36 +1819,34 @@ void fringe_field_info_struct_get_location_info(
 void fringe_field_info_struct_reallocate_location(void *s, int lb, size_t n);
 
 void fringe_field_info_struct_set_location(void *s, const void *d, const int *shape);
-void gen_grad1_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
-void gen_grad1_struct_set_integer(void *struct_obj, int field_id, int value_in);
-void gen_grad1_struct_get_deriv_info(
+void gen_grad_curve_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void gen_grad_curve_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void gen_grad_curve_struct_get_deriv_info(
     const void *s,
     double **d,
     int *bounds,
     int *strides,
     bool *is_alloc
 );
-void gen_grad1_struct_set_deriv(void *s, const void *d, const int *shape);
-void gen_grad_map_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
-void gen_grad_map_struct_set_integer(void *struct_obj, int field_id, int value_in);
-void gen_grad_map_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
-void gen_grad_map_struct_set_logical(void *struct_obj, int field_id, bool value_in);
-void gen_grad_map_struct_get_real(const void *struct_obj, int field_id, double *value_out);
-void gen_grad_map_struct_set_real(void *struct_obj, int field_id, double value_in);
-void gen_grad_map_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
-void gen_grad_map_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
+void gen_grad_curve_struct_set_deriv(void *s, const void *d, const int *shape);
+void gen_gradients_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void gen_gradients_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void gen_gradients_struct_get_real(const void *struct_obj, int field_id, double *value_out);
+void gen_gradients_struct_set_real(void *struct_obj, int field_id, double value_in);
+void gen_gradients_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
+void gen_gradients_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
 
-void gen_grad_map_struct_get_gg_info(
+void gen_gradients_struct_get_curve_info(
     const void *s,
     void **d,
     int *bounds,
     bool *is_alloc,
     size_t *el_size
 );
-void gen_grad_map_struct_reallocate_gg(void *s, int lb, size_t n);
+void gen_gradients_struct_reallocate_curve(void *s, int lb, size_t n);
 
-void gen_grad_map_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
-void gen_grad_map_struct_set_r0(void *s, const void *d, const int *shape);
+void gen_gradients_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void gen_gradients_struct_set_r0(void *s, const void *d, const int *shape);
 void general_bin_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void general_bin_struct_set_integer(void *struct_obj, int field_id, int value_in);
 
@@ -6321,14 +6319,14 @@ void access_fringe_field_info_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_gen_grad1_struct(int n, size_t *element_size);
-void deallocate_fortran_gen_grad1_struct(void *ptr, int n) noexcept;
-void copy_fortran_gen_grad1_struct(const void *src, void *dst);
+void *allocate_fortran_gen_grad_curve_struct(int n, size_t *element_size);
+void deallocate_fortran_gen_grad_curve_struct(void *ptr, int n) noexcept;
+void copy_fortran_gen_grad_curve_struct(const void *src, void *dst);
 
-void *allocate_gen_grad1_struct_container();
-void reallocate_gen_grad1_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gen_grad1_struct_container(void *) noexcept;
-void access_gen_grad1_struct_container(
+void *allocate_gen_grad_curve_struct_container();
+void reallocate_gen_grad_curve_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gen_grad_curve_struct_container(void *) noexcept;
+void access_gen_grad_curve_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -6336,14 +6334,14 @@ void access_gen_grad1_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_gen_grad_map_struct(int n, size_t *element_size);
-void deallocate_fortran_gen_grad_map_struct(void *ptr, int n) noexcept;
-void copy_fortran_gen_grad_map_struct(const void *src, void *dst);
+void *allocate_fortran_gen_gradients_struct(int n, size_t *element_size);
+void deallocate_fortran_gen_gradients_struct(void *ptr, int n) noexcept;
+void copy_fortran_gen_gradients_struct(const void *src, void *dst);
 
-void *allocate_gen_grad_map_struct_container();
-void reallocate_gen_grad_map_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gen_grad_map_struct_container(void *) noexcept;
-void access_gen_grad_map_struct_container(
+void *allocate_gen_gradients_struct_container();
+void reallocate_gen_gradients_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gen_gradients_struct_container(void *) noexcept;
+void access_gen_gradients_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -11815,65 +11813,65 @@ struct FringeFieldInfoStructAlloc1D : public FTypeAlloc1D<FringeFieldInfoStructA
       : Base(handle, realloc, access) {}
 };
 
-class GenGrad1Struct;
+class GenGradCurveStruct;
 
-using GenGrad1StructArray1D = FTypeArray1D<
-    GenGrad1Struct,
-    allocate_fortran_gen_grad1_struct,
-    deallocate_fortran_gen_grad1_struct>;
-using GenGrad1StructArray2D = FTypeArray2D<GenGrad1Struct>;
-using GenGrad1StructArray3D = FTypeArray3D<GenGrad1Struct>;
+using GenGradCurveStructArray1D = FTypeArray1D<
+    GenGradCurveStruct,
+    allocate_fortran_gen_grad_curve_struct,
+    deallocate_fortran_gen_grad_curve_struct>;
+using GenGradCurveStructArray2D = FTypeArray2D<GenGradCurveStruct>;
+using GenGradCurveStructArray3D = FTypeArray3D<GenGradCurveStruct>;
 
-struct GenGrad1StructAlloc1D : public FTypeAlloc1D<GenGrad1StructArray1D> {
-  using Base = FTypeAlloc1D<GenGrad1StructArray1D>;
+struct GenGradCurveStructAlloc1D : public FTypeAlloc1D<GenGradCurveStructArray1D> {
+  using Base = FTypeAlloc1D<GenGradCurveStructArray1D>;
   using Base::Base;
-  GenGrad1StructAlloc1D()
+  GenGradCurveStructAlloc1D()
       : Base(
-            allocate_gen_grad1_struct_container,
-            deallocate_gen_grad1_struct_container,
-            reallocate_gen_grad1_struct_container_data,
-            access_gen_grad1_struct_container
+            allocate_gen_grad_curve_struct_container,
+            deallocate_gen_grad_curve_struct_container,
+            reallocate_gen_grad_curve_struct_container_data,
+            access_gen_grad_curve_struct_container
         ) {}
-  GenGrad1StructAlloc1D(int n)
+  GenGradCurveStructAlloc1D(int n)
       : Base(
             n,
-            allocate_gen_grad1_struct_container,
-            deallocate_gen_grad1_struct_container,
-            reallocate_gen_grad1_struct_container_data,
-            access_gen_grad1_struct_container
+            allocate_gen_grad_curve_struct_container,
+            deallocate_gen_grad_curve_struct_container,
+            reallocate_gen_grad_curve_struct_container_data,
+            access_gen_grad_curve_struct_container
         ) {}
-  GenGrad1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GenGradCurveStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
-class GenGradMapStruct;
+class GenGradientsStruct;
 
-using GenGradMapStructArray1D = FTypeArray1D<
-    GenGradMapStruct,
-    allocate_fortran_gen_grad_map_struct,
-    deallocate_fortran_gen_grad_map_struct>;
-using GenGradMapStructArray2D = FTypeArray2D<GenGradMapStruct>;
-using GenGradMapStructArray3D = FTypeArray3D<GenGradMapStruct>;
+using GenGradientsStructArray1D = FTypeArray1D<
+    GenGradientsStruct,
+    allocate_fortran_gen_gradients_struct,
+    deallocate_fortran_gen_gradients_struct>;
+using GenGradientsStructArray2D = FTypeArray2D<GenGradientsStruct>;
+using GenGradientsStructArray3D = FTypeArray3D<GenGradientsStruct>;
 
-struct GenGradMapStructAlloc1D : public FTypeAlloc1D<GenGradMapStructArray1D> {
-  using Base = FTypeAlloc1D<GenGradMapStructArray1D>;
+struct GenGradientsStructAlloc1D : public FTypeAlloc1D<GenGradientsStructArray1D> {
+  using Base = FTypeAlloc1D<GenGradientsStructArray1D>;
   using Base::Base;
-  GenGradMapStructAlloc1D()
+  GenGradientsStructAlloc1D()
       : Base(
-            allocate_gen_grad_map_struct_container,
-            deallocate_gen_grad_map_struct_container,
-            reallocate_gen_grad_map_struct_container_data,
-            access_gen_grad_map_struct_container
+            allocate_gen_gradients_struct_container,
+            deallocate_gen_gradients_struct_container,
+            reallocate_gen_gradients_struct_container_data,
+            access_gen_gradients_struct_container
         ) {}
-  GenGradMapStructAlloc1D(int n)
+  GenGradientsStructAlloc1D(int n)
       : Base(
             n,
-            allocate_gen_grad_map_struct_container,
-            deallocate_gen_grad_map_struct_container,
-            reallocate_gen_grad_map_struct_container_data,
-            access_gen_grad_map_struct_container
+            allocate_gen_gradients_struct_container,
+            deallocate_gen_gradients_struct_container,
+            reallocate_gen_gradients_struct_container_data,
+            access_gen_gradients_struct_container
         ) {}
-  GenGradMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GenGradientsStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
@@ -22416,7 +22414,7 @@ public:
   Wall3dStructArray1D wall3d() const; // 1D_PTR_type
   CartesianMapStructArray1D cartesian_map() const; // 1D_PTR_type
   CylindricalMapStructArray1D cylindrical_map() const; // 1D_PTR_type
-  GenGradMapStructArray1D gen_grad_map() const; // 1D_PTR_type
+  GenGradientsStructArray1D gen_gradients() const; // 1D_PTR_type
   GridFieldStructArray1D grid_field() const; // 1D_PTR_type
   CoordStruct map_ref_orb_in() const; // 0D_NOT_type
   void set_map_ref_orb_in(const CoordStruct &src);
@@ -22804,7 +22802,9 @@ public:
       std::optional<bool> exact_misalign_set = std::nullopt,
       std::optional<bool> vertical_kick_set = std::nullopt,
       std::optional<bool> cut_factor_set = std::nullopt,
-      std::optional<bool> translate_patch_drift_time_set = std::nullopt
+      std::optional<bool> translate_patch_drift_time_set = std::nullopt,
+      std::optional<bool> pancake_symplectic_set = std::nullopt,
+      std::optional<bool> pancake_canonical_set = std::nullopt
   )
       : FortranProxy() {
     if (ran_state)
@@ -22949,6 +22949,10 @@ public:
       set_cut_factor_set(*cut_factor_set);
     if (translate_patch_drift_time_set)
       set_translate_patch_drift_time_set(*translate_patch_drift_time_set);
+    if (pancake_symplectic_set)
+      set_pancake_symplectic_set(*pancake_symplectic_set);
+    if (pancake_canonical_set)
+      set_pancake_canonical_set(*pancake_canonical_set);
   }
 
   RandomStateStruct ran_state() const; // 0D_NOT_type
@@ -23093,6 +23097,10 @@ public:
   void set_cut_factor_set(bool value);
   bool translate_patch_drift_time_set() const; // 0D_NOT_logical [dispatch:68]
   void set_translate_patch_drift_time_set(bool value);
+  bool pancake_symplectic_set() const; // 0D_NOT_logical [dispatch:69]
+  void set_pancake_symplectic_set(bool value);
+  bool pancake_canonical_set() const; // 0D_NOT_logical [dispatch:70]
+  void set_pancake_canonical_set(bool value);
 };
 
 template <>
@@ -23451,75 +23459,75 @@ public:
 };
 
 template <>
-struct FortranTraits<GenGrad1Struct> {
+struct FortranTraits<GenGradCurveStruct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_gen_grad1_struct(0, &sz);
+    return allocate_fortran_gen_grad_curve_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad1_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gen_grad1_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gen_grad1_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad_curve_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gen_grad_curve_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gen_grad_curve_struct"; }
 };
 
-class GenGrad1Struct : public FortranProxy<GenGrad1Struct> {
+class GenGradCurveStruct : public FortranProxy<GenGradCurveStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit GenGrad1Struct(
-      std::optional<int> m = std::nullopt,
-      std::optional<int> sincos = std::nullopt,
-      std::optional<int> n_deriv_max = std::nullopt,
+  explicit GenGradCurveStruct(
+      std::optional<int> kind = std::nullopt,
+      std::optional<int> n = std::nullopt,
+      std::optional<int> m_max = std::nullopt,
       std::optional<std::vector<std::vector<double>>> deriv = std::nullopt
   )
       : FortranProxy() {
-    if (m)
-      set_m(*m);
-    if (sincos)
-      set_sincos(*sincos);
-    if (n_deriv_max)
-      set_n_deriv_max(*n_deriv_max);
+    if (kind)
+      set_kind(*kind);
+    if (n)
+      set_n(*n);
+    if (m_max)
+      set_m_max(*m_max);
     if (deriv)
       set_deriv(*deriv);
   }
 
-  int m() const; // 0D_NOT_integer [dispatch:0]
-  void set_m(int value);
-  int sincos() const; // 0D_NOT_integer [dispatch:1]
-  void set_sincos(int value);
-  int n_deriv_max() const; // 0D_NOT_integer [dispatch:2]
-  void set_n_deriv_max(int value);
+  int kind() const; // 0D_NOT_integer [dispatch:0]
+  void set_kind(int value);
+  int n() const; // 0D_NOT_integer [dispatch:1]
+  void set_n(int value);
+  int m_max() const; // 0D_NOT_integer [dispatch:2]
+  void set_m_max(int value);
   FArray2D<double> deriv() const; // 2D_ALLOC_real
   void set_deriv(const std::vector<std::vector<double>> &v);
 };
 
 template <>
-struct FortranTraits<GenGradMapStruct> {
+struct FortranTraits<GenGradientsStruct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_gen_grad_map_struct(0, &sz);
+    return allocate_fortran_gen_gradients_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad_map_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gen_grad_map_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gen_grad_map_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_gradients_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gen_gradients_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gen_gradients_struct"; }
 };
 
-class GenGradMapStruct : public FortranProxy<GenGradMapStruct> {
+class GenGradientsStruct : public FortranProxy<GenGradientsStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit GenGradMapStruct(
+  explicit GenGradientsStruct(
       std::optional<std::string> file = std::nullopt,
       std::optional<int> ele_anchor_pt = std::nullopt,
       std::optional<int> field_type = std::nullopt,
       std::optional<int> iz0 = std::nullopt,
       std::optional<int> iz1 = std::nullopt,
       std::optional<double> dz = std::nullopt,
+      std::optional<double> g_ref = std::nullopt,
       std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<double> field_scale = std::nullopt,
-      std::optional<int> master_parameter = std::nullopt,
-      std::optional<bool> curved_ref_frame = std::nullopt
+      std::optional<int> master_parameter = std::nullopt
   )
       : FortranProxy() {
     if (file)
@@ -23534,19 +23542,19 @@ public:
       set_iz1(*iz1);
     if (dz)
       set_dz(*dz);
+    if (g_ref)
+      set_g_ref(*g_ref);
     if (r0)
       set_r0(*r0);
     if (field_scale)
       set_field_scale(*field_scale);
     if (master_parameter)
       set_master_parameter(*master_parameter);
-    if (curved_ref_frame)
-      set_curved_ref_frame(*curved_ref_frame);
   }
 
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
-  GenGrad1StructAlloc1D gg() const; // 1D_ALLOC_type
+  GenGradCurveStructAlloc1D curve() const; // 1D_ALLOC_type
   int ele_anchor_pt() const; // 0D_NOT_integer [dispatch:0]
   void set_ele_anchor_pt(int value);
   int field_type() const; // 0D_NOT_integer [dispatch:1]
@@ -23557,14 +23565,14 @@ public:
   void set_iz1(int value);
   double dz() const; // 0D_NOT_real [dispatch:0]
   void set_dz(double value);
+  double g_ref() const; // 0D_NOT_real [dispatch:1]
+  void set_g_ref(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
   void set_r0(const std::vector<double> &v);
-  double field_scale() const; // 0D_NOT_real [dispatch:1]
+  double field_scale() const; // 0D_NOT_real [dispatch:2]
   void set_field_scale(double value);
   int master_parameter() const; // 0D_NOT_integer [dispatch:4]
   void set_master_parameter(int value);
-  bool curved_ref_frame() const; // 0D_NOT_logical [dispatch:0]
-  void set_curved_ref_frame(bool value);
 };
 
 template <>

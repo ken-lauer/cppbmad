@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `359` |  |
+| `BMAD_INC_VERSION` | `361` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
@@ -198,6 +198,9 @@ Fortran integer and real parameters exposed as Python constants.
 | `HYPER_Y` | `1` |  |
 | `HYPER_XY` | `2` |  |
 | `HYPER_X` | `3` |  |
+| `GG_A` | `1` | Curve kind: skew, normal, solenoid. |
+| `GG_B` | `2` |  |
+| `GG_BS` | `3` |  |
 | `SUPER_OK` | `0` |  |
 | `STALE` | `2` |  |
 | `ATTRIBUTE_GROUP` | `1` |  |
@@ -841,7 +844,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `CARTESIAN_MAP` | `123` |  |
 | `CYLINDRICAL_MAP` | `124` |  |
 | `GRID_FIELD` | `125` |  |
-| `GEN_GRAD_MAP` | `126` |  |
+| `GEN_GRADIENTS` | `126` |  |
 | `CREATE_JUMBO_SLAVE` | `127` |  |
 | `ACCORDION_EDGE` | `128` |  |
 | `START_EDGE` | `129` |  |

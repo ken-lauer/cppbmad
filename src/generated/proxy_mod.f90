@@ -4,7 +4,7 @@ module bmad_struct_proxy_mod
   use test_struct_defs
   use, intrinsic :: iso_c_binding
 
-    use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_pointer_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, converter_dir_1D_struct, converter_dir_2D_struct, converter_dir_coef_struct, converter_direction_out_struct, converter_distribution_struct, converter_prob_pc_r_struct, converter_struct, converter_sub_distribution_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, expression_atom_struct, expression_tree_struct, extra_parsing_info_struct, floor_position_struct, foil_struct, fringe_field_info_struct, gen_grad1_struct, gen_grad_map_struct, gg_taylor_struct, gg_taylor_term_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_pointer_struct, lat_struct, linac_normal_mode_struct, linear_ele_isf_struct, linear_isf1_struct, material_struct, mode3_struct, mode_info_struct, multipass_all_info_struct, multipass_branch_info_struct, multipass_ele_info_struct, multipass_lord_info_struct, multipole_cache_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pmd_header_struct, pre_tracker_struct, ptc_branch1_struct, ptc_layout_pointer_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_eigen_struct, spin_matching_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
+    use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_pointer_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, converter_dir_1D_struct, converter_dir_2D_struct, converter_dir_coef_struct, converter_direction_out_struct, converter_distribution_struct, converter_prob_pc_r_struct, converter_struct, converter_sub_distribution_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, expression_atom_struct, expression_tree_struct, extra_parsing_info_struct, floor_position_struct, foil_struct, fringe_field_info_struct, gen_grad_curve_struct, gen_gradients_struct, gg_taylor_struct, gg_taylor_term_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_pointer_struct, lat_struct, linac_normal_mode_struct, linear_ele_isf_struct, linear_isf1_struct, material_struct, mode3_struct, mode_info_struct, multipass_all_info_struct, multipass_branch_info_struct, multipass_ele_info_struct, multipass_lord_info_struct, multipole_cache_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pmd_header_struct, pre_tracker_struct, ptc_branch1_struct, ptc_layout_pointer_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_eigen_struct, spin_matching_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   use sim_utils_struct, only: all_pointer_struct, molecular_component_struct, nametable_struct, str_index_struct, var_length_string_struct
   use astra_interface_mod, only: astra_lattice_param_struct
@@ -350,13 +350,13 @@ module bmad_struct_proxy_mod
     type(fringe_field_info_struct), allocatable :: data(:)
   end type fringe_field_info_struct_container_alloc
 
-  type :: gen_grad1_struct_container_alloc
-    type(gen_grad1_struct), allocatable :: data(:)
-  end type gen_grad1_struct_container_alloc
+  type :: gen_grad_curve_struct_container_alloc
+    type(gen_grad_curve_struct), allocatable :: data(:)
+  end type gen_grad_curve_struct_container_alloc
 
-  type :: gen_grad_map_struct_container_alloc
-    type(gen_grad_map_struct), allocatable :: data(:)
-  end type gen_grad_map_struct_container_alloc
+  type :: gen_gradients_struct_container_alloc
+    type(gen_gradients_struct), allocatable :: data(:)
+  end type gen_gradients_struct_container_alloc
 
   type :: general_bin_struct_container_alloc
     type(general_bin_struct), allocatable :: data(:)
@@ -22070,10 +22070,10 @@ contains
     endif
   end subroutine
 
-  ! ele_struct%gen_grad_map: 1D_PTR_type
+  ! ele_struct%gen_gradients: 1D_PTR_type
 
-  subroutine ele_struct_get_gen_grad_map_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='ele_struct_get_gen_grad_map_info')
+  subroutine ele_struct_get_gen_gradients_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='ele_struct_get_gen_gradients_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
@@ -22083,12 +22083,12 @@ contains
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
-    if (associated(struct_obj%gen_grad_map) .and. is_contiguous(struct_obj%gen_grad_map)) then
-      data_ptr = c_loc(struct_obj%gen_grad_map(lbound(struct_obj%gen_grad_map, 1)))
-      bounds(1) = int(lbound(struct_obj%gen_grad_map, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%gen_grad_map, 1), c_int)
+    if (associated(struct_obj%gen_gradients) .and. is_contiguous(struct_obj%gen_gradients)) then
+      data_ptr = c_loc(struct_obj%gen_gradients(lbound(struct_obj%gen_gradients, 1)))
+      bounds(1) = int(lbound(struct_obj%gen_gradients, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%gen_gradients, 1), c_int)
       
-      el_size = int(storage_size(struct_obj%gen_grad_map(bounds(1))) / 8, c_size_t)
+      el_size = int(storage_size(struct_obj%gen_gradients(bounds(1))) / 8, c_size_t)
       is_allocated = .true.
     else
       data_ptr = c_null_ptr
@@ -23947,7 +23947,7 @@ contains
     end select
   end subroutine
 
-  ! dispatch: extra_parsing_info_struct%logical (69 fields)
+  ! dispatch: extra_parsing_info_struct%logical (71 fields)
 
   subroutine extra_parsing_info_struct_get_logical(struct_obj_ptr, field_id, value_out) &
       bind(c, name='extra_parsing_info_struct_get_logical')
@@ -24026,6 +24026,8 @@ contains
     case(66); value_out = struct_obj%vertical_kick_set
     case(67); value_out = struct_obj%cut_factor_set
     case(68); value_out = struct_obj%translate_patch_drift_time_set
+    case(69); value_out = struct_obj%pancake_symplectic_set
+    case(70); value_out = struct_obj%pancake_canonical_set
     end select
   end subroutine
 
@@ -24107,6 +24109,8 @@ contains
     case(66); struct_obj%vertical_kick_set = value_in
     case(67); struct_obj%cut_factor_set = value_in
     case(68); struct_obj%translate_patch_drift_time_set = value_in
+    case(69); struct_obj%pancake_symplectic_set = value_in
+    case(70); struct_obj%pancake_canonical_set = value_in
     end select
   end subroutine
 
@@ -25943,15 +25947,15 @@ contains
     endif
   end subroutine
 
-  !! gen_grad1_struct
+  !! gen_grad_curve_struct
 
-    function allocate_fortran_gen_grad1_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gen_grad_curve_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(gen_grad1_struct), pointer :: fptr
-      type(gen_grad1_struct), pointer :: fptr_array(:)
+      type(gen_grad_curve_struct), pointer :: fptr
+      type(gen_grad_curve_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -25964,12 +25968,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_gen_grad1_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gen_grad_curve_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(gen_grad1_struct), pointer :: fptr
-      type(gen_grad1_struct), pointer :: fptr_array(:)
+      type(gen_grad_curve_struct), pointer :: fptr
+      type(gen_grad_curve_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -25982,10 +25986,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_gen_grad1_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gen_grad_curve_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(gen_grad1_struct), pointer :: src, dst
+    type(gen_grad_curve_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -25994,30 +25998,30 @@ contains
     end if
   end subroutine
 
-  function allocate_gen_grad1_struct_container() result(ptr) bind(c)
+  function allocate_gen_grad_curve_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_gen_grad1_struct_container(ptr) bind(c)
+  subroutine deallocate_gen_grad_curve_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_gen_grad1_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gen_grad_curve_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -26030,7 +26034,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_grad1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gen_grad_curve_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -26039,7 +26043,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(gen_grad1_struct_container_alloc), pointer :: ctr
+    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -26063,46 +26067,46 @@ contains
     endif
   end subroutine
     
-  ! dispatch: gen_grad1_struct%integer (3 fields)
+  ! dispatch: gen_grad_curve_struct%integer (3 fields)
 
-  subroutine gen_grad1_struct_get_integer(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_grad1_struct_get_integer')
+  subroutine gen_grad_curve_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_grad_curve_struct_get_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(out) :: value_out
-    type(gen_grad1_struct), pointer :: struct_obj
+    type(gen_grad_curve_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
-    case(0); value_out = struct_obj%m
-    case(1); value_out = struct_obj%sincos
-    case(2); value_out = struct_obj%n_deriv_max
+    case(0); value_out = struct_obj%kind
+    case(1); value_out = struct_obj%n
+    case(2); value_out = struct_obj%m_max
     end select
   end subroutine
 
 
-  subroutine gen_grad1_struct_set_integer(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_grad1_struct_set_integer')
+  subroutine gen_grad_curve_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_grad_curve_struct_set_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(in), value :: value_in
-    type(gen_grad1_struct), pointer :: struct_obj
+    type(gen_grad_curve_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
-    case(0); struct_obj%m = value_in
-    case(1); struct_obj%sincos = value_in
-    case(2); struct_obj%n_deriv_max = value_in
+    case(0); struct_obj%kind = value_in
+    case(1); struct_obj%n = value_in
+    case(2); struct_obj%m_max = value_in
     end select
   end subroutine
 
-  ! gen_grad1_struct%deriv: 2D_ALLOC_real
+  ! gen_grad_curve_struct%deriv: 2D_ALLOC_real
 
-  subroutine gen_grad1_struct_get_deriv_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
-        bind(c, name='gen_grad1_struct_get_deriv_info')
+  subroutine gen_grad_curve_struct_get_deriv_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='gen_grad_curve_struct_get_deriv_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(4), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_grad1_struct), pointer :: struct_obj
+    type(gen_grad_curve_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
 
@@ -26128,12 +26132,12 @@ contains
   end subroutine
 
 
-  subroutine gen_grad1_struct_set_deriv(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='gen_grad1_struct_set_deriv')
+  subroutine gen_grad_curve_struct_set_deriv(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_grad_curve_struct_set_deriv')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: val_ptr
     integer(c_int), dimension(2), intent(in) :: shape
-    type(gen_grad1_struct), pointer :: struct_obj
+    type(gen_grad_curve_struct), pointer :: struct_obj
     real(c_double), pointer :: val(:,:)
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
@@ -26147,15 +26151,15 @@ contains
     endif
   end subroutine
 
-  !! gen_grad_map_struct
+  !! gen_gradients_struct
 
-    function allocate_fortran_gen_grad_map_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gen_gradients_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(gen_grad_map_struct), pointer :: fptr
-      type(gen_grad_map_struct), pointer :: fptr_array(:)
+      type(gen_gradients_struct), pointer :: fptr
+      type(gen_gradients_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -26168,12 +26172,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_gen_grad_map_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gen_gradients_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(gen_grad_map_struct), pointer :: fptr
-      type(gen_grad_map_struct), pointer :: fptr_array(:)
+      type(gen_gradients_struct), pointer :: fptr
+      type(gen_gradients_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -26186,10 +26190,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_gen_grad_map_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gen_gradients_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(gen_grad_map_struct), pointer :: src, dst
+    type(gen_gradients_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -26198,30 +26202,30 @@ contains
     end if
   end subroutine
 
-  function allocate_gen_grad_map_struct_container() result(ptr) bind(c)
+  function allocate_gen_gradients_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    type(gen_gradients_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_gen_grad_map_struct_container(ptr) bind(c)
+  subroutine deallocate_gen_gradients_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    type(gen_gradients_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_gen_grad_map_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gen_gradients_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    type(gen_gradients_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -26234,7 +26238,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_grad_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gen_gradients_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -26243,7 +26247,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(gen_grad_map_struct_container_alloc), pointer :: ctr
+    type(gen_gradients_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -26267,14 +26271,14 @@ contains
     endif
   end subroutine
     
-  ! dispatch: gen_grad_map_struct%integer (5 fields)
+  ! dispatch: gen_gradients_struct%integer (5 fields)
 
-  subroutine gen_grad_map_struct_get_integer(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_grad_map_struct_get_integer')
+  subroutine gen_gradients_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_gradients_struct_get_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(out) :: value_out
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); value_out = struct_obj%ele_anchor_pt
@@ -26286,12 +26290,12 @@ contains
   end subroutine
 
 
-  subroutine gen_grad_map_struct_set_integer(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_grad_map_struct_set_integer')
+  subroutine gen_gradients_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_gradients_struct_set_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(in), value :: value_in
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); struct_obj%ele_anchor_pt = value_in
@@ -26302,71 +26306,46 @@ contains
     end select
   end subroutine
 
-  ! dispatch: gen_grad_map_struct%logical (1 fields)
+  ! dispatch: gen_gradients_struct%real (3 fields)
 
-  subroutine gen_grad_map_struct_get_logical(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_grad_map_struct_get_logical')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    logical(c_bool), intent(out) :: value_out
-    type(gen_grad_map_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); value_out = struct_obj%curved_ref_frame
-    end select
-  end subroutine
-
-
-  subroutine gen_grad_map_struct_set_logical(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_grad_map_struct_set_logical')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    logical(c_bool), intent(in), value :: value_in
-    type(gen_grad_map_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); struct_obj%curved_ref_frame = value_in
-    end select
-  end subroutine
-
-  ! dispatch: gen_grad_map_struct%real (2 fields)
-
-  subroutine gen_grad_map_struct_get_real(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_grad_map_struct_get_real')
+  subroutine gen_gradients_struct_get_real(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_gradients_struct_get_real')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     real(c_double), intent(out) :: value_out
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); value_out = struct_obj%dz
-    case(1); value_out = struct_obj%field_scale
+    case(1); value_out = struct_obj%g_ref
+    case(2); value_out = struct_obj%field_scale
     end select
   end subroutine
 
 
-  subroutine gen_grad_map_struct_set_real(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_grad_map_struct_set_real')
+  subroutine gen_gradients_struct_set_real(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_gradients_struct_set_real')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     real(c_double), intent(in), value :: value_in
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); struct_obj%dz = value_in
-    case(1); struct_obj%field_scale = value_in
+    case(1); struct_obj%g_ref = value_in
+    case(2); struct_obj%field_scale = value_in
     end select
   end subroutine
 
-  ! gen_grad_map_struct%file: 0D_NOT_character
+  ! gen_gradients_struct%file: 0D_NOT_character
 
-  subroutine gen_grad_map_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-    bind(c, name='gen_grad_map_struct_get_file_info')
+  subroutine gen_gradients_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='gen_gradients_struct_get_file_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     data_ptr = c_loc(struct_obj%file)
     bounds(1) = 1_c_int
@@ -26375,36 +26354,36 @@ contains
   end subroutine
 
 
-  subroutine gen_grad_map_struct_set_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='gen_grad_map_struct_set_file')
+  subroutine gen_gradients_struct_set_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='gen_gradients_struct_set_file')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: str_ptr
     integer(c_int), intent(in), value :: str_len
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     character(len=str_len), pointer :: str_in
     call c_f_pointer(struct_obj_ptr, struct_obj)
     call c_f_pointer(str_ptr, str_in)
     struct_obj%file = str_in ! implicitly handles padding
   end subroutine
 
-  ! gen_grad_map_struct%gg: 1D_ALLOC_type
+  ! gen_gradients_struct%curve: 1D_ALLOC_type
 
-  subroutine gen_grad_map_struct_get_gg_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='gen_grad_map_struct_get_gg_info')
+  subroutine gen_gradients_struct_get_curve_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='gen_gradients_struct_get_curve_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
-    if (allocated(struct_obj%gg) .and. is_contiguous(struct_obj%gg)) then
-      data_ptr = c_loc(struct_obj%gg(lbound(struct_obj%gg, 1)))
-      bounds(1) = int(lbound(struct_obj%gg, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%gg, 1), c_int)
+    if (allocated(struct_obj%curve) .and. is_contiguous(struct_obj%curve)) then
+      data_ptr = c_loc(struct_obj%curve(lbound(struct_obj%curve, 1)))
+      bounds(1) = int(lbound(struct_obj%curve, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%curve, 1), c_int)
       
-      el_size = int(storage_size(struct_obj%gg(bounds(1))) / 8, c_size_t)
+      el_size = int(storage_size(struct_obj%curve(bounds(1))) / 8, c_size_t)
       is_allocated = .true.
     else
       data_ptr = c_null_ptr
@@ -26414,32 +26393,32 @@ contains
     endif
   end subroutine
 
-  subroutine gen_grad_map_struct_reallocate_gg(struct_obj_ptr, lbound_, n) &
-        bind(c, name='gen_grad_map_struct_reallocate_gg')
+  subroutine gen_gradients_struct_reallocate_curve(struct_obj_ptr, lbound_, n) &
+        bind(c, name='gen_gradients_struct_reallocate_curve')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
     
     if (n == 0) then
-      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
+      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
     else
-      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
-      allocate(struct_obj%gg(lbound_:lbound_ + n - 1))
+      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
+      allocate(struct_obj%curve(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
-  ! gen_grad_map_struct%r0: 1D_NOT_real
+  ! gen_gradients_struct%r0: 1D_NOT_real
 
-  subroutine gen_grad_map_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-        bind(c, name='gen_grad_map_struct_get_r0_info')
+  subroutine gen_gradients_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='gen_gradients_struct_get_r0_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
@@ -26458,12 +26437,12 @@ contains
   end subroutine
 
 
-  subroutine gen_grad_map_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='gen_grad_map_struct_set_r0')
+  subroutine gen_gradients_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_gradients_struct_set_r0')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: val_ptr
     integer(c_int), dimension(1), intent(in) :: shape
-    type(gen_grad_map_struct), pointer :: struct_obj
+    type(gen_gradients_struct), pointer :: struct_obj
     real(c_double), pointer :: val(:)
 
     call c_f_pointer(struct_obj_ptr, struct_obj)

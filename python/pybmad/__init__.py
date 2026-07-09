@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260707.0"
+__version__ = "20260709.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -179,12 +179,12 @@ from ._pybmad import FieldAt3DBoxStruct
 from ._pybmad import FloorPositionStruct
 from ._pybmad import FoilStruct
 from ._pybmad import FringeFieldInfoStruct
-from ._pybmad import GenGrad1Struct
-from ._pybmad import GenGrad1StructArray1D
-from ._pybmad import GenGrad1StructAlloc1D
-from ._pybmad import GenGradMapStruct
-from ._pybmad import GenGradMapStructArray1D
-from ._pybmad import GenGradMapStructAlloc1D
+from ._pybmad import GenGradCurveStruct
+from ._pybmad import GenGradCurveStructArray1D
+from ._pybmad import GenGradCurveStructAlloc1D
+from ._pybmad import GenGradientsStruct
+from ._pybmad import GenGradientsStructArray1D
+from ._pybmad import GenGradientsStructAlloc1D
 from ._pybmad import GeneralBinStruct
 from ._pybmad import GgTaylorStruct
 from ._pybmad import GgTaylorStructArray1D
@@ -905,8 +905,8 @@ eq_ellipse_beam_init = bmad.eq_ellipse_beam_init
 eq_em_field = bmad.eq_em_field
 eq_expression_atom = bmad.eq_expression_atom
 eq_floor_position = bmad.eq_floor_position
-eq_gen_grad1 = bmad.eq_gen_grad1
-eq_gen_grad_map = bmad.eq_gen_grad_map
+eq_gen_grad_curve = bmad.eq_gen_grad_curve
+eq_gen_gradients = bmad.eq_gen_gradients
 eq_gg_taylor = bmad.eq_gg_taylor
 eq_gg_taylor_term = bmad.eq_gg_taylor_term
 eq_grid_beam_init = bmad.eq_grid_beam_init
@@ -1010,9 +1010,8 @@ g_integrals_calc = bmad.g_integrals_calc
 gamma_ref = bmad.gamma_ref
 gelbd = simutils.gelbd
 gen_complete_elliptic = simutils.gen_complete_elliptic
-gen_grad1_to_gg_taylor = bmad.gen_grad1_to_gg_taylor
+gen_grad_at_s_to_gg_a_taylor = bmad.gen_grad_at_s_to_gg_a_taylor
 gen_grad_at_s_to_gg_taylor = bmad.gen_grad_at_s_to_gg_taylor
-gen_grad_field = bmad.gen_grad_field
 general_bin_count = simutils.general_bin_count
 general_bin_index = simutils.general_bin_index
 general_bin_index_in_bounds = simutils.general_bin_index_in_bounds
@@ -1032,6 +1031,21 @@ get_sequence_args = bmad.get_sequence_args
 get_slave_list = bmad.get_slave_list
 get_switch = bmad.get_switch
 get_tty_char = simutils.get_tty_char
+gg_coef_table_init = bmad.gg_coef_table_init
+gg_set_block_001 = bmad.gg_set_block_001
+gg_set_block_002 = bmad.gg_set_block_002
+gg_set_block_003 = bmad.gg_set_block_003
+gg_set_block_004 = bmad.gg_set_block_004
+gg_set_block_005 = bmad.gg_set_block_005
+gg_set_block_006 = bmad.gg_set_block_006
+gg_set_block_007 = bmad.gg_set_block_007
+gg_set_block_008 = bmad.gg_set_block_008
+gg_set_block_009 = bmad.gg_set_block_009
+gg_set_block_010 = bmad.gg_set_block_010
+gg_set_block_011 = bmad.gg_set_block_011
+gg_set_block_012 = bmad.gg_set_block_012
+gg_set_block_013 = bmad.gg_set_block_013
+gg_set_block_014 = bmad.gg_set_block_014
 gg_taylor_equal_gg_taylor = bmad.gg_taylor_equal_gg_taylor
 gg_taylors_equal_gg_taylors = bmad.gg_taylors_equal_gg_taylors
 gpt_field_grid_scaling = bmad.gpt_field_grid_scaling
@@ -1287,7 +1301,7 @@ p_func = bmad.p_func
 parse_cartesian_map = bmad.parse_cartesian_map
 parse_cylindrical_map = bmad.parse_cylindrical_map
 parse_fortran_format = simutils.parse_fortran_format
-parse_gen_grad_map = bmad.parse_gen_grad_map
+parse_gen_gradients = bmad.parse_gen_gradients
 parse_grid_field = bmad.parse_grid_field
 parse_integer_list = bmad.parse_integer_list
 parse_integer_list2 = bmad.parse_integer_list2
@@ -2009,6 +2023,9 @@ from ._enums import FAMILY_SQ
 from ._enums import HYPER_Y
 from ._enums import HYPER_XY
 from ._enums import HYPER_X
+from ._enums import GG_A
+from ._enums import GG_B
+from ._enums import GG_BS
 from ._enums import SUPER_OK
 from ._enums import STALE
 from ._enums import ATTRIBUTE_GROUP
@@ -2652,7 +2669,7 @@ from ._enums import REFERENCE
 from ._enums import CARTESIAN_MAP
 from ._enums import CYLINDRICAL_MAP
 from ._enums import GRID_FIELD
-from ._enums import GEN_GRAD_MAP
+from ._enums import GEN_GRADIENTS
 from ._enums import CREATE_JUMBO_SLAVE
 from ._enums import ACCORDION_EDGE
 from ._enums import START_EDGE
@@ -3099,12 +3116,12 @@ __all__ = [
     "FloorPositionStruct",
     "FoilStruct",
     "FringeFieldInfoStruct",
-    "GenGrad1Struct",
-    "GenGrad1StructArray1D",
-    "GenGrad1StructAlloc1D",
-    "GenGradMapStruct",
-    "GenGradMapStructArray1D",
-    "GenGradMapStructAlloc1D",
+    "GenGradCurveStruct",
+    "GenGradCurveStructArray1D",
+    "GenGradCurveStructAlloc1D",
+    "GenGradientsStruct",
+    "GenGradientsStructArray1D",
+    "GenGradientsStructAlloc1D",
     "GeneralBinStruct",
     "GgTaylorStruct",
     "GgTaylorStructArray1D",
@@ -3825,8 +3842,8 @@ __all__ = [
     "eq_em_field",
     "eq_expression_atom",
     "eq_floor_position",
-    "eq_gen_grad1",
-    "eq_gen_grad_map",
+    "eq_gen_grad_curve",
+    "eq_gen_gradients",
     "eq_gg_taylor",
     "eq_gg_taylor_term",
     "eq_grid_beam_init",
@@ -3930,9 +3947,8 @@ __all__ = [
     "gamma_ref",
     "gelbd",
     "gen_complete_elliptic",
-    "gen_grad1_to_gg_taylor",
+    "gen_grad_at_s_to_gg_a_taylor",
     "gen_grad_at_s_to_gg_taylor",
-    "gen_grad_field",
     "general_bin_count",
     "general_bin_index",
     "general_bin_index_in_bounds",
@@ -3952,6 +3968,21 @@ __all__ = [
     "get_slave_list",
     "get_switch",
     "get_tty_char",
+    "gg_coef_table_init",
+    "gg_set_block_001",
+    "gg_set_block_002",
+    "gg_set_block_003",
+    "gg_set_block_004",
+    "gg_set_block_005",
+    "gg_set_block_006",
+    "gg_set_block_007",
+    "gg_set_block_008",
+    "gg_set_block_009",
+    "gg_set_block_010",
+    "gg_set_block_011",
+    "gg_set_block_012",
+    "gg_set_block_013",
+    "gg_set_block_014",
     "gg_taylor_equal_gg_taylor",
     "gg_taylors_equal_gg_taylors",
     "gpt_field_grid_scaling",
@@ -4207,7 +4238,7 @@ __all__ = [
     "parse_cartesian_map",
     "parse_cylindrical_map",
     "parse_fortran_format",
-    "parse_gen_grad_map",
+    "parse_gen_gradients",
     "parse_grid_field",
     "parse_integer_list",
     "parse_integer_list2",
@@ -4929,6 +4960,9 @@ __all__ = [
     "HYPER_Y",
     "HYPER_XY",
     "HYPER_X",
+    "GG_A",
+    "GG_B",
+    "GG_BS",
     "SUPER_OK",
     "STALE",
     "ATTRIBUTE_GROUP",
@@ -5572,7 +5606,7 @@ __all__ = [
     "CARTESIAN_MAP",
     "CYLINDRICAL_MAP",
     "GRID_FIELD",
-    "GEN_GRAD_MAP",
+    "GEN_GRADIENTS",
     "CREATE_JUMBO_SLAVE",
     "ACCORDION_EDGE",
     "START_EDGE",

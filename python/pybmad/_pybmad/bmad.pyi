@@ -6700,30 +6700,30 @@ def eq_floor_position(f1: _pybmad.FloorPositionStruct, f2: _pybmad.FloorPosition
     is_eq : bool
     """
 
-def eq_gen_grad1(f1: _pybmad.GenGrad1Struct, f2: _pybmad.GenGrad1Struct) -> bool:
+def eq_gen_grad_curve(f1: _pybmad.GenGradCurveStruct, f2: _pybmad.GenGradCurveStruct) -> bool:
     """
-    Wrapper for Fortran routine eq_gen_grad1
+    Wrapper for Fortran routine eq_gen_grad_curve
 
     Parameters
     ----------
-    f1 : GenGrad1Struct
+    f1 : GenGradCurveStruct
 
-    f2 : GenGrad1Struct
+    f2 : GenGradCurveStruct
 
     Returns
     -------
     is_eq : bool
     """
 
-def eq_gen_grad_map(f1: _pybmad.GenGradMapStruct, f2: _pybmad.GenGradMapStruct) -> bool:
+def eq_gen_gradients(f1: _pybmad.GenGradientsStruct, f2: _pybmad.GenGradientsStruct) -> bool:
     """
-    Wrapper for Fortran routine eq_gen_grad_map
+    Wrapper for Fortran routine eq_gen_gradients
 
     Parameters
     ----------
-    f1 : GenGradMapStruct
+    f1 : GenGradientsStruct
 
-    f2 : GenGradMapStruct
+    f2 : GenGradientsStruct
 
     Returns
     -------
@@ -8313,7 +8313,7 @@ def find_matching_fieldmap(file_name: str, ele: _pybmad.EleStruct, fm_type: int,
         Element holding the field to be matched.
 
     fm_type : int
-        Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_grad_map$, grid_field$
+        Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_gradients$, grid_field$
 
     ignore_slaves : bool, optional
         If True, ignore any multipass slaves. Default is False.
@@ -8599,28 +8599,44 @@ def gamma_ref(ele: _pybmad.EleStruct) -> float:
         Relativistic gamma factor Energy/mass*c^2.
     """
 
-def gen_grad1_to_gg_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGradMapStruct, iz: int) -> _pybmad.GgTaylorStructArray1D:
+class GenGradAtSToGgATaylor:
+    """gen_grad_at_s_to_gg_a_taylor return type"""
+
+    @property
+    def gg_a(self) -> _pybmad.GgTaylorStructArray1D: ...
+
+    @property
+    def gg_da_ds(self) -> _pybmad.GgTaylorStructArray1D: ...
+
+    def __len__(self) -> int: ...
+
+    def __getitem__(self, arg: int, /) -> object: ...
+
+def gen_grad_at_s_to_gg_a_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGradientsStruct, s_pos: float) -> GenGradAtSToGgATaylor:
     """
-    Wrapper for Fortran routine gen_grad1_to_gg_taylor
+    Wrapper for Fortran routine gen_grad_at_s_to_gg_a_taylor
 
     Parameters
     ----------
     ele : EleStruct
         Element containing the map.
 
-    gen_grad : GenGradMapStruct
-        Gen_grad map.
+    gen_grad : GenGradientsStruct
+        Gen_gradients map.
 
-    iz : int
-        z-plane index to evaluate.
+    s_pos : float
+        Position to evaluate the map at.
 
     Returns
     -------
-    gg_taylor : 1D array of GgTaylorStruct (shape: 3)
-        Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
+    gg_a : 1D array of GgTaylorStruct (shape: 3)
+        Map for the (Ax, Ay, As) vector potential.
+
+    gg_da_ds : 1D array of GgTaylorStruct (shape: 3), optional
+        Map for the s-derivative (dAx/ds, dAy/ds, dAs/ds).
     """
 
-def gen_grad_at_s_to_gg_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGradMapStruct, s_pos: float) -> _pybmad.GgTaylorStructArray1D:
+def gen_grad_at_s_to_gg_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGradientsStruct, s_pos: float) -> _pybmad.GgTaylorStructArray1D:
     """
     Wrapper for Fortran routine gen_grad_at_s_to_gg_taylor
 
@@ -8629,8 +8645,8 @@ def gen_grad_at_s_to_gg_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGrad
     ele : EleStruct
         Element containing the map.
 
-    gen_grad : GenGradMapStruct
-        Gen_grad map.
+    gen_grad : GenGradientsStruct
+        Gen_gradients map.
 
     s_pos : float
         Position to evaluate gg_taylor at.
@@ -8638,26 +8654,7 @@ def gen_grad_at_s_to_gg_taylor(ele: _pybmad.EleStruct, gen_grad: _pybmad.GenGrad
     Returns
     -------
     gg_taylor : 1D array of GgTaylorStruct (shape: 3)
-        Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
-    """
-
-def gen_grad_field(deriv: _pybmad.RealArray1D, gg: _pybmad.GenGrad1Struct, rho: float, theta: float) -> list[float]:
-    """
-    Wrapper for Fortran routine gen_grad_field
-
-    Parameters
-    ----------
-    deriv : 1D array of float
-
-    gg : GenGrad1Struct
-
-    rho : float
-
-    theta : float
-
-    Returns
-    -------
-    field : 1D array of float (shape: 3)
+        Map for (Bx, By, Bs) or (Ex, Ey, Es) fields.
     """
 
 class GetAstraFieldgridNameAndScaling:
@@ -8998,6 +8995,51 @@ def get_switch(name: str, name_list: _pybmad.CharacterAlloc1D, switch_: int, err
 
     delim_found : bool
     """
+
+def gg_coef_table_init() -> None:
+    """Populate the module-level gg_coef_table on first call (idempotent)."""
+
+def gg_set_block_001() -> None:
+    """Wrapper for Fortran routine gg_set_block_001"""
+
+def gg_set_block_002() -> None:
+    """Wrapper for Fortran routine gg_set_block_002"""
+
+def gg_set_block_003() -> None:
+    """Wrapper for Fortran routine gg_set_block_003"""
+
+def gg_set_block_004() -> None:
+    """Wrapper for Fortran routine gg_set_block_004"""
+
+def gg_set_block_005() -> None:
+    """Wrapper for Fortran routine gg_set_block_005"""
+
+def gg_set_block_006() -> None:
+    """Wrapper for Fortran routine gg_set_block_006"""
+
+def gg_set_block_007() -> None:
+    """Wrapper for Fortran routine gg_set_block_007"""
+
+def gg_set_block_008() -> None:
+    """Wrapper for Fortran routine gg_set_block_008"""
+
+def gg_set_block_009() -> None:
+    """Wrapper for Fortran routine gg_set_block_009"""
+
+def gg_set_block_010() -> None:
+    """Wrapper for Fortran routine gg_set_block_010"""
+
+def gg_set_block_011() -> None:
+    """Wrapper for Fortran routine gg_set_block_011"""
+
+def gg_set_block_012() -> None:
+    """Wrapper for Fortran routine gg_set_block_012"""
+
+def gg_set_block_013() -> None:
+    """Wrapper for Fortran routine gg_set_block_013"""
+
+def gg_set_block_014() -> None:
+    """Wrapper for Fortran routine gg_set_block_014"""
 
 def gg_taylor_equal_gg_taylor(gg_taylor1: _pybmad.GgTaylorStruct, gg_taylor2: _pybmad.GgTaylorStruct) -> None:
     """
@@ -13786,6 +13828,7 @@ def order_particles_in_z(bunch: _pybmad.BunchStruct) -> None:
     Routine to order the particles longitudinally in terms of decreasing %vec(5).
     That is from large z (head of bunch) to small z.
     Only live particles are ordered.
+    The relative order of particles with equal %vec(5) is arbitrary and may change from call to call.
 
     Parameters
     ----------
@@ -13940,8 +13983,12 @@ def parse_cylindrical_map(cl_map: _pybmad.CylindricalMapStruct, ele: _pybmad.Ele
     err_flag : bool
     """
 
-def parse_gen_grad_map(gg_map: _pybmad.GenGradMapStruct, ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
-    """Subroutine to parse a "gen_grad_map = {}" construct"""
+def parse_gen_gradients(gg_map: _pybmad.GenGradientsStruct, ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
+    """
+    Subroutine to parse a "gen_gradients = {}" construct (curved-coordinate
+    generalized gradients). Each curve holds one GG derivative tower a_n, b_n, or
+    b_s selected by "kind = <a|b|bs>" and harmonic "n = <int>".
+    """
 
 def parse_grid_field(g_field: _pybmad.GridFieldStruct, ele: _pybmad.EleStruct, lat: _pybmad.LatStruct, delim: str, delim_found: bool, err_flag: bool) -> None:
     """

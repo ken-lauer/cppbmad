@@ -1102,7 +1102,9 @@ std::string to_string(const ExtraParsingInfoStruct &self) {
        std::pair{
            "translate_patch_drift_time_set",
            to_string(self.translate_patch_drift_time_set())
-       }}
+       },
+       std::pair{"pancake_symplectic_set", to_string(self.pancake_symplectic_set())},
+       std::pair{"pancake_canonical_set", to_string(self.pancake_canonical_set())}}
   );
 }
 std::string to_string(const Fibre &self) {
@@ -1185,31 +1187,31 @@ std::string to_string(const FringeFieldInfoStruct &self) {
        std::pair{"has_fringe", to_string(self.has_fringe())}}
   );
 }
-std::string to_string(const GenGrad1Struct &self) {
+std::string to_string(const GenGradCurveStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "GenGrad1Struct",
-      {std::pair{"m", to_string(self.m())},
-       std::pair{"sincos", to_string(self.sincos())},
-       std::pair{"n_deriv_max", to_string(self.n_deriv_max())},
+      "GenGradCurveStruct",
+      {std::pair{"kind", to_string(self.kind())},
+       std::pair{"n", to_string(self.n())},
+       std::pair{"m_max", to_string(self.m_max())},
        std::pair{"deriv", to_string(self.deriv())}}
   );
 }
-std::string to_string(const GenGradMapStruct &self) {
+std::string to_string(const GenGradientsStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "GenGradMapStruct",
+      "GenGradientsStruct",
       {std::pair{"file", self.file()},
-       std::pair{"gg", "[...]"},
+       std::pair{"curve", "[...]"},
        std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
        std::pair{"field_type", to_string(self.field_type())},
        std::pair{"iz0", to_string(self.iz0())},
        std::pair{"iz1", to_string(self.iz1())},
        std::pair{"dz", to_string(self.dz())},
+       std::pair{"g_ref", to_string(self.g_ref())},
        std::pair{"r0", to_string(self.r0())},
        std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"master_parameter", to_string(self.master_parameter())},
-       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())}}
+       std::pair{"master_parameter", to_string(self.master_parameter())}}
   );
 }
 std::string to_string(const GeneralBinStruct &self) {
@@ -4386,6 +4388,13 @@ std::string to_string(const SimUtils::Gelbd &self) {
       &self,
       "SimUtils::Gelbd",
       {std::pair{"elb", to_string(self.elb)}, std::pair{"eld", to_string(self.eld)}}
+  );
+}
+std::string to_string(const Bmad::GenGradAtSToGgATaylor &self) {
+  return repr(
+      &self,
+      "Bmad::GenGradAtSToGgATaylor",
+      {std::pair{"gg_a", "[...]"}, std::pair{"gg_da_ds", "[...]"}}
   );
 }
 std::string to_string(const Bmad::GetAstraFieldgridNameAndScaling &self) {

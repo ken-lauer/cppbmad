@@ -2076,17 +2076,17 @@ is_eq : bool
 )"""
   );
   m.def(
-      "eq_gen_grad1",
-      &Bmad::eq_gen_grad1,
+      "eq_gen_grad_curve",
+      &Bmad::eq_gen_grad_curve,
       nb::arg("f1"),
       nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gen_grad1
+      R"""(Wrapper for Fortran routine eq_gen_grad_curve
 
 Parameters
 ----------
-f1 : GenGrad1Struct
+f1 : GenGradCurveStruct
 
-f2 : GenGrad1Struct
+f2 : GenGradCurveStruct
 
 Returns
 -------
@@ -2094,17 +2094,17 @@ is_eq : bool
 )"""
   );
   m.def(
-      "eq_gen_grad_map",
-      &Bmad::eq_gen_grad_map,
+      "eq_gen_gradients",
+      &Bmad::eq_gen_gradients,
       nb::arg("f1"),
       nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gen_grad_map
+      R"""(Wrapper for Fortran routine eq_gen_gradients
 
 Parameters
 ----------
-f1 : GenGradMapStruct
+f1 : GenGradientsStruct
 
-f2 : GenGradMapStruct
+f2 : GenGradientsStruct
 
 Returns
 -------

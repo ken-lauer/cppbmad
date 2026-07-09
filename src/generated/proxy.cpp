@@ -4816,10 +4816,10 @@ CylindricalMapStructArray1D EleStruct::cylindrical_map() const {
       ele_struct_get_cylindrical_map_info
   );
 }
-GenGradMapStructArray1D EleStruct::gen_grad_map() const {
-  return ProxyHelpers::get_type_array_1d<GenGradMapStructArray1D>(
+GenGradientsStructArray1D EleStruct::gen_gradients() const {
+  return ProxyHelpers::get_type_array_1d<GenGradientsStructArray1D>(
       fortran_ptr_,
-      ele_struct_get_gen_grad_map_info
+      ele_struct_get_gen_gradients_info
   );
 }
 GridFieldStructArray1D EleStruct::grid_field() const {
@@ -5905,6 +5905,22 @@ bool ExtraParsingInfoStruct::translate_patch_drift_time_set() const {
 void ExtraParsingInfoStruct::set_translate_patch_drift_time_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 68, value);
 }
+bool ExtraParsingInfoStruct::pancake_symplectic_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 69, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_pancake_symplectic_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 69, value);
+}
+bool ExtraParsingInfoStruct::pancake_canonical_set() const {
+  bool value;
+  extra_parsing_info_struct_get_logical(fortran_ptr_, 70, &value);
+  return value;
+}
+void ExtraParsingInfoStruct::set_pancake_canonical_set(bool value) {
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 70, value);
+}
 std::optional<int> Fibre::DIR() const {
   int value;
   bool is_valid;
@@ -6216,117 +6232,121 @@ bool FringeFieldInfoStruct::has_fringe() const {
 void FringeFieldInfoStruct::set_has_fringe(bool value) {
   fringe_field_info_struct_set_logical(fortran_ptr_, 0, value);
 }
-int GenGrad1Struct::m() const {
+int GenGradCurveStruct::kind() const {
   int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 0, &value);
+  gen_grad_curve_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGrad1Struct::set_m(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 0, value); }
-int GenGrad1Struct::sincos() const {
+void GenGradCurveStruct::set_kind(int value) {
+  gen_grad_curve_struct_set_integer(fortran_ptr_, 0, value);
+}
+int GenGradCurveStruct::n() const {
   int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 1, &value);
+  gen_grad_curve_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void GenGrad1Struct::set_sincos(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 1, value); }
-int GenGrad1Struct::n_deriv_max() const {
+void GenGradCurveStruct::set_n(int value) {
+  gen_grad_curve_struct_set_integer(fortran_ptr_, 1, value);
+}
+int GenGradCurveStruct::m_max() const {
   int value;
-  gen_grad1_struct_get_integer(fortran_ptr_, 2, &value);
+  gen_grad_curve_struct_get_integer(fortran_ptr_, 2, &value);
   return value;
 }
-void GenGrad1Struct::set_n_deriv_max(int value) {
-  gen_grad1_struct_set_integer(fortran_ptr_, 2, value);
+void GenGradCurveStruct::set_m_max(int value) {
+  gen_grad_curve_struct_set_integer(fortran_ptr_, 2, value);
 }
-FArray2D<double> GenGrad1Struct::deriv() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad1_struct_get_deriv_info);
+FArray2D<double> GenGradCurveStruct::deriv() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad_curve_struct_get_deriv_info);
 }
-void GenGrad1Struct::set_deriv(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad1_struct_set_deriv, v);
+void GenGradCurveStruct::set_deriv(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad_curve_struct_set_deriv, v);
 }
-std::string GenGradMapStruct::file() const {
+std::string GenGradientsStruct::file() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_grad_map_struct_get_file_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_gradients_struct_get_file_info);
   return std::string(arr.data(), arr.size());
 }
-void GenGradMapStruct::set_file(const std::string &value) {
-  gen_grad_map_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void GenGradientsStruct::set_file(const std::string &value) {
+  gen_gradients_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-GenGrad1StructAlloc1D GenGradMapStruct::gg() const {
-  return GenGrad1StructAlloc1D(
+GenGradCurveStructAlloc1D GenGradientsStruct::curve() const {
+  return GenGradCurveStructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      gen_grad_map_struct_reallocate_gg,
-      gen_grad_map_struct_get_gg_info
+      gen_gradients_struct_reallocate_curve,
+      gen_gradients_struct_get_curve_info
   );
 }
-int GenGradMapStruct::ele_anchor_pt() const {
+int GenGradientsStruct::ele_anchor_pt() const {
   int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 0, &value);
+  gen_gradients_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGradMapStruct::set_ele_anchor_pt(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 0, value);
+void GenGradientsStruct::set_ele_anchor_pt(int value) {
+  gen_gradients_struct_set_integer(fortran_ptr_, 0, value);
 }
-int GenGradMapStruct::field_type() const {
+int GenGradientsStruct::field_type() const {
   int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 1, &value);
+  gen_gradients_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void GenGradMapStruct::set_field_type(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 1, value);
+void GenGradientsStruct::set_field_type(int value) {
+  gen_gradients_struct_set_integer(fortran_ptr_, 1, value);
 }
-int GenGradMapStruct::iz0() const {
+int GenGradientsStruct::iz0() const {
   int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 2, &value);
+  gen_gradients_struct_get_integer(fortran_ptr_, 2, &value);
   return value;
 }
-void GenGradMapStruct::set_iz0(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 2, value);
+void GenGradientsStruct::set_iz0(int value) {
+  gen_gradients_struct_set_integer(fortran_ptr_, 2, value);
 }
-int GenGradMapStruct::iz1() const {
+int GenGradientsStruct::iz1() const {
   int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 3, &value);
+  gen_gradients_struct_get_integer(fortran_ptr_, 3, &value);
   return value;
 }
-void GenGradMapStruct::set_iz1(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 3, value);
+void GenGradientsStruct::set_iz1(int value) {
+  gen_gradients_struct_set_integer(fortran_ptr_, 3, value);
 }
-double GenGradMapStruct::dz() const {
+double GenGradientsStruct::dz() const {
   double value;
-  gen_grad_map_struct_get_real(fortran_ptr_, 0, &value);
+  gen_gradients_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGradMapStruct::set_dz(double value) {
-  gen_grad_map_struct_set_real(fortran_ptr_, 0, value);
+void GenGradientsStruct::set_dz(double value) {
+  gen_gradients_struct_set_real(fortran_ptr_, 0, value);
 }
-FArray1D<double> GenGradMapStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_grad_map_struct_get_r0_info);
+double GenGradientsStruct::g_ref() const {
+  double value;
+  gen_gradients_struct_get_real(fortran_ptr_, 1, &value);
+  return value;
 }
-void GenGradMapStruct::set_r0(const std::vector<double> &v) {
+void GenGradientsStruct::set_g_ref(double value) {
+  gen_gradients_struct_set_real(fortran_ptr_, 1, value);
+}
+FArray1D<double> GenGradientsStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_gradients_struct_get_r0_info);
+}
+void GenGradientsStruct::set_r0(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  gen_grad_map_struct_set_r0(fortran_ptr_, v.data(), shape);
+  gen_gradients_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
-double GenGradMapStruct::field_scale() const {
+double GenGradientsStruct::field_scale() const {
   double value;
-  gen_grad_map_struct_get_real(fortran_ptr_, 1, &value);
+  gen_gradients_struct_get_real(fortran_ptr_, 2, &value);
   return value;
 }
-void GenGradMapStruct::set_field_scale(double value) {
-  gen_grad_map_struct_set_real(fortran_ptr_, 1, value);
+void GenGradientsStruct::set_field_scale(double value) {
+  gen_gradients_struct_set_real(fortran_ptr_, 2, value);
 }
-int GenGradMapStruct::master_parameter() const {
+int GenGradientsStruct::master_parameter() const {
   int value;
-  gen_grad_map_struct_get_integer(fortran_ptr_, 4, &value);
+  gen_gradients_struct_get_integer(fortran_ptr_, 4, &value);
   return value;
 }
-void GenGradMapStruct::set_master_parameter(int value) {
-  gen_grad_map_struct_set_integer(fortran_ptr_, 4, value);
-}
-bool GenGradMapStruct::curved_ref_frame() const {
-  bool value;
-  gen_grad_map_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void GenGradMapStruct::set_curved_ref_frame(bool value) {
-  gen_grad_map_struct_set_logical(fortran_ptr_, 0, value);
+void GenGradientsStruct::set_master_parameter(int value) {
+  gen_gradients_struct_set_integer(fortran_ptr_, 4, value);
 }
 RealAlloc1D GeneralBinStruct::count() const {
   return RealAlloc1D(

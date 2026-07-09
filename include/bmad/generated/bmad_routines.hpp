@@ -2770,18 +2770,18 @@ extern "C" bool fortran_eq_floor_position(
     bool &is_eq /* 0D_NOT_logical out */
 );
 bool eq_floor_position(FloorPositionStruct &f1, FloorPositionStruct &f2);
-extern "C" bool fortran_eq_gen_grad1(
+extern "C" bool fortran_eq_gen_grad_curve(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
     bool &is_eq /* 0D_NOT_logical out */
 );
-bool eq_gen_grad1(GenGrad1Struct &f1, GenGrad1Struct &f2);
-extern "C" bool fortran_eq_gen_grad_map(
+bool eq_gen_grad_curve(GenGradCurveStruct &f1, GenGradCurveStruct &f2);
+extern "C" bool fortran_eq_gen_gradients(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
     bool &is_eq /* 0D_NOT_logical out */
 );
-bool eq_gen_grad_map(GenGradMapStruct &f1, GenGradMapStruct &f2);
+bool eq_gen_gradients(GenGradientsStruct &f1, GenGradientsStruct &f2);
 extern "C" bool fortran_eq_gg_taylor(
     void *f1 /* 0D_NOT_type in */,
     void *f2 /* 0D_NOT_type in */,
@@ -3507,13 +3507,19 @@ void g_integrals_calc(LatStruct &lat);
 extern "C" bool
 fortran_gamma_ref(void *ele /* 0D_NOT_type in */, double &gamma /* 0D_NOT_real out */);
 double gamma_ref(EleStruct &ele);
-extern "C" void fortran_gen_grad1_to_gg_taylor(
+extern "C" void fortran_gen_grad_at_s_to_gg_a_taylor(
     void *ele /* 0D_NOT_type in */,
     void *gen_grad /* 0D_NOT_type in */,
-    int &iz /* 0D_NOT_integer in */,
-    Bmad::array_descriptor_t &gg_taylor /* 1D_NOT_type out */
+    double &s_pos /* 0D_NOT_real in */,
+    Bmad::array_descriptor_t &gg_a /* 1D_NOT_type out */,
+    Bmad::array_descriptor_t &gg_da_ds /* 1D_NOT_type out */
 );
-GgTaylorStructArray1D gen_grad1_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, int iz);
+struct GenGradAtSToGgATaylor {
+  GgTaylorStructArray1D gg_a;
+  GgTaylorStructArray1D gg_da_ds;
+};
+Bmad::GenGradAtSToGgATaylor
+gen_grad_at_s_to_gg_a_taylor(EleStruct &ele, GenGradientsStruct &gen_grad, double s_pos);
 extern "C" void fortran_gen_grad_at_s_to_gg_taylor(
     void *ele /* 0D_NOT_type in */,
     void *gen_grad /* 0D_NOT_type in */,
@@ -3521,16 +3527,7 @@ extern "C" void fortran_gen_grad_at_s_to_gg_taylor(
     Bmad::array_descriptor_t &gg_taylor /* 1D_NOT_type out */
 );
 GgTaylorStructArray1D
-gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradMapStruct &gen_grad, double s_pos);
-extern "C" bool fortran_gen_grad_field(
-    Bmad::array_descriptor_t &deriv /* 1D_NOT_real inout */,
-    void *gg /* 0D_NOT_type inout */,
-    double &rho /* 0D_NOT_real in */,
-    double &theta /* 0D_NOT_real in */,
-    Bmad::array_descriptor_t &field /* 1D_NOT_real out */
-);
-FixedArray1D<Real, 3>
-gen_grad_field(FArray1D<Real> &deriv, GenGrad1Struct &gg, double rho, double theta);
+gen_grad_at_s_to_gg_taylor(EleStruct &ele, GenGradientsStruct &gen_grad, double s_pos);
 extern "C" void fortran_get_astra_fieldgrid_name_and_scaling(
     void *ele /* 0D_NOT_type in */,
     void *name_indexx /* 0D_NOT_type inout */,
@@ -3716,6 +3713,50 @@ void get_switch(
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
 // - Array bounds handling: "Enum 'ILO' found in bounds 'ilo' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
+
+// Skipped unusable routine gg_accumulate_coefs:
+// - Array bounds handling: "Enum 'GG_COEF_MAX_N' found in bounds 'gg_coef_max_n$' but not in
+// provided map."
+// - Array bounds handling: "Enum 'GG_COEF_MAX_PQ' found in bounds 'gg_coef_max_pq$' but not in
+// provided map."
+// - Array bounds handling: "Enum 'GG_COEF_MAX_PQ' found in bounds 'gg_coef_max_pq$' but not in
+// provided map."
+// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_gg_coef_table_init();
+void gg_coef_table_init();
+
+// Skipped unusable routine gg_field_potential_calc:
+// - Array bounds handling: "Enum 'GG_COEF_MAX_N' found in bounds 'gg_coef_max_n$' but not in
+// provided map."
+// - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_gg_set_block_001();
+void gg_set_block_001();
+extern "C" void fortran_gg_set_block_002();
+void gg_set_block_002();
+extern "C" void fortran_gg_set_block_003();
+void gg_set_block_003();
+extern "C" void fortran_gg_set_block_004();
+void gg_set_block_004();
+extern "C" void fortran_gg_set_block_005();
+void gg_set_block_005();
+extern "C" void fortran_gg_set_block_006();
+void gg_set_block_006();
+extern "C" void fortran_gg_set_block_007();
+void gg_set_block_007();
+extern "C" void fortran_gg_set_block_008();
+void gg_set_block_008();
+extern "C" void fortran_gg_set_block_009();
+void gg_set_block_009();
+extern "C" void fortran_gg_set_block_010();
+void gg_set_block_010();
+extern "C" void fortran_gg_set_block_011();
+void gg_set_block_011();
+extern "C" void fortran_gg_set_block_012();
+void gg_set_block_012();
+extern "C" void fortran_gg_set_block_013();
+void gg_set_block_013();
+extern "C" void fortran_gg_set_block_014();
+void gg_set_block_014();
 extern "C" void fortran_gg_taylor_equal_gg_taylor(
     void *gg_taylor1 /* 0D_NOT_type inout */,
     void *gg_taylor2 /* 0D_NOT_type in */
@@ -5865,7 +5906,7 @@ void parse_cylindrical_map(
     bool delim_found,
     bool err_flag
 );
-extern "C" void fortran_parse_gen_grad_map(
+extern "C" void fortran_parse_gen_gradients(
     void *gg_map /* 0D_PTR_type inout */,
     void *ele /* 0D_NOT_type inout */,
     void *lat /* 0D_NOT_type inout */,
@@ -5873,8 +5914,8 @@ extern "C" void fortran_parse_gen_grad_map(
     bool &delim_found /* 0D_NOT_logical in */,
     bool &err_flag /* 0D_NOT_logical in */
 );
-void parse_gen_grad_map(
-    GenGradMapStruct &gg_map,
+void parse_gen_gradients(
+    GenGradientsStruct &gg_map,
     EleStruct &ele,
     LatStruct &lat,
     std::string delim,

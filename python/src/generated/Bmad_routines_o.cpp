@@ -694,6 +694,7 @@ err_flag : bool
       R"""(Routine to order the particles longitudinally in terms of decreasing %vec(5).
 That is from large z (head of bunch) to small z.
 Only live particles are ordered.
+The relative order of particles with equal %vec(5) is arbitrary and may change from call to call.
 
 Parameters
 ----------

@@ -714,8 +714,8 @@
 | [`eq_em_field`](bmad.md#eq_em_field) | Routine | [Bmad](bmad.md) |
 | [`eq_expression_atom`](bmad.md#eq_expression_atom) | Routine | [Bmad](bmad.md) |
 | [`eq_floor_position`](bmad.md#eq_floor_position) | Routine | [Bmad](bmad.md) |
-| [`eq_gen_grad1`](bmad.md#eq_gen_grad1) | Routine | [Bmad](bmad.md) |
-| [`eq_gen_grad_map`](bmad.md#eq_gen_grad_map) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_grad_curve`](bmad.md#eq_gen_grad_curve) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_gradients`](bmad.md#eq_gen_gradients) | Routine | [Bmad](bmad.md) |
 | [`eq_gg_taylor`](bmad.md#eq_gg_taylor) | Routine | [Bmad](bmad.md) |
 | [`eq_gg_taylor_term`](bmad.md#eq_gg_taylor_term) | Routine | [Bmad](bmad.md) |
 | [`eq_grid_beam_init`](bmad.md#eq_grid_beam_init) | Routine | [Bmad](bmad.md) |
@@ -920,16 +920,15 @@
 | `GAUSSIAN` | Enum | [Enums](enums.md) |
 | [`gelbd`](sim_utils.md#gelbd) | Routine | [Sim Utils](sim_utils.md) |
 | [`gen_complete_elliptic`](sim_utils.md#gen_complete_elliptic) | Routine | [Sim Utils](sim_utils.md) |
-| [`gen_grad1_to_gg_taylor`](bmad.md#gen_grad1_to_gg_taylor) | Routine | [Bmad](bmad.md) |
+| [`gen_grad_at_s_to_gg_a_taylor`](bmad.md#gen_grad_at_s_to_gg_a_taylor) | Routine | [Bmad](bmad.md) |
 | [`gen_grad_at_s_to_gg_taylor`](bmad.md#gen_grad_at_s_to_gg_taylor) | Routine | [Bmad](bmad.md) |
-| [`gen_grad_field`](bmad.md#gen_grad_field) | Routine | [Bmad](bmad.md) |
-| `GEN_GRAD_MAP` | Enum | [Enums](enums.md) |
+| `GEN_GRADIENTS` | Enum | [Enums](enums.md) |
 | [`general_bin_count`](sim_utils.md#general_bin_count) | Routine | [Sim Utils](sim_utils.md) |
 | [`general_bin_index`](sim_utils.md#general_bin_index) | Routine | [Sim Utils](sim_utils.md) |
 | [`general_bin_index_in_bounds`](sim_utils.md#general_bin_index_in_bounds) | Routine | [Sim Utils](sim_utils.md) |
 | [GeneralBinStruct](sim_utils.md#generalbinstruct) | Struct | [Sim Utils](sim_utils.md) |
-| [GenGrad1Struct](bmad.md#gengrad1struct) | Struct | [Bmad](bmad.md) |
-| [GenGradMapStruct](bmad.md#gengradmapstruct) | Struct | [Bmad](bmad.md) |
+| [GenGradCurveStruct](bmad.md#gengradcurvestruct) | Struct | [Bmad](bmad.md) |
+| [GenGradientsStruct](bmad.md#gengradientsstruct) | Struct | [Bmad](bmad.md) |
 | `GEOMETRY` | Enum | [Enums](enums.md) |
 | [`get_a_char`](sim_utils.md#get_a_char) | Routine | [Sim Utils](sim_utils.md) |
 | [`get_astra_fieldgrid_name_and_scaling`](bmad.md#get_astra_fieldgrid_name_and_scaling) | Routine | [Bmad](bmad.md) |
@@ -947,6 +946,24 @@
 | [`get_slave_list`](bmad.md#get_slave_list) | Routine | [Bmad](bmad.md) |
 | [`get_switch`](bmad.md#get_switch) | Routine | [Bmad](bmad.md) |
 | [`get_tty_char`](sim_utils.md#get_tty_char) | Routine | [Sim Utils](sim_utils.md) |
+| `GG_A` | Enum | [Enums](enums.md) |
+| `GG_B` | Enum | [Enums](enums.md) |
+| `GG_BS` | Enum | [Enums](enums.md) |
+| [`gg_coef_table_init`](bmad.md#gg_coef_table_init) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_001`](bmad.md#gg_set_block_001) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_002`](bmad.md#gg_set_block_002) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_003`](bmad.md#gg_set_block_003) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_004`](bmad.md#gg_set_block_004) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_005`](bmad.md#gg_set_block_005) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_006`](bmad.md#gg_set_block_006) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_007`](bmad.md#gg_set_block_007) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_008`](bmad.md#gg_set_block_008) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_009`](bmad.md#gg_set_block_009) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_010`](bmad.md#gg_set_block_010) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_011`](bmad.md#gg_set_block_011) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_012`](bmad.md#gg_set_block_012) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_013`](bmad.md#gg_set_block_013) | Routine | [Bmad](bmad.md) |
+| [`gg_set_block_014`](bmad.md#gg_set_block_014) | Routine | [Bmad](bmad.md) |
 | [`gg_taylor_equal_gg_taylor`](bmad.md#gg_taylor_equal_gg_taylor) | Routine | [Bmad](bmad.md) |
 | [`gg_taylors_equal_gg_taylors`](bmad.md#gg_taylors_equal_gg_taylors) | Routine | [Bmad](bmad.md) |
 | [GgTaylorStruct](bmad.md#ggtaylorstruct) | Struct | [Bmad](bmad.md) |
@@ -1505,7 +1522,7 @@
 | [`parse_cartesian_map`](bmad.md#parse_cartesian_map) | Routine | [Bmad](bmad.md) |
 | [`parse_cylindrical_map`](bmad.md#parse_cylindrical_map) | Routine | [Bmad](bmad.md) |
 | [`parse_fortran_format`](sim_utils.md#parse_fortran_format) | Routine | [Sim Utils](sim_utils.md) |
-| [`parse_gen_grad_map`](bmad.md#parse_gen_grad_map) | Routine | [Bmad](bmad.md) |
+| [`parse_gen_gradients`](bmad.md#parse_gen_gradients) | Routine | [Bmad](bmad.md) |
 | [`parse_grid_field`](bmad.md#parse_grid_field) | Routine | [Bmad](bmad.md) |
 | [`parse_integer_list`](bmad.md#parse_integer_list) | Routine | [Bmad](bmad.md) |
 | [`parse_integer_list2`](bmad.md#parse_integer_list2) | Routine | [Bmad](bmad.md) |

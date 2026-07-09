@@ -9,8 +9,8 @@ using namespace Bmad;
 
 // Per-struct init functions
 void init_general_bin_struct(nb::module_ &m, nb::class_<GeneralBinStruct> &class_);
-void init_gen_grad1_struct(nb::module_ &m, nb::class_<GenGrad1Struct> &class_);
-void init_gen_grad_map_struct(nb::module_ &m, nb::class_<GenGradMapStruct> &class_);
+void init_gen_grad_curve_struct(nb::module_ &m, nb::class_<GenGradCurveStruct> &class_);
+void init_gen_gradients_struct(nb::module_ &m, nb::class_<GenGradientsStruct> &class_);
 void init_gg_taylor_struct(nb::module_ &m, nb::class_<GgTaylorStruct> &class_);
 void init_gg_taylor_term_struct(nb::module_ &m, nb::class_<GgTaylorTermStruct> &class_);
 void init_grid_beam_init_struct(nb::module_ &m, nb::class_<GridBeamInitStruct> &class_);

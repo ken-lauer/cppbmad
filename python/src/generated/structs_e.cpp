@@ -625,8 +625,8 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
           "Used to define E/M fields"
       )
       .def_prop_ro(
-          "gen_grad_map",
-          &EleStruct::gen_grad_map,
+          "gen_gradients",
+          &EleStruct::gen_gradients,
           nb::keep_alive<0, 1>(),
           "Used to define E/M fields."
       )
@@ -1481,7 +1481,9 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
             std::optional<bool> exact_misalign_set,
             std::optional<bool> vertical_kick_set,
             std::optional<bool> cut_factor_set,
-            std::optional<bool> translate_patch_drift_time_set) {
+            std::optional<bool> translate_patch_drift_time_set,
+            std::optional<bool> pancake_symplectic_set,
+            std::optional<bool> pancake_canonical_set) {
            new (self) ExtraParsingInfoStruct(
                ptr_to_opt_ref(ran_state),
                ran_seed,
@@ -1553,7 +1555,9 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
                exact_misalign_set,
                vertical_kick_set,
                cut_factor_set,
-               translate_patch_drift_time_set
+               translate_patch_drift_time_set,
+               pancake_symplectic_set,
+               pancake_canonical_set
            );
          },
          nb::arg("ran_state") = nb::none(),
@@ -1626,7 +1630,9 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
          nb::arg("exact_misalign_set") = nb::none(),
          nb::arg("vertical_kick_set") = nb::none(),
          nb::arg("cut_factor_set") = nb::none(),
-         nb::arg("translate_patch_drift_time_set") = nb::none()
+         nb::arg("translate_patch_drift_time_set") = nb::none(),
+         nb::arg("pancake_symplectic_set") = nb::none(),
+         nb::arg("pancake_canonical_set") = nb::none()
   )
       .def_prop_rw(
           "ran_state",
@@ -1988,6 +1994,16 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
           "translate_patch_drift_time_set",
           &ExtraParsingInfoStruct::translate_patch_drift_time_set,
           &ExtraParsingInfoStruct::set_translate_patch_drift_time_set
+      )
+      .def_prop_rw(
+          "pancake_symplectic_set",
+          &ExtraParsingInfoStruct::pancake_symplectic_set,
+          &ExtraParsingInfoStruct::set_pancake_symplectic_set
+      )
+      .def_prop_rw(
+          "pancake_canonical_set",
+          &ExtraParsingInfoStruct::pancake_canonical_set,
+          &ExtraParsingInfoStruct::set_pancake_canonical_set
       )
 
       .def("__repr__", [](const ExtraParsingInfoStruct &self) { return to_string(self); })
