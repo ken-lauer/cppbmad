@@ -1011,7 +1011,8 @@ ignore_radiation : bool, optional
     If present and True then do not include radiation effects along with space charge effects.
 
 make_map1 : bool, optional
-    Make ele.mat6 and ele.spin_q components? Default is false.
+    In **some** cases, make ele.mat6 and ele.spin_q components? Default is false. Do not set this! For
+    internal use only to speed up some calculations!
 
 init_to_edge : bool, optional
     Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
