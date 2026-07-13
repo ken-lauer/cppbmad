@@ -884,7 +884,7 @@ def attribute_free(ix_ele: int, attrib_name: str, lat: _pybmad.LatStruct, err_pr
     """
 
 @overload
-def attribute_free(ele: _pybmad.EleStruct, attrib_name: str, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None) -> AttributeFree2:
+def attribute_free(ele: _pybmad.EleStruct, attrib_name: str, err_print_flag: bool | None = None, except_overlay: bool | None = None, dependent_attribs_free: bool | None = None, ix_attrib: int | None = None) -> AttributeFree2:
     """
     Overloaded function for:
       Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,

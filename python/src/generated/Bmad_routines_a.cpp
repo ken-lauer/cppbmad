@@ -900,12 +900,14 @@ why_not_free : int, optional
           std::string,
           std::optional<bool>,
           std::optional<bool>,
-          std::optional<bool>>(&Bmad::attribute_free),
+          std::optional<bool>,
+          std::optional<int>>(&Bmad::attribute_free),
       nb::arg("ele"),
       nb::arg("attrib_name"),
       nb::arg("err_print_flag") = nb::none(),
       nb::arg("except_overlay") = nb::none(),
       nb::arg("dependent_attribs_free") = nb::none(),
+      nb::arg("ix_attrib") = nb::none(),
       R"""(Overloaded function for:
   Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)

@@ -626,7 +626,8 @@ Bmad::AttributeFree2 Bmad::attribute_free(
     std::string attrib_name,
     std::optional<bool> err_print_flag,
     std::optional<bool> except_overlay,
-    std::optional<bool> dependent_attribs_free
+    std::optional<bool> dependent_attribs_free,
+    std::optional<int> ix_attrib
 ) {
   auto _attrib_name = attrib_name.c_str();
   bool err_print_flag_lvalue;
@@ -651,6 +652,13 @@ Bmad::AttributeFree2 Bmad::attribute_free(
     _dependent_attribs_free = nullptr;
   }
   int _why_not_free{};
+  int ix_attrib_lvalue;
+  auto *_ix_attrib{&ix_attrib_lvalue};
+  if (ix_attrib.has_value()) {
+    ix_attrib_lvalue = ix_attrib.value();
+  } else {
+    _ix_attrib = nullptr;
+  }
   bool _free{};
   fortran_attribute_free2(/* void* */ ele.get_fortran_ptr(),
                           /* const char* */ _attrib_name,
@@ -658,6 +666,7 @@ Bmad::AttributeFree2 Bmad::attribute_free(
                           /* bool* */ _except_overlay,
                           /* bool* */ _dependent_attribs_free,
                           /* int& */ _why_not_free,
+                          /* int* */ _ix_attrib,
                           /* bool& */ _free);
   return AttributeFree2{_why_not_free, _free};
 }

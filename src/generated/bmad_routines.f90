@@ -1637,7 +1637,7 @@ subroutine fortran_attribute_free1 (ix_ele, attrib_name, lat, err_print_flag, ex
   f_free_ptr = f_free
 end subroutine
 subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_overlay, &
-    dependent_attribs_free, why_not_free, free) bind(c)
+    dependent_attribs_free, why_not_free, ix_attrib, free) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -1663,6 +1663,9 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   logical, target :: f_dependent_attribs_free_native
   logical, pointer :: f_dependent_attribs_free_native_ptr
   logical(c_bool), pointer :: f_dependent_attribs_free_ptr
+  type(c_ptr), intent(in), value :: ix_attrib  ! 0D_NOT_integer
+  integer(c_int) :: f_ix_attrib
+  integer(c_int), pointer :: f_ix_attrib_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: why_not_free  ! 0D_NOT_integer
   integer :: f_why_not_free
@@ -1708,8 +1711,15 @@ subroutine fortran_attribute_free2 (ele, attrib_name, err_print_flag, except_ove
   else
     f_why_not_free_ptr => null()
   endif
+  ! in: f_ix_attrib 0D_NOT_integer
+  if (c_associated(ix_attrib)) then
+    call c_f_pointer(ix_attrib, f_ix_attrib_ptr)
+  else
+    f_ix_attrib_ptr => null()
+  endif
   f_free = attribute_free(f_ele, f_attrib_name, f_err_print_flag_native_ptr, &
-      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free)
+      f_except_overlay_native_ptr, f_dependent_attribs_free_native_ptr, f_why_not_free, &
+      f_ix_attrib_ptr)
 
   ! out: f_why_not_free 0D_NOT_integer
   call c_f_pointer(why_not_free, f_why_not_free_ptr)

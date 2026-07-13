@@ -342,6 +342,7 @@ extern "C" bool fortran_attribute_free2(
     bool *except_overlay /* 0D_NOT_logical in */,
     bool *dependent_attribs_free /* 0D_NOT_logical in */,
     int &why_not_free /* 0D_NOT_integer out */,
+    int *ix_attrib /* 0D_NOT_integer in */,
     bool &free /* 0D_NOT_logical out */
 );
 struct AttributeFree2 {
@@ -353,7 +354,8 @@ Bmad::AttributeFree2 attribute_free(
     std::string attrib_name,
     std::optional<bool> err_print_flag = std::nullopt,
     std::optional<bool> except_overlay = std::nullopt,
-    std::optional<bool> dependent_attribs_free = std::nullopt
+    std::optional<bool> dependent_attribs_free = std::nullopt,
+    std::optional<int> ix_attrib = std::nullopt
 );
 extern "C" bool fortran_attribute_free3(
     int &ix_ele /* 0D_NOT_integer in */,
