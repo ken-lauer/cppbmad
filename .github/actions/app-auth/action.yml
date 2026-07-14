@@ -1,0 +1,42 @@
+name: App auth
+description: >
+  Mint a short-lived GitHub App installation token, configure git to commit as
+  the app's bot identity, and authenticate the `origin` remote for pushing.
+  Exposes the token as an output for gh/API calls.
+
+  Requires the repository to already be checked out with
+  `persist-credentials: false`, since a local action cannot run before checkout
+  and we must own the push credential ourselves.
+
+inputs:
+  app-id:
+    description: "GitHub App ID"
+    required: true
+  private-key:
+    description: "GitHub App private key (PEM)"
+    required: true
+
+outputs:
+  token:
+    description: "Short-lived installation access token"
+    value: ${{ steps.app-token.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/create-github-app-token@v2
+      id: app-token
+      with:
+        app-id: ${{ inputs.app-id }}
+        private-key: ${{ inputs.private-key }}
+
+    - name: Configure git identity and push auth as the app bot
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+      run: |
+        user_id=$(gh api "/users/$APP_SLUG[bot]" --jq .id)
+        git config --global user.name "$APP_SLUG[bot]"
+        git config --global user.email "$user_id+$APP_SLUG[bot]@users.noreply.github.com"
+        git remote set-url origin "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"

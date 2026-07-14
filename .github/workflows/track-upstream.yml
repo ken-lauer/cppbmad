@@ -1,5 +1,15 @@
 name: Track upstream releases
 
+# Two-phase release tracking:
+#   1. stage:   on a new upstream Bmad tag, regenerate against it (codegen only,
+#               no build) and open a draft PR from regen/<tag> (no tag yet).
+#   2. promote: polls every run; once the staged PR's CI passes AND conda-forge
+#               has the matching bmad release for all required platforms, marks
+#               the PR ready, rebase-merges it (single codegen commit, no merge
+#               commit), and tags that commit. Close the PR to skip a release.
+#
+# Upstream tags are yyyymmdd-n; the conda-forge version is yyyymmdd.n.
+
 on:
   schedule:
     - cron: "*/20 * * * *"
@@ -9,6 +19,11 @@ on:
         description: "Specific upstream tag to process (leave empty for latest)"
         required: false
         type: string
+      force_promote:
+        description: "Merge as soon as CI passes, without waiting for the conda-forge bmad release (branch protection still requires CI)"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: track-upstream
@@ -17,12 +32,14 @@ concurrency:
 env:
   UPSTREAM_REPO: bmad-sim/bmad-ecosystem
   FEEDSTOCK_REPO: conda-forge/cppbmad-feedstock
+  ANACONDA_PACKAGE: conda-forge/bmad
+  REQUIRED_SUBDIRS: linux-64 osx-64 osx-arm64
 
 jobs:
   check-release:
     runs-on: ubuntu-latest
     outputs:
-      new_release: ${{ steps.check.outputs.new_release }}
+      needs_stage: ${{ steps.check.outputs.needs_stage }}
       upstream_tag: ${{ steps.check.outputs.upstream_tag }}
     steps:
       - uses: actions/checkout@v7
@@ -36,32 +53,39 @@ jobs:
         run: |
           if [[ -n "${{ inputs.upstream_tag }}" ]]; then
             UPSTREAM_TAG="${{ inputs.upstream_tag }}"
+            EXPLICIT=true
           else
             UPSTREAM_TAG=$(gh api "repos/$UPSTREAM_REPO/releases/latest" --jq '.tag_name')
+            EXPLICIT=false
           fi
           echo "Latest upstream tag: $UPSTREAM_TAG"
+          echo "upstream_tag=$UPSTREAM_TAG" >> "$GITHUB_OUTPUT"
 
           if git tag -l "$UPSTREAM_TAG" | grep -q .; then
-            echo "Tag $UPSTREAM_TAG already exists, nothing to do"
-            echo "new_release=false" >> "$GITHUB_OUTPUT"
+            echo "Tag $UPSTREAM_TAG already released, nothing to stage"
+            echo "needs_stage=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$EXPLICIT" == "false" ]] && git ls-remote --exit-code --heads origin "regen-failed/$UPSTREAM_TAG" > /dev/null; then
+            echo "::warning::$UPSTREAM_TAG previously failed staging (marker branch regen-failed/$UPSTREAM_TAG exists); skipping."
+            echo "Delete the marker branch or dispatch with upstream_tag=$UPSTREAM_TAG to retry."
+            echo "needs_stage=false" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --heads origin "regen/$UPSTREAM_TAG" > /dev/null; then
+            echo "Branch regen/$UPSTREAM_TAG already staged, waiting on conda-forge"
+            echo "needs_stage=false" >> "$GITHUB_OUTPUT"
           else
             echo "New release detected: $UPSTREAM_TAG"
-            echo "new_release=true" >> "$GITHUB_OUTPUT"
-            echo "upstream_tag=$UPSTREAM_TAG" >> "$GITHUB_OUTPUT"
+            echo "needs_stage=true" >> "$GITHUB_OUTPUT"
           fi
 
-  regenerate:
+  stage:
     needs: check-release
-    if: needs.check-release.outputs.new_release == 'true'
+    if: needs.check-release.outputs.needs_stage == 'true'
     runs-on: ubuntu-latest
     environment: auto-regen
     env:
       UPSTREAM_TAG: ${{ needs.check-release.outputs.upstream_tag }}
     permissions:
       contents: write
-      pull-requests: read
-      pages: write
-      id-token: write
+      pull-requests: write
     defaults:
       run:
         shell: bash -eo pipefail -l {0}
@@ -69,61 +93,209 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          token: ${{ secrets.AUTOGENERATE_PAT }}
+          persist-credentials: false
 
-      - uses: ./.github/actions/build-bmad
+      - uses: ./.github/actions/app-auth
+        id: auth
+        with:
+          app-id: ${{ secrets.AUTOGEN_APP_ID }}
+          private-key: ${{ secrets.AUTOGEN_APP_PRIVATE_KEY }}
+
+      - uses: ./.github/actions/setup-codegen
         with:
           bmad_ref: ${{ needs.check-release.outputs.upstream_tag }}
-          build_type: release
 
-      - uses: ./.github/actions/build-cppbmad
-        with:
-          build_type: release
+      - name: Regenerate bindings
+        run: python -m codegen
 
-      - uses: ./.github/actions/build-pybmad
-        with:
-          build_type: release
-          upload_wheel: "true"
-
-      - name: Commit regenerated files, tag, and release
+      - name: Commit regenerated files to staging branch and open draft PR
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="regen/$UPSTREAM_TAG"
+          CONDA_VERSION="${UPSTREAM_TAG/-/.}"
+          git checkout -B "$BRANCH"
 
           git add $(bash list-generated.sh)
 
           if git diff --cached --quiet; then
-            echo "No changes to generated files"
+            echo "No generated changes; staging an empty commit so the release can still be tagged"
+            git commit --allow-empty -m "MAINT: regenerate for Bmad $UPSTREAM_TAG (no generated changes)"
           else
             git commit -m "MAINT: regenerate for Bmad $UPSTREAM_TAG"
           fi
 
-          git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG"
-          git push origin HEAD "$UPSTREAM_TAG"
+          git push --force origin "HEAD:refs/heads/$BRANCH"
 
-      - uses: ./.github/actions/build-docs
-        with:
-          output_dir: ${{ github.workspace }}/docs-site
+          # A prior attempt for this tag may have left a failure marker; clear it now that we succeeded.
+          git push origin --delete "regen-failed/$UPSTREAM_TAG" 2>/dev/null || true
 
-      - name: Upload docs artifact
-        uses: actions/upload-pages-artifact@v4
+          if [[ "$(gh pr list --head "$BRANCH" --state open --json number --jq length)" == "0" ]]; then
+            cat > "$RUNNER_TEMP/pr-body.md" <<EOF
+          Automated regeneration for upstream [Bmad \`$UPSTREAM_TAG\`](https://github.com/$UPSTREAM_REPO/releases/tag/$UPSTREAM_TAG).
+
+          This is an auto-managed **draft**. Once its CI passes **and** \`bmad $CONDA_VERSION\` is available on conda-forge for all of ($REQUIRED_SUBDIRS), the workflow marks it ready, merges it, and tags \`$UPSTREAM_TAG\` on \`main\`.
+
+          - **Close** the PR to skip this upstream release.
+          - Dispatch \`track-upstream\` with \`force_promote\` to merge without waiting for conda-forge or CI.
+          EOF
+            gh pr create \
+              --draft \
+              --base main \
+              --head "$BRANCH" \
+              --title "MAINT: regenerate for Bmad $UPSTREAM_TAG" \
+              --body-file "$RUNNER_TEMP/pr-body.md"
+          else
+            echo "PR for $BRANCH already open"
+          fi
+
+      - name: Mark staging failure to stop retries
+        if: failure()
+        env:
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
+        run: |
+          MARKER="regen-failed/$UPSTREAM_TAG"
+          echo "::error::Staging failed for Bmad $UPSTREAM_TAG."
+          if git push --force origin "HEAD:refs/heads/$MARKER"; then
+            echo "Pushed marker branch $MARKER; automatic retries for $UPSTREAM_TAG are now paused."
+            echo "To retry: delete the marker (git push origin --delete $MARKER) or dispatch with upstream_tag=$UPSTREAM_TAG."
+          else
+            echo "::warning::Could not push failure marker $MARKER (app auth may not be set up); retries will continue."
+          fi
+
+      - name: Supersede older staged PRs
+        env:
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
+        run: |
+          gh pr list --state open --json number,headRefName \
+            --jq '.[] | select(.headRefName | startswith("regen/")) | "\(.number) \(.headRefName)"' |
+          while read -r number branch; do
+            other_tag="${branch#regen/}"
+            if [[ "$other_tag" != "$UPSTREAM_TAG" && "$other_tag" < "$UPSTREAM_TAG" ]]; then
+              echo "Closing superseded PR #$number ($branch)"
+              gh pr close "$number" \
+                --comment "Superseded by the staged regeneration for Bmad $UPSTREAM_TAG."
+            fi
+          done
+
+  promote:
+    needs: [check-release, stage]
+    if: ${{ !cancelled() && needs.check-release.result == 'success' }}
+    runs-on: ubuntu-latest
+    environment: auto-regen
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
         with:
-          path: docs-site
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: ./.github/actions/app-auth
+        id: auth
+        with:
+          app-id: ${{ secrets.AUTOGEN_APP_ID }}
+          private-key: ${{ secrets.AUTOGEN_APP_PRIVATE_KEY }}
+
+      - name: Find staged PR
+        id: staged
+        env:
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
+        run: |
+          staged=$(gh pr list --state open --json number,headRefName \
+            --jq '[.[] | select(.headRefName | startswith("regen/"))] | sort_by(.headRefName) | reverse')
+          count=$(jq length <<< "$staged")
+          if [[ "$count" == "0" ]]; then
+            echo "No staged regeneration PRs open"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$count" != "1" ]]; then
+            echo "::warning::$count staged PRs open; considering only the newest"
+          fi
+          branch=$(jq -r '.[0].headRefName' <<< "$staged")
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "pr_number=$(jq -r '.[0].number' <<< "$staged")" >> "$GITHUB_OUTPUT"
+          echo "upstream_tag=${branch#regen/}" >> "$GITHUB_OUTPUT"
+
+      - name: Check staged PR CI status
+        id: ci
+        if: steps.staged.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
+          PR_NUMBER: ${{ steps.staged.outputs.pr_number }}
+        run: |
+          # CI is always required (branch protection enforces it too); force_promote only skips the conda-forge wait.
+          # Snapshot only (no --watch): don't block the runner while the matrix builds; the cron re-checks each tick.
+          # `gh pr checks` exits 0 only when every check has passed; 8 = pending, 1 = a failure (or not yet reported).
+          if gh pr checks "$PR_NUMBER"; then
+            echo "All checks passing."
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            rc=$?
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            if [[ "$rc" == "8" ]]; then
+              echo "CI still running; will re-check next run."
+            else
+              echo "::warning::PR #$PR_NUMBER has failing or unreported checks (gh exit $rc); not merging. Fix the branch or close the PR to skip."
+            fi
+          fi
+
+      - name: Check conda-forge for the matching bmad release
+        id: conda
+        if: steps.ci.outputs.ready == 'true'
+        env:
+          UPSTREAM_TAG: ${{ steps.staged.outputs.upstream_tag }}
+        run: |
+          if [[ "${{ inputs.force_promote }}" == "true" ]]; then
+            echo "force_promote set; skipping conda-forge check"
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CONDA_VERSION="${UPSTREAM_TAG/-/.}"
+          echo "Looking for bmad $CONDA_VERSION on conda-forge (upstream tag $UPSTREAM_TAG)"
+
+          if ! available=$(curl -fsSL "https://api.anaconda.org/package/$ANACONDA_PACKAGE" |
+            jq -r --arg v "$CONDA_VERSION" '[.files[] | select(.version == $v) | .attrs.subdir] | unique | .[]'); then
+            echo "::warning::anaconda.org query failed; will retry on the next run"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Available platforms for $CONDA_VERSION: ${available:-none}"
+
+          missing=""
+          for subdir in $REQUIRED_SUBDIRS; do
+            grep -qx "$subdir" <<< "$available" || missing="$missing $subdir"
+          done
+
+          if [[ -n "$missing" ]]; then
+            echo "bmad $CONDA_VERSION not yet complete on conda-forge; missing:$missing"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "bmad $CONDA_VERSION is available for all required platforms"
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Mark ready, merge staged PR, and tag release
+        if: steps.ci.outputs.ready == 'true' && steps.conda.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ steps.auth.outputs.token }}
+          UPSTREAM_TAG: ${{ steps.staged.outputs.upstream_tag }}
+          PR_NUMBER: ${{ steps.staged.outputs.pr_number }}
+        run: |
+          gh pr ready "$PR_NUMBER"
+          # Rebase (not merge) so main gets the single codegen commit with no merge commit.
+          gh pr merge "$PR_NUMBER" --rebase --delete-branch
+
+          git fetch origin main
+          # mergeCommit can be null for a rebase merge; fall back to the new main tip.
+          MERGE_SHA=$(gh pr view "$PR_NUMBER" --json mergeCommit --jq '.mergeCommit.oid // empty')
+          MERGE_SHA="${MERGE_SHA:-$(git rev-parse FETCH_HEAD)}"
+          echo "Merged PR #$PR_NUMBER; tagging $UPSTREAM_TAG at $MERGE_SHA"
+
+          git tag -a "$UPSTREAM_TAG" -m "Release $UPSTREAM_TAG" "$MERGE_SHA"
+          git push origin "$UPSTREAM_TAG"
 
       # - name: Trigger conda-forge feedstock rerender
-
-  deploy-docs:
-    needs: regenerate
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
