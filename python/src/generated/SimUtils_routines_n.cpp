@@ -162,40 +162,4 @@ nametable : NametableStruct
 ix_name : int
 )"""
   );
-  m.def(
-      "negative_ampsquared",
-      &SimUtils::negative_ampsquared,
-      nb::arg("frequency"),
-      nb::arg("status") = nb::none(),
-      R"""(Wrapper for Fortran routine negative_ampsquared
-
-Parameters
-----------
-frequency : float
-
-status : int, optional
-
-Returns
--------
-amp : float
-)"""
-  );
-  m.def(
-      "negative_dampsquared",
-      &SimUtils::negative_dampsquared,
-      nb::arg("frequency"),
-      nb::arg("status") = nb::none(),
-      R"""(Wrapper for Fortran routine negative_dampsquared
-
-Parameters
-----------
-frequency : float
-
-status : int, optional
-
-Returns
--------
-damp : float
-)"""
-  );
 }

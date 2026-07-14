@@ -557,8 +557,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
             std::optional<std::vector<int>> ic,
             std::optional<int> photon_type,
             std::optional<int> creation_hash,
-            std::optional<int> ramper_slave_bookkeeping,
-            std::optional<bool> parser_make_xfer_mats) {
+            std::optional<int> ramper_slave_bookkeeping) {
            new (self) LatStruct(
                use_name,
                lattice,
@@ -585,8 +584,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
                ic,
                photon_type,
                creation_hash,
-               ramper_slave_bookkeeping,
-               parser_make_xfer_mats
+               ramper_slave_bookkeeping
            );
          },
          nb::arg("use_name") = nb::none(),
@@ -614,8 +612,7 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
          nb::arg("ic") = nb::none(),
          nb::arg("photon_type") = nb::none(),
          nb::arg("creation_hash") = nb::none(),
-         nb::arg("ramper_slave_bookkeeping") = nb::none(),
-         nb::arg("parser_make_xfer_mats") = nb::none()
+         nb::arg("ramper_slave_bookkeeping") = nb::none()
   )
       .def_prop_rw(
           "use_name",
@@ -788,12 +785,6 @@ void init_lat_struct(nb::module_ &m, nb::class_<LatStruct> &cls) {
           "ramper_slave_bookkeeping",
           &LatStruct::ramper_slave_bookkeeping,
           &LatStruct::set_ramper_slave_bookkeeping
-      )
-      .def_prop_rw(
-          "parser_make_xfer_mats",
-          &LatStruct::parser_make_xfer_mats,
-          &LatStruct::set_parser_make_xfer_mats,
-          "Is Bmad parser to make element transfer matrices?"
       )
       .def_static(
           "new_array1d",

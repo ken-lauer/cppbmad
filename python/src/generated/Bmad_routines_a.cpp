@@ -86,11 +86,9 @@ dk : 2D array of float (shape: 2,2), optional
       nb::arg("scale") = nb::none(),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""(Routine to put in the kick due to ab_multipole components in an element.
-The kick will be corrected for the orientation of the element and the particle direction of travel.
-Any difference between element p0c and orbit%p0c will be taken into account.
-
+      R"""(Routine to put in the kick due to ab_multipole components.
 Also see the multipole_kicks routine.
+The kick will be corrected for the orientation of the element and the particle direction of travel.
 
 Parameters
 ----------
@@ -98,7 +96,7 @@ an : 1D array of float
     Skew multipole strengths.
 
 bn : 1D array of float
-    Normal multipole strengths.
+    Normal multipole tilts.
 
 ix_pole_max : int
     Maximum pole index.
@@ -132,16 +130,11 @@ make_matrix : bool, optional
       &Bmad::absolute_photon_position,
       nb::arg("e_orb"),
       nb::arg("photon_orb"),
-      R"""($OMP THREADPRIVATE(pinit_E_rel_target, pinit_va_E_rel, pinit_va_gamma, &
-$OMP                pinit_va_vert_angle, pinit_va_invert, pinit_alpha)
-
- Subroutine absolute_photon_position (e_orb, photon_orb)
-
- Routine to calculate the photon phase space coordinates given:
-   1) The phase space coords of the emitting charged particle and
-   2) The photon phase space coords relative to the emitting particle.
-      The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
-      the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
+      R"""(Routine to calculate the photon phase space coordinates given:
+  1) The phase space coords of the emitting charged particle and
+  2) The photon phase space coords relative to the emitting particle.
+     The photon (x, y, z) position is ignored (it is assumed the photon is emitted at
+     the charged particle position) and only the photon's (vx, vy, vz) velocity matters.
 
 Parameters
 ----------
@@ -471,20 +464,6 @@ upper_bound : int
 )"""
   );
   m.def(
-      "allocate_grid_field",
-      &Bmad::allocate_grid_field,
-      nb::arg("g_field"),
-      nb::arg("n_gf"),
-      R"""(Wrapper for Fortran routine allocate_grid_field
-
-Parameters
-----------
-g_field : 1D array of GridFieldStruct
-
-n_gf : int
-)"""
-  );
-  m.def(
       "allocate_lat_ele_array",
       &Bmad::allocate_lat_ele_array,
       nb::arg("lat"),
@@ -674,25 +653,6 @@ make_matrix : bool, optional
 )"""
   );
   m.def(
-      "apply_fft_3d_kicks",
-      &Bmad::apply_fft_3d_kicks,
-      nb::arg("csr"),
-      nb::arg("particle"),
-      R"""(Routine to apply FFT-based 3D space charge kicks to particles.
-Deposits charge on a mesh, solves for the field, interpolates back, and applies kicks.
-
-Parameters
-----------
-csr : CsrStruct
-    Contains mesh, position arrays, and tracking parameters.
-
-particle : 1D array of CoordStruct
-    Particles to kick.
-    This parameter is an input/output and is modified in-place.
-    As an output, particle: Particles with kicks applied.
-)"""
-  );
-  m.def(
       "apply_patch_to_ptc_fibre",
       &Bmad::apply_patch_to_ptc_fibre,
       nb::arg("ele"),
@@ -796,7 +756,8 @@ ele : EleStruct
 
 force_bookkeeping : bool, optional
     If present and True then force attribute bookkeeping to be done independent of the state of
-    ele.bookkeeping_stat.attributes.
+    ele.bookkeeping_stat.attributes. This will also cause attribute_bookkeeper to assume intelligent
+    bookkeeping.
 )"""
   );
   nb::class_<Bmad::AttributeFree1>(m, "AttributeFree1", "attribute_free1 return type")
@@ -833,7 +794,7 @@ force_bookkeeping : bool, optional
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+                               except_overlay, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -864,8 +825,7 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
-    considered "dependent".
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
 Returns
 -------
@@ -900,21 +860,19 @@ why_not_free : int, optional
           std::string,
           std::optional<bool>,
           std::optional<bool>,
-          std::optional<bool>,
-          std::optional<int>>(&Bmad::attribute_free),
+          std::optional<bool>>(&Bmad::attribute_free),
       nb::arg("ele"),
       nb::arg("attrib_name"),
       nb::arg("err_print_flag") = nb::none(),
       nb::arg("except_overlay") = nb::none(),
       nb::arg("dependent_attribs_free") = nb::none(),
-      nb::arg("ix_attrib") = nb::none(),
       R"""(Overloaded function for:
   Function attribute_free1 (ix_ele, attrib_name, lat, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+                               except_overlay, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -942,8 +900,7 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
-    considered "dependent".
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
 Returns
 -------
@@ -994,7 +951,7 @@ why_not_free : int, optional
   Function attribute_free2 (ele, attrib_name, err_print_flag,
                                except_overlay, dependent_attribs_free, why_not_free) result (free)
   Function attribute_free3 (ix_ele, ix_branch, attrib_name, lat, err_print_flag,
-                               except_overlay, dependent_attribs_free, why_not_free) result (free)
+                               except_overlay, why_not_free) result (free)
 
 Routine to check if an attribute is free to vary.
 
@@ -1028,8 +985,7 @@ except_overlay : bool, optional
 
 dependent_attribs_free : bool, optional
     If present and True then mark as free attributes that are dependent. For example, if ele.field_master = F,
-    b1_field is dependent upon k1. Default is False. Also fixer Twiss/dispersion/orbit attributes are
-    considered "dependent".
+    b1_field is dependent upon k1. Default is False. Use True when using intelligent bookkeeping.
 
 Returns
 -------
@@ -1325,8 +1281,8 @@ ele : EleStruct, optional
 Returns
 -------
 attrib_type : int
-    Attribute type: is_string$, is_logical$, is_integer$, is_real$, is_switch$, is_struct$, is_species$ or
-    invalid_name$ Note: An overlay or group variable will be marked invalid_name$ if ele is missing.
+    Attribute type: is_string$, is_logical$, is_integer$, is_real$, is_switch$, is_struct$ or invalid_name$
+    Note: An overlay or group variable will be marked invalid_name$ if ele is missing.
 )"""
   );
   m.def(

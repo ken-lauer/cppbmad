@@ -114,74 +114,78 @@ gamma : float
     Relativistic gamma factor Energy/mass*c^2.
 )"""
   );
-  nb::class_<Bmad::GenGradAtSToGgATaylor>(
-      m,
-      "GenGradAtSToGgATaylor",
-      "gen_grad_at_s_to_gg_a_taylor return type"
-  )
-      .def_ro("gg_a", &Bmad::GenGradAtSToGgATaylor::gg_a)
-      .def_ro("gg_da_ds", &Bmad::GenGradAtSToGgATaylor::gg_da_ds)
-      .def("__len__", [](const Bmad::GenGradAtSToGgATaylor &) { return 2; })
-      .def("__getitem__", [](const Bmad::GenGradAtSToGgATaylor &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.gg_a);
-        if (i == 1)
-          return nb::cast(s.gg_da_ds);
-        throw nb::index_error();
-      });
   m.def(
-      "gen_grad_at_s_to_gg_a_taylor",
-      &Bmad::gen_grad_at_s_to_gg_a_taylor,
+      "gen_grad1_to_em_taylor",
+      &Bmad::gen_grad1_to_em_taylor,
       nb::arg("ele"),
       nb::arg("gen_grad"),
-      nb::arg("s_pos"),
-      R"""(Wrapper for Fortran routine gen_grad_at_s_to_gg_a_taylor
+      nb::arg("iz"),
+      R"""(Wrapper for Fortran routine gen_grad1_to_em_taylor
 
 Parameters
 ----------
 ele : EleStruct
     Element containing the map.
 
-gen_grad : GenGradientsStruct
-    Gen_gradients map.
+gen_grad : GenGradMapStruct
+    Gen_grad map.
 
-s_pos : float
-    Position to evaluate the map at.
+iz : int
+    z-plane index to evaluate.
 
 Returns
 -------
-gg_a : 1D array of GgTaylorStruct (shape: 3)
-    Map for the (Ax, Ay, As) vector potential.
-
-gg_da_ds : 1D array of GgTaylorStruct (shape: 3), optional
-    Map for the s-derivative (dAx/ds, dAy/ds, dAs/ds).
+em_taylor : 1D array of EmTaylorStruct (shape: 3)
+    Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
 )"""
   );
   m.def(
-      "gen_grad_at_s_to_gg_taylor",
-      &Bmad::gen_grad_at_s_to_gg_taylor,
+      "gen_grad_at_s_to_em_taylor",
+      &Bmad::gen_grad_at_s_to_em_taylor,
       nb::arg("ele"),
       nb::arg("gen_grad"),
       nb::arg("s_pos"),
-      R"""(Wrapper for Fortran routine gen_grad_at_s_to_gg_taylor
+      R"""(Wrapper for Fortran routine gen_grad_at_s_to_em_taylor
 
 Parameters
 ----------
 ele : EleStruct
     Element containing the map.
 
-gen_grad : GenGradientsStruct
-    Gen_gradients map.
+gen_grad : GenGradMapStruct
+    Gen_grad map.
 
 s_pos : float
-    Position to evaluate gg_taylor at.
+    Position to evaluate em_taylor at.
 
 Returns
 -------
-gg_taylor : 1D array of GgTaylorStruct (shape: 3)
-    Map for (Bx, By, Bs) or (Ex, Ey, Es) fields.
+em_taylor : 1D array of EmTaylorStruct (shape: 3)
+    Map for (Bx, By, Bz) or (Ex, Ey, Ez) fields.
+)"""
+  );
+  m.def(
+      "gen_grad_field",
+      &Bmad::gen_grad_field,
+      nb::arg("deriv"),
+      nb::arg("gg"),
+      nb::arg("rho"),
+      nb::arg("theta"),
+      R"""(Wrapper for Fortran routine gen_grad_field
+
+Parameters
+----------
+deriv : 1D array of float
+
+gg : GenGrad1Struct
+
+rho : float
+
+theta : float
+
+Returns
+-------
+field : 1D array of float (shape: 3)
 )"""
   );
   nb::class_<Bmad::GetAstraFieldgridNameAndScaling>(
@@ -623,124 +627,6 @@ ele : EleStruct
 delim : str
 
 delim_found : bool
-)"""
-  );
-  m.def(
-      "gg_coef_table_init",
-      &Bmad::gg_coef_table_init,
-      R"""(Populate the module-level gg_coef_table on first call (idempotent).
-)"""
-  );
-  m.def(
-      "gg_set_block_001",
-      &Bmad::gg_set_block_001,
-      R"""(Wrapper for Fortran routine gg_set_block_001
-)"""
-  );
-  m.def(
-      "gg_set_block_002",
-      &Bmad::gg_set_block_002,
-      R"""(Wrapper for Fortran routine gg_set_block_002
-)"""
-  );
-  m.def(
-      "gg_set_block_003",
-      &Bmad::gg_set_block_003,
-      R"""(Wrapper for Fortran routine gg_set_block_003
-)"""
-  );
-  m.def(
-      "gg_set_block_004",
-      &Bmad::gg_set_block_004,
-      R"""(Wrapper for Fortran routine gg_set_block_004
-)"""
-  );
-  m.def(
-      "gg_set_block_005",
-      &Bmad::gg_set_block_005,
-      R"""(Wrapper for Fortran routine gg_set_block_005
-)"""
-  );
-  m.def(
-      "gg_set_block_006",
-      &Bmad::gg_set_block_006,
-      R"""(Wrapper for Fortran routine gg_set_block_006
-)"""
-  );
-  m.def(
-      "gg_set_block_007",
-      &Bmad::gg_set_block_007,
-      R"""(Wrapper for Fortran routine gg_set_block_007
-)"""
-  );
-  m.def(
-      "gg_set_block_008",
-      &Bmad::gg_set_block_008,
-      R"""(Wrapper for Fortran routine gg_set_block_008
-)"""
-  );
-  m.def(
-      "gg_set_block_009",
-      &Bmad::gg_set_block_009,
-      R"""(Wrapper for Fortran routine gg_set_block_009
-)"""
-  );
-  m.def(
-      "gg_set_block_010",
-      &Bmad::gg_set_block_010,
-      R"""(Wrapper for Fortran routine gg_set_block_010
-)"""
-  );
-  m.def(
-      "gg_set_block_011",
-      &Bmad::gg_set_block_011,
-      R"""(Wrapper for Fortran routine gg_set_block_011
-)"""
-  );
-  m.def(
-      "gg_set_block_012",
-      &Bmad::gg_set_block_012,
-      R"""(Wrapper for Fortran routine gg_set_block_012
-)"""
-  );
-  m.def(
-      "gg_set_block_013",
-      &Bmad::gg_set_block_013,
-      R"""(Wrapper for Fortran routine gg_set_block_013
-)"""
-  );
-  m.def(
-      "gg_set_block_014",
-      &Bmad::gg_set_block_014,
-      R"""(Wrapper for Fortran routine gg_set_block_014
-)"""
-  );
-  m.def(
-      "gg_taylor_equal_gg_taylor",
-      &Bmad::gg_taylor_equal_gg_taylor,
-      nb::arg("gg_taylor1"),
-      nb::arg("gg_taylor2"),
-      R"""(Wrapper for Fortran routine gg_taylor_equal_gg_taylor
-
-Parameters
-----------
-gg_taylor1 : GgTaylorStruct
-
-gg_taylor2 : GgTaylorStruct
-)"""
-  );
-  m.def(
-      "gg_taylors_equal_gg_taylors",
-      &Bmad::gg_taylors_equal_gg_taylors,
-      nb::arg("gg_taylor1"),
-      nb::arg("gg_taylor2"),
-      R"""(Wrapper for Fortran routine gg_taylors_equal_gg_taylors
-
-Parameters
-----------
-gg_taylor1 : 1D array of GgTaylorStruct
-
-gg_taylor2 : 1D array of GgTaylorStruct
 )"""
   );
   m.def(

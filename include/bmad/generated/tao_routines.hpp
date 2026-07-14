@@ -60,9 +60,6 @@ void integrate_min(
 // - Array bounds handling: "Enum 'NN' found in bounds 'nn' but not in provided map."
 // - Array bounds handling: "Enum 'MM' found in bounds 'mm' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
-
-// Skipped unusable routine merit_wrapper:
-// - Routine module in configuration skip list
 extern "C" void fortran_tao_abort_command_file(bool *force_abort /* 0D_NOT_logical in */);
 void tao_abort_command_file(std::optional<bool> force_abort = std::nullopt);
 extern "C" void fortran_tao_add_to_normal_mode_h_array(
@@ -246,8 +243,8 @@ extern "C" bool fortran_tao_constraint_type_name(
 );
 std::string tao_constraint_type_name(TaoDataStruct &datum);
 extern "C" void
-fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type out */);
-ElePointerStructAlloc1D tao_control_tree_list(EleStruct &ele);
+fortran_tao_control_tree_list(void *ele /* 0D_NOT_type in */, void *tree /* 1D_ALLOC_type in */);
+void tao_control_tree_list(EleStruct &ele, ElePointerStructAlloc1D tree);
 extern "C" void fortran_tao_count_strings(
     const char *string /* 0D_NOT_character in */,
     const char *pattern /* 0D_NOT_character in */,
@@ -1078,6 +1075,8 @@ Tao::TaoGraphSMinMaxCalc tao_graph_s_min_max_calc(TaoGraphStruct &graph, BranchS
 extern "C" void
 fortran_tao_graph_setup(void *plot /* 0D_NOT_type inout */, void *graph /* 0D_NOT_type inout */);
 void tao_graph_setup(TaoPlotStruct &plot, TaoGraphStruct &graph);
+extern "C" void fortran_tao_has_been_created();
+void tao_has_been_created();
 extern "C" void fortran_tao_help(
     const char *what1 /* 0D_NOT_character in */,
     const char *what2 /* 0D_NOT_character in */,
@@ -1167,9 +1166,6 @@ Tao::TaoHelp tao_help(std::string what1, std::string what2);
 
 // Skipped unusable routine tao_hook_show_cmd_def:
 // - Routine in configuration skip list
-
-// Skipped unusable routine tao_hook_universe_calc_post_process_def:
-// - Routine in configuration skip list
 extern "C" void fortran_tao_init(bool &err_flag /* 0D_NOT_logical out */);
 bool tao_init();
 extern "C" void fortran_tao_init_beam_in_universe(
@@ -1232,6 +1228,9 @@ extern "C" void fortran_tao_init_lattice(
 void tao_init_lattice(std::string lat_file, bool err_flag);
 extern "C" void fortran_tao_init_plotting(const char *plot_file /* 0D_NOT_character in */);
 void tao_init_plotting(std::string plot_file);
+extern "C" void
+fortran_tao_init_single_mode(const char *single_mode_file /* 0D_NOT_character in */);
+void tao_init_single_mode(std::string single_mode_file);
 extern "C" void fortran_tao_init_variables(const char *var_file /* 0D_NOT_character in */);
 void tao_init_variables(std::string var_file);
 extern "C" void fortran_tao_inject_beam(
@@ -1853,8 +1852,8 @@ int tao_read_phase_space_index(
     int ixc,
     std::optional<bool> print_err = std::nullopt
 );
-extern "C" void fortran_tao_regression_test(const char *cmd_str /* 0D_NOT_character in */);
-void tao_regression_test(std::string cmd_str);
+extern "C" void fortran_tao_regression_test();
+void tao_regression_test();
 extern "C" void fortran_tao_remove_blank_characters(const char *str /* 0D_NOT_character inout */);
 void tao_remove_blank_characters(std::string &str);
 extern "C" void fortran_tao_run_cmd(

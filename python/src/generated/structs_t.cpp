@@ -1626,8 +1626,7 @@ void init_tao_command_file_struct(nb::module_ &m, nb::class_<TaoCommandFileStruc
              std::optional<int>,
              std::optional<bool>,
              std::optional<bool>,
-             std::optional<bool>,
-             std::optional<std::string>>(),
+             std::optional<bool>>(),
          nb::arg("full_name") = nb::none(),
          nb::arg("dir") = nb::none(),
          nb::arg("ix_unit") = nb::none(),
@@ -1636,8 +1635,7 @@ void init_tao_command_file_struct(nb::module_ &m, nb::class_<TaoCommandFileStruc
          nb::arg("n_line") = nb::none(),
          nb::arg("reset_at_end") = nb::none(),
          nb::arg("lattice_calc_save") = nb::none(),
-         nb::arg("plot_save") = nb::none(),
-         nb::arg("multi_cmd") = nb::none()
+         nb::arg("plot_save") = nb::none()
   )
       .def_prop_rw(
           "full_name",
@@ -1680,12 +1678,6 @@ void init_tao_command_file_struct(nb::module_ &m, nb::class_<TaoCommandFileStruc
           "plot_save",
           &TaoCommandFileStruct::plot_save,
           &TaoCommandFileStruct::set_plot_save
-      )
-      .def_prop_rw(
-          "multi_cmd",
-          &TaoCommandFileStruct::multi_cmd,
-          &TaoCommandFileStruct::set_multi_cmd,
-          "Commands not yet executed when there are mulitple commands on a line"
       )
       .def_static(
           "new_array1d",
@@ -1786,6 +1778,7 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
              std::optional<bool>,
              std::optional<bool>,
              std::optional<std::string>,
+             std::optional<std::string>,
              std::optional<std::string>>(),
          nb::arg("covar") = nb::none(),
          nb::arg("alpha") = nb::none(),
@@ -1824,7 +1817,8 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
          nb::arg("rad_int_ri_calc_on") = nb::none(),
          nb::arg("rad_int_6d_calc_on") = nb::none(),
          nb::arg("single_mode_buffer") = nb::none(),
-         nb::arg("cmd") = nb::none()
+         nb::arg("cmd") = nb::none(),
+         nb::arg("saved_cmd_line") = nb::none()
   )
       .def_prop_ro("alias", &TaoCommonStruct::alias, nb::keep_alive<0, 1>())
       .def_prop_ro("key", &TaoCommonStruct::key, nb::keep_alive<0, 1>())
@@ -2054,6 +2048,12 @@ void init_tao_common_struct(nb::module_ &m, nb::class_<TaoCommonStruct> &cls) {
           &TaoCommonStruct::cmd,
           &TaoCommonStruct::set_cmd,
           "Used for the cmd history"
+      )
+      .def_prop_rw(
+          "saved_cmd_line",
+          &TaoCommonStruct::saved_cmd_line,
+          &TaoCommonStruct::set_saved_cmd_line,
+          "Saved part of command line when there are mulitple commands on a line"
       )
 
       .def("__repr__", [](const TaoCommonStruct &self) { return to_string(self); })
@@ -6080,8 +6080,7 @@ void init_tao_lattice_branch_struct(nb::module_ &m, nb::class_<TaoLatticeBranchS
           &TaoLatticeBranchStruct::orb0,
           &TaoLatticeBranchStruct::set_orb0,
           nb::for_getter(nb::keep_alive<0, 1>()),
-          "For saving beginning orbit in closed geometry branches. orb0 can then be used as an "
-          "initial guess when closed_orbit is called again."
+          "For saving beginning orbit"
       )
       .def_prop_rw(
           "modes_ri",

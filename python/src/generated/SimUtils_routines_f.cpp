@@ -40,16 +40,25 @@ dw : 2D array of float (shape: 2,2)
 )"""
   );
   m.def(
+      "fff_sub",
+      &SimUtils::fff_sub,
+      nb::arg("line"),
+      nb::arg("error"),
+      R"""(Wrapper for Fortran routine fff_sub
+
+Parameters
+----------
+line : str
+
+error : bool
+)"""
+  );
+  m.def(
       "fft_1d",
       &SimUtils::fft_1d,
       nb::arg("arr"),
       nb::arg("isign"),
-      R"""(no longer exists
-subroutine fff_sub(line, error)
-  implicit none
-  character(*) line
-  logical error
-end subroutine
+      R"""(Wrapper for Fortran routine fft_1d
 
 Parameters
 ----------

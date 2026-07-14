@@ -1604,7 +1604,7 @@ void ele_struct_get_cylindrical_map_info(
     size_t *el_size
 );
 
-void ele_struct_get_gen_gradients_info(
+void ele_struct_get_gen_grad_map_info(
     const void *s,
     void **d,
     int *bounds,
@@ -1700,6 +1700,22 @@ void em_field_struct_get_dB_info(
 void em_field_struct_set_dB(void *s, const void *d, const int *shape);
 void em_field_struct_get_A_info(const void *s, double **d, int *bounds, bool *is_alloc);
 void em_field_struct_set_A(void *s, const void *d, const int *shape);
+void em_taylor_struct_get_real(const void *struct_obj, int field_id, double *value_out);
+void em_taylor_struct_set_real(void *struct_obj, int field_id, double value_in);
+
+void em_taylor_struct_get_term_info(
+    const void *s,
+    void **d,
+    int *bounds,
+    bool *is_alloc,
+    size_t *el_size
+);
+void em_taylor_struct_reallocate_term(void *s, int lb, size_t n);
+
+void em_taylor_term_struct_get_real(const void *struct_obj, int field_id, double *value_out);
+void em_taylor_term_struct_set_real(void *struct_obj, int field_id, double value_in);
+void em_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
+void em_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
 void expression_atom_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void expression_atom_struct_set_integer(void *struct_obj, int field_id, int value_in);
 void expression_atom_struct_get_real(const void *struct_obj, int field_id, double *value_out);
@@ -1819,34 +1835,36 @@ void fringe_field_info_struct_get_location_info(
 void fringe_field_info_struct_reallocate_location(void *s, int lb, size_t n);
 
 void fringe_field_info_struct_set_location(void *s, const void *d, const int *shape);
-void gen_grad_curve_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
-void gen_grad_curve_struct_set_integer(void *struct_obj, int field_id, int value_in);
-void gen_grad_curve_struct_get_deriv_info(
+void gen_grad1_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void gen_grad1_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void gen_grad1_struct_get_deriv_info(
     const void *s,
     double **d,
     int *bounds,
     int *strides,
     bool *is_alloc
 );
-void gen_grad_curve_struct_set_deriv(void *s, const void *d, const int *shape);
-void gen_gradients_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
-void gen_gradients_struct_set_integer(void *struct_obj, int field_id, int value_in);
-void gen_gradients_struct_get_real(const void *struct_obj, int field_id, double *value_out);
-void gen_gradients_struct_set_real(void *struct_obj, int field_id, double value_in);
-void gen_gradients_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
-void gen_gradients_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
+void gen_grad1_struct_set_deriv(void *s, const void *d, const int *shape);
+void gen_grad_map_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
+void gen_grad_map_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void gen_grad_map_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
+void gen_grad_map_struct_set_logical(void *struct_obj, int field_id, bool value_in);
+void gen_grad_map_struct_get_real(const void *struct_obj, int field_id, double *value_out);
+void gen_grad_map_struct_set_real(void *struct_obj, int field_id, double value_in);
+void gen_grad_map_struct_get_file_info(const void *s, char **d, int *bounds, bool *a);
+void gen_grad_map_struct_set_file(void *struct_obj, const char *str_ptr, int str_len);
 
-void gen_gradients_struct_get_curve_info(
+void gen_grad_map_struct_get_gg_info(
     const void *s,
     void **d,
     int *bounds,
     bool *is_alloc,
     size_t *el_size
 );
-void gen_gradients_struct_reallocate_curve(void *s, int lb, size_t n);
+void gen_grad_map_struct_reallocate_gg(void *s, int lb, size_t n);
 
-void gen_gradients_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
-void gen_gradients_struct_set_r0(void *s, const void *d, const int *shape);
+void gen_grad_map_struct_get_r0_info(const void *s, double **d, int *bounds, bool *is_alloc);
+void gen_grad_map_struct_set_r0(void *s, const void *d, const int *shape);
 void general_bin_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void general_bin_struct_set_integer(void *struct_obj, int field_id, int value_in);
 
@@ -1862,22 +1880,6 @@ void general_bin_struct_get_delta_info(const void *s, double **d, int *bounds, b
 void general_bin_struct_set_delta(void *s, const void *d, const int *shape);
 void general_bin_struct_get_n_info(const void *s, int **d, int *bounds, bool *is_alloc);
 void general_bin_struct_set_n(void *s, const void *d, const int *shape);
-void gg_taylor_struct_get_real(const void *struct_obj, int field_id, double *value_out);
-void gg_taylor_struct_set_real(void *struct_obj, int field_id, double value_in);
-
-void gg_taylor_struct_get_term_info(
-    const void *s,
-    void **d,
-    int *bounds,
-    bool *is_alloc,
-    size_t *el_size
-);
-void gg_taylor_struct_reallocate_term(void *s, int lb, size_t n);
-
-void gg_taylor_term_struct_get_real(const void *struct_obj, int field_id, double *value_out);
-void gg_taylor_term_struct_set_real(void *struct_obj, int field_id, double value_in);
-void gg_taylor_term_struct_get_expn_info(const void *s, int **d, int *bounds, bool *is_alloc);
-void gg_taylor_term_struct_set_expn(void *s, const void *d, const int *shape);
 void gpt_lat_param_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void gpt_lat_param_struct_set_integer(void *struct_obj, int field_id, int value_in);
 void gpt_lat_param_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
@@ -2043,8 +2045,6 @@ void lat_pointer_struct_get_lat(const void *struct_obj, void **ptr_out);
 void lat_pointer_struct_set_lat(void *struct_obj, const void *src_ptr);
 void lat_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void lat_struct_set_integer(void *struct_obj, int field_id, int value_in);
-void lat_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
-void lat_struct_set_logical(void *struct_obj, int field_id, bool value_in);
 void lat_struct_get_use_name_info(const void *s, char **d, int *bounds, bool *a);
 void lat_struct_set_use_name(void *struct_obj, const char *str_ptr, int str_len);
 void lat_struct_get_lattice_info(const void *s, char **d, int *bounds, bool *a);
@@ -3568,8 +3568,6 @@ void tao_command_file_struct_get_cmd_arg_info(
 
 void tao_command_file_struct_get_quiet_info(const void *s, char **d, int *bounds, bool *a);
 void tao_command_file_struct_set_quiet(void *struct_obj, const char *str_ptr, int str_len);
-void tao_command_file_struct_get_multi_cmd_info(const void *s, char **d, int *bounds, bool *a);
-void tao_command_file_struct_set_multi_cmd(void *struct_obj, const char *str_ptr, int str_len);
 void tao_common_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void tao_common_struct_set_integer(void *struct_obj, int field_id, int value_in);
 void tao_common_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
@@ -3665,6 +3663,8 @@ void tao_common_struct_get_single_mode_buffer_info(const void *s, char **d, int 
 void tao_common_struct_set_single_mode_buffer(void *struct_obj, const char *str_ptr, int str_len);
 void tao_common_struct_get_cmd_info(const void *s, char **d, int *bounds, bool *a);
 void tao_common_struct_set_cmd(void *struct_obj, const char *str_ptr, int str_len);
+void tao_common_struct_get_saved_cmd_line_info(const void *s, char **d, int *bounds, bool *a);
+void tao_common_struct_set_saved_cmd_line(void *struct_obj, const char *str_ptr, int str_len);
 void tao_curve_array_struct_get_c(const void *struct_obj, void **ptr_out);
 void tao_curve_array_struct_set_c(void *struct_obj, const void *src_ptr);
 void tao_curve_color_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
@@ -6154,6 +6154,36 @@ void access_em_field_struct_container(
     size_t *elem_size
 );
 
+void *allocate_fortran_em_taylor_struct(int n, size_t *element_size);
+void deallocate_fortran_em_taylor_struct(void *ptr, int n) noexcept;
+void copy_fortran_em_taylor_struct(const void *src, void *dst);
+
+void *allocate_em_taylor_struct_container();
+void reallocate_em_taylor_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_em_taylor_struct_container(void *) noexcept;
+void access_em_taylor_struct_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
+);
+
+void *allocate_fortran_em_taylor_term_struct(int n, size_t *element_size);
+void deallocate_fortran_em_taylor_term_struct(void *ptr, int n) noexcept;
+void copy_fortran_em_taylor_term_struct(const void *src, void *dst);
+
+void *allocate_em_taylor_term_struct_container();
+void reallocate_em_taylor_term_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_em_taylor_term_struct_container(void *) noexcept;
+void access_em_taylor_term_struct_container(
+    const void *handle,
+    void **data,
+    int *bounds,
+    bool *alloc,
+    size_t *elem_size
+);
+
 void *allocate_fortran_expression_atom_struct(int n, size_t *element_size);
 void deallocate_fortran_expression_atom_struct(void *ptr, int n) noexcept;
 void copy_fortran_expression_atom_struct(const void *src, void *dst);
@@ -6319,14 +6349,14 @@ void access_fringe_field_info_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_gen_grad_curve_struct(int n, size_t *element_size);
-void deallocate_fortran_gen_grad_curve_struct(void *ptr, int n) noexcept;
-void copy_fortran_gen_grad_curve_struct(const void *src, void *dst);
+void *allocate_fortran_gen_grad1_struct(int n, size_t *element_size);
+void deallocate_fortran_gen_grad1_struct(void *ptr, int n) noexcept;
+void copy_fortran_gen_grad1_struct(const void *src, void *dst);
 
-void *allocate_gen_grad_curve_struct_container();
-void reallocate_gen_grad_curve_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gen_grad_curve_struct_container(void *) noexcept;
-void access_gen_grad_curve_struct_container(
+void *allocate_gen_grad1_struct_container();
+void reallocate_gen_grad1_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gen_grad1_struct_container(void *) noexcept;
+void access_gen_grad1_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -6334,14 +6364,14 @@ void access_gen_grad_curve_struct_container(
     size_t *elem_size
 );
 
-void *allocate_fortran_gen_gradients_struct(int n, size_t *element_size);
-void deallocate_fortran_gen_gradients_struct(void *ptr, int n) noexcept;
-void copy_fortran_gen_gradients_struct(const void *src, void *dst);
+void *allocate_fortran_gen_grad_map_struct(int n, size_t *element_size);
+void deallocate_fortran_gen_grad_map_struct(void *ptr, int n) noexcept;
+void copy_fortran_gen_grad_map_struct(const void *src, void *dst);
 
-void *allocate_gen_gradients_struct_container();
-void reallocate_gen_gradients_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gen_gradients_struct_container(void *) noexcept;
-void access_gen_gradients_struct_container(
+void *allocate_gen_grad_map_struct_container();
+void reallocate_gen_grad_map_struct_container_data(void *, int, size_t) noexcept;
+void deallocate_gen_grad_map_struct_container(void *) noexcept;
+void access_gen_grad_map_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -6357,36 +6387,6 @@ void *allocate_general_bin_struct_container();
 void reallocate_general_bin_struct_container_data(void *, int, size_t) noexcept;
 void deallocate_general_bin_struct_container(void *) noexcept;
 void access_general_bin_struct_container(
-    const void *handle,
-    void **data,
-    int *bounds,
-    bool *alloc,
-    size_t *elem_size
-);
-
-void *allocate_fortran_gg_taylor_struct(int n, size_t *element_size);
-void deallocate_fortran_gg_taylor_struct(void *ptr, int n) noexcept;
-void copy_fortran_gg_taylor_struct(const void *src, void *dst);
-
-void *allocate_gg_taylor_struct_container();
-void reallocate_gg_taylor_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gg_taylor_struct_container(void *) noexcept;
-void access_gg_taylor_struct_container(
-    const void *handle,
-    void **data,
-    int *bounds,
-    bool *alloc,
-    size_t *elem_size
-);
-
-void *allocate_fortran_gg_taylor_term_struct(int n, size_t *element_size);
-void deallocate_fortran_gg_taylor_term_struct(void *ptr, int n) noexcept;
-void copy_fortran_gg_taylor_term_struct(const void *src, void *dst);
-
-void *allocate_gg_taylor_term_struct_container();
-void reallocate_gg_taylor_term_struct_container_data(void *, int, size_t) noexcept;
-void deallocate_gg_taylor_term_struct_container(void *) noexcept;
-void access_gg_taylor_term_struct_container(
     const void *handle,
     void **data,
     int *bounds,
@@ -11477,6 +11477,68 @@ struct EmFieldStructAlloc1D : public FTypeAlloc1D<EmFieldStructArray1D> {
       : Base(handle, realloc, access) {}
 };
 
+class EmTaylorStruct;
+
+using EmTaylorStructArray1D = FTypeArray1D<
+    EmTaylorStruct,
+    allocate_fortran_em_taylor_struct,
+    deallocate_fortran_em_taylor_struct>;
+using EmTaylorStructArray2D = FTypeArray2D<EmTaylorStruct>;
+using EmTaylorStructArray3D = FTypeArray3D<EmTaylorStruct>;
+
+struct EmTaylorStructAlloc1D : public FTypeAlloc1D<EmTaylorStructArray1D> {
+  using Base = FTypeAlloc1D<EmTaylorStructArray1D>;
+  using Base::Base;
+  EmTaylorStructAlloc1D()
+      : Base(
+            allocate_em_taylor_struct_container,
+            deallocate_em_taylor_struct_container,
+            reallocate_em_taylor_struct_container_data,
+            access_em_taylor_struct_container
+        ) {}
+  EmTaylorStructAlloc1D(int n)
+      : Base(
+            n,
+            allocate_em_taylor_struct_container,
+            deallocate_em_taylor_struct_container,
+            reallocate_em_taylor_struct_container_data,
+            access_em_taylor_struct_container
+        ) {}
+  EmTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
+class EmTaylorTermStruct;
+
+using EmTaylorTermStructArray1D = FTypeArray1D<
+    EmTaylorTermStruct,
+    allocate_fortran_em_taylor_term_struct,
+    deallocate_fortran_em_taylor_term_struct>;
+using EmTaylorTermStructArray2D = FTypeArray2D<EmTaylorTermStruct>;
+using EmTaylorTermStructArray3D = FTypeArray3D<EmTaylorTermStruct>;
+
+struct EmTaylorTermStructAlloc1D : public FTypeAlloc1D<EmTaylorTermStructArray1D> {
+  using Base = FTypeAlloc1D<EmTaylorTermStructArray1D>;
+  using Base::Base;
+  EmTaylorTermStructAlloc1D()
+      : Base(
+            allocate_em_taylor_term_struct_container,
+            deallocate_em_taylor_term_struct_container,
+            reallocate_em_taylor_term_struct_container_data,
+            access_em_taylor_term_struct_container
+        ) {}
+  EmTaylorTermStructAlloc1D(int n)
+      : Base(
+            n,
+            allocate_em_taylor_term_struct_container,
+            deallocate_em_taylor_term_struct_container,
+            reallocate_em_taylor_term_struct_container_data,
+            access_em_taylor_term_struct_container
+        ) {}
+  EmTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+      : Base(handle, realloc, access) {}
+};
+
 class ExpressionAtomStruct;
 
 using ExpressionAtomStructArray1D = FTypeArray1D<
@@ -11813,65 +11875,65 @@ struct FringeFieldInfoStructAlloc1D : public FTypeAlloc1D<FringeFieldInfoStructA
       : Base(handle, realloc, access) {}
 };
 
-class GenGradCurveStruct;
+class GenGrad1Struct;
 
-using GenGradCurveStructArray1D = FTypeArray1D<
-    GenGradCurveStruct,
-    allocate_fortran_gen_grad_curve_struct,
-    deallocate_fortran_gen_grad_curve_struct>;
-using GenGradCurveStructArray2D = FTypeArray2D<GenGradCurveStruct>;
-using GenGradCurveStructArray3D = FTypeArray3D<GenGradCurveStruct>;
+using GenGrad1StructArray1D = FTypeArray1D<
+    GenGrad1Struct,
+    allocate_fortran_gen_grad1_struct,
+    deallocate_fortran_gen_grad1_struct>;
+using GenGrad1StructArray2D = FTypeArray2D<GenGrad1Struct>;
+using GenGrad1StructArray3D = FTypeArray3D<GenGrad1Struct>;
 
-struct GenGradCurveStructAlloc1D : public FTypeAlloc1D<GenGradCurveStructArray1D> {
-  using Base = FTypeAlloc1D<GenGradCurveStructArray1D>;
+struct GenGrad1StructAlloc1D : public FTypeAlloc1D<GenGrad1StructArray1D> {
+  using Base = FTypeAlloc1D<GenGrad1StructArray1D>;
   using Base::Base;
-  GenGradCurveStructAlloc1D()
+  GenGrad1StructAlloc1D()
       : Base(
-            allocate_gen_grad_curve_struct_container,
-            deallocate_gen_grad_curve_struct_container,
-            reallocate_gen_grad_curve_struct_container_data,
-            access_gen_grad_curve_struct_container
+            allocate_gen_grad1_struct_container,
+            deallocate_gen_grad1_struct_container,
+            reallocate_gen_grad1_struct_container_data,
+            access_gen_grad1_struct_container
         ) {}
-  GenGradCurveStructAlloc1D(int n)
+  GenGrad1StructAlloc1D(int n)
       : Base(
             n,
-            allocate_gen_grad_curve_struct_container,
-            deallocate_gen_grad_curve_struct_container,
-            reallocate_gen_grad_curve_struct_container_data,
-            access_gen_grad_curve_struct_container
+            allocate_gen_grad1_struct_container,
+            deallocate_gen_grad1_struct_container,
+            reallocate_gen_grad1_struct_container_data,
+            access_gen_grad1_struct_container
         ) {}
-  GenGradCurveStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GenGrad1StructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
-class GenGradientsStruct;
+class GenGradMapStruct;
 
-using GenGradientsStructArray1D = FTypeArray1D<
-    GenGradientsStruct,
-    allocate_fortran_gen_gradients_struct,
-    deallocate_fortran_gen_gradients_struct>;
-using GenGradientsStructArray2D = FTypeArray2D<GenGradientsStruct>;
-using GenGradientsStructArray3D = FTypeArray3D<GenGradientsStruct>;
+using GenGradMapStructArray1D = FTypeArray1D<
+    GenGradMapStruct,
+    allocate_fortran_gen_grad_map_struct,
+    deallocate_fortran_gen_grad_map_struct>;
+using GenGradMapStructArray2D = FTypeArray2D<GenGradMapStruct>;
+using GenGradMapStructArray3D = FTypeArray3D<GenGradMapStruct>;
 
-struct GenGradientsStructAlloc1D : public FTypeAlloc1D<GenGradientsStructArray1D> {
-  using Base = FTypeAlloc1D<GenGradientsStructArray1D>;
+struct GenGradMapStructAlloc1D : public FTypeAlloc1D<GenGradMapStructArray1D> {
+  using Base = FTypeAlloc1D<GenGradMapStructArray1D>;
   using Base::Base;
-  GenGradientsStructAlloc1D()
+  GenGradMapStructAlloc1D()
       : Base(
-            allocate_gen_gradients_struct_container,
-            deallocate_gen_gradients_struct_container,
-            reallocate_gen_gradients_struct_container_data,
-            access_gen_gradients_struct_container
+            allocate_gen_grad_map_struct_container,
+            deallocate_gen_grad_map_struct_container,
+            reallocate_gen_grad_map_struct_container_data,
+            access_gen_grad_map_struct_container
         ) {}
-  GenGradientsStructAlloc1D(int n)
+  GenGradMapStructAlloc1D(int n)
       : Base(
             n,
-            allocate_gen_gradients_struct_container,
-            deallocate_gen_gradients_struct_container,
-            reallocate_gen_gradients_struct_container_data,
-            access_gen_gradients_struct_container
+            allocate_gen_grad_map_struct_container,
+            deallocate_gen_grad_map_struct_container,
+            reallocate_gen_grad_map_struct_container_data,
+            access_gen_grad_map_struct_container
         ) {}
-  GenGradientsStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
+  GenGradMapStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
@@ -11903,68 +11965,6 @@ struct GeneralBinStructAlloc1D : public FTypeAlloc1D<GeneralBinStructArray1D> {
             access_general_bin_struct_container
         ) {}
   GeneralBinStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
-      : Base(handle, realloc, access) {}
-};
-
-class GgTaylorStruct;
-
-using GgTaylorStructArray1D = FTypeArray1D<
-    GgTaylorStruct,
-    allocate_fortran_gg_taylor_struct,
-    deallocate_fortran_gg_taylor_struct>;
-using GgTaylorStructArray2D = FTypeArray2D<GgTaylorStruct>;
-using GgTaylorStructArray3D = FTypeArray3D<GgTaylorStruct>;
-
-struct GgTaylorStructAlloc1D : public FTypeAlloc1D<GgTaylorStructArray1D> {
-  using Base = FTypeAlloc1D<GgTaylorStructArray1D>;
-  using Base::Base;
-  GgTaylorStructAlloc1D()
-      : Base(
-            allocate_gg_taylor_struct_container,
-            deallocate_gg_taylor_struct_container,
-            reallocate_gg_taylor_struct_container_data,
-            access_gg_taylor_struct_container
-        ) {}
-  GgTaylorStructAlloc1D(int n)
-      : Base(
-            n,
-            allocate_gg_taylor_struct_container,
-            deallocate_gg_taylor_struct_container,
-            reallocate_gg_taylor_struct_container_data,
-            access_gg_taylor_struct_container
-        ) {}
-  GgTaylorStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
-      : Base(handle, realloc, access) {}
-};
-
-class GgTaylorTermStruct;
-
-using GgTaylorTermStructArray1D = FTypeArray1D<
-    GgTaylorTermStruct,
-    allocate_fortran_gg_taylor_term_struct,
-    deallocate_fortran_gg_taylor_term_struct>;
-using GgTaylorTermStructArray2D = FTypeArray2D<GgTaylorTermStruct>;
-using GgTaylorTermStructArray3D = FTypeArray3D<GgTaylorTermStruct>;
-
-struct GgTaylorTermStructAlloc1D : public FTypeAlloc1D<GgTaylorTermStructArray1D> {
-  using Base = FTypeAlloc1D<GgTaylorTermStructArray1D>;
-  using Base::Base;
-  GgTaylorTermStructAlloc1D()
-      : Base(
-            allocate_gg_taylor_term_struct_container,
-            deallocate_gg_taylor_term_struct_container,
-            reallocate_gg_taylor_term_struct_container_data,
-            access_gg_taylor_term_struct_container
-        ) {}
-  GgTaylorTermStructAlloc1D(int n)
-      : Base(
-            n,
-            allocate_gg_taylor_term_struct_container,
-            deallocate_gg_taylor_term_struct_container,
-            reallocate_gg_taylor_term_struct_container_data,
-            access_gg_taylor_term_struct_container
-        ) {}
-  GgTaylorTermStructAlloc1D(void *handle, ReallocFuncPtr realloc, TypeAccessFuncPtr access)
       : Base(handle, realloc, access) {}
 };
 
@@ -19417,7 +19417,6 @@ public:
       std::optional<bool> lr_wakes_on = std::nullopt,
       std::optional<bool> auto_bookkeeper = std::nullopt,
       std::optional<bool> high_energy_space_charge_on = std::nullopt,
-      std::optional<bool> high_energy_space_charge_linear = std::nullopt,
       std::optional<bool> csr_and_space_charge_on = std::nullopt,
       std::optional<bool> spin_tracking_on = std::nullopt,
       std::optional<bool> spin_sokolov_ternov_flipping_on = std::nullopt,
@@ -19490,8 +19489,6 @@ public:
       set_auto_bookkeeper(*auto_bookkeeper);
     if (high_energy_space_charge_on)
       set_high_energy_space_charge_on(*high_energy_space_charge_on);
-    if (high_energy_space_charge_linear)
-      set_high_energy_space_charge_linear(*high_energy_space_charge_linear);
     if (csr_and_space_charge_on)
       set_csr_and_space_charge_on(*csr_and_space_charge_on);
     if (spin_tracking_on)
@@ -19578,35 +19575,33 @@ public:
   void set_auto_bookkeeper(bool value);
   bool high_energy_space_charge_on() const; // 0D_NOT_logical [dispatch:4]
   void set_high_energy_space_charge_on(bool value);
-  bool high_energy_space_charge_linear() const; // 0D_NOT_logical [dispatch:5]
-  void set_high_energy_space_charge_linear(bool value);
-  bool csr_and_space_charge_on() const; // 0D_NOT_logical [dispatch:6]
+  bool csr_and_space_charge_on() const; // 0D_NOT_logical [dispatch:5]
   void set_csr_and_space_charge_on(bool value);
-  bool spin_tracking_on() const; // 0D_NOT_logical [dispatch:7]
+  bool spin_tracking_on() const; // 0D_NOT_logical [dispatch:6]
   void set_spin_tracking_on(bool value);
-  bool spin_sokolov_ternov_flipping_on() const; // 0D_NOT_logical [dispatch:8]
+  bool spin_sokolov_ternov_flipping_on() const; // 0D_NOT_logical [dispatch:7]
   void set_spin_sokolov_ternov_flipping_on(bool value);
-  bool radiation_damping_on() const; // 0D_NOT_logical [dispatch:9]
+  bool radiation_damping_on() const; // 0D_NOT_logical [dispatch:8]
   void set_radiation_damping_on(bool value);
-  bool radiation_zero_average() const; // 0D_NOT_logical [dispatch:10]
+  bool radiation_zero_average() const; // 0D_NOT_logical [dispatch:9]
   void set_radiation_zero_average(bool value);
-  bool radiation_fluctuations_on() const; // 0D_NOT_logical [dispatch:11]
+  bool radiation_fluctuations_on() const; // 0D_NOT_logical [dispatch:10]
   void set_radiation_fluctuations_on(bool value);
-  bool conserve_taylor_maps() const; // 0D_NOT_logical [dispatch:12]
+  bool conserve_taylor_maps() const; // 0D_NOT_logical [dispatch:11]
   void set_conserve_taylor_maps(bool value);
-  bool absolute_time_tracking() const; // 0D_NOT_logical [dispatch:13]
+  bool absolute_time_tracking() const; // 0D_NOT_logical [dispatch:12]
   void set_absolute_time_tracking(bool value);
-  bool absolute_time_ref_shift() const; // 0D_NOT_logical [dispatch:14]
+  bool absolute_time_ref_shift() const; // 0D_NOT_logical [dispatch:13]
   void set_absolute_time_ref_shift(bool value);
-  bool convert_to_kinetic_momentum() const; // 0D_NOT_logical [dispatch:15]
+  bool convert_to_kinetic_momentum() const; // 0D_NOT_logical [dispatch:14]
   void set_convert_to_kinetic_momentum(bool value);
-  bool normalize_twiss() const; // 0D_NOT_logical [dispatch:16]
+  bool normalize_twiss() const; // 0D_NOT_logical [dispatch:15]
   void set_normalize_twiss(bool value);
-  bool aperture_limit_on() const; // 0D_NOT_logical [dispatch:17]
+  bool aperture_limit_on() const; // 0D_NOT_logical [dispatch:16]
   void set_aperture_limit_on(bool value);
-  bool spin_n0_direction_user_set() const; // 0D_NOT_logical [dispatch:18]
+  bool spin_n0_direction_user_set() const; // 0D_NOT_logical [dispatch:17]
   void set_spin_n0_direction_user_set(bool value);
-  bool debug() const; // 0D_NOT_logical [dispatch:19]
+  bool debug() const; // 0D_NOT_logical [dispatch:18]
   void set_debug(bool value);
 };
 
@@ -22414,7 +22409,7 @@ public:
   Wall3dStructArray1D wall3d() const; // 1D_PTR_type
   CartesianMapStructArray1D cartesian_map() const; // 1D_PTR_type
   CylindricalMapStructArray1D cylindrical_map() const; // 1D_PTR_type
-  GenGradientsStructArray1D gen_gradients() const; // 1D_PTR_type
+  GenGradMapStructArray1D gen_grad_map() const; // 1D_PTR_type
   GridFieldStructArray1D grid_field() const; // 1D_PTR_type
   CoordStruct map_ref_orb_in() const; // 0D_NOT_type
   void set_map_ref_orb_in(const CoordStruct &src);
@@ -22637,6 +22632,66 @@ public:
 };
 
 template <>
+struct FortranTraits<EmTaylorStruct> {
+  static void *allocate() {
+    size_t sz;
+    return allocate_fortran_em_taylor_struct(0, &sz);
+  }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_em_taylor_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_em_taylor_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "em_taylor_struct"; }
+};
+
+class EmTaylorStruct : public FortranProxy<EmTaylorStruct> {
+public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  explicit EmTaylorStruct(std::optional<double> ref = std::nullopt)
+      : FortranProxy() {
+    if (ref)
+      set_ref(*ref);
+  }
+
+  double ref() const; // 0D_NOT_real [dispatch:0]
+  void set_ref(double value);
+  EmTaylorTermStructAlloc1D term() const; // 1D_ALLOC_type
+};
+
+template <>
+struct FortranTraits<EmTaylorTermStruct> {
+  static void *allocate() {
+    size_t sz;
+    return allocate_fortran_em_taylor_term_struct(0, &sz);
+  }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_em_taylor_term_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_em_taylor_term_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "em_taylor_term_struct"; }
+};
+
+class EmTaylorTermStruct : public FortranProxy<EmTaylorTermStruct> {
+public:
+  using FortranProxy::FortranProxy;
+  using FortranProxy::operator=;
+
+  explicit EmTaylorTermStruct(
+      std::optional<double> coef = std::nullopt,
+      std::optional<std::vector<int>> expn = std::nullopt
+  )
+      : FortranProxy() {
+    if (coef)
+      set_coef(*coef);
+    if (expn)
+      set_expn(*expn);
+  }
+
+  double coef() const; // 0D_NOT_real [dispatch:0]
+  void set_coef(double value);
+  FArray1D<int> expn() const; // 1D_NOT_integer
+  void set_expn(const std::vector<int> &v);
+};
+
+template <>
 struct FortranTraits<ExpressionAtomStruct> {
   static void *allocate() {
     size_t sz;
@@ -22758,7 +22813,6 @@ public:
       std::optional<bool> sr_wakes_on_set = std::nullopt,
       std::optional<bool> lr_wakes_on_set = std::nullopt,
       std::optional<bool> high_energy_space_charge_on_set = std::nullopt,
-      std::optional<bool> high_energy_space_charge_linear_set = std::nullopt,
       std::optional<bool> csr_and_space_charge_on_set = std::nullopt,
       std::optional<bool> spin_tracking_on_set = std::nullopt,
       std::optional<bool> spin_sokolov_ternov_flipping_on_set = std::nullopt,
@@ -22802,9 +22856,7 @@ public:
       std::optional<bool> exact_misalign_set = std::nullopt,
       std::optional<bool> vertical_kick_set = std::nullopt,
       std::optional<bool> cut_factor_set = std::nullopt,
-      std::optional<bool> translate_patch_drift_time_set = std::nullopt,
-      std::optional<bool> pancake_symplectic_set = std::nullopt,
-      std::optional<bool> pancake_canonical_set = std::nullopt
+      std::optional<bool> translate_patch_drift_time_set = std::nullopt
   )
       : FortranProxy() {
     if (ran_state)
@@ -22859,8 +22911,6 @@ public:
       set_lr_wakes_on_set(*lr_wakes_on_set);
     if (high_energy_space_charge_on_set)
       set_high_energy_space_charge_on_set(*high_energy_space_charge_on_set);
-    if (high_energy_space_charge_linear_set)
-      set_high_energy_space_charge_linear_set(*high_energy_space_charge_linear_set);
     if (csr_and_space_charge_on_set)
       set_csr_and_space_charge_on_set(*csr_and_space_charge_on_set);
     if (spin_tracking_on_set)
@@ -22949,10 +22999,6 @@ public:
       set_cut_factor_set(*cut_factor_set);
     if (translate_patch_drift_time_set)
       set_translate_patch_drift_time_set(*translate_patch_drift_time_set);
-    if (pancake_symplectic_set)
-      set_pancake_symplectic_set(*pancake_symplectic_set);
-    if (pancake_canonical_set)
-      set_pancake_canonical_set(*pancake_canonical_set);
   }
 
   RandomStateStruct ran_state() const; // 0D_NOT_type
@@ -23007,100 +23053,94 @@ public:
   void set_lr_wakes_on_set(bool value);
   bool high_energy_space_charge_on_set() const; // 0D_NOT_logical [dispatch:23]
   void set_high_energy_space_charge_on_set(bool value);
-  bool high_energy_space_charge_linear_set() const; // 0D_NOT_logical [dispatch:24]
-  void set_high_energy_space_charge_linear_set(bool value);
-  bool csr_and_space_charge_on_set() const; // 0D_NOT_logical [dispatch:25]
+  bool csr_and_space_charge_on_set() const; // 0D_NOT_logical [dispatch:24]
   void set_csr_and_space_charge_on_set(bool value);
-  bool spin_tracking_on_set() const; // 0D_NOT_logical [dispatch:26]
+  bool spin_tracking_on_set() const; // 0D_NOT_logical [dispatch:25]
   void set_spin_tracking_on_set(bool value);
-  bool spin_sokolov_ternov_flipping_on_set() const; // 0D_NOT_logical [dispatch:27]
+  bool spin_sokolov_ternov_flipping_on_set() const; // 0D_NOT_logical [dispatch:26]
   void set_spin_sokolov_ternov_flipping_on_set(bool value);
-  bool radiation_damping_on_set() const; // 0D_NOT_logical [dispatch:28]
+  bool radiation_damping_on_set() const; // 0D_NOT_logical [dispatch:27]
   void set_radiation_damping_on_set(bool value);
-  bool radiation_zero_average_set() const; // 0D_NOT_logical [dispatch:29]
+  bool radiation_zero_average_set() const; // 0D_NOT_logical [dispatch:28]
   void set_radiation_zero_average_set(bool value);
-  bool radiation_fluctuations_on_set() const; // 0D_NOT_logical [dispatch:30]
+  bool radiation_fluctuations_on_set() const; // 0D_NOT_logical [dispatch:29]
   void set_radiation_fluctuations_on_set(bool value);
-  bool conserve_taylor_maps_set() const; // 0D_NOT_logical [dispatch:31]
+  bool conserve_taylor_maps_set() const; // 0D_NOT_logical [dispatch:30]
   void set_conserve_taylor_maps_set(bool value);
-  bool absolute_time_tracking_set() const; // 0D_NOT_logical [dispatch:32]
+  bool absolute_time_tracking_set() const; // 0D_NOT_logical [dispatch:31]
   void set_absolute_time_tracking_set(bool value);
-  bool absolute_time_ref_shift_set() const; // 0D_NOT_logical [dispatch:33]
+  bool absolute_time_ref_shift_set() const; // 0D_NOT_logical [dispatch:32]
   void set_absolute_time_ref_shift_set(bool value);
-  bool convert_to_kinetic_momentum_set() const; // 0D_NOT_logical [dispatch:34]
+  bool convert_to_kinetic_momentum_set() const; // 0D_NOT_logical [dispatch:33]
   void set_convert_to_kinetic_momentum_set(bool value);
-  bool aperture_limit_on_set() const; // 0D_NOT_logical [dispatch:35]
+  bool aperture_limit_on_set() const; // 0D_NOT_logical [dispatch:34]
   void set_aperture_limit_on_set(bool value);
-  bool normalize_twiss_set() const; // 0D_NOT_logical [dispatch:36]
+  bool normalize_twiss_set() const; // 0D_NOT_logical [dispatch:35]
   void set_normalize_twiss_set(bool value);
-  bool sad_eps_scale_set() const; // 0D_NOT_logical [dispatch:37]
+  bool sad_eps_scale_set() const; // 0D_NOT_logical [dispatch:36]
   void set_sad_eps_scale_set(bool value);
-  bool sad_amp_max_set() const; // 0D_NOT_logical [dispatch:38]
+  bool sad_amp_max_set() const; // 0D_NOT_logical [dispatch:37]
   void set_sad_amp_max_set(bool value);
-  bool sad_n_div_max_set() const; // 0D_NOT_logical [dispatch:39]
+  bool sad_n_div_max_set() const; // 0D_NOT_logical [dispatch:38]
   void set_sad_n_div_max_set(bool value);
-  bool max_num_runge_kutta_step_set() const; // 0D_NOT_logical [dispatch:40]
+  bool max_num_runge_kutta_step_set() const; // 0D_NOT_logical [dispatch:39]
   void set_max_num_runge_kutta_step_set(bool value);
-  bool spin_n0_direction_user_set_set() const; // 0D_NOT_logical [dispatch:41]
+  bool spin_n0_direction_user_set_set() const; // 0D_NOT_logical [dispatch:40]
   void set_spin_n0_direction_user_set_set(bool value);
-  bool debug_set() const; // 0D_NOT_logical [dispatch:42]
+  bool debug_set() const; // 0D_NOT_logical [dispatch:41]
   void set_debug_set(bool value);
-  bool ds_track_step_set() const; // 0D_NOT_logical [dispatch:43]
+  bool ds_track_step_set() const; // 0D_NOT_logical [dispatch:42]
   void set_ds_track_step_set(bool value);
-  bool dt_track_step_set() const; // 0D_NOT_logical [dispatch:44]
+  bool dt_track_step_set() const; // 0D_NOT_logical [dispatch:43]
   void set_dt_track_step_set(bool value);
-  bool cathode_strength_cutoff_set() const; // 0D_NOT_logical [dispatch:45]
+  bool cathode_strength_cutoff_set() const; // 0D_NOT_logical [dispatch:44]
   void set_cathode_strength_cutoff_set(bool value);
-  bool sc_rel_tol_tracking_set() const; // 0D_NOT_logical [dispatch:46]
+  bool sc_rel_tol_tracking_set() const; // 0D_NOT_logical [dispatch:45]
   void set_sc_rel_tol_tracking_set(bool value);
-  bool sc_abs_tol_tracking_set() const; // 0D_NOT_logical [dispatch:47]
+  bool sc_abs_tol_tracking_set() const; // 0D_NOT_logical [dispatch:46]
   void set_sc_abs_tol_tracking_set(bool value);
-  bool beam_chamber_height_set() const; // 0D_NOT_logical [dispatch:48]
+  bool beam_chamber_height_set() const; // 0D_NOT_logical [dispatch:47]
   void set_beam_chamber_height_set(bool value);
-  bool lsc_sigma_cutoff_set() const; // 0D_NOT_logical [dispatch:49]
+  bool lsc_sigma_cutoff_set() const; // 0D_NOT_logical [dispatch:48]
   void set_lsc_sigma_cutoff_set(bool value);
-  bool particle_sigma_cutoff_set() const; // 0D_NOT_logical [dispatch:50]
+  bool particle_sigma_cutoff_set() const; // 0D_NOT_logical [dispatch:49]
   void set_particle_sigma_cutoff_set(bool value);
-  bool space_charge_mesh_size_set() const; // 0D_NOT_logical [dispatch:51]
+  bool space_charge_mesh_size_set() const; // 0D_NOT_logical [dispatch:50]
   void set_space_charge_mesh_size_set(bool value);
-  bool csr3d_mesh_size_set() const; // 0D_NOT_logical [dispatch:52]
+  bool csr3d_mesh_size_set() const; // 0D_NOT_logical [dispatch:51]
   void set_csr3d_mesh_size_set(bool value);
-  bool n_bin_set() const; // 0D_NOT_logical [dispatch:53]
+  bool n_bin_set() const; // 0D_NOT_logical [dispatch:52]
   void set_n_bin_set(bool value);
-  bool particle_bin_span_set() const; // 0D_NOT_logical [dispatch:54]
+  bool particle_bin_span_set() const; // 0D_NOT_logical [dispatch:53]
   void set_particle_bin_span_set(bool value);
-  bool n_shield_images_set() const; // 0D_NOT_logical [dispatch:55]
+  bool n_shield_images_set() const; // 0D_NOT_logical [dispatch:54]
   void set_n_shield_images_set(bool value);
-  bool sc_min_in_bin_set() const; // 0D_NOT_logical [dispatch:56]
+  bool sc_min_in_bin_set() const; // 0D_NOT_logical [dispatch:55]
   void set_sc_min_in_bin_set(bool value);
-  bool lsc_kick_transverse_dependence_set() const; // 0D_NOT_logical [dispatch:57]
+  bool lsc_kick_transverse_dependence_set() const; // 0D_NOT_logical [dispatch:56]
   void set_lsc_kick_transverse_dependence_set(bool value);
-  bool sc_debug_set() const; // 0D_NOT_logical [dispatch:58]
+  bool sc_debug_set() const; // 0D_NOT_logical [dispatch:57]
   void set_sc_debug_set(bool value);
-  bool diagnostic_output_file_set() const; // 0D_NOT_logical [dispatch:59]
+  bool diagnostic_output_file_set() const; // 0D_NOT_logical [dispatch:58]
   void set_diagnostic_output_file_set(bool value);
-  bool old_integrator_set() const; // 0D_NOT_logical [dispatch:60]
+  bool old_integrator_set() const; // 0D_NOT_logical [dispatch:59]
   void set_old_integrator_set(bool value);
-  bool use_orientation_patches_set() const; // 0D_NOT_logical [dispatch:61]
+  bool use_orientation_patches_set() const; // 0D_NOT_logical [dispatch:60]
   void set_use_orientation_patches_set(bool value);
-  bool print_info_messages_set() const; // 0D_NOT_logical [dispatch:62]
+  bool print_info_messages_set() const; // 0D_NOT_logical [dispatch:61]
   void set_print_info_messages_set(bool value);
-  bool max_fringe_order_set() const; // 0D_NOT_logical [dispatch:63]
+  bool max_fringe_order_set() const; // 0D_NOT_logical [dispatch:62]
   void set_max_fringe_order_set(bool value);
-  bool exact_model_set() const; // 0D_NOT_logical [dispatch:64]
+  bool exact_model_set() const; // 0D_NOT_logical [dispatch:63]
   void set_exact_model_set(bool value);
-  bool exact_misalign_set() const; // 0D_NOT_logical [dispatch:65]
+  bool exact_misalign_set() const; // 0D_NOT_logical [dispatch:64]
   void set_exact_misalign_set(bool value);
-  bool vertical_kick_set() const; // 0D_NOT_logical [dispatch:66]
+  bool vertical_kick_set() const; // 0D_NOT_logical [dispatch:65]
   void set_vertical_kick_set(bool value);
-  bool cut_factor_set() const; // 0D_NOT_logical [dispatch:67]
+  bool cut_factor_set() const; // 0D_NOT_logical [dispatch:66]
   void set_cut_factor_set(bool value);
-  bool translate_patch_drift_time_set() const; // 0D_NOT_logical [dispatch:68]
+  bool translate_patch_drift_time_set() const; // 0D_NOT_logical [dispatch:67]
   void set_translate_patch_drift_time_set(bool value);
-  bool pancake_symplectic_set() const; // 0D_NOT_logical [dispatch:69]
-  void set_pancake_symplectic_set(bool value);
-  bool pancake_canonical_set() const; // 0D_NOT_logical [dispatch:70]
-  void set_pancake_canonical_set(bool value);
 };
 
 template <>
@@ -23459,75 +23499,75 @@ public:
 };
 
 template <>
-struct FortranTraits<GenGradCurveStruct> {
+struct FortranTraits<GenGrad1Struct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_gen_grad_curve_struct(0, &sz);
+    return allocate_fortran_gen_grad1_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad_curve_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gen_grad_curve_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gen_grad_curve_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad1_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gen_grad1_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gen_grad1_struct"; }
 };
 
-class GenGradCurveStruct : public FortranProxy<GenGradCurveStruct> {
+class GenGrad1Struct : public FortranProxy<GenGrad1Struct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit GenGradCurveStruct(
-      std::optional<int> kind = std::nullopt,
-      std::optional<int> n = std::nullopt,
-      std::optional<int> m_max = std::nullopt,
+  explicit GenGrad1Struct(
+      std::optional<int> m = std::nullopt,
+      std::optional<int> sincos = std::nullopt,
+      std::optional<int> n_deriv_max = std::nullopt,
       std::optional<std::vector<std::vector<double>>> deriv = std::nullopt
   )
       : FortranProxy() {
-    if (kind)
-      set_kind(*kind);
-    if (n)
-      set_n(*n);
-    if (m_max)
-      set_m_max(*m_max);
+    if (m)
+      set_m(*m);
+    if (sincos)
+      set_sincos(*sincos);
+    if (n_deriv_max)
+      set_n_deriv_max(*n_deriv_max);
     if (deriv)
       set_deriv(*deriv);
   }
 
-  int kind() const; // 0D_NOT_integer [dispatch:0]
-  void set_kind(int value);
-  int n() const; // 0D_NOT_integer [dispatch:1]
-  void set_n(int value);
-  int m_max() const; // 0D_NOT_integer [dispatch:2]
-  void set_m_max(int value);
+  int m() const; // 0D_NOT_integer [dispatch:0]
+  void set_m(int value);
+  int sincos() const; // 0D_NOT_integer [dispatch:1]
+  void set_sincos(int value);
+  int n_deriv_max() const; // 0D_NOT_integer [dispatch:2]
+  void set_n_deriv_max(int value);
   FArray2D<double> deriv() const; // 2D_ALLOC_real
   void set_deriv(const std::vector<std::vector<double>> &v);
 };
 
 template <>
-struct FortranTraits<GenGradientsStruct> {
+struct FortranTraits<GenGradMapStruct> {
   static void *allocate() {
     size_t sz;
-    return allocate_fortran_gen_gradients_struct(0, &sz);
+    return allocate_fortran_gen_grad_map_struct(0, &sz);
   }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_gradients_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gen_gradients_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gen_gradients_struct"; }
+  static void deallocate(void *ptr) noexcept { deallocate_fortran_gen_grad_map_struct(ptr, 0); }
+  static void copy(const void *src, void *dst) { copy_fortran_gen_grad_map_struct(src, dst); }
+  static constexpr std::string_view type_name() { return "gen_grad_map_struct"; }
 };
 
-class GenGradientsStruct : public FortranProxy<GenGradientsStruct> {
+class GenGradMapStruct : public FortranProxy<GenGradMapStruct> {
 public:
   using FortranProxy::FortranProxy;
   using FortranProxy::operator=;
 
-  explicit GenGradientsStruct(
+  explicit GenGradMapStruct(
       std::optional<std::string> file = std::nullopt,
       std::optional<int> ele_anchor_pt = std::nullopt,
       std::optional<int> field_type = std::nullopt,
       std::optional<int> iz0 = std::nullopt,
       std::optional<int> iz1 = std::nullopt,
       std::optional<double> dz = std::nullopt,
-      std::optional<double> g_ref = std::nullopt,
       std::optional<std::vector<double>> r0 = std::nullopt,
       std::optional<double> field_scale = std::nullopt,
-      std::optional<int> master_parameter = std::nullopt
+      std::optional<int> master_parameter = std::nullopt,
+      std::optional<bool> curved_ref_frame = std::nullopt
   )
       : FortranProxy() {
     if (file)
@@ -23542,19 +23582,19 @@ public:
       set_iz1(*iz1);
     if (dz)
       set_dz(*dz);
-    if (g_ref)
-      set_g_ref(*g_ref);
     if (r0)
       set_r0(*r0);
     if (field_scale)
       set_field_scale(*field_scale);
     if (master_parameter)
       set_master_parameter(*master_parameter);
+    if (curved_ref_frame)
+      set_curved_ref_frame(*curved_ref_frame);
   }
 
   std::string file() const; // 0D_NOT_character
   void set_file(const std::string &value);
-  GenGradCurveStructAlloc1D curve() const; // 1D_ALLOC_type
+  GenGrad1StructAlloc1D gg() const; // 1D_ALLOC_type
   int ele_anchor_pt() const; // 0D_NOT_integer [dispatch:0]
   void set_ele_anchor_pt(int value);
   int field_type() const; // 0D_NOT_integer [dispatch:1]
@@ -23565,14 +23605,14 @@ public:
   void set_iz1(int value);
   double dz() const; // 0D_NOT_real [dispatch:0]
   void set_dz(double value);
-  double g_ref() const; // 0D_NOT_real [dispatch:1]
-  void set_g_ref(double value);
   FArray1D<double> r0() const; // 1D_NOT_real
   void set_r0(const std::vector<double> &v);
-  double field_scale() const; // 0D_NOT_real [dispatch:2]
+  double field_scale() const; // 0D_NOT_real [dispatch:1]
   void set_field_scale(double value);
   int master_parameter() const; // 0D_NOT_integer [dispatch:4]
   void set_master_parameter(int value);
+  bool curved_ref_frame() const; // 0D_NOT_logical [dispatch:0]
+  void set_curved_ref_frame(bool value);
 };
 
 template <>
@@ -23626,66 +23666,6 @@ public:
   void set_dim(int value);
   FArray1D<int> n() const; // 1D_NOT_integer
   void set_n(const std::vector<int> &v);
-};
-
-template <>
-struct FortranTraits<GgTaylorStruct> {
-  static void *allocate() {
-    size_t sz;
-    return allocate_fortran_gg_taylor_struct(0, &sz);
-  }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gg_taylor_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gg_taylor_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gg_taylor_struct"; }
-};
-
-class GgTaylorStruct : public FortranProxy<GgTaylorStruct> {
-public:
-  using FortranProxy::FortranProxy;
-  using FortranProxy::operator=;
-
-  explicit GgTaylorStruct(std::optional<double> ref = std::nullopt)
-      : FortranProxy() {
-    if (ref)
-      set_ref(*ref);
-  }
-
-  double ref() const; // 0D_NOT_real [dispatch:0]
-  void set_ref(double value);
-  GgTaylorTermStructAlloc1D term() const; // 1D_ALLOC_type
-};
-
-template <>
-struct FortranTraits<GgTaylorTermStruct> {
-  static void *allocate() {
-    size_t sz;
-    return allocate_fortran_gg_taylor_term_struct(0, &sz);
-  }
-  static void deallocate(void *ptr) noexcept { deallocate_fortran_gg_taylor_term_struct(ptr, 0); }
-  static void copy(const void *src, void *dst) { copy_fortran_gg_taylor_term_struct(src, dst); }
-  static constexpr std::string_view type_name() { return "gg_taylor_term_struct"; }
-};
-
-class GgTaylorTermStruct : public FortranProxy<GgTaylorTermStruct> {
-public:
-  using FortranProxy::FortranProxy;
-  using FortranProxy::operator=;
-
-  explicit GgTaylorTermStruct(
-      std::optional<double> coef = std::nullopt,
-      std::optional<std::vector<int>> expn = std::nullopt
-  )
-      : FortranProxy() {
-    if (coef)
-      set_coef(*coef);
-    if (expn)
-      set_expn(*expn);
-  }
-
-  double coef() const; // 0D_NOT_real [dispatch:0]
-  void set_coef(double value);
-  FArray1D<int> expn() const; // 1D_NOT_integer
-  void set_expn(const std::vector<int> &v);
 };
 
 template <>
@@ -24545,8 +24525,7 @@ public:
       std::optional<std::vector<int>> ic = std::nullopt,
       std::optional<int> photon_type = std::nullopt,
       std::optional<int> creation_hash = std::nullopt,
-      std::optional<int> ramper_slave_bookkeeping = std::nullopt,
-      std::optional<bool> parser_make_xfer_mats = std::nullopt
+      std::optional<int> ramper_slave_bookkeeping = std::nullopt
   )
       : FortranProxy() {
     if (use_name)
@@ -24601,8 +24580,6 @@ public:
       set_creation_hash(*creation_hash);
     if (ramper_slave_bookkeeping)
       set_ramper_slave_bookkeeping(*ramper_slave_bookkeeping);
-    if (parser_make_xfer_mats)
-      set_parser_make_xfer_mats(*parser_make_xfer_mats);
   }
 
   std::string use_name() const; // 0D_NOT_character
@@ -24662,8 +24639,6 @@ public:
   void set_creation_hash(int value);
   int ramper_slave_bookkeeping() const; // 0D_NOT_integer [dispatch:6]
   void set_ramper_slave_bookkeeping(int value);
-  bool parser_make_xfer_mats() const; // 0D_NOT_logical [dispatch:0]
-  void set_parser_make_xfer_mats(bool value);
 };
 
 template <>
@@ -28060,8 +28035,6 @@ public:
       std::optional<double> beam_chamber_height = std::nullopt,
       std::optional<double> lsc_sigma_cutoff = std::nullopt,
       std::optional<double> particle_sigma_cutoff = std::nullopt,
-      std::optional<double> mesh_growth_factor = std::nullopt,
-      std::optional<double> mesh_shrink_factor = std::nullopt,
       std::optional<std::vector<int>> space_charge_mesh_size = std::nullopt,
       std::optional<std::vector<int>> csr3d_mesh_size = std::nullopt,
       std::optional<int> n_bin = std::nullopt,
@@ -28089,10 +28062,6 @@ public:
       set_lsc_sigma_cutoff(*lsc_sigma_cutoff);
     if (particle_sigma_cutoff)
       set_particle_sigma_cutoff(*particle_sigma_cutoff);
-    if (mesh_growth_factor)
-      set_mesh_growth_factor(*mesh_growth_factor);
-    if (mesh_shrink_factor)
-      set_mesh_shrink_factor(*mesh_shrink_factor);
     if (space_charge_mesh_size)
       set_space_charge_mesh_size(*space_charge_mesh_size);
     if (csr3d_mesh_size)
@@ -28129,10 +28098,6 @@ public:
   void set_lsc_sigma_cutoff(double value);
   double particle_sigma_cutoff() const; // 0D_NOT_real [dispatch:7]
   void set_particle_sigma_cutoff(double value);
-  double mesh_growth_factor() const; // 0D_NOT_real [dispatch:8]
-  void set_mesh_growth_factor(double value);
-  double mesh_shrink_factor() const; // 0D_NOT_real [dispatch:9]
-  void set_mesh_shrink_factor(double value);
   FArray1D<int> space_charge_mesh_size() const; // 1D_NOT_integer
   void set_space_charge_mesh_size(const std::vector<int> &v);
   FArray1D<int> csr3d_mesh_size() const; // 1D_NOT_integer
@@ -29353,8 +29318,7 @@ public:
       std::optional<int> n_line = std::nullopt,
       std::optional<bool> reset_at_end = std::nullopt,
       std::optional<bool> lattice_calc_save = std::nullopt,
-      std::optional<bool> plot_save = std::nullopt,
-      std::optional<std::string> multi_cmd = std::nullopt
+      std::optional<bool> plot_save = std::nullopt
   )
       : FortranProxy() {
     if (full_name)
@@ -29375,8 +29339,6 @@ public:
       set_lattice_calc_save(*lattice_calc_save);
     if (plot_save)
       set_plot_save(*plot_save);
-    if (multi_cmd)
-      set_multi_cmd(*multi_cmd);
   }
 
   std::string full_name() const; // 0D_NOT_character
@@ -29398,8 +29360,6 @@ public:
   void set_lattice_calc_save(bool value);
   bool plot_save() const; // 0D_NOT_logical [dispatch:3]
   void set_plot_save(bool value);
-  std::string multi_cmd() const; // 0D_NOT_character
-  void set_multi_cmd(const std::string &value);
 };
 
 template <>
@@ -29456,7 +29416,8 @@ public:
       std::optional<bool> rad_int_ri_calc_on = std::nullopt,
       std::optional<bool> rad_int_6d_calc_on = std::nullopt,
       std::optional<std::string> single_mode_buffer = std::nullopt,
-      std::optional<std::string> cmd = std::nullopt
+      std::optional<std::string> cmd = std::nullopt,
+      std::optional<std::string> saved_cmd_line = std::nullopt
   )
       : FortranProxy() {
     if (covar)
@@ -29535,6 +29496,8 @@ public:
       set_single_mode_buffer(*single_mode_buffer);
     if (cmd)
       set_cmd(*cmd);
+    if (saved_cmd_line)
+      set_saved_cmd_line(*saved_cmd_line);
   }
 
   TaoAliasStructArray1D alias() const; // 1D_NOT_type
@@ -29620,6 +29583,8 @@ public:
   void set_single_mode_buffer(const std::string &value);
   std::string cmd() const; // 0D_NOT_character
   void set_cmd(const std::string &value);
+  std::string saved_cmd_line() const; // 0D_NOT_character
+  void set_saved_cmd_line(const std::string &value);
 };
 
 template <>

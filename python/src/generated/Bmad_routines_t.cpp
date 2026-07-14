@@ -513,31 +513,6 @@ err : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  nb::class_<Bmad::ToFieldmapCoords>(m, "ToFieldmapCoords", "to_fieldmap_coords return type")
-      .def_ro("x", &Bmad::ToFieldmapCoords::x)
-      .def_ro("y", &Bmad::ToFieldmapCoords::y)
-      .def_ro("z", &Bmad::ToFieldmapCoords::z)
-      .def_ro("cos_ang", &Bmad::ToFieldmapCoords::cos_ang)
-      .def_ro("sin_ang", &Bmad::ToFieldmapCoords::sin_ang)
-      .def_ro("err_flag", &Bmad::ToFieldmapCoords::err_flag)
-      .def("__len__", [](const Bmad::ToFieldmapCoords &) { return 6; })
-      .def("__getitem__", [](const Bmad::ToFieldmapCoords &s, int i) -> nb::object {
-        if (i < 0)
-          i += 6;
-        if (i == 0)
-          return nb::cast(s.x);
-        if (i == 1)
-          return nb::cast(s.y);
-        if (i == 2)
-          return nb::cast(s.z);
-        if (i == 3)
-          return nb::cast(s.cos_ang);
-        if (i == 4)
-          return nb::cast(s.sin_ang);
-        if (i == 5)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "to_fieldmap_coords",
       &Bmad::to_fieldmap_coords,
@@ -547,6 +522,12 @@ err : bool
       nb::arg("ele_anchor_pt"),
       nb::arg("r0"),
       nb::arg("curved_ref_frame"),
+      nb::arg("x"),
+      nb::arg("y"),
+      nb::arg("z"),
+      nb::arg("cos_ang"),
+      nb::arg("sin_ang"),
+      nb::arg("err_flag"),
       R"""(                                                              x, y, z, cos_ang, sin_ang, err_flag)
 
 Routine to return the (x,y,s) position relative to a field map.
@@ -569,10 +550,8 @@ r0 : 1D array of float (shape: 3)
     origin point of the fieldmap.
 
 curved_ref_frame : bool
-    If the element is a bend: Does the field map follow the bend reference coords?
+    If the element is a bend: Does the field map follow the bend reference coords? Outpt:
 
-Returns
--------
 x : float
     Coords relative to the field map.
 
@@ -1011,8 +990,7 @@ ignore_radiation : bool, optional
     If present and True then do not include radiation effects along with space charge effects.
 
 make_map1 : bool, optional
-    In **some** cases, make ele.mat6 and ele.spin_q components? Default is false. Do not set this! For
-    internal use only to speed up some calculations!
+    Make ele.mat6 and ele.spin_q components? Default is false.
 
 init_to_edge : bool, optional
     Default is True. If True then force the tracked particle to begin at the element's edge. See above. Do not
@@ -1214,11 +1192,7 @@ err : bool
       nb::arg("s_start") = nb::none(),
       nb::arg("s_end") = nb::none(),
       nb::arg("bunch_track") = nb::none(),
-      R"""($OMP THREADPRIVATE(csr_kick1_ptr, csr_csr_ptr, csr_einfo_s_ptr, csr_dr_match_ptr)
-
- Subroutine track1_bunch_csr (bunch, ele, centroid, err, s_start, s_end, bunch_track)
-
- Routine to track a bunch of particles through an element with csr radiation effects.
+      R"""(Routine to track a bunch of particles through an element with csr radiation effects.
 
 Parameters
 ----------
@@ -1810,6 +1784,26 @@ end_orb : CoordStruct
 )"""
   );
   m.def(
+      "track1_spin_magnus",
+      &Bmad::track1_spin_magnus,
+      nb::arg("start_orb"),
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("end_orb"),
+      R"""(Wrapper for Fortran routine track1_spin_magnus
+
+Parameters
+----------
+start_orb : CoordStruct
+
+ele : EleStruct
+
+param : LatParamStruct
+
+end_orb : CoordStruct
+)"""
+  );
+  m.def(
       "track1_spin_taylor",
       &Bmad::track1_spin_taylor,
       nb::arg("start_orb"),
@@ -2088,11 +2082,7 @@ length : float
       &Bmad::track_a_capillary,
       nb::arg("orb"),
       nb::arg("ele"),
-      R"""($OMP THREADPRIVATE(cap_ele_ptr, cap_photon_ptr, cap_photon1_ptr)
-
- Subroutine track_a_capillary (orb, ele)
-
- Routine to track through a capillary.
+      R"""(Routine to track through a capillary.
 
 Parameters
 ----------
@@ -3168,24 +3158,6 @@ track_state : int, optional
 )"""
   );
   m.def(
-      "track_func",
-      &Bmad::track_func,
-      nb::arg("s_target"),
-      nb::arg("status"),
-      R"""(Wrapper for Fortran routine track_func
-
-Parameters
-----------
-s_target : float
-
-status : int
-
-Returns
--------
-dt : float
-)"""
-  );
-  m.def(
       "track_many",
       &Bmad::track_many,
       nb::arg("lat"),
@@ -3339,18 +3311,15 @@ err_flag : bool
   m.def(
       "transfer_ac_kick",
       &Bmad::transfer_ac_kick,
-      nb::arg("ac_in"),
+      nb::arg("ac_kick_in"),
+      nb::arg("ac_kick_out"),
       R"""(Wrapper for Fortran routine transfer_ac_kick
 
 Parameters
 ----------
-ac_in : AcKickerStruct
-    Input
+ac_kick_in : AcKickerStruct
 
-Returns
--------
-ac_out : AcKickerStruct, optional
-    Gets set equal to ac_in
+ac_kick_out : AcKickerStruct
 )"""
   );
   m.def(
@@ -3500,9 +3469,7 @@ to_stored : bool
     If False, set real Twiss from stored. If True, set stored Twiss from real.
 
 orbit : CoordStruct, optional
-    Used for 'phase_space' transfers. Used for input if to_stored = True.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Used for 'phase_space' transfers. Used for output if to_stored = False.
+    Used for 'phase_space' transfers.
 
 who : str, optional
     Who to set. Possibilities are: Groups: 'all', ' ' (default and same as 'all') Note: This excludes all
@@ -3551,7 +3518,7 @@ lat_out : LatStruct
   m.def(
       "transfer_map_calc",
       [](LatStruct &lat,
-         TaylorStructArray1D orb_map,
+         TaylorStructArray1D t_map,
          std::optional<int> ix1,
          std::optional<int> ix2,
          CoordStruct *ref_orb,
@@ -3574,7 +3541,7 @@ lat_out : LatStruct
         )>(&Bmad::transfer_map_calc);
         return fn(
             lat,
-            orb_map,
+            t_map,
             ix1,
             ix2,
             ptr_to_opt_ref(ref_orb),
@@ -3586,7 +3553,7 @@ lat_out : LatStruct
         );
       },
       nb::arg("lat"),
-      nb::arg("orb_map"),
+      nb::arg("t_map"),
       nb::arg("ix1") = nb::none(),
       nb::arg("ix2") = nb::none(),
       nb::arg("ref_orb") = nb::none(),
@@ -3602,10 +3569,7 @@ Parameters
 lat : LatStruct
     Lattice used in the calculation.
 
-orb_map : 1D array of TaylorStruct
-    Initial map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, orb_map: Transfer map.
+t_map : 1D array of TaylorStruct
 
 ix1 : int, optional
     Element start index for the calculation. Default is 0.
@@ -3929,7 +3893,7 @@ complex_taylor_out : 1D array of ComplexTaylorStruct
       &Bmad::twiss1_propagate,
       nb::arg("twiss1"),
       nb::arg("mat2"),
-      nb::arg("ele_key"),
+      nb::arg("ele_type"),
       nb::arg("length"),
       R"""(Wrapper for Fortran routine twiss1_propagate
 
@@ -3941,8 +3905,7 @@ twiss1 : TwissStruct
 mat2 : 2D array of float (shape: 2,2)
     The transfer matrix.
 
-ele_key : int
-    quadrupole$, etc.
+ele_type : int
 
 length : float
     Determines whether the phase is increasing or decreasing.
@@ -4030,16 +3993,14 @@ ix_branch : int, optional
           LatStruct &,
           CoordArrayStructAlloc1D,
           std::optional<bool>,
-          std::optional<bool>,
           std::optional<bool>>(&Bmad::twiss_and_track),
       nb::arg("lat"),
       nb::arg("orb_array"),
       nb::arg("print_err") = nb::none(),
       nb::arg("calc_chrom") = nb::none(),
-      nb::arg("use_particle_start") = nb::none(),
       R"""(This routine is an overloaded name for:
-  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
-  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
 
@@ -4084,10 +4045,6 @@ print_err : bool, optional
 
 calc_chrom : bool, optional
     Default is False. If True, calculate the chromatic functions.
-
-use_particle_start : bool, optional
-    Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
-    orb_start.
 
 Returns
 -------
@@ -4198,26 +4155,16 @@ err : bool, optional
          std::optional<int> ix_branch,
          std::optional<bool> print_err,
          std::optional<bool> calc_chrom,
-         CoordStruct *orb_start,
-         std::optional<bool> use_particle_start) {
+         CoordStruct *orb_start) {
         auto fn = static_cast<int (*)(
             LatStruct &,
             CoordStructAlloc1D,
             std::optional<int>,
             std::optional<bool>,
             std::optional<bool>,
-            optional_ref<CoordStruct>,
-            std::optional<bool>
+            optional_ref<CoordStruct>
         )>(&Bmad::twiss_and_track);
-        return fn(
-            lat,
-            orb,
-            ix_branch,
-            print_err,
-            calc_chrom,
-            ptr_to_opt_ref(orb_start),
-            use_particle_start
-        );
+        return fn(lat, orb, ix_branch, print_err, calc_chrom, ptr_to_opt_ref(orb_start));
       },
       nb::arg("lat"),
       nb::arg("orb"),
@@ -4225,10 +4172,9 @@ err : bool, optional
       nb::arg("print_err") = nb::none(),
       nb::arg("calc_chrom") = nb::none(),
       nb::arg("orb_start") = nb::none(),
-      nb::arg("use_particle_start") = nb::none(),
       R"""(This routine is an overloaded name for:
-  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start, use_particle_start)
-  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom, use_particle_start)
+  Subroutine twiss_and_track_branch (lat, orb, status, ix_branch, print_err, calc_chrom, orb_start)
+  Subroutine twiss_and_track_all (lat, orb_array, status, print_err, calc_chrom)
 
 Routine to calculate the twiss parameters, transport matrices and orbit.
 
@@ -4282,10 +4228,6 @@ calc_chrom : bool, optional
 
 orb_start : CoordStruct, optional
     If present, use this as the starting orbit.
-
-use_particle_start : bool, optional
-    Default is False. If True use branch.particle_start for the starting orbit. Do not use both this and
-    orb_start.
 
 Returns
 -------
@@ -4507,26 +4449,18 @@ err : bool, optional
     Set True if there is a problem like the particle gets lost in tracking
 )"""
   );
-  nb::class_<Bmad::TwissAtElement>(m, "TwissAtElement", "twiss_at_element return type")
-      .def_ro("start", &Bmad::TwissAtElement::start)
-      .def_ro("end", &Bmad::TwissAtElement::end)
-      .def_ro("average", &Bmad::TwissAtElement::average)
-      .def("__len__", [](const Bmad::TwissAtElement &) { return 3; })
-      .def("__getitem__", [](const Bmad::TwissAtElement &s, int i) -> nb::object {
-        if (i < 0)
-          i += 3;
-        if (i == 0)
-          return nb::cast(s.start);
-        if (i == 1)
-          return nb::cast(s.end);
-        if (i == 2)
-          return nb::cast(s.average);
-        throw nb::index_error();
-      });
   m.def(
       "twiss_at_element",
-      &Bmad::twiss_at_element,
+      [](EleStruct &ele, EleStruct *start_ele, EleStruct *end_ele) {
+        auto fn = static_cast<
+            EleStruct (*)(EleStruct &, optional_ref<EleStruct>, optional_ref<EleStruct>)>(
+            &Bmad::twiss_at_element
+        );
+        return fn(ele, ptr_to_opt_ref(start_ele), ptr_to_opt_ref(end_ele));
+      },
       nb::arg("ele"),
+      nb::arg("start_ele") = nb::none(),
+      nb::arg("end_ele") = nb::none(),
       R"""(Wrapper for Fortran routine twiss_at_element
 
 Parameters
@@ -4534,14 +4468,12 @@ Parameters
 ele : EleStruct
     Element to be averaged
 
+start_ele : EleStruct, optional
+
+end_ele : EleStruct, optional
+
 Returns
 -------
-start : EleStruct, optional
-    Twiss and s at start of element.
-
-end : EleStruct, optional
-    Twiss and s at end of element.
-
 average : EleStruct, optional
     Average Twiss and s of element.
 )"""

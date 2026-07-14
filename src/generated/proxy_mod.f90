@@ -4,7 +4,7 @@ module bmad_struct_proxy_mod
   use test_struct_defs
   use, intrinsic :: iso_c_binding
 
-    use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_pointer_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, converter_dir_1D_struct, converter_dir_2D_struct, converter_dir_coef_struct, converter_direction_out_struct, converter_distribution_struct, converter_prob_pc_r_struct, converter_struct, converter_sub_distribution_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, expression_atom_struct, expression_tree_struct, extra_parsing_info_struct, floor_position_struct, foil_struct, fringe_field_info_struct, gen_grad_curve_struct, gen_gradients_struct, gg_taylor_struct, gg_taylor_term_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_pointer_struct, lat_struct, linac_normal_mode_struct, linear_ele_isf_struct, linear_isf1_struct, material_struct, mode3_struct, mode_info_struct, multipass_all_info_struct, multipass_branch_info_struct, multipass_ele_info_struct, multipass_lord_info_struct, multipole_cache_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pmd_header_struct, pre_tracker_struct, ptc_branch1_struct, ptc_layout_pointer_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_eigen_struct, spin_matching_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
+    use bmad_struct, only: ac_kicker_freq_struct, ac_kicker_struct, ac_kicker_time_struct, anormal_mode_struct, aperture_param_struct, aperture_point_struct, aperture_scan_struct, beam_init_struct, beam_struct, bmad_common_struct, bmad_normal_form_struct, bookkeeping_state_struct, bpm_phase_coupling_struct, branch_pointer_struct, branch_struct, bunch_params_struct, bunch_struct, bunch_track_struct, cartesian_map_struct, cartesian_map_term1_struct, cartesian_map_term_struct, complex_taylor_struct, complex_taylor_term_struct, control_ramp1_struct, control_struct, control_var1_struct, controller_struct, converter_dir_1D_struct, converter_dir_2D_struct, converter_dir_coef_struct, converter_direction_out_struct, converter_distribution_struct, converter_prob_pc_r_struct, converter_struct, converter_sub_distribution_struct, coord_array_struct, coord_struct, cylindrical_map_struct, cylindrical_map_term1_struct, cylindrical_map_term_struct, ele_pointer_struct, ele_struct, ellipse_beam_init_struct, em_field_struct, em_taylor_struct, em_taylor_term_struct, expression_atom_struct, expression_tree_struct, extra_parsing_info_struct, floor_position_struct, foil_struct, fringe_field_info_struct, gen_grad1_struct, gen_grad_map_struct, grid_beam_init_struct, grid_field_pt1_struct, grid_field_pt_struct, grid_field_struct, high_energy_space_charge_struct, interval1_coef_struct, kv_beam_init_struct, lat_ele_loc_struct, lat_ele_order1_struct, lat_ele_order_array_struct, lat_ele_order_struct, lat_param_struct, lat_pointer_struct, lat_struct, linac_normal_mode_struct, linear_ele_isf_struct, linear_isf1_struct, material_struct, mode3_struct, mode_info_struct, multipass_all_info_struct, multipass_branch_info_struct, multipass_ele_info_struct, multipass_lord_info_struct, multipole_cache_struct, normal_modes_struct, photon_element_struct, photon_material_struct, photon_reflect_surface_struct, photon_reflect_table_struct, photon_target_struct, pixel_detec_struct, pixel_pt_struct, pmd_header_struct, pre_tracker_struct, ptc_branch1_struct, ptc_layout_pointer_struct, ptc_normal_form_struct, rad_int1_struct, rad_int_all_ele_struct, rad_int_branch_struct, rad_map_ele_struct, rad_map_struct, ramper_lord_struct, resonance_h_struct, rf_ele_struct, rf_stair_step_struct, space_charge_common_struct, spin_axis_struct, spin_eigen_struct, spin_matching_struct, spin_orbit_map1_struct, spin_polar_struct, strong_beam_struct, surface_curvature_struct, surface_displacement_pt_struct, surface_displacement_struct, surface_h_misalign_pt_struct, surface_h_misalign_struct, surface_segmented_pt_struct, surface_segmented_struct, target_point_struct, taylor_struct, taylor_term_struct, track_point_struct, track_struct, twiss_struct, wake_lr_mode_struct, wake_lr_struct, wake_sr_mode_struct, wake_sr_struct, wake_sr_z_long_struct, wake_struct, wall3d_section_struct, wall3d_struct, wall3d_vertex_struct, xy_disp_struct
   use test_struct_defs, only: all_encompassing_struct, test_sub_struct, test_sub_sub_struct
   use sim_utils_struct, only: all_pointer_struct, molecular_component_struct, nametable_struct, str_index_struct, var_length_string_struct
   use astra_interface_mod, only: astra_lattice_param_struct
@@ -306,6 +306,14 @@ module bmad_struct_proxy_mod
     type(em_field_struct), allocatable :: data(:)
   end type em_field_struct_container_alloc
 
+  type :: em_taylor_struct_container_alloc
+    type(em_taylor_struct), allocatable :: data(:)
+  end type em_taylor_struct_container_alloc
+
+  type :: em_taylor_term_struct_container_alloc
+    type(em_taylor_term_struct), allocatable :: data(:)
+  end type em_taylor_term_struct_container_alloc
+
   type :: expression_atom_struct_container_alloc
     type(expression_atom_struct), allocatable :: data(:)
   end type expression_atom_struct_container_alloc
@@ -350,25 +358,17 @@ module bmad_struct_proxy_mod
     type(fringe_field_info_struct), allocatable :: data(:)
   end type fringe_field_info_struct_container_alloc
 
-  type :: gen_grad_curve_struct_container_alloc
-    type(gen_grad_curve_struct), allocatable :: data(:)
-  end type gen_grad_curve_struct_container_alloc
+  type :: gen_grad1_struct_container_alloc
+    type(gen_grad1_struct), allocatable :: data(:)
+  end type gen_grad1_struct_container_alloc
 
-  type :: gen_gradients_struct_container_alloc
-    type(gen_gradients_struct), allocatable :: data(:)
-  end type gen_gradients_struct_container_alloc
+  type :: gen_grad_map_struct_container_alloc
+    type(gen_grad_map_struct), allocatable :: data(:)
+  end type gen_grad_map_struct_container_alloc
 
   type :: general_bin_struct_container_alloc
     type(general_bin_struct), allocatable :: data(:)
   end type general_bin_struct_container_alloc
-
-  type :: gg_taylor_struct_container_alloc
-    type(gg_taylor_struct), allocatable :: data(:)
-  end type gg_taylor_struct_container_alloc
-
-  type :: gg_taylor_term_struct_container_alloc
-    type(gg_taylor_term_struct), allocatable :: data(:)
-  end type gg_taylor_term_struct_container_alloc
 
   type :: gpt_lat_param_struct_container_alloc
     type(gpt_lat_param_struct), allocatable :: data(:)
@@ -9722,7 +9722,7 @@ contains
     end select
   end subroutine
 
-  ! dispatch: bmad_common_struct%logical (20 fields)
+  ! dispatch: bmad_common_struct%logical (19 fields)
 
   subroutine bmad_common_struct_get_logical(struct_obj_ptr, field_id, value_out) &
       bind(c, name='bmad_common_struct_get_logical')
@@ -9737,21 +9737,20 @@ contains
     case(2); value_out = struct_obj%lr_wakes_on
     case(3); value_out = struct_obj%auto_bookkeeper
     case(4); value_out = struct_obj%high_energy_space_charge_on
-    case(5); value_out = struct_obj%high_energy_space_charge_linear
-    case(6); value_out = struct_obj%csr_and_space_charge_on
-    case(7); value_out = struct_obj%spin_tracking_on
-    case(8); value_out = struct_obj%spin_sokolov_ternov_flipping_on
-    case(9); value_out = struct_obj%radiation_damping_on
-    case(10); value_out = struct_obj%radiation_zero_average
-    case(11); value_out = struct_obj%radiation_fluctuations_on
-    case(12); value_out = struct_obj%conserve_taylor_maps
-    case(13); value_out = struct_obj%absolute_time_tracking
-    case(14); value_out = struct_obj%absolute_time_ref_shift
-    case(15); value_out = struct_obj%convert_to_kinetic_momentum
-    case(16); value_out = struct_obj%normalize_twiss
-    case(17); value_out = struct_obj%aperture_limit_on
-    case(18); value_out = struct_obj%spin_n0_direction_user_set
-    case(19); value_out = struct_obj%debug
+    case(5); value_out = struct_obj%csr_and_space_charge_on
+    case(6); value_out = struct_obj%spin_tracking_on
+    case(7); value_out = struct_obj%spin_sokolov_ternov_flipping_on
+    case(8); value_out = struct_obj%radiation_damping_on
+    case(9); value_out = struct_obj%radiation_zero_average
+    case(10); value_out = struct_obj%radiation_fluctuations_on
+    case(11); value_out = struct_obj%conserve_taylor_maps
+    case(12); value_out = struct_obj%absolute_time_tracking
+    case(13); value_out = struct_obj%absolute_time_ref_shift
+    case(14); value_out = struct_obj%convert_to_kinetic_momentum
+    case(15); value_out = struct_obj%normalize_twiss
+    case(16); value_out = struct_obj%aperture_limit_on
+    case(17); value_out = struct_obj%spin_n0_direction_user_set
+    case(18); value_out = struct_obj%debug
     end select
   end subroutine
 
@@ -9769,21 +9768,20 @@ contains
     case(2); struct_obj%lr_wakes_on = value_in
     case(3); struct_obj%auto_bookkeeper = value_in
     case(4); struct_obj%high_energy_space_charge_on = value_in
-    case(5); struct_obj%high_energy_space_charge_linear = value_in
-    case(6); struct_obj%csr_and_space_charge_on = value_in
-    case(7); struct_obj%spin_tracking_on = value_in
-    case(8); struct_obj%spin_sokolov_ternov_flipping_on = value_in
-    case(9); struct_obj%radiation_damping_on = value_in
-    case(10); struct_obj%radiation_zero_average = value_in
-    case(11); struct_obj%radiation_fluctuations_on = value_in
-    case(12); struct_obj%conserve_taylor_maps = value_in
-    case(13); struct_obj%absolute_time_tracking = value_in
-    case(14); struct_obj%absolute_time_ref_shift = value_in
-    case(15); struct_obj%convert_to_kinetic_momentum = value_in
-    case(16); struct_obj%normalize_twiss = value_in
-    case(17); struct_obj%aperture_limit_on = value_in
-    case(18); struct_obj%spin_n0_direction_user_set = value_in
-    case(19); struct_obj%debug = value_in
+    case(5); struct_obj%csr_and_space_charge_on = value_in
+    case(6); struct_obj%spin_tracking_on = value_in
+    case(7); struct_obj%spin_sokolov_ternov_flipping_on = value_in
+    case(8); struct_obj%radiation_damping_on = value_in
+    case(9); struct_obj%radiation_zero_average = value_in
+    case(10); struct_obj%radiation_fluctuations_on = value_in
+    case(11); struct_obj%conserve_taylor_maps = value_in
+    case(12); struct_obj%absolute_time_tracking = value_in
+    case(13); struct_obj%absolute_time_ref_shift = value_in
+    case(14); struct_obj%convert_to_kinetic_momentum = value_in
+    case(15); struct_obj%normalize_twiss = value_in
+    case(16); struct_obj%aperture_limit_on = value_in
+    case(17); struct_obj%spin_n0_direction_user_set = value_in
+    case(18); struct_obj%debug = value_in
     end select
   end subroutine
 
@@ -22070,10 +22068,10 @@ contains
     endif
   end subroutine
 
-  ! ele_struct%gen_gradients: 1D_PTR_type
+  ! ele_struct%gen_grad_map: 1D_PTR_type
 
-  subroutine ele_struct_get_gen_gradients_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='ele_struct_get_gen_gradients_info')
+  subroutine ele_struct_get_gen_grad_map_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='ele_struct_get_gen_grad_map_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
@@ -22083,12 +22081,12 @@ contains
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
-    if (associated(struct_obj%gen_gradients) .and. is_contiguous(struct_obj%gen_gradients)) then
-      data_ptr = c_loc(struct_obj%gen_gradients(lbound(struct_obj%gen_gradients, 1)))
-      bounds(1) = int(lbound(struct_obj%gen_gradients, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%gen_gradients, 1), c_int)
+    if (associated(struct_obj%gen_grad_map) .and. is_contiguous(struct_obj%gen_grad_map)) then
+      data_ptr = c_loc(struct_obj%gen_grad_map(lbound(struct_obj%gen_grad_map, 1)))
+      bounds(1) = int(lbound(struct_obj%gen_grad_map, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%gen_grad_map, 1), c_int)
       
-      el_size = int(storage_size(struct_obj%gen_gradients(bounds(1))) / 8, c_size_t)
+      el_size = int(storage_size(struct_obj%gen_grad_map(bounds(1))) / 8, c_size_t)
       is_allocated = .true.
     else
       data_ptr = c_null_ptr
@@ -23368,6 +23366,387 @@ contains
     endif
   end subroutine
 
+  !! em_taylor_struct
+
+    function allocate_fortran_em_taylor_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(em_taylor_struct), pointer :: fptr
+      type(em_taylor_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_em_taylor_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(em_taylor_struct), pointer :: fptr
+      type(em_taylor_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_em_taylor_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(em_taylor_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_em_taylor_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_em_taylor_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_em_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_em_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
+
+    type(em_taylor_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! dispatch: em_taylor_struct%real (1 fields)
+
+  subroutine em_taylor_struct_get_real(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='em_taylor_struct_get_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(out) :: value_out
+    type(em_taylor_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%ref
+    end select
+  end subroutine
+
+
+  subroutine em_taylor_struct_set_real(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='em_taylor_struct_set_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(in), value :: value_in
+    type(em_taylor_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%ref = value_in
+    end select
+  end subroutine
+
+  ! em_taylor_struct%term: 1D_ALLOC_type
+
+  subroutine em_taylor_struct_get_term_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='em_taylor_struct_get_term_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(em_taylor_struct), pointer :: struct_obj
+    integer(c_size_t), intent(out) :: el_size
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (allocated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
+      data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
+      bounds(1) = int(lbound(struct_obj%term, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%term, 1), c_int)
+      
+      el_size = int(storage_size(struct_obj%term(bounds(1))) / 8, c_size_t)
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      el_size = 0
+      is_allocated = .false.
+    endif
+  end subroutine
+
+  subroutine em_taylor_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
+        bind(c, name='em_taylor_struct_reallocate_term')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    
+    if (n == 0) then
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+    else
+      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
+      allocate(struct_obj%term(lbound_:lbound_ + n - 1))
+    endif
+  end subroutine
+
+  !! em_taylor_term_struct
+
+    function allocate_fortran_em_taylor_term_struct(n, element_size) result(ptr) bind(c)
+      implicit none
+      integer(c_int), value :: n
+      integer(c_size_t), intent(out) :: element_size
+      type(c_ptr) :: ptr
+      type(em_taylor_term_struct), pointer :: fptr
+      type(em_taylor_term_struct), pointer :: fptr_array(:)
+
+      if (n <= 0) then
+        allocate(fptr)
+        ptr = c_loc(fptr)
+        element_size = int(storage_size(fptr) / 8, c_size_t)
+      else
+        allocate(fptr_array(n))
+        ptr = c_loc(fptr_array)
+        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
+      end if
+    end function
+
+    subroutine deallocate_fortran_em_taylor_term_struct(ptr, n) bind(c)
+      implicit none
+      type(c_ptr), value :: ptr
+      integer(c_int), value :: n
+      type(em_taylor_term_struct), pointer :: fptr
+      type(em_taylor_term_struct), pointer :: fptr_array(:)
+
+      if (c_associated(ptr)) then
+        if (n <= 0) then
+          call c_f_pointer(ptr, fptr)
+          deallocate(fptr)
+        else
+          call c_f_pointer(ptr, fptr_array, [n])
+          deallocate(fptr_array)
+        end if
+      end if
+    end subroutine
+
+  subroutine copy_fortran_em_taylor_term_struct(src_ptr, dst_ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: src_ptr, dst_ptr
+    type(em_taylor_term_struct), pointer :: src, dst
+
+    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
+      call c_f_pointer(src_ptr, src)
+      call c_f_pointer(dst_ptr, dst)
+      dst = src  ! Fortran derived type assignment
+    end if
+  end subroutine
+
+  function allocate_em_taylor_term_struct_container() result(ptr) bind(c)
+    implicit none
+    type(c_ptr) :: ptr
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    allocate(ctr)
+    ptr = c_loc(ctr)
+  end function
+
+  subroutine deallocate_em_taylor_term_struct_container(ptr) bind(c)
+    implicit none
+    type(c_ptr), value :: ptr
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+    if (c_associated(ptr)) then
+      call c_f_pointer(ptr, ctr)
+      deallocate(ctr)
+    end if
+  end subroutine
+
+  subroutine reallocate_em_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
+    implicit none
+    type(c_ptr), value :: container_ptr
+    integer(c_int), value :: lbound_
+    integer(c_size_t), value :: n
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) return
+    call c_f_pointer(container_ptr, ctr)
+
+    if (n == 0) then
+      if (allocated(ctr%data)) deallocate(ctr%data)
+    else
+      if (allocated(ctr%data)) deallocate(ctr%data)
+      allocate(ctr%data(lbound_:lbound_ + n - 1))
+    end if
+  end subroutine
+
+  subroutine access_em_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+    use iso_c_binding
+    implicit none
+    type(c_ptr), value :: container_ptr
+    type(c_ptr), intent(out) :: d_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    integer(c_size_t), intent(out) :: elem_size
+
+    type(em_taylor_term_struct_container_alloc), pointer :: ctr
+
+    if (.not. c_associated(container_ptr)) then
+       is_allocated = .false.
+       return
+    endif
+
+    call c_f_pointer(container_ptr, ctr)
+
+    if (allocated(ctr%data)) then
+      is_allocated = .true.
+      bounds(1) = int(lbound(ctr%data, 1), c_int)
+      bounds(2) = int(ubound(ctr%data, 1), c_int)
+      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
+      elem_size = storage_size(ctr%data(bounds(1))) / 8
+      d_ptr = c_loc(ctr%data(bounds(1)))
+    else
+      is_allocated = .false.
+      d_ptr = c_null_ptr
+      bounds = 0
+      elem_size = 0
+    endif
+  end subroutine
+    
+  ! dispatch: em_taylor_term_struct%real (1 fields)
+
+  subroutine em_taylor_term_struct_get_real(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='em_taylor_term_struct_get_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(out) :: value_out
+    type(em_taylor_term_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%coef
+    end select
+  end subroutine
+
+
+  subroutine em_taylor_term_struct_set_real(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='em_taylor_term_struct_set_real')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    real(c_double), intent(in), value :: value_in
+    type(em_taylor_term_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%coef = value_in
+    end select
+  end subroutine
+
+  ! em_taylor_term_struct%expn: 1D_NOT_integer
+
+  subroutine em_taylor_term_struct_get_expn_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='em_taylor_term_struct_get_expn_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(em_taylor_term_struct), pointer :: struct_obj
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+
+    if (.true. .and. is_contiguous(struct_obj%expn)) then
+      data_ptr = c_loc(struct_obj%expn(lbound(struct_obj%expn, 1)))
+      bounds(1) = int(lbound(struct_obj%expn, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%expn, 1), c_int)
+      
+      
+      is_allocated = .true.
+    else
+      data_ptr = c_null_ptr
+      bounds = 0_c_int
+      is_allocated = .false.
+    endif
+  end subroutine
+
+
+  subroutine em_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='em_taylor_term_struct_set_expn')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: val_ptr
+    integer(c_int), dimension(1), intent(in) :: shape
+    type(em_taylor_term_struct), pointer :: struct_obj
+    integer(c_int), pointer :: val(:)
+
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    if (c_associated(val_ptr)) then
+      call c_f_pointer(val_ptr, val, shape)
+      struct_obj%expn = val
+    endif
+  end subroutine
+
   !! expression_atom_struct
 
     function allocate_fortran_expression_atom_struct(n, element_size) result(ptr) bind(c)
@@ -23947,7 +24326,7 @@ contains
     end select
   end subroutine
 
-  ! dispatch: extra_parsing_info_struct%logical (71 fields)
+  ! dispatch: extra_parsing_info_struct%logical (68 fields)
 
   subroutine extra_parsing_info_struct_get_logical(struct_obj_ptr, field_id, value_out) &
       bind(c, name='extra_parsing_info_struct_get_logical')
@@ -23981,53 +24360,50 @@ contains
     case(21); value_out = struct_obj%sr_wakes_on_set
     case(22); value_out = struct_obj%lr_wakes_on_set
     case(23); value_out = struct_obj%high_energy_space_charge_on_set
-    case(24); value_out = struct_obj%high_energy_space_charge_linear_set
-    case(25); value_out = struct_obj%csr_and_space_charge_on_set
-    case(26); value_out = struct_obj%spin_tracking_on_set
-    case(27); value_out = struct_obj%spin_sokolov_ternov_flipping_on_set
-    case(28); value_out = struct_obj%radiation_damping_on_set
-    case(29); value_out = struct_obj%radiation_zero_average_set
-    case(30); value_out = struct_obj%radiation_fluctuations_on_set
-    case(31); value_out = struct_obj%conserve_taylor_maps_set
-    case(32); value_out = struct_obj%absolute_time_tracking_set
-    case(33); value_out = struct_obj%absolute_time_ref_shift_set
-    case(34); value_out = struct_obj%convert_to_kinetic_momentum_set
-    case(35); value_out = struct_obj%aperture_limit_on_set
-    case(36); value_out = struct_obj%normalize_twiss_set
-    case(37); value_out = struct_obj%sad_eps_scale_set
-    case(38); value_out = struct_obj%sad_amp_max_set
-    case(39); value_out = struct_obj%sad_n_div_max_set
-    case(40); value_out = struct_obj%max_num_runge_kutta_step_set
-    case(41); value_out = struct_obj%spin_n0_direction_user_set_set
-    case(42); value_out = struct_obj%debug_set
-    case(43); value_out = struct_obj%ds_track_step_set
-    case(44); value_out = struct_obj%dt_track_step_set
-    case(45); value_out = struct_obj%cathode_strength_cutoff_set
-    case(46); value_out = struct_obj%sc_rel_tol_tracking_set
-    case(47); value_out = struct_obj%sc_abs_tol_tracking_set
-    case(48); value_out = struct_obj%beam_chamber_height_set
-    case(49); value_out = struct_obj%lsc_sigma_cutoff_set
-    case(50); value_out = struct_obj%particle_sigma_cutoff_set
-    case(51); value_out = struct_obj%space_charge_mesh_size_set
-    case(52); value_out = struct_obj%csr3d_mesh_size_set
-    case(53); value_out = struct_obj%n_bin_set
-    case(54); value_out = struct_obj%particle_bin_span_set
-    case(55); value_out = struct_obj%n_shield_images_set
-    case(56); value_out = struct_obj%sc_min_in_bin_set
-    case(57); value_out = struct_obj%lsc_kick_transverse_dependence_set
-    case(58); value_out = struct_obj%sc_debug_set
-    case(59); value_out = struct_obj%diagnostic_output_file_set
-    case(60); value_out = struct_obj%old_integrator_set
-    case(61); value_out = struct_obj%use_orientation_patches_set
-    case(62); value_out = struct_obj%print_info_messages_set
-    case(63); value_out = struct_obj%max_fringe_order_set
-    case(64); value_out = struct_obj%exact_model_set
-    case(65); value_out = struct_obj%exact_misalign_set
-    case(66); value_out = struct_obj%vertical_kick_set
-    case(67); value_out = struct_obj%cut_factor_set
-    case(68); value_out = struct_obj%translate_patch_drift_time_set
-    case(69); value_out = struct_obj%pancake_symplectic_set
-    case(70); value_out = struct_obj%pancake_canonical_set
+    case(24); value_out = struct_obj%csr_and_space_charge_on_set
+    case(25); value_out = struct_obj%spin_tracking_on_set
+    case(26); value_out = struct_obj%spin_sokolov_ternov_flipping_on_set
+    case(27); value_out = struct_obj%radiation_damping_on_set
+    case(28); value_out = struct_obj%radiation_zero_average_set
+    case(29); value_out = struct_obj%radiation_fluctuations_on_set
+    case(30); value_out = struct_obj%conserve_taylor_maps_set
+    case(31); value_out = struct_obj%absolute_time_tracking_set
+    case(32); value_out = struct_obj%absolute_time_ref_shift_set
+    case(33); value_out = struct_obj%convert_to_kinetic_momentum_set
+    case(34); value_out = struct_obj%aperture_limit_on_set
+    case(35); value_out = struct_obj%normalize_twiss_set
+    case(36); value_out = struct_obj%sad_eps_scale_set
+    case(37); value_out = struct_obj%sad_amp_max_set
+    case(38); value_out = struct_obj%sad_n_div_max_set
+    case(39); value_out = struct_obj%max_num_runge_kutta_step_set
+    case(40); value_out = struct_obj%spin_n0_direction_user_set_set
+    case(41); value_out = struct_obj%debug_set
+    case(42); value_out = struct_obj%ds_track_step_set
+    case(43); value_out = struct_obj%dt_track_step_set
+    case(44); value_out = struct_obj%cathode_strength_cutoff_set
+    case(45); value_out = struct_obj%sc_rel_tol_tracking_set
+    case(46); value_out = struct_obj%sc_abs_tol_tracking_set
+    case(47); value_out = struct_obj%beam_chamber_height_set
+    case(48); value_out = struct_obj%lsc_sigma_cutoff_set
+    case(49); value_out = struct_obj%particle_sigma_cutoff_set
+    case(50); value_out = struct_obj%space_charge_mesh_size_set
+    case(51); value_out = struct_obj%csr3d_mesh_size_set
+    case(52); value_out = struct_obj%n_bin_set
+    case(53); value_out = struct_obj%particle_bin_span_set
+    case(54); value_out = struct_obj%n_shield_images_set
+    case(55); value_out = struct_obj%sc_min_in_bin_set
+    case(56); value_out = struct_obj%lsc_kick_transverse_dependence_set
+    case(57); value_out = struct_obj%sc_debug_set
+    case(58); value_out = struct_obj%diagnostic_output_file_set
+    case(59); value_out = struct_obj%old_integrator_set
+    case(60); value_out = struct_obj%use_orientation_patches_set
+    case(61); value_out = struct_obj%print_info_messages_set
+    case(62); value_out = struct_obj%max_fringe_order_set
+    case(63); value_out = struct_obj%exact_model_set
+    case(64); value_out = struct_obj%exact_misalign_set
+    case(65); value_out = struct_obj%vertical_kick_set
+    case(66); value_out = struct_obj%cut_factor_set
+    case(67); value_out = struct_obj%translate_patch_drift_time_set
     end select
   end subroutine
 
@@ -24064,53 +24440,50 @@ contains
     case(21); struct_obj%sr_wakes_on_set = value_in
     case(22); struct_obj%lr_wakes_on_set = value_in
     case(23); struct_obj%high_energy_space_charge_on_set = value_in
-    case(24); struct_obj%high_energy_space_charge_linear_set = value_in
-    case(25); struct_obj%csr_and_space_charge_on_set = value_in
-    case(26); struct_obj%spin_tracking_on_set = value_in
-    case(27); struct_obj%spin_sokolov_ternov_flipping_on_set = value_in
-    case(28); struct_obj%radiation_damping_on_set = value_in
-    case(29); struct_obj%radiation_zero_average_set = value_in
-    case(30); struct_obj%radiation_fluctuations_on_set = value_in
-    case(31); struct_obj%conserve_taylor_maps_set = value_in
-    case(32); struct_obj%absolute_time_tracking_set = value_in
-    case(33); struct_obj%absolute_time_ref_shift_set = value_in
-    case(34); struct_obj%convert_to_kinetic_momentum_set = value_in
-    case(35); struct_obj%aperture_limit_on_set = value_in
-    case(36); struct_obj%normalize_twiss_set = value_in
-    case(37); struct_obj%sad_eps_scale_set = value_in
-    case(38); struct_obj%sad_amp_max_set = value_in
-    case(39); struct_obj%sad_n_div_max_set = value_in
-    case(40); struct_obj%max_num_runge_kutta_step_set = value_in
-    case(41); struct_obj%spin_n0_direction_user_set_set = value_in
-    case(42); struct_obj%debug_set = value_in
-    case(43); struct_obj%ds_track_step_set = value_in
-    case(44); struct_obj%dt_track_step_set = value_in
-    case(45); struct_obj%cathode_strength_cutoff_set = value_in
-    case(46); struct_obj%sc_rel_tol_tracking_set = value_in
-    case(47); struct_obj%sc_abs_tol_tracking_set = value_in
-    case(48); struct_obj%beam_chamber_height_set = value_in
-    case(49); struct_obj%lsc_sigma_cutoff_set = value_in
-    case(50); struct_obj%particle_sigma_cutoff_set = value_in
-    case(51); struct_obj%space_charge_mesh_size_set = value_in
-    case(52); struct_obj%csr3d_mesh_size_set = value_in
-    case(53); struct_obj%n_bin_set = value_in
-    case(54); struct_obj%particle_bin_span_set = value_in
-    case(55); struct_obj%n_shield_images_set = value_in
-    case(56); struct_obj%sc_min_in_bin_set = value_in
-    case(57); struct_obj%lsc_kick_transverse_dependence_set = value_in
-    case(58); struct_obj%sc_debug_set = value_in
-    case(59); struct_obj%diagnostic_output_file_set = value_in
-    case(60); struct_obj%old_integrator_set = value_in
-    case(61); struct_obj%use_orientation_patches_set = value_in
-    case(62); struct_obj%print_info_messages_set = value_in
-    case(63); struct_obj%max_fringe_order_set = value_in
-    case(64); struct_obj%exact_model_set = value_in
-    case(65); struct_obj%exact_misalign_set = value_in
-    case(66); struct_obj%vertical_kick_set = value_in
-    case(67); struct_obj%cut_factor_set = value_in
-    case(68); struct_obj%translate_patch_drift_time_set = value_in
-    case(69); struct_obj%pancake_symplectic_set = value_in
-    case(70); struct_obj%pancake_canonical_set = value_in
+    case(24); struct_obj%csr_and_space_charge_on_set = value_in
+    case(25); struct_obj%spin_tracking_on_set = value_in
+    case(26); struct_obj%spin_sokolov_ternov_flipping_on_set = value_in
+    case(27); struct_obj%radiation_damping_on_set = value_in
+    case(28); struct_obj%radiation_zero_average_set = value_in
+    case(29); struct_obj%radiation_fluctuations_on_set = value_in
+    case(30); struct_obj%conserve_taylor_maps_set = value_in
+    case(31); struct_obj%absolute_time_tracking_set = value_in
+    case(32); struct_obj%absolute_time_ref_shift_set = value_in
+    case(33); struct_obj%convert_to_kinetic_momentum_set = value_in
+    case(34); struct_obj%aperture_limit_on_set = value_in
+    case(35); struct_obj%normalize_twiss_set = value_in
+    case(36); struct_obj%sad_eps_scale_set = value_in
+    case(37); struct_obj%sad_amp_max_set = value_in
+    case(38); struct_obj%sad_n_div_max_set = value_in
+    case(39); struct_obj%max_num_runge_kutta_step_set = value_in
+    case(40); struct_obj%spin_n0_direction_user_set_set = value_in
+    case(41); struct_obj%debug_set = value_in
+    case(42); struct_obj%ds_track_step_set = value_in
+    case(43); struct_obj%dt_track_step_set = value_in
+    case(44); struct_obj%cathode_strength_cutoff_set = value_in
+    case(45); struct_obj%sc_rel_tol_tracking_set = value_in
+    case(46); struct_obj%sc_abs_tol_tracking_set = value_in
+    case(47); struct_obj%beam_chamber_height_set = value_in
+    case(48); struct_obj%lsc_sigma_cutoff_set = value_in
+    case(49); struct_obj%particle_sigma_cutoff_set = value_in
+    case(50); struct_obj%space_charge_mesh_size_set = value_in
+    case(51); struct_obj%csr3d_mesh_size_set = value_in
+    case(52); struct_obj%n_bin_set = value_in
+    case(53); struct_obj%particle_bin_span_set = value_in
+    case(54); struct_obj%n_shield_images_set = value_in
+    case(55); struct_obj%sc_min_in_bin_set = value_in
+    case(56); struct_obj%lsc_kick_transverse_dependence_set = value_in
+    case(57); struct_obj%sc_debug_set = value_in
+    case(58); struct_obj%diagnostic_output_file_set = value_in
+    case(59); struct_obj%old_integrator_set = value_in
+    case(60); struct_obj%use_orientation_patches_set = value_in
+    case(61); struct_obj%print_info_messages_set = value_in
+    case(62); struct_obj%max_fringe_order_set = value_in
+    case(63); struct_obj%exact_model_set = value_in
+    case(64); struct_obj%exact_misalign_set = value_in
+    case(65); struct_obj%vertical_kick_set = value_in
+    case(66); struct_obj%cut_factor_set = value_in
+    case(67); struct_obj%translate_patch_drift_time_set = value_in
     end select
   end subroutine
 
@@ -25947,15 +26320,15 @@ contains
     endif
   end subroutine
 
-  !! gen_grad_curve_struct
+  !! gen_grad1_struct
 
-    function allocate_fortran_gen_grad_curve_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gen_grad1_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(gen_grad_curve_struct), pointer :: fptr
-      type(gen_grad_curve_struct), pointer :: fptr_array(:)
+      type(gen_grad1_struct), pointer :: fptr
+      type(gen_grad1_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -25968,12 +26341,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_gen_grad_curve_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gen_grad1_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(gen_grad_curve_struct), pointer :: fptr
-      type(gen_grad_curve_struct), pointer :: fptr_array(:)
+      type(gen_grad1_struct), pointer :: fptr
+      type(gen_grad1_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -25986,10 +26359,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_gen_grad_curve_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gen_grad1_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(gen_grad_curve_struct), pointer :: src, dst
+    type(gen_grad1_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -25998,30 +26371,30 @@ contains
     end if
   end subroutine
 
-  function allocate_gen_grad_curve_struct_container() result(ptr) bind(c)
+  function allocate_gen_grad1_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_gen_grad_curve_struct_container(ptr) bind(c)
+  subroutine deallocate_gen_grad1_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_gen_grad_curve_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gen_grad1_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -26034,7 +26407,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_grad_curve_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gen_grad1_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -26043,7 +26416,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(gen_grad_curve_struct_container_alloc), pointer :: ctr
+    type(gen_grad1_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -26067,46 +26440,46 @@ contains
     endif
   end subroutine
     
-  ! dispatch: gen_grad_curve_struct%integer (3 fields)
+  ! dispatch: gen_grad1_struct%integer (3 fields)
 
-  subroutine gen_grad_curve_struct_get_integer(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_grad_curve_struct_get_integer')
+  subroutine gen_grad1_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_grad1_struct_get_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(out) :: value_out
-    type(gen_grad_curve_struct), pointer :: struct_obj
+    type(gen_grad1_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
-    case(0); value_out = struct_obj%kind
-    case(1); value_out = struct_obj%n
-    case(2); value_out = struct_obj%m_max
+    case(0); value_out = struct_obj%m
+    case(1); value_out = struct_obj%sincos
+    case(2); value_out = struct_obj%n_deriv_max
     end select
   end subroutine
 
 
-  subroutine gen_grad_curve_struct_set_integer(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_grad_curve_struct_set_integer')
+  subroutine gen_grad1_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_grad1_struct_set_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(in), value :: value_in
-    type(gen_grad_curve_struct), pointer :: struct_obj
+    type(gen_grad1_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
-    case(0); struct_obj%kind = value_in
-    case(1); struct_obj%n = value_in
-    case(2); struct_obj%m_max = value_in
+    case(0); struct_obj%m = value_in
+    case(1); struct_obj%sincos = value_in
+    case(2); struct_obj%n_deriv_max = value_in
     end select
   end subroutine
 
-  ! gen_grad_curve_struct%deriv: 2D_ALLOC_real
+  ! gen_grad1_struct%deriv: 2D_ALLOC_real
 
-  subroutine gen_grad_curve_struct_get_deriv_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
-        bind(c, name='gen_grad_curve_struct_get_deriv_info')
+  subroutine gen_grad1_struct_get_deriv_info(struct_obj_ptr, data_ptr, bounds, strides, is_allocated) &
+        bind(c, name='gen_grad1_struct_get_deriv_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(4), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_grad_curve_struct), pointer :: struct_obj
+    type(gen_grad1_struct), pointer :: struct_obj
     integer(c_int), dimension(2), intent(out) :: strides
     integer :: d1
 
@@ -26132,12 +26505,12 @@ contains
   end subroutine
 
 
-  subroutine gen_grad_curve_struct_set_deriv(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='gen_grad_curve_struct_set_deriv')
+  subroutine gen_grad1_struct_set_deriv(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_grad1_struct_set_deriv')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: val_ptr
     integer(c_int), dimension(2), intent(in) :: shape
-    type(gen_grad_curve_struct), pointer :: struct_obj
+    type(gen_grad1_struct), pointer :: struct_obj
     real(c_double), pointer :: val(:,:)
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
@@ -26151,15 +26524,15 @@ contains
     endif
   end subroutine
 
-  !! gen_gradients_struct
+  !! gen_grad_map_struct
 
-    function allocate_fortran_gen_gradients_struct(n, element_size) result(ptr) bind(c)
+    function allocate_fortran_gen_grad_map_struct(n, element_size) result(ptr) bind(c)
       implicit none
       integer(c_int), value :: n
       integer(c_size_t), intent(out) :: element_size
       type(c_ptr) :: ptr
-      type(gen_gradients_struct), pointer :: fptr
-      type(gen_gradients_struct), pointer :: fptr_array(:)
+      type(gen_grad_map_struct), pointer :: fptr
+      type(gen_grad_map_struct), pointer :: fptr_array(:)
 
       if (n <= 0) then
         allocate(fptr)
@@ -26172,12 +26545,12 @@ contains
       end if
     end function
 
-    subroutine deallocate_fortran_gen_gradients_struct(ptr, n) bind(c)
+    subroutine deallocate_fortran_gen_grad_map_struct(ptr, n) bind(c)
       implicit none
       type(c_ptr), value :: ptr
       integer(c_int), value :: n
-      type(gen_gradients_struct), pointer :: fptr
-      type(gen_gradients_struct), pointer :: fptr_array(:)
+      type(gen_grad_map_struct), pointer :: fptr
+      type(gen_grad_map_struct), pointer :: fptr_array(:)
 
       if (c_associated(ptr)) then
         if (n <= 0) then
@@ -26190,10 +26563,10 @@ contains
       end if
     end subroutine
 
-  subroutine copy_fortran_gen_gradients_struct(src_ptr, dst_ptr) bind(c)
+  subroutine copy_fortran_gen_grad_map_struct(src_ptr, dst_ptr) bind(c)
     implicit none
     type(c_ptr), value :: src_ptr, dst_ptr
-    type(gen_gradients_struct), pointer :: src, dst
+    type(gen_grad_map_struct), pointer :: src, dst
 
     if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
       call c_f_pointer(src_ptr, src)
@@ -26202,30 +26575,30 @@ contains
     end if
   end subroutine
 
-  function allocate_gen_gradients_struct_container() result(ptr) bind(c)
+  function allocate_gen_grad_map_struct_container() result(ptr) bind(c)
     implicit none
     type(c_ptr) :: ptr
-    type(gen_gradients_struct_container_alloc), pointer :: ctr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
     allocate(ctr)
     ptr = c_loc(ctr)
   end function
 
-  subroutine deallocate_gen_gradients_struct_container(ptr) bind(c)
+  subroutine deallocate_gen_grad_map_struct_container(ptr) bind(c)
     implicit none
     type(c_ptr), value :: ptr
-    type(gen_gradients_struct_container_alloc), pointer :: ctr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
     if (c_associated(ptr)) then
       call c_f_pointer(ptr, ctr)
       deallocate(ctr)
     end if
   end subroutine
 
-  subroutine reallocate_gen_gradients_struct_container_data(container_ptr, lbound_, n) bind(c)
+  subroutine reallocate_gen_grad_map_struct_container_data(container_ptr, lbound_, n) bind(c)
     implicit none
     type(c_ptr), value :: container_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_gradients_struct_container_alloc), pointer :: ctr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) return
     call c_f_pointer(container_ptr, ctr)
@@ -26238,7 +26611,7 @@ contains
     end if
   end subroutine
 
-  subroutine access_gen_gradients_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
+  subroutine access_gen_grad_map_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
     use iso_c_binding
     implicit none
     type(c_ptr), value :: container_ptr
@@ -26247,7 +26620,7 @@ contains
     logical(c_bool), intent(out) :: is_allocated
     integer(c_size_t), intent(out) :: elem_size
 
-    type(gen_gradients_struct_container_alloc), pointer :: ctr
+    type(gen_grad_map_struct_container_alloc), pointer :: ctr
 
     if (.not. c_associated(container_ptr)) then
        is_allocated = .false.
@@ -26271,14 +26644,14 @@ contains
     endif
   end subroutine
     
-  ! dispatch: gen_gradients_struct%integer (5 fields)
+  ! dispatch: gen_grad_map_struct%integer (5 fields)
 
-  subroutine gen_gradients_struct_get_integer(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_gradients_struct_get_integer')
+  subroutine gen_grad_map_struct_get_integer(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_grad_map_struct_get_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(out) :: value_out
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); value_out = struct_obj%ele_anchor_pt
@@ -26290,12 +26663,12 @@ contains
   end subroutine
 
 
-  subroutine gen_gradients_struct_set_integer(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_gradients_struct_set_integer')
+  subroutine gen_grad_map_struct_set_integer(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_grad_map_struct_set_integer')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     integer(c_int), intent(in), value :: value_in
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); struct_obj%ele_anchor_pt = value_in
@@ -26306,46 +26679,71 @@ contains
     end select
   end subroutine
 
-  ! dispatch: gen_gradients_struct%real (3 fields)
+  ! dispatch: gen_grad_map_struct%logical (1 fields)
 
-  subroutine gen_gradients_struct_get_real(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gen_gradients_struct_get_real')
+  subroutine gen_grad_map_struct_get_logical(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_grad_map_struct_get_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(out) :: value_out
+    type(gen_grad_map_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%curved_ref_frame
+    end select
+  end subroutine
+
+
+  subroutine gen_grad_map_struct_set_logical(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_grad_map_struct_set_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(in), value :: value_in
+    type(gen_grad_map_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%curved_ref_frame = value_in
+    end select
+  end subroutine
+
+  ! dispatch: gen_grad_map_struct%real (2 fields)
+
+  subroutine gen_grad_map_struct_get_real(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='gen_grad_map_struct_get_real')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     real(c_double), intent(out) :: value_out
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); value_out = struct_obj%dz
-    case(1); value_out = struct_obj%g_ref
-    case(2); value_out = struct_obj%field_scale
+    case(1); value_out = struct_obj%field_scale
     end select
   end subroutine
 
 
-  subroutine gen_gradients_struct_set_real(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gen_gradients_struct_set_real')
+  subroutine gen_grad_map_struct_set_real(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='gen_grad_map_struct_set_real')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), intent(in), value :: field_id
     real(c_double), intent(in), value :: value_in
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); struct_obj%dz = value_in
-    case(1); struct_obj%g_ref = value_in
-    case(2); struct_obj%field_scale = value_in
+    case(1); struct_obj%field_scale = value_in
     end select
   end subroutine
 
-  ! gen_gradients_struct%file: 0D_NOT_character
+  ! gen_grad_map_struct%file: 0D_NOT_character
 
-  subroutine gen_gradients_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-    bind(c, name='gen_gradients_struct_get_file_info')
+  subroutine gen_grad_map_struct_get_file_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='gen_grad_map_struct_get_file_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     call c_f_pointer(struct_obj_ptr, struct_obj)
     data_ptr = c_loc(struct_obj%file)
     bounds(1) = 1_c_int
@@ -26354,36 +26752,36 @@ contains
   end subroutine
 
 
-  subroutine gen_gradients_struct_set_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='gen_gradients_struct_set_file')
+  subroutine gen_grad_map_struct_set_file(struct_obj_ptr, str_ptr, str_len) bind(c, name='gen_grad_map_struct_set_file')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: str_ptr
     integer(c_int), intent(in), value :: str_len
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     character(len=str_len), pointer :: str_in
     call c_f_pointer(struct_obj_ptr, struct_obj)
     call c_f_pointer(str_ptr, str_in)
     struct_obj%file = str_in ! implicitly handles padding
   end subroutine
 
-  ! gen_gradients_struct%curve: 1D_ALLOC_type
+  ! gen_grad_map_struct%gg: 1D_ALLOC_type
 
-  subroutine gen_gradients_struct_get_curve_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='gen_gradients_struct_get_curve_info')
+  subroutine gen_grad_map_struct_get_gg_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
+        bind(c, name='gen_grad_map_struct_get_gg_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     integer(c_size_t), intent(out) :: el_size
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
-    if (allocated(struct_obj%curve) .and. is_contiguous(struct_obj%curve)) then
-      data_ptr = c_loc(struct_obj%curve(lbound(struct_obj%curve, 1)))
-      bounds(1) = int(lbound(struct_obj%curve, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%curve, 1), c_int)
+    if (allocated(struct_obj%gg) .and. is_contiguous(struct_obj%gg)) then
+      data_ptr = c_loc(struct_obj%gg(lbound(struct_obj%gg, 1)))
+      bounds(1) = int(lbound(struct_obj%gg, 1), c_int)
+      bounds(2) = int(ubound(struct_obj%gg, 1), c_int)
       
-      el_size = int(storage_size(struct_obj%curve(bounds(1))) / 8, c_size_t)
+      el_size = int(storage_size(struct_obj%gg(bounds(1))) / 8, c_size_t)
       is_allocated = .true.
     else
       data_ptr = c_null_ptr
@@ -26393,32 +26791,32 @@ contains
     endif
   end subroutine
 
-  subroutine gen_gradients_struct_reallocate_curve(struct_obj_ptr, lbound_, n) &
-        bind(c, name='gen_gradients_struct_reallocate_curve')
+  subroutine gen_grad_map_struct_reallocate_gg(struct_obj_ptr, lbound_, n) &
+        bind(c, name='gen_grad_map_struct_reallocate_gg')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     integer(c_int), value :: lbound_
     integer(c_size_t), value :: n
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
     
     if (n == 0) then
-      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
+      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
     else
-      if (allocated(struct_obj%curve)) deallocate(struct_obj%curve)
-      allocate(struct_obj%curve(lbound_:lbound_ + n - 1))
+      if (allocated(struct_obj%gg)) deallocate(struct_obj%gg)
+      allocate(struct_obj%gg(lbound_:lbound_ + n - 1))
     endif
   end subroutine
 
-  ! gen_gradients_struct%r0: 1D_NOT_real
+  ! gen_grad_map_struct%r0: 1D_NOT_real
 
-  subroutine gen_gradients_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-        bind(c, name='gen_gradients_struct_get_r0_info')
+  subroutine gen_grad_map_struct_get_r0_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+        bind(c, name='gen_grad_map_struct_get_r0_info')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(out) :: data_ptr
     integer(c_int), dimension(2), intent(out) :: bounds
     logical(c_bool), intent(out) :: is_allocated
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
 
@@ -26437,12 +26835,12 @@ contains
   end subroutine
 
 
-  subroutine gen_gradients_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='gen_gradients_struct_set_r0')
+  subroutine gen_grad_map_struct_set_r0(struct_obj_ptr, val_ptr, shape) &
+      bind(c, name='gen_grad_map_struct_set_r0')
     type(c_ptr), intent(in), value :: struct_obj_ptr
     type(c_ptr), intent(in), value :: val_ptr
     integer(c_int), dimension(1), intent(in) :: shape
-    type(gen_gradients_struct), pointer :: struct_obj
+    type(gen_grad_map_struct), pointer :: struct_obj
     real(c_double), pointer :: val(:)
 
     call c_f_pointer(struct_obj_ptr, struct_obj)
@@ -26827,387 +27225,6 @@ contains
     if (c_associated(val_ptr)) then
       call c_f_pointer(val_ptr, val, shape)
       struct_obj%n = val
-    endif
-  end subroutine
-
-  !! gg_taylor_struct
-
-    function allocate_fortran_gg_taylor_struct(n, element_size) result(ptr) bind(c)
-      implicit none
-      integer(c_int), value :: n
-      integer(c_size_t), intent(out) :: element_size
-      type(c_ptr) :: ptr
-      type(gg_taylor_struct), pointer :: fptr
-      type(gg_taylor_struct), pointer :: fptr_array(:)
-
-      if (n <= 0) then
-        allocate(fptr)
-        ptr = c_loc(fptr)
-        element_size = int(storage_size(fptr) / 8, c_size_t)
-      else
-        allocate(fptr_array(n))
-        ptr = c_loc(fptr_array)
-        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-      end if
-    end function
-
-    subroutine deallocate_fortran_gg_taylor_struct(ptr, n) bind(c)
-      implicit none
-      type(c_ptr), value :: ptr
-      integer(c_int), value :: n
-      type(gg_taylor_struct), pointer :: fptr
-      type(gg_taylor_struct), pointer :: fptr_array(:)
-
-      if (c_associated(ptr)) then
-        if (n <= 0) then
-          call c_f_pointer(ptr, fptr)
-          deallocate(fptr)
-        else
-          call c_f_pointer(ptr, fptr_array, [n])
-          deallocate(fptr_array)
-        end if
-      end if
-    end subroutine
-
-  subroutine copy_fortran_gg_taylor_struct(src_ptr, dst_ptr) bind(c)
-    implicit none
-    type(c_ptr), value :: src_ptr, dst_ptr
-    type(gg_taylor_struct), pointer :: src, dst
-
-    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
-      call c_f_pointer(src_ptr, src)
-      call c_f_pointer(dst_ptr, dst)
-      dst = src  ! Fortran derived type assignment
-    end if
-  end subroutine
-
-  function allocate_gg_taylor_struct_container() result(ptr) bind(c)
-    implicit none
-    type(c_ptr) :: ptr
-    type(gg_taylor_struct_container_alloc), pointer :: ctr
-    allocate(ctr)
-    ptr = c_loc(ctr)
-  end function
-
-  subroutine deallocate_gg_taylor_struct_container(ptr) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    type(gg_taylor_struct_container_alloc), pointer :: ctr
-    if (c_associated(ptr)) then
-      call c_f_pointer(ptr, ctr)
-      deallocate(ctr)
-    end if
-  end subroutine
-
-  subroutine reallocate_gg_taylor_struct_container_data(container_ptr, lbound_, n) bind(c)
-    implicit none
-    type(c_ptr), value :: container_ptr
-    integer(c_int), value :: lbound_
-    integer(c_size_t), value :: n
-    type(gg_taylor_struct_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) return
-    call c_f_pointer(container_ptr, ctr)
-
-    if (n == 0) then
-      if (allocated(ctr%data)) deallocate(ctr%data)
-    else
-      if (allocated(ctr%data)) deallocate(ctr%data)
-      allocate(ctr%data(lbound_:lbound_ + n - 1))
-    end if
-  end subroutine
-
-  subroutine access_gg_taylor_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
-    use iso_c_binding
-    implicit none
-    type(c_ptr), value :: container_ptr
-    type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    integer(c_size_t), intent(out) :: elem_size
-
-    type(gg_taylor_struct_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) then
-       is_allocated = .false.
-       return
-    endif
-
-    call c_f_pointer(container_ptr, ctr)
-
-    if (allocated(ctr%data)) then
-      is_allocated = .true.
-      bounds(1) = int(lbound(ctr%data, 1), c_int)
-      bounds(2) = int(ubound(ctr%data, 1), c_int)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(bounds(1))) / 8
-      d_ptr = c_loc(ctr%data(bounds(1)))
-    else
-      is_allocated = .false.
-      d_ptr = c_null_ptr
-      bounds = 0
-      elem_size = 0
-    endif
-  end subroutine
-    
-  ! dispatch: gg_taylor_struct%real (1 fields)
-
-  subroutine gg_taylor_struct_get_real(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gg_taylor_struct_get_real')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    real(c_double), intent(out) :: value_out
-    type(gg_taylor_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); value_out = struct_obj%ref
-    end select
-  end subroutine
-
-
-  subroutine gg_taylor_struct_set_real(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gg_taylor_struct_set_real')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    real(c_double), intent(in), value :: value_in
-    type(gg_taylor_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); struct_obj%ref = value_in
-    end select
-  end subroutine
-
-  ! gg_taylor_struct%term: 1D_ALLOC_type
-
-  subroutine gg_taylor_struct_get_term_info(struct_obj_ptr, data_ptr, bounds, is_allocated, el_size) &
-        bind(c, name='gg_taylor_struct_get_term_info')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: data_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    type(gg_taylor_struct), pointer :: struct_obj
-    integer(c_size_t), intent(out) :: el_size
-
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-
-    if (allocated(struct_obj%term) .and. is_contiguous(struct_obj%term)) then
-      data_ptr = c_loc(struct_obj%term(lbound(struct_obj%term, 1)))
-      bounds(1) = int(lbound(struct_obj%term, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%term, 1), c_int)
-      
-      el_size = int(storage_size(struct_obj%term(bounds(1))) / 8, c_size_t)
-      is_allocated = .true.
-    else
-      data_ptr = c_null_ptr
-      bounds = 0_c_int
-      el_size = 0
-      is_allocated = .false.
-    endif
-  end subroutine
-
-  subroutine gg_taylor_struct_reallocate_term(struct_obj_ptr, lbound_, n) &
-        bind(c, name='gg_taylor_struct_reallocate_term')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), value :: lbound_
-    integer(c_size_t), value :: n
-    type(gg_taylor_struct), pointer :: struct_obj
-
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    
-    if (n == 0) then
-      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
-    else
-      if (allocated(struct_obj%term)) deallocate(struct_obj%term)
-      allocate(struct_obj%term(lbound_:lbound_ + n - 1))
-    endif
-  end subroutine
-
-  !! gg_taylor_term_struct
-
-    function allocate_fortran_gg_taylor_term_struct(n, element_size) result(ptr) bind(c)
-      implicit none
-      integer(c_int), value :: n
-      integer(c_size_t), intent(out) :: element_size
-      type(c_ptr) :: ptr
-      type(gg_taylor_term_struct), pointer :: fptr
-      type(gg_taylor_term_struct), pointer :: fptr_array(:)
-
-      if (n <= 0) then
-        allocate(fptr)
-        ptr = c_loc(fptr)
-        element_size = int(storage_size(fptr) / 8, c_size_t)
-      else
-        allocate(fptr_array(n))
-        ptr = c_loc(fptr_array)
-        element_size = int(storage_size(fptr_array(1)) / 8, c_size_t)
-      end if
-    end function
-
-    subroutine deallocate_fortran_gg_taylor_term_struct(ptr, n) bind(c)
-      implicit none
-      type(c_ptr), value :: ptr
-      integer(c_int), value :: n
-      type(gg_taylor_term_struct), pointer :: fptr
-      type(gg_taylor_term_struct), pointer :: fptr_array(:)
-
-      if (c_associated(ptr)) then
-        if (n <= 0) then
-          call c_f_pointer(ptr, fptr)
-          deallocate(fptr)
-        else
-          call c_f_pointer(ptr, fptr_array, [n])
-          deallocate(fptr_array)
-        end if
-      end if
-    end subroutine
-
-  subroutine copy_fortran_gg_taylor_term_struct(src_ptr, dst_ptr) bind(c)
-    implicit none
-    type(c_ptr), value :: src_ptr, dst_ptr
-    type(gg_taylor_term_struct), pointer :: src, dst
-
-    if (c_associated(src_ptr) .and. c_associated(dst_ptr)) then
-      call c_f_pointer(src_ptr, src)
-      call c_f_pointer(dst_ptr, dst)
-      dst = src  ! Fortran derived type assignment
-    end if
-  end subroutine
-
-  function allocate_gg_taylor_term_struct_container() result(ptr) bind(c)
-    implicit none
-    type(c_ptr) :: ptr
-    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
-    allocate(ctr)
-    ptr = c_loc(ctr)
-  end function
-
-  subroutine deallocate_gg_taylor_term_struct_container(ptr) bind(c)
-    implicit none
-    type(c_ptr), value :: ptr
-    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
-    if (c_associated(ptr)) then
-      call c_f_pointer(ptr, ctr)
-      deallocate(ctr)
-    end if
-  end subroutine
-
-  subroutine reallocate_gg_taylor_term_struct_container_data(container_ptr, lbound_, n) bind(c)
-    implicit none
-    type(c_ptr), value :: container_ptr
-    integer(c_int), value :: lbound_
-    integer(c_size_t), value :: n
-    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) return
-    call c_f_pointer(container_ptr, ctr)
-
-    if (n == 0) then
-      if (allocated(ctr%data)) deallocate(ctr%data)
-    else
-      if (allocated(ctr%data)) deallocate(ctr%data)
-      allocate(ctr%data(lbound_:lbound_ + n - 1))
-    end if
-  end subroutine
-
-  subroutine access_gg_taylor_term_struct_container(container_ptr, d_ptr, bounds, is_allocated, elem_size) bind(c)
-    use iso_c_binding
-    implicit none
-    type(c_ptr), value :: container_ptr
-    type(c_ptr), intent(out) :: d_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    integer(c_size_t), intent(out) :: elem_size
-
-    type(gg_taylor_term_struct_container_alloc), pointer :: ctr
-
-    if (.not. c_associated(container_ptr)) then
-       is_allocated = .false.
-       return
-    endif
-
-    call c_f_pointer(container_ptr, ctr)
-
-    if (allocated(ctr%data)) then
-      is_allocated = .true.
-      bounds(1) = int(lbound(ctr%data, 1), c_int)
-      bounds(2) = int(ubound(ctr%data, 1), c_int)
-      ! Use intrinsic storage_size (returns bits) divided by 8 for bytes
-      elem_size = storage_size(ctr%data(bounds(1))) / 8
-      d_ptr = c_loc(ctr%data(bounds(1)))
-    else
-      is_allocated = .false.
-      d_ptr = c_null_ptr
-      bounds = 0
-      elem_size = 0
-    endif
-  end subroutine
-    
-  ! dispatch: gg_taylor_term_struct%real (1 fields)
-
-  subroutine gg_taylor_term_struct_get_real(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='gg_taylor_term_struct_get_real')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    real(c_double), intent(out) :: value_out
-    type(gg_taylor_term_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); value_out = struct_obj%coef
-    end select
-  end subroutine
-
-
-  subroutine gg_taylor_term_struct_set_real(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='gg_taylor_term_struct_set_real')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    real(c_double), intent(in), value :: value_in
-    type(gg_taylor_term_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); struct_obj%coef = value_in
-    end select
-  end subroutine
-
-  ! gg_taylor_term_struct%expn: 1D_NOT_integer
-
-  subroutine gg_taylor_term_struct_get_expn_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-        bind(c, name='gg_taylor_term_struct_get_expn_info')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: data_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    type(gg_taylor_term_struct), pointer :: struct_obj
-
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-
-    if (.true. .and. is_contiguous(struct_obj%expn)) then
-      data_ptr = c_loc(struct_obj%expn(lbound(struct_obj%expn, 1)))
-      bounds(1) = int(lbound(struct_obj%expn, 1), c_int)
-      bounds(2) = int(ubound(struct_obj%expn, 1), c_int)
-      
-      
-      is_allocated = .true.
-    else
-      data_ptr = c_null_ptr
-      bounds = 0_c_int
-      is_allocated = .false.
-    endif
-  end subroutine
-
-
-  subroutine gg_taylor_term_struct_set_expn(struct_obj_ptr, val_ptr, shape) &
-      bind(c, name='gg_taylor_term_struct_set_expn')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(in), value :: val_ptr
-    integer(c_int), dimension(1), intent(in) :: shape
-    type(gg_taylor_term_struct), pointer :: struct_obj
-    integer(c_int), pointer :: val(:)
-
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    if (c_associated(val_ptr)) then
-      call c_f_pointer(val_ptr, val, shape)
-      struct_obj%expn = val
     endif
   end subroutine
 
@@ -31000,33 +31017,6 @@ contains
     case(4); struct_obj%photon_type = value_in
     case(5); struct_obj%creation_hash = value_in
     case(6); struct_obj%ramper_slave_bookkeeping = value_in
-    end select
-  end subroutine
-
-  ! dispatch: lat_struct%logical (1 fields)
-
-  subroutine lat_struct_get_logical(struct_obj_ptr, field_id, value_out) &
-      bind(c, name='lat_struct_get_logical')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    logical(c_bool), intent(out) :: value_out
-    type(lat_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); value_out = struct_obj%parser_make_xfer_mats
-    end select
-  end subroutine
-
-
-  subroutine lat_struct_set_logical(struct_obj_ptr, field_id, value_in) &
-      bind(c, name='lat_struct_set_logical')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    integer(c_int), intent(in), value :: field_id
-    logical(c_bool), intent(in), value :: value_in
-    type(lat_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    select case(field_id)
-    case(0); struct_obj%parser_make_xfer_mats = value_in
     end select
   end subroutine
 
@@ -49104,7 +49094,7 @@ contains
     end select
   end subroutine
 
-  ! dispatch: space_charge_common_struct%real (10 fields)
+  ! dispatch: space_charge_common_struct%real (8 fields)
 
   subroutine space_charge_common_struct_get_real(struct_obj_ptr, field_id, value_out) &
       bind(c, name='space_charge_common_struct_get_real')
@@ -49122,8 +49112,6 @@ contains
     case(5); value_out = struct_obj%beam_chamber_height
     case(6); value_out = struct_obj%lsc_sigma_cutoff
     case(7); value_out = struct_obj%particle_sigma_cutoff
-    case(8); value_out = struct_obj%mesh_growth_factor
-    case(9); value_out = struct_obj%mesh_shrink_factor
     end select
   end subroutine
 
@@ -49144,8 +49132,6 @@ contains
     case(5); struct_obj%beam_chamber_height = value_in
     case(6); struct_obj%lsc_sigma_cutoff = value_in
     case(7); struct_obj%particle_sigma_cutoff = value_in
-    case(8); struct_obj%mesh_growth_factor = value_in
-    case(9); struct_obj%mesh_shrink_factor = value_in
     end select
   end subroutine
 
@@ -54907,34 +54893,6 @@ contains
     struct_obj%quiet = str_in ! implicitly handles padding
   end subroutine
 
-  ! tao_command_file_struct%multi_cmd: 0D_NOT_character
-
-  subroutine tao_command_file_struct_get_multi_cmd_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
-    bind(c, name='tao_command_file_struct_get_multi_cmd_info')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(out) :: data_ptr
-    integer(c_int), dimension(2), intent(out) :: bounds
-    logical(c_bool), intent(out) :: is_allocated
-    type(tao_command_file_struct), pointer :: struct_obj
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    data_ptr = c_loc(struct_obj%multi_cmd)
-    bounds(1) = 1_c_int
-    bounds(2) = int(len_trim(struct_obj%multi_cmd), c_int)
-    is_allocated = .true.
-  end subroutine
-
-
-  subroutine tao_command_file_struct_set_multi_cmd(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_command_file_struct_set_multi_cmd')
-    type(c_ptr), intent(in), value :: struct_obj_ptr
-    type(c_ptr), intent(in), value :: str_ptr
-    integer(c_int), intent(in), value :: str_len
-    type(tao_command_file_struct), pointer :: struct_obj
-    character(len=str_len), pointer :: str_in
-    call c_f_pointer(struct_obj_ptr, struct_obj)
-    call c_f_pointer(str_ptr, str_in)
-    struct_obj%multi_cmd = str_in ! implicitly handles padding
-  end subroutine
-
   !! tao_common_struct
 
     function allocate_fortran_tao_common_struct(n, element_size) result(ptr) bind(c)
@@ -55660,6 +55618,34 @@ contains
     call c_f_pointer(struct_obj_ptr, struct_obj)
     call c_f_pointer(str_ptr, str_in)
     struct_obj%cmd = str_in ! implicitly handles padding
+  end subroutine
+
+  ! tao_common_struct%saved_cmd_line: 0D_NOT_character
+
+  subroutine tao_common_struct_get_saved_cmd_line_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
+    bind(c, name='tao_common_struct_get_saved_cmd_line_info')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(out) :: data_ptr
+    integer(c_int), dimension(2), intent(out) :: bounds
+    logical(c_bool), intent(out) :: is_allocated
+    type(tao_common_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    data_ptr = c_loc(struct_obj%saved_cmd_line)
+    bounds(1) = 1_c_int
+    bounds(2) = int(len_trim(struct_obj%saved_cmd_line), c_int)
+    is_allocated = .true.
+  end subroutine
+
+
+  subroutine tao_common_struct_set_saved_cmd_line(struct_obj_ptr, str_ptr, str_len) bind(c, name='tao_common_struct_set_saved_cmd_line')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    type(c_ptr), intent(in), value :: str_ptr
+    integer(c_int), intent(in), value :: str_len
+    type(tao_common_struct), pointer :: struct_obj
+    character(len=str_len), pointer :: str_in
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    call c_f_pointer(str_ptr, str_in)
+    struct_obj%saved_cmd_line = str_in ! implicitly handles padding
   end subroutine
 
   !! tao_curve_array_struct

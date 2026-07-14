@@ -2111,125 +2111,117 @@ bool BmadCommonStruct::high_energy_space_charge_on() const {
 void BmadCommonStruct::set_high_energy_space_charge_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 4, value);
 }
-bool BmadCommonStruct::high_energy_space_charge_linear() const {
+bool BmadCommonStruct::csr_and_space_charge_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 5, &value);
   return value;
 }
-void BmadCommonStruct::set_high_energy_space_charge_linear(bool value) {
+void BmadCommonStruct::set_csr_and_space_charge_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 5, value);
 }
-bool BmadCommonStruct::csr_and_space_charge_on() const {
+bool BmadCommonStruct::spin_tracking_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 6, &value);
   return value;
 }
-void BmadCommonStruct::set_csr_and_space_charge_on(bool value) {
+void BmadCommonStruct::set_spin_tracking_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 6, value);
 }
-bool BmadCommonStruct::spin_tracking_on() const {
+bool BmadCommonStruct::spin_sokolov_ternov_flipping_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 7, &value);
   return value;
 }
-void BmadCommonStruct::set_spin_tracking_on(bool value) {
+void BmadCommonStruct::set_spin_sokolov_ternov_flipping_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 7, value);
 }
-bool BmadCommonStruct::spin_sokolov_ternov_flipping_on() const {
+bool BmadCommonStruct::radiation_damping_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 8, &value);
   return value;
 }
-void BmadCommonStruct::set_spin_sokolov_ternov_flipping_on(bool value) {
+void BmadCommonStruct::set_radiation_damping_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 8, value);
 }
-bool BmadCommonStruct::radiation_damping_on() const {
+bool BmadCommonStruct::radiation_zero_average() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 9, &value);
   return value;
 }
-void BmadCommonStruct::set_radiation_damping_on(bool value) {
+void BmadCommonStruct::set_radiation_zero_average(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 9, value);
 }
-bool BmadCommonStruct::radiation_zero_average() const {
+bool BmadCommonStruct::radiation_fluctuations_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 10, &value);
   return value;
 }
-void BmadCommonStruct::set_radiation_zero_average(bool value) {
+void BmadCommonStruct::set_radiation_fluctuations_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 10, value);
 }
-bool BmadCommonStruct::radiation_fluctuations_on() const {
+bool BmadCommonStruct::conserve_taylor_maps() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 11, &value);
   return value;
 }
-void BmadCommonStruct::set_radiation_fluctuations_on(bool value) {
+void BmadCommonStruct::set_conserve_taylor_maps(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 11, value);
 }
-bool BmadCommonStruct::conserve_taylor_maps() const {
+bool BmadCommonStruct::absolute_time_tracking() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 12, &value);
   return value;
 }
-void BmadCommonStruct::set_conserve_taylor_maps(bool value) {
+void BmadCommonStruct::set_absolute_time_tracking(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 12, value);
 }
-bool BmadCommonStruct::absolute_time_tracking() const {
+bool BmadCommonStruct::absolute_time_ref_shift() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 13, &value);
   return value;
 }
-void BmadCommonStruct::set_absolute_time_tracking(bool value) {
+void BmadCommonStruct::set_absolute_time_ref_shift(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 13, value);
 }
-bool BmadCommonStruct::absolute_time_ref_shift() const {
+bool BmadCommonStruct::convert_to_kinetic_momentum() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 14, &value);
   return value;
 }
-void BmadCommonStruct::set_absolute_time_ref_shift(bool value) {
+void BmadCommonStruct::set_convert_to_kinetic_momentum(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 14, value);
 }
-bool BmadCommonStruct::convert_to_kinetic_momentum() const {
+bool BmadCommonStruct::normalize_twiss() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 15, &value);
   return value;
 }
-void BmadCommonStruct::set_convert_to_kinetic_momentum(bool value) {
+void BmadCommonStruct::set_normalize_twiss(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 15, value);
 }
-bool BmadCommonStruct::normalize_twiss() const {
+bool BmadCommonStruct::aperture_limit_on() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 16, &value);
   return value;
 }
-void BmadCommonStruct::set_normalize_twiss(bool value) {
+void BmadCommonStruct::set_aperture_limit_on(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 16, value);
 }
-bool BmadCommonStruct::aperture_limit_on() const {
+bool BmadCommonStruct::spin_n0_direction_user_set() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 17, &value);
   return value;
 }
-void BmadCommonStruct::set_aperture_limit_on(bool value) {
+void BmadCommonStruct::set_spin_n0_direction_user_set(bool value) {
   bmad_common_struct_set_logical(fortran_ptr_, 17, value);
 }
-bool BmadCommonStruct::spin_n0_direction_user_set() const {
+bool BmadCommonStruct::debug() const {
   bool value;
   bmad_common_struct_get_logical(fortran_ptr_, 18, &value);
   return value;
 }
-void BmadCommonStruct::set_spin_n0_direction_user_set(bool value) {
-  bmad_common_struct_set_logical(fortran_ptr_, 18, value);
-}
-bool BmadCommonStruct::debug() const {
-  bool value;
-  bmad_common_struct_get_logical(fortran_ptr_, 19, &value);
-  return value;
-}
 void BmadCommonStruct::set_debug(bool value) {
-  bmad_common_struct_set_logical(fortran_ptr_, 19, value);
+  bmad_common_struct_set_logical(fortran_ptr_, 18, value);
 }
 std::optional<EleStruct> BmadNormalFormStruct::ele_origin() const {
   void *ptr;
@@ -4816,10 +4808,10 @@ CylindricalMapStructArray1D EleStruct::cylindrical_map() const {
       ele_struct_get_cylindrical_map_info
   );
 }
-GenGradientsStructArray1D EleStruct::gen_gradients() const {
-  return ProxyHelpers::get_type_array_1d<GenGradientsStructArray1D>(
+GenGradMapStructArray1D EleStruct::gen_grad_map() const {
+  return ProxyHelpers::get_type_array_1d<GenGradMapStructArray1D>(
       fortran_ptr_,
-      ele_struct_get_gen_gradients_info
+      ele_struct_get_gen_grad_map_info
   );
 }
 GridFieldStructArray1D EleStruct::grid_field() const {
@@ -5283,6 +5275,34 @@ void EmFieldStruct::set_A(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
   em_field_struct_set_A(fortran_ptr_, v.data(), shape);
 }
+double EmTaylorStruct::ref() const {
+  double value;
+  em_taylor_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void EmTaylorStruct::set_ref(double value) { em_taylor_struct_set_real(fortran_ptr_, 0, value); }
+EmTaylorTermStructAlloc1D EmTaylorStruct::term() const {
+  return EmTaylorTermStructAlloc1D(
+      const_cast<void *>(fortran_ptr_),
+      em_taylor_struct_reallocate_term,
+      em_taylor_struct_get_term_info
+  );
+}
+double EmTaylorTermStruct::coef() const {
+  double value;
+  em_taylor_term_struct_get_real(fortran_ptr_, 0, &value);
+  return value;
+}
+void EmTaylorTermStruct::set_coef(double value) {
+  em_taylor_term_struct_set_real(fortran_ptr_, 0, value);
+}
+FArray1D<int> EmTaylorTermStruct::expn() const {
+  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, em_taylor_term_struct_get_expn_info);
+}
+void EmTaylorTermStruct::set_expn(const std::vector<int> &v) {
+  int shape[] = {static_cast<int>(v.size())};
+  em_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
+}
 std::string ExpressionAtomStruct::name() const {
   FArray1D<char> arr =
       ProxyHelpers::get_array_1d<char>(fortran_ptr_, expression_atom_struct_get_name_info);
@@ -5545,381 +5565,357 @@ bool ExtraParsingInfoStruct::high_energy_space_charge_on_set() const {
 void ExtraParsingInfoStruct::set_high_energy_space_charge_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 23, value);
 }
-bool ExtraParsingInfoStruct::high_energy_space_charge_linear_set() const {
+bool ExtraParsingInfoStruct::csr_and_space_charge_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 24, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_high_energy_space_charge_linear_set(bool value) {
+void ExtraParsingInfoStruct::set_csr_and_space_charge_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 24, value);
 }
-bool ExtraParsingInfoStruct::csr_and_space_charge_on_set() const {
+bool ExtraParsingInfoStruct::spin_tracking_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 25, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_csr_and_space_charge_on_set(bool value) {
+void ExtraParsingInfoStruct::set_spin_tracking_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 25, value);
 }
-bool ExtraParsingInfoStruct::spin_tracking_on_set() const {
+bool ExtraParsingInfoStruct::spin_sokolov_ternov_flipping_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 26, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_spin_tracking_on_set(bool value) {
+void ExtraParsingInfoStruct::set_spin_sokolov_ternov_flipping_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 26, value);
 }
-bool ExtraParsingInfoStruct::spin_sokolov_ternov_flipping_on_set() const {
+bool ExtraParsingInfoStruct::radiation_damping_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 27, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_spin_sokolov_ternov_flipping_on_set(bool value) {
+void ExtraParsingInfoStruct::set_radiation_damping_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 27, value);
 }
-bool ExtraParsingInfoStruct::radiation_damping_on_set() const {
+bool ExtraParsingInfoStruct::radiation_zero_average_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 28, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_radiation_damping_on_set(bool value) {
+void ExtraParsingInfoStruct::set_radiation_zero_average_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 28, value);
 }
-bool ExtraParsingInfoStruct::radiation_zero_average_set() const {
+bool ExtraParsingInfoStruct::radiation_fluctuations_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 29, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_radiation_zero_average_set(bool value) {
+void ExtraParsingInfoStruct::set_radiation_fluctuations_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 29, value);
 }
-bool ExtraParsingInfoStruct::radiation_fluctuations_on_set() const {
+bool ExtraParsingInfoStruct::conserve_taylor_maps_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 30, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_radiation_fluctuations_on_set(bool value) {
+void ExtraParsingInfoStruct::set_conserve_taylor_maps_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 30, value);
 }
-bool ExtraParsingInfoStruct::conserve_taylor_maps_set() const {
+bool ExtraParsingInfoStruct::absolute_time_tracking_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 31, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_conserve_taylor_maps_set(bool value) {
+void ExtraParsingInfoStruct::set_absolute_time_tracking_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 31, value);
 }
-bool ExtraParsingInfoStruct::absolute_time_tracking_set() const {
+bool ExtraParsingInfoStruct::absolute_time_ref_shift_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 32, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_absolute_time_tracking_set(bool value) {
+void ExtraParsingInfoStruct::set_absolute_time_ref_shift_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 32, value);
 }
-bool ExtraParsingInfoStruct::absolute_time_ref_shift_set() const {
+bool ExtraParsingInfoStruct::convert_to_kinetic_momentum_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 33, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_absolute_time_ref_shift_set(bool value) {
+void ExtraParsingInfoStruct::set_convert_to_kinetic_momentum_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 33, value);
 }
-bool ExtraParsingInfoStruct::convert_to_kinetic_momentum_set() const {
+bool ExtraParsingInfoStruct::aperture_limit_on_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 34, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_convert_to_kinetic_momentum_set(bool value) {
+void ExtraParsingInfoStruct::set_aperture_limit_on_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 34, value);
 }
-bool ExtraParsingInfoStruct::aperture_limit_on_set() const {
+bool ExtraParsingInfoStruct::normalize_twiss_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 35, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_aperture_limit_on_set(bool value) {
+void ExtraParsingInfoStruct::set_normalize_twiss_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 35, value);
 }
-bool ExtraParsingInfoStruct::normalize_twiss_set() const {
+bool ExtraParsingInfoStruct::sad_eps_scale_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 36, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_normalize_twiss_set(bool value) {
+void ExtraParsingInfoStruct::set_sad_eps_scale_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 36, value);
 }
-bool ExtraParsingInfoStruct::sad_eps_scale_set() const {
+bool ExtraParsingInfoStruct::sad_amp_max_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 37, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sad_eps_scale_set(bool value) {
+void ExtraParsingInfoStruct::set_sad_amp_max_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 37, value);
 }
-bool ExtraParsingInfoStruct::sad_amp_max_set() const {
+bool ExtraParsingInfoStruct::sad_n_div_max_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 38, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sad_amp_max_set(bool value) {
+void ExtraParsingInfoStruct::set_sad_n_div_max_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 38, value);
 }
-bool ExtraParsingInfoStruct::sad_n_div_max_set() const {
+bool ExtraParsingInfoStruct::max_num_runge_kutta_step_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 39, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sad_n_div_max_set(bool value) {
+void ExtraParsingInfoStruct::set_max_num_runge_kutta_step_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 39, value);
 }
-bool ExtraParsingInfoStruct::max_num_runge_kutta_step_set() const {
+bool ExtraParsingInfoStruct::spin_n0_direction_user_set_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 40, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_max_num_runge_kutta_step_set(bool value) {
+void ExtraParsingInfoStruct::set_spin_n0_direction_user_set_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 40, value);
 }
-bool ExtraParsingInfoStruct::spin_n0_direction_user_set_set() const {
+bool ExtraParsingInfoStruct::debug_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 41, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_spin_n0_direction_user_set_set(bool value) {
+void ExtraParsingInfoStruct::set_debug_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 41, value);
 }
-bool ExtraParsingInfoStruct::debug_set() const {
+bool ExtraParsingInfoStruct::ds_track_step_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 42, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_debug_set(bool value) {
+void ExtraParsingInfoStruct::set_ds_track_step_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 42, value);
 }
-bool ExtraParsingInfoStruct::ds_track_step_set() const {
+bool ExtraParsingInfoStruct::dt_track_step_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 43, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_ds_track_step_set(bool value) {
+void ExtraParsingInfoStruct::set_dt_track_step_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 43, value);
 }
-bool ExtraParsingInfoStruct::dt_track_step_set() const {
+bool ExtraParsingInfoStruct::cathode_strength_cutoff_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 44, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_dt_track_step_set(bool value) {
+void ExtraParsingInfoStruct::set_cathode_strength_cutoff_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 44, value);
 }
-bool ExtraParsingInfoStruct::cathode_strength_cutoff_set() const {
+bool ExtraParsingInfoStruct::sc_rel_tol_tracking_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 45, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_cathode_strength_cutoff_set(bool value) {
+void ExtraParsingInfoStruct::set_sc_rel_tol_tracking_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 45, value);
 }
-bool ExtraParsingInfoStruct::sc_rel_tol_tracking_set() const {
+bool ExtraParsingInfoStruct::sc_abs_tol_tracking_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 46, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sc_rel_tol_tracking_set(bool value) {
+void ExtraParsingInfoStruct::set_sc_abs_tol_tracking_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 46, value);
 }
-bool ExtraParsingInfoStruct::sc_abs_tol_tracking_set() const {
+bool ExtraParsingInfoStruct::beam_chamber_height_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 47, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sc_abs_tol_tracking_set(bool value) {
+void ExtraParsingInfoStruct::set_beam_chamber_height_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 47, value);
 }
-bool ExtraParsingInfoStruct::beam_chamber_height_set() const {
+bool ExtraParsingInfoStruct::lsc_sigma_cutoff_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 48, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_beam_chamber_height_set(bool value) {
+void ExtraParsingInfoStruct::set_lsc_sigma_cutoff_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 48, value);
 }
-bool ExtraParsingInfoStruct::lsc_sigma_cutoff_set() const {
+bool ExtraParsingInfoStruct::particle_sigma_cutoff_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 49, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_lsc_sigma_cutoff_set(bool value) {
+void ExtraParsingInfoStruct::set_particle_sigma_cutoff_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 49, value);
 }
-bool ExtraParsingInfoStruct::particle_sigma_cutoff_set() const {
+bool ExtraParsingInfoStruct::space_charge_mesh_size_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 50, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_particle_sigma_cutoff_set(bool value) {
+void ExtraParsingInfoStruct::set_space_charge_mesh_size_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 50, value);
 }
-bool ExtraParsingInfoStruct::space_charge_mesh_size_set() const {
+bool ExtraParsingInfoStruct::csr3d_mesh_size_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 51, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_space_charge_mesh_size_set(bool value) {
+void ExtraParsingInfoStruct::set_csr3d_mesh_size_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 51, value);
 }
-bool ExtraParsingInfoStruct::csr3d_mesh_size_set() const {
+bool ExtraParsingInfoStruct::n_bin_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 52, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_csr3d_mesh_size_set(bool value) {
+void ExtraParsingInfoStruct::set_n_bin_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 52, value);
 }
-bool ExtraParsingInfoStruct::n_bin_set() const {
+bool ExtraParsingInfoStruct::particle_bin_span_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 53, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_n_bin_set(bool value) {
+void ExtraParsingInfoStruct::set_particle_bin_span_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 53, value);
 }
-bool ExtraParsingInfoStruct::particle_bin_span_set() const {
+bool ExtraParsingInfoStruct::n_shield_images_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 54, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_particle_bin_span_set(bool value) {
+void ExtraParsingInfoStruct::set_n_shield_images_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 54, value);
 }
-bool ExtraParsingInfoStruct::n_shield_images_set() const {
+bool ExtraParsingInfoStruct::sc_min_in_bin_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 55, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_n_shield_images_set(bool value) {
+void ExtraParsingInfoStruct::set_sc_min_in_bin_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 55, value);
 }
-bool ExtraParsingInfoStruct::sc_min_in_bin_set() const {
+bool ExtraParsingInfoStruct::lsc_kick_transverse_dependence_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 56, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sc_min_in_bin_set(bool value) {
+void ExtraParsingInfoStruct::set_lsc_kick_transverse_dependence_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 56, value);
 }
-bool ExtraParsingInfoStruct::lsc_kick_transverse_dependence_set() const {
+bool ExtraParsingInfoStruct::sc_debug_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 57, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_lsc_kick_transverse_dependence_set(bool value) {
+void ExtraParsingInfoStruct::set_sc_debug_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 57, value);
 }
-bool ExtraParsingInfoStruct::sc_debug_set() const {
+bool ExtraParsingInfoStruct::diagnostic_output_file_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 58, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_sc_debug_set(bool value) {
+void ExtraParsingInfoStruct::set_diagnostic_output_file_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 58, value);
 }
-bool ExtraParsingInfoStruct::diagnostic_output_file_set() const {
+bool ExtraParsingInfoStruct::old_integrator_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 59, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_diagnostic_output_file_set(bool value) {
+void ExtraParsingInfoStruct::set_old_integrator_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 59, value);
 }
-bool ExtraParsingInfoStruct::old_integrator_set() const {
+bool ExtraParsingInfoStruct::use_orientation_patches_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 60, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_old_integrator_set(bool value) {
+void ExtraParsingInfoStruct::set_use_orientation_patches_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 60, value);
 }
-bool ExtraParsingInfoStruct::use_orientation_patches_set() const {
+bool ExtraParsingInfoStruct::print_info_messages_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 61, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_use_orientation_patches_set(bool value) {
+void ExtraParsingInfoStruct::set_print_info_messages_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 61, value);
 }
-bool ExtraParsingInfoStruct::print_info_messages_set() const {
+bool ExtraParsingInfoStruct::max_fringe_order_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 62, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_print_info_messages_set(bool value) {
+void ExtraParsingInfoStruct::set_max_fringe_order_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 62, value);
 }
-bool ExtraParsingInfoStruct::max_fringe_order_set() const {
+bool ExtraParsingInfoStruct::exact_model_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 63, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_max_fringe_order_set(bool value) {
+void ExtraParsingInfoStruct::set_exact_model_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 63, value);
 }
-bool ExtraParsingInfoStruct::exact_model_set() const {
+bool ExtraParsingInfoStruct::exact_misalign_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 64, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_exact_model_set(bool value) {
+void ExtraParsingInfoStruct::set_exact_misalign_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 64, value);
 }
-bool ExtraParsingInfoStruct::exact_misalign_set() const {
+bool ExtraParsingInfoStruct::vertical_kick_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 65, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_exact_misalign_set(bool value) {
+void ExtraParsingInfoStruct::set_vertical_kick_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 65, value);
 }
-bool ExtraParsingInfoStruct::vertical_kick_set() const {
+bool ExtraParsingInfoStruct::cut_factor_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 66, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_vertical_kick_set(bool value) {
+void ExtraParsingInfoStruct::set_cut_factor_set(bool value) {
   extra_parsing_info_struct_set_logical(fortran_ptr_, 66, value);
 }
-bool ExtraParsingInfoStruct::cut_factor_set() const {
+bool ExtraParsingInfoStruct::translate_patch_drift_time_set() const {
   bool value;
   extra_parsing_info_struct_get_logical(fortran_ptr_, 67, &value);
   return value;
 }
-void ExtraParsingInfoStruct::set_cut_factor_set(bool value) {
-  extra_parsing_info_struct_set_logical(fortran_ptr_, 67, value);
-}
-bool ExtraParsingInfoStruct::translate_patch_drift_time_set() const {
-  bool value;
-  extra_parsing_info_struct_get_logical(fortran_ptr_, 68, &value);
-  return value;
-}
 void ExtraParsingInfoStruct::set_translate_patch_drift_time_set(bool value) {
-  extra_parsing_info_struct_set_logical(fortran_ptr_, 68, value);
-}
-bool ExtraParsingInfoStruct::pancake_symplectic_set() const {
-  bool value;
-  extra_parsing_info_struct_get_logical(fortran_ptr_, 69, &value);
-  return value;
-}
-void ExtraParsingInfoStruct::set_pancake_symplectic_set(bool value) {
-  extra_parsing_info_struct_set_logical(fortran_ptr_, 69, value);
-}
-bool ExtraParsingInfoStruct::pancake_canonical_set() const {
-  bool value;
-  extra_parsing_info_struct_get_logical(fortran_ptr_, 70, &value);
-  return value;
-}
-void ExtraParsingInfoStruct::set_pancake_canonical_set(bool value) {
-  extra_parsing_info_struct_set_logical(fortran_ptr_, 70, value);
+  extra_parsing_info_struct_set_logical(fortran_ptr_, 67, value);
 }
 std::optional<int> Fibre::DIR() const {
   int value;
@@ -6232,121 +6228,117 @@ bool FringeFieldInfoStruct::has_fringe() const {
 void FringeFieldInfoStruct::set_has_fringe(bool value) {
   fringe_field_info_struct_set_logical(fortran_ptr_, 0, value);
 }
-int GenGradCurveStruct::kind() const {
+int GenGrad1Struct::m() const {
   int value;
-  gen_grad_curve_struct_get_integer(fortran_ptr_, 0, &value);
+  gen_grad1_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGradCurveStruct::set_kind(int value) {
-  gen_grad_curve_struct_set_integer(fortran_ptr_, 0, value);
-}
-int GenGradCurveStruct::n() const {
+void GenGrad1Struct::set_m(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 0, value); }
+int GenGrad1Struct::sincos() const {
   int value;
-  gen_grad_curve_struct_get_integer(fortran_ptr_, 1, &value);
+  gen_grad1_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void GenGradCurveStruct::set_n(int value) {
-  gen_grad_curve_struct_set_integer(fortran_ptr_, 1, value);
-}
-int GenGradCurveStruct::m_max() const {
+void GenGrad1Struct::set_sincos(int value) { gen_grad1_struct_set_integer(fortran_ptr_, 1, value); }
+int GenGrad1Struct::n_deriv_max() const {
   int value;
-  gen_grad_curve_struct_get_integer(fortran_ptr_, 2, &value);
+  gen_grad1_struct_get_integer(fortran_ptr_, 2, &value);
   return value;
 }
-void GenGradCurveStruct::set_m_max(int value) {
-  gen_grad_curve_struct_set_integer(fortran_ptr_, 2, value);
+void GenGrad1Struct::set_n_deriv_max(int value) {
+  gen_grad1_struct_set_integer(fortran_ptr_, 2, value);
 }
-FArray2D<double> GenGradCurveStruct::deriv() const {
-  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad_curve_struct_get_deriv_info);
+FArray2D<double> GenGrad1Struct::deriv() const {
+  return ProxyHelpers::get_array_2d<double>(fortran_ptr_, gen_grad1_struct_get_deriv_info);
 }
-void GenGradCurveStruct::set_deriv(const std::vector<std::vector<double>> &v) {
-  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad_curve_struct_set_deriv, v);
+void GenGrad1Struct::set_deriv(const std::vector<std::vector<double>> &v) {
+  ProxyHelpers::set_array_2d<double>(fortran_ptr_, gen_grad1_struct_set_deriv, v);
 }
-std::string GenGradientsStruct::file() const {
+std::string GenGradMapStruct::file() const {
   FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_gradients_struct_get_file_info);
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, gen_grad_map_struct_get_file_info);
   return std::string(arr.data(), arr.size());
 }
-void GenGradientsStruct::set_file(const std::string &value) {
-  gen_gradients_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+void GenGradMapStruct::set_file(const std::string &value) {
+  gen_grad_map_struct_set_file(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
-GenGradCurveStructAlloc1D GenGradientsStruct::curve() const {
-  return GenGradCurveStructAlloc1D(
+GenGrad1StructAlloc1D GenGradMapStruct::gg() const {
+  return GenGrad1StructAlloc1D(
       const_cast<void *>(fortran_ptr_),
-      gen_gradients_struct_reallocate_curve,
-      gen_gradients_struct_get_curve_info
+      gen_grad_map_struct_reallocate_gg,
+      gen_grad_map_struct_get_gg_info
   );
 }
-int GenGradientsStruct::ele_anchor_pt() const {
+int GenGradMapStruct::ele_anchor_pt() const {
   int value;
-  gen_gradients_struct_get_integer(fortran_ptr_, 0, &value);
+  gen_grad_map_struct_get_integer(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGradientsStruct::set_ele_anchor_pt(int value) {
-  gen_gradients_struct_set_integer(fortran_ptr_, 0, value);
+void GenGradMapStruct::set_ele_anchor_pt(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 0, value);
 }
-int GenGradientsStruct::field_type() const {
+int GenGradMapStruct::field_type() const {
   int value;
-  gen_gradients_struct_get_integer(fortran_ptr_, 1, &value);
+  gen_grad_map_struct_get_integer(fortran_ptr_, 1, &value);
   return value;
 }
-void GenGradientsStruct::set_field_type(int value) {
-  gen_gradients_struct_set_integer(fortran_ptr_, 1, value);
+void GenGradMapStruct::set_field_type(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 1, value);
 }
-int GenGradientsStruct::iz0() const {
+int GenGradMapStruct::iz0() const {
   int value;
-  gen_gradients_struct_get_integer(fortran_ptr_, 2, &value);
+  gen_grad_map_struct_get_integer(fortran_ptr_, 2, &value);
   return value;
 }
-void GenGradientsStruct::set_iz0(int value) {
-  gen_gradients_struct_set_integer(fortran_ptr_, 2, value);
+void GenGradMapStruct::set_iz0(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 2, value);
 }
-int GenGradientsStruct::iz1() const {
+int GenGradMapStruct::iz1() const {
   int value;
-  gen_gradients_struct_get_integer(fortran_ptr_, 3, &value);
+  gen_grad_map_struct_get_integer(fortran_ptr_, 3, &value);
   return value;
 }
-void GenGradientsStruct::set_iz1(int value) {
-  gen_gradients_struct_set_integer(fortran_ptr_, 3, value);
+void GenGradMapStruct::set_iz1(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 3, value);
 }
-double GenGradientsStruct::dz() const {
+double GenGradMapStruct::dz() const {
   double value;
-  gen_gradients_struct_get_real(fortran_ptr_, 0, &value);
+  gen_grad_map_struct_get_real(fortran_ptr_, 0, &value);
   return value;
 }
-void GenGradientsStruct::set_dz(double value) {
-  gen_gradients_struct_set_real(fortran_ptr_, 0, value);
+void GenGradMapStruct::set_dz(double value) {
+  gen_grad_map_struct_set_real(fortran_ptr_, 0, value);
 }
-double GenGradientsStruct::g_ref() const {
-  double value;
-  gen_gradients_struct_get_real(fortran_ptr_, 1, &value);
-  return value;
+FArray1D<double> GenGradMapStruct::r0() const {
+  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_grad_map_struct_get_r0_info);
 }
-void GenGradientsStruct::set_g_ref(double value) {
-  gen_gradients_struct_set_real(fortran_ptr_, 1, value);
-}
-FArray1D<double> GenGradientsStruct::r0() const {
-  return ProxyHelpers::get_array_1d<double>(fortran_ptr_, gen_gradients_struct_get_r0_info);
-}
-void GenGradientsStruct::set_r0(const std::vector<double> &v) {
+void GenGradMapStruct::set_r0(const std::vector<double> &v) {
   int shape[] = {static_cast<int>(v.size())};
-  gen_gradients_struct_set_r0(fortran_ptr_, v.data(), shape);
+  gen_grad_map_struct_set_r0(fortran_ptr_, v.data(), shape);
 }
-double GenGradientsStruct::field_scale() const {
+double GenGradMapStruct::field_scale() const {
   double value;
-  gen_gradients_struct_get_real(fortran_ptr_, 2, &value);
+  gen_grad_map_struct_get_real(fortran_ptr_, 1, &value);
   return value;
 }
-void GenGradientsStruct::set_field_scale(double value) {
-  gen_gradients_struct_set_real(fortran_ptr_, 2, value);
+void GenGradMapStruct::set_field_scale(double value) {
+  gen_grad_map_struct_set_real(fortran_ptr_, 1, value);
 }
-int GenGradientsStruct::master_parameter() const {
+int GenGradMapStruct::master_parameter() const {
   int value;
-  gen_gradients_struct_get_integer(fortran_ptr_, 4, &value);
+  gen_grad_map_struct_get_integer(fortran_ptr_, 4, &value);
   return value;
 }
-void GenGradientsStruct::set_master_parameter(int value) {
-  gen_gradients_struct_set_integer(fortran_ptr_, 4, value);
+void GenGradMapStruct::set_master_parameter(int value) {
+  gen_grad_map_struct_set_integer(fortran_ptr_, 4, value);
+}
+bool GenGradMapStruct::curved_ref_frame() const {
+  bool value;
+  gen_grad_map_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void GenGradMapStruct::set_curved_ref_frame(bool value) {
+  gen_grad_map_struct_set_logical(fortran_ptr_, 0, value);
 }
 RealAlloc1D GeneralBinStruct::count() const {
   return RealAlloc1D(
@@ -6394,34 +6386,6 @@ FArray1D<int> GeneralBinStruct::n() const {
 void GeneralBinStruct::set_n(const std::vector<int> &v) {
   int shape[] = {static_cast<int>(v.size())};
   general_bin_struct_set_n(fortran_ptr_, v.data(), shape);
-}
-double GgTaylorStruct::ref() const {
-  double value;
-  gg_taylor_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GgTaylorStruct::set_ref(double value) { gg_taylor_struct_set_real(fortran_ptr_, 0, value); }
-GgTaylorTermStructAlloc1D GgTaylorStruct::term() const {
-  return GgTaylorTermStructAlloc1D(
-      const_cast<void *>(fortran_ptr_),
-      gg_taylor_struct_reallocate_term,
-      gg_taylor_struct_get_term_info
-  );
-}
-double GgTaylorTermStruct::coef() const {
-  double value;
-  gg_taylor_term_struct_get_real(fortran_ptr_, 0, &value);
-  return value;
-}
-void GgTaylorTermStruct::set_coef(double value) {
-  gg_taylor_term_struct_set_real(fortran_ptr_, 0, value);
-}
-FArray1D<int> GgTaylorTermStruct::expn() const {
-  return ProxyHelpers::get_array_1d<int>(fortran_ptr_, gg_taylor_term_struct_get_expn_info);
-}
-void GgTaylorTermStruct::set_expn(const std::vector<int> &v) {
-  int shape[] = {static_cast<int>(v.size())};
-  gg_taylor_term_struct_set_expn(fortran_ptr_, v.data(), shape);
 }
 int GptLatParamStruct::fieldmap_dimension() const {
   int value;
@@ -7338,14 +7302,6 @@ int LatStruct::ramper_slave_bookkeeping() const {
 }
 void LatStruct::set_ramper_slave_bookkeeping(int value) {
   lat_struct_set_integer(fortran_ptr_, 6, value);
-}
-bool LatStruct::parser_make_xfer_mats() const {
-  bool value;
-  lat_struct_get_logical(fortran_ptr_, 0, &value);
-  return value;
-}
-void LatStruct::set_parser_make_xfer_mats(bool value) {
-  lat_struct_set_logical(fortran_ptr_, 0, value);
 }
 std::string Layout::NAME() const {
   return ProxyHelpers::get_string(fortran_ptr_, layout_get_NAME_info);
@@ -10487,22 +10443,6 @@ double SpaceChargeCommonStruct::particle_sigma_cutoff() const {
 void SpaceChargeCommonStruct::set_particle_sigma_cutoff(double value) {
   space_charge_common_struct_set_real(fortran_ptr_, 7, value);
 }
-double SpaceChargeCommonStruct::mesh_growth_factor() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 8, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_mesh_growth_factor(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 8, value);
-}
-double SpaceChargeCommonStruct::mesh_shrink_factor() const {
-  double value;
-  space_charge_common_struct_get_real(fortran_ptr_, 9, &value);
-  return value;
-}
-void SpaceChargeCommonStruct::set_mesh_shrink_factor(double value) {
-  space_charge_common_struct_set_real(fortran_ptr_, 9, value);
-}
 FArray1D<int> SpaceChargeCommonStruct::space_charge_mesh_size() const {
   return ProxyHelpers::get_array_1d<int>(
       fortran_ptr_,
@@ -11617,18 +11557,6 @@ bool TaoCommandFileStruct::plot_save() const {
 void TaoCommandFileStruct::set_plot_save(bool value) {
   tao_command_file_struct_set_logical(fortran_ptr_, 3, value);
 }
-std::string TaoCommandFileStruct::multi_cmd() const {
-  FArray1D<char> arr =
-      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_command_file_struct_get_multi_cmd_info);
-  return std::string(arr.data(), arr.size());
-}
-void TaoCommandFileStruct::set_multi_cmd(const std::string &value) {
-  tao_command_file_struct_set_multi_cmd(
-      fortran_ptr_,
-      value.c_str(),
-      static_cast<int>(value.length())
-  );
-}
 TaoAliasStructArray1D TaoCommonStruct::alias() const {
   return ProxyHelpers::get_type_array_1d<TaoAliasStructArray1D>(
       fortran_ptr_,
@@ -11980,6 +11908,18 @@ std::string TaoCommonStruct::cmd() const {
 }
 void TaoCommonStruct::set_cmd(const std::string &value) {
   tao_common_struct_set_cmd(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
+}
+std::string TaoCommonStruct::saved_cmd_line() const {
+  FArray1D<char> arr =
+      ProxyHelpers::get_array_1d<char>(fortran_ptr_, tao_common_struct_get_saved_cmd_line_info);
+  return std::string(arr.data(), arr.size());
+}
+void TaoCommonStruct::set_saved_cmd_line(const std::string &value) {
+  tao_common_struct_set_saved_cmd_line(
+      fortran_ptr_,
+      value.c_str(),
+      static_cast<int>(value.length())
+  );
 }
 std::optional<TaoCurveStruct> TaoCurveArrayStruct::c() const {
   void *ptr;

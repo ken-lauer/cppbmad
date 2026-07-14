@@ -158,17 +158,36 @@ available.
 )"""
   );
   m.def(
+      "inverse_prob",
+      &SimUtils::inverse_prob,
+      nb::arg("val"),
+      R"""(Wrapper for Fortran routine inverse_prob
+
+Parameters
+----------
+val : float
+
+Returns
+-------
+prob : float
+)"""
+  );
+  m.def(
       "is_alphabetic",
       &SimUtils::is_alphabetic,
       nb::arg("string"),
       nb::arg("valid_chars") = nb::none(),
-      R"""(no longer exists
-function inverse_prob (val) result (prob)
-  import
-  implicit none
-  real(rp) prob
-  real(rp) val
-end function
+      R"""(Wrapper for Fortran routine is_alphabetic
+
+Parameters
+----------
+string : str
+
+valid_chars : str, optional
+
+Returns
+-------
+is_alpha : bool
 )"""
   );
   m.def(

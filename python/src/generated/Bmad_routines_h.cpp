@@ -109,7 +109,7 @@ has_attribs : bool
          bool error,
          EleStruct *ele,
          PmdHeaderStruct *pmd_header,
-         std::optional<bool> print_mom_shift_warning,
+         std::optional<bool> print_p0c_shift_warning,
          std::optional<bool> conserve_momentum) {
         auto fn = static_cast<void (*)(
             std::string,
@@ -126,7 +126,7 @@ has_attribs : bool
             error,
             ptr_to_opt_ref(ele),
             ptr_to_opt_ref(pmd_header),
-            print_mom_shift_warning,
+            print_p0c_shift_warning,
             conserve_momentum
         );
       },
@@ -135,7 +135,7 @@ has_attribs : bool
       nb::arg("error"),
       nb::arg("ele") = nb::none(),
       nb::arg("pmd_header") = nb::none(),
-      nb::arg("print_mom_shift_warning") = nb::none(),
+      nb::arg("print_p0c_shift_warning") = nb::none(),
       nb::arg("conserve_momentum") = nb::none(),
       R"""(Wrapper for Fortran routine hdf5_read_beam
 
@@ -151,7 +151,7 @@ ele : EleStruct, optional
 
 pmd_header : PmdHeaderStruct, optional
 
-print_mom_shift_warning : bool, optional
+print_p0c_shift_warning : bool, optional
 
 conserve_momentum : bool, optional
 )"""

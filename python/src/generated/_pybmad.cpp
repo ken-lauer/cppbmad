@@ -273,6 +273,13 @@ NB_MODULE(_pybmad, m) {
   );
   auto py_EmFieldStruct =
       nb::class_<EmFieldStruct>(m, "EmFieldStruct", "Fortran struct: em_field_struct");
+  auto py_EmTaylorStruct =
+      nb::class_<EmTaylorStruct>(m, "EmTaylorStruct", "Fortran struct: em_taylor_struct");
+  auto py_EmTaylorTermStruct = nb::class_<EmTaylorTermStruct>(
+      m,
+      "EmTaylorTermStruct",
+      "Fortran struct: em_taylor_term_struct"
+  );
   auto py_ExpressionAtomStruct = nb::class_<ExpressionAtomStruct>(
       m,
       "ExpressionAtomStruct",
@@ -320,25 +327,12 @@ NB_MODULE(_pybmad, m) {
       "FringeFieldInfoStruct",
       "Fortran struct: fringe_field_info_struct"
   );
-  auto py_GenGradCurveStruct = nb::class_<GenGradCurveStruct>(
-      m,
-      "GenGradCurveStruct",
-      "Fortran struct: gen_grad_curve_struct"
-  );
-  auto py_GenGradientsStruct = nb::class_<GenGradientsStruct>(
-      m,
-      "GenGradientsStruct",
-      "Fortran struct: gen_gradients_struct"
-  );
+  auto py_GenGrad1Struct =
+      nb::class_<GenGrad1Struct>(m, "GenGrad1Struct", "Fortran struct: gen_grad1_struct");
+  auto py_GenGradMapStruct =
+      nb::class_<GenGradMapStruct>(m, "GenGradMapStruct", "Fortran struct: gen_grad_map_struct");
   auto py_GeneralBinStruct =
       nb::class_<GeneralBinStruct>(m, "GeneralBinStruct", "Fortran struct: general_bin_struct");
-  auto py_GgTaylorStruct =
-      nb::class_<GgTaylorStruct>(m, "GgTaylorStruct", "Fortran struct: gg_taylor_struct");
-  auto py_GgTaylorTermStruct = nb::class_<GgTaylorTermStruct>(
-      m,
-      "GgTaylorTermStruct",
-      "Fortran struct: gg_taylor_term_struct"
-  );
   auto py_GptLatParamStruct =
       nb::class_<GptLatParamStruct>(m, "GptLatParamStruct", "Fortran struct: gpt_lat_param_struct");
   auto py_GridBeamInitStruct = nb::class_<GridBeamInitStruct>(
@@ -1054,6 +1048,8 @@ NB_MODULE(_pybmad, m) {
   init_ele_struct(m, py_EleStruct);
   init_ellipse_beam_init_struct(m, py_EllipseBeamInitStruct);
   init_em_field_struct(m, py_EmFieldStruct);
+  init_em_taylor_struct(m, py_EmTaylorStruct);
+  init_em_taylor_term_struct(m, py_EmTaylorTermStruct);
   init_expression_atom_struct(m, py_ExpressionAtomStruct);
   init_expression_tree_struct(m, py_ExpressionTreeStruct);
   init_extra_parsing_info_struct(m, py_ExtraParsingInfoStruct);
@@ -1065,11 +1061,9 @@ NB_MODULE(_pybmad, m) {
   init_floor_position_struct(m, py_FloorPositionStruct);
   init_foil_struct(m, py_FoilStruct);
   init_fringe_field_info_struct(m, py_FringeFieldInfoStruct);
-  init_gen_grad_curve_struct(m, py_GenGradCurveStruct);
-  init_gen_gradients_struct(m, py_GenGradientsStruct);
+  init_gen_grad1_struct(m, py_GenGrad1Struct);
+  init_gen_grad_map_struct(m, py_GenGradMapStruct);
   init_general_bin_struct(m, py_GeneralBinStruct);
-  init_gg_taylor_struct(m, py_GgTaylorStruct);
-  init_gg_taylor_term_struct(m, py_GgTaylorTermStruct);
   init_gpt_lat_param_struct(m, py_GptLatParamStruct);
   init_grid_beam_init_struct(m, py_GridBeamInitStruct);
   init_grid_field_pt1_struct(m, py_GridFieldPt1Struct);
@@ -1328,7 +1322,6 @@ NB_MODULE(_pybmad, m) {
   init_SimUtils_routines_v(m_simutils);
   init_SimUtils_routines_w(m_simutils);
   init_SimUtils_routines_x(m_simutils);
-  init_SimUtils_routines_z(m_simutils);
   init_Tao_routines_i(m_tao);
   init_Tao_routines_t(m_tao);
   init_bsim_routines_b(m_bsim);

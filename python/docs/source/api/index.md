@@ -38,7 +38,6 @@
 | `ALL_GROUPS` | Enum | [Enums](enums.md) |
 | [`all_pointer_to_string`](sim_utils.md#all_pointer_to_string) | Routine | [Sim Utils](sim_utils.md) |
 | [`allocate_branch_array`](bmad.md#allocate_branch_array) | Routine | [Bmad](bmad.md) |
-| [`allocate_grid_field`](bmad.md#allocate_grid_field) | Routine | [Bmad](bmad.md) |
 | [`allocate_lat_ele_array`](bmad.md#allocate_lat_ele_array) | Routine | [Bmad](bmad.md) |
 | [`allocate_plat`](bmad.md#allocate_plat) | Routine | [Bmad](bmad.md) |
 | [`allocate_thread_states`](sim_utils.md#allocate_thread_states) | Routine | [Sim Utils](sim_utils.md) |
@@ -96,7 +95,6 @@
 | [`apply_all_rampers`](bmad.md#apply_all_rampers) | Routine | [Bmad](bmad.md) |
 | [`apply_element_edge_kick`](bmad.md#apply_element_edge_kick) | Routine | [Bmad](bmad.md) |
 | [`apply_energy_kick`](bmad.md#apply_energy_kick) | Routine | [Bmad](bmad.md) |
-| [`apply_fft_3d_kicks`](bmad.md#apply_fft_3d_kicks) | Routine | [Bmad](bmad.md) |
 | [`apply_patch_to_ptc_fibre`](bmad.md#apply_patch_to_ptc_fibre) | Routine | [Bmad](bmad.md) |
 | [`apply_rampers_to_slave`](bmad.md#apply_rampers_to_slave) | Routine | [Bmad](bmad.md) |
 | `AREA_DENSITY` | Enum | [Enums](enums.md) |
@@ -165,7 +163,6 @@
 | [BbuStageStruct](bsim.md#bbustagestruct) | Struct | [Bsim](bsim.md) |
 | [`beam_envelope_ibs`](bmad.md#beam_envelope_ibs) | Routine | [Bmad](bmad.md) |
 | [`beam_equal_beam`](bmad.md#beam_equal_beam) | Routine | [Bmad](bmad.md) |
-| [`beam_init_setup`](bmad.md#beam_init_setup) | Routine | [Bmad](bmad.md) |
 | [`beam_tilts`](bmad.md#beam_tilts) | Routine | [Bmad](bmad.md) |
 | `BEAMBEAM` | Enum | [Enums](enums.md) |
 | [`beambeam_fibre_setup`](bmad.md#beambeam_fibre_setup) | Routine | [Bmad](bmad.md) |
@@ -185,7 +182,6 @@
 | `BEND_TILT` | Enum | [Enums](enums.md) |
 | [`bend_vert_angle_integ_prob`](bmad.md#bend_vert_angle_integ_prob) | Routine | [Bmad](bmad.md) |
 | `BENDS` | Enum | [Enums](enums.md) |
-| `BENDS_REFERENCE` | Enum | [Enums](enums.md) |
 | `BETA_A` | Enum | [Enums](enums.md) |
 | `BETA_A0` | Enum | [Enums](enums.md) |
 | `BETA_A1` | Enum | [Enums](enums.md) |
@@ -457,7 +453,6 @@
 | [CsrParticlePositionStruct](bmad.md#csrparticlepositionstruct) | Struct | [Bmad](bmad.md) |
 | [CsrStruct](bmad.md#csrstruct) | Struct | [Bmad](bmad.md) |
 | `CUBIC` | Enum | [Enums](enums.md) |
-| [`cumulr`](bmad.md#cumulr) | Routine | [Bmad](bmad.md) |
 | `CURLY_BRACKETS` | Enum | [Enums](enums.md) |
 | `CURRENT` | Enum | [Enums](enums.md) |
 | `CURVATURE` | Enum | [Enums](enums.md) |
@@ -476,7 +471,6 @@
 | [CylindricalMapTermStruct](bmad.md#cylindricalmaptermstruct) | Struct | [Bmad](bmad.md) |
 | `D1_THICKNESS` | Enum | [Enums](enums.md) |
 | `D2_THICKNESS` | Enum | [Enums](enums.md) |
-| [`d_integral`](bmad.md#d_integral) | Routine | [Bmad](bmad.md) |
 | `D_SPACING` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_A` | Enum | [Enums](enums.md) |
 | `DALPHA_DPZ_A_STORED` | Enum | [Enums](enums.md) |
@@ -500,11 +494,11 @@
 | `DCMAT_DPZ_12_STORED` | Enum | [Enums](enums.md) |
 | `DCMAT_DPZ_21_STORED` | Enum | [Enums](enums.md) |
 | `DCMAT_DPZ_22_STORED` | Enum | [Enums](enums.md) |
-| [`ddz_calc_csr`](bmad.md#ddz_calc_csr) | Routine | [Bmad](bmad.md) |
 | `DE_ETA_MEAS` | Enum | [Enums](enums.md) |
 | [`deallocate_ele_pointers`](bmad.md#deallocate_ele_pointers) | Routine | [Bmad](bmad.md) |
 | [`deallocate_expression_tree`](bmad.md#deallocate_expression_tree) | Routine | [Bmad](bmad.md) |
 | [`deallocate_lat_pointers`](bmad.md#deallocate_lat_pointers) | Routine | [Bmad](bmad.md) |
+| [`deallocate_tree`](bmad.md#deallocate_tree) | Routine | [Bmad](bmad.md) |
 | `DEF_BMAD_COM` | Enum | [Enums](enums.md) |
 | `DEF_LINE` | Enum | [Enums](enums.md) |
 | `DEF_MAD_BEAM` | Enum | [Enums](enums.md) |
@@ -633,6 +627,7 @@
 | [`ele_nametable_index`](bmad.md#ele_nametable_index) | Routine | [Bmad](bmad.md) |
 | [`ele_order_calc`](bmad.md#ele_order_calc) | Routine | [Bmad](bmad.md) |
 | `ELE_ORIGIN` | Enum | [Enums](enums.md) |
+| [`ele_rad_int_cache_calc`](bmad.md#ele_rad_int_cache_calc) | Routine | [Bmad](bmad.md) |
 | [`ele_reference_energy_correction`](bmad.md#ele_reference_energy_correction) | Routine | [Bmad](bmad.md) |
 | [`ele_rf_step_index`](bmad.md#ele_rf_step_index) | Routine | [Bmad](bmad.md) |
 | [`ele_to_fibre`](bmad.md#ele_to_fibre) | Routine | [Bmad](bmad.md) |
@@ -663,17 +658,20 @@
 | [`em_field_derivatives`](bmad.md#em_field_derivatives) | Routine | [Bmad](bmad.md) |
 | [`em_field_kick_vector_time`](bmad.md#em_field_kick_vector_time) | Routine | [Bmad](bmad.md) |
 | [`em_field_plus_em_field`](bmad.md#em_field_plus_em_field) | Routine | [Bmad](bmad.md) |
+| [`em_taylor_equal_em_taylor`](bmad.md#em_taylor_equal_em_taylor) | Routine | [Bmad](bmad.md) |
+| [`em_taylors_equal_em_taylors`](bmad.md#em_taylors_equal_em_taylors) | Routine | [Bmad](bmad.md) |
 | [EmFieldStruct](bmad.md#emfieldstruct) | Struct | [Bmad](bmad.md) |
 | [`emit_6d`](bmad.md#emit_6d) | Routine | [Bmad](bmad.md) |
 | `EMIT_FRACTION` | Enum | [Enums](enums.md) |
 | `EMITTANCE_A` | Enum | [Enums](enums.md) |
 | `EMITTANCE_B` | Enum | [Enums](enums.md) |
 | `EMITTANCE_Z` | Enum | [Enums](enums.md) |
+| [EmTaylorStruct](bmad.md#emtaylorstruct) | Struct | [Bmad](bmad.md) |
+| [EmTaylorTermStruct](bmad.md#emtaylortermstruct) | Struct | [Bmad](bmad.md) |
 | [`end_akima_spline_calc`](sim_utils.md#end_akima_spline_calc) | Routine | [Sim Utils](sim_utils.md) |
 | `END_EDGE` | Enum | [Enums](enums.md) |
 | `END_STACK` | Enum | [Enums](enums.md) |
 | `ENERGY_DISTRIBUTION` | Enum | [Enums](enums.md) |
-| [`energy_func`](bmad.md#energy_func) | Routine | [Bmad](bmad.md) |
 | `ENERGY_PROBABILITY_CURVE` | Enum | [Enums](enums.md) |
 | [`entering_element`](bmad.md#entering_element) | Routine | [Bmad](bmad.md) |
 | `ENTRANCE_END` | Enum | [Enums](enums.md) |
@@ -712,12 +710,12 @@
 | [`eq_ele`](bmad.md#eq_ele) | Routine | [Bmad](bmad.md) |
 | [`eq_ellipse_beam_init`](bmad.md#eq_ellipse_beam_init) | Routine | [Bmad](bmad.md) |
 | [`eq_em_field`](bmad.md#eq_em_field) | Routine | [Bmad](bmad.md) |
+| [`eq_em_taylor`](bmad.md#eq_em_taylor) | Routine | [Bmad](bmad.md) |
+| [`eq_em_taylor_term`](bmad.md#eq_em_taylor_term) | Routine | [Bmad](bmad.md) |
 | [`eq_expression_atom`](bmad.md#eq_expression_atom) | Routine | [Bmad](bmad.md) |
 | [`eq_floor_position`](bmad.md#eq_floor_position) | Routine | [Bmad](bmad.md) |
-| [`eq_gen_grad_curve`](bmad.md#eq_gen_grad_curve) | Routine | [Bmad](bmad.md) |
-| [`eq_gen_gradients`](bmad.md#eq_gen_gradients) | Routine | [Bmad](bmad.md) |
-| [`eq_gg_taylor`](bmad.md#eq_gg_taylor) | Routine | [Bmad](bmad.md) |
-| [`eq_gg_taylor_term`](bmad.md#eq_gg_taylor_term) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_grad1`](bmad.md#eq_gen_grad1) | Routine | [Bmad](bmad.md) |
+| [`eq_gen_grad_map`](bmad.md#eq_gen_grad_map) | Routine | [Bmad](bmad.md) |
 | [`eq_grid_beam_init`](bmad.md#eq_grid_beam_init) | Routine | [Bmad](bmad.md) |
 | [`eq_grid_field`](bmad.md#eq_grid_field) | Routine | [Bmad](bmad.md) |
 | [`eq_grid_field_pt`](bmad.md#eq_grid_field_pt) | Routine | [Bmad](bmad.md) |
@@ -836,6 +834,7 @@
 | `FB1` | Enum | [Enums](enums.md) |
 | `FB2` | Enum | [Enums](enums.md) |
 | `FEEDBACK` | Enum | [Enums](enums.md) |
+| [`fff_sub`](sim_utils.md#fff_sub) | Routine | [Sim Utils](sim_utils.md) |
 | [`fft1`](bmad.md#fft1) | Routine | [Bmad](bmad.md) |
 | [`fft_1d`](sim_utils.md#fft_1d) | Routine | [Sim Utils](sim_utils.md) |
 | `FFT_3D` | Enum | [Enums](enums.md) |
@@ -852,7 +851,6 @@
 | `FIELD_MASTER` | Enum | [Enums](enums.md) |
 | `FIELD_OVERLAPS` | Enum | [Enums](enums.md) |
 | `FIELD_SCALE_FACTOR` | Enum | [Enums](enums.md) |
-| `FIELD_SLAVE` | Enum | [Enums](enums.md) |
 | `FIELD_X` | Enum | [Enums](enums.md) |
 | `FIELD_Y` | Enum | [Enums](enums.md) |
 | [FieldAt2DBoxStruct](sim_utils.md#fieldat2dboxstruct) | Struct | [Sim Utils](sim_utils.md) |
@@ -920,15 +918,16 @@
 | `GAUSSIAN` | Enum | [Enums](enums.md) |
 | [`gelbd`](sim_utils.md#gelbd) | Routine | [Sim Utils](sim_utils.md) |
 | [`gen_complete_elliptic`](sim_utils.md#gen_complete_elliptic) | Routine | [Sim Utils](sim_utils.md) |
-| [`gen_grad_at_s_to_gg_a_taylor`](bmad.md#gen_grad_at_s_to_gg_a_taylor) | Routine | [Bmad](bmad.md) |
-| [`gen_grad_at_s_to_gg_taylor`](bmad.md#gen_grad_at_s_to_gg_taylor) | Routine | [Bmad](bmad.md) |
-| `GEN_GRADIENTS` | Enum | [Enums](enums.md) |
+| [`gen_grad1_to_em_taylor`](bmad.md#gen_grad1_to_em_taylor) | Routine | [Bmad](bmad.md) |
+| [`gen_grad_at_s_to_em_taylor`](bmad.md#gen_grad_at_s_to_em_taylor) | Routine | [Bmad](bmad.md) |
+| [`gen_grad_field`](bmad.md#gen_grad_field) | Routine | [Bmad](bmad.md) |
+| `GEN_GRAD_MAP` | Enum | [Enums](enums.md) |
 | [`general_bin_count`](sim_utils.md#general_bin_count) | Routine | [Sim Utils](sim_utils.md) |
 | [`general_bin_index`](sim_utils.md#general_bin_index) | Routine | [Sim Utils](sim_utils.md) |
 | [`general_bin_index_in_bounds`](sim_utils.md#general_bin_index_in_bounds) | Routine | [Sim Utils](sim_utils.md) |
 | [GeneralBinStruct](sim_utils.md#generalbinstruct) | Struct | [Sim Utils](sim_utils.md) |
-| [GenGradCurveStruct](bmad.md#gengradcurvestruct) | Struct | [Bmad](bmad.md) |
-| [GenGradientsStruct](bmad.md#gengradientsstruct) | Struct | [Bmad](bmad.md) |
+| [GenGrad1Struct](bmad.md#gengrad1struct) | Struct | [Bmad](bmad.md) |
+| [GenGradMapStruct](bmad.md#gengradmapstruct) | Struct | [Bmad](bmad.md) |
 | `GEOMETRY` | Enum | [Enums](enums.md) |
 | [`get_a_char`](sim_utils.md#get_a_char) | Routine | [Sim Utils](sim_utils.md) |
 | [`get_astra_fieldgrid_name_and_scaling`](bmad.md#get_astra_fieldgrid_name_and_scaling) | Routine | [Bmad](bmad.md) |
@@ -939,6 +938,7 @@
 | [`get_file_time_stamp`](sim_utils.md#get_file_time_stamp) | Routine | [Sim Utils](sim_utils.md) |
 | [`get_gpt_fieldgrid_name_and_scaling`](bmad.md#get_gpt_fieldgrid_name_and_scaling) | Routine | [Bmad](bmad.md) |
 | [`get_list_of_names`](bmad.md#get_list_of_names) | Routine | [Bmad](bmad.md) |
+| [`get_next_number`](sim_utils.md#get_next_number) | Routine | [Sim Utils](sim_utils.md) |
 | [`get_next_word`](bmad.md#get_next_word) | Routine | [Bmad](bmad.md) |
 | [`get_opal_fieldgrid_name_and_scaling`](bmad.md#get_opal_fieldgrid_name_and_scaling) | Routine | [Bmad](bmad.md) |
 | [`get_overlay_group_names`](bmad.md#get_overlay_group_names) | Routine | [Bmad](bmad.md) |
@@ -946,28 +946,6 @@
 | [`get_slave_list`](bmad.md#get_slave_list) | Routine | [Bmad](bmad.md) |
 | [`get_switch`](bmad.md#get_switch) | Routine | [Bmad](bmad.md) |
 | [`get_tty_char`](sim_utils.md#get_tty_char) | Routine | [Sim Utils](sim_utils.md) |
-| `GG_A` | Enum | [Enums](enums.md) |
-| `GG_B` | Enum | [Enums](enums.md) |
-| `GG_BS` | Enum | [Enums](enums.md) |
-| [`gg_coef_table_init`](bmad.md#gg_coef_table_init) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_001`](bmad.md#gg_set_block_001) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_002`](bmad.md#gg_set_block_002) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_003`](bmad.md#gg_set_block_003) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_004`](bmad.md#gg_set_block_004) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_005`](bmad.md#gg_set_block_005) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_006`](bmad.md#gg_set_block_006) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_007`](bmad.md#gg_set_block_007) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_008`](bmad.md#gg_set_block_008) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_009`](bmad.md#gg_set_block_009) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_010`](bmad.md#gg_set_block_010) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_011`](bmad.md#gg_set_block_011) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_012`](bmad.md#gg_set_block_012) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_013`](bmad.md#gg_set_block_013) | Routine | [Bmad](bmad.md) |
-| [`gg_set_block_014`](bmad.md#gg_set_block_014) | Routine | [Bmad](bmad.md) |
-| [`gg_taylor_equal_gg_taylor`](bmad.md#gg_taylor_equal_gg_taylor) | Routine | [Bmad](bmad.md) |
-| [`gg_taylors_equal_gg_taylors`](bmad.md#gg_taylors_equal_gg_taylors) | Routine | [Bmad](bmad.md) |
-| [GgTaylorStruct](bmad.md#ggtaylorstruct) | Struct | [Bmad](bmad.md) |
-| [GgTaylorTermStruct](bmad.md#ggtaylortermstruct) | Struct | [Bmad](bmad.md) |
 | `GIRDER` | Enum | [Enums](enums.md) |
 | `GIRDER_LORD` | Enum | [Enums](enums.md) |
 | `GKICKER` | Enum | [Enums](enums.md) |
@@ -1066,8 +1044,8 @@
 | [`init_coord`](bmad.md#init_coord) | Routine | [Bmad](bmad.md) |
 | [`init_custom`](bmad.md#init_custom) | Routine | [Bmad](bmad.md) |
 | [`init_ele`](bmad.md#init_ele) | Routine | [Bmad](bmad.md) |
+| [`init_em_taylor_series`](bmad.md#init_em_taylor_series) | Routine | [Bmad](bmad.md) |
 | [`init_fringe_info`](bmad.md#init_fringe_info) | Routine | [Bmad](bmad.md) |
-| [`init_gg_taylor_series`](bmad.md#init_gg_taylor_series) | Routine | [Bmad](bmad.md) |
 | [`init_lat`](bmad.md#init_lat) | Routine | [Bmad](bmad.md) |
 | [`init_multipole_cache`](bmad.md#init_multipole_cache) | Routine | [Bmad](bmad.md) |
 | `INIT_NEEDED` | Enum | [Enums](enums.md) |
@@ -1101,6 +1079,7 @@
 | [Interval1CoefStruct](bmad.md#interval1coefstruct) | Struct | [Bmad](bmad.md) |
 | `INVALID` | Enum | [Enums](enums.md) |
 | `INVALID_NAME` | Enum | [Enums](enums.md) |
+| [`inverse_prob`](sim_utils.md#inverse_prob) | Routine | [Sim Utils](sim_utils.md) |
 | [`ion_kick`](bmad.md#ion_kick) | Routine | [Bmad](bmad.md) |
 | [`is_alphabetic`](sim_utils.md#is_alphabetic) | Routine | [Sim Utils](sim_utils.md) |
 | [`is_attribute`](bmad.md#is_attribute) | Routine | [Bmad](bmad.md) |
@@ -1115,7 +1094,6 @@
 | `IS_ON` | Enum | [Enums](enums.md) |
 | [`is_real`](sim_utils.md#is_real) | Routine | [Sim Utils](sim_utils.md) |
 | `IS_REAL` | Enum | [Enums](enums.md) |
-| `IS_SPECIES` | Enum | [Enums](enums.md) |
 | `IS_STRING` | Enum | [Enums](enums.md) |
 | `IS_STRUCT` | Enum | [Enums](enums.md) |
 | [`is_subatomic_species`](sim_utils.md#is_subatomic_species) | Routine | [Sim Utils](sim_utils.md) |
@@ -1128,7 +1106,6 @@
 | `IX_TO_ELEMENT` | Enum | [Enums](enums.md) |
 | [`j_bessel`](sim_utils.md#j_bessel) | Routine | [Sim Utils](sim_utils.md) |
 | `K0L` | Enum | [Enums](enums.md) |
-| `K0L_STATUS` | Enum | [Enums](enums.md) |
 | `K0SL` | Enum | [Enums](enums.md) |
 | `K1` | Enum | [Enums](enums.md) |
 | `K1X` | Enum | [Enums](enums.md) |
@@ -1270,6 +1247,7 @@
 | [`make_mat6_bmad_photon`](bmad.md#make_mat6_bmad_photon) | Routine | [Bmad](bmad.md) |
 | [`make_mat6_high_energy_space_charge`](bmad.md#make_mat6_high_energy_space_charge) | Routine | [Bmad](bmad.md) |
 | [`make_mat6_mad`](bmad.md#make_mat6_mad) | Routine | [Bmad](bmad.md) |
+| [`make_mat6_runge_kutta`](bmad.md#make_mat6_runge_kutta) | Routine | [Bmad](bmad.md) |
 | [`make_mat6_symp_lie_ptc`](bmad.md#make_mat6_symp_lie_ptc) | Routine | [Bmad](bmad.md) |
 | [`make_mat6_taylor`](bmad.md#make_mat6_taylor) | Routine | [Bmad](bmad.md) |
 | [`make_mat6_tracking`](bmad.md#make_mat6_tracking) | Routine | [Bmad](bmad.md) |
@@ -1414,8 +1392,6 @@
 | [`nametable_remove`](sim_utils.md#nametable_remove) | Routine | [Sim Utils](sim_utils.md) |
 | [NametableStruct](sim_utils.md#nametablestruct) | Struct | [Sim Utils](sim_utils.md) |
 | `NAVY_BLUE` | Enum | [Enums](enums.md) |
-| [`negative_ampsquared`](sim_utils.md#negative_ampsquared) | Routine | [Sim Utils](sim_utils.md) |
-| [`negative_dampsquared`](sim_utils.md#negative_dampsquared) | Routine | [Sim Utils](sim_utils.md) |
 | `NEUTRON` | Enum | [Enums](enums.md) |
 | `NEW_BRANCH` | Enum | [Enums](enums.md) |
 | [`new_control`](bmad.md#new_control) | Routine | [Bmad](bmad.md) |
@@ -1443,7 +1419,6 @@
 | [`normalize_evecs`](bmad.md#normalize_evecs) | Routine | [Bmad](bmad.md) |
 | [NormalModesStruct](bmad.md#normalmodesstruct) | Struct | [Bmad](bmad.md) |
 | `NOT_A_LORD` | Enum | [Enums](enums.md) |
-| `NOT_ALLOWED` | Enum | [Enums](enums.md) |
 | `NOT_SET` | Enum | [Enums](enums.md) |
 | `NOWHERE` | Enum | [Enums](enums.md) |
 | `NULL_ELE` | Enum | [Enums](enums.md) |
@@ -1516,13 +1491,12 @@
 | `P88` | Enum | [Enums](enums.md) |
 | `P89` | Enum | [Enums](enums.md) |
 | `P90` | Enum | [Enums](enums.md) |
-| [`p_func`](bmad.md#p_func) | Routine | [Bmad](bmad.md) |
 | `P_MASS` | Enum | [Enums](enums.md) |
 | `PARENS` | Enum | [Enums](enums.md) |
 | [`parse_cartesian_map`](bmad.md#parse_cartesian_map) | Routine | [Bmad](bmad.md) |
 | [`parse_cylindrical_map`](bmad.md#parse_cylindrical_map) | Routine | [Bmad](bmad.md) |
 | [`parse_fortran_format`](sim_utils.md#parse_fortran_format) | Routine | [Sim Utils](sim_utils.md) |
-| [`parse_gen_gradients`](bmad.md#parse_gen_gradients) | Routine | [Bmad](bmad.md) |
+| [`parse_gen_grad_map`](bmad.md#parse_gen_grad_map) | Routine | [Bmad](bmad.md) |
 | [`parse_grid_field`](bmad.md#parse_grid_field) | Routine | [Bmad](bmad.md) |
 | [`parse_integer_list`](bmad.md#parse_integer_list) | Routine | [Bmad](bmad.md) |
 | [`parse_integer_list2`](bmad.md#parse_integer_list2) | Routine | [Bmad](bmad.md) |
@@ -1547,7 +1521,6 @@
 | [`parser_get_logical`](bmad.md#parser_get_logical) | Routine | [Bmad](bmad.md) |
 | [`parser_identify_fork_to_element`](bmad.md#parser_identify_fork_to_element) | Routine | [Bmad](bmad.md) |
 | [`parser_init_custom_elements`](bmad.md#parser_init_custom_elements) | Routine | [Bmad](bmad.md) |
-| `PARSER_MAKE_XFER_MATS` | Enum | [Enums](enums.md) |
 | [`parser_print_line`](bmad.md#parser_print_line) | Routine | [Bmad](bmad.md) |
 | [`parser_read_lr_wake`](bmad.md#parser_read_lr_wake) | Routine | [Bmad](bmad.md) |
 | [`parser_read_old_format_lr_wake`](bmad.md#parser_read_old_format_lr_wake) | Routine | [Bmad](bmad.md) |
@@ -1572,6 +1545,7 @@
 | `PC_STRONG` | Enum | [Enums](enums.md) |
 | `PENDELLOSUNG_PERIOD_PI` | Enum | [Enums](enums.md) |
 | `PENDELLOSUNG_PERIOD_SIGMA` | Enum | [Enums](enums.md) |
+| [`phase_space_fit`](bmad.md#phase_space_fit) | Routine | [Bmad](bmad.md) |
 | `PHASE_TROMBONE` | Enum | [Enums](enums.md) |
 | `PHASE_X` | Enum | [Enums](enums.md) |
 | `PHASE_Y` | Enum | [Enums](enums.md) |
@@ -1590,7 +1564,6 @@
 | [`photon_add_to_detector_statistics`](bmad.md#photon_add_to_detector_statistics) | Routine | [Bmad](bmad.md) |
 | [`photon_diffuse_scattering`](bmad.md#photon_diffuse_scattering) | Routine | [Bmad](bmad.md) |
 | `PHOTON_FORK` | Enum | [Enums](enums.md) |
-| [`photon_hit_func`](bmad.md#photon_hit_func) | Routine | [Bmad](bmad.md) |
 | `PHOTON_INIT` | Enum | [Enums](enums.md) |
 | [`photon_read_spline`](bmad.md#photon_read_spline) | Routine | [Bmad](bmad.md) |
 | [`photon_reflection`](bmad.md#photon_reflection) | Routine | [Bmad](bmad.md) |
@@ -1852,12 +1825,12 @@
 | [`remove_eles_from_lat`](bmad.md#remove_eles_from_lat) | Routine | [Bmad](bmad.md) |
 | [`remove_lord_slave_link`](bmad.md#remove_lord_slave_link) | Routine | [Bmad](bmad.md) |
 | `REPETITION_FREQUENCY` | Enum | [Enums](enums.md) |
-| [`residual_pwd_sig_z`](bmad.md#residual_pwd_sig_z) | Routine | [Bmad](bmad.md) |
 | [ResonanceHStruct](bmad.md#resonancehstruct) | Struct | [Bmad](bmad.md) |
 | `RESTORE_STATE` | Enum | [Enums](enums.md) |
 | [`reverse_lat`](bmad.md#reverse_lat) | Routine | [Bmad](bmad.md) |
 | `RF_BEND` | Enum | [Enums](enums.md) |
 | [`rf_cav_names`](bsim.md#rf_cav_names) | Routine | [Bsim](bsim.md) |
+| [`rf_clock_setup`](bmad.md#rf_clock_setup) | Routine | [Bmad](bmad.md) |
 | [`rf_coupler_kick`](bmad.md#rf_coupler_kick) | Routine | [Bmad](bmad.md) |
 | `RF_FREQUENCY` | Enum | [Enums](enums.md) |
 | [`rf_is_on`](bmad.md#rf_is_on) | Routine | [Bmad](bmad.md) |
@@ -1946,13 +1919,15 @@
 | [`set_ele_name`](bmad.md#set_ele_name) | Routine | [Bmad](bmad.md) |
 | [`set_ele_real_attribute`](bmad.md#set_ele_real_attribute) | Routine | [Bmad](bmad.md) |
 | [`set_ele_status_stale`](bmad.md#set_ele_status_stale) | Routine | [Bmad](bmad.md) |
-| [`set_env`](sim_utils.md#set_env) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_emit_from_beam_init`](bmad.md#set_emit_from_beam_init) | Routine | [Bmad](bmad.md) |
 | [`set_flags_for_changed_attribute`](bmad.md#set_flags_for_changed_attribute) | Routine | [Bmad](bmad.md) |
 | [`set_fringe_on_off`](bmad.md#set_fringe_on_off) | Routine | [Bmad](bmad.md) |
 | [`set_lords_status_stale`](bmad.md#set_lords_status_stale) | Routine | [Bmad](bmad.md) |
+| [`set_on`](bmad.md#set_on) | Routine | [Bmad](bmad.md) |
 | [`set_on_off`](bmad.md#set_on_off) | Routine | [Bmad](bmad.md) |
 | [`set_orbit_to_zero`](bmad.md#set_orbit_to_zero) | Routine | [Bmad](bmad.md) |
 | [`set_parameter`](sim_utils.md#set_parameter) | Routine | [Sim Utils](sim_utils.md) |
+| [`set_particle_from_rf_time`](bmad.md#set_particle_from_rf_time) | Routine | [Bmad](bmad.md) |
 | [`set_ptc`](bmad.md#set_ptc) | Routine | [Bmad](bmad.md) |
 | [`set_ptc_base_state`](bmad.md#set_ptc_base_state) | Routine | [Bmad](bmad.md) |
 | [`set_ptc_com_pointers`](bmad.md#set_ptc_com_pointers) | Routine | [Bmad](bmad.md) |
@@ -2013,7 +1988,6 @@
 | [`space_charge_rectpipe`](bmad.md#space_charge_rectpipe) | Routine | [Bmad](bmad.md) |
 | [SpaceChargeCommonStruct](bmad.md#spacechargecommonstruct) | Struct | [Bmad](bmad.md) |
 | `SPATIAL_DISTRIBUTION` | Enum | [Enums](enums.md) |
-| [`special_projection`](sim_utils.md#special_projection) | Routine | [Sim Utils](sim_utils.md) |
 | `SPECIES` | Enum | [Enums](enums.md) |
 | `SPECIES_CONST` | Enum | [Enums](enums.md) |
 | [`species_id`](sim_utils.md#species_id) | Routine | [Sim Utils](sim_utils.md) |
@@ -2100,7 +2074,6 @@
 | [`str_substitute`](sim_utils.md#str_substitute) | Routine | [Sim Utils](sim_utils.md) |
 | [`str_upcase`](sim_utils.md#str_upcase) | Routine | [Sim Utils](sim_utils.md) |
 | `STRAIGHT` | Enum | [Enums](enums.md) |
-| `STRAIGHT_REFERENCE` | Enum | [Enums](enums.md) |
 | [`stream_ele_end`](bmad.md#stream_ele_end) | Routine | [Bmad](bmad.md) |
 | [StrIndexStruct](sim_utils.md#strindexstruct) | Struct | [Sim Utils](sim_utils.md) |
 | [`string_attrib`](bmad.md#string_attrib) | Routine | [Bmad](bmad.md) |
@@ -2248,6 +2221,7 @@
 | [`tao_graph_phase_space_setup`](tao.md#tao_graph_phase_space_setup) | Routine | [Tao](tao.md) |
 | [`tao_graph_s_min_max_calc`](tao.md#tao_graph_s_min_max_calc) | Routine | [Tao](tao.md) |
 | [`tao_graph_setup`](tao.md#tao_graph_setup) | Routine | [Tao](tao.md) |
+| [`tao_has_been_created`](tao.md#tao_has_been_created) | Routine | [Tao](tao.md) |
 | [`tao_help`](tao.md#tao_help) | Routine | [Tao](tao.md) |
 | [`tao_init`](tao.md#tao_init) | Routine | [Tao](tao.md) |
 | [`tao_init_beam_in_universe`](tao.md#tao_init_beam_in_universe) | Routine | [Tao](tao.md) |
@@ -2260,6 +2234,7 @@
 | [`tao_init_global`](tao.md#tao_init_global) | Routine | [Tao](tao.md) |
 | [`tao_init_lattice`](tao.md#tao_init_lattice) | Routine | [Tao](tao.md) |
 | [`tao_init_plotting`](tao.md#tao_init_plotting) | Routine | [Tao](tao.md) |
+| [`tao_init_single_mode`](tao.md#tao_init_single_mode) | Routine | [Tao](tao.md) |
 | [`tao_init_variables`](tao.md#tao_init_variables) | Routine | [Tao](tao.md) |
 | [`tao_inject_beam`](tao.md#tao_inject_beam) | Routine | [Tao](tao.md) |
 | [`tao_inject_particle`](tao.md#tao_inject_particle) | Routine | [Tao](tao.md) |
@@ -2517,6 +2492,7 @@
 | [TaylorStruct](bmad.md#taylorstruct) | Struct | [Bmad](bmad.md) |
 | [TaylorTermStruct](bmad.md#taylortermstruct) | Struct | [Bmad](bmad.md) |
 | `TERM` | Enum | [Enums](enums.md) |
+| [`test_tune_tracker_lock`](sim_utils.md#test_tune_tracker_lock) | Routine | [Sim Utils](sim_utils.md) |
 | [`test_xgelbd`](sim_utils.md#test_xgelbd) | Routine | [Sim Utils](sim_utils.md) |
 | `THETA_POSITION` | Enum | [Enums](enums.md) |
 | `THICK_MULTIPOLE` | Enum | [Enums](enums.md) |
@@ -2570,6 +2546,7 @@
 | [`track1_sample`](bmad.md#track1_sample) | Routine | [Bmad](bmad.md) |
 | [`track1_spin`](bmad.md#track1_spin) | Routine | [Bmad](bmad.md) |
 | [`track1_spin_integration`](bmad.md#track1_spin_integration) | Routine | [Bmad](bmad.md) |
+| [`track1_spin_magnus`](bmad.md#track1_spin_magnus) | Routine | [Bmad](bmad.md) |
 | [`track1_spin_taylor`](bmad.md#track1_spin_taylor) | Routine | [Bmad](bmad.md) |
 | [`track1_sr_wake`](bmad.md#track1_sr_wake) | Routine | [Bmad](bmad.md) |
 | [`track1_symp_lie_ptc`](bmad.md#track1_symp_lie_ptc) | Routine | [Bmad](bmad.md) |
@@ -2607,7 +2584,6 @@
 | [`track_bunch_to_t`](bmad.md#track_bunch_to_t) | Routine | [Bmad](bmad.md) |
 | [`track_complex_taylor`](bmad.md#track_complex_taylor) | Routine | [Bmad](bmad.md) |
 | [`track_from_s_to_s`](bmad.md#track_from_s_to_s) | Routine | [Bmad](bmad.md) |
-| [`track_func`](bmad.md#track_func) | Routine | [Bmad](bmad.md) |
 | [`track_many`](bmad.md#track_many) | Routine | [Bmad](bmad.md) |
 | [`track_to_surface`](bmad.md#track_to_surface) | Routine | [Bmad](bmad.md) |
 | [`track_until_dead`](bmad.md#track_until_dead) | Routine | [Bmad](bmad.md) |
@@ -2734,7 +2710,6 @@
 | [`vec_to_spinor`](bmad.md#vec_to_spinor) | Routine | [Bmad](bmad.md) |
 | `VELOCITY_DISTRIBUTION` | Enum | [Enums](enums.md) |
 | [`verify_valid_name`](bmad.md#verify_valid_name) | Routine | [Bmad](bmad.md) |
-| [`vert_angle_func`](bmad.md#vert_angle_func) | Routine | [Bmad](bmad.md) |
 | `VERTICAL_BAR` | Enum | [Enums](enums.md) |
 | `VERTICAL_KICK` | Enum | [Enums](enums.md) |
 | `VERTICALLY_PURE` | Enum | [Enums](enums.md) |
@@ -2768,7 +2743,6 @@
 | `WALL_END` | Enum | [Enums](enums.md) |
 | `WALL_START` | Enum | [Enums](enums.md) |
 | `WALL_TRANSITION` | Enum | [Enums](enums.md) |
-| `WARN_COUNT` | Enum | [Enums](enums.md) |
 | `WHITE` | Enum | [Enums](enums.md) |
 | `WIGGLER` | Enum | [Enums](enums.md) |
 | `WIGGLERS` | Enum | [Enums](enums.md) |
@@ -2798,12 +2772,11 @@
 | [`write_gpt_field_grid_file_3d`](bmad.md#write_gpt_field_grid_file_3d) | Routine | [Bmad](bmad.md) |
 | [`write_gpt_lattice_file`](bmad.md#write_gpt_lattice_file) | Routine | [Bmad](bmad.md) |
 | [`write_lat_line`](bmad.md#write_lat_line) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_elegant_format`](bmad.md#write_lattice_elegant_format) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_foreign_format`](bmad.md#write_lattice_foreign_format) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_mad_format`](bmad.md#write_lattice_mad_format) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_pals_format`](bmad.md#write_lattice_pals_format) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_sad_format`](bmad.md#write_lattice_sad_format) | Routine | [Bmad](bmad.md) |
-| [`write_lattice_scibmad_format`](bmad.md#write_lattice_scibmad_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_elegant_format`](bmad.md#write_lattice_in_elegant_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_foreign_format`](bmad.md#write_lattice_in_foreign_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_mad_format`](bmad.md#write_lattice_in_mad_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_sad_format`](bmad.md#write_lattice_in_sad_format) | Routine | [Bmad](bmad.md) |
+| [`write_lattice_in_scibmad`](bmad.md#write_lattice_in_scibmad) | Routine | [Bmad](bmad.md) |
 | [`write_line_element`](bmad.md#write_line_element) | Routine | [Bmad](bmad.md) |
 | [`write_opal_field_grid_file`](bmad.md#write_opal_field_grid_file) | Routine | [Bmad](bmad.md) |
 | [`write_opal_lattice_file`](bmad.md#write_opal_lattice_file) | Routine | [Bmad](bmad.md) |
@@ -2898,5 +2871,4 @@
 | [`zero_ele_kicks`](bmad.md#zero_ele_kicks) | Routine | [Bmad](bmad.md) |
 | [`zero_ele_offsets`](bmad.md#zero_ele_offsets) | Routine | [Bmad](bmad.md) |
 | [`zero_lr_wakes_in_lat`](bmad.md#zero_lr_wakes_in_lat) | Routine | [Bmad](bmad.md) |
-| [`zig_table_init`](sim_utils.md#zig_table_init) | Routine | [Sim Utils](sim_utils.md) |
 | [`zlafun`](bmad.md#zlafun) | Routine | [Bmad](bmad.md) |

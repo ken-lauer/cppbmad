@@ -366,10 +366,6 @@ std::string to_string(const BmadCommonStruct &self) {
        std::pair{"lr_wakes_on", to_string(self.lr_wakes_on())},
        std::pair{"auto_bookkeeper", to_string(self.auto_bookkeeper())},
        std::pair{"high_energy_space_charge_on", to_string(self.high_energy_space_charge_on())},
-       std::pair{
-           "high_energy_space_charge_linear",
-           to_string(self.high_energy_space_charge_linear())
-       },
        std::pair{"csr_and_space_charge_on", to_string(self.csr_and_space_charge_on())},
        std::pair{"spin_tracking_on", to_string(self.spin_tracking_on())},
        std::pair{
@@ -979,6 +975,20 @@ std::string to_string(const EmFieldStruct &self) {
        std::pair{"A", to_string(self.A())}}
   );
 }
+std::string to_string(const EmTaylorStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EmTaylorStruct",
+      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
+  );
+}
+std::string to_string(const EmTaylorTermStruct &self) {
+  return repr(
+      self.get_fortran_ptr(),
+      "EmTaylorTermStruct",
+      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
+  );
+}
 std::string to_string(const ExpressionAtomStruct &self) {
   return repr(
       self.get_fortran_ptr(),
@@ -1040,10 +1050,6 @@ std::string to_string(const ExtraParsingInfoStruct &self) {
            "high_energy_space_charge_on_set",
            to_string(self.high_energy_space_charge_on_set())
        },
-       std::pair{
-           "high_energy_space_charge_linear_set",
-           to_string(self.high_energy_space_charge_linear_set())
-       },
        std::pair{"csr_and_space_charge_on_set", to_string(self.csr_and_space_charge_on_set())},
        std::pair{"spin_tracking_on_set", to_string(self.spin_tracking_on_set())},
        std::pair{
@@ -1102,9 +1108,7 @@ std::string to_string(const ExtraParsingInfoStruct &self) {
        std::pair{
            "translate_patch_drift_time_set",
            to_string(self.translate_patch_drift_time_set())
-       },
-       std::pair{"pancake_symplectic_set", to_string(self.pancake_symplectic_set())},
-       std::pair{"pancake_canonical_set", to_string(self.pancake_canonical_set())}}
+       }}
   );
 }
 std::string to_string(const Fibre &self) {
@@ -1187,31 +1191,31 @@ std::string to_string(const FringeFieldInfoStruct &self) {
        std::pair{"has_fringe", to_string(self.has_fringe())}}
   );
 }
-std::string to_string(const GenGradCurveStruct &self) {
+std::string to_string(const GenGrad1Struct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "GenGradCurveStruct",
-      {std::pair{"kind", to_string(self.kind())},
-       std::pair{"n", to_string(self.n())},
-       std::pair{"m_max", to_string(self.m_max())},
+      "GenGrad1Struct",
+      {std::pair{"m", to_string(self.m())},
+       std::pair{"sincos", to_string(self.sincos())},
+       std::pair{"n_deriv_max", to_string(self.n_deriv_max())},
        std::pair{"deriv", to_string(self.deriv())}}
   );
 }
-std::string to_string(const GenGradientsStruct &self) {
+std::string to_string(const GenGradMapStruct &self) {
   return repr(
       self.get_fortran_ptr(),
-      "GenGradientsStruct",
+      "GenGradMapStruct",
       {std::pair{"file", self.file()},
-       std::pair{"curve", "[...]"},
+       std::pair{"gg", "[...]"},
        std::pair{"ele_anchor_pt", to_string(self.ele_anchor_pt())},
        std::pair{"field_type", to_string(self.field_type())},
        std::pair{"iz0", to_string(self.iz0())},
        std::pair{"iz1", to_string(self.iz1())},
        std::pair{"dz", to_string(self.dz())},
-       std::pair{"g_ref", to_string(self.g_ref())},
        std::pair{"r0", to_string(self.r0())},
        std::pair{"field_scale", to_string(self.field_scale())},
-       std::pair{"master_parameter", to_string(self.master_parameter())}}
+       std::pair{"master_parameter", to_string(self.master_parameter())},
+       std::pair{"curved_ref_frame", to_string(self.curved_ref_frame())}}
   );
 }
 std::string to_string(const GeneralBinStruct &self) {
@@ -1224,20 +1228,6 @@ std::string to_string(const GeneralBinStruct &self) {
        std::pair{"delta", to_string(self.delta())},
        std::pair{"dim", to_string(self.dim())},
        std::pair{"n", to_string(self.n())}}
-  );
-}
-std::string to_string(const GgTaylorStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GgTaylorStruct",
-      {std::pair{"ref", to_string(self.ref())}, std::pair{"term", "[...]"}}
-  );
-}
-std::string to_string(const GgTaylorTermStruct &self) {
-  return repr(
-      self.get_fortran_ptr(),
-      "GgTaylorTermStruct",
-      {std::pair{"coef", to_string(self.coef())}, std::pair{"expn", to_string(self.expn())}}
   );
 }
 std::string to_string(const GptLatParamStruct &self) {
@@ -2204,8 +2194,6 @@ std::string to_string(const SpaceChargeCommonStruct &self) {
        std::pair{"beam_chamber_height", to_string(self.beam_chamber_height())},
        std::pair{"lsc_sigma_cutoff", to_string(self.lsc_sigma_cutoff())},
        std::pair{"particle_sigma_cutoff", to_string(self.particle_sigma_cutoff())},
-       std::pair{"mesh_growth_factor", to_string(self.mesh_growth_factor())},
-       std::pair{"mesh_shrink_factor", to_string(self.mesh_shrink_factor())},
        std::pair{"space_charge_mesh_size", to_string(self.space_charge_mesh_size())},
        std::pair{"csr3d_mesh_size", to_string(self.csr3d_mesh_size())},
        std::pair{"n_bin", to_string(self.n_bin())},
@@ -2486,8 +2474,7 @@ std::string to_string(const TaoCommandFileStruct &self) {
        std::pair{"n_line", to_string(self.n_line())},
        std::pair{"reset_at_end", to_string(self.reset_at_end())},
        std::pair{"lattice_calc_save", to_string(self.lattice_calc_save())},
-       std::pair{"plot_save", to_string(self.plot_save())},
-       std::pair{"multi_cmd", self.multi_cmd()}}
+       std::pair{"plot_save", to_string(self.plot_save())}}
   );
 }
 std::string to_string(const TaoCommonStruct &self) {
@@ -2541,7 +2528,8 @@ std::string to_string(const TaoCommonStruct &self) {
        std::pair{"rad_int_6d_calc_on", to_string(self.rad_int_6d_calc_on())},
        std::pair{"valid_plot_who", to_string(self.valid_plot_who())},
        std::pair{"single_mode_buffer", self.single_mode_buffer()},
-       std::pair{"cmd", self.cmd()}}
+       std::pair{"cmd", self.cmd()},
+       std::pair{"saved_cmd_line", self.saved_cmd_line()}}
   );
 }
 std::string to_string(const TaoCurveArrayStruct &self) {
@@ -3850,14 +3838,6 @@ std::string to_string(const bsim::BbuTrackAll &self) {
        std::pair{"irep", to_string(self.irep)}}
   );
 }
-std::string to_string(const Bmad::BeamInitSetup &self) {
-  return repr(
-      &self,
-      "Bmad::BeamInitSetup",
-      {std::pair{"err_flag", to_string(self.err_flag)},
-       std::pair{"beam_init_set", to_string(self.beam_init_set)}}
-  );
-}
 std::string to_string(const Bmad::BeamTilts &self) {
   return repr(
       &self,
@@ -3974,9 +3954,7 @@ std::string to_string(const Bmad::ChromCalc &self) {
   return repr(
       &self,
       "Bmad::ChromCalc",
-      {std::pair{"chrom_a", to_string(self.chrom_a)},
-       std::pair{"chrom_b", to_string(self.chrom_b)},
-       std::pair{"err_flag", to_string(self.err_flag)},
+      {std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"low_E_lat", to_string(self.low_E_lat)},
        std::pair{"high_E_lat", to_string(self.high_E_lat)},
        std::pair{"low_E_orb", "[...]"},
@@ -4036,6 +4014,15 @@ std::string to_string(const Bmad::ConvertTotalEnergyTo &self) {
        std::pair{"pc", to_string(self.pc)},
        std::pair{"brho", to_string(self.brho)},
        std::pair{"beta1", to_string(self.beta1)},
+       std::pair{"err_flag", to_string(self.err_flag)}}
+  );
+}
+std::string to_string(const Bmad::ConverterDistributionParser &self) {
+  return repr(
+      &self,
+      "Bmad::ConverterDistributionParser",
+      {std::pair{"delim", self.delim},
+       std::pair{"delim_found", to_string(self.delim_found)},
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
@@ -4121,26 +4108,12 @@ std::string to_string(const Bmad::CrystalDiffractionFieldCalc &self) {
        std::pair{"dr", to_string(self.dr)}}
   );
 }
-std::string to_string(const Bmad::Cumulr &self) {
-  return repr(
-      &self,
-      "Bmad::Cumulr",
-      {std::pair{"fn", to_string(self.fn)}, std::pair{"df", to_string(self.df)}}
-  );
-}
 std::string to_string(const Bmad::CustomEleAttribNameList &self) {
   return repr(
       &self,
       "Bmad::CustomEleAttribNameList",
       {std::pair{"index_list", to_string(self.index_list)},
        std::pair{"name_list", to_string(self.name_list)}}
-  );
-}
-std::string to_string(const Bmad::DIntegral &self) {
-  return repr(
-      &self,
-      "Bmad::DIntegral",
-      {std::pair{"fn", to_string(self.fn)}, std::pair{"df", to_string(self.df)}}
   );
 }
 std::string to_string(const Bmad::DistanceToAperture &self) {
@@ -4388,13 +4361,6 @@ std::string to_string(const SimUtils::Gelbd &self) {
       &self,
       "SimUtils::Gelbd",
       {std::pair{"elb", to_string(self.elb)}, std::pair{"eld", to_string(self.eld)}}
-  );
-}
-std::string to_string(const Bmad::GenGradAtSToGgATaylor &self) {
-  return repr(
-      &self,
-      "Bmad::GenGradAtSToGgATaylor",
-      {std::pair{"gg_a", "[...]"}, std::pair{"gg_da_ds", "[...]"}}
   );
 }
 std::string to_string(const Bmad::GetAstraFieldgridNameAndScaling &self) {
@@ -4861,13 +4827,6 @@ std::string to_string(const Bmad::PhotonDiffuseScattering &self) {
        std::pair{"diffuse_param", to_string(self.diffuse_param)}}
   );
 }
-std::string to_string(const Bmad::PhotonHitFunc &self) {
-  return repr(
-      &self,
-      "Bmad::PhotonHitFunc",
-      {std::pair{"status", to_string(self.status)}, std::pair{"d_radius", to_string(self.d_radius)}}
-  );
-}
 std::string to_string(const Bmad::PhotonReflection &self) {
   return repr(
       &self,
@@ -5150,35 +5109,11 @@ std::string to_string(const Bmad::ReadBeamFile &self) {
       {std::pair{"beam", to_string(self.beam)}, std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
-std::string to_string(const Bmad::ReadBinaryCartesianMap &self) {
-  return repr(
-      &self,
-      "Bmad::ReadBinaryCartesianMap",
-      {std::pair{"cart_map", to_string(self.cart_map)},
-       std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
-std::string to_string(const Bmad::ReadBinaryCylindricalMap &self) {
-  return repr(
-      &self,
-      "Bmad::ReadBinaryCylindricalMap",
-      {std::pair{"cl_map", to_string(self.cl_map)}, std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
-std::string to_string(const Bmad::ReadBinaryGridField &self) {
-  return repr(
-      &self,
-      "Bmad::ReadBinaryGridField",
-      {std::pair{"g_field", to_string(self.g_field)},
-       std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
 std::string to_string(const Bmad::ReadDigestedBmadFile &self) {
   return repr(
       &self,
       "Bmad::ReadDigestedBmadFile",
       {std::pair{"lat", to_string(self.lat)},
-       std::pair{"inc_version", to_string(self.inc_version)},
        std::pair{"err_flag", to_string(self.err_flag)},
        std::pair{"parser_calling", to_string(self.parser_calling)},
        std::pair{"lat_files", to_string(self.lat_files)}}
@@ -5220,11 +5155,13 @@ std::string to_string(const Bmad::SetEleAttribute &self) {
       {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"err_id", to_string(self.err_id)}}
   );
 }
-std::string to_string(const Bmad::SpinConcatLinearMaps &self) {
+std::string to_string(const Bmad::SetEleStatusStale &self) {
   return repr(
       &self,
-      "Bmad::SpinConcatLinearMaps",
-      {std::pair{"err_flag", to_string(self.err_flag)}, std::pair{"map1", to_string(self.map1)}}
+      "Bmad::SetEleStatusStale",
+      {std::pair{"ele", to_string(self.ele)},
+       std::pair{"status_group", to_string(self.status_group)},
+       std::pair{"set_slaves", to_string(self.set_slaves)}}
   );
 }
 std::string to_string(const Bmad::SpinDnDpzFromMat8 &self) {
@@ -5252,8 +5189,7 @@ std::string to_string(const Bmad::SpinMatToEigen &self) {
   return repr(
       &self,
       "Bmad::SpinMatToEigen",
-      {std::pair{"orb_eval", to_string(self.orb_eval)},
-       std::pair{"orb_evec", to_string(self.orb_evec)},
+      {std::pair{"orb_evec", to_string(self.orb_evec)},
        std::pair{"n0", to_string(self.n0)},
        std::pair{"spin_evec", to_string(self.spin_evec)},
        std::pair{"error", to_string(self.error)}}
@@ -5930,18 +5866,6 @@ std::string to_string(const Bmad::ToEtaReading &self) {
       {std::pair{"reading", to_string(self.reading)}, std::pair{"err", to_string(self.err)}}
   );
 }
-std::string to_string(const Bmad::ToFieldmapCoords &self) {
-  return repr(
-      &self,
-      "Bmad::ToFieldmapCoords",
-      {std::pair{"x", to_string(self.x)},
-       std::pair{"y", to_string(self.y)},
-       std::pair{"z", to_string(self.z)},
-       std::pair{"cos_ang", to_string(self.cos_ang)},
-       std::pair{"sin_ang", to_string(self.sin_ang)},
-       std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
 std::string to_string(const Bmad::ToOrbitReading &self) {
   return repr(
       &self,
@@ -6092,15 +6016,6 @@ std::string to_string(const Bmad::TwissAndTrackIntraEle &self) {
       {std::pair{"orbit_end", to_string(self.orbit_end)}, std::pair{"err", to_string(self.err)}}
   );
 }
-std::string to_string(const Bmad::TwissAtElement &self) {
-  return repr(
-      &self,
-      "Bmad::TwissAtElement",
-      {std::pair{"start", to_string(self.start)},
-       std::pair{"end", to_string(self.end)},
-       std::pair{"average", to_string(self.average)}}
-  );
-}
 std::string to_string(const Bmad::TwissFromTracking &self) {
   return repr(
       &self,
@@ -6196,21 +6111,6 @@ std::string to_string(const Bmad::WriteGptFieldGridFile3d &self) {
       {std::pair{"maxfield", to_string(self.maxfield)},
        std::pair{"ref_time", to_string(self.ref_time)},
        std::pair{"err", to_string(self.err)}}
-  );
-}
-std::string to_string(const Bmad::WriteLatticePalsFormat &self) {
-  return repr(
-      &self,
-      "Bmad::WriteLatticePalsFormat",
-      {std::pair{"pals_file", self.pals_file}, std::pair{"err_flag", to_string(self.err_flag)}}
-  );
-}
-std::string to_string(const Bmad::WriteLatticeScibmadFormat &self) {
-  return repr(
-      &self,
-      "Bmad::WriteLatticeScibmadFormat",
-      {std::pair{"scibmad_file", self.scibmad_file},
-       std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
 std::string to_string(const Bmad::WriteOpalFieldGridFile &self) {

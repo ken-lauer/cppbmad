@@ -7,22 +7,20 @@ using namespace Pybmad;
 PyChromCalc python_chrom_calc(
     LatStruct &lat,
     double delta_e,
+    double chrom_x,
+    double chrom_y,
     std::optional<double> pz = std::nullopt,
     std::optional<int> ix_branch = std::nullopt,
     CoordStruct *orb0 = nullptr
 ) {
-  auto _result = Bmad::chrom_calc(lat, delta_e, pz, ix_branch, ptr_to_opt_ref(orb0));
+  auto _result =
+      Bmad::chrom_calc(lat, delta_e, chrom_x, chrom_y, pz, ix_branch, ptr_to_opt_ref(orb0));
   auto py_result{PyChromCalc{_result, delta_e}};
   return py_result;
 }
-PyChromTune python_chrom_tune(
-    LatStruct &lat,
-    double delta_e,
-    double target_x,
-    double target_y,
-    double err_tol
-) {
-  auto _result = Bmad::chrom_tune(lat, delta_e, target_x, target_y, err_tol);
+PyChromTune
+python_chrom_tune(LatStruct &lat, double delta_e, double chrom_x, double chrom_y, double err_tol) {
+  auto _result = Bmad::chrom_tune(lat, delta_e, chrom_x, chrom_y, err_tol);
   auto py_result{PyChromTune{_result, delta_e}};
   return py_result;
 }
@@ -847,33 +845,27 @@ err_flag : bool, optional
 )"""
   );
   nb::class_<PyChromCalc>(m, "ChromCalc", "chrom_calc return type")
-      .def_ro("chrom_a", &PyChromCalc::chrom_a)
-      .def_ro("chrom_b", &PyChromCalc::chrom_b)
       .def_ro("err_flag", &PyChromCalc::err_flag)
       .def_ro("low_E_lat", &PyChromCalc::low_E_lat)
       .def_ro("high_E_lat", &PyChromCalc::high_E_lat)
       .def_ro("low_E_orb", &PyChromCalc::low_E_orb)
       .def_ro("high_E_orb", &PyChromCalc::high_E_orb)
       .def_ro("delta_e", &PyChromCalc::delta_e)
-      .def("__len__", [](const PyChromCalc &) { return 8; })
+      .def("__len__", [](const PyChromCalc &) { return 6; })
       .def("__getitem__", [](const PyChromCalc &s, int i) -> nb::object {
         if (i < 0)
-          i += 8;
+          i += 6;
         if (i == 0)
-          return nb::cast(s.chrom_a);
-        if (i == 1)
-          return nb::cast(s.chrom_b);
-        if (i == 2)
           return nb::cast(s.err_flag);
-        if (i == 3)
+        if (i == 1)
           return nb::cast(s.low_E_lat);
-        if (i == 4)
+        if (i == 2)
           return nb::cast(s.high_E_lat);
-        if (i == 5)
+        if (i == 3)
           return nb::cast(s.low_E_orb);
-        if (i == 6)
+        if (i == 4)
           return nb::cast(s.high_E_orb);
-        if (i == 7)
+        if (i == 5)
           return nb::cast(s.delta_e);
         throw nb::index_error();
       });
@@ -882,6 +874,8 @@ err_flag : bool, optional
       &python_chrom_calc,
       nb::arg("lat"),
       nb::arg("delta_e"),
+      nb::arg("chrom_x"),
+      nb::arg("chrom_y"),
       nb::arg("pz") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
       nb::arg("orb0") = nb::none(),
@@ -896,7 +890,11 @@ delta_e : float
     +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
     delta_e. If 0 then default of 1.0d-4 is used.
     This parameter is an input/output and is modified in-place.
-    As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
+    As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
+
+chrom_x : float
+
+chrom_y : float
 
 pz : float, optional
     reference momentum about which to calculate. Default is 0.
@@ -914,13 +912,7 @@ delta_e : float
     +/- Delta energy used for the calculation. Notice that the energy difference between high and low is 2 *
     delta_e. If 0 then default of 1.0d-4 is used.
     This parameter is an input/output and is modified in-place.
-    As an output, delta_e: Value used in computation. Set to 1.0d-4 if on input delta_e =< 0.
-
-chrom_a : float
-    a-mode chromaticity.
-
-chrom_b : float
-    b-mode chromaticity.
+    As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
 
 err_flag : bool, optional
     Set true if there is an error. False otherwise.
@@ -956,8 +948,8 @@ high_E_orb : 1D array of CoordStruct, optional
       &python_chrom_tune,
       nb::arg("lat"),
       nb::arg("delta_e"),
-      nb::arg("target_x"),
-      nb::arg("target_y"),
+      nb::arg("chrom_x"),
+      nb::arg("chrom_y"),
       nb::arg("err_tol"),
       R"""(Wrapper for Fortran routine chrom_tune
 
@@ -973,11 +965,9 @@ delta_e : float
     This parameter is an input/output and is modified in-place.
     As an output, delta_e: Set to 1.0d-4 if on input DELTA_E =< 0.
 
-target_x : float
-    Target X Chromaticity
+chrom_x : float
 
-target_y : float
-    Target Y Chromaticity
+chrom_y : float
 
 err_tol : float
     Max allowable Error: Error = | X_Target - X_Actual | + | Y_Target -Y_Actual | A good number is: err_tol =
@@ -1908,24 +1898,49 @@ err_flag : bool, optional
     Set true if there is an error. False otherwise.
 )"""
   );
+  nb::class_<Bmad::ConverterDistributionParser>(
+      m,
+      "ConverterDistributionParser",
+      "converter_distribution_parser return type"
+  )
+      .def_ro("delim", &Bmad::ConverterDistributionParser::delim)
+      .def_ro("delim_found", &Bmad::ConverterDistributionParser::delim_found)
+      .def_ro("err_flag", &Bmad::ConverterDistributionParser::err_flag)
+      .def("__len__", [](const Bmad::ConverterDistributionParser &) { return 3; })
+      .def("__getitem__", [](const Bmad::ConverterDistributionParser &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.delim);
+        if (i == 1)
+          return nb::cast(s.delim_found);
+        if (i == 2)
+          return nb::cast(s.err_flag);
+        throw nb::index_error();
+      });
   m.def(
       "converter_distribution_parser",
       &Bmad::converter_distribution_parser,
       nb::arg("ele"),
-      nb::arg("delim"),
-      nb::arg("delim_found"),
-      nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine converter_distribution_parser
 
 Parameters
 ----------
 ele : EleStruct
+    Converter element.
+    This parameter is an input/output and is modified in-place.
+    As an output, ele: Converter element with .converter field set.
 
+Returns
+-------
 delim : str
+    Ending delimitor.
 
 delim_found : bool
+    Has a delimitor been found?
 
 err_flag : bool
+    Set True if there is an error. False otherwise.
 )"""
   );
   m.def(
@@ -2309,15 +2324,14 @@ w_mat : 2D array of float (shape: 3,3), optional
       nb::arg("ele"),
       nb::arg("in_body_frame") = nb::none(),
       nb::arg("calculate_angles") = nb::none(),
-      nb::arg("end_origin") = nb::none(),
-      nb::arg("downstream_dir_ref") = nb::none(),
+      nb::arg("relative_to") = nb::none(),
       R"""(Wrapper for Fortran routine coords_local_curvilinear_to_floor
 
 Parameters
 ----------
 local_position : FloorPositionStruct
     Floor position in local curvilinear coordinates, with .r = [x, y, z_local] where z_local is wrt the
-    entrance end of the element except if end_origin = downstream_end$. In this case, z_local is a distance
+    entrance end of the element except if relative_to = downstream_end$. In this case, z_local is a distance
     -ele.value(l$) from the exit end (important for patch elements).
 
 ele : EleStruct
@@ -2331,16 +2345,10 @@ calculate_angles : bool, optional
     calculate angles for global_position Default: True. False returns local_position angles (.theta, .phi,
     .psi) = 0.
 
-end_origin : int, optional
+relative_to : int, optional
     not_set$ (default), upstream_end$, or downstream_end$. Force which end is used for z = 0. If
     upstream_end$, local_position.r(3) is relative to the upstream end which will not be the entrance end if
     ele.orientation = -1.
-
-downstream_dir_ref : bool, optional
-    Default False. The output theta angle is calculated so that moduo 2pi this angle is near ele.floor.theta.
-    If the element is reversed (ele.direction = -1), the element body coords point upstream which is not
-    always wanted. If this arg is set True, ele.floor.theta+pi modulo to be in the range [-pi, pi] is the
-    reference.
 
 Returns
 -------
@@ -2547,7 +2555,7 @@ err_flag : bool
       nb::arg("lord"),
       nb::arg("input"),
       nb::arg("output"),
-      nb::arg("err_flag"),
+      nb::arg("err"),
       R"""(Wrapper for Fortran routine create_feedback
 
 Parameters
@@ -2563,8 +2571,7 @@ input : 1D array of str
 output : 1D array of str
     Names of output slaves.
 
-err_flag : bool
-    Set True if there is a problem.
+err : bool
 )"""
   );
   m.def(
@@ -2596,9 +2603,9 @@ err_flag : bool
       "create_girder",
       &Bmad::create_girder,
       nb::arg("lat"),
-      nb::arg("ix_girder"),
-      nb::arg("contrl"),
-      nb::arg("girder_info"),
+      nb::arg("ix_ele"),
+      nb::arg("con"),
+      nb::arg("init_ele"),
       nb::arg("err_flag"),
       R"""(Wrapper for Fortran routine create_girder
 
@@ -2609,15 +2616,11 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place.
     As an output, lat: Modified lattice.
 
-ix_girder : int
-    Index of girder element.
+ix_ele : int
 
-contrl : 1D array of ControlStruct
-    Array of elements that are supported by the girder.
+con : 1D array of ControlStruct
 
-girder_info : EleStruct
-    Element containing attributes to be transfered to the Girder element: girder_info.name girder_info.alias
-    girder_info.descrip girder_info.value(:)
+init_ele : EleStruct
 
 err_flag : bool
 )"""
@@ -2626,7 +2629,7 @@ err_flag : bool
       "create_group",
       &Bmad::create_group,
       nb::arg("lord"),
-      nb::arg("contrl"),
+      nb::arg("con"),
       nb::arg("err"),
       R"""(Wrapper for Fortran routine create_group
 
@@ -2637,8 +2640,7 @@ lord : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, lord: Modified group elment
 
-contrl : 1D array of ControlStruct
-    control info. 1 element for each slave.
+con : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
@@ -2648,15 +2650,14 @@ err : bool
       "create_lat_ele_nametable",
       &Bmad::create_lat_ele_nametable,
       nb::arg("lat"),
+      nb::arg("nametable"),
       R"""(Wrapper for Fortran routine create_lat_ele_nametable
 
 Parameters
 ----------
 lat : LatStruct
-    Lattice.
+    Lattice. Ouput:
 
-Returns
--------
 nametable : NametableStruct
     Nametable of the elment names
 )"""
@@ -2665,7 +2666,7 @@ nametable : NametableStruct
       "create_overlay",
       &Bmad::create_overlay,
       nb::arg("lord"),
-      nb::arg("contrl"),
+      nb::arg("contl"),
       nb::arg("err"),
       R"""(Wrapper for Fortran routine create_overlay
 
@@ -2676,8 +2677,7 @@ lord : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, lord: Modified overlay elment
 
-contrl : 1D array of ControlStruct
-    control info. 1 element for each slave.
+contl : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
@@ -2740,7 +2740,7 @@ err_flag : bool, optional
       "create_ramper",
       &Bmad::create_ramper,
       nb::arg("lord"),
-      nb::arg("contrl"),
+      nb::arg("contl"),
       nb::arg("err"),
       R"""(Wrapper for Fortran routine create_ramper
 
@@ -2751,8 +2751,7 @@ lord : EleStruct
     This parameter is an input/output and is modified in-place.
     As an output, lord: Modified ramper elment
 
-contrl : 1D array of ControlStruct
-    control info. 1 element for each slave.
+contl : 1D array of ControlStruct
 
 err : bool
     Set True if an attribute is not free to be controlled.
@@ -2995,7 +2994,7 @@ err_flag : bool
       nb::arg("err_flag"),
       R"""(Routine to bin the particles longitudinally in s.
 
-To avoid noise in the calculation, every particle is considered to have a
+To avoid noise in the cacluation, every particle is considered to have a
 triangular distribution with a base length  given by
   space_charge_com%particle_bin_span * csr%dz_slice.
 That is, particles will, in general, overlap multiple bins.
@@ -3012,28 +3011,6 @@ Returns
 -------
 csr : CsrStruct
     The bin structure.
-)"""
-  );
-  nb::class_<Bmad::Cumulr>(m, "Cumulr", "cumulr return type")
-      .def_ro("fn", &Bmad::Cumulr::fn)
-      .def_ro("df", &Bmad::Cumulr::df)
-      .def("__len__", [](const Bmad::Cumulr &) { return 2; })
-      .def("__getitem__", [](const Bmad::Cumulr &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.fn);
-        if (i == 1)
-          return nb::cast(s.df);
-        throw nb::index_error();
-      });
-  m.def(
-      "cumulr",
-      &Bmad::cumulr,
-      nb::arg("phi"),
-      nb::arg("status"),
-      R"""(Wrapper function passed to super_rtsafe by photon_diffuse_scattering.
-Made a module procedure (not nested) to avoid a stack trampoline.
 )"""
   );
   m.def(

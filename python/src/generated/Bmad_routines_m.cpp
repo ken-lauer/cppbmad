@@ -495,15 +495,17 @@ Hbar : 2D array of float (shape: 6,6), optional
   m.def(
       "make_hybrid_lat",
       &Bmad::make_hybrid_lat,
-      nb::arg("lat_in"),
+      nb::arg("r_in"),
+      nb::arg("r_out"),
       nb::arg("use_taylor") = nb::none(),
       nb::arg("orb0_arr") = nb::none(),
       R"""(Wrapper for Fortran routine make_hybrid_lat
 
 Parameters
 ----------
-lat_in : LatStruct
-    Input lattice.
+r_in : LatStruct
+
+r_out : LatStruct
 
 use_taylor : bool, optional
     If present and True then the hybrid elements will have a taylor series instead of a simple linear matrix.
@@ -512,11 +514,6 @@ use_taylor : bool, optional
 
 orb0_arr : 1D array of CoordArrayStruct, optional
     Central orbit for taylor stuff. Each orb0_arr(i).orbit(:) holds the orbit for the i^th lattice branch
-
-Returns
--------
-lat_out : LatStruct
-    Lattice with hybrid elements. Note: Lat_out must not be the same actual argument as lat_in.
 )"""
   );
   nb::class_<Bmad::MakeMadMap>(m, "MakeMadMap", "make_mad_map return type")
@@ -734,6 +731,26 @@ Returns
 -------
 c1 : CoordStruct
     Coordinates at the end of element.
+)"""
+  );
+  m.def(
+      "make_mat6_runge_kutta",
+      &Bmad::make_mat6_runge_kutta,
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("start_orb"),
+      nb::arg("end_orb"),
+      R"""(Wrapper for Fortran routine make_mat6_runge_kutta
+
+Parameters
+----------
+ele : EleStruct
+
+param : LatParamStruct
+
+start_orb : CoordStruct
+
+end_orb : CoordStruct
 )"""
   );
   m.def(
@@ -1451,7 +1468,7 @@ vec0 : 1D array of float (shape: 6)
     0th order part of the transfer map.
 
 err_flag : bool
-    Set true if there is an error. False otherwise. Note: Currently err_flag is never set True.
+    Set true if there is an error. False otherwise.
 )"""
   );
   m.def(
@@ -1530,13 +1547,16 @@ ptc_fibre : Fibre, optional
   );
   m.def(
       "momentum_compaction",
-      &Bmad::momentum_compaction,
-      nb::arg("branch"),
+      [](BranchStruct *branch) {
+        auto fn = static_cast<double (*)(optional_ref<BranchStruct>)>(&Bmad::momentum_compaction);
+        return fn(ptr_to_opt_ref(branch));
+      },
+      nb::arg("branch") = nb::none(),
       R"""(Wrapper for Fortran routine momentum_compaction
 
 Parameters
 ----------
-branch : BranchStruct
+branch : BranchStruct, optional
     Lattice branch to calculate on.
 
 Returns
@@ -2073,7 +2093,7 @@ mat6 : 2D array of float (shape: 6,6)
       nb::arg("orbit"),
       nb::arg("pole_type") = nb::none(),
       nb::arg("ref_orb_offset") = nb::none(),
-      R"""(Subroutine to put in the kick due to a multipole element.
+      R"""(Subroutine to put in the kick due to a multipole.
 Also see the ab_multipole_kicks routine.
 
 Parameters

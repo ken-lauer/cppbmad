@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `361` |  |
+| `BMAD_INC_VERSION` | `351` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
@@ -59,7 +59,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `RAMPER_LORD` | `13` |  |
 | `GOVERNOR` | `14` | governor$ = Union of overlay and group lords. |
 | `FIELD_LORD` | `15` |  |
-| `FIELD_SLAVE` | `16` |  |
 | `MULTIPOLE_SOURCE` | `-1` | Used with pointer_to_lord(...) |
 | `AUTO_APERTURE` | `1` |  |
 | `RECTANGULAR` | `2` |  |
@@ -98,9 +97,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `FIRST_PASS` | `1` |  |
 | `HIGHLAND` | `2` |  |
 | `LYNCH_DAHL` | `3` |  |
-| `NOT_ALLOWED` | `1` |  |
-| `STRAIGHT_REFERENCE` | `2` |  |
-| `BENDS_REFERENCE` | `3` |  |
 | `INCOHERENT` | `1` |  |
 | `COHERENT` | `2` |  |
 | `ASCII` | `1` |  |
@@ -198,9 +194,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `HYPER_Y` | `1` |  |
 | `HYPER_XY` | `2` |  |
 | `HYPER_X` | `3` |  |
-| `GG_A` | `1` | Curve kind: skew, normal, solenoid. |
-| `GG_B` | `2` |  |
-| `GG_BS` | `3` |  |
 | `SUPER_OK` | `0` |  |
 | `STALE` | `2` |  |
 | `ATTRIBUTE_GROUP` | `1` |  |
@@ -422,8 +415,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `TAYLOR_ORDER` | `3` |  |
 | `R_SOLENOID` | `3` |  |
 | `FINAL_CHARGE` | `3` |  |
-| `K0L_STATUS` | `3` |  |
-| `WARN_COUNT` | `3` |  |
 | `K1` | `4` |  |
 | `KX` | `4` |  |
 | `HARMON` | `4` |  |
@@ -464,6 +455,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `CRITICAL_ANGLE` | `7` |  |
 | `BRAGG_ANGLE_IN` | `7` |  |
 | `SPIN_DN_DPZ_X` | `7` |  |
+| `DELTA_E_REF` | `8` |  |
 | `INTERPOLATION` | `8` |  |
 | `BRAGG_ANGLE_OUT` | `8` |  |
 | `K1X` | `8` |  |
@@ -626,7 +618,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `PZ_APERTURE_CENTER` | `31` |  |
 | `MEAN_EXCITATION_ENERGY` | `31` |  |
 | `FIDUCIAL_PT` | `31` |  |
-| `DELTA_E_REF` | `31` |  |
 | `CMAT_22` | `32` |  |
 | `DPSI_ORIGIN` | `32` |  |
 | `T_OFFSET` | `32` |  |
@@ -725,11 +716,10 @@ Fortran integer and real parameters exposed as Python constants.
 | `Y1_LIMIT` | `73` |  |
 | `Y2_LIMIT` | `74` |  |
 | `CHECK_SUM` | `75` |  |
-| `IS_ON` | `79` |  |
-| `ALIAS` | `80` |  |
 | `DISTRIBUTION` | `81` |  |
 | `TT` | `81` |  |
 | `X_KNOT` | `81` |  |
+| `ALIAS` | `82` |  |
 | `MAX_FRINGE_ORDER` | `82` |  |
 | `ETA_X` | `82` |  |
 | `ELECTRIC_DIPOLE_MOMENT` | `83` |  |
@@ -744,7 +734,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `ETAP_X` | `84` |  |
 | `SLAVE` | `84` |  |
 | `DENSITY_USED` | `84` |  |
-| `PARSER_MAKE_XFER_MATS` | `84` |  |
 | `LR_FREQ_SPREAD` | `85` |  |
 | `Y_REF` | `85` |  |
 | `ETAP_Y` | `85` |  |
@@ -769,23 +758,24 @@ Fortran integer and real parameters exposed as Python constants.
 | `Z_REF` | `89` |  |
 | `P89` | `89` |  |
 | `RADIATION_LENGTH_USED` | `89` |  |
+| `DETA_DPZ_Y` | `89` |  |
 | `PZ_REF` | `90` |  |
 | `SPACE_CHARGE_METHOD` | `90` |  |
 | `P90` | `90` |  |
 | `DETAP_DPZ_X` | `90` |  |
 | `MAT6_CALC_METHOD` | `91` |  |
+| `DETAP_DPZ_Y` | `91` |  |
 | `TRACKING_METHOD` | `92` |  |
+| `S_LONG` | `92` |  |
 | `REF_TIME` | `93` |  |
 | `PTC_INTEGRATION_TYPE` | `93` |  |
 | `SPIN_TRACKING_METHOD` | `94` |  |
 | `ETA_A` | `94` |  |
 | `APERTURE` | `95` |  |
 | `ETAP_A` | `95` |  |
-| `DETA_DPZ_Y` | `95` |  |
 | `X_LIMIT` | `96` |  |
 | `ABSOLUTE_TIME_TRACKING` | `96` |  |
 | `ETA_B` | `96` |  |
-| `DETAP_DPZ_Y` | `96` |  |
 | `Y_LIMIT` | `97` |  |
 | `ETAP_B` | `97` |  |
 | `OFFSET_MOVES_APERTURE` | `98` |  |
@@ -800,7 +790,6 @@ Fortran integer and real parameters exposed as Python constants.
 | `FREQUENCIES` | `101` |  |
 | `OLD_INTEGRATOR` | `101` |  |
 | `CURVATURE` | `101` |  |
-| `S_LONG` | `101` |  |
 | `X_POSITION` | `102` |  |
 | `EXACT_MODEL` | `102` |  |
 | `SYMPLECTIFY` | `103` |  |
@@ -808,6 +797,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `N_SLICE_SPLINE` | `103` |  |
 | `Z_POSITION` | `104` |  |
 | `AMP_VS_TIME` | `104` |  |
+| `IS_ON` | `105` |  |
 | `THETA_POSITION` | `105` |  |
 | `VERTICAL_KICK` | `105` |  |
 | `FIELD_CALC` | `106` |  |
@@ -844,7 +834,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `CARTESIAN_MAP` | `123` |  |
 | `CYLINDRICAL_MAP` | `124` |  |
 | `GRID_FIELD` | `125` |  |
-| `GEN_GRADIENTS` | `126` |  |
+| `GEN_GRAD_MAP` | `126` |  |
 | `CREATE_JUMBO_SLAVE` | `127` |  |
 | `ACCORDION_EDGE` | `128` |  |
 | `START_EDGE` | `129` |  |
@@ -892,11 +882,10 @@ Fortran integer and real parameters exposed as Python constants.
 | `IS_SWITCH` | `4` |  |
 | `IS_STRING` | `5` |  |
 | `IS_STRUCT` | `6` |  |
-| `IS_SPECIES` | `7` |  |
-| `UNKNOWN` | `8` |  |
+| `UNKNOWN` | `7` |  |
 | `PATCH_PROBLEM` | `2` |  |
+| `OUTSIDE` | `3` |  |
 | `CANNOT_FIND` | `4` |  |
-| `OUTSIDE` | `5` |  |
 | `SMALL_REL_CHANGE` | `1E-14` |  |
 | `END_STACK` | `0` |  |
 | `PLUS` | `1` |  |

@@ -24,23 +24,24 @@ use tao_interface, only: tao_abort_command_file, tao_alias_cmd, tao_beam_emit_ca
     tao_evaluate_element_parameters, tao_evaluate_expression, tao_evaluate_expression_new, &
     tao_evaluate_expression_old, tao_evaluate_tree, tao_evaluate_tune, tao_find_data, &
     tao_find_plot_region, tao_find_plots, tao_find_var, tao_fixer, tao_floor_to_screen, &
-    tao_floor_to_screen_coords, tao_get_opt_vars, tao_graph_name, tao_help, tao_init, &
-    tao_init_find_elements, tao_init_lattice, tao_init_plotting, tao_is_valid_name, &
-    tao_json_cmd, tao_key_info_to_str, tao_lat_bookkeeper, tao_lat_emit_calc, &
-    tao_lat_sigma_calc_needed, tao_lattice_calc, tao_limit_calc, tao_lmdif_optimizer, &
-    tao_locate_all_elements, tao_locate_elements, tao_mark_lattice_ele, tao_merit, &
-    tao_one_turn_map_calc_needed, tao_open_file, tao_open_scratch_file, &
-    tao_optimization_status, tao_oreint_building_wall_pt, tao_param_value_at_s, &
-    tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, tao_pick_universe, &
-    tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, tao_plot_struct_transfer, &
-    tao_pointer_to_branches, tao_pointer_to_building_wall_shape, tao_pointer_to_datum, &
-    tao_pointer_to_ele_shape, tao_pointer_to_tao_lat, tao_pointer_to_universe, &
-    tao_pointer_to_universes, tao_print_command_line_info, tao_ptc_normal_form, tao_python_cmd, &
-    tao_quiet_set, tao_rad_int_calc_needed, tao_re_allocate_expression_info, tao_read_cmd, &
-    tao_read_phase_space_index, tao_regression_test, tao_remove_blank_characters, tao_run_cmd, &
-    tao_scale_ping_data, tao_set_data_useit_opt, tao_set_flags_for_changed_attribute, &
-    tao_set_invalid, tao_set_opt_vars, tao_set_var_model_value, tao_set_var_useit_opt, &
-    tao_setup_key_table, tao_shape_init, tao_show_cmd, tao_show_this, tao_single_mode, &
+    tao_floor_to_screen_coords, tao_get_opt_vars, tao_graph_name, tao_has_been_created, &
+    tao_help, tao_init, tao_init_find_elements, tao_init_lattice, tao_init_plotting, &
+    tao_init_single_mode, tao_is_valid_name, tao_json_cmd, tao_key_info_to_str, &
+    tao_lat_bookkeeper, tao_lat_emit_calc, tao_lat_sigma_calc_needed, tao_lattice_calc, &
+    tao_limit_calc, tao_lmdif_optimizer, tao_locate_all_elements, tao_locate_elements, &
+    tao_mark_lattice_ele, tao_merit, tao_one_turn_map_calc_needed, tao_open_file, &
+    tao_open_scratch_file, tao_optimization_status, tao_oreint_building_wall_pt, &
+    tao_param_value_at_s, tao_parse_command_args, tao_parse_element_param_str, tao_pause_cmd, &
+    tao_pick_universe, tao_pipe_cmd, tao_place_cmd, tao_plot_cmd, tao_plot_setup, &
+    tao_plot_struct_transfer, tao_pointer_to_branches, tao_pointer_to_building_wall_shape, &
+    tao_pointer_to_datum, tao_pointer_to_ele_shape, tao_pointer_to_tao_lat, &
+    tao_pointer_to_universe, tao_pointer_to_universes, tao_print_command_line_info, &
+    tao_ptc_normal_form, tao_python_cmd, tao_quiet_set, tao_rad_int_calc_needed, &
+    tao_re_allocate_expression_info, tao_read_cmd, tao_read_phase_space_index, &
+    tao_regression_test, tao_remove_blank_characters, tao_run_cmd, tao_scale_ping_data, &
+    tao_set_data_useit_opt, tao_set_flags_for_changed_attribute, tao_set_invalid, &
+    tao_set_opt_vars, tao_set_var_model_value, tao_set_var_useit_opt, tao_setup_key_table, &
+    tao_shape_init, tao_show_cmd, tao_show_this, tao_single_mode, &
     tao_spin_matrices_calc_needed, tao_spin_tracking_turn_on, tao_split_component, &
     tao_srdt_calc_needed, tao_subin_uni_number, tao_symbol_import_from_lat, tao_taper_cmd, &
     tao_to_real, tao_top_level, tao_turn_on_special_calcs_if_needed_for_plotting, &
@@ -998,7 +999,6 @@ subroutine fortran_tao_control_tree_list (ele, tree) bind(c)
   ! ** In parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
-  ! ** Out parameters **
   type(c_ptr), intent(in), value :: tree
   type(ele_pointer_struct_container_alloc), pointer :: f_tree
   ! ** End of parameters **
@@ -4023,6 +4023,14 @@ subroutine fortran_tao_graph_setup (plot, graph) bind(c)
   call tao_graph_setup(f_plot, f_graph)
 
 end subroutine
+subroutine fortran_tao_has_been_created () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call tao_has_been_created()
+
+end subroutine
 subroutine fortran_tao_help (what1, what2, lines, n_lines) bind(c)
 
   use array_desc_mod
@@ -4318,6 +4326,22 @@ subroutine fortran_tao_init_plotting (plot_file) bind(c)
   call c_f_pointer(plot_file, f_plot_file_ptr, [huge(0)])
   call to_f_str(f_plot_file_ptr, f_plot_file)
   call tao_init_plotting(f_plot_file)
+
+end subroutine
+subroutine fortran_tao_init_single_mode (single_mode_file) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: single_mode_file
+  character(len=4096), target :: f_single_mode_file
+  character(kind=c_char), pointer :: f_single_mode_file_ptr(:)
+  ! ** End of parameters **
+  ! in: f_single_mode_file 0D_NOT_character
+  if (.not. c_associated(single_mode_file)) return
+  call c_f_pointer(single_mode_file, f_single_mode_file_ptr, [huge(0)])
+  call to_f_str(f_single_mode_file_ptr, f_single_mode_file)
+  call tao_init_single_mode(f_single_mode_file)
 
 end subroutine
 subroutine fortran_tao_init_variables (var_file) bind(c)
@@ -6046,7 +6070,8 @@ subroutine fortran_tao_pointer_to_datum (d1, ele_name, datum_ptr) bind(c)
   call c_f_pointer(ele_name, f_ele_name_ptr, [huge(0)])
   call to_f_str(f_ele_name_ptr, f_ele_name)
   ! out: f_datum_ptr 0D_PTR_type
-  if (c_associated(datum_ptr))   call c_f_pointer(datum_ptr, f_datum_ptr)
+  if (.not. c_associated(datum_ptr)) return
+  call c_f_pointer(datum_ptr, f_datum_ptr)
   f_datum_ptr => tao_pointer_to_datum(f_d1, f_ele_name)
 
   ! out: f_datum_ptr 0D_PTR_type
@@ -6755,20 +6780,12 @@ subroutine fortran_tao_read_phase_space_index (name, ixc, print_err, ix_ps) bind
   call c_f_pointer(ix_ps, f_ix_ps_ptr)
   f_ix_ps_ptr = f_ix_ps
 end subroutine
-subroutine fortran_tao_regression_test (cmd_str) bind(c)
+subroutine fortran_tao_regression_test () bind(c)
 
   use array_desc_mod
   implicit none
-  ! ** In parameters **
-  type(c_ptr), intent(in), value :: cmd_str
-  character(len=4096), target :: f_cmd_str
-  character(kind=c_char), pointer :: f_cmd_str_ptr(:)
   ! ** End of parameters **
-  ! in: f_cmd_str 0D_NOT_character
-  if (.not. c_associated(cmd_str)) return
-  call c_f_pointer(cmd_str, f_cmd_str_ptr, [huge(0)])
-  call to_f_str(f_cmd_str_ptr, f_cmd_str)
-  call tao_regression_test(f_cmd_str)
+  call tao_regression_test()
 
 end subroutine
 subroutine fortran_tao_remove_blank_characters (str) bind(c)

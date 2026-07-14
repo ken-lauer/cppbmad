@@ -449,6 +449,17 @@ order : LatEleOrderStruct
 )"""
   );
   m.def(
+      "ele_rad_int_cache_calc",
+      &Bmad::ele_rad_int_cache_calc,
+      nb::arg("ele"),
+      R"""(Wrapper for Fortran routine ele_rad_int_cache_calc
+
+Parameters
+----------
+ele : EleStruct
+)"""
+  );
+  m.def(
       "ele_reference_energy_correction",
       &Bmad::ele_reference_energy_correction,
       nb::arg("ele"),
@@ -1280,6 +1291,34 @@ Returns
 field_tot : EmFieldStruct
 )"""
   );
+  m.def(
+      "em_taylor_equal_em_taylor",
+      &Bmad::em_taylor_equal_em_taylor,
+      nb::arg("em_taylor1"),
+      nb::arg("em_taylor2"),
+      R"""(Wrapper for Fortran routine em_taylor_equal_em_taylor
+
+Parameters
+----------
+em_taylor1 : EmTaylorStruct
+
+em_taylor2 : EmTaylorStruct
+)"""
+  );
+  m.def(
+      "em_taylors_equal_em_taylors",
+      &Bmad::em_taylors_equal_em_taylors,
+      nb::arg("em_taylor1"),
+      nb::arg("em_taylor2"),
+      R"""(Wrapper for Fortran routine em_taylors_equal_em_taylors
+
+Parameters
+----------
+em_taylor1 : 1D array of EmTaylorStruct
+
+em_taylor2 : 1D array of EmTaylorStruct
+)"""
+  );
   nb::class_<Bmad::Emit6d>(m, "Emit6d", "emit_6d return type")
       .def_ro("mode", &Bmad::Emit6d::mode)
       .def_ro("sigma_mat", &Bmad::Emit6d::sigma_mat)
@@ -1330,24 +1369,6 @@ sigma_mat : 2D array of float (shape: 6,6)
 
 rad_int_by_ele : RadIntAllEleStruct, optional
     Radiation integrals element-by-element.
-)"""
-  );
-  m.def(
-      "energy_func",
-      &Bmad::energy_func,
-      nb::arg("integ_prob"),
-      nb::arg("status"),
-      R"""(Wrapper for Fortran routine energy_func
-
-Parameters
-----------
-integ_prob : float
-
-status : int
-
-Returns
--------
-de : float
 )"""
   );
   m.def(
@@ -2040,6 +2061,42 @@ is_eq : bool
 )"""
   );
   m.def(
+      "eq_em_taylor",
+      &Bmad::eq_em_taylor,
+      nb::arg("f1"),
+      nb::arg("f2"),
+      R"""(Wrapper for Fortran routine eq_em_taylor
+
+Parameters
+----------
+f1 : EmTaylorStruct
+
+f2 : EmTaylorStruct
+
+Returns
+-------
+is_eq : bool
+)"""
+  );
+  m.def(
+      "eq_em_taylor_term",
+      &Bmad::eq_em_taylor_term,
+      nb::arg("f1"),
+      nb::arg("f2"),
+      R"""(Wrapper for Fortran routine eq_em_taylor_term
+
+Parameters
+----------
+f1 : EmTaylorTermStruct
+
+f2 : EmTaylorTermStruct
+
+Returns
+-------
+is_eq : bool
+)"""
+  );
+  m.def(
       "eq_expression_atom",
       &Bmad::eq_expression_atom,
       nb::arg("f1"),
@@ -2076,17 +2133,17 @@ is_eq : bool
 )"""
   );
   m.def(
-      "eq_gen_grad_curve",
-      &Bmad::eq_gen_grad_curve,
+      "eq_gen_grad1",
+      &Bmad::eq_gen_grad1,
       nb::arg("f1"),
       nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gen_grad_curve
+      R"""(Wrapper for Fortran routine eq_gen_grad1
 
 Parameters
 ----------
-f1 : GenGradCurveStruct
+f1 : GenGrad1Struct
 
-f2 : GenGradCurveStruct
+f2 : GenGrad1Struct
 
 Returns
 -------
@@ -2094,53 +2151,17 @@ is_eq : bool
 )"""
   );
   m.def(
-      "eq_gen_gradients",
-      &Bmad::eq_gen_gradients,
+      "eq_gen_grad_map",
+      &Bmad::eq_gen_grad_map,
       nb::arg("f1"),
       nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gen_gradients
+      R"""(Wrapper for Fortran routine eq_gen_grad_map
 
 Parameters
 ----------
-f1 : GenGradientsStruct
+f1 : GenGradMapStruct
 
-f2 : GenGradientsStruct
-
-Returns
--------
-is_eq : bool
-)"""
-  );
-  m.def(
-      "eq_gg_taylor",
-      &Bmad::eq_gg_taylor,
-      nb::arg("f1"),
-      nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gg_taylor
-
-Parameters
-----------
-f1 : GgTaylorStruct
-
-f2 : GgTaylorStruct
-
-Returns
--------
-is_eq : bool
-)"""
-  );
-  m.def(
-      "eq_gg_taylor_term",
-      &Bmad::eq_gg_taylor_term,
-      nb::arg("f1"),
-      nb::arg("f2"),
-      R"""(Wrapper for Fortran routine eq_gg_taylor_term
-
-Parameters
-----------
-f1 : GgTaylorTermStruct
-
-f2 : GgTaylorTermStruct
+f2 : GenGradMapStruct
 
 Returns
 -------

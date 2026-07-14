@@ -59,23 +59,6 @@ value_set : float, optional
 )"""
   );
   m.def(
-      "set_env",
-      &SimUtils::set_env,
-      nb::arg("env_name"),
-      nb::arg("env_value"),
-      nb::arg("err_flag"),
-      R"""(Wrapper for Fortran routine set_env
-
-Parameters
-----------
-env_name : str
-
-env_value : str
-
-err_flag : bool
-)"""
-  );
-  m.def(
       "set_parameter",
       nb::overload_cast<int, int>(&SimUtils::set_parameter),
       nb::arg("param_val"),
@@ -276,16 +259,6 @@ Parameters
 ix_unit : int
 
 error_flag : bool
-)"""
-  );
-  m.def(
-      "special_projection",
-      &SimUtils::special_projection,
-      nb::arg("f"),
-      nb::arg("status") = nb::none(),
-      R"""(Calculates <cdata | exp(i theta)>
-
-Used only by maximize projection. Uses data global to the function to accomodate stock NR routine.
 )"""
   );
   m.def(

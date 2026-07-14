@@ -9,9 +9,9 @@ PyWriteLatLine python_write_lat_line(
     int iu,
     bool end_is_neigh,
     std::optional<bool> do_split = std::nullopt,
-    std::optional<bool> ampersand_at_ends = std::nullopt
+    std::optional<bool> scibmad = std::nullopt
 ) {
-  Bmad::write_lat_line(line, iu, end_is_neigh, do_split, ampersand_at_ends);
+  Bmad::write_lat_line(line, iu, end_is_neigh, do_split, scibmad);
   auto py_result{PyWriteLatLine{line}};
   return py_result;
 }
@@ -577,6 +577,7 @@ new_file : bool, optional
       nb::arg("file_name"),
       nb::arg("ele"),
       nb::arg("cart_map"),
+      nb::arg("err_flag"),
       R"""(Routine to write a binary cartesian_map structure.
 Note: The file name should have a ".bin" suffix.
 
@@ -589,10 +590,8 @@ ele : EleStruct
     Element associated with the map.
 
 cart_map : CartesianMapStruct
-    Cartesian map.
+    Cartesian map. Ouput:
 
-Returns
--------
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -603,6 +602,7 @@ err_flag : bool
       nb::arg("file_name"),
       nb::arg("ele"),
       nb::arg("cl_map"),
+      nb::arg("err_flag"),
       R"""(Routine to write a binary cylindrical_map structure.
 Note: The file name should have a ".bin" suffix.
 
@@ -615,10 +615,8 @@ ele : EleStruct
     Element associated with the map.
 
 cl_map : CylindricalMapStruct
-    Cylindrical map.
+    Cylindrical map. Ouput:
 
-Returns
--------
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -629,6 +627,7 @@ err_flag : bool
       nb::arg("file_name"),
       nb::arg("ele"),
       nb::arg("g_field"),
+      nb::arg("err_flag"),
       R"""(Routine to write a binary grid_field structure.
 Note: The file name should have a ".bin" suffix.
 
@@ -641,10 +640,8 @@ ele : EleStruct
     Element associated with the map.
 
 g_field : GridFieldStruct
-    Cylindrical map.
+    Cylindrical map. Ouput:
 
-Returns
--------
 err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
@@ -1021,7 +1018,7 @@ err : bool
       nb::arg("iu"),
       nb::arg("end_is_neigh"),
       nb::arg("do_split") = nb::none(),
-      nb::arg("ampersand_at_ends") = nb::none(),
+      nb::arg("scibmad") = nb::none(),
       R"""(Routine to write strings to a lattice file.
 This routine will break the string up into multiple lines
 if the string is too long and add a continuation character if needed.
@@ -1046,8 +1043,8 @@ do_split : bool, optional
     Split line if overlength? Default is True. False is used when line has already been split for expressions
     since the expression splitting routine does a much better job of it.
 
-ampersand_at_ends : bool, optional
-    Default True. If False then do not include "&" line continuation
+scibmad : bool, optional
+    Default False. If True then do not include "&" line continuation
 
 Returns
 -------
@@ -1058,8 +1055,8 @@ line : str
 )"""
   );
   m.def(
-      "write_lattice_elegant_format",
-      &Bmad::write_lattice_elegant_format,
+      "write_lattice_in_elegant_format",
+      &Bmad::write_lattice_in_elegant_format,
       nb::arg("out_file_name"),
       nb::arg("lat"),
       nb::arg("ref_orbit") = nb::none(),
@@ -1067,7 +1064,7 @@ line : str
       nb::arg("include_apertures") = nb::none(),
       nb::arg("dr12_drift_max") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
-      R"""(Wrapper for Fortran routine write_lattice_elegant_format
+      R"""(Wrapper for Fortran routine write_lattice_in_elegant_format
 
 Parameters
 ----------
@@ -1105,8 +1102,8 @@ err : bool, optional
 )"""
   );
   m.def(
-      "write_lattice_foreign_format",
-      &Bmad::write_lattice_foreign_format,
+      "write_lattice_in_foreign_format",
+      &Bmad::write_lattice_in_foreign_format,
       nb::arg("out_type"),
       nb::arg("out_file_name"),
       nb::arg("lat"),
@@ -1115,12 +1112,12 @@ err : bool, optional
       nb::arg("include_apertures") = nb::none(),
       nb::arg("dr12_drift_max") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
-      R"""(Wrapper for Fortran routine write_lattice_foreign_format
+      R"""(Wrapper for Fortran routine write_lattice_in_foreign_format
 
 Parameters
 ----------
 out_type : str
-    Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', 'OPAL-T', 'PALS', or 'SCIBMAD'.
+    Either 'ELEGANT', 'MAD-8', 'MAD-X', 'SAD', or 'OPAL-T', 'SCIBMAD'.
 
 out_file_name : str
     Name of the mad output lattice file.
@@ -1156,8 +1153,8 @@ err : bool, optional
 )"""
   );
   m.def(
-      "write_lattice_mad_format",
-      &Bmad::write_lattice_mad_format,
+      "write_lattice_in_mad_format",
+      &Bmad::write_lattice_in_mad_format,
       nb::arg("out_type"),
       nb::arg("out_file_name"),
       nb::arg("lat"),
@@ -1166,7 +1163,7 @@ err : bool, optional
       nb::arg("include_apertures") = nb::none(),
       nb::arg("dr12_drift_max") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
-      R"""(Wrapper for Fortran routine write_lattice_mad_format
+      R"""(Wrapper for Fortran routine write_lattice_in_mad_format
 
 Parameters
 ----------
@@ -1206,52 +1203,15 @@ err : bool, optional
     Set True if, say a file could not be opened.
 )"""
   );
-  nb::class_<Bmad::WriteLatticePalsFormat>(
-      m,
-      "WriteLatticePalsFormat",
-      "write_lattice_pals_format return type"
-  )
-      .def_ro("pals_file", &Bmad::WriteLatticePalsFormat::pals_file)
-      .def_ro("err_flag", &Bmad::WriteLatticePalsFormat::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticePalsFormat &) { return 2; })
-      .def("__getitem__", [](const Bmad::WriteLatticePalsFormat &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.pals_file);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
-      "write_lattice_pals_format",
-      &Bmad::write_lattice_pals_format,
-      nb::arg("lat"),
-      R"""(Wrapper for Fortran routine write_lattice_pals_format
-
-Parameters
-----------
-lat : LatStruct
-    Lattice
-
-Returns
--------
-pals_file : str
-    Pals lattice file name.
-
-err_flag : bool, optional
-    Error flag
-)"""
-  );
-  m.def(
-      "write_lattice_sad_format",
-      &Bmad::write_lattice_sad_format,
+      "write_lattice_in_sad_format",
+      &Bmad::write_lattice_in_sad_format,
       nb::arg("out_file_name"),
       nb::arg("lat"),
       nb::arg("include_apertures") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
       nb::arg("err") = nb::none(),
-      R"""(Wrapper for Fortran routine write_lattice_sad_format
+      R"""(Wrapper for Fortran routine write_lattice_in_sad_format
 
 Parameters
 ----------
@@ -1266,39 +1226,22 @@ ix_branch : int, optional
 err : bool, optional
 )"""
   );
-  nb::class_<Bmad::WriteLatticeScibmadFormat>(
-      m,
-      "WriteLatticeScibmadFormat",
-      "write_lattice_scibmad_format return type"
-  )
-      .def_ro("scibmad_file", &Bmad::WriteLatticeScibmadFormat::scibmad_file)
-      .def_ro("err_flag", &Bmad::WriteLatticeScibmadFormat::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticeScibmadFormat &) { return 2; })
-      .def("__getitem__", [](const Bmad::WriteLatticeScibmadFormat &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.scibmad_file);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
-      "write_lattice_scibmad_format",
-      &Bmad::write_lattice_scibmad_format,
+      "write_lattice_in_scibmad",
+      &Bmad::write_lattice_in_scibmad,
+      nb::arg("scibmad_name"),
       nb::arg("lat"),
-      R"""(Wrapper for Fortran routine write_lattice_scibmad_format
+      R"""(Wrapper for Fortran routine write_lattice_in_scibmad
 
 Parameters
 ----------
+scibmad_name : str
+
 lat : LatStruct
     Lattice
 
 Returns
 -------
-scibmad_file : str
-    SciBmad lattice file name.
-
 err_flag : bool, optional
     Error flag
 )"""

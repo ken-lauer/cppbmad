@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260713.0"
+__version__ = "20251223.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -162,6 +162,12 @@ from ._pybmad import EllipseBeamInitStructAlloc1D
 from ._pybmad import EmFieldStruct
 from ._pybmad import EmFieldStructArray1D
 from ._pybmad import EmFieldStructAlloc1D
+from ._pybmad import EmTaylorStruct
+from ._pybmad import EmTaylorStructArray1D
+from ._pybmad import EmTaylorStructAlloc1D
+from ._pybmad import EmTaylorTermStruct
+from ._pybmad import EmTaylorTermStructArray1D
+from ._pybmad import EmTaylorTermStructAlloc1D
 from ._pybmad import ExpressionAtomStruct
 from ._pybmad import ExpressionAtomStructArray1D
 from ._pybmad import ExpressionAtomStructAlloc1D
@@ -179,19 +185,13 @@ from ._pybmad import FieldAt3DBoxStruct
 from ._pybmad import FloorPositionStruct
 from ._pybmad import FoilStruct
 from ._pybmad import FringeFieldInfoStruct
-from ._pybmad import GenGradCurveStruct
-from ._pybmad import GenGradCurveStructArray1D
-from ._pybmad import GenGradCurveStructAlloc1D
-from ._pybmad import GenGradientsStruct
-from ._pybmad import GenGradientsStructArray1D
-from ._pybmad import GenGradientsStructAlloc1D
+from ._pybmad import GenGrad1Struct
+from ._pybmad import GenGrad1StructArray1D
+from ._pybmad import GenGrad1StructAlloc1D
+from ._pybmad import GenGradMapStruct
+from ._pybmad import GenGradMapStructArray1D
+from ._pybmad import GenGradMapStructAlloc1D
 from ._pybmad import GeneralBinStruct
-from ._pybmad import GgTaylorStruct
-from ._pybmad import GgTaylorStructArray1D
-from ._pybmad import GgTaylorStructAlloc1D
-from ._pybmad import GgTaylorTermStruct
-from ._pybmad import GgTaylorTermStructArray1D
-from ._pybmad import GgTaylorTermStructAlloc1D
 from ._pybmad import GptLatParamStruct
 from ._pybmad import GridBeamInitStruct
 from ._pybmad import GridBeamInitStructArray1D
@@ -601,7 +601,6 @@ add_this_taylor_term = bmad.add_this_taylor_term
 adjust_super_slave_names = bmad.adjust_super_slave_names
 all_pointer_to_string = simutils.all_pointer_to_string
 allocate_branch_array = bmad.allocate_branch_array
-allocate_grid_field = bmad.allocate_grid_field
 allocate_lat_ele_array = bmad.allocate_lat_ele_array
 allocate_plat = bmad.allocate_plat
 allocate_thread_states = simutils.allocate_thread_states
@@ -616,7 +615,6 @@ apfft_ext = simutils.apfft_ext
 apply_all_rampers = bmad.apply_all_rampers
 apply_element_edge_kick = bmad.apply_element_edge_kick
 apply_energy_kick = bmad.apply_energy_kick
-apply_fft_3d_kicks = bmad.apply_fft_3d_kicks
 apply_patch_to_ptc_fibre = bmad.apply_patch_to_ptc_fibre
 apply_rampers_to_slave = bmad.apply_rampers_to_slave
 array_re_str = bmad.array_re_str
@@ -649,7 +647,6 @@ bbu_track_a_stage = bsim.bbu_track_a_stage
 bbu_track_all = bsim.bbu_track_all
 beam_envelope_ibs = bmad.beam_envelope_ibs
 beam_equal_beam = bmad.beam_equal_beam
-beam_init_setup = bmad.beam_init_setup
 beam_tilts = bmad.beam_tilts
 beambeam_fibre_setup = bmad.beambeam_fibre_setup
 bend_edge_kick = bmad.bend_edge_kick
@@ -792,16 +789,14 @@ crystal_type_to_crystal_params = bmad.crystal_type_to_crystal_params
 csr_and_sc_apply_kicks = bmad.csr_and_sc_apply_kicks
 csr_bin_kicks = bmad.csr_bin_kicks
 csr_bin_particles = bmad.csr_bin_particles
-cumulr = bmad.cumulr
 custom_attribute_ubound_index = bmad.custom_attribute_ubound_index
 custom_ele_attrib_name_list = bmad.custom_ele_attrib_name_list
-d_integral = bmad.d_integral
 damping_matrix_d = bmad.damping_matrix_d
 date_and_time_stamp = simutils.date_and_time_stamp
-ddz_calc_csr = bmad.ddz_calc_csr
 deallocate_ele_pointers = bmad.deallocate_ele_pointers
 deallocate_expression_tree = bmad.deallocate_expression_tree
 deallocate_lat_pointers = bmad.deallocate_lat_pointers
+deallocate_tree = bmad.deallocate_tree
 default_tracking_species = bmad.default_tracking_species
 deposit_particles = bmad.deposit_particles
 destfixedwindowls = simutils.destfixedwindowls
@@ -846,6 +841,7 @@ ele_loc_name = bmad.ele_loc_name
 ele_misalignment_l_s_calc = bmad.ele_misalignment_l_s_calc
 ele_nametable_index = bmad.ele_nametable_index
 ele_order_calc = bmad.ele_order_calc
+ele_rad_int_cache_calc = bmad.ele_rad_int_cache_calc
 ele_reference_energy_correction = bmad.ele_reference_energy_correction
 ele_rf_step_index = bmad.ele_rf_step_index
 ele_to_fibre = bmad.ele_to_fibre
@@ -865,9 +861,10 @@ em_field_calc = bmad.em_field_calc
 em_field_derivatives = bmad.em_field_derivatives
 em_field_kick_vector_time = bmad.em_field_kick_vector_time
 em_field_plus_em_field = bmad.em_field_plus_em_field
+em_taylor_equal_em_taylor = bmad.em_taylor_equal_em_taylor
+em_taylors_equal_em_taylors = bmad.em_taylors_equal_em_taylors
 emit_6d = bmad.emit_6d
 end_akima_spline_calc = simutils.end_akima_spline_calc
-energy_func = bmad.energy_func
 entering_element = bmad.entering_element
 envelope_radints = bmad.envelope_radints
 envelope_radints_ibs = bmad.envelope_radints_ibs
@@ -903,12 +900,12 @@ eq_cylindrical_map_term1 = bmad.eq_cylindrical_map_term1
 eq_ele = bmad.eq_ele
 eq_ellipse_beam_init = bmad.eq_ellipse_beam_init
 eq_em_field = bmad.eq_em_field
+eq_em_taylor = bmad.eq_em_taylor
+eq_em_taylor_term = bmad.eq_em_taylor_term
 eq_expression_atom = bmad.eq_expression_atom
 eq_floor_position = bmad.eq_floor_position
-eq_gen_grad_curve = bmad.eq_gen_grad_curve
-eq_gen_gradients = bmad.eq_gen_gradients
-eq_gg_taylor = bmad.eq_gg_taylor
-eq_gg_taylor_term = bmad.eq_gg_taylor_term
+eq_gen_grad1 = bmad.eq_gen_grad1
+eq_gen_grad_map = bmad.eq_gen_grad_map
 eq_grid_beam_init = bmad.eq_grid_beam_init
 eq_grid_field = bmad.eq_grid_field
 eq_grid_field_pt = bmad.eq_grid_field_pt
@@ -982,6 +979,7 @@ expression_tree_to_string = bmad.expression_tree_to_string
 expression_value = bmad.expression_value
 factorial = simutils.factorial
 faddeeva_function = simutils.faddeeva_function
+fff_sub = simutils.fff_sub
 fft1 = bmad.fft1
 fft_1d = simutils.fft_1d
 fibre_to_ele = bmad.fibre_to_ele
@@ -1010,8 +1008,9 @@ g_integrals_calc = bmad.g_integrals_calc
 gamma_ref = bmad.gamma_ref
 gelbd = simutils.gelbd
 gen_complete_elliptic = simutils.gen_complete_elliptic
-gen_grad_at_s_to_gg_a_taylor = bmad.gen_grad_at_s_to_gg_a_taylor
-gen_grad_at_s_to_gg_taylor = bmad.gen_grad_at_s_to_gg_taylor
+gen_grad1_to_em_taylor = bmad.gen_grad1_to_em_taylor
+gen_grad_at_s_to_em_taylor = bmad.gen_grad_at_s_to_em_taylor
+gen_grad_field = bmad.gen_grad_field
 general_bin_count = simutils.general_bin_count
 general_bin_index = simutils.general_bin_index
 general_bin_index_in_bounds = simutils.general_bin_index_in_bounds
@@ -1024,6 +1023,7 @@ get_file_number = simutils.get_file_number
 get_file_time_stamp = simutils.get_file_time_stamp
 get_gpt_fieldgrid_name_and_scaling = bmad.get_gpt_fieldgrid_name_and_scaling
 get_list_of_names = bmad.get_list_of_names
+get_next_number = simutils.get_next_number
 get_next_word = bmad.get_next_word
 get_opal_fieldgrid_name_and_scaling = bmad.get_opal_fieldgrid_name_and_scaling
 get_overlay_group_names = bmad.get_overlay_group_names
@@ -1031,23 +1031,6 @@ get_sequence_args = bmad.get_sequence_args
 get_slave_list = bmad.get_slave_list
 get_switch = bmad.get_switch
 get_tty_char = simutils.get_tty_char
-gg_coef_table_init = bmad.gg_coef_table_init
-gg_set_block_001 = bmad.gg_set_block_001
-gg_set_block_002 = bmad.gg_set_block_002
-gg_set_block_003 = bmad.gg_set_block_003
-gg_set_block_004 = bmad.gg_set_block_004
-gg_set_block_005 = bmad.gg_set_block_005
-gg_set_block_006 = bmad.gg_set_block_006
-gg_set_block_007 = bmad.gg_set_block_007
-gg_set_block_008 = bmad.gg_set_block_008
-gg_set_block_009 = bmad.gg_set_block_009
-gg_set_block_010 = bmad.gg_set_block_010
-gg_set_block_011 = bmad.gg_set_block_011
-gg_set_block_012 = bmad.gg_set_block_012
-gg_set_block_013 = bmad.gg_set_block_013
-gg_set_block_014 = bmad.gg_set_block_014
-gg_taylor_equal_gg_taylor = bmad.gg_taylor_equal_gg_taylor
-gg_taylors_equal_gg_taylors = bmad.gg_taylors_equal_gg_taylors
 gpt_field_grid_scaling = bmad.gpt_field_grid_scaling
 gpt_max_field_reference = bmad.gpt_max_field_reference
 gpt_to_particle_bunch = bmad.gpt_to_particle_bunch
@@ -1092,8 +1075,8 @@ init_complex_taylor_series = bmad.init_complex_taylor_series
 init_coord = bmad.init_coord
 init_custom = bmad.init_custom
 init_ele = bmad.init_ele
+init_em_taylor_series = bmad.init_em_taylor_series
 init_fringe_info = bmad.init_fringe_info
-init_gg_taylor_series = bmad.init_gg_taylor_series
 init_lat = bmad.init_lat
 init_multipole_cache = bmad.init_multipole_cache
 init_photon_from_a_photon_init_ele = bmad.init_photon_from_a_photon_init_ele
@@ -1114,6 +1097,7 @@ integration_timer = bmad.integration_timer
 interpolate_field = bmad.interpolate_field
 interpolated_fft = simutils.interpolated_fft
 interpolated_fft_gsl = simutils.interpolated_fft_gsl
+inverse_prob = simutils.inverse_prob
 ion_kick = bmad.ion_kick
 is_alphabetic = simutils.is_alphabetic
 is_attribute = bmad.is_attribute
@@ -1184,6 +1168,7 @@ make_mat6_bmad = bmad.make_mat6_bmad
 make_mat6_bmad_photon = bmad.make_mat6_bmad_photon
 make_mat6_high_energy_space_charge = bmad.make_mat6_high_energy_space_charge
 make_mat6_mad = bmad.make_mat6_mad
+make_mat6_runge_kutta = bmad.make_mat6_runge_kutta
 make_mat6_symp_lie_ptc = bmad.make_mat6_symp_lie_ptc
 make_mat6_taylor = bmad.make_mat6_taylor
 make_mat6_tracking = bmad.make_mat6_tracking
@@ -1255,8 +1240,6 @@ nametable_bracket_indexx = simutils.nametable_bracket_indexx
 nametable_change1 = simutils.nametable_change1
 nametable_init = simutils.nametable_init
 nametable_remove = simutils.nametable_remove
-negative_ampsquared = simutils.negative_ampsquared
-negative_dampsquared = simutils.negative_dampsquared
 new_control = bmad.new_control
 nint_chk = bmad.nint_chk
 normal_form_complex_taylors = bmad.normal_form_complex_taylors
@@ -1297,11 +1280,10 @@ out_io_buffer_reset = simutils.out_io_buffer_reset
 out_io = simutils.out_io
 out_io_print_and_capture_setup = simutils.out_io_print_and_capture_setup
 output_direct = simutils.output_direct
-p_func = bmad.p_func
 parse_cartesian_map = bmad.parse_cartesian_map
 parse_cylindrical_map = bmad.parse_cylindrical_map
 parse_fortran_format = simutils.parse_fortran_format
-parse_gen_gradients = bmad.parse_gen_gradients
+parse_gen_grad_map = bmad.parse_gen_grad_map
 parse_grid_field = bmad.parse_grid_field
 parse_integer_list = bmad.parse_integer_list
 parse_integer_list2 = bmad.parse_integer_list2
@@ -1339,10 +1321,10 @@ particle_is_moving_forward = bmad.particle_is_moving_forward
 particle_rf_time = bmad.particle_rf_time
 patch_flips_propagation_direction = bmad.patch_flips_propagation_direction
 patch_length = bmad.patch_length
+phase_space_fit = bmad.phase_space_fit
 photon_absorption_and_phase_shift = bmad.photon_absorption_and_phase_shift
 photon_add_to_detector_statistics = bmad.photon_add_to_detector_statistics
 photon_diffuse_scattering = bmad.photon_diffuse_scattering
-photon_hit_func = bmad.photon_hit_func
 photon_read_spline = bmad.photon_read_spline
 photon_reflection = bmad.photon_reflection
 photon_reflection_std_surface_init = bmad.photon_reflection_std_surface_init
@@ -1470,9 +1452,9 @@ remove_constant_taylor = bmad.remove_constant_taylor
 remove_dead_from_bunch = bmad.remove_dead_from_bunch
 remove_eles_from_lat = bmad.remove_eles_from_lat
 remove_lord_slave_link = bmad.remove_lord_slave_link
-residual_pwd_sig_z = bmad.residual_pwd_sig_z
 reverse_lat = bmad.reverse_lat
 rf_cav_names = bsim.rf_cav_names
+rf_clock_setup = bmad.rf_clock_setup
 rf_coupler_kick = bmad.rf_coupler_kick
 rf_is_on = bmad.rf_is_on
 rf_ref_time_offset = bmad.rf_ref_time_offset
@@ -1516,13 +1498,15 @@ set_ele_defaults = bmad.set_ele_defaults
 set_ele_name = bmad.set_ele_name
 set_ele_real_attribute = bmad.set_ele_real_attribute
 set_ele_status_stale = bmad.set_ele_status_stale
-set_env = simutils.set_env
+set_emit_from_beam_init = bmad.set_emit_from_beam_init
 set_flags_for_changed_attribute = bmad.set_flags_for_changed_attribute
 set_fringe_on_off = bmad.set_fringe_on_off
 set_lords_status_stale = bmad.set_lords_status_stale
+set_on = bmad.set_on
 set_on_off = bmad.set_on_off
 set_orbit_to_zero = bmad.set_orbit_to_zero
 set_parameter = simutils.set_parameter
+set_particle_from_rf_time = bmad.set_particle_from_rf_time
 set_ptc = bmad.set_ptc
 set_ptc_base_state = bmad.set_ptc_base_state
 set_ptc_com_pointers = bmad.set_ptc_com_pointers
@@ -1555,7 +1539,6 @@ sort_complex_taylor_terms = bmad.sort_complex_taylor_terms
 space_charge_cathodeimages = bmad.space_charge_cathodeimages
 space_charge_freespace = bmad.space_charge_freespace
 space_charge_rectpipe = bmad.space_charge_rectpipe
-special_projection = simutils.special_projection
 species_id = simutils.species_id
 species_id_from_openpmd = simutils.species_id_from_openpmd
 species_name = simutils.species_name
@@ -1626,6 +1609,7 @@ taylor_inverse = bmad.taylor_inverse
 taylor_propagate1 = bmad.taylor_propagate1
 taylor_to_mad_map = bmad.taylor_to_mad_map
 taylors_equal_taylors = bmad.taylors_equal_taylors
+test_tune_tracker_lock = simutils.test_tune_tracker_lock
 test_xgelbd = simutils.test_xgelbd
 tilt_coords = bmad.tilt_coords
 tilt_coords_photon = bmad.tilt_coords_photon
@@ -1667,6 +1651,7 @@ track1_runge_kutta = bmad.track1_runge_kutta
 track1_sample = bmad.track1_sample
 track1_spin = bmad.track1_spin
 track1_spin_integration = bmad.track1_spin_integration
+track1_spin_magnus = bmad.track1_spin_magnus
 track1_spin_taylor = bmad.track1_spin_taylor
 track1_sr_wake = bmad.track1_sr_wake
 track1_symp_lie_ptc = bmad.track1_symp_lie_ptc
@@ -1704,7 +1689,6 @@ track_bunch_to_s = bmad.track_bunch_to_s
 track_bunch_to_t = bmad.track_bunch_to_t
 track_complex_taylor = bmad.track_complex_taylor
 track_from_s_to_s = bmad.track_from_s_to_s
-track_func = bmad.track_func
 track_many = bmad.track_many
 track_to_surface = bmad.track_to_surface
 track_until_dead = bmad.track_until_dead
@@ -1772,7 +1756,6 @@ value_to_line = bmad.value_to_line
 vec_to_polar = bmad.vec_to_polar
 vec_to_spinor = bmad.vec_to_spinor
 verify_valid_name = bmad.verify_valid_name
-vert_angle_func = bmad.vert_angle_func
 virtual_memory_usage = simutils.virtual_memory_usage
 w_mat_for_bend_angle = bmad.w_mat_for_bend_angle
 w_mat_for_tilt = bmad.w_mat_for_tilt
@@ -1809,12 +1792,11 @@ write_gpt_field_grid_file_2d = bmad.write_gpt_field_grid_file_2d
 write_gpt_field_grid_file_3d = bmad.write_gpt_field_grid_file_3d
 write_gpt_lattice_file = bmad.write_gpt_lattice_file
 write_lat_line = bmad.write_lat_line
-write_lattice_elegant_format = bmad.write_lattice_elegant_format
-write_lattice_foreign_format = bmad.write_lattice_foreign_format
-write_lattice_mad_format = bmad.write_lattice_mad_format
-write_lattice_pals_format = bmad.write_lattice_pals_format
-write_lattice_sad_format = bmad.write_lattice_sad_format
-write_lattice_scibmad_format = bmad.write_lattice_scibmad_format
+write_lattice_in_elegant_format = bmad.write_lattice_in_elegant_format
+write_lattice_in_foreign_format = bmad.write_lattice_in_foreign_format
+write_lattice_in_mad_format = bmad.write_lattice_in_mad_format
+write_lattice_in_sad_format = bmad.write_lattice_in_sad_format
+write_lattice_in_scibmad = bmad.write_lattice_in_scibmad
 write_line_element = bmad.write_line_element
 write_opal_field_grid_file = bmad.write_opal_field_grid_file
 write_opal_lattice_file = bmad.write_opal_lattice_file
@@ -1827,7 +1809,6 @@ z_at_surface = bmad.z_at_surface
 zero_ele_kicks = bmad.zero_ele_kicks
 zero_ele_offsets = bmad.zero_ele_offsets
 zero_lr_wakes_in_lat = bmad.zero_lr_wakes_in_lat
-zig_table_init = simutils.zig_table_init
 zlafun = bmad.zlafun
 
 # Enums
@@ -1884,7 +1865,6 @@ from ._enums import CONTROL_LORD
 from ._enums import RAMPER_LORD
 from ._enums import GOVERNOR
 from ._enums import FIELD_LORD
-from ._enums import FIELD_SLAVE
 from ._enums import MULTIPOLE_SOURCE
 from ._enums import AUTO_APERTURE
 from ._enums import RECTANGULAR
@@ -1923,9 +1903,6 @@ from ._enums import USER_SET
 from ._enums import FIRST_PASS
 from ._enums import HIGHLAND
 from ._enums import LYNCH_DAHL
-from ._enums import NOT_ALLOWED
-from ._enums import STRAIGHT_REFERENCE
-from ._enums import BENDS_REFERENCE
 from ._enums import INCOHERENT
 from ._enums import COHERENT
 from ._enums import ASCII
@@ -2023,9 +2000,6 @@ from ._enums import FAMILY_SQ
 from ._enums import HYPER_Y
 from ._enums import HYPER_XY
 from ._enums import HYPER_X
-from ._enums import GG_A
-from ._enums import GG_B
-from ._enums import GG_BS
 from ._enums import SUPER_OK
 from ._enums import STALE
 from ._enums import ATTRIBUTE_GROUP
@@ -2247,8 +2221,6 @@ from ._enums import X_GAIN_ERR
 from ._enums import TAYLOR_ORDER
 from ._enums import R_SOLENOID
 from ._enums import FINAL_CHARGE
-from ._enums import K0L_STATUS
-from ._enums import WARN_COUNT
 from ._enums import K1
 from ._enums import KX
 from ._enums import HARMON
@@ -2289,6 +2261,7 @@ from ._enums import GRADIENT_ERR
 from ._enums import CRITICAL_ANGLE
 from ._enums import BRAGG_ANGLE_IN
 from ._enums import SPIN_DN_DPZ_X
+from ._enums import DELTA_E_REF
 from ._enums import INTERPOLATION
 from ._enums import BRAGG_ANGLE_OUT
 from ._enums import K1X
@@ -2451,7 +2424,6 @@ from ._enums import TRANSVERSE_SIGMA_CUT
 from ._enums import PZ_APERTURE_CENTER
 from ._enums import MEAN_EXCITATION_ENERGY
 from ._enums import FIDUCIAL_PT
-from ._enums import DELTA_E_REF
 from ._enums import CMAT_22
 from ._enums import DPSI_ORIGIN
 from ._enums import T_OFFSET
@@ -2550,11 +2522,10 @@ from ._enums import X2_LIMIT
 from ._enums import Y1_LIMIT
 from ._enums import Y2_LIMIT
 from ._enums import CHECK_SUM
-from ._enums import IS_ON
-from ._enums import ALIAS
 from ._enums import DISTRIBUTION
 from ._enums import TT
 from ._enums import X_KNOT
+from ._enums import ALIAS
 from ._enums import MAX_FRINGE_ORDER
 from ._enums import ETA_X
 from ._enums import ELECTRIC_DIPOLE_MOMENT
@@ -2569,7 +2540,6 @@ from ._enums import PX_REF
 from ._enums import ETAP_X
 from ._enums import SLAVE
 from ._enums import DENSITY_USED
-from ._enums import PARSER_MAKE_XFER_MATS
 from ._enums import LR_FREQ_SPREAD
 from ._enums import Y_REF
 from ._enums import ETAP_Y
@@ -2594,23 +2564,24 @@ from ._enums import VAR
 from ._enums import Z_REF
 from ._enums import P89
 from ._enums import RADIATION_LENGTH_USED
+from ._enums import DETA_DPZ_Y
 from ._enums import PZ_REF
 from ._enums import SPACE_CHARGE_METHOD
 from ._enums import P90
 from ._enums import DETAP_DPZ_X
 from ._enums import MAT6_CALC_METHOD
+from ._enums import DETAP_DPZ_Y
 from ._enums import TRACKING_METHOD
+from ._enums import S_LONG
 from ._enums import REF_TIME
 from ._enums import PTC_INTEGRATION_TYPE
 from ._enums import SPIN_TRACKING_METHOD
 from ._enums import ETA_A
 from ._enums import APERTURE
 from ._enums import ETAP_A
-from ._enums import DETA_DPZ_Y
 from ._enums import X_LIMIT
 from ._enums import ABSOLUTE_TIME_TRACKING
 from ._enums import ETA_B
-from ._enums import DETAP_DPZ_Y
 from ._enums import Y_LIMIT
 from ._enums import ETAP_B
 from ._enums import OFFSET_MOVES_APERTURE
@@ -2625,7 +2596,6 @@ from ._enums import TERM
 from ._enums import FREQUENCIES
 from ._enums import OLD_INTEGRATOR
 from ._enums import CURVATURE
-from ._enums import S_LONG
 from ._enums import X_POSITION
 from ._enums import EXACT_MODEL
 from ._enums import SYMPLECTIFY
@@ -2633,6 +2603,7 @@ from ._enums import Y_POSITION
 from ._enums import N_SLICE_SPLINE
 from ._enums import Z_POSITION
 from ._enums import AMP_VS_TIME
+from ._enums import IS_ON
 from ._enums import THETA_POSITION
 from ._enums import VERTICAL_KICK
 from ._enums import FIELD_CALC
@@ -2669,7 +2640,7 @@ from ._enums import REFERENCE
 from ._enums import CARTESIAN_MAP
 from ._enums import CYLINDRICAL_MAP
 from ._enums import GRID_FIELD
-from ._enums import GEN_GRADIENTS
+from ._enums import GEN_GRAD_MAP
 from ._enums import CREATE_JUMBO_SLAVE
 from ._enums import ACCORDION_EDGE
 from ._enums import START_EDGE
@@ -2717,11 +2688,10 @@ from ._enums import IS_REAL
 from ._enums import IS_SWITCH
 from ._enums import IS_STRING
 from ._enums import IS_STRUCT
-from ._enums import IS_SPECIES
 from ._enums import UNKNOWN
 from ._enums import PATCH_PROBLEM
-from ._enums import CANNOT_FIND
 from ._enums import OUTSIDE
+from ._enums import CANNOT_FIND
 from ._enums import SMALL_REL_CHANGE
 from ._enums import END_STACK
 from ._enums import PLUS
@@ -3099,6 +3069,12 @@ __all__ = [
     "EmFieldStruct",
     "EmFieldStructArray1D",
     "EmFieldStructAlloc1D",
+    "EmTaylorStruct",
+    "EmTaylorStructArray1D",
+    "EmTaylorStructAlloc1D",
+    "EmTaylorTermStruct",
+    "EmTaylorTermStructArray1D",
+    "EmTaylorTermStructAlloc1D",
     "ExpressionAtomStruct",
     "ExpressionAtomStructArray1D",
     "ExpressionAtomStructAlloc1D",
@@ -3116,19 +3092,13 @@ __all__ = [
     "FloorPositionStruct",
     "FoilStruct",
     "FringeFieldInfoStruct",
-    "GenGradCurveStruct",
-    "GenGradCurveStructArray1D",
-    "GenGradCurveStructAlloc1D",
-    "GenGradientsStruct",
-    "GenGradientsStructArray1D",
-    "GenGradientsStructAlloc1D",
+    "GenGrad1Struct",
+    "GenGrad1StructArray1D",
+    "GenGrad1StructAlloc1D",
+    "GenGradMapStruct",
+    "GenGradMapStructArray1D",
+    "GenGradMapStructAlloc1D",
     "GeneralBinStruct",
-    "GgTaylorStruct",
-    "GgTaylorStructArray1D",
-    "GgTaylorStructAlloc1D",
-    "GgTaylorTermStruct",
-    "GgTaylorTermStructArray1D",
-    "GgTaylorTermStructAlloc1D",
     "GptLatParamStruct",
     "GridBeamInitStruct",
     "GridBeamInitStructArray1D",
@@ -3538,7 +3508,6 @@ __all__ = [
     "adjust_super_slave_names",
     "all_pointer_to_string",
     "allocate_branch_array",
-    "allocate_grid_field",
     "allocate_lat_ele_array",
     "allocate_plat",
     "allocate_thread_states",
@@ -3553,7 +3522,6 @@ __all__ = [
     "apply_all_rampers",
     "apply_element_edge_kick",
     "apply_energy_kick",
-    "apply_fft_3d_kicks",
     "apply_patch_to_ptc_fibre",
     "apply_rampers_to_slave",
     "array_re_str",
@@ -3586,7 +3554,6 @@ __all__ = [
     "bbu_track_all",
     "beam_envelope_ibs",
     "beam_equal_beam",
-    "beam_init_setup",
     "beam_tilts",
     "beambeam_fibre_setup",
     "bend_edge_kick",
@@ -3729,16 +3696,14 @@ __all__ = [
     "csr_and_sc_apply_kicks",
     "csr_bin_kicks",
     "csr_bin_particles",
-    "cumulr",
     "custom_attribute_ubound_index",
     "custom_ele_attrib_name_list",
-    "d_integral",
     "damping_matrix_d",
     "date_and_time_stamp",
-    "ddz_calc_csr",
     "deallocate_ele_pointers",
     "deallocate_expression_tree",
     "deallocate_lat_pointers",
+    "deallocate_tree",
     "default_tracking_species",
     "deposit_particles",
     "destfixedwindowls",
@@ -3783,6 +3748,7 @@ __all__ = [
     "ele_misalignment_l_s_calc",
     "ele_nametable_index",
     "ele_order_calc",
+    "ele_rad_int_cache_calc",
     "ele_reference_energy_correction",
     "ele_rf_step_index",
     "ele_to_fibre",
@@ -3802,9 +3768,10 @@ __all__ = [
     "em_field_derivatives",
     "em_field_kick_vector_time",
     "em_field_plus_em_field",
+    "em_taylor_equal_em_taylor",
+    "em_taylors_equal_em_taylors",
     "emit_6d",
     "end_akima_spline_calc",
-    "energy_func",
     "entering_element",
     "envelope_radints",
     "envelope_radints_ibs",
@@ -3840,12 +3807,12 @@ __all__ = [
     "eq_ele",
     "eq_ellipse_beam_init",
     "eq_em_field",
+    "eq_em_taylor",
+    "eq_em_taylor_term",
     "eq_expression_atom",
     "eq_floor_position",
-    "eq_gen_grad_curve",
-    "eq_gen_gradients",
-    "eq_gg_taylor",
-    "eq_gg_taylor_term",
+    "eq_gen_grad1",
+    "eq_gen_grad_map",
     "eq_grid_beam_init",
     "eq_grid_field",
     "eq_grid_field_pt",
@@ -3919,6 +3886,7 @@ __all__ = [
     "expression_value",
     "factorial",
     "faddeeva_function",
+    "fff_sub",
     "fft1",
     "fft_1d",
     "fibre_to_ele",
@@ -3947,8 +3915,9 @@ __all__ = [
     "gamma_ref",
     "gelbd",
     "gen_complete_elliptic",
-    "gen_grad_at_s_to_gg_a_taylor",
-    "gen_grad_at_s_to_gg_taylor",
+    "gen_grad1_to_em_taylor",
+    "gen_grad_at_s_to_em_taylor",
+    "gen_grad_field",
     "general_bin_count",
     "general_bin_index",
     "general_bin_index_in_bounds",
@@ -3961,6 +3930,7 @@ __all__ = [
     "get_file_time_stamp",
     "get_gpt_fieldgrid_name_and_scaling",
     "get_list_of_names",
+    "get_next_number",
     "get_next_word",
     "get_opal_fieldgrid_name_and_scaling",
     "get_overlay_group_names",
@@ -3968,23 +3938,6 @@ __all__ = [
     "get_slave_list",
     "get_switch",
     "get_tty_char",
-    "gg_coef_table_init",
-    "gg_set_block_001",
-    "gg_set_block_002",
-    "gg_set_block_003",
-    "gg_set_block_004",
-    "gg_set_block_005",
-    "gg_set_block_006",
-    "gg_set_block_007",
-    "gg_set_block_008",
-    "gg_set_block_009",
-    "gg_set_block_010",
-    "gg_set_block_011",
-    "gg_set_block_012",
-    "gg_set_block_013",
-    "gg_set_block_014",
-    "gg_taylor_equal_gg_taylor",
-    "gg_taylors_equal_gg_taylors",
     "gpt_field_grid_scaling",
     "gpt_max_field_reference",
     "gpt_to_particle_bunch",
@@ -4029,8 +3982,8 @@ __all__ = [
     "init_coord",
     "init_custom",
     "init_ele",
+    "init_em_taylor_series",
     "init_fringe_info",
-    "init_gg_taylor_series",
     "init_lat",
     "init_multipole_cache",
     "init_photon_from_a_photon_init_ele",
@@ -4051,6 +4004,7 @@ __all__ = [
     "interpolate_field",
     "interpolated_fft",
     "interpolated_fft_gsl",
+    "inverse_prob",
     "ion_kick",
     "is_alphabetic",
     "is_attribute",
@@ -4121,6 +4075,7 @@ __all__ = [
     "make_mat6_bmad_photon",
     "make_mat6_high_energy_space_charge",
     "make_mat6_mad",
+    "make_mat6_runge_kutta",
     "make_mat6_symp_lie_ptc",
     "make_mat6_taylor",
     "make_mat6_tracking",
@@ -4192,8 +4147,6 @@ __all__ = [
     "nametable_change1",
     "nametable_init",
     "nametable_remove",
-    "negative_ampsquared",
-    "negative_dampsquared",
     "new_control",
     "nint_chk",
     "normal_form_complex_taylors",
@@ -4234,11 +4187,10 @@ __all__ = [
     "out_io",
     "out_io_print_and_capture_setup",
     "output_direct",
-    "p_func",
     "parse_cartesian_map",
     "parse_cylindrical_map",
     "parse_fortran_format",
-    "parse_gen_gradients",
+    "parse_gen_grad_map",
     "parse_grid_field",
     "parse_integer_list",
     "parse_integer_list2",
@@ -4276,10 +4228,10 @@ __all__ = [
     "particle_rf_time",
     "patch_flips_propagation_direction",
     "patch_length",
+    "phase_space_fit",
     "photon_absorption_and_phase_shift",
     "photon_add_to_detector_statistics",
     "photon_diffuse_scattering",
-    "photon_hit_func",
     "photon_read_spline",
     "photon_reflection",
     "photon_reflection_std_surface_init",
@@ -4407,9 +4359,9 @@ __all__ = [
     "remove_dead_from_bunch",
     "remove_eles_from_lat",
     "remove_lord_slave_link",
-    "residual_pwd_sig_z",
     "reverse_lat",
     "rf_cav_names",
+    "rf_clock_setup",
     "rf_coupler_kick",
     "rf_is_on",
     "rf_ref_time_offset",
@@ -4453,13 +4405,15 @@ __all__ = [
     "set_ele_name",
     "set_ele_real_attribute",
     "set_ele_status_stale",
-    "set_env",
+    "set_emit_from_beam_init",
     "set_flags_for_changed_attribute",
     "set_fringe_on_off",
     "set_lords_status_stale",
+    "set_on",
     "set_on_off",
     "set_orbit_to_zero",
     "set_parameter",
+    "set_particle_from_rf_time",
     "set_ptc",
     "set_ptc_base_state",
     "set_ptc_com_pointers",
@@ -4492,7 +4446,6 @@ __all__ = [
     "space_charge_cathodeimages",
     "space_charge_freespace",
     "space_charge_rectpipe",
-    "special_projection",
     "species_id",
     "species_id_from_openpmd",
     "species_name",
@@ -4563,6 +4516,7 @@ __all__ = [
     "taylor_propagate1",
     "taylor_to_mad_map",
     "taylors_equal_taylors",
+    "test_tune_tracker_lock",
     "test_xgelbd",
     "tilt_coords",
     "tilt_coords_photon",
@@ -4604,6 +4558,7 @@ __all__ = [
     "track1_sample",
     "track1_spin",
     "track1_spin_integration",
+    "track1_spin_magnus",
     "track1_spin_taylor",
     "track1_sr_wake",
     "track1_symp_lie_ptc",
@@ -4641,7 +4596,6 @@ __all__ = [
     "track_bunch_to_t",
     "track_complex_taylor",
     "track_from_s_to_s",
-    "track_func",
     "track_many",
     "track_to_surface",
     "track_until_dead",
@@ -4709,7 +4663,6 @@ __all__ = [
     "vec_to_polar",
     "vec_to_spinor",
     "verify_valid_name",
-    "vert_angle_func",
     "virtual_memory_usage",
     "w_mat_for_bend_angle",
     "w_mat_for_tilt",
@@ -4746,12 +4699,11 @@ __all__ = [
     "write_gpt_field_grid_file_3d",
     "write_gpt_lattice_file",
     "write_lat_line",
-    "write_lattice_elegant_format",
-    "write_lattice_foreign_format",
-    "write_lattice_mad_format",
-    "write_lattice_pals_format",
-    "write_lattice_sad_format",
-    "write_lattice_scibmad_format",
+    "write_lattice_in_elegant_format",
+    "write_lattice_in_foreign_format",
+    "write_lattice_in_mad_format",
+    "write_lattice_in_sad_format",
+    "write_lattice_in_scibmad",
     "write_line_element",
     "write_opal_field_grid_file",
     "write_opal_lattice_file",
@@ -4764,7 +4716,6 @@ __all__ = [
     "zero_ele_kicks",
     "zero_ele_offsets",
     "zero_lr_wakes_in_lat",
-    "zig_table_init",
     "zlafun",
 
     # Enums
@@ -4821,7 +4772,6 @@ __all__ = [
     "RAMPER_LORD",
     "GOVERNOR",
     "FIELD_LORD",
-    "FIELD_SLAVE",
     "MULTIPOLE_SOURCE",
     "AUTO_APERTURE",
     "RECTANGULAR",
@@ -4860,9 +4810,6 @@ __all__ = [
     "FIRST_PASS",
     "HIGHLAND",
     "LYNCH_DAHL",
-    "NOT_ALLOWED",
-    "STRAIGHT_REFERENCE",
-    "BENDS_REFERENCE",
     "INCOHERENT",
     "COHERENT",
     "ASCII",
@@ -4960,9 +4907,6 @@ __all__ = [
     "HYPER_Y",
     "HYPER_XY",
     "HYPER_X",
-    "GG_A",
-    "GG_B",
-    "GG_BS",
     "SUPER_OK",
     "STALE",
     "ATTRIBUTE_GROUP",
@@ -5184,8 +5128,6 @@ __all__ = [
     "TAYLOR_ORDER",
     "R_SOLENOID",
     "FINAL_CHARGE",
-    "K0L_STATUS",
-    "WARN_COUNT",
     "K1",
     "KX",
     "HARMON",
@@ -5226,6 +5168,7 @@ __all__ = [
     "CRITICAL_ANGLE",
     "BRAGG_ANGLE_IN",
     "SPIN_DN_DPZ_X",
+    "DELTA_E_REF",
     "INTERPOLATION",
     "BRAGG_ANGLE_OUT",
     "K1X",
@@ -5388,7 +5331,6 @@ __all__ = [
     "PZ_APERTURE_CENTER",
     "MEAN_EXCITATION_ENERGY",
     "FIDUCIAL_PT",
-    "DELTA_E_REF",
     "CMAT_22",
     "DPSI_ORIGIN",
     "T_OFFSET",
@@ -5487,11 +5429,10 @@ __all__ = [
     "Y1_LIMIT",
     "Y2_LIMIT",
     "CHECK_SUM",
-    "IS_ON",
-    "ALIAS",
     "DISTRIBUTION",
     "TT",
     "X_KNOT",
+    "ALIAS",
     "MAX_FRINGE_ORDER",
     "ETA_X",
     "ELECTRIC_DIPOLE_MOMENT",
@@ -5506,7 +5447,6 @@ __all__ = [
     "ETAP_X",
     "SLAVE",
     "DENSITY_USED",
-    "PARSER_MAKE_XFER_MATS",
     "LR_FREQ_SPREAD",
     "Y_REF",
     "ETAP_Y",
@@ -5531,23 +5471,24 @@ __all__ = [
     "Z_REF",
     "P89",
     "RADIATION_LENGTH_USED",
+    "DETA_DPZ_Y",
     "PZ_REF",
     "SPACE_CHARGE_METHOD",
     "P90",
     "DETAP_DPZ_X",
     "MAT6_CALC_METHOD",
+    "DETAP_DPZ_Y",
     "TRACKING_METHOD",
+    "S_LONG",
     "REF_TIME",
     "PTC_INTEGRATION_TYPE",
     "SPIN_TRACKING_METHOD",
     "ETA_A",
     "APERTURE",
     "ETAP_A",
-    "DETA_DPZ_Y",
     "X_LIMIT",
     "ABSOLUTE_TIME_TRACKING",
     "ETA_B",
-    "DETAP_DPZ_Y",
     "Y_LIMIT",
     "ETAP_B",
     "OFFSET_MOVES_APERTURE",
@@ -5562,7 +5503,6 @@ __all__ = [
     "FREQUENCIES",
     "OLD_INTEGRATOR",
     "CURVATURE",
-    "S_LONG",
     "X_POSITION",
     "EXACT_MODEL",
     "SYMPLECTIFY",
@@ -5570,6 +5510,7 @@ __all__ = [
     "N_SLICE_SPLINE",
     "Z_POSITION",
     "AMP_VS_TIME",
+    "IS_ON",
     "THETA_POSITION",
     "VERTICAL_KICK",
     "FIELD_CALC",
@@ -5606,7 +5547,7 @@ __all__ = [
     "CARTESIAN_MAP",
     "CYLINDRICAL_MAP",
     "GRID_FIELD",
-    "GEN_GRADIENTS",
+    "GEN_GRAD_MAP",
     "CREATE_JUMBO_SLAVE",
     "ACCORDION_EDGE",
     "START_EDGE",
@@ -5654,11 +5595,10 @@ __all__ = [
     "IS_SWITCH",
     "IS_STRING",
     "IS_STRUCT",
-    "IS_SPECIES",
     "UNKNOWN",
     "PATCH_PROBLEM",
-    "CANNOT_FIND",
     "OUTSIDE",
+    "CANNOT_FIND",
     "SMALL_REL_CHANGE",
     "END_STACK",
     "PLUS",

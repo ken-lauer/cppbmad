@@ -513,6 +513,9 @@ void faddeeva_function(
 // - Array bounds handling: "Enum 'LDFJAC' found in bounds 'LDFJAC' but not in provided map."
 // - Array bounds handling: "Enum 'M' found in bounds 'M' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
+extern "C" void
+fortran_fff_sub(const char *line /* 0D_NOT_character in */, bool &error /* 0D_NOT_logical in */);
+void fff_sub(std::string line, bool error);
 extern "C" void fortran_fft_1d(
     Bmad::array_descriptor_t &arr /* 1D_NOT_complex inout */,
     int &isign /* 0D_NOT_integer in */
@@ -695,6 +698,12 @@ extern "C" void fortran_get_file_time_stamp(
     const char *time_stamp /* 0D_NOT_character in */
 );
 void get_file_time_stamp(std::string file, std::string time_stamp);
+extern "C" void fortran_get_next_number(
+    const char *filein /* 0D_NOT_character in */,
+    const char *cnum /* 0D_NOT_character in */,
+    int &digits /* 0D_NOT_integer in */
+);
+void get_next_number(std::string filein, std::string cnum, int digits);
 extern "C" void fortran_get_tty_char(
     const char *this_char /* 0D_NOT_character out */,
     bool &wait /* 0D_NOT_logical in */,
@@ -788,6 +797,9 @@ double interpolated_fft_gsl(
 // - Argument not defined: tol (have: [])
 // - Argument not defined: x (have: [])
 // - Translated arg count mismatch (unsupported?)
+extern "C" bool
+fortran_inverse_prob(double &val /* 0D_NOT_real in */, double &prob /* 0D_NOT_real out */);
+double inverse_prob(double val);
 extern "C" bool fortran_is_alphabetic(
     const char *string /* 0D_NOT_character in */,
     const char *valid_chars /* 0D_NOT_character in */,
@@ -1097,18 +1109,6 @@ extern "C" void fortran_nametable_remove(
     int &ix_name /* 0D_NOT_integer in */
 );
 void nametable_remove(NametableStruct &nametable, int ix_name);
-extern "C" bool fortran_negative_ampsquared(
-    double &frequency /* 0D_NOT_real in */,
-    int *status /* 0D_NOT_integer in */,
-    double &amp /* 0D_NOT_real out */
-);
-double negative_ampsquared(double frequency, std::optional<int> status = std::nullopt);
-extern "C" bool fortran_negative_dampsquared(
-    double &frequency /* 0D_NOT_real in */,
-    int *status /* 0D_NOT_integer in */,
-    double &damp /* 0D_NOT_real out */
-);
-double negative_dampsquared(double frequency, std::optional<int> status = std::nullopt);
 
 // Skipped unusable routine node_put:
 // - Routine in configuration skip list
@@ -1559,8 +1559,11 @@ void ran_gauss_vector(
 extern "C" void fortran_ran_seed_get(int &seed /* 0D_NOT_integer out */);
 int ran_seed_get();
 extern "C" void
-fortran_ran_seed_put(int &seed /* 0D_NOT_integer in */, int *mpi_offset /* 0D_NOT_integer in */);
-void ran_seed_put(int seed, std::optional<int> mpi_offset = std::nullopt);
+fortran_ran_seed_put(int *seed /* 0D_NOT_integer in */, int *mpi_offset /* 0D_NOT_integer in */);
+void ran_seed_put(
+    std::optional<int> seed = std::nullopt,
+    std::optional<int> mpi_offset = std::nullopt
+);
 extern "C" void fortran_ran_uniform_scalar(
     double &harvest /* 0D_NOT_real out */,
     void *ran_state /* 0D_NOT_type in */,
@@ -1772,12 +1775,6 @@ void set_all_ptr(
     std::optional<bool> delta = std::nullopt,
     std::optional<double> value_set = std::nullopt
 );
-extern "C" void fortran_set_env(
-    const char *env_name /* 0D_NOT_character in */,
-    const char *env_value /* 0D_NOT_character in */,
-    bool &err_flag /* 0D_NOT_logical in */
-);
-void set_env(std::string env_name, std::string env_value, bool err_flag);
 extern "C" bool fortran_set_parameter_int(
     int &param_val /* 0D_NOT_integer in */,
     int &set_val /* 0D_NOT_integer in */,
@@ -1835,12 +1832,6 @@ double sinhx_x(double x, std::optional<int> nd = std::nullopt);
 extern "C" void
 fortran_skip_header(int &ix_unit /* 0D_NOT_integer in */, bool &error_flag /* 0D_NOT_logical in */);
 void skip_header(int ix_unit, bool error_flag);
-extern "C" bool fortran_special_projection(
-    double &f /* 0D_NOT_real in */,
-    int *status /* 0D_NOT_integer in */,
-    double &func_retval__ /* 0D_NOT_real out */
-);
-double special_projection(double f, std::optional<int> status = std::nullopt);
 extern "C" bool fortran_species_id(
     const char *name /* 0D_NOT_character in */,
     int *default_ /* 0D_NOT_integer in */,
@@ -2272,13 +2263,15 @@ extern "C" void fortran_system_command(
     bool &err_flag /* 0D_NOT_logical out */
 );
 bool system_command(std::string line);
+extern "C" void fortran_test_tune_tracker_lock(void *tracker_locked /* 1D_ALLOC_logical inout */);
+void test_tune_tracker_lock(BoolAlloc1D &tracker_locked);
 extern "C" void fortran_test_xgelbd();
 void test_xgelbd();
 
 // Skipped unusable routine thin_qr:
 // - Variable in sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
-// - Variable inout sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
+// - Variable in sized array: 2D_NOT_real
 extern "C" bool fortran_to_str(
     double &num /* 0D_NOT_real in */,
     int *max_signif /* 0D_NOT_integer in */,
@@ -2395,6 +2388,4 @@ void word_read(
 extern "C" bool
 fortran_x0_radiation_length(int &species /* 0D_NOT_integer in */, double &x0 /* 0D_NOT_real out */);
 double x0_radiation_length(int species);
-extern "C" void fortran_zig_table_init();
-void zig_table_init();
 } // namespace SimUtils

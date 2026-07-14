@@ -4,19 +4,6 @@ namespace nb = nanobind;
 using namespace nanobind::literals;
 using namespace Pybmad;
 
-PyInitAttributeName1 python_init_attribute_name1(
-    bool is_ok,
-    int ix_key,
-    int ix_attrib,
-    std::string name,
-    std::optional<int> attrib_state = std::nullopt,
-    std::optional<bool> override = std::nullopt
-) {
-  Bmad::init_attribute_name1(is_ok, ix_key, ix_attrib, name, attrib_state, override);
-  auto py_result{PyInitAttributeName1{is_ok}};
-  return py_result;
-}
-
 void init_Bmad_routines_i(nb::module_ &m) {
   m.def(
       "i_csr",
@@ -170,15 +157,12 @@ ibsmode : NormalModesStruct
       nb::arg("ratio"),
       nb::arg("initial_blow_up"),
       nb::arg("granularity"),
-      R"""($OMP THREADPRIVATE(bl_lat_ptr, bl_ibs_params_ptr, bl_mode_ptr)
+      R"""(Iterates to equilibrium beam conditions using relaxation method
 
- Subroutine ibs_equib_rlx(lat,ibs_sim_params,inmode,ibsmode,ratio,initial_blow_up,granularity)
- Iterates to equilibrium beam conditions using relaxation method
+This method requires that the initial beam size be larger than the equilibrium beam size.
+An initial_blow_up of 3 to 5 is a good place to start.
 
- This method requires that the initial beam size be larger than the equilibrium beam size.
- An initial_blow_up of 3 to 5 is a good place to start.
-
- See ibs_rates subroutine for available IBS rate formulas.
+See ibs_rates subroutine for available IBS rate formulas.
 
 Parameters
 ----------
@@ -443,20 +427,9 @@ kick1 : CsrKick1Struct
 csr : CsrStruct
 )"""
   );
-  nb::class_<PyInitAttributeName1>(m, "InitAttributeName1", "init_attribute_name1 return type")
-      .def_ro("is_ok", &PyInitAttributeName1::is_ok)
-      .def("__len__", [](const PyInitAttributeName1 &) { return 1; })
-      .def("__getitem__", [](const PyInitAttributeName1 &s, int i) -> nb::object {
-        if (i < 0)
-          i += 1;
-        if (i == 0)
-          return nb::cast(s.is_ok);
-        throw nb::index_error();
-      });
   m.def(
       "init_attribute_name1",
-      &python_init_attribute_name1,
-      nb::arg("is_ok"),
+      &Bmad::init_attribute_name1,
       nb::arg("ix_key"),
       nb::arg("ix_attrib"),
       nb::arg("name"),
@@ -466,11 +439,6 @@ csr : CsrStruct
 
 Parameters
 ----------
-is_ok : bool
-    Initial setting.
-    This parameter is an input/output and is modified in-place.
-    As an output, is_ok: Set False if there is a problem. Otherwise untouched.
-
 ix_key : int
     Key index.
 
@@ -487,13 +455,6 @@ attrib_state : int, optional
 override : bool, optional
     Normally this routine throws an error if the [ix_key, ix_attrib] has been set previously. If override =
     True then the set is done and no error is generated.
-
-Returns
--------
-is_ok : bool
-    Initial setting.
-    This parameter is an input/output and is modified in-place.
-    As an output, is_ok: Set False if there is a problem. Otherwise untouched.
 )"""
   );
   m.def(
@@ -768,7 +729,7 @@ save : bool, optional
   m.def(
       "init_coord",
       [](CoordStruct &orb,
-         FixedArray1D<Real, 6> vec,
+         std::optional<FixedArray1D<Real, 6>> vec,
          EleStruct *ele,
          std::optional<int> element_end,
          std::optional<int> particle,
@@ -781,7 +742,7 @@ save : bool, optional
          std::optional<bool> random_on) {
         auto fn = static_cast<void (*)(
             CoordStruct &,
-            FixedArray1D<Real, 6>,
+            std::optional<FixedArray1D<Real, 6>>,
             optional_ref<EleStruct>,
             std::optional<int>,
             std::optional<int>,
@@ -809,7 +770,7 @@ save : bool, optional
         );
       },
       nb::arg("orb"),
-      nb::arg("vec"),
+      nb::arg("vec") = nb::none(),
       nb::arg("ele") = nb::none(),
       nb::arg("element_end") = nb::none(),
       nb::arg("particle") = nb::none(),
@@ -844,7 +805,7 @@ Parameters
 orb : CoordStruct
     Input orbit
 
-vec : 1D array of float (shape: 6)
+vec : 1D array of float (shape: 6), optional
     Coordinate vector. If not present then taken to be zero.
 
 ele : EleStruct, optional
@@ -858,10 +819,6 @@ element_end : int, optional
 
 particle : int, optional
     Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
-
-direction : int, optional
-    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
 
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
@@ -972,10 +929,6 @@ element_end : int, optional
 particle : int, optional
     Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
 
-direction : int, optional
-    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
-
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
 
@@ -1082,10 +1035,6 @@ element_end : int, optional
 particle : int, optional
     Particle type (electron$, etc.). If particle = not_set$ and orb_in is present, use orb_in.species instead.
 
-direction : int, optional
-    +1 -> moving downstream +s direciton, -1 -> moving upstream. 0 -> Ignore. Default is to not change
-    orb.direction except for photons which get set according to orb.vec(6).
-
 E_photon : float, optional
     Photon energy if particle is a photon. Ignored otherwise.
 
@@ -1152,6 +1101,30 @@ ele : EleStruct
 )"""
   );
   m.def(
+      "init_em_taylor_series",
+      &Bmad::init_em_taylor_series,
+      nb::arg("em_taylor"),
+      nb::arg("n_term"),
+      nb::arg("save_old") = nb::none(),
+      R"""(Subroutine to initialize a Bmad Em_taylor series (6 of these series make
+a Em_taylor map). Note: This routine does not zero the structure. The calling
+routine is responsible for setting all values.
+
+Parameters
+----------
+em_taylor : EmTaylorStruct
+    Old structure.
+    This parameter is an input/output and is modified in-place.
+    As an output, em_taylor: Initalized structure.
+
+n_term : int
+    Number of terms to allocate. n_term < 0 => em_taylor.term pointer will be disassociated.
+
+save_old : bool, optional
+    If True then save any old terms when em_taylor is resized. Default is False.
+)"""
+  );
+  m.def(
       "init_fringe_info",
       [](EleStruct &ele, CoordStruct *orbit, std::optional<int> leng_sign) {
         auto fn = static_cast<
@@ -1181,30 +1154,6 @@ Returns
 -------
 fringe_info : FringeFieldInfoStruct
     Fringe information.
-)"""
-  );
-  m.def(
-      "init_gg_taylor_series",
-      &Bmad::init_gg_taylor_series,
-      nb::arg("gg_taylor"),
-      nb::arg("n_term"),
-      nb::arg("save_old") = nb::none(),
-      R"""(Subroutine to initialize a Bmad gg_taylor series (6 of these series make
-a gg_taylor map). Note: This routine does not zero the structure. The calling
-routine is responsible for setting all values.
-
-Parameters
-----------
-gg_taylor : GgTaylorStruct
-    Old structure.
-    This parameter is an input/output and is modified in-place.
-    As an output, gg_taylor: Initalized structure.
-
-n_term : int
-    Number of terms to allocate. n_term < 0 => gg_taylor.term pointer will be disassociated.
-
-save_old : bool, optional
-    If True then save any old terms when gg_taylor is resized. Default is False.
 )"""
   );
   m.def(
@@ -1247,19 +1196,24 @@ ele : EleStruct
       &Bmad::init_photon_from_a_photon_init_ele,
       nb::arg("ele"),
       nb::arg("param"),
-      nb::arg("orbit"),
       nb::arg("random_on") = nb::none(),
       R"""(Wrapper for Fortran routine init_photon_from_a_photon_init_ele
 
 Parameters
 ----------
 ele : EleStruct
+    patch element.
 
 param : LatParamStruct
-
-orbit : CoordStruct
+    lat_param_struct.
 
 random_on : bool, optional
+    : Default is True. If False then use zero for all random numbers needed in the calc.
+
+Returns
+-------
+orbit : CoordStruct
+    Output photon coords.
 )"""
   );
   nb::class_<Bmad::InitPhotonIntegProb>(
@@ -1355,19 +1309,19 @@ bunch : BunchStruct
       "init_surface_segment",
       &Bmad::init_surface_segment,
       nb::arg("phot"),
-      nb::arg("ix_pt"),
-      nb::arg("iy_pt"),
-      R"""(Routine to init the componentes in ele%photon%segmented%pt(ix_pt,iy_pt) for use with segmented surface calculations.
+      nb::arg("ix"),
+      nb::arg("iy"),
+      R"""(Routine to init the componentes in ele%photon%segmented%pt(ix,iy) for use with segmented surface calculations.
 
 Parameters
 ----------
 phot : PhotonElementStruct
     Surface structure.
 
-ix_pt : int
+ix : int
     index of grid point to init.
 
-iy_pt : int
+iy : int
     index of grid point to init.
 )"""
   );
@@ -1432,7 +1386,7 @@ wake : WakeStruct, optional
       &Bmad::insert_element,
       nb::arg("lat"),
       nb::arg("insert_ele"),
-      nb::arg("ix_ele"),
+      nb::arg("insert_index"),
       nb::arg("ix_branch") = nb::none(),
       nb::arg("orbit") = nb::none(),
       R"""(Wrapper for Fortran routine insert_element
@@ -1447,8 +1401,7 @@ lat : LatStruct
 insert_ele : EleStruct
     element to insert into the lat
 
-ix_ele : int
-    branch.ele(:) index where the new element is inserted.
+insert_index : int
 
 ix_branch : int, optional
     : branch index for the insertion. Default = 0.

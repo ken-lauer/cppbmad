@@ -578,15 +578,14 @@ datum_name : str
       "tao_control_tree_list",
       &Tao::tao_control_tree_list,
       nb::arg("ele"),
+      nb::arg("tree"),
       R"""(Wrapper for Fortran routine tao_control_tree_list
 
 Parameters
 ----------
 ele : EleStruct
-    Lattice element to start at.
+    Lattice element to start at. Ouput:
 
-Returns
--------
 tree : 1D array of ElePointerStruct
     Array of elements.
 )"""
@@ -2504,7 +2503,7 @@ q0 : float
     Default to use if q_str evaluates to zero. Also used to set the integer part of the tune.
 
 delta_input : bool
-    If true then qa_str and qb_str are deltas from present tune.
+    If true then qa_str and qb_str are deltas from present tune. Outut:
 
 Returns
 -------
@@ -3041,6 +3040,7 @@ ignore_if_not_limited : bool, optional
       R"""(Subroutine to get the next Tao command. In order of precedence, input may come from:
   1) s%com%cmd string (if s%com%use_cmd_here is set to True).
      Used for recalling commands from the history stack.
+  2) A saved command string.
   3) A command file.
   4) The cmd_in argument (if present). Used, for example, when interfacing with Python.
   5) The terminal.
@@ -3225,6 +3225,12 @@ Parameters
 plot : TaoPlotStruct
 
 graph : TaoGraphStruct
+)"""
+  );
+  m.def(
+      "tao_has_been_created",
+      &Tao::tao_has_been_created,
+      R"""(Wrapper for Fortran routine tao_has_been_created
 )"""
   );
   nb::class_<Tao::TaoHelp>(m, "TaoHelp", "tao_help return type")
@@ -3437,6 +3443,17 @@ err_flag : bool
 Parameters
 ----------
 plot_file : str
+)"""
+  );
+  m.def(
+      "tao_init_single_mode",
+      &Tao::tao_init_single_mode,
+      nb::arg("single_mode_file"),
+      R"""(Wrapper for Fortran routine tao_init_single_mode
+
+Parameters
+----------
+single_mode_file : str
 )"""
   );
   m.def(
@@ -4823,11 +4840,11 @@ d1 : TaoD1DataStruct
     D1 data struct to search.
 
 ele_name : str
-    Name of lattice element to match to.
+    Name of lattice element to match to. Ouput:
 
 Returns
 -------
-datum_ptr : TaoDataStruct, optional
+datum_ptr : TaoDataStruct
     Pointer to the matched datum. Will be null if no match found.
 )"""
   );
@@ -5366,12 +5383,7 @@ ix_ps : int
   m.def(
       "tao_regression_test",
       &Tao::tao_regression_test,
-      nb::arg("cmd_str"),
       R"""(Wrapper for Fortran routine tao_regression_test
-
-Parameters
-----------
-cmd_str : str
 )"""
   );
   nb::class_<PyTaoRemoveBlankCharacters>(

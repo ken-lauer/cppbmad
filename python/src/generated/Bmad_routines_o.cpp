@@ -30,7 +30,7 @@ PyOdeintBmadTime python_odeint_bmad_time(
 PyOffsetParticle python_offset_particle(
     EleStruct &ele,
     bool set,
-    CoordStruct &orbit,
+    CoordStruct &coord,
     std::optional<bool> set_tilt = std::nullopt,
     std::optional<bool> set_hvkicks = std::nullopt,
     std::optional<int> drift_to_edge = std::nullopt,
@@ -43,7 +43,7 @@ PyOffsetParticle python_offset_particle(
   auto _result = Bmad::offset_particle(
       ele,
       set,
-      orbit,
+      coord,
       set_tilt,
       set_hvkicks,
       drift_to_edge,
@@ -81,21 +81,16 @@ void init_Bmad_routines_o(nb::module_ &m) {
       nb::arg("s2_body"),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""($OMP THREADPRIVATE(rk_ele_ptr, rk_param_ptr, rk_orbit_ptr, rk_old_orbit_ptr, rk_s_body_ptr, &
-$OMP                rk_old_s, rk_err_flag_ptr)
+      R"""(Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
+Recipes.  See the NR book for more details.
 
- Subroutine odeint_bmad (orbit, ele, param, s1_body, s2_body, err_flag, track, mat6, make_matrix)
+Notice that this routine has an two tolerances:
+  bmad_com%rel_tol_adaptive_tracking
+  bmad_com%abs_tol_adaptive_tracking
 
- Subroutine to do Runge Kutta tracking. This routine is adapted from Numerical
- Recipes.  See the NR book for more details.
-
- Notice that this routine has an two tolerances:
-   bmad_com%rel_tol_adaptive_tracking
-   bmad_com%abs_tol_adaptive_tracking
-
- Note: For elements where the reference energy is not constant (lcavity, etc.), and
- with elements where the reference particle does not follow the reference trajectory (wigglers for example),
- the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
+Note: For elements where the reference energy is not constant (lcavity, etc.), and
+with elements where the reference particle does not follow the reference trajectory (wigglers for example),
+the calculation of z is "off" while the particle is inside the element. At the ends there is no problem.
 
 Parameters
 ----------
@@ -161,15 +156,10 @@ track : TrackStruct, optional
       nb::arg("track") = nb::none(),
       nb::arg("t_end") = nb::none(),
       nb::arg("extra_field") = nb::none(),
-      R"""($OMP THREADPRIVATE(tt_ele_ptr, tt_param_ptr, tt_orb_ptr, tt_old_orb_ptr, tt_extra_field_ptr, &
-$OMP                tt_old_t_ptr, tt_rf_time_ptr, tt_s_fringe_ptr, tt_vec_err_ptr)
+      R"""(Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
+Recipes.  See the NR book for more details.
 
- Subroutine odeint_bmad_time (orb, ele, param, t_dir, rf_time, err_flag, track, t_end, dt_step, extra_field)
-
- Subroutine to do Runge Kutta tracking in time. This routine is adapted from Numerical
- Recipes.  See the NR book for more details.
-
- Tracking is done until the particle is lost or exits the element.
+Tracking is done until the particle is lost or exits the element.
 
 Parameters
 ----------
@@ -238,7 +228,7 @@ dt_step : float, optional
       &python_offset_particle,
       nb::arg("ele"),
       nb::arg("set"),
-      nb::arg("orbit"),
+      nb::arg("coord"),
       nb::arg("set_tilt") = nb::none(),
       nb::arg("set_hvkicks") = nb::none(),
       nb::arg("drift_to_edge") = nb::none(),
@@ -258,10 +248,7 @@ set : bool
     T (= set$)   -> Translate from lab coords to the local element coords. F (= unset$) -> Translate back from
     element to lab coords.
 
-orbit : CoordStruct
-    Coordinates of the particle.
-    This parameter is an input/output and is modified in-place.
-    As an output, orbit: Coordinates of particle.
+coord : CoordStruct
 
 set_tilt : bool, optional
     Default is True. T -> Rotate using ele.value(tilt$) and ele.value(roll$) for sbends. F -> Do not rotate
@@ -694,7 +681,6 @@ err_flag : bool
       R"""(Routine to order the particles longitudinally in terms of decreasing %vec(5).
 That is from large z (head of bunch) to small z.
 Only live particles are ordered.
-The relative order of particles with equal %vec(5) is arbitrary and may change from call to call.
 
 Parameters
 ----------

@@ -36,7 +36,6 @@ formulation.
       nb::arg("x"),
       nb::arg("y"),
       nb::arg("sigma"),
-      nb::arg("linear_kick") = nb::none(),
       R"""(Wrapper for Fortran routine bbi_kick
 
 Parameters
@@ -50,10 +49,6 @@ y : float
 sigma : 1D array of float (shape: 2)
     Beam (x,y) sigmas.
 
-linear_kick : bool, optional
-    Default False. If present and True, kick and dnk are computed using the extrapolated kick from the linear
-    region.
-
 Returns
 -------
 nk : 1D array of float (shape: 2)
@@ -61,7 +56,7 @@ nk : 1D array of float (shape: 2)
     / beta_x), kick_y / (xi_y * sigma_y / beta_y) nk = -4 * pi * [x/sigma_x, y/sigma_y] in the linear region
 
 dnk : 2D array of float (shape: 2,2)
-    derivatives of nk. EG: dnk(2,1) = nk(2)/dx
+    derivatives of nk. EG: dnk(2,1) = dnk(2)/dy
 )"""
   );
   m.def(
@@ -139,58 +134,6 @@ Parameters
 beam1 : BeamStruct
 
 beam2 : BeamStruct
-)"""
-  );
-  nb::class_<Bmad::BeamInitSetup>(m, "BeamInitSetup", "beam_init_setup return type")
-      .def_ro("err_flag", &Bmad::BeamInitSetup::err_flag)
-      .def_ro("beam_init_set", &Bmad::BeamInitSetup::beam_init_set)
-      .def("__len__", [](const Bmad::BeamInitSetup &) { return 2; })
-      .def("__getitem__", [](const Bmad::BeamInitSetup &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.err_flag);
-        if (i == 1)
-          return nb::cast(s.beam_init_set);
-        throw nb::index_error();
-      });
-  m.def(
-      "beam_init_setup",
-      [](BeamInitStruct &beam_init_in, EleStruct &ele, int species, NormalModesStruct *modes) {
-        auto fn = static_cast<Bmad::BeamInitSetup (*)(
-            BeamInitStruct &,
-            EleStruct &,
-            int,
-            optional_ref<NormalModesStruct>
-        )>(&Bmad::beam_init_setup);
-        return fn(beam_init_in, ele, species, ptr_to_opt_ref(modes));
-      },
-      nb::arg("beam_init_in"),
-      nb::arg("ele"),
-      nb::arg("species"),
-      nb::arg("modes") = nb::none(),
-      R"""(Wrapper for Fortran routine beam_init_setup
-
-Parameters
-----------
-beam_init_in : BeamInitStruct
-    Input parameters
-
-ele : EleStruct
-
-species : int
-    Beam particle species.
-
-modes : NormalModesStruct, optional
-    Normal mode parameters.
-
-Returns
--------
-beam_init_set : BeamInitStruct
-    See above.
-
-err_flag : bool, optional
-    Set true if there is an error. False otherwise.
 )"""
   );
   nb::class_<Bmad::BeamTilts>(m, "BeamTilts", "beam_tilts return type")
@@ -362,7 +305,7 @@ field : EmFieldStruct
 Parameters
 ----------
 ele : EleStruct
-    Element to be checked.
+    Element to be checked. Ouput:
 
 Returns
 -------
@@ -806,7 +749,7 @@ parse_lat : LatStruct, optional
   );
   m.def(
       "bmad_parser2",
-      [](std::string lat_file,
+      [](std::string in_file,
          LatStruct &lat,
          std::optional<CoordStructArray1D> orbit,
          std::optional<bool> make_mats6,
@@ -820,9 +763,9 @@ parse_lat : LatStruct, optional
             std::optional<bool>,
             optional_ref<LatStruct>
         )>(&Bmad::bmad_parser2);
-        return fn(lat_file, lat, orbit, make_mats6, err_flag, ptr_to_opt_ref(parse_lat));
+        return fn(in_file, lat, orbit, make_mats6, err_flag, ptr_to_opt_ref(parse_lat));
       },
-      nb::arg("lat_file"),
+      nb::arg("in_file"),
       nb::arg("lat"),
       nb::arg("orbit") = nb::none(),
       nb::arg("make_mats6") = nb::none(),
@@ -832,8 +775,7 @@ parse_lat : LatStruct, optional
 
 Parameters
 ----------
-lat_file : str
-    Input file name.
+in_file : str
 
 lat : LatStruct
     lattice with existing layout.

@@ -10,25 +10,26 @@ use bmad_struct_proxy_mod
 use sim_utils_interface, only: all_pointer_to_string, asinc, assert_equal, calc_file_number, &
     change_file_number, complex_error_function, cos_one, cosc, cross_product, &
     date_and_time_stamp, detab, display_size_and_resolution, dj_bessel, djb_hash, djb_str_hash, &
-    downcase_string, err_exit, factorial, faddeeva_function, fft_1d, file_directorizer, &
-    file_get, file_get_open, file_suffixer, find_location, gen_complete_elliptic, &
-    get_file_number, get_file_time_stamp, i_bessel, i_bessel_extended, increment_file_number, &
-    index_nocase, int_str, is_alphabetic, is_decreasing_sequence, is_increasing_sequence, &
-    is_integer, is_logical, is_real, j_bessel, linear_fit, linear_fit_2d, logic_str, lunget, &
-    make_legal_comment, match_reg, match_wild, match_word, milli_sleep, n_choose_k, &
-    n_spline_create, nametable_add, nametable_bracket_indexx, nametable_change1, &
-    nametable_init, nametable_remove, ordinal_str, parse_fortran_format, pointer_to_locations, &
-    poly_eval, probability_funct, quadratic_roots, query_string, quote, quoten, &
-    real_num_fortran_format, real_path, real_str, real_to_string, rms_value, rot_2d, run_timer, &
-    set_all_ptr, set_env, set_parameter, sinc, sincc, sinhx_x, skip_header, sqrt_alpha, &
-    sqrt_one, str_count, str_downcase, str_first_in_set, str_first_not_in_set, str_last_in_set, &
-    str_last_not_in_set, str_match_wild, str_substitute, str_upcase, string_to_int, &
-    string_to_real, string_trim, string_trim2, system_command, to_str, type_this_file, &
-    upcase_string, value_of_all_ptr, virtual_memory_usage, word_len, word_read
+    downcase_string, err_exit, factorial, faddeeva_function, fff_sub, fft_1d, &
+    file_directorizer, file_get, file_get_open, file_suffixer, find_location, &
+    gen_complete_elliptic, get_file_number, get_file_time_stamp, get_next_number, i_bessel, &
+    i_bessel_extended, increment_file_number, index_nocase, int_str, inverse_prob, &
+    is_alphabetic, is_decreasing_sequence, is_increasing_sequence, is_integer, is_logical, &
+    is_real, j_bessel, linear_fit, linear_fit_2d, logic_str, lunget, make_legal_comment, &
+    match_reg, match_wild, match_word, milli_sleep, n_choose_k, n_spline_create, nametable_add, &
+    nametable_bracket_indexx, nametable_change1, nametable_init, nametable_remove, ordinal_str, &
+    parse_fortran_format, pointer_to_locations, poly_eval, probability_funct, quadratic_roots, &
+    query_string, quote, quoten, real_num_fortran_format, real_path, real_str, real_to_string, &
+    rms_value, rot_2d, run_timer, set_all_ptr, set_parameter, sinc, sincc, sinhx_x, &
+    skip_header, sqrt_alpha, sqrt_one, str_count, str_downcase, str_first_in_set, &
+    str_first_not_in_set, str_last_in_set, str_last_not_in_set, str_match_wild, str_substitute, &
+    str_upcase, string_to_int, string_to_real, string_trim, string_trim2, system_command, &
+    test_tune_tracker_lock, to_str, type_this_file, upcase_string, value_of_all_ptr, &
+    virtual_memory_usage, word_len, word_read
 
 use random_mod, only: allocate_thread_states, pointer_to_ran_state, ran_default_state, &
     ran_engine, ran_gauss_converter, ran_gauss_scalar, ran_gauss_vector, ran_seed_get, &
-    ran_seed_put, ran_uniform, super_sobseq, zig_table_init
+    ran_seed_put, ran_uniform, super_sobseq
 
 use particle_species_mod, only: anomalous_moment_of, antiparticle, atomic_number, &
     atomic_species_id, charge_of, charge_to_mass_of, is_subatomic_species, mass_of, &
@@ -59,8 +60,7 @@ use elliptic_integral_mod, only: celbd, elbd, elcbd, ellipinc, elsbd, gelbd, rce
 
 use command_line_mod, only: cesr_getarg, cesr_iargc
 
-use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fourier_amplitude, &
-    negative_ampsquared, negative_dampsquared
+use fourier_mod, only: coarse_frequency_estimate, fine_frequency_estimate, fourier_amplitude
 
 use windowls_mod, only: destfixedwindowls, fixedwindowls, initfixedwindowls
 
@@ -69,8 +69,7 @@ use input_mod, only: get_a_char, get_tty_char, read_a_line, readline_read_histor
 
 use lmdif_mod, only: initial_lmdif, suggest_lmdif
 
-use naff_mod, only: interpolated_fft, interpolated_fft_gsl, maximize_projection, naff, projdd, &
-    special_projection
+use naff_mod, only: interpolated_fft, interpolated_fft_gsl, maximize_projection, naff, projdd
 
 use sim_utils_struct, only: is_false, is_true
 
@@ -1911,6 +1910,26 @@ subroutine fortran_faddeeva_function (z, w, dw) bind(c)
   call faddeeva_function(f_z, f_w, f_dw)
 
 end subroutine
+subroutine fortran_fff_sub (line, error) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  logical(c_bool) :: error  ! 0D_NOT_logical
+  logical :: f_error
+  ! ** End of parameters **
+  ! in: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  ! in: f_error 0D_NOT_logical
+  f_error = error
+  call fff_sub(f_line, f_error)
+
+end subroutine
 subroutine fortran_fft_1d (arr, isign) bind(c)
 
   use array_desc_mod
@@ -2601,6 +2620,33 @@ subroutine fortran_get_file_time_stamp (file, time_stamp) bind(c)
   call get_file_time_stamp(f_file, f_time_stamp)
 
 end subroutine
+subroutine fortran_get_next_number (filein, cnum, digits) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: filein
+  character(len=4096), target :: f_filein
+  character(kind=c_char), pointer :: f_filein_ptr(:)
+  type(c_ptr), intent(in), value :: cnum
+  character(len=4096), target :: f_cnum
+  character(kind=c_char), pointer :: f_cnum_ptr(:)
+  integer(c_int) :: digits  ! 0D_NOT_integer
+  integer :: f_digits
+  ! ** End of parameters **
+  ! in: f_filein 0D_NOT_character
+  if (.not. c_associated(filein)) return
+  call c_f_pointer(filein, f_filein_ptr, [huge(0)])
+  call to_f_str(f_filein_ptr, f_filein)
+  ! in: f_cnum 0D_NOT_character
+  if (.not. c_associated(cnum)) return
+  call c_f_pointer(cnum, f_cnum_ptr, [huge(0)])
+  call to_f_str(f_cnum_ptr, f_cnum)
+  ! in: f_digits 0D_NOT_integer
+  f_digits = digits
+  call get_next_number(f_filein, f_cnum, f_digits)
+
+end subroutine
 subroutine fortran_get_tty_char (this_char, wait, flush) bind(c)
 
   use array_desc_mod
@@ -2928,6 +2974,26 @@ subroutine fortran_interpolated_fft_gsl (cdata, calc_ok, opt_dump_spectrum, opt_
   ! out: f_this_fft 0D_NOT_real
   call c_f_pointer(this_fft, f_this_fft_ptr)
   f_this_fft_ptr = f_this_fft
+end subroutine
+subroutine fortran_inverse_prob (val, prob) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: val  ! 0D_NOT_real
+  real(rp) :: f_val
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: prob  ! 0D_NOT_real
+  real(rp) :: f_prob
+  real(c_double), pointer :: f_prob_ptr
+  ! ** End of parameters **
+  ! in: f_val 0D_NOT_real
+  f_val = val
+  f_prob = inverse_prob(f_val)
+
+  ! out: f_prob 0D_NOT_real
+  call c_f_pointer(prob, f_prob_ptr)
+  f_prob_ptr = f_prob
 end subroutine
 subroutine fortran_is_alphabetic (string, valid_chars, is_alpha) bind(c)
 
@@ -4036,64 +4102,6 @@ subroutine fortran_nametable_remove (nametable, ix_name) bind(c)
   f_ix_name = ix_name
   call nametable_remove(f_nametable, f_ix_name)
 
-end subroutine
-subroutine fortran_negative_ampsquared (frequency, status, amp) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  real(c_double) :: frequency  ! 0D_NOT_real
-  real(rp) :: f_frequency
-  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
-  integer(c_int) :: f_status
-  integer(c_int), pointer :: f_status_ptr
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: amp  ! 0D_NOT_real
-  real(rp) :: f_amp
-  real(c_double), pointer :: f_amp_ptr
-  ! ** End of parameters **
-  ! in: f_frequency 0D_NOT_real
-  f_frequency = frequency
-  ! in: f_status 0D_NOT_integer
-  if (c_associated(status)) then
-    call c_f_pointer(status, f_status_ptr)
-  else
-    f_status_ptr => null()
-  endif
-  f_amp = negative_ampsquared(f_frequency, f_status_ptr)
-
-  ! out: f_amp 0D_NOT_real
-  call c_f_pointer(amp, f_amp_ptr)
-  f_amp_ptr = f_amp
-end subroutine
-subroutine fortran_negative_dampsquared (frequency, status, damp) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  real(c_double) :: frequency  ! 0D_NOT_real
-  real(rp) :: f_frequency
-  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
-  integer(c_int) :: f_status
-  integer(c_int), pointer :: f_status_ptr
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: damp  ! 0D_NOT_real
-  real(rp) :: f_damp
-  real(c_double), pointer :: f_damp_ptr
-  ! ** End of parameters **
-  ! in: f_frequency 0D_NOT_real
-  f_frequency = frequency
-  ! in: f_status 0D_NOT_integer
-  if (c_associated(status)) then
-    call c_f_pointer(status, f_status_ptr)
-  else
-    f_status_ptr => null()
-  endif
-  f_damp = negative_dampsquared(f_frequency, f_status_ptr)
-
-  ! out: f_damp 0D_NOT_real
-  call c_f_pointer(damp, f_damp_ptr)
-  f_damp_ptr = f_damp
 end subroutine
 subroutine fortran_omega_to_quat (omega, quat) bind(c)
 
@@ -6677,33 +6685,6 @@ subroutine fortran_set_all_ptr (a_ptr, value, delta, value_set) bind(c)
   call set_all_ptr(f_a_ptr, f_value, f_delta_native_ptr, f_value_set_ptr)
 
 end subroutine
-subroutine fortran_set_env (env_name, env_value, err_flag) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  type(c_ptr), intent(in), value :: env_name
-  character(len=4096), target :: f_env_name
-  character(kind=c_char), pointer :: f_env_name_ptr(:)
-  type(c_ptr), intent(in), value :: env_value
-  character(len=4096), target :: f_env_value
-  character(kind=c_char), pointer :: f_env_value_ptr(:)
-  logical(c_bool) :: err_flag  ! 0D_NOT_logical
-  logical :: f_err_flag
-  ! ** End of parameters **
-  ! in: f_env_name 0D_NOT_character
-  if (.not. c_associated(env_name)) return
-  call c_f_pointer(env_name, f_env_name_ptr, [huge(0)])
-  call to_f_str(f_env_name_ptr, f_env_name)
-  ! in: f_env_value 0D_NOT_character
-  if (.not. c_associated(env_value)) return
-  call c_f_pointer(env_value, f_env_value_ptr, [huge(0)])
-  call to_f_str(f_env_value_ptr, f_env_value)
-  ! in: f_err_flag 0D_NOT_logical
-  f_err_flag = err_flag
-  call set_env(f_env_name, f_env_value, f_err_flag)
-
-end subroutine
 subroutine fortran_set_parameter_int (param_val, set_val, save_val) bind(c)
 
   use array_desc_mod
@@ -6969,35 +6950,6 @@ subroutine fortran_skip_header (ix_unit, error_flag) bind(c)
   f_error_flag = error_flag
   call skip_header(f_ix_unit, f_error_flag)
 
-end subroutine
-subroutine fortran_special_projection (f, status, func_retval__) bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** In parameters **
-  real(c_double) :: f  ! 0D_NOT_real
-  real(rp) :: f_f
-  type(c_ptr), intent(in), value :: status  ! 0D_NOT_integer
-  integer(c_int) :: f_status
-  integer(c_int), pointer :: f_status_ptr
-  ! ** Out parameters **
-  type(c_ptr), intent(in), value :: func_retval__  ! 0D_NOT_real
-  real(rp) :: f_func_retval__
-  real(c_double), pointer :: f_func_retval___ptr
-  ! ** End of parameters **
-  ! in: f_f 0D_NOT_real
-  f_f = f
-  ! in: f_status 0D_NOT_integer
-  if (c_associated(status)) then
-    call c_f_pointer(status, f_status_ptr)
-  else
-    f_status_ptr => null()
-  endif
-  f_func_retval__ = special_projection(f_f, f_status_ptr)
-
-  ! out: f_func_retval__ 0D_NOT_real
-  call c_f_pointer(func_retval__, f_func_retval___ptr)
-  f_func_retval___ptr = f_func_retval__
 end subroutine
 subroutine fortran_species_id (name, default_, print_err, species) bind(c)
 
@@ -8219,6 +8171,19 @@ subroutine fortran_system_command (line, err_flag) bind(c)
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
+subroutine fortran_test_tune_tracker_lock (tracker_locked) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), intent(in), value :: tracker_locked
+  type(logical_container_alloc), pointer :: f_tracker_locked
+  ! ** End of parameters **
+  !! container general array (1D_ALLOC_logical)
+  if (c_associated(tracker_locked))   call c_f_pointer(tracker_locked, f_tracker_locked)
+  call test_tune_tracker_lock(f_tracker_locked%data)
+
+end subroutine
 subroutine fortran_test_xgelbd () bind(c)
 
   use array_desc_mod
@@ -8699,14 +8664,6 @@ subroutine fortran_x0_radiation_length (species, x0) bind(c)
   ! out: f_x0 0D_NOT_real
   call c_f_pointer(x0, f_x0_ptr)
   f_x0_ptr = f_x0
-end subroutine
-subroutine fortran_zig_table_init () bind(c)
-
-  use array_desc_mod
-  implicit none
-  ! ** End of parameters **
-  call zig_table_init()
-
 end subroutine
 
 end module cppbmad_sim_utils_routines

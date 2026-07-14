@@ -292,8 +292,6 @@ void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommo
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             std::optional<double>,
-             std::optional<double>,
              std::optional<std::vector<int>>,
              std::optional<std::vector<int>>,
              std::optional<int>,
@@ -311,8 +309,6 @@ void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommo
          nb::arg("beam_chamber_height") = nb::none(),
          nb::arg("lsc_sigma_cutoff") = nb::none(),
          nb::arg("particle_sigma_cutoff") = nb::none(),
-         nb::arg("mesh_growth_factor") = nb::none(),
-         nb::arg("mesh_shrink_factor") = nb::none(),
          nb::arg("space_charge_mesh_size") = nb::none(),
          nb::arg("csr3d_mesh_size") = nb::none(),
          nb::arg("n_bin") = nb::none(),
@@ -372,20 +368,6 @@ void init_space_charge_common_struct(nb::module_ &m, nb::class_<SpaceChargeCommo
           &SpaceChargeCommonStruct::set_particle_sigma_cutoff,
           "3D SC calc cutoff for particles with (x,y,z) position far from the center. Negative or "
           "zero means ignore."
-      )
-      .def_prop_rw(
-          "mesh_growth_factor",
-          &SpaceChargeCommonStruct::mesh_growth_factor,
-          &SpaceChargeCommonStruct::set_mesh_growth_factor,
-          "Fractional padding when growing SC mesh (default: 10%). Set to 0 for tight-fit (no "
-          "caching speedup)."
-      )
-      .def_prop_rw(
-          "mesh_shrink_factor",
-          &SpaceChargeCommonStruct::mesh_shrink_factor,
-          &SpaceChargeCommonStruct::set_mesh_shrink_factor,
-          "Fractional threshold for shrinking SC mesh (default: 10%). Mesh shrinks when bunch "
-          "fills < (1-this) of the mesh range."
       )
       .def_prop_rw(
           "space_charge_mesh_size",

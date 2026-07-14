@@ -108,8 +108,8 @@ used independent of what was set with this routine.
 Parameters
 ----------
 set : str, optional
-    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' 'ziggurat'
-    ''       ! Do nothing
+    Set the random number engine. Possibilities are: 'exact' 'quick'  ! Old deprecated: 'limited' ''       !
+    Do nothing
 
 set_sigma_cut : float, optional
     Sigma cutoff. Initially: sigma_cut = -1.
@@ -219,7 +219,7 @@ seed : int
   m.def(
       "ran_seed_put",
       &SimUtils::ran_seed_put,
-      nb::arg("seed"),
+      nb::arg("seed") = nb::none(),
       nb::arg("mpi_offset") = nb::none(),
       R"""(Routine to seed a random number generator.
 
@@ -232,7 +232,7 @@ Note: Use pointer_to_ran_state() to access the ran state directly.
 
 Parameters
 ----------
-seed : int
+seed : int, optional
     Seed number. If seed = 0 then a seed will be choosen based upon the system clock.
 
 mpi_offset : int, optional

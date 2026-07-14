@@ -11,7 +11,3 @@
 namespace nb = nanobind;
 
 void init_Bmad_routines_i(nb::module_ &m);
-
-struct PyInitAttributeName1 {
-  bool is_ok;
-};

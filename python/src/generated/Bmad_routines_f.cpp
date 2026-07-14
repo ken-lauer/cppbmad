@@ -225,7 +225,7 @@ fwhm : float
       &Bmad::find_matching_fieldmap,
       nb::arg("file_name"),
       nb::arg("ele"),
-      nb::arg("fm_type"),
+      nb::arg("t_type"),
       nb::arg("ignore_slaves") = nb::none(),
       R"""(Wrapper for Fortran routine find_matching_fieldmap
 
@@ -237,8 +237,7 @@ file_name : str
 ele : EleStruct
     Element holding the field to be matched.
 
-fm_type : int
-    Type of fieldmap: cartesian_map$, cylindircal_map$, or gen_gradients$, grid_field$
+t_type : int
 
 ignore_slaves : bool, optional
     If True, ignore any multipass slaves. Default is False.

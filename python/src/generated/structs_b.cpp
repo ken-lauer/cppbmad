@@ -946,7 +946,7 @@ void init_beam_init_struct(nb::module_ &m, nb::class_<BeamInitStruct> &cls) {
           "random_gauss_converter",
           &BeamInitStruct::random_gauss_converter,
           &BeamInitStruct::set_random_gauss_converter,
-          "Or 'quick' or 'exact'. Uniform to gauss conversion method."
+          "Or 'quick'. Uniform to gauss conversion method."
       )
       .def_prop_rw(
           "random_sigma_cutoff",
@@ -1180,7 +1180,6 @@ void init_bmad_common_struct(nb::module_ &m, nb::class_<BmadCommonStruct> &cls) 
              std::optional<bool>,
              std::optional<bool>,
              std::optional<bool>,
-             std::optional<bool>,
              std::optional<bool>>(),
          nb::arg("max_aperture_limit") = nb::none(),
          nb::arg("d_orb") = nb::none(),
@@ -1210,7 +1209,6 @@ void init_bmad_common_struct(nb::module_ &m, nb::class_<BmadCommonStruct> &cls) 
          nb::arg("lr_wakes_on") = nb::none(),
          nb::arg("auto_bookkeeper") = nb::none(),
          nb::arg("high_energy_space_charge_on") = nb::none(),
-         nb::arg("high_energy_space_charge_linear") = nb::none(),
          nb::arg("csr_and_space_charge_on") = nb::none(),
          nb::arg("spin_tracking_on") = nb::none(),
          nb::arg("spin_sokolov_ternov_flipping_on") = nb::none(),
@@ -1393,12 +1391,6 @@ void init_bmad_common_struct(nb::module_ &m, nb::class_<BmadCommonStruct> &cls) 
           "high_energy_space_charge_on",
           &BmadCommonStruct::high_energy_space_charge_on,
           &BmadCommonStruct::set_high_energy_space_charge_on,
-          "High energy space charge effect switch."
-      )
-      .def_prop_rw(
-          "high_energy_space_charge_linear",
-          &BmadCommonStruct::high_energy_space_charge_linear,
-          &BmadCommonStruct::set_high_energy_space_charge_linear,
           "High energy space charge effect switch."
       )
       .def_prop_rw(

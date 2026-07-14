@@ -157,13 +157,30 @@ err_flag : bool
       &SimUtils::get_file_time_stamp,
       nb::arg("file"),
       nb::arg("time_stamp"),
-      R"""(no longer exists
-subroutine get_next_number (filein, cnum, digits)
-  implicit none
-  character(*) filein
-  character(*) cnum
-  integer digits
-end subroutine
+      R"""(Wrapper for Fortran routine get_file_time_stamp
+
+Parameters
+----------
+file : str
+
+time_stamp : str
+)"""
+  );
+  m.def(
+      "get_next_number",
+      &SimUtils::get_next_number,
+      nb::arg("filein"),
+      nb::arg("cnum"),
+      nb::arg("digits"),
+      R"""(Wrapper for Fortran routine get_next_number
+
+Parameters
+----------
+filein : str
+
+cnum : str
+
+digits : int
 )"""
   );
   m.def(

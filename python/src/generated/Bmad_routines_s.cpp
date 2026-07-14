@@ -228,7 +228,6 @@ beam : BeamStruct
 
 bunch_tracks : 1D array of BunchTrackStruct, optional
     Track up to now. If bunch_tracks.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
     As an output, bunch_tracks: Track with current bunch info appended on. This routine does nothing
 
 s_body : float, optional
@@ -236,7 +235,7 @@ s_body : float, optional
 
 is_time_coords : bool, optional
     Default is False. If True, input beam is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed.
+    to s-coords before bunch_params are computed. Ouput:
 )"""
   );
   m.def(
@@ -272,7 +271,6 @@ bunch : BunchStruct
 
 bunch_track : BunchTrackStruct, optional
     Track up to now. If bunch_track.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
     As an output, bunch_track: Track with current bunch info appended on. This routine does nothing
 
 s_body : float, optional
@@ -280,7 +278,7 @@ s_body : float, optional
 
 is_time_coords : bool, optional
     Default is False. If True, input bunch is using time coordinates in which case there will be a conversion
-    to s-coords before bunch_params are computed.
+    to s-coords before bunch_params are computed. Ouput:
 )"""
   );
   m.def(
@@ -340,7 +338,6 @@ Parameters
 ----------
 track : TrackStruct
     Track up to now. If track.n_pt < 0, the structure will be reinitialized.
-    This parameter is an input/output and is modified in-place.
     As an output, track: Track with current position appended on.
 
 ele : EleStruct
@@ -373,7 +370,7 @@ rf_time : float, optional
     standard algorithm. This is only needed if save_field = True.
 
 strong_beam : StrongBeamStruct, optional
-    Strong beam info if tracking through a beambeam element.
+    Strong beam info if tracking through a beambeam element. Ouput:
 )"""
   );
   m.def(
@@ -381,7 +378,7 @@ strong_beam : StrongBeamStruct, optional
       &Bmad::sbend_body_with_k1_map,
       nb::arg("ele"),
       nb::arg("dg"),
-      nb::arg("b1"),
+      nb::arg("k_1"),
       nb::arg("param"),
       nb::arg("n_step"),
       nb::arg("orbit"),
@@ -397,8 +394,7 @@ ele : EleStruct
 dg : float
     Field error.
 
-b1 : float
-    b1 quadrupole strength * rel_charge_dir
+k_1 : float
 
 param : LatParamStruct
     Branch parameters.
@@ -765,21 +761,31 @@ err_flag : bool
     Set True if there is an error, False otherwise.
 )"""
   );
+  nb::class_<Bmad::SetEleStatusStale>(m, "SetEleStatusStale", "set_ele_status_stale return type")
+      .def_ro("ele", &Bmad::SetEleStatusStale::ele)
+      .def_ro("status_group", &Bmad::SetEleStatusStale::status_group)
+      .def_ro("set_slaves", &Bmad::SetEleStatusStale::set_slaves)
+      .def("__len__", [](const Bmad::SetEleStatusStale &) { return 3; })
+      .def("__getitem__", [](const Bmad::SetEleStatusStale &s, int i) -> nb::object {
+        if (i < 0)
+          i += 3;
+        if (i == 0)
+          return nb::cast(s.ele);
+        if (i == 1)
+          return nb::cast(s.status_group);
+        if (i == 2)
+          return nb::cast(s.set_slaves);
+        throw nb::index_error();
+      });
   m.def(
       "set_ele_status_stale",
       &Bmad::set_ele_status_stale,
-      nb::arg("ele"),
-      nb::arg("status_group"),
-      nb::arg("set_slaves") = nb::none(),
-      nb::arg("old_eles") = nb::none(),
       R"""(Wrapper for Fortran routine set_ele_status_stale
 
-Parameters
-----------
+Returns
+-------
 ele : EleStruct
-    Element to set.
-    This parameter is an input/output and is modified in-place.
-    As an output, ele: Element.
+    Element.
 
 status_group : int
     Which flag groups to set. Possibilities are: attribute_group$, control_group$, floor_position_group$,
@@ -787,9 +793,51 @@ status_group : int
 
 set_slaves : bool, optional
     If present and False then do not set the status for any slaves. Default is True.
+)"""
+  );
+  m.def(
+      "set_emit_from_beam_init",
+      [](BeamInitStruct &beam_init_in,
+         EleStruct &ele,
+         int species,
+         NormalModesStruct *modes,
+         std::optional<bool> err_flag) {
+        auto fn = static_cast<BeamInitStruct (*)(
+            BeamInitStruct &,
+            EleStruct &,
+            int,
+            optional_ref<NormalModesStruct>,
+            std::optional<bool>
+        )>(&Bmad::set_emit_from_beam_init);
+        return fn(beam_init_in, ele, species, ptr_to_opt_ref(modes), err_flag);
+      },
+      nb::arg("beam_init_in"),
+      nb::arg("ele"),
+      nb::arg("species"),
+      nb::arg("modes") = nb::none(),
+      nb::arg("err_flag") = nb::none(),
+      R"""(Wrapper for Fortran routine set_emit_from_beam_init
 
-old_eles : 1D array of ElePointerStruct, optional
-    List of elements already set. This argument is only used when this routine is called recursively.
+Parameters
+----------
+beam_init_in : BeamInitStruct
+    Input parameters
+
+ele : EleStruct
+
+species : int
+    Beam particle species.
+
+modes : NormalModesStruct, optional
+    Normal mode parameters. Used if stuff like beam_init_in.a_emit set negative. Ouput:
+
+err_flag : bool, optional
+    Set true if there is an error. False otherwise.
+
+Returns
+-------
+beam_init_set : BeamInitStruct
+    See above.
 )"""
   );
   m.def(
@@ -800,7 +848,7 @@ old_eles : 1D array of ElePointerStruct, optional
       nb::arg("ele"),
       nb::arg("all_attrib"),
       nb::arg("set_dependent") = nb::none(),
-      R"""(Routine to mark an element or lattice as modified.
+      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -844,7 +892,7 @@ set_dependent : bool, optional
       nb::arg("ele"),
       nb::arg("attrib"),
       nb::arg("set_dependent") = nb::none(),
-      R"""(Routine to mark an element or lattice as modified.
+      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -882,7 +930,7 @@ set_dependent : bool, optional
       nb::overload_cast<LatStruct &, std::optional<bool>>(&Bmad::set_flags_for_changed_attribute),
       nb::arg("lat"),
       nb::arg("set_dependent") = nb::none(),
-      R"""(Routine to mark an element or lattice as modified.
+      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -925,7 +973,7 @@ set_dependent : bool, optional
       nb::arg("ele"),
       nb::arg("attrib"),
       nb::arg("set_dependent") = nb::none(),
-      R"""(Routine to mark an element or lattice as modified.
+      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -966,7 +1014,7 @@ set_dependent : bool, optional
       nb::arg("ele"),
       nb::arg("attrib") = nb::none(),
       nb::arg("set_dependent") = nb::none(),
-      R"""(Routine to mark an element or lattice as modified.
+      R"""(Routine to mark an element or lattice as modified for use with "intelligent" bookkeeping.
 Also will do some dependent variable bookkeeping when a particular attribute has
 been altered.
 
@@ -1060,6 +1108,26 @@ control_bookkeeping : bool, optional
 
 flag : int, optional
     Do not use. For coordinating recursion.
+)"""
+  );
+  m.def(
+      "set_on",
+      &Bmad::set_on,
+      nb::arg("key"),
+      nb::arg("lat"),
+      nb::arg("on_switch"),
+      nb::arg("orb") = nb::none(),
+      R"""(Wrapper for Fortran routine set_on
+
+Parameters
+----------
+key : int
+
+lat : LatStruct
+
+on_switch : bool
+
+orb : 1D array of CoordStruct, optional
 )"""
   );
   m.def(
@@ -1162,6 +1230,26 @@ n2 : int
 
 ix_noset : int, optional
     If present then orbit(ix_noset) will not be zeroed.
+)"""
+  );
+  m.def(
+      "set_particle_from_rf_time",
+      &Bmad::set_particle_from_rf_time,
+      nb::arg("rf_time"),
+      nb::arg("ele"),
+      nb::arg("reference_active_edge"),
+      nb::arg("orbit"),
+      R"""(Wrapper for Fortran routine set_particle_from_rf_time
+
+Parameters
+----------
+rf_time : float
+
+ele : EleStruct
+
+reference_active_edge : bool
+
+orbit : CoordStruct
 )"""
   );
   m.def(
@@ -1474,37 +1562,15 @@ This subroutine is not intended for general use.
   );
   m.def(
       "setup_high_energy_space_charge_calc",
-      [](bool calc_on,
-         BranchStruct &branch,
-         double n_part,
-         NormalModesStruct &mode,
-         BeamInitStruct *beam_init,
-         std::optional<CoordStructArray1D> closed_orb) {
-        auto fn = static_cast<void (*)(
-            bool,
-            BranchStruct &,
-            double,
-            NormalModesStruct &,
-            optional_ref<BeamInitStruct>,
-            std::optional<CoordStructArray1D>
-        )>(&Bmad::setup_high_energy_space_charge_calc);
-        return fn(calc_on, branch, n_part, mode, ptr_to_opt_ref(beam_init), closed_orb);
-      },
+      &Bmad::setup_high_energy_space_charge_calc,
       nb::arg("calc_on"),
       nb::arg("branch"),
       nb::arg("n_part"),
       nb::arg("mode"),
-      nb::arg("beam_init") = nb::none(),
       nb::arg("closed_orb") = nb::none(),
       R"""(Routine to initialize constants needed by the ultra relativistic space charge
 tracking routine track1_high_energy_space_charge. This setup routine must be called if
 the lattice or any of the other input parameters are changed.
-
-Parameters used:
-    a-mode emittance
-    b-mode emittance
-    sig_z bunch length
-    sig_pz relative energy spread
 
 Parameters
 ----------
@@ -1518,10 +1584,7 @@ n_part : float
     Number of actual particles in a bunch. Used to compute the bunch charge.
 
 mode : NormalModesStruct
-    Structure holding the beam info. Will be combined with info in beam_init.
-
-beam_init : BeamInitStruct, optional
-    Structure holding beam info. Will be combined with info in mode.
+    Structure holding the beam info.
 
 closed_orb : 1D array of CoordStruct, optional
     Closed orbit. If not present the closed orbit is taken to be zero.
@@ -1604,7 +1667,6 @@ skip : bool
       nb::arg("lat"),
       nb::arg("ele_list"),
       nb::arg("do_bookkeeping") = nb::none(),
-      nb::arg("set_phase_zero") = nb::none(),
       R"""(Wrapper for Fortran routine slice_lattice
 
 Parameters
@@ -1621,9 +1683,6 @@ ele_list : str
 do_bookkeeping : bool, optional
     Default is True. If false, the calling routine is responsible for: * Modifying lat.particle_start if
     needed. * Calculating Twiss functions.
-
-set_phase_zero : bool, optional
-    Default is True. Set betatron phase to zero?
 
 Returns
 -------
@@ -1672,10 +1731,10 @@ make_matrix : bool, optional
   m.def(
       "sol_quad_mat6_calc",
       &Bmad::sol_quad_mat6_calc,
-      nb::arg("ks_in"),
-      nb::arg("k1_in"),
+      nb::arg("ks"),
+      nb::arg("k1"),
       nb::arg("tilt"),
-      nb::arg("length"),
+      nb::arg("s_len"),
       nb::arg("ele"),
       nb::arg("orbit"),
       nb::arg("mat6") = nb::none(),
@@ -1684,15 +1743,16 @@ make_matrix : bool, optional
 
 Parameters
 ----------
-ks_in : float
+ks : float
+    Solenoid strength.
 
-k1_in : float
+k1 : float
+    Quadrupole strength.
 
 tilt : float
     quadrupole tilt.
 
-length : float
-    Sol_quad length.
+s_len : float
 
 ele : EleStruct
     Sol_quad element.
@@ -1863,36 +1923,22 @@ direct_field_calc : bool, optional
 integrated_green_function : bool, optional
 )"""
   );
-  nb::class_<Bmad::SpinConcatLinearMaps>(
-      m,
-      "SpinConcatLinearMaps",
-      "spin_concat_linear_maps return type"
-  )
-      .def_ro("err_flag", &Bmad::SpinConcatLinearMaps::err_flag)
-      .def_ro("map1", &Bmad::SpinConcatLinearMaps::map1)
-      .def("__len__", [](const Bmad::SpinConcatLinearMaps &) { return 2; })
-      .def("__getitem__", [](const Bmad::SpinConcatLinearMaps &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.err_flag);
-        if (i == 1)
-          return nb::cast(s.map1);
-        throw nb::index_error();
-      });
   m.def(
       "spin_concat_linear_maps",
       &Bmad::spin_concat_linear_maps,
+      nb::arg("mat1"),
       nb::arg("branch"),
       nb::arg("n1"),
       nb::arg("n2"),
-      nb::arg("map1_ele") = nb::none(),
+      nb::arg("mat1_ele") = nb::none(),
       nb::arg("orbit") = nb::none(),
       nb::arg("excite_zero") = nb::none(),
       R"""(Wrapper for Fortran routine spin_concat_linear_maps
 
 Parameters
 ----------
+mat1 : SpinOrbitMap1Struct
+
 branch : BranchStruct
     Lattice branch.
 
@@ -1902,8 +1948,7 @@ n1 : int
 n2 : int
     Ending element index. End at element downstream end
 
-map1_ele : 1D array of SpinOrbitMap1Struct, optional
-    Individual spin/orbit maps.
+mat1_ele : 1D array of SpinOrbitMap1Struct, optional
 
 orbit : 1D array of CoordStruct, optional
     Reference orbit used if maps must be created.
@@ -1915,9 +1960,6 @@ Returns
 -------
 err_flag : bool
     Set True if there is an error. False otherwise.
-
-map1 : SpinOrbitMap1Struct
-    Map with element spin/orbit maps concatenated.
 )"""
   );
   m.def(
@@ -2089,24 +2131,21 @@ xi_diff : float
 )"""
   );
   nb::class_<Bmad::SpinMatToEigen>(m, "SpinMatToEigen", "spin_mat_to_eigen return type")
-      .def_ro("orb_eval", &Bmad::SpinMatToEigen::orb_eval)
       .def_ro("orb_evec", &Bmad::SpinMatToEigen::orb_evec)
       .def_ro("n0", &Bmad::SpinMatToEigen::n0)
       .def_ro("spin_evec", &Bmad::SpinMatToEigen::spin_evec)
       .def_ro("error", &Bmad::SpinMatToEigen::error)
-      .def("__len__", [](const Bmad::SpinMatToEigen &) { return 5; })
+      .def("__len__", [](const Bmad::SpinMatToEigen &) { return 4; })
       .def("__getitem__", [](const Bmad::SpinMatToEigen &s, int i) -> nb::object {
         if (i < 0)
-          i += 5;
+          i += 4;
         if (i == 0)
-          return nb::cast(s.orb_eval);
-        if (i == 1)
           return nb::cast(s.orb_evec);
-        if (i == 2)
+        if (i == 1)
           return nb::cast(s.n0);
-        if (i == 3)
+        if (i == 2)
           return nb::cast(s.spin_evec);
-        if (i == 4)
+        if (i == 3)
           return nb::cast(s.error);
         throw nb::index_error();
       });
@@ -2115,6 +2154,7 @@ xi_diff : float
       &Bmad::spin_mat_to_eigen,
       nb::arg("orb_mat"),
       nb::arg("spin_map"),
+      nb::arg("eigen_val"),
       R"""(Wrapper for Fortran routine spin_mat_to_eigen
 
 Parameters
@@ -2125,11 +2165,10 @@ orb_mat : 2D array of float (shape: 6,6)
 spin_map : 2D array of float (shape: 0:3,0:6)
     Quaternion 0th & 1st order map.
 
+eigen_val : 1D array of complex (shape: 6)
+
 Returns
 -------
-orb_eval : 1D array of complex (shape: 6)
-    Eigenvalues.
-
 orb_evec : 2D array of complex (shape: 6,6)
     Orbital eigenvectors. orb_evec(j,:) is the j^th vector.
 
@@ -2794,7 +2833,7 @@ dz_dxy : 1D array of float (shape: 2), optional
 
 Routine to return the name corresponding to the value of a given switch attribute.
 
-This routine is for "switch" and "species" attributes. For example, the "aperture_type" attribute
+This routine is for "switch" attributes. For example, the "aperture_type" attribute
 can have value names of "Entrance_End", "Exit_End", etc.
 
 Optionally, this routine can determine if the attribute value corresponds

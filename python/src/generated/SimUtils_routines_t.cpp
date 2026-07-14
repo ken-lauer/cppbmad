@@ -6,6 +6,17 @@ using namespace Pybmad;
 
 void init_SimUtils_routines_t(nb::module_ &m) {
   m.def(
+      "test_tune_tracker_lock",
+      &SimUtils::test_tune_tracker_lock,
+      nb::arg("tracker_locked"),
+      R"""(Wrapper for Fortran routine test_tune_tracker_lock
+
+Parameters
+----------
+tracker_locked : 1D array of bool (shape: 2)
+)"""
+  );
+  m.def(
       "test_xgelbd",
       &SimUtils::test_xgelbd,
       R"""(Wrapper for Fortran routine test_xgelbd
@@ -16,11 +27,17 @@ void init_SimUtils_routines_t(nb::module_ &m) {
       &SimUtils::to_str,
       nb::arg("num"),
       nb::arg("max_signif") = nb::none(),
-      R"""(no longer exists
-subroutine test_tune_tracker_lock (tracker_locked)
-  implicit none
-  logical tracker_locked(2)
-end subroutine
+      R"""(Wrapper for Fortran routine to_str
+
+Parameters
+----------
+num : float
+
+max_signif : int, optional
+
+Returns
+-------
+string : str
 )"""
   );
   nb::class_<SimUtils::TricubicCmplxEval>(m, "TricubicCmplxEval", "tricubic_cmplx_eval return type")

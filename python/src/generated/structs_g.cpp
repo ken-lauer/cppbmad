@@ -107,54 +107,44 @@ void init_general_bin_struct(nb::module_ &m, nb::class_<GeneralBinStruct> &cls) 
 }
 
 // =============================================================================
-// gen_grad_curve_struct
-void init_gen_grad_curve_struct(nb::module_ &m, nb::class_<GenGradCurveStruct> &cls) {
+// gen_grad1_struct
+void init_gen_grad1_struct(nb::module_ &m, nb::class_<GenGrad1Struct> &cls) {
   cls.def(
          nb::init<
              std::optional<int>,
              std::optional<int>,
              std::optional<int>,
              std::optional<std::vector<std::vector<double>>>>(),
-         nb::arg("kind") = nb::none(),
-         nb::arg("n") = nb::none(),
-         nb::arg("m_max") = nb::none(),
+         nb::arg("m") = nb::none(),
+         nb::arg("sincos") = nb::none(),
+         nb::arg("n_deriv_max") = nb::none(),
          nb::arg("deriv") = nb::none()
   )
+      .def_prop_rw("m", &GenGrad1Struct::m, &GenGrad1Struct::set_m, "Azimuthal index")
+      .def_prop_rw("sincos", &GenGrad1Struct::sincos, &GenGrad1Struct::set_sincos, "sin$ or cos$")
       .def_prop_rw(
-          "kind",
-          &GenGradCurveStruct::kind,
-          &GenGradCurveStruct::set_kind,
-          "gg_a$ (skew), gg_b$ (normal), or gg_bs$ (solenoid)."
-      )
-      .def_prop_rw(
-          "n",
-          &GenGradCurveStruct::n,
-          &GenGradCurveStruct::set_n,
-          "Azimuthal harmonic index (n = 0 for gg_bs$)."
-      )
-      .def_prop_rw(
-          "m_max",
-          &GenGradCurveStruct::m_max,
-          &GenGradCurveStruct::set_m_max,
-          "Max GG derivative order stored. deriv(iz, 0:m_max) are the GG derivatives d^m/ds^m; "
-          "columns m_max+1:2*m_max+1 hold the interpolating spline extension (see n_spline_create)."
+          "n_deriv_max",
+          &GenGrad1Struct::n_deriv_max,
+          &GenGrad1Struct::set_n_deriv_max,
+          "Max GG derivative The derivative matrix is extended to include the interpolating spline "
+          "polynomial."
       )
       .def_prop_rw(
           "deriv",
-          &GenGradCurveStruct::deriv,
-          &GenGradCurveStruct::set_deriv,
+          &GenGrad1Struct::deriv,
+          &GenGrad1Struct::set_deriv,
           nb::for_getter(nb::keep_alive<0, 1>()),
-          "Range: (iz0:iz1, 0:2*m_max+1)"
+          "Range: (iz0:iz1, 0:2*n_deriv_max+1)"
       )
       .def_static(
           "new_array1d",
-          [](int sz) { return GenGradCurveStructAlloc1D(sz); },
+          [](int sz) { return GenGrad1StructAlloc1D(sz); },
           nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
           [](int lbound, int ubound) {
-            auto cnt = GenGradCurveStructAlloc1D();
+            auto cnt = GenGrad1StructAlloc1D();
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
@@ -162,28 +152,28 @@ void init_gen_grad_curve_struct(nb::module_ &m, nb::class_<GenGradCurveStruct> &
           nb::arg("ubound")
       )
 
-      .def("__repr__", [](const GenGradCurveStruct &self) { return to_string(self); })
+      .def("__repr__", [](const GenGrad1Struct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const GenGradCurveStruct &self) {
-            return GenGradCurveStruct(self); // under-the-hood fortran copy
+          [](const GenGrad1Struct &self) {
+            return GenGrad1Struct(self); // under-the-hood fortran copy
           }
       )
       .def(
           "__deepcopy__",
-          [](const GenGradCurveStruct &self, nb::dict &memo) { return GenGradCurveStruct(self); }
+          [](const GenGrad1Struct &self, nb::dict &memo) { return GenGrad1Struct(self); }
       )
       .def(
           "__eq__",
-          [](const GenGradCurveStruct &self, const GenGradCurveStruct &other) {
+          [](const GenGrad1Struct &self, const GenGrad1Struct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
           nb::is_operator()
       )
       .def(
           "__hash__",
-          [](const GenGradCurveStruct &self) {
+          [](const GenGrad1Struct &self) {
             return std::hash<std::uintptr_t>{}(
                 reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
             );
@@ -192,18 +182,18 @@ void init_gen_grad_curve_struct(nb::module_ &m, nb::class_<GenGradCurveStruct> &
 
       ;
 
-  bind_1d_type_array_pair<GenGradCurveStructArray1D, GenGradCurveStructAlloc1D>(
+  bind_1d_type_array_pair<GenGrad1StructArray1D, GenGrad1StructAlloc1D>(
       m,
-      "GenGradCurveStructArray1D",
-      "GenGradCurveStructAlloc1D"
+      "GenGrad1StructArray1D",
+      "GenGrad1StructAlloc1D"
   );
-  // 2D GenGradCurveStruct arrays are not used in structs/routines
-  // 3D GenGradCurveStruct arrays are not used in structs/routines
+  // 2D GenGrad1Struct arrays are not used in structs/routines
+  // 3D GenGrad1Struct arrays are not used in structs/routines
 }
 
 // =============================================================================
-// gen_gradients_struct
-void init_gen_gradients_struct(nb::module_ &m, nb::class_<GenGradientsStruct> &cls) {
+// gen_grad_map_struct
+void init_gen_grad_map_struct(nb::module_ &m, nb::class_<GenGradMapStruct> &cls) {
   cls.def(
          nb::init<
              std::optional<std::string>,
@@ -212,225 +202,86 @@ void init_gen_gradients_struct(nb::module_ &m, nb::class_<GenGradientsStruct> &c
              std::optional<int>,
              std::optional<int>,
              std::optional<double>,
-             std::optional<double>,
              std::optional<std::vector<double>>,
              std::optional<double>,
-             std::optional<int>>(),
+             std::optional<int>,
+             std::optional<bool>>(),
          nb::arg("file") = nb::none(),
          nb::arg("ele_anchor_pt") = nb::none(),
          nb::arg("field_type") = nb::none(),
          nb::arg("iz0") = nb::none(),
          nb::arg("iz1") = nb::none(),
          nb::arg("dz") = nb::none(),
-         nb::arg("g_ref") = nb::none(),
          nb::arg("r0") = nb::none(),
          nb::arg("field_scale") = nb::none(),
-         nb::arg("master_parameter") = nb::none()
+         nb::arg("master_parameter") = nb::none(),
+         nb::arg("curved_ref_frame") = nb::none()
   )
       .def_prop_rw(
           "file",
-          &GenGradientsStruct::file,
-          &GenGradientsStruct::set_file,
+          &GenGradMapStruct::file,
+          &GenGradMapStruct::set_file,
           "Input file name. Used also as ID for instances."
       )
-      .def_prop_ro("curve", &GenGradientsStruct::curve, nb::keep_alive<0, 1>())
+      .def_prop_ro("gg", &GenGradMapStruct::gg, nb::keep_alive<0, 1>())
       .def_prop_rw(
           "ele_anchor_pt",
-          &GenGradientsStruct::ele_anchor_pt,
-          &GenGradientsStruct::set_ele_anchor_pt,
+          &GenGradMapStruct::ele_anchor_pt,
+          &GenGradMapStruct::set_ele_anchor_pt,
           "anchor_beginning$, anchor_center$, or anchor_end$"
       )
       .def_prop_rw(
           "field_type",
-          &GenGradientsStruct::field_type,
-          &GenGradientsStruct::set_field_type,
+          &GenGradMapStruct::field_type,
+          &GenGradMapStruct::set_field_type,
           "or electric$"
       )
       .def_prop_rw(
           "iz0",
-          &GenGradientsStruct::iz0,
-          &GenGradientsStruct::set_iz0,
-          "curve%deriv(iz0:iz1, :) lower bound."
+          &GenGradMapStruct::iz0,
+          &GenGradMapStruct::set_iz0,
+          "gg%deriv(iz0:iz1, :) lower bound."
       )
       .def_prop_rw(
           "iz1",
-          &GenGradientsStruct::iz1,
-          &GenGradientsStruct::set_iz1,
-          "curve%deriv(iz0:iz1, :) upper bound."
+          &GenGradMapStruct::iz1,
+          &GenGradMapStruct::set_iz1,
+          "gg%deriv(iz0:iz1, :) upper bound."
       )
-      .def_prop_rw(
-          "dz",
-          &GenGradientsStruct::dz,
-          &GenGradientsStruct::set_dz,
-          "Point spacing between base planes."
-      )
-      .def_prop_rw(
-          "g_ref",
-          &GenGradientsStruct::g_ref,
-          &GenGradientsStruct::set_g_ref,
-          "Reference-frame curvature 1/rho (0 => straight frame). Must be equal to g for a bend "
-          "and zero for all else."
-      )
+      .def_prop_rw("dz", &GenGradMapStruct::dz, &GenGradMapStruct::set_dz, "Point spacing.")
       .def_prop_rw(
           "r0",
-          &GenGradientsStruct::r0,
-          &GenGradientsStruct::set_r0,
+          &GenGradMapStruct::r0,
+          &GenGradMapStruct::set_r0,
           nb::for_getter(nb::keep_alive<0, 1>()),
-          "Field origin relative to ele_anchor_pt. r0(1:2) = transverse expansion axis (GGCoefs "
-          "origin), r0(3) = longitudinal offset."
+          "field origin relative to ele_anchor_pt."
       )
       .def_prop_rw(
           "field_scale",
-          &GenGradientsStruct::field_scale,
-          &GenGradientsStruct::set_field_scale,
-          "Factor to scale the fields by."
+          &GenGradMapStruct::field_scale,
+          &GenGradMapStruct::set_field_scale,
+          "Factor to scale the fields by"
       )
       .def_prop_rw(
           "master_parameter",
-          &GenGradientsStruct::master_parameter,
-          &GenGradientsStruct::set_master_parameter,
+          &GenGradMapStruct::master_parameter,
+          &GenGradMapStruct::set_master_parameter,
           "Master parameter in ele%value(:) array to use for scaling the field."
       )
-      .def_static(
-          "new_array1d",
-          [](int sz) { return GenGradientsStructAlloc1D(sz); },
-          nb::arg("sz") = 0
-      )
-      .def_static(
-          "new_array1d_bounds",
-          [](int lbound, int ubound) {
-            auto cnt = GenGradientsStructAlloc1D();
-            cnt.resize_bounds(lbound, ubound);
-            return cnt;
-          },
-          nb::arg("lbound"),
-          nb::arg("ubound")
-      )
-
-      .def("__repr__", [](const GenGradientsStruct &self) { return to_string(self); })
-
-      .def(
-          "__copy__",
-          [](const GenGradientsStruct &self) {
-            return GenGradientsStruct(self); // under-the-hood fortran copy
-          }
-      )
-      .def(
-          "__deepcopy__",
-          [](const GenGradientsStruct &self, nb::dict &memo) { return GenGradientsStruct(self); }
-      )
-      .def(
-          "__eq__",
-          [](const GenGradientsStruct &self, const GenGradientsStruct &other) {
-            return self.get_fortran_ptr() == other.get_fortran_ptr();
-          },
-          nb::is_operator()
-      )
-      .def(
-          "__hash__",
-          [](const GenGradientsStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
-          }
-      )
-
-      ;
-
-  bind_1d_type_array_pair<GenGradientsStructArray1D, GenGradientsStructAlloc1D>(
-      m,
-      "GenGradientsStructArray1D",
-      "GenGradientsStructAlloc1D"
-  );
-  // 2D GenGradientsStruct arrays are not used in structs/routines
-  // 3D GenGradientsStruct arrays are not used in structs/routines
-}
-
-// =============================================================================
-// gg_taylor_struct
-void init_gg_taylor_struct(nb::module_ &m, nb::class_<GgTaylorStruct> &cls) {
-  cls.def(nb::init<std::optional<double>>(), nb::arg("ref") = nb::none())
-      .def_prop_rw("ref", &GgTaylorStruct::ref, &GgTaylorStruct::set_ref)
-      .def_prop_ro("term", &GgTaylorStruct::term, nb::keep_alive<0, 1>())
-      .def_static(
-          "new_array1d",
-          [](int sz) { return GgTaylorStructAlloc1D(sz); },
-          nb::arg("sz") = 0
-      )
-      .def_static(
-          "new_array1d_bounds",
-          [](int lbound, int ubound) {
-            auto cnt = GgTaylorStructAlloc1D();
-            cnt.resize_bounds(lbound, ubound);
-            return cnt;
-          },
-          nb::arg("lbound"),
-          nb::arg("ubound")
-      )
-
-      .def("__repr__", [](const GgTaylorStruct &self) { return to_string(self); })
-
-      .def(
-          "__copy__",
-          [](const GgTaylorStruct &self) {
-            return GgTaylorStruct(self); // under-the-hood fortran copy
-          }
-      )
-      .def(
-          "__deepcopy__",
-          [](const GgTaylorStruct &self, nb::dict &memo) { return GgTaylorStruct(self); }
-      )
-      .def(
-          "__eq__",
-          [](const GgTaylorStruct &self, const GgTaylorStruct &other) {
-            return self.get_fortran_ptr() == other.get_fortran_ptr();
-          },
-          nb::is_operator()
-      )
-      .def(
-          "__hash__",
-          [](const GgTaylorStruct &self) {
-            return std::hash<std::uintptr_t>{}(
-                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
-            );
-          }
-      )
-
-      ;
-
-  bind_1d_type_array_pair<GgTaylorStructArray1D, GgTaylorStructAlloc1D>(
-      m,
-      "GgTaylorStructArray1D",
-      "GgTaylorStructAlloc1D"
-  );
-  // 2D GgTaylorStruct arrays are not used in structs/routines
-  // 3D GgTaylorStruct arrays are not used in structs/routines
-}
-
-// =============================================================================
-// gg_taylor_term_struct
-void init_gg_taylor_term_struct(nb::module_ &m, nb::class_<GgTaylorTermStruct> &cls) {
-  cls.def(
-         nb::init<std::optional<double>, std::optional<std::vector<int>>>(),
-         nb::arg("coef") = nb::none(),
-         nb::arg("expn") = nb::none()
-  )
-      .def_prop_rw("coef", &GgTaylorTermStruct::coef, &GgTaylorTermStruct::set_coef)
       .def_prop_rw(
-          "expn",
-          &GgTaylorTermStruct::expn,
-          &GgTaylorTermStruct::set_expn,
-          nb::for_getter(nb::keep_alive<0, 1>())
+          "curved_ref_frame",
+          &GenGradMapStruct::curved_ref_frame,
+          &GenGradMapStruct::set_curved_ref_frame
       )
       .def_static(
           "new_array1d",
-          [](int sz) { return GgTaylorTermStructAlloc1D(sz); },
+          [](int sz) { return GenGradMapStructAlloc1D(sz); },
           nb::arg("sz") = 0
       )
       .def_static(
           "new_array1d_bounds",
           [](int lbound, int ubound) {
-            auto cnt = GgTaylorTermStructAlloc1D();
+            auto cnt = GenGradMapStructAlloc1D();
             cnt.resize_bounds(lbound, ubound);
             return cnt;
           },
@@ -438,28 +289,28 @@ void init_gg_taylor_term_struct(nb::module_ &m, nb::class_<GgTaylorTermStruct> &
           nb::arg("ubound")
       )
 
-      .def("__repr__", [](const GgTaylorTermStruct &self) { return to_string(self); })
+      .def("__repr__", [](const GenGradMapStruct &self) { return to_string(self); })
 
       .def(
           "__copy__",
-          [](const GgTaylorTermStruct &self) {
-            return GgTaylorTermStruct(self); // under-the-hood fortran copy
+          [](const GenGradMapStruct &self) {
+            return GenGradMapStruct(self); // under-the-hood fortran copy
           }
       )
       .def(
           "__deepcopy__",
-          [](const GgTaylorTermStruct &self, nb::dict &memo) { return GgTaylorTermStruct(self); }
+          [](const GenGradMapStruct &self, nb::dict &memo) { return GenGradMapStruct(self); }
       )
       .def(
           "__eq__",
-          [](const GgTaylorTermStruct &self, const GgTaylorTermStruct &other) {
+          [](const GenGradMapStruct &self, const GenGradMapStruct &other) {
             return self.get_fortran_ptr() == other.get_fortran_ptr();
           },
           nb::is_operator()
       )
       .def(
           "__hash__",
-          [](const GgTaylorTermStruct &self) {
+          [](const GenGradMapStruct &self) {
             return std::hash<std::uintptr_t>{}(
                 reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
             );
@@ -468,13 +319,13 @@ void init_gg_taylor_term_struct(nb::module_ &m, nb::class_<GgTaylorTermStruct> &
 
       ;
 
-  bind_1d_type_array_pair<GgTaylorTermStructArray1D, GgTaylorTermStructAlloc1D>(
+  bind_1d_type_array_pair<GenGradMapStructArray1D, GenGradMapStructAlloc1D>(
       m,
-      "GgTaylorTermStructArray1D",
-      "GgTaylorTermStructAlloc1D"
+      "GenGradMapStructArray1D",
+      "GenGradMapStructAlloc1D"
   );
-  // 2D GgTaylorTermStruct arrays are not used in structs/routines
-  // 3D GgTaylorTermStruct arrays are not used in structs/routines
+  // 2D GenGradMapStruct arrays are not used in structs/routines
+  // 3D GenGradMapStruct arrays are not used in structs/routines
 }
 
 // =============================================================================

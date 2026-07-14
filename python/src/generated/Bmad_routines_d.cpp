@@ -5,28 +5,6 @@ using namespace nanobind::literals;
 using namespace Pybmad;
 
 void init_Bmad_routines_d(nb::module_ &m) {
-  nb::class_<Bmad::DIntegral>(m, "DIntegral", "d_integral return type")
-      .def_ro("fn", &Bmad::DIntegral::fn)
-      .def_ro("df", &Bmad::DIntegral::df)
-      .def("__len__", [](const Bmad::DIntegral &) { return 2; })
-      .def("__getitem__", [](const Bmad::DIntegral &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.fn);
-        if (i == 1)
-          return nb::cast(s.df);
-        throw nb::index_error();
-      });
-  m.def(
-      "d_integral",
-      &Bmad::d_integral,
-      nb::arg("x"),
-      nb::arg("status"),
-      R"""(Wrapper function passed to super_rtsafe by photon_diffuse_scattering.
-Made a module procedure (not nested) to avoid a stack trampoline.
-)"""
-  );
   m.def(
       "damping_matrix_d",
       &Bmad::damping_matrix_d,
@@ -55,27 +33,6 @@ species : int
 Returns
 -------
 mat : 2D array of float (shape: 6,6)
-)"""
-  );
-  m.def(
-      "ddz_calc_csr",
-      &Bmad::ddz_calc_csr,
-      nb::arg("s_chord_source"),
-      nb::arg("status"),
-      R"""(Routine to calculate the distance between the source particle and the
-kicked particle at constant time minus the target distance.
-Made a module procedure (not nested) to avoid a stack trampoline. State is passed
-from s_source_calc via the csr_*_ptr / csr_dr_match module variables.
-
-Parameters
-----------
-s_chord_source : float
-    Chord distance from start of element.
-
-Returns
--------
-ddz_this : float
-    Distance between source and kick particles: Calculated - Wanted.
 )"""
   );
   m.def(
@@ -133,6 +90,20 @@ lat : LatStruct
 )"""
   );
   m.def(
+      "deallocate_tree",
+      &Bmad::deallocate_tree,
+      nb::arg("tree"),
+      R"""(Routine to deallocate tree%node(:) and everything below it
+
+Parameters
+----------
+tree : ExpressionTreeStruct
+    Root of tree to deallocate.
+    This parameter is an input/output and is modified in-place.
+    As an output, tree: Deallocated tree.
+)"""
+  );
+  m.def(
       "default_tracking_species",
       &Bmad::default_tracking_species,
       nb::arg("param"),
@@ -158,8 +129,6 @@ species : int
       nb::arg("qa") = nb::none(),
       nb::arg("total_charge") = nb::none(),
       nb::arg("resize_mesh") = nb::none(),
-      nb::arg("mesh_growth_factor") = nb::none(),
-      nb::arg("mesh_shrink_factor") = nb::none(),
       R"""(Deposits particle arrays onto mesh
 
 Parameters
@@ -181,12 +150,6 @@ total_charge : float, optional
 
 resize_mesh : bool, optional
     Set mesh bounds to fit bunch. default  : .true.
-
-mesh_growth_factor : float, optional
-    Fractional padding when growing mesh (default: 0 = tight fit).
-
-mesh_shrink_factor : float, optional
-    Fractional threshold for shrinking mesh (default: 0 = tight fit).
 
 Returns
 -------
@@ -233,8 +196,7 @@ orbit : CoordStruct
 Returns
 -------
 ix_section : int
-    integer, Set to index of the section where the particle is. Set to zero if the photon is outside all clear
-    areas.
+    integer, Set to index of clear section hit. Set to zero if photon is outside all clear areas.
 )"""
   );
   m.def(

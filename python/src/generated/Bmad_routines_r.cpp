@@ -6,11 +6,11 @@ using namespace Pybmad;
 
 PyRadiationIntegrals python_radiation_integrals(
     LatStruct &lat,
-    CoordStructArray1D orbit,
+    CoordStructArray1D orb,
     std::optional<int> ix_cache = std::nullopt,
     std::optional<int> ix_branch = std::nullopt
 ) {
-  auto _result = Bmad::radiation_integrals(lat, orbit, make_opt_ref(ix_cache), ix_branch);
+  auto _result = Bmad::radiation_integrals(lat, orb, make_opt_ref(ix_cache), ix_branch);
   auto py_result{PyRadiationIntegrals{_result, ix_cache}};
   return py_result;
 }
@@ -268,7 +268,7 @@ int_g3 : float
       "radiation_integrals",
       &python_radiation_integrals,
       nb::arg("lat"),
-      nb::arg("orbit"),
+      nb::arg("orb"),
       nb::arg("ix_cache") = nb::none(),
       nb::arg("ix_branch") = nb::none(),
       R"""(Wrapper for Fortran routine radiation_integrals
@@ -278,8 +278,7 @@ Parameters
 lat : LatStruct
     Lattice to use. The calculation assumes that the Twiss parameters have been calculated.
 
-orbit : 1D array of CoordStruct
-    Closed orbit for the branch.
+orb : 1D array of CoordStruct
 
 ix_cache : int, optional
     Cache pointer.
@@ -332,7 +331,7 @@ err_flag : bool
       "ramper_slave_setup",
       &Bmad::ramper_slave_setup,
       nb::arg("lat"),
-      nb::arg("force_setup") = nb::none(),
+      nb::arg("do_setup") = nb::none(),
       R"""(Wrapper for Fortran routine ramper_slave_setup
 
 Parameters
@@ -342,9 +341,7 @@ lat : LatStruct
     This parameter is an input/output and is modified in-place.
     As an output, lat: Lattice with ramper slaves setup.
 
-force_setup : bool, optional
-    Default False. If True, do the setup even if lat.ramper_slave_bookkeeping = ok$. But the setup will never
-    be done if lat.ramper_slave_bookkeeping = super_ok$.
+do_setup : bool, optional
 )"""
   );
   nb::class_<Bmad::RamperValue>(m, "RamperValue", "ramper_value return type")
@@ -653,28 +650,13 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  nb::class_<Bmad::ReadBinaryCartesianMap>(
-      m,
-      "ReadBinaryCartesianMap",
-      "read_binary_cartesian_map return type"
-  )
-      .def_ro("cart_map", &Bmad::ReadBinaryCartesianMap::cart_map)
-      .def_ro("err_flag", &Bmad::ReadBinaryCartesianMap::err_flag)
-      .def("__len__", [](const Bmad::ReadBinaryCartesianMap &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryCartesianMap &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.cart_map);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "read_binary_cartesian_map",
       &Bmad::read_binary_cartesian_map,
       nb::arg("file_name"),
       nb::arg("ele"),
+      nb::arg("cart_map"),
+      nb::arg("err_flag"),
       R"""(Routine to read a binary cartesian_map structure.
 
 Parameters
@@ -683,10 +665,8 @@ file_name : str
     File to create.
 
 ele : EleStruct
-    Element associated with the map.
+    Element associated with the map. Ouput:
 
-Returns
--------
 cart_map : CartesianMapStruct
     cartesian_map_struct, cartesian map.
 
@@ -694,28 +674,13 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  nb::class_<Bmad::ReadBinaryCylindricalMap>(
-      m,
-      "ReadBinaryCylindricalMap",
-      "read_binary_cylindrical_map return type"
-  )
-      .def_ro("cl_map", &Bmad::ReadBinaryCylindricalMap::cl_map)
-      .def_ro("err_flag", &Bmad::ReadBinaryCylindricalMap::err_flag)
-      .def("__len__", [](const Bmad::ReadBinaryCylindricalMap &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryCylindricalMap &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.cl_map);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "read_binary_cylindrical_map",
       &Bmad::read_binary_cylindrical_map,
       nb::arg("file_name"),
       nb::arg("ele"),
+      nb::arg("cl_map"),
+      nb::arg("err_flag"),
       R"""(Routine to read a binary cylindrical_map structure.
 
 Parameters
@@ -724,10 +689,8 @@ file_name : str
     File to create.
 
 ele : EleStruct
-    Element associated with the map.
+    Element associated with the map. Ouput:
 
-Returns
--------
 cl_map : CylindricalMapStruct
     cylindrical_map_struct, cylindrical map.
 
@@ -735,28 +698,13 @@ err_flag : bool
     Set True if there is an error. False otherwise.
 )"""
   );
-  nb::class_<Bmad::ReadBinaryGridField>(
-      m,
-      "ReadBinaryGridField",
-      "read_binary_grid_field return type"
-  )
-      .def_ro("g_field", &Bmad::ReadBinaryGridField::g_field)
-      .def_ro("err_flag", &Bmad::ReadBinaryGridField::err_flag)
-      .def("__len__", [](const Bmad::ReadBinaryGridField &) { return 2; })
-      .def("__getitem__", [](const Bmad::ReadBinaryGridField &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.g_field);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "read_binary_grid_field",
       &Bmad::read_binary_grid_field,
       nb::arg("file_name"),
       nb::arg("ele"),
+      nb::arg("g_field"),
+      nb::arg("err_flag"),
       R"""(Routine to read a binary grid_field structure.
 
 Parameters
@@ -765,10 +713,8 @@ file_name : str
     File to create.
 
 ele : EleStruct
-    Element associated with the map.
+    Element associated with the map. Ouput:
 
-Returns
--------
 g_field : GridFieldStruct
     grid_field_struct, cylindrical map.
 
@@ -782,45 +728,40 @@ err_flag : bool
       "read_digested_bmad_file return type"
   )
       .def_ro("lat", &Bmad::ReadDigestedBmadFile::lat)
-      .def_ro("inc_version", &Bmad::ReadDigestedBmadFile::inc_version)
       .def_ro("err_flag", &Bmad::ReadDigestedBmadFile::err_flag)
       .def_ro("parser_calling", &Bmad::ReadDigestedBmadFile::parser_calling)
       .def_ro("lat_files", &Bmad::ReadDigestedBmadFile::lat_files)
-      .def("__len__", [](const Bmad::ReadDigestedBmadFile &) { return 5; })
+      .def("__len__", [](const Bmad::ReadDigestedBmadFile &) { return 4; })
       .def("__getitem__", [](const Bmad::ReadDigestedBmadFile &s, int i) -> nb::object {
         if (i < 0)
-          i += 5;
+          i += 4;
         if (i == 0)
           return nb::cast(s.lat);
         if (i == 1)
-          return nb::cast(s.inc_version);
-        if (i == 2)
           return nb::cast(s.err_flag);
-        if (i == 3)
+        if (i == 2)
           return nb::cast(s.parser_calling);
-        if (i == 4)
+        if (i == 3)
           return nb::cast(s.lat_files);
         throw nb::index_error();
       });
   m.def(
       "read_digested_bmad_file",
       &Bmad::read_digested_bmad_file,
-      nb::arg("digested_file"),
+      nb::arg("in_file_name"),
+      nb::arg("version"),
       R"""(Wrapper for Fortran routine read_digested_bmad_file
 
 Parameters
 ----------
-digested_file : str
-    Name of the digested file.
+in_file_name : str
+
+version : int
 
 Returns
 -------
 lat : LatStruct
     Output lattice structure
-
-inc_version : int
-    bmad version number stored in the lattice file. If the file is current this number should be the same as
-    the global parameter bmad_inc_version$. Set to -1 if there is a read error.
 
 err_flag : bool, optional
     Set True if there is an error. False otherwise.
@@ -1195,20 +1136,6 @@ slave : EleStruct
 )"""
   );
   m.def(
-      "residual_pwd_sig_z",
-      &Bmad::residual_pwd_sig_z,
-      nb::arg("zz"),
-      nb::arg("status") = nb::none(),
-      R"""(Wrapper for Fortran routine residual_pwd_sig_z
-
-Parameters
-----------
-zz : float
-
-status : int, optional
-)"""
-  );
-  m.def(
       "reverse_lat",
       &Bmad::reverse_lat,
       nb::arg("lat_in"),
@@ -1230,6 +1157,27 @@ lat_rev : LatStruct
 )"""
   );
   m.def(
+      "rf_clock_setup",
+      &Bmad::rf_clock_setup,
+      nb::arg("branch"),
+      nb::arg("n_rf_included"),
+      nb::arg("n_rf_excluded"),
+      R"""(Wrapper for Fortran routine rf_clock_setup
+
+Parameters
+----------
+branch : BranchStruct
+
+n_rf_included : int
+
+n_rf_excluded : int
+
+Returns
+-------
+ok : bool
+)"""
+  );
+  m.def(
       "rf_coupler_kick",
       &Bmad::rf_coupler_kick,
       nb::arg("ele"),
@@ -1239,14 +1187,7 @@ lat_rev : LatStruct
       nb::arg("orbit"),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""(No longer in the codebase
-function rf_clock_setup (branch, n_rf_included, n_rf_excluded) result (ok)
-  import
-  implicit none
-  type (branch_struct), target :: branch
-  integer n_rf_included, n_rf_excluded
-  logical ok
-end function
+      R"""(Wrapper for Fortran routine rf_coupler_kick
 
 Parameters
 ----------
@@ -1314,7 +1255,7 @@ ele : EleStruct
     RF Element being tracked through.
 
 ds : float, optional
-    Distance of particle from start edge. Default is zero.
+    Distance of particle from start edge. Default is zero. Ouput:
 
 Returns
 -------

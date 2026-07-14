@@ -625,8 +625,8 @@ void init_ele_struct(nb::module_ &m, nb::class_<EleStruct> &cls) {
           "Used to define E/M fields"
       )
       .def_prop_ro(
-          "gen_gradients",
-          &EleStruct::gen_gradients,
+          "gen_grad_map",
+          &EleStruct::gen_grad_map,
           nb::keep_alive<0, 1>(),
           "Used to define E/M fields."
       )
@@ -1252,6 +1252,137 @@ void init_em_field_struct(nb::module_ &m, nb::class_<EmFieldStruct> &cls) {
 }
 
 // =============================================================================
+// em_taylor_struct
+void init_em_taylor_struct(nb::module_ &m, nb::class_<EmTaylorStruct> &cls) {
+  cls.def(nb::init<std::optional<double>>(), nb::arg("ref") = nb::none())
+      .def_prop_rw("ref", &EmTaylorStruct::ref, &EmTaylorStruct::set_ref)
+      .def_prop_ro("term", &EmTaylorStruct::term, nb::keep_alive<0, 1>())
+      .def_static(
+          "new_array1d",
+          [](int sz) { return EmTaylorStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EmTaylorStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const EmTaylorStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const EmTaylorStruct &self) {
+            return EmTaylorStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const EmTaylorStruct &self, nb::dict &memo) { return EmTaylorStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const EmTaylorStruct &self, const EmTaylorStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EmTaylorStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<EmTaylorStructArray1D, EmTaylorStructAlloc1D>(
+      m,
+      "EmTaylorStructArray1D",
+      "EmTaylorStructAlloc1D"
+  );
+  // 2D EmTaylorStruct arrays are not used in structs/routines
+  // 3D EmTaylorStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
+// em_taylor_term_struct
+void init_em_taylor_term_struct(nb::module_ &m, nb::class_<EmTaylorTermStruct> &cls) {
+  cls.def(
+         nb::init<std::optional<double>, std::optional<std::vector<int>>>(),
+         nb::arg("coef") = nb::none(),
+         nb::arg("expn") = nb::none()
+  )
+      .def_prop_rw("coef", &EmTaylorTermStruct::coef, &EmTaylorTermStruct::set_coef)
+      .def_prop_rw(
+          "expn",
+          &EmTaylorTermStruct::expn,
+          &EmTaylorTermStruct::set_expn,
+          nb::for_getter(nb::keep_alive<0, 1>())
+      )
+      .def_static(
+          "new_array1d",
+          [](int sz) { return EmTaylorTermStructAlloc1D(sz); },
+          nb::arg("sz") = 0
+      )
+      .def_static(
+          "new_array1d_bounds",
+          [](int lbound, int ubound) {
+            auto cnt = EmTaylorTermStructAlloc1D();
+            cnt.resize_bounds(lbound, ubound);
+            return cnt;
+          },
+          nb::arg("lbound"),
+          nb::arg("ubound")
+      )
+
+      .def("__repr__", [](const EmTaylorTermStruct &self) { return to_string(self); })
+
+      .def(
+          "__copy__",
+          [](const EmTaylorTermStruct &self) {
+            return EmTaylorTermStruct(self); // under-the-hood fortran copy
+          }
+      )
+      .def(
+          "__deepcopy__",
+          [](const EmTaylorTermStruct &self, nb::dict &memo) { return EmTaylorTermStruct(self); }
+      )
+      .def(
+          "__eq__",
+          [](const EmTaylorTermStruct &self, const EmTaylorTermStruct &other) {
+            return self.get_fortran_ptr() == other.get_fortran_ptr();
+          },
+          nb::is_operator()
+      )
+      .def(
+          "__hash__",
+          [](const EmTaylorTermStruct &self) {
+            return std::hash<std::uintptr_t>{}(
+                reinterpret_cast<std::uintptr_t>(self.get_fortran_ptr())
+            );
+          }
+      )
+
+      ;
+
+  bind_1d_type_array_pair<EmTaylorTermStructArray1D, EmTaylorTermStructAlloc1D>(
+      m,
+      "EmTaylorTermStructArray1D",
+      "EmTaylorTermStructAlloc1D"
+  );
+  // 2D EmTaylorTermStruct arrays are not used in structs/routines
+  // 3D EmTaylorTermStruct arrays are not used in structs/routines
+}
+
+// =============================================================================
 // expression_atom_struct
 void init_expression_atom_struct(nb::module_ &m, nb::class_<ExpressionAtomStruct> &cls) {
   cls.def(
@@ -1437,7 +1568,6 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
             std::optional<bool> sr_wakes_on_set,
             std::optional<bool> lr_wakes_on_set,
             std::optional<bool> high_energy_space_charge_on_set,
-            std::optional<bool> high_energy_space_charge_linear_set,
             std::optional<bool> csr_and_space_charge_on_set,
             std::optional<bool> spin_tracking_on_set,
             std::optional<bool> spin_sokolov_ternov_flipping_on_set,
@@ -1481,9 +1611,7 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
             std::optional<bool> exact_misalign_set,
             std::optional<bool> vertical_kick_set,
             std::optional<bool> cut_factor_set,
-            std::optional<bool> translate_patch_drift_time_set,
-            std::optional<bool> pancake_symplectic_set,
-            std::optional<bool> pancake_canonical_set) {
+            std::optional<bool> translate_patch_drift_time_set) {
            new (self) ExtraParsingInfoStruct(
                ptr_to_opt_ref(ran_state),
                ran_seed,
@@ -1511,7 +1639,6 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
                sr_wakes_on_set,
                lr_wakes_on_set,
                high_energy_space_charge_on_set,
-               high_energy_space_charge_linear_set,
                csr_and_space_charge_on_set,
                spin_tracking_on_set,
                spin_sokolov_ternov_flipping_on_set,
@@ -1555,9 +1682,7 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
                exact_misalign_set,
                vertical_kick_set,
                cut_factor_set,
-               translate_patch_drift_time_set,
-               pancake_symplectic_set,
-               pancake_canonical_set
+               translate_patch_drift_time_set
            );
          },
          nb::arg("ran_state") = nb::none(),
@@ -1586,7 +1711,6 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
          nb::arg("sr_wakes_on_set") = nb::none(),
          nb::arg("lr_wakes_on_set") = nb::none(),
          nb::arg("high_energy_space_charge_on_set") = nb::none(),
-         nb::arg("high_energy_space_charge_linear_set") = nb::none(),
          nb::arg("csr_and_space_charge_on_set") = nb::none(),
          nb::arg("spin_tracking_on_set") = nb::none(),
          nb::arg("spin_sokolov_ternov_flipping_on_set") = nb::none(),
@@ -1630,9 +1754,7 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
          nb::arg("exact_misalign_set") = nb::none(),
          nb::arg("vertical_kick_set") = nb::none(),
          nb::arg("cut_factor_set") = nb::none(),
-         nb::arg("translate_patch_drift_time_set") = nb::none(),
-         nb::arg("pancake_symplectic_set") = nb::none(),
-         nb::arg("pancake_canonical_set") = nb::none()
+         nb::arg("translate_patch_drift_time_set") = nb::none()
   )
       .def_prop_rw(
           "ran_state",
@@ -1765,11 +1887,6 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
           "high_energy_space_charge_on_set",
           &ExtraParsingInfoStruct::high_energy_space_charge_on_set,
           &ExtraParsingInfoStruct::set_high_energy_space_charge_on_set
-      )
-      .def_prop_rw(
-          "high_energy_space_charge_linear_set",
-          &ExtraParsingInfoStruct::high_energy_space_charge_linear_set,
-          &ExtraParsingInfoStruct::set_high_energy_space_charge_linear_set
       )
       .def_prop_rw(
           "csr_and_space_charge_on_set",
@@ -1994,16 +2111,6 @@ void init_extra_parsing_info_struct(nb::module_ &m, nb::class_<ExtraParsingInfoS
           "translate_patch_drift_time_set",
           &ExtraParsingInfoStruct::translate_patch_drift_time_set,
           &ExtraParsingInfoStruct::set_translate_patch_drift_time_set
-      )
-      .def_prop_rw(
-          "pancake_symplectic_set",
-          &ExtraParsingInfoStruct::pancake_symplectic_set,
-          &ExtraParsingInfoStruct::set_pancake_symplectic_set
-      )
-      .def_prop_rw(
-          "pancake_canonical_set",
-          &ExtraParsingInfoStruct::pancake_canonical_set,
-          &ExtraParsingInfoStruct::set_pancake_canonical_set
       )
 
       .def("__repr__", [](const ExtraParsingInfoStruct &self) { return to_string(self); })
