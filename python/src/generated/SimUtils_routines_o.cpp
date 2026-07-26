@@ -27,8 +27,6 @@ quat : 1D array of float (shape: 0:3)
       &SimUtils::openpmd_species_name,
       nb::arg("species"),
       R"""(Routine to return the openPMD name of a particle species given the Bmad species ID.
-Note: the pmd_name does not include the particle charge. For example, if species
-corresponds to He+ then the pmd_name will be "He".
 
 Parameters
 ----------
