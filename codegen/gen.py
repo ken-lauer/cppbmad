@@ -21,6 +21,7 @@ import pathlib
 
 from codegen.exceptions import StructureNotFoundError
 from codegen.proxy import get_proxy_classes
+from codegen.struct_parser.parser import dump_structs_to_json
 
 from .arg import Argument, CodegenStructure
 from .context import CodegenConfig, ConfigContext, UpstreamInfo, config_context
@@ -265,10 +266,15 @@ def generate(
     config_file: pathlib.Path = CODEGEN_ROOT / "default.toml",
     pybmad: bool = True,
     write: bool = True,
+    write_structs_to: pathlib.Path | str | None = None,
 ):
     ctx = load_context(config_file, pybmad)
     logger.info(f"Number of structs in input list: {len(ctx.codegen_structs)}")
     logger.info(f"Number of structs found:         {len(ctx.parsed_structs)}")
+
+    if write_structs_to:
+        logger.info(f"Writing parsed structures to: {write_structs_to}")
+        dump_structs_to_json(ctx.parsed_structs, pathlib.Path(write_structs_to))
 
     to_string_header = ctx.cpp_to_string_header
     to_string_code = ctx.cpp_to_string_code
@@ -358,6 +364,11 @@ def main():
         action="store_true",
         help="Enable debug mode",
     )
+    parser.add_argument(
+        "--write-structs-to",
+        type=pathlib.Path,
+        help="Write all parsed structs to this file",
+    )
     args = parser.parse_args()
 
     log_file_handler = logging.handlers.RotatingFileHandler("build-log.log", backupCount=5)
@@ -367,7 +378,12 @@ def main():
     logging.basicConfig(level=args.log_level, handlers=[stream_handler, log_file_handler])
     logging.getLogger("codegen").setLevel(logging.DEBUG)
 
-    return generate(config_file=args.config_file, pybmad=not args.no_pybmad, write=not args.no_write)
+    return generate(
+        config_file=args.config_file,
+        pybmad=not args.no_pybmad,
+        write=not args.no_write,
+        write_structs_to=args.write_structs_to,
+    )
 
 
 if __name__ == "__main__":

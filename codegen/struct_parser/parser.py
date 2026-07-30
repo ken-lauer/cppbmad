@@ -7,6 +7,7 @@ import json
 import logging
 import pathlib
 import re
+from collections.abc import Sequence
 from typing import Any, NamedTuple
 
 from .config import DEFAULT_CONFIG_FILE, ParserConfig, SourceConfig
@@ -976,6 +977,23 @@ def parse_all_structures(parser_config: ParserConfig) -> list[Structure]:
     return all_structs
 
 
+def dump_structs_to_json(
+    structs: Sequence[Structure], output_path: pathlib.Path, include_lines: bool = False
+):
+    def by_name(st: Structure):
+        return st.name
+
+    sorted_structs = [struct.to_json() for struct in structs]
+    for st in sorted_structs:
+        if not include_lines:
+            # Don't include line numbers in the output as it could frequently change
+            st.pop("line")
+            for member in st["members"].values():
+                member.pop("line")
+    dumped_json = json.dumps(sorted_structs, indent=2)
+    write_file_if_changed(output_path, dumped_json, description="JSON file", logger=logger)
+
+
 def parse_and_write_json(parser_config: ParserConfig, output_path: pathlib.Path):
     """
     Converts source files for all configurations and writes the resulting JSON files to the specified output path.
@@ -995,16 +1013,7 @@ def parse_and_write_json(parser_config: ParserConfig, output_path: pathlib.Path)
 
     for source_config in parser_config.sources:
         structs = parse_structures(parser_config, source_config)
-
-        sorted_structs = [struct.to_json() for struct in structs]
-        output_json_path = get_output_path(source_config.json_filename)
-        for st in sorted_structs:
-            st.pop("line")  # Don't include line numbers in the output as it could frequently change
-            for member in st["members"].values():
-                member.pop("line")
-        dumped_json = json.dumps(sorted_structs, indent=2)
-        json_filename = pathlib.Path(output_json_path).with_suffix(".json")
-        write_file_if_changed(json_filename, dumped_json, description="JSON file", logger=logger)
+        dump_structs_to_json(structs, get_output_path(source_config.json_filename).with_suffix(".json"))
 
 
 def main():
