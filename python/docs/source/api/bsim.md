@@ -15,7 +15,7 @@ Bsim application-level structs and routines (BBU, etc.).
 
 ### BbuBeamStruct
 
-Fortran struct: `bbu_beam_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L19))
+Fortran struct: `bbu_beam_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L19))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -44,7 +44,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BbuParamStruct
 
-Fortran struct: `bbu_param_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L33))
+Fortran struct: `bbu_param_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L33))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -98,7 +98,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BbuStageStruct
 
-Fortran struct: `bbu_stage_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L6))
+Fortran struct: `bbu_stage_struct` ([`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L6))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -122,7 +122,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### bbu_add_a_bunch
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L559)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L559)
 
 ::: pybmad.bsim.bbu_add_a_bunch
     options:
@@ -131,7 +131,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### bbu_hom_voltage_calc
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L657)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L657)
 
 ::: pybmad.bsim.bbu_hom_voltage_calc
     options:
@@ -140,7 +140,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### bbu_remove_head_bunch
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L630)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L630)
 
 ::: pybmad.bsim.bbu_remove_head_bunch
     options:
@@ -149,7 +149,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### bbu_setup
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L82)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L82)
 
 ::: pybmad.bsim.bbu_setup
     options:
@@ -158,7 +158,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### bbu_track_a_stage
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L453)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L453)
 
 ::: pybmad.bsim.bbu_track_a_stage
     options:
@@ -167,7 +167,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### bbu_track_all
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L213)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L213)
 
 ::: pybmad.bsim.bbu_track_all
     options:
@@ -176,7 +176,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### check_rf_freq
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L757)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L757)
 
 ::: pybmad.bsim.check_rf_freq
     options:
@@ -185,7 +185,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### count_lines_in_file
 
-Fortran source: [`bsim/code/count_lines_in_file.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/count_lines_in_file.f90#L5)
+Fortran source: [`bsim/code/count_lines_in_file.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/count_lines_in_file.f90#L5)
 
 ::: pybmad.bsim.count_lines_in_file
     options:
@@ -194,7 +194,7 @@ Fortran source: [`bsim/code/count_lines_in_file.f90`](https://github.com/bmad-si
 
 ### hom_voltage
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L819)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L819)
 
 ::: pybmad.bsim.hom_voltage
     options:
@@ -203,7 +203,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### insert_phase_trombone
 
-Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bsim_interface.f90#L18)
+Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bsim_interface.f90#L18)
 
 ::: pybmad.bsim.insert_phase_trombone
     options:
@@ -212,7 +212,7 @@ Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bma
 
 ### logical_to_python
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L831)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L831)
 
 ::: pybmad.bsim.logical_to_python
     options:
@@ -221,7 +221,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### rf_cav_names
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L732)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L732)
 
 ::: pybmad.bsim.rf_cav_names
     options:
@@ -230,7 +230,7 @@ Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad
 
 ### set_tune_3d
 
-Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bsim_interface.f90#L7)
+Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bsim_interface.f90#L7)
 
 ::: pybmad.bsim.set_tune_3d
     options:
@@ -239,7 +239,7 @@ Fortran source: [`bsim/code/bsim_interface.f90`](https://github.com/bmad-sim/bma
 
 ### write_bunch_by_bunch_info
 
-Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/f2af0173777f36c226710acc535538c0da4000f3/bsim/code/bbu_track_mod.f90#L785)
+Fortran source: [`bsim/code/bbu_track_mod.f90`](https://github.com/bmad-sim/bmad-ecosystem/blob/b41ae6ef92b61c52c3bd27486c07fec6df7dd1e9/bsim/code/bbu_track_mod.f90#L785)
 
 ::: pybmad.bsim.write_bunch_by_bunch_info
     options:
