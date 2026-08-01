@@ -3443,7 +3443,7 @@ include_damping : bool, optional
     be constructed with radiation dampling included.
 
 create_symplectic_map : bool, optional
-    If False (default), create a Taylor map. If True, create a partially inverted map which can be
+    If False, create a Taylor map. If True (default), create a partially inverted map which can be
     symplecitally tracked.
 
 orbit1 : CoordStruct, optional
@@ -3603,9 +3603,6 @@ branch : BranchStruct
     Lattice branch used in the calculation.
 
 t_map : 1D array of TaylorStruct (shape: 6)
-    Initial orbital map (used when unit_start = False)
-    This parameter is an input/output and is modified in-place.
-    As an output, t_map: Orbital transfer map.
 
 s_map : 1D array of TaylorStruct (shape: 4)
     Initial spin map (used when unit_start = False)
@@ -3626,7 +3623,8 @@ one_turn : bool, optional
     ix1 back to ix1. Default = False.
 
 unit_start : bool, optional
-    If present and False then t_map will be used as the starting map instead of the unit map. Default = True
+    If present and False then t_map_init will be used as the starting map instead of the unit map. Default =
+    True
 
 Returns
 -------
