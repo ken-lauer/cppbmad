@@ -2567,6 +2567,12 @@ PtcBranch1Struct BranchStruct::ptc() const {
 void BranchStruct::set_ptc(const PtcBranch1Struct &src) {
   branch_struct_set_ptc(fortran_ptr_, src.get_fortran_ptr());
 }
+bool BranchStruct::b_logic() const {
+  bool value;
+  branch_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void BranchStruct::set_b_logic(bool value) { branch_struct_set_logical(fortran_ptr_, 0, value); }
 CoordStruct BunchParamsStruct::centroid() const {
   void *ptr;
   bunch_params_struct_get_centroid(fortran_ptr_, &ptr);
@@ -5330,6 +5336,14 @@ double ExpressionTreeStruct::value() const {
 }
 void ExpressionTreeStruct::set_value(double value) {
   expression_tree_struct_set_real(fortran_ptr_, 0, value);
+}
+bool ExpressionTreeStruct::reverse_polish() const {
+  bool value;
+  expression_tree_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ExpressionTreeStruct::set_reverse_polish(bool value) {
+  expression_tree_struct_set_logical(fortran_ptr_, 0, value);
 }
 ExpressionTreeStructArray1D ExpressionTreeStruct::node() const {
   return ProxyHelpers::get_type_array_1d<ExpressionTreeStructArray1D>(

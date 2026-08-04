@@ -1329,10 +1329,15 @@ void init_expression_atom_struct(nb::module_ &m, nb::class_<ExpressionAtomStruct
 // expression_tree_struct
 void init_expression_tree_struct(nb::module_ &m, nb::class_<ExpressionTreeStruct> &cls) {
   cls.def(
-         nb::init<std::optional<std::string>, std::optional<int>, std::optional<double>>(),
+         nb::init<
+             std::optional<std::string>,
+             std::optional<int>,
+             std::optional<double>,
+             std::optional<bool>>(),
          nb::arg("name") = nb::none(),
          nb::arg("type") = nb::none(),
-         nb::arg("value") = nb::none()
+         nb::arg("value") = nb::none(),
+         nb::arg("reverse_polish") = nb::none()
   )
       .def_prop_rw("name", &ExpressionTreeStruct::name, &ExpressionTreeStruct::set_name)
       .def_prop_rw(
@@ -1342,6 +1347,12 @@ void init_expression_tree_struct(nb::module_ &m, nb::class_<ExpressionTreeStruct
           "plus$, minum$, sin$, cos$, etc."
       )
       .def_prop_rw("value", &ExpressionTreeStruct::value, &ExpressionTreeStruct::set_value)
+      .def_prop_rw(
+          "reverse_polish",
+          &ExpressionTreeStruct::reverse_polish,
+          &ExpressionTreeStruct::set_reverse_polish,
+          "Can the children node(:) array be in reverse Polish order?"
+      )
       .def_prop_ro(
           "node",
           &ExpressionTreeStruct::node,

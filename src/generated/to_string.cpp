@@ -461,7 +461,8 @@ std::string to_string(const BranchStruct &self) {
        std::pair{"param", to_string(self.param())},
        std::pair{"particle_start", to_string(self.particle_start())},
        std::pair{"wall3d", "[...]"},
-       std::pair{"ptc", to_string(self.ptc())}}
+       std::pair{"ptc", to_string(self.ptc())},
+       std::pair{"b_logic", to_string(self.b_logic())}}
   );
 }
 std::string to_string(const BunchParamsStruct &self) {
@@ -995,6 +996,7 @@ std::string to_string(const ExpressionTreeStruct &self) {
       {std::pair{"name", self.name()},
        std::pair{"type", to_string(self.type())},
        std::pair{"value", to_string(self.value())},
+       std::pair{"reverse_polish", to_string(self.reverse_polish())},
        std::pair{"node", "[...]"}}
   );
 }

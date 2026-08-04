@@ -10907,6 +10907,33 @@ contains
     end select
   end subroutine
 
+  ! dispatch: branch_struct%logical (1 fields)
+
+  subroutine branch_struct_get_logical(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='branch_struct_get_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(out) :: value_out
+    type(branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%b_logic
+    end select
+  end subroutine
+
+
+  subroutine branch_struct_set_logical(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='branch_struct_set_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(in), value :: value_in
+    type(branch_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%b_logic = value_in
+    end select
+  end subroutine
+
   ! branch_struct%name: 0D_NOT_character
 
   subroutine branch_struct_get_name_info(struct_obj_ptr, data_ptr, bounds, is_allocated) &
@@ -23714,6 +23741,33 @@ contains
     call c_f_pointer(struct_obj_ptr, struct_obj)
     select case(field_id)
     case(0); struct_obj%type = value_in
+    end select
+  end subroutine
+
+  ! dispatch: expression_tree_struct%logical (1 fields)
+
+  subroutine expression_tree_struct_get_logical(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='expression_tree_struct_get_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(out) :: value_out
+    type(expression_tree_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%reverse_polish
+    end select
+  end subroutine
+
+
+  subroutine expression_tree_struct_set_logical(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='expression_tree_struct_set_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(in), value :: value_in
+    type(expression_tree_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%reverse_polish = value_in
     end select
   end subroutine
 
