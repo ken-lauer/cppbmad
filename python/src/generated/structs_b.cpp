@@ -1940,7 +1940,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
             const ModeInfoStruct *z,
             const LatParamStruct *param,
             const CoordStruct *particle_start,
-            const PtcBranch1Struct *ptc) {
+            const PtcBranch1Struct *ptc,
+            std::optional<bool> b_logic) {
            new (self) BranchStruct(
                name,
                ix_branch,
@@ -1956,7 +1957,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
                ptr_to_opt_ref(z),
                ptr_to_opt_ref(param),
                ptr_to_opt_ref(particle_start),
-               ptr_to_opt_ref(ptc)
+               ptr_to_opt_ref(ptc),
+               b_logic
            );
          },
          nb::arg("name") = nb::none(),
@@ -1973,7 +1975,8 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
          nb::arg("z") = nb::none(),
          nb::arg("param") = nb::none(),
          nb::arg("particle_start") = nb::none(),
-         nb::arg("ptc") = nb::none()
+         nb::arg("ptc") = nb::none(),
+         nb::arg("b_logic") = nb::none()
   )
       .def_prop_rw(
           "name",
@@ -2060,6 +2063,12 @@ void init_branch_struct(nb::module_ &m, nb::class_<BranchStruct> &cls) {
           &BranchStruct::set_ptc,
           nb::for_getter(nb::keep_alive<0, 1>()),
           "Pointer to layout. Note: ptc info not transferred with 'branch1 = branch2' set."
+      )
+      .def_prop_rw(
+          "b_logic",
+          &BranchStruct::b_logic,
+          &BranchStruct::set_b_logic,
+          "For Bmad internal use only."
       )
       .def_static(
           "new_array1d",

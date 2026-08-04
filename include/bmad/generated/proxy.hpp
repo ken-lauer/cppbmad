@@ -855,6 +855,8 @@ void branch_pointer_struct_get_branch(const void *struct_obj, void **ptr_out);
 void branch_pointer_struct_set_branch(void *struct_obj, const void *src_ptr);
 void branch_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void branch_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void branch_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
+void branch_struct_set_logical(void *struct_obj, int field_id, bool value_in);
 void branch_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
 void branch_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
 void branch_struct_get_lat(const void *struct_obj, void **ptr_out);
@@ -1708,6 +1710,8 @@ void expression_atom_struct_get_name_info(const void *s, char **d, int *bounds, 
 void expression_atom_struct_set_name(void *struct_obj, const char *str_ptr, int str_len);
 void expression_tree_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void expression_tree_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void expression_tree_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
+void expression_tree_struct_set_logical(void *struct_obj, int field_id, bool value_in);
 void expression_tree_struct_get_real(const void *struct_obj, int field_id, double *value_out);
 void expression_tree_struct_set_real(void *struct_obj, int field_id, double value_in);
 void expression_tree_struct_get_name_info(const void *s, char **d, int *bounds, bool *a);
@@ -19845,7 +19849,8 @@ public:
       optional_ref<const ModeInfoStruct> z = std::nullopt,
       optional_ref<const LatParamStruct> param = std::nullopt,
       optional_ref<const CoordStruct> particle_start = std::nullopt,
-      optional_ref<const PtcBranch1Struct> ptc = std::nullopt
+      optional_ref<const PtcBranch1Struct> ptc = std::nullopt,
+      std::optional<bool> b_logic = std::nullopt
   )
       : FortranProxy() {
     if (name)
@@ -19878,6 +19883,8 @@ public:
       set_particle_start(particle_start->get());
     if (ptc)
       set_ptc(ptc->get());
+    if (b_logic)
+      set_b_logic(*b_logic);
   }
 
   std::string name() const; // 0D_NOT_character
@@ -19912,6 +19919,8 @@ public:
   Wall3dStructArray1D wall3d() const; // 1D_PTR_type
   PtcBranch1Struct ptc() const; // 0D_NOT_type
   void set_ptc(const PtcBranch1Struct &src);
+  bool b_logic() const; // 0D_NOT_logical [dispatch:0]
+  void set_b_logic(bool value);
 };
 
 template <>
@@ -22693,7 +22702,8 @@ public:
   explicit ExpressionTreeStruct(
       std::optional<std::string> name = std::nullopt,
       std::optional<int> type = std::nullopt,
-      std::optional<double> value = std::nullopt
+      std::optional<double> value = std::nullopt,
+      std::optional<bool> reverse_polish = std::nullopt
   )
       : FortranProxy() {
     if (name)
@@ -22702,6 +22712,8 @@ public:
       set_type(*type);
     if (value)
       set_value(*value);
+    if (reverse_polish)
+      set_reverse_polish(*reverse_polish);
   }
 
   std::string name() const; // 0D_NOT_character
@@ -22710,6 +22722,8 @@ public:
   void set_type(int value);
   double value() const; // 0D_NOT_real [dispatch:0]
   void set_value(double value);
+  bool reverse_polish() const; // 0D_NOT_logical [dispatch:0]
+  void set_reverse_polish(bool value);
   ExpressionTreeStructArray1D node() const; // 1D_PTR_type
 };
 

@@ -3638,10 +3638,13 @@ Note types used:
   arrow$, equal$, colon$, double_colon$, vertical_bar$, compound$
 
 An expression string will be split on:
-  Two character operators: "->", "::"
   operators: + -  * / ^ = : &
   brackets: [] () {}
   comma: ,
+
+Reverse polish tree will be constructed for mathematical expressions.
+Exception: Any expression with the "->" (arrow$) token is not considered mathematical.
+The reason why "::" is still considered mathematical is due to Tao syntax.
 
 Root node name is "root" and is of type root$
 Brackets in the expression string must be matched.
