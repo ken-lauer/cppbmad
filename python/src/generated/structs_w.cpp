@@ -291,7 +291,12 @@ void init_wake_sr_mode_struct(nb::module_ &m, nb::class_<WakeSrModeStruct> &cls)
          nb::arg("position_dependence") = nb::none()
   )
       .def_prop_rw("amp", &WakeSrModeStruct::amp, &WakeSrModeStruct::set_amp, "Amplitude")
-      .def_prop_rw("damp", &WakeSrModeStruct::damp, &WakeSrModeStruct::set_damp, "Dampling factor.")
+      .def_prop_rw(
+          "damp",
+          &WakeSrModeStruct::damp,
+          &WakeSrModeStruct::set_damp,
+          "Dampling factor (1/m)."
+      )
       .def_prop_rw("k", &WakeSrModeStruct::k, &WakeSrModeStruct::set_k, "k factor")
       .def_prop_rw(
           "phi",
