@@ -41,7 +41,7 @@ generator.
 
 ## Building
 
-1. Clone [Bmad](https://github.com/bmad-sim/bmad-ecosystem) (currently: my JSON branch)
+1. Clone [Bmad](https://github.com/bmad-sim/bmad-ecosystem)
 2. Set `ACC_ROOT_DIR` to that directory
 3. Run `bash regenerate.sh`
 
