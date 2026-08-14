@@ -3206,6 +3206,22 @@ void exact_bend_edge_kick(
     std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
     std::optional<bool> make_matrix = std::nullopt
 );
+extern "C" void fortran_exact_bend_edge_kick_ptc(
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
+    int &particle_at /* 0D_NOT_integer in */,
+    void *orb /* 0D_NOT_type inout */,
+    Bmad::array_descriptor_t &mat6 /* 2D_NOT_real inout */,
+    bool *make_matrix /* 0D_NOT_logical in */
+);
+void exact_bend_edge_kick_ptc(
+    EleStruct &ele,
+    LatParamStruct &param,
+    int particle_at,
+    CoordStruct &orb,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
+    std::optional<bool> make_matrix = std::nullopt
+);
 extern "C" bool fortran_exp_bessi0(
     double &t /* 0D_NOT_real in */,
     double &B1 /* 0D_NOT_real in */,
@@ -10976,15 +10992,11 @@ void write_lattice_sad_format(
     std::optional<bool> err = std::nullopt
 );
 extern "C" void fortran_write_lattice_scibmad_format(
-    const char *scibmad_file /* 0D_NOT_character out */,
+    const char *scibmad_file /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-struct WriteLatticeScibmadFormat {
-  std::string scibmad_file;
-  bool err_flag;
-};
-Bmad::WriteLatticeScibmadFormat write_lattice_scibmad_format(LatStruct &lat);
+bool write_lattice_scibmad_format(std::string scibmad_file, LatStruct &lat);
 extern "C" void fortran_write_line_element(
     const char *line /* 0D_NOT_character in */,
     int &iu /* 0D_NOT_integer in */,

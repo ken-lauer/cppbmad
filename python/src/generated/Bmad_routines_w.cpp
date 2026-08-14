@@ -1266,41 +1266,26 @@ ix_branch : int, optional
 err : bool, optional
 )"""
   );
-  nb::class_<Bmad::WriteLatticeScibmadFormat>(
-      m,
-      "WriteLatticeScibmadFormat",
-      "write_lattice_scibmad_format return type"
-  )
-      .def_ro("scibmad_file", &Bmad::WriteLatticeScibmadFormat::scibmad_file)
-      .def_ro("err_flag", &Bmad::WriteLatticeScibmadFormat::err_flag)
-      .def("__len__", [](const Bmad::WriteLatticeScibmadFormat &) { return 2; })
-      .def("__getitem__", [](const Bmad::WriteLatticeScibmadFormat &s, int i) -> nb::object {
-        if (i < 0)
-          i += 2;
-        if (i == 0)
-          return nb::cast(s.scibmad_file);
-        if (i == 1)
-          return nb::cast(s.err_flag);
-        throw nb::index_error();
-      });
   m.def(
       "write_lattice_scibmad_format",
       &Bmad::write_lattice_scibmad_format,
+      nb::arg("scibmad_file"),
       nb::arg("lat"),
       R"""(Wrapper for Fortran routine write_lattice_scibmad_format
 
 Parameters
 ----------
+scibmad_file : str
+    SciBmad lattice file name.
+
 lat : LatStruct
     Lattice
 
 Returns
 -------
-scibmad_file : str
-    SciBmad lattice file name.
-
 err_flag : bool, optional
-    Error flag
+    Set True if there is a problem. That is, if the file could not be opened or if the lattice contains
+    something that could not be translated. Set False otherwise.
 )"""
   );
   m.def(
