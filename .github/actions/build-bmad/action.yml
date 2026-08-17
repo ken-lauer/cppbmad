@@ -65,3 +65,5 @@ runs:
       run: |
         echo "ACC_ROOT_DIR=$GITHUB_WORKSPACE/bmad_src" >> "$GITHUB_ENV"
         echo "BUILD_TYPE=${{ inputs.build_type }}" >> "$GITHUB_ENV"
+        echo "ACC_CONDA_BUILD=Y" >> "$GITHUB_ENV"
+        echo "ACC_CONDA_PATH=$CONDA_PREFIX" >> "$GITHUB_ENV"

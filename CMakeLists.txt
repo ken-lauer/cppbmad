@@ -44,6 +44,32 @@ project(
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
+# Linux conda builds: point the linker at the conda lib directory.
+# Uses ACC_CONDA_BUILD / ACC_CONDA_PATH from Bmad.
+# NOTE: conda-forge "compilers 2.0" dropped the automatic -rpath-link to the
+# conda lib dir which makes this necessary.
+if("$ENV{ACC_CONDA_BUILD}" MATCHES "Y" AND NOT "${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
+  set(_conda_prefix "$ENV{ACC_CONDA_PATH}")
+  if(NOT _conda_prefix)
+    set(_conda_prefix "$ENV{CONDA_PREFIX}")
+  endif()
+  if(_conda_prefix)
+    message(STATUS
+      "Conda build (ACC_CONDA_BUILD=Y): adding link flags for ${_conda_prefix}/lib"
+    )
+    add_link_options(
+      "-L${_conda_prefix}/lib"
+      "-Wl,-rpath,${_conda_prefix}/lib"
+      "-Wl,-rpath-link,${_conda_prefix}/lib"
+    )
+  else()
+    message(WARNING
+      "ACC_CONDA_BUILD=Y but neither ACC_CONDA_PATH nor CONDA_PREFIX is set; "
+      "not adding conda link flags"
+    )
+  endif()
+endif()
+
 add_library(${LIBNAME} SHARED
   src/generated/proxy_mod.f90
   src/generated/bmad_routines.f90
