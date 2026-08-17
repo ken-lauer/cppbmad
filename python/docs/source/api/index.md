@@ -806,6 +806,7 @@
 | [`evaluate_array_index`](bmad.md#evaluate_array_index) | Routine | [Bmad](bmad.md) |
 | [`evaluate_logical`](bmad.md#evaluate_logical) | Routine | [Bmad](bmad.md) |
 | [`exact_bend_edge_kick`](bmad.md#exact_bend_edge_kick) | Routine | [Bmad](bmad.md) |
+| [`exact_bend_edge_kick_ptc`](bmad.md#exact_bend_edge_kick_ptc) | Routine | [Bmad](bmad.md) |
 | `EXACT_MISALIGN` | Enum | [Enums](enums.md) |
 | `EXACT_MODEL` | Enum | [Enums](enums.md) |
 | `EXACT_MULTIPOLES` | Enum | [Enums](enums.md) |

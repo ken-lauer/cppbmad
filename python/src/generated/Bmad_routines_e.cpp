@@ -3299,8 +3299,52 @@ this_logic : bool
       nb::arg("orb"),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""(Subroutine to track through the edge field of an sbend.
-Uses routines adapted from PTC
+      R"""(Subroutine to track through the hard edge field of an sbend.
+
+This is the Bmad-coordinate implementation: it tracks directly in Bmad phase
+space (no PTC coordinate conversion) using the bmad_wedger and
+bmad_fringe_dipoler helper routines. It reproduces the results of the
+reference routine exact_bend_edge_kick_ptc. See the Bmad manual section
+"Exact Dipole Hard Edge Fringe Map" for the formulas, and the note
+bmad/doc/notes/exact-bend-edge-bmad-coords.tex for the full derivation.
+
+Parameters
+----------
+ele : EleStruct
+    SBend element.
+
+param : LatParamStruct
+
+particle_at : int
+    first_track_edge$, or second_track_edge$.
+
+orb : CoordStruct
+    Starting coords.
+    This parameter is an input/output and is modified in-place.
+    As an output, orb: Coords after tracking.
+
+mat6 : 2D array of float (shape: 6,6), optional
+    Transfer matrix up to the edge.
+    This parameter is an input/output and is modified in-place.
+    As an output, mat6: Transfer matrix through the edge.
+
+make_matrix : bool, optional
+    Propagate the transfer matrix? Default is False.
+)"""
+  );
+  m.def(
+      "exact_bend_edge_kick_ptc",
+      &Bmad::exact_bend_edge_kick_ptc,
+      nb::arg("ele"),
+      nb::arg("param"),
+      nb::arg("particle_at"),
+      nb::arg("orb"),
+      nb::arg("mat6") = nb::none(),
+      nb::arg("make_matrix") = nb::none(),
+      R"""(Reference implementation of exact_bend_edge_kick that works in PTC phase-space
+coordinates (converts Bmad -> PTC, tracks, converts back). Kept for regression
+testing and benchmarking against the Bmad-coordinate exact_bend_edge_kick.
+Uses routines adapted from PTC.
 
 Parameters
 ----------

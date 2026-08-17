@@ -154,7 +154,8 @@ extern "C" void fortran_add_this_name_to_list(
     int &n_names /* 0D_NOT_integer in */,
     int &ix_match /* 0D_NOT_integer in */,
     bool &has_been_added /* 0D_NOT_logical in */,
-    void *named_eles /* 1D_ALLOC_type inout */
+    void *named_eles /* 1D_ALLOC_type inout */,
+    const char *name_in_list /* 0D_NOT_character in */
 );
 void add_this_name_to_list(
     EleStruct &ele,
@@ -163,7 +164,8 @@ void add_this_name_to_list(
     int n_names,
     int ix_match,
     bool has_been_added,
-    ElePointerStructAlloc1D named_eles
+    ElePointerStructAlloc1D named_eles,
+    std::optional<std::string> name_in_list = std::nullopt
 );
 extern "C" void fortran_add_this_taylor_term(
     void *ele /* 0D_NOT_type inout */,
@@ -3199,6 +3201,22 @@ extern "C" void fortran_exact_bend_edge_kick(
     bool *make_matrix /* 0D_NOT_logical in */
 );
 void exact_bend_edge_kick(
+    EleStruct &ele,
+    LatParamStruct &param,
+    int particle_at,
+    CoordStruct &orb,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6 = std::nullopt,
+    std::optional<bool> make_matrix = std::nullopt
+);
+extern "C" void fortran_exact_bend_edge_kick_ptc(
+    void *ele /* 0D_NOT_type in */,
+    void *param /* 0D_NOT_type in */,
+    int &particle_at /* 0D_NOT_integer in */,
+    void *orb /* 0D_NOT_type inout */,
+    Bmad::array_descriptor_t &mat6 /* 2D_NOT_real inout */,
+    bool *make_matrix /* 0D_NOT_logical in */
+);
+void exact_bend_edge_kick_ptc(
     EleStruct &ele,
     LatParamStruct &param,
     int particle_at,
@@ -10976,15 +10994,11 @@ void write_lattice_sad_format(
     std::optional<bool> err = std::nullopt
 );
 extern "C" void fortran_write_lattice_scibmad_format(
-    const char *scibmad_file /* 0D_NOT_character out */,
+    const char *scibmad_file /* 0D_NOT_character in */,
     void *lat /* 0D_NOT_type in */,
     bool &err_flag /* 0D_NOT_logical out */
 );
-struct WriteLatticeScibmadFormat {
-  std::string scibmad_file;
-  bool err_flag;
-};
-Bmad::WriteLatticeScibmadFormat write_lattice_scibmad_format(LatStruct &lat);
+bool write_lattice_scibmad_format(std::string scibmad_file, LatStruct &lat);
 extern "C" void fortran_write_line_element(
     const char *line /* 0D_NOT_character in */,
     int &iu /* 0D_NOT_integer in */,

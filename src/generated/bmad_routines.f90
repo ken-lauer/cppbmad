@@ -183,9 +183,9 @@ use envelope_mod, only: beam_envelope_ibs, damping_matrix_d, diffusion_matrix_b,
     envelope_radints, envelope_radints_ibs, etdiv, ibs_matrix_c, integrated_mats, make_pbrh, &
     make_v
 
-use fringe_mod, only: bend_edge_kick, exact_bend_edge_kick, hard_multipole_edge_kick, &
-    hwang_bend_edge_kick, linear_bend_edge_kick, sad_mult_hard_bend_edge_kick, &
-    sad_soft_bend_edge_kick, soft_quadrupole_edge_kick
+use fringe_mod, only: bend_edge_kick, exact_bend_edge_kick, exact_bend_edge_kick_ptc, &
+    hard_multipole_edge_kick, hwang_bend_edge_kick, linear_bend_edge_kick, &
+    sad_mult_hard_bend_edge_kick, sad_soft_bend_edge_kick, soft_quadrupole_edge_kick
 
 use ibs_mod, only: bl_via_mat, bl_via_vlassov, ibs1, ibs_blowup1turn, ibs_delta_calc, &
     ibs_equib_der, ibs_equib_rlx, ibs_lifetime, ibs_rates1turn, multi_coulomb_log, &
@@ -900,7 +900,7 @@ subroutine fortran_add_this_multipass (lat, m_slaves, lord_in) bind(c)
 
 end subroutine
 subroutine fortran_add_this_name_to_list (ele, names, an_indexx, n_names, ix_match, &
-    has_been_added, named_eles) bind(c)
+    has_been_added, named_eles, name_in_list) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_pointer_struct, ele_struct
@@ -912,6 +912,10 @@ subroutine fortran_add_this_name_to_list (ele, names, an_indexx, n_names, ix_mat
   integer :: f_ix_match
   logical(c_bool) :: has_been_added  ! 0D_NOT_logical
   logical :: f_has_been_added
+  type(c_ptr), intent(in), value :: name_in_list
+  character(len=4096), target :: f_name_in_list
+  character(kind=c_char), pointer :: f_name_in_list_ptr(:)
+  character(len=4096), pointer :: f_name_in_list_call_ptr
   ! ** Inout parameters **
   type(c_ptr), value :: ele  ! 0D_NOT_type
   type(ele_struct), pointer :: f_ele
@@ -938,8 +942,16 @@ subroutine fortran_add_this_name_to_list (ele, names, an_indexx, n_names, ix_mat
   f_has_been_added = has_been_added
   !! container type array (1D_ALLOC_type)
   if (c_associated(named_eles))   call c_f_pointer(named_eles, f_named_eles)
+  ! in: f_name_in_list 0D_NOT_character
+  if (c_associated(name_in_list)) then
+    call c_f_pointer(name_in_list, f_name_in_list_ptr, [huge(0)])
+    call to_f_str(f_name_in_list_ptr, f_name_in_list)
+    f_name_in_list_call_ptr => f_name_in_list
+  else
+    f_name_in_list_call_ptr => null()
+  endif
   call add_this_name_to_list(f_ele, f_names_local, f_an_indexx%data, f_n_names, f_ix_match, &
-      f_has_been_added, f_named_eles%data)
+      f_has_been_added, f_named_eles%data, f_name_in_list_call_ptr)
 
   !! copy allocatable character result into container
   if (c_associated(names) .and. allocated(f_names_local)) then
@@ -12937,6 +12949,61 @@ subroutine fortran_exact_bend_edge_kick (ele, param, particle_at, orb, mat6, mak
     f_make_matrix_native_ptr => null()
   endif
   call exact_bend_edge_kick(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
+      f_make_matrix_native_ptr)
+
+end subroutine
+subroutine fortran_exact_bend_edge_kick_ptc (ele, param, particle_at, orb, mat6, make_matrix) &
+    bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: coord_struct, ele_struct, lat_param_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), value :: param  ! 0D_NOT_type
+  type(lat_param_struct), pointer :: f_param
+  integer(c_int) :: particle_at  ! 0D_NOT_integer
+  integer :: f_particle_at
+  type(c_ptr), intent(in), value :: make_matrix  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_make_matrix
+  logical, target :: f_make_matrix_native
+  logical, pointer :: f_make_matrix_native_ptr
+  logical(c_bool), pointer :: f_make_matrix_ptr
+  ! ** Inout parameters **
+  type(c_ptr), value :: orb  ! 0D_NOT_type
+  type(coord_struct), pointer :: f_orb
+  type(array_descriptor_t), intent(in) :: mat6
+  real(rp) :: f_mat6(6,6)
+  real(c_double), pointer :: f_mat6_ptr(:)
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  ! in: f_param 0D_NOT_type
+  if (.not. c_associated(param)) return
+  call c_f_pointer(param, f_param)
+  ! in: f_particle_at 0D_NOT_integer
+  f_particle_at = particle_at
+  ! inout: f_orb 0D_NOT_type
+  if (.not. c_associated(orb)) return
+  call c_f_pointer(orb, f_orb)
+  !! general array (2D_NOT_real) inout
+  if (c_associated(mat6%data_ptr)) then
+    call c_f_pointer(mat6%data_ptr, f_mat6_ptr, [product(mat6%dims(1:mat6%rank))])
+    call vec2mat(f_mat6_ptr, f_mat6)
+  else
+    f_mat6_ptr => null()
+  endif
+  ! in: f_make_matrix 0D_NOT_logical
+  if (c_associated(make_matrix)) then
+    call c_f_pointer(make_matrix, f_make_matrix_ptr)
+    f_make_matrix_native = f_make_matrix_ptr
+    f_make_matrix_native_ptr => f_make_matrix_native
+  else
+    f_make_matrix_native_ptr => null()
+  endif
+  call exact_bend_edge_kick_ptc(f_ele, f_param, f_particle_at, f_orb, f_mat6, &
       f_make_matrix_native_ptr)
 
 end subroutine
@@ -42553,16 +42620,24 @@ subroutine fortran_write_lattice_scibmad_format (scibmad_file, lat, err_flag) bi
   use bmad_struct, only: lat_struct
   implicit none
   ! ** In parameters **
-  type(c_ptr), value :: lat  ! 0D_NOT_type
-  type(lat_struct), pointer :: f_lat
-  ! ** Out parameters **
   type(c_ptr), intent(in), value :: scibmad_file
   character(len=4096), target :: f_scibmad_file
   character(kind=c_char), pointer :: f_scibmad_file_ptr(:)
+  type(c_ptr), value :: lat  ! 0D_NOT_type
+  type(lat_struct), pointer :: f_lat
+  ! ** Out parameters **
   type(c_ptr), intent(in), value :: err_flag  ! 0D_NOT_logical
   logical :: f_err_flag
   logical(c_bool), pointer :: f_err_flag_ptr
   ! ** End of parameters **
+  ! in: f_scibmad_file 0D_NOT_character
+  if (.not. c_associated(scibmad_file)) then
+    call c_f_pointer(err_flag, f_err_flag_ptr)
+    f_err_flag_ptr = .true.
+    return
+  endif
+  call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [huge(0)])
+  call to_f_str(f_scibmad_file_ptr, f_scibmad_file)
   ! in: f_lat 0D_NOT_type
   if (.not. c_associated(lat)) then
     call c_f_pointer(err_flag, f_err_flag_ptr)
@@ -42578,9 +42653,6 @@ subroutine fortran_write_lattice_scibmad_format (scibmad_file, lat, err_flag) bi
   endif
   call write_lattice_scibmad_format(f_scibmad_file, f_lat, f_err_flag)
 
-  ! out: f_scibmad_file 0D_NOT_character
-  call c_f_pointer(scibmad_file, f_scibmad_file_ptr, [len_trim(f_scibmad_file) + 1])
-  call to_c_str(f_scibmad_file, f_scibmad_file_ptr)
   ! out: f_err_flag 0D_NOT_logical
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag

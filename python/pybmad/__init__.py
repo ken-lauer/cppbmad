@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260810.0"
+__version__ = "20260817.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -971,6 +971,7 @@ etdiv = bmad.etdiv
 evaluate_array_index = bmad.evaluate_array_index
 evaluate_logical = bmad.evaluate_logical
 exact_bend_edge_kick = bmad.exact_bend_edge_kick
+exact_bend_edge_kick_ptc = bmad.exact_bend_edge_kick_ptc
 exp_bessi0 = bmad.exp_bessi0
 expect_one_of = bmad.expect_one_of
 expect_this = bmad.expect_this
@@ -3908,6 +3909,7 @@ __all__ = [
     "evaluate_array_index",
     "evaluate_logical",
     "exact_bend_edge_kick",
+    "exact_bend_edge_kick_ptc",
     "exp_bessi0",
     "expect_one_of",
     "expect_this",

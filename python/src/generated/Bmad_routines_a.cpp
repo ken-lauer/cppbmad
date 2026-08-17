@@ -414,6 +414,7 @@ lord_in : EleStruct, optional
       nb::arg("ix_match"),
       nb::arg("has_been_added"),
       nb::arg("named_eles"),
+      nb::arg("name_in_list") = nb::none(),
       R"""(Wrapper for Fortran routine add_this_name_to_list
 
 Parameters
@@ -431,6 +432,8 @@ ix_match : int
 has_been_added : bool
 
 named_eles : 1D array of ElePointerStruct
+
+name_in_list : str, optional
 )"""
   );
   m.def(
