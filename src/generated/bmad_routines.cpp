@@ -312,18 +312,21 @@ void Bmad::add_this_name_to_list(
     int n_names,
     int ix_match,
     bool has_been_added,
-    ElePointerStructAlloc1D named_eles
+    ElePointerStructAlloc1D named_eles,
+    std::optional<std::string> name_in_list
 ) {
   // intent=inout character array container
   // intent=inout allocatable general array
   // intent=inout allocatable type array
+  const char *_name_in_list = name_in_list.has_value() ? name_in_list->c_str() : nullptr;
   fortran_add_this_name_to_list(/* void* */ ele.get_fortran_ptr(),
                                 /* void* */ names.get_fortran_ptr(),
                                 /* void* */ an_indexx.get_fortran_ptr(),
                                 /* int& */ n_names,
                                 /* int& */ ix_match,
                                 /* bool& */ has_been_added,
-                                /* void* */ named_eles.get_fortran_ptr());
+                                /* void* */ named_eles.get_fortran_ptr(),
+                                /* const char* */ _name_in_list);
 }
 void Bmad::add_this_taylor_term(EleStruct &ele, int i_out, double coef, FixedArray1D<Int, 6> expn) {
   // expn: inout NOT (CppWrapperGeneralArgumentArray) (['6'])
@@ -5096,6 +5099,42 @@ void Bmad::exact_bend_edge_kick(
                                /* void* */ orb.get_fortran_ptr(),
                                /* Bmad::array_descriptor_t& */ _mat6_desc,
                                /* bool* */ _make_matrix);
+  if (mat6.has_value())
+    vec_to_matrix(_mat6_vec, mat6.value());
+}
+void Bmad::exact_bend_edge_kick_ptc(
+    EleStruct &ele,
+    LatParamStruct &param,
+    int particle_at,
+    CoordStruct &orb,
+    std::optional<FixedArray2D<Real, 6, 6>> mat6,
+    std::optional<bool> make_matrix
+) {
+  // mat6: inout NOT (CppWrapperGeneralArgumentArray) (['6', '6'])
+  Bmad::array_descriptor_t _mat6_desc;
+  _mat6_desc.rank = 2;
+  double _mat6_vec[6 * 6];
+  _mat6_desc.data_ptr = _mat6_vec;
+  if (mat6.has_value()) {
+    matrix_to_vec(mat6.value(), _mat6_vec);
+    _mat6_desc.dims[0] = 6;
+    _mat6_desc.dims[1] = 6;
+  } else {
+    _mat6_desc.data_ptr = nullptr;
+  }
+  bool make_matrix_lvalue;
+  auto *_make_matrix{&make_matrix_lvalue};
+  if (make_matrix.has_value()) {
+    make_matrix_lvalue = make_matrix.value();
+  } else {
+    _make_matrix = nullptr;
+  }
+  fortran_exact_bend_edge_kick_ptc(/* void* */ ele.get_fortran_ptr(),
+                                   /* void* */ param.get_fortran_ptr(),
+                                   /* int& */ particle_at,
+                                   /* void* */ orb.get_fortran_ptr(),
+                                   /* Bmad::array_descriptor_t& */ _mat6_desc,
+                                   /* bool* */ _make_matrix);
   if (mat6.has_value())
     vec_to_matrix(_mat6_vec, mat6.value());
 }
@@ -18742,13 +18781,13 @@ void Bmad::write_lattice_sad_format(
                                    /* int* */ _ix_branch,
                                    /* bool* */ _err);
 }
-Bmad::WriteLatticeScibmadFormat Bmad::write_lattice_scibmad_format(LatStruct &lat) {
-  char _scibmad_file[4096];
+bool Bmad::write_lattice_scibmad_format(std::string scibmad_file, LatStruct &lat) {
+  auto _scibmad_file = scibmad_file.c_str();
   bool _err_flag{};
   fortran_write_lattice_scibmad_format(/* const char* */ _scibmad_file,
                                        /* void* */ lat.get_fortran_ptr(),
                                        /* bool& */ _err_flag);
-  return WriteLatticeScibmadFormat{_scibmad_file, _err_flag};
+  return _err_flag;
 }
 void Bmad::write_line_element(std::string line, int iu, EleStruct &ele, LatStruct &lat) {
   auto _line = line.c_str();

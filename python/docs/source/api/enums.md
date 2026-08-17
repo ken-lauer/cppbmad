@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `362` |  |
+| `BMAD_INC_VERSION` | `363` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
