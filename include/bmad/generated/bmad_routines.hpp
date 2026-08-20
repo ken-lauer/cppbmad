@@ -231,6 +231,11 @@ void angle_to_canonical_coords(
     CoordStruct &orbit,
     std::optional<std::string> coord_type = std::nullopt
 );
+extern "C" bool fortran_aperture_at_is_wall_transition(
+    void *ele /* 0D_NOT_type in */,
+    bool &is_wall_transition /* 0D_NOT_logical out */
+);
+bool aperture_at_is_wall_transition(EleStruct &ele);
 extern "C" void fortran_aperture_bookkeeper(void *ele /* 0D_NOT_type inout */);
 void aperture_bookkeeper(EleStruct &ele);
 extern "C" void fortran_apply_all_rampers(

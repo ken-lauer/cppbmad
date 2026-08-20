@@ -6391,20 +6391,19 @@ subroutine fortran_tao_pointer_to_var_in_lattice (var, ix_uni, ele, err) bind(c)
   type(tao_var_struct), pointer :: f_var
   integer(c_int) :: ix_uni  ! 0D_NOT_integer
   integer :: f_ix_uni
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: err  ! 0D_NOT_logical
   logical :: f_err
   logical(c_bool), pointer :: f_err_ptr
-  ! ** Inout parameters **
-  type(c_ptr), value :: ele  ! 0D_NOT_type
-  type(ele_struct), pointer :: f_ele
   ! ** End of parameters **
   ! in: f_var 0D_NOT_type
   if (.not. c_associated(var)) return
   call c_f_pointer(var, f_var)
   ! in: f_ix_uni 0D_NOT_integer
   f_ix_uni = ix_uni
-  ! inout: f_ele 0D_NOT_type
+  ! in: f_ele 0D_NOT_type
   if (.not. c_associated(ele)) return
   call c_f_pointer(ele, f_ele)
   call tao_pointer_to_var_in_lattice(f_var, f_ix_uni, f_ele, f_err)

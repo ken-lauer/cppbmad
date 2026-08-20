@@ -16,10 +16,11 @@ use photon_init_mod, only: absolute_photon_position, bend_photon_e_rel_init, &
 
 use bmad_routine_interface, only: absolute_time_tracking, ac_kicker_amp, &
     add_lattice_control_structs, allocate_branch_array, allocate_grid_field, &
-    allocate_lat_ele_array, angle_between_polars, angle_to_canonical_coords, apply_all_rampers, &
-    apply_element_edge_kick, apply_energy_kick, apply_rampers_to_slave, at_this_ele_end, &
-    attribute_bookkeeper, attribute_set_bookkeeping, autoscale_phase_and_amp, average_twiss, &
-    bbi_kick, bbi_slice_calc, beam_equal_beam, beam_init_setup, bend_exact_multipole_field, &
+    allocate_lat_ele_array, angle_between_polars, angle_to_canonical_coords, &
+    aperture_at_is_wall_transition, apply_all_rampers, apply_element_edge_kick, &
+    apply_energy_kick, apply_rampers_to_slave, at_this_ele_end, attribute_bookkeeper, &
+    attribute_set_bookkeeping, autoscale_phase_and_amp, average_twiss, bbi_kick, &
+    bbi_slice_calc, beam_equal_beam, beam_init_setup, bend_exact_multipole_field, &
     bend_length_has_been_set, bend_shift, bmad_parser, bmad_parser2, branch_equal_branch, &
     branch_name, bunch_equal_bunch, c_to_cbar, calc_next_fringe_edge, calc_super_slave_key, &
     calc_z_tune, canonical_to_angle_coords, cbar_to_c, check_aperture_limit, &
@@ -1198,6 +1199,28 @@ subroutine fortran_angle_to_canonical_coords (orbit, coord_type) bind(c)
   endif
   call angle_to_canonical_coords(f_orbit, f_coord_type_call_ptr)
 
+end subroutine
+subroutine fortran_aperture_at_is_wall_transition (ele, is_wall_transition) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: is_wall_transition  ! 0D_NOT_logical
+  logical :: f_is_wall_transition
+  logical(c_bool), pointer :: f_is_wall_transition_ptr
+  ! ** End of parameters **
+  ! in: f_ele 0D_NOT_type
+  if (.not. c_associated(ele)) return
+  call c_f_pointer(ele, f_ele)
+  f_is_wall_transition = aperture_at_is_wall_transition(f_ele)
+
+  ! out: f_is_wall_transition 0D_NOT_logical
+  call c_f_pointer(is_wall_transition, f_is_wall_transition_ptr)
+  f_is_wall_transition_ptr = f_is_wall_transition
 end subroutine
 subroutine fortran_aperture_bookkeeper (ele) bind(c)
 

@@ -563,6 +563,23 @@ coord_type : str, optional
 )"""
   );
   m.def(
+      "aperture_at_is_wall_transition",
+      &Bmad::aperture_at_is_wall_transition,
+      nb::arg("ele"),
+      R"""(Wrapper for Fortran routine aperture_at_is_wall_transition
+
+Parameters
+----------
+ele : EleStruct
+    Element under consideration.
+
+Returns
+-------
+is_wall_transition : bool
+    True if the element, or a super_lord of the element, has aperture_at = wall_transition$.
+)"""
+  );
+  m.def(
       "aperture_bookkeeper",
       &Bmad::aperture_bookkeeper,
       nb::arg("ele"),
