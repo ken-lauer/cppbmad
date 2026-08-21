@@ -416,6 +416,12 @@ void Bmad::angle_to_canonical_coords(CoordStruct &orbit, std::optional<std::stri
   fortran_angle_to_canonical_coords(/* void* */ orbit.get_fortran_ptr(),
                                     /* const char* */ _coord_type);
 }
+bool Bmad::aperture_at_is_wall_transition(EleStruct &ele) {
+  bool _is_wall_transition{};
+  fortran_aperture_at_is_wall_transition(/* void* */ ele.get_fortran_ptr(),
+                                         /* bool& */ _is_wall_transition);
+  return _is_wall_transition;
+}
 void Bmad::aperture_bookkeeper(EleStruct &ele) {
   fortran_aperture_bookkeeper(/* void* */ ele.get_fortran_ptr());
 }
