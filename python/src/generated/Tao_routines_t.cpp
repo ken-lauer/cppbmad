@@ -5131,6 +5131,9 @@ var : TaoVarStruct
 ix_uni : int
     the universe to use
 
+ele : EleStruct
+    Element containing slave parameter.
+
 Returns
 -------
 err : bool

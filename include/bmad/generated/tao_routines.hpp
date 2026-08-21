@@ -1756,7 +1756,7 @@ tao_pointer_to_universes(std::string name_in, std::optional<int> dflt_uni = std:
 extern "C" void fortran_tao_pointer_to_var_in_lattice(
     void *var /* 0D_NOT_type in */,
     int &ix_uni /* 0D_NOT_integer in */,
-    void *ele /* 0D_NOT_type inout */,
+    void *ele /* 0D_NOT_type in */,
     bool &err /* 0D_NOT_logical out */
 );
 bool tao_pointer_to_var_in_lattice(TaoVarStruct &var, int ix_uni, EleStruct &ele);

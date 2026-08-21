@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260817.0"
+__version__ = "20260821.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -609,6 +609,7 @@ angle_between_polars = bmad.angle_between_polars
 angle_to_canonical_coords = bmad.angle_to_canonical_coords
 anomalous_moment_of = simutils.anomalous_moment_of
 antiparticle = simutils.antiparticle
+aperture_at_is_wall_transition = bmad.aperture_at_is_wall_transition
 aperture_bookkeeper = bmad.aperture_bookkeeper
 apfft = simutils.apfft
 apfft_corr = simutils.apfft_corr
@@ -3547,6 +3548,7 @@ __all__ = [
     "angle_to_canonical_coords",
     "anomalous_moment_of",
     "antiparticle",
+    "aperture_at_is_wall_transition",
     "aperture_bookkeeper",
     "apfft",
     "apfft_corr",

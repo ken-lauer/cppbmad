@@ -85,6 +85,7 @@
 | `ANTIPROTON` | Enum | [Enums](enums.md) |
 | `APERTURE` | Enum | [Enums](enums.md) |
 | `APERTURE_AT` | Enum | [Enums](enums.md) |
+| [`aperture_at_is_wall_transition`](bmad.md#aperture_at_is_wall_transition) | Routine | [Bmad](bmad.md) |
 | [`aperture_bookkeeper`](bmad.md#aperture_bookkeeper) | Routine | [Bmad](bmad.md) |
 | `APERTURE_TYPE` | Enum | [Enums](enums.md) |
 | [ApertureParamStruct](bmad.md#apertureparamstruct) | Struct | [Bmad](bmad.md) |
