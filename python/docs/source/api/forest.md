@@ -15,7 +15,7 @@ PTC (Polymorphic Tracking Code) and Forest library.
 
 ### Fibre
 
-Fortran struct: `fibre` ([`forest/include/a_def_element_fibre_layout.inc`](https://github.com/bmad-sim/bmad-ecosystem/blob/b7669dd92e2d2a251820c94c91af5cf184cdc871/forest/include/a_def_element_fibre_layout.inc#L387))
+Fortran struct: `fibre` ([`forest/include/a_def_element_fibre_layout.inc`](https://github.com/bmad-sim/bmad-ecosystem/blob/99cbe2f70be9e79827eb57c9f9e6ee1ba21b9080/forest/include/a_def_element_fibre_layout.inc#L387))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -42,7 +42,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### Layout
 
-Fortran struct: `layout` ([`forest/include/a_def_element_fibre_layout.inc`](https://github.com/bmad-sim/bmad-ecosystem/blob/b7669dd92e2d2a251820c94c91af5cf184cdc871/forest/include/a_def_element_fibre_layout.inc#L416))
+Fortran struct: `layout` ([`forest/include/a_def_element_fibre_layout.inc`](https://github.com/bmad-sim/bmad-ecosystem/blob/99cbe2f70be9e79827eb57c9f9e6ee1ba21b9080/forest/include/a_def_element_fibre_layout.inc#L416))
 
 All attributes may be passed to the initializer as arguments:
 
