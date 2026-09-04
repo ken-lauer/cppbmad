@@ -506,6 +506,7 @@
 | [`deallocate_ele_pointers`](bmad.md#deallocate_ele_pointers) | Routine | [Bmad](bmad.md) |
 | [`deallocate_expression_tree`](bmad.md#deallocate_expression_tree) | Routine | [Bmad](bmad.md) |
 | [`deallocate_lat_pointers`](bmad.md#deallocate_lat_pointers) | Routine | [Bmad](bmad.md) |
+| [`deallocate_node_components`](tao.md#deallocate_node_components) | Routine | [Tao](tao.md) |
 | `DEF_BMAD_COM` | Enum | [Enums](enums.md) |
 | `DEF_LINE` | Enum | [Enums](enums.md) |
 | `DEF_MAD_BEAM` | Enum | [Enums](enums.md) |

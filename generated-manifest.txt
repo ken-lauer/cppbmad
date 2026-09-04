@@ -70,6 +70,7 @@ python/include/pybmad/generated/SimUtils_routines_v.hpp
 python/include/pybmad/generated/SimUtils_routines_w.hpp
 python/include/pybmad/generated/SimUtils_routines_x.hpp
 python/include/pybmad/generated/SimUtils_routines_z.hpp
+python/include/pybmad/generated/Tao_routines_d.hpp
 python/include/pybmad/generated/Tao_routines_i.hpp
 python/include/pybmad/generated/Tao_routines_t.hpp
 python/include/pybmad/generated/bsim_routines_b.hpp
@@ -164,6 +165,7 @@ python/src/generated/SimUtils_routines_v.cpp
 python/src/generated/SimUtils_routines_w.cpp
 python/src/generated/SimUtils_routines_x.cpp
 python/src/generated/SimUtils_routines_z.cpp
+python/src/generated/Tao_routines_d.cpp
 python/src/generated/Tao_routines_i.cpp
 python/src/generated/Tao_routines_t.cpp
 python/src/generated/_pybmad.cpp

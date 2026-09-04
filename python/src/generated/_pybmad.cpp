@@ -1329,6 +1329,7 @@ NB_MODULE(_pybmad, m) {
   init_SimUtils_routines_w(m_simutils);
   init_SimUtils_routines_x(m_simutils);
   init_SimUtils_routines_z(m_simutils);
+  init_Tao_routines_d(m_tao);
   init_Tao_routines_i(m_tao);
   init_Tao_routines_t(m_tao);
   init_bsim_routines_b(m_bsim);

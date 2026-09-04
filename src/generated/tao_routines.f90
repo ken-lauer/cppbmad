@@ -7,6 +7,9 @@ use precision_def ! , only: global_com, rp
 
 use bmad_struct_proxy_mod
 
+use tao_expression_tree_mod, only: deallocate_node_components, tao_deallocate_tree, &
+    tao_expression_tree_to_string, tao_re_associate_node_array, tao_type_expression_tree
+
 use tao_data_and_eval_mod, only: integrate_max, integrate_min, tao_datum_integrate, &
     tao_datum_s_position, tao_do_wire_scan, tao_ele_geometry_with_misalignments, &
     tao_eval_floor_orbit, tao_evaluate_datum_at_s, tao_evaluate_lat_or_beam_data, &
@@ -79,9 +82,6 @@ use tao_plot_window_mod, only: tao_create_plot_window, tao_destroy_plot_window
 use tao_struct, only: tao_deallocate_plot_cache, &
     tao_lattice_branches_equal_tao_lattice_branches, tao_lattice_equal_tao_lattice
 
-use tao_expression_tree_mod, only: tao_deallocate_tree, tao_expression_tree_to_string, &
-    tao_re_associate_node_array, tao_type_expression_tree
-
 use tao_dmerit_mod, only: tao_dmerit_calc, tao_dmodel_dvar_calc, tao_veto_vars_with_zero_dmodel
 
 use tao_plot_mod, only: tao_draw_beam_chamber_wall, tao_draw_curve_data, &
@@ -136,6 +136,21 @@ elemental function assc(ptr) result(associated)
   associated = c_associated(ptr)
 end function assc
 
+subroutine fortran_deallocate_node_components (node) bind(c)
+
+  use array_desc_mod
+  use tao_struct, only: tao_eval_node_struct
+  implicit none
+  ! ** Inout parameters **
+  type(c_ptr), value :: node  ! 0D_NOT_type
+  type(tao_eval_node_struct), pointer :: f_node
+  ! ** End of parameters **
+  ! inout: f_node 0D_NOT_type
+  if (.not. c_associated(node)) return
+  call c_f_pointer(node, f_node)
+  call deallocate_node_components(f_node)
+
+end subroutine
 subroutine fortran_integrate_max (ix_start, ix_ele, datum_value, ix_m, branch, vec, datum) &
     bind(c)
 

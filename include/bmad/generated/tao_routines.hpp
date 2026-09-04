@@ -19,6 +19,8 @@ namespace Tao {
 // - Array bounds handling: "Enum 'M' found in bounds 'm' but not in provided map."
 // - Array bounds handling: "Enum 'M' found in bounds 'm' but not in provided map."
 // - Translated arg count mismatch (unsupported?)
+extern "C" void fortran_deallocate_node_components(void *node /* 0D_NOT_type inout */);
+void deallocate_node_components(TaoEvalNodeStruct &node);
 extern "C" void fortran_integrate_max(
     int &ix_start /* 0D_NOT_integer in */,
     int &ix_ele /* 0D_NOT_integer in */,
