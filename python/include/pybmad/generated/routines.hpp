@@ -49,6 +49,7 @@
 #include "pybmad/generated/SimUtils_routines_w.hpp"
 #include "pybmad/generated/SimUtils_routines_x.hpp"
 #include "pybmad/generated/SimUtils_routines_z.hpp"
+#include "pybmad/generated/Tao_routines_d.hpp"
 #include "pybmad/generated/Tao_routines_i.hpp"
 #include "pybmad/generated/Tao_routines_t.hpp"
 #include "pybmad/generated/bsim_routines_b.hpp"

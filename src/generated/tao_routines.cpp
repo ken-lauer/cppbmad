@@ -14,6 +14,9 @@
 using namespace Bmad;
 
 using json = nlohmann::json;
+void Tao::deallocate_node_components(TaoEvalNodeStruct &node) {
+  fortran_deallocate_node_components(/* void* */ node.get_fortran_ptr());
+}
 void Tao::integrate_max(
     int ix_start,
     int ix_ele,
