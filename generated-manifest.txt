@@ -20,6 +20,7 @@ python/docs/source/api/index.md
 python/docs/source/api/sim_utils.md
 python/docs/source/api/tao.md
 python/docs/source/coverage.html
+python/docs/upstream.json
 python/include/pybmad/generated/Bmad_routines_a.hpp
 python/include/pybmad/generated/Bmad_routines_b.hpp
 python/include/pybmad/generated/Bmad_routines_c.hpp

@@ -4,6 +4,7 @@ Generate per-project API documentation pages for mkdocs.
 
 from __future__ import annotations
 
+import json
 import logging
 import pathlib
 
@@ -17,16 +18,16 @@ from .util import struct_to_proxy_class_name
 
 logger = logging.getLogger(__name__)
 
-DOCS_SOURCE = pathlib.Path(__file__).resolve().parent.parent / "python" / "docs" / "source"
+DOCS_ROOT = pathlib.Path(__file__).resolve().parent.parent / "python" / "docs"
+DOCS_SOURCE = DOCS_ROOT / "source"
+
+# Resolved to ``<upstream_source_url>/blob/<commit>`` at mkdocs build time by
+# ``python/docs/hooks/upstream_source.py``, so the commit hash lives in one
+# place (``upstream.json``) instead of in every link.
+UPSTREAM_SOURCE_PLACEHOLDER = "{{ upstream_source }}"
 
 
-def _source_link(
-    filepath: pathlib.Path,
-    lineno: int,
-    source_dir: pathlib.Path,
-    upstream: UpstreamInfo,
-    upstream_url: str,
-) -> str:
+def _source_link(filepath: pathlib.Path, lineno: int, source_dir: pathlib.Path) -> str:
     """Markdown link to the source file on GitHub."""
     expanded = paths.normalize(filepath)
     try:
@@ -34,11 +35,17 @@ def _source_link(
     except ValueError:
         return f"`{filepath.name}:{lineno}`"
 
-    if not upstream.commit_hash or not upstream_url:
-        return f"`{rel}:{lineno}`"
+    return f"[`{rel}`]({UPSTREAM_SOURCE_PLACEHOLDER}/{rel}#L{lineno})"
 
-    url = f"{upstream_url.rstrip('/')}/blob/{upstream.commit_hash}/{rel}#L{lineno}"
-    return f"[`{rel}`]({url})"
+
+def _upstream_json(upstream: UpstreamInfo, upstream_url: str) -> str:
+    """Contents of ``python/docs/upstream.json`` read by the mkdocs hook."""
+    info = {
+        "url": upstream_url.rstrip("/"),
+        "commit": upstream.commit_hash,
+        "tag": upstream.tag,
+    }
+    return json.dumps(info, indent=2) + "\n"
 
 
 def _python_type_for_arg(arg: Argument, struct_links: dict[str, str] | None = None) -> str:
@@ -56,12 +63,10 @@ def _generate_struct_section(
     struct: CodegenStructure,
     struct_links: dict[str, str],
     source_dir: pathlib.Path,
-    upstream: UpstreamInfo,
-    upstream_url: str,
 ) -> list[str]:
     """Generate markdown for a single struct with an attribute table."""
     assert struct.parsed is not None
-    src = _source_link(struct.parsed.filename, struct.parsed.line, source_dir, upstream, upstream_url)
+    src = _source_link(struct.parsed.filename, struct.parsed.line, source_dir)
     lines = [
         # Register identifier for autorefs cross-references
         f"::: pybmad.{struct.python_class_name}",
@@ -101,8 +106,6 @@ def _generate_project_page(
     project_info: dict[str, ProjectSettings],
     struct_links: dict[str, str],
     source_dir: pathlib.Path,
-    upstream: UpstreamInfo,
-    upstream_url: str,
     namespace_to_submodule: dict[str, str],
     namespace_top_level: dict[str, bool],
 ) -> str:
@@ -121,7 +124,7 @@ def _generate_project_page(
         lines.append("## Classes (Fortran Structures)")
         lines.append("")
         for struct in sorted(structs, key=lambda s: s.python_class_name):
-            lines.extend(_generate_struct_section(struct, struct_links, source_dir, upstream, upstream_url))
+            lines.extend(_generate_struct_section(struct, struct_links, source_dir))
 
     if routines:
         lines.append("## Procedures")
@@ -138,8 +141,7 @@ def _generate_project_page(
             qualified = f"pybmad.{submodule}.{name}" if submodule else f"pybmad.{name}"
             top_level = namespace_top_level.get(namespace, True)
             src_links = [
-                _source_link(r.start_line.filename, r.start_line.lineno, source_dir, upstream, upstream_url)
-                for r in variants
+                _source_link(r.start_line.filename, r.start_line.lineno, source_dir) for r in variants
             ]
             lines.append(f"### {name}")
             lines.append("")
@@ -322,8 +324,6 @@ def generate_docs(
             project_info,
             struct_links,
             source_dir,
-            upstream,
-            upstream_url,
             namespace_to_submodule,
             namespace_top_level,
         )
@@ -337,4 +337,5 @@ def generate_docs(
 
     files[api_dir / "index.md"] = _generate_index_page(project_structs, project_routines, enums, project_info)
     files[api_dir / "enums.md"] = _generate_enums_page(enums)
+    files[DOCS_ROOT / "upstream.json"] = _upstream_json(upstream, upstream_url)
     return files

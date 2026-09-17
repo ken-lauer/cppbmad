@@ -54,6 +54,9 @@ extra:
 extra_css:
   - stylesheets/extra.css
 
+hooks:
+  - hooks/upstream_source.py
+
 plugins:
   - search
   - autorefs
