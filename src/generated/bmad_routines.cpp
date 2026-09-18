@@ -889,12 +889,12 @@ TwissStruct Bmad::average_twiss(double frac1, TwissStruct &twiss1, TwissStruct &
                         /* void* */ _ave_twiss.get_fortran_ptr());
   return std::move(_ave_twiss);
 }
-IbsStruct Bmad::bane1(EleStruct &ele, double coulomb_log, double n_part) {
+IbsStruct Bmad::bane1(EleStruct &ele, double coulomb_log, double lambda) {
   IbsStruct _rates;
   fortran_bane1(/* void* */ ele.get_fortran_ptr(),
                 /* double& */ coulomb_log,
                 /* void* */ _rates.get_fortran_ptr(),
-                /* double& */ n_part);
+                /* double& */ lambda);
   return std::move(_rates);
 }
 Bmad::BbiKick
@@ -1289,12 +1289,12 @@ double Bmad::bend_vert_angle_integ_prob(double vert_angle, double E_rel, double 
                                      /* double& */ _integ_prob);
   return _integ_prob;
 }
-IbsStruct Bmad::bjmt1(EleStruct &ele, double coulomb_log, double n_part) {
+IbsStruct Bmad::bjmt1(EleStruct &ele, double coulomb_log, double lambda) {
   IbsStruct _rates;
   fortran_bjmt1(/* void* */ ele.get_fortran_ptr(),
                 /* double& */ coulomb_log,
                 /* void* */ _rates.get_fortran_ptr(),
-                /* double& */ n_part);
+                /* double& */ lambda);
   return std::move(_rates);
 }
 void Bmad::bl_via_mat(
@@ -1963,12 +1963,12 @@ bool Bmad::chrom_tune(
                      /* bool& */ _err_flag);
   return _err_flag;
 }
-IbsStruct Bmad::cimp1(EleStruct &ele, double coulomb_log, double n_part) {
+IbsStruct Bmad::cimp1(EleStruct &ele, double coulomb_log, double lambda) {
   IbsStruct _rates;
   fortran_cimp1(/* void* */ ele.get_fortran_ptr(),
                 /* double& */ coulomb_log,
                 /* void* */ _rates.get_fortran_ptr(),
-                /* double& */ n_part);
+                /* double& */ lambda);
   return std::move(_rates);
 }
 double Bmad::classical_radius(int species) {
@@ -8507,32 +8507,32 @@ double Bmad::momentum_compaction(BranchStruct &branch) {
   fortran_momentum_compaction(/* void* */ branch.get_fortran_ptr(), /* double& */ _mom_comp);
   return _mom_comp;
 }
-IbsStruct Bmad::mpxx1(EleStruct &ele, double coulomb_log, double n_part) {
+IbsStruct Bmad::mpxx1(EleStruct &ele, double coulomb_log, double lambda) {
   IbsStruct _rates;
   fortran_mpxx1(/* void* */ ele.get_fortran_ptr(),
                 /* double& */ coulomb_log,
                 /* void* */ _rates.get_fortran_ptr(),
-                /* double& */ n_part);
+                /* double& */ lambda);
   return std::move(_rates);
 }
-IbsStruct Bmad::mpzt1(EleStruct &ele, double coulomb_log, double n_part) {
+IbsStruct Bmad::mpzt1(EleStruct &ele, double coulomb_log, double lambda) {
   IbsStruct _rates;
   fortran_mpzt1(/* void* */ ele.get_fortran_ptr(),
                 /* double& */ coulomb_log,
                 /* void* */ _rates.get_fortran_ptr(),
-                /* double& */ n_part);
+                /* double& */ lambda);
   return std::move(_rates);
 }
 void Bmad::multi_coulomb_log(
     IbsSimParamStruct &ibs_sim_params,
     EleStruct &ele,
     double coulomb_log,
-    double n_part
+    double lambda
 ) {
   fortran_multi_coulomb_log(/* void* */ ibs_sim_params.get_fortran_ptr(),
                             /* void* */ ele.get_fortran_ptr(),
                             /* double& */ coulomb_log,
-                            /* double& */ n_part);
+                            /* double& */ lambda);
 }
 Bmad::MultiTurnTrackingAnalysis
 Bmad::multi_turn_tracking_analysis(CoordStructArray1D track, int i_dim) {

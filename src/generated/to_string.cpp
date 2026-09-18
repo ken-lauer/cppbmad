@@ -1347,7 +1347,8 @@ std::string to_string(const IbsSimParamStruct &self) {
        std::pair{"etap_set", to_string(self.etap_set())},
        std::pair{"do_pwd", to_string(self.do_pwd())},
        std::pair{"inductance", to_string(self.inductance())},
-       std::pair{"formula", self.formula()}}
+       std::pair{"formula", self.formula()},
+       std::pair{"bunched", to_string(self.bunched())}}
   );
 }
 std::string to_string(const IbsStruct &self) {
@@ -1356,7 +1357,7 @@ std::string to_string(const IbsStruct &self) {
       "IbsStruct",
       {std::pair{"inv_Ta", to_string(self.inv_Ta())},
        std::pair{"inv_Tb", to_string(self.inv_Tb())},
-       std::pair{"inv_Tz", to_string(self.inv_Tz())}}
+       std::pair{"inv_Tp", to_string(self.inv_Tp())}}
   );
 }
 std::string to_string(const Interval1CoefStruct &self) {

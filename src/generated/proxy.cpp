@@ -6867,6 +6867,14 @@ std::string IbsSimParamStruct::formula() const {
 void IbsSimParamStruct::set_formula(const std::string &value) {
   ibs_sim_param_struct_set_formula(fortran_ptr_, value.c_str(), static_cast<int>(value.length()));
 }
+bool IbsSimParamStruct::bunched() const {
+  bool value;
+  ibs_sim_param_struct_get_logical(fortran_ptr_, 2, &value);
+  return value;
+}
+void IbsSimParamStruct::set_bunched(bool value) {
+  ibs_sim_param_struct_set_logical(fortran_ptr_, 2, value);
+}
 double IbsStruct::inv_Ta() const {
   double value;
   ibs_struct_get_real(fortran_ptr_, 0, &value);
@@ -6879,12 +6887,12 @@ double IbsStruct::inv_Tb() const {
   return value;
 }
 void IbsStruct::set_inv_Tb(double value) { ibs_struct_set_real(fortran_ptr_, 1, value); }
-double IbsStruct::inv_Tz() const {
+double IbsStruct::inv_Tp() const {
   double value;
   ibs_struct_get_real(fortran_ptr_, 2, &value);
   return value;
 }
-void IbsStruct::set_inv_Tz(double value) { ibs_struct_set_real(fortran_ptr_, 2, value); }
+void IbsStruct::set_inv_Tp(double value) { ibs_struct_set_real(fortran_ptr_, 2, value); }
 double Interval1CoefStruct::c0() const {
   double value;
   interval1_coef_struct_get_real(fortran_ptr_, 0, &value);

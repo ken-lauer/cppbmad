@@ -2306,7 +2306,7 @@ subroutine fortran_average_twiss (frac1, twiss1, twiss2, ave_twiss) bind(c)
   ! out: f_ave_twiss 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_bane1 (ele, coulomb_log, rates, n_part) bind(c)
+subroutine fortran_bane1 (ele, coulomb_log, rates, lambda) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -2315,8 +2315,8 @@ subroutine fortran_bane1 (ele, coulomb_log, rates, n_part) bind(c)
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Out parameters **
   type(c_ptr), value :: rates  ! 0D_NOT_type
   type(ibs_struct), pointer :: f_rates
@@ -2332,9 +2332,9 @@ subroutine fortran_bane1 (ele, coulomb_log, rates, n_part) bind(c)
   ! out: f_rates 0D_NOT_type
   if (.not. c_associated(rates)) return
   call c_f_pointer(rates, f_rates)
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call bane1(f_ele, f_coulomb_log, f_rates, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call bane1(f_ele, f_coulomb_log, f_rates, f_lambda)
 
   ! out: f_rates 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -3137,7 +3137,7 @@ subroutine fortran_bend_vert_angle_integ_prob (vert_angle, E_rel, gamma, integ_p
   call c_f_pointer(integ_prob, f_integ_prob_ptr)
   f_integ_prob_ptr = f_integ_prob
 end subroutine
-subroutine fortran_bjmt1 (ele, coulomb_log, rates, n_part) bind(c)
+subroutine fortran_bjmt1 (ele, coulomb_log, rates, lambda) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -3146,8 +3146,8 @@ subroutine fortran_bjmt1 (ele, coulomb_log, rates, n_part) bind(c)
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Out parameters **
   type(c_ptr), value :: rates  ! 0D_NOT_type
   type(ibs_struct), pointer :: f_rates
@@ -3163,9 +3163,9 @@ subroutine fortran_bjmt1 (ele, coulomb_log, rates, n_part) bind(c)
   ! out: f_rates 0D_NOT_type
   if (.not. c_associated(rates)) return
   call c_f_pointer(rates, f_rates)
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call bjmt1(f_ele, f_coulomb_log, f_rates, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call bjmt1(f_ele, f_coulomb_log, f_rates, f_lambda)
 
   ! out: f_rates 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -4728,7 +4728,7 @@ subroutine fortran_chrom_tune (lat, delta_e, target_x, target_y, err_tol, err_fl
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
-subroutine fortran_cimp1 (ele, coulomb_log, rates, n_part) bind(c)
+subroutine fortran_cimp1 (ele, coulomb_log, rates, lambda) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -4737,8 +4737,8 @@ subroutine fortran_cimp1 (ele, coulomb_log, rates, n_part) bind(c)
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Out parameters **
   type(c_ptr), value :: rates  ! 0D_NOT_type
   type(ibs_struct), pointer :: f_rates
@@ -4754,9 +4754,9 @@ subroutine fortran_cimp1 (ele, coulomb_log, rates, n_part) bind(c)
   ! out: f_rates 0D_NOT_type
   if (.not. c_associated(rates)) return
   call c_f_pointer(rates, f_rates)
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call cimp1(f_ele, f_coulomb_log, f_rates, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call cimp1(f_ele, f_coulomb_log, f_rates, f_lambda)
 
   ! out: f_rates 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -20690,7 +20690,7 @@ subroutine fortran_momentum_compaction (branch, mom_comp) bind(c)
   call c_f_pointer(mom_comp, f_mom_comp_ptr)
   f_mom_comp_ptr = f_mom_comp
 end subroutine
-subroutine fortran_mpxx1 (ele, coulomb_log, rates, n_part) bind(c)
+subroutine fortran_mpxx1 (ele, coulomb_log, rates, lambda) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -20699,8 +20699,8 @@ subroutine fortran_mpxx1 (ele, coulomb_log, rates, n_part) bind(c)
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Out parameters **
   type(c_ptr), value :: rates  ! 0D_NOT_type
   type(ibs_struct), pointer :: f_rates
@@ -20716,14 +20716,14 @@ subroutine fortran_mpxx1 (ele, coulomb_log, rates, n_part) bind(c)
   ! out: f_rates 0D_NOT_type
   if (.not. c_associated(rates)) return
   call c_f_pointer(rates, f_rates)
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call mpxx1(f_ele, f_coulomb_log, f_rates, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call mpxx1(f_ele, f_coulomb_log, f_rates, f_lambda)
 
   ! out: f_rates 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_mpzt1 (ele, coulomb_log, rates, n_part) bind(c)
+subroutine fortran_mpzt1 (ele, coulomb_log, rates, lambda) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -20732,8 +20732,8 @@ subroutine fortran_mpzt1 (ele, coulomb_log, rates, n_part) bind(c)
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Out parameters **
   type(c_ptr), value :: rates  ! 0D_NOT_type
   type(ibs_struct), pointer :: f_rates
@@ -20749,14 +20749,14 @@ subroutine fortran_mpzt1 (ele, coulomb_log, rates, n_part) bind(c)
   ! out: f_rates 0D_NOT_type
   if (.not. c_associated(rates)) return
   call c_f_pointer(rates, f_rates)
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call mpzt1(f_ele, f_coulomb_log, f_rates, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call mpzt1(f_ele, f_coulomb_log, f_rates, f_lambda)
 
   ! out: f_rates 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
 end subroutine
-subroutine fortran_multi_coulomb_log (ibs_sim_params, ele, coulomb_log, n_part) bind(c)
+subroutine fortran_multi_coulomb_log (ibs_sim_params, ele, coulomb_log, lambda) bind(c)
 
   use array_desc_mod
   use ibs_mod, only: ibs_sim_param_struct
@@ -20765,8 +20765,8 @@ subroutine fortran_multi_coulomb_log (ibs_sim_params, ele, coulomb_log, n_part) 
   ! ** In parameters **
   real(c_double) :: coulomb_log  ! 0D_NOT_real
   real(rp) :: f_coulomb_log
-  real(c_double) :: n_part  ! 0D_NOT_real
-  real(rp) :: f_n_part
+  real(c_double) :: lambda  ! 0D_NOT_real
+  real(rp) :: f_lambda
   ! ** Inout parameters **
   type(c_ptr), value :: ibs_sim_params  ! 0D_NOT_type
   type(ibs_sim_param_struct), pointer :: f_ibs_sim_params
@@ -20781,9 +20781,9 @@ subroutine fortran_multi_coulomb_log (ibs_sim_params, ele, coulomb_log, n_part) 
   call c_f_pointer(ele, f_ele)
   ! in: f_coulomb_log 0D_NOT_real
   f_coulomb_log = coulomb_log
-  ! in: f_n_part 0D_NOT_real
-  f_n_part = n_part
-  call multi_coulomb_log(f_ibs_sim_params, f_ele, f_coulomb_log, f_n_part)
+  ! in: f_lambda 0D_NOT_real
+  f_lambda = lambda
+  call multi_coulomb_log(f_ibs_sim_params, f_ele, f_coulomb_log, f_lambda)
 
 end subroutine
 subroutine fortran_multi_turn_tracking_analysis (track, i_dim, track0, ele, stable, &

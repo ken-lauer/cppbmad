@@ -187,7 +187,8 @@ void init_ibs_sim_param_struct(nb::module_ &m, nb::class_<IbsSimParamStruct> &cl
              std::optional<double>,
              std::optional<bool>,
              std::optional<double>,
-             std::optional<std::string>>(),
+             std::optional<std::string>,
+             std::optional<bool>>(),
          nb::arg("tau_a") = nb::none(),
          nb::arg("clog_to_use") = nb::none(),
          nb::arg("set_dispersion") = nb::none(),
@@ -195,7 +196,8 @@ void init_ibs_sim_param_struct(nb::module_ &m, nb::class_<IbsSimParamStruct> &cl
          nb::arg("etap_set") = nb::none(),
          nb::arg("do_pwd") = nb::none(),
          nb::arg("inductance") = nb::none(),
-         nb::arg("formula") = nb::none()
+         nb::arg("formula") = nb::none(),
+         nb::arg("bunched") = nb::none()
   )
       .def_prop_rw(
           "tau_a",
@@ -248,6 +250,12 @@ void init_ibs_sim_param_struct(nb::module_ &m, nb::class_<IbsSimParamStruct> &cl
           "Which IBS formulation to use.  See subroutine ibs1 for a list. real(rp) :: fake_3HC = "
           "-1   ! If greater than zero, divide growth rates by this factor."
       )
+      .def_prop_rw(
+          "bunched",
+          &IbsSimParamStruct::bunched,
+          &IbsSimParamStruct::set_bunched,
+          "if true, lambda = N/sig_z.  If false, lambda = 2sqrt(pi)*N/lat%param%total_length"
+      )
 
       .def("__repr__", [](const IbsSimParamStruct &self) { return to_string(self); })
 
@@ -291,11 +299,11 @@ void init_ibs_struct(nb::module_ &m, nb::class_<IbsStruct> &cls) {
          nb::init<std::optional<double>, std::optional<double>, std::optional<double>>(),
          nb::arg("inv_Ta") = nb::none(),
          nb::arg("inv_Tb") = nb::none(),
-         nb::arg("inv_Tz") = nb::none()
+         nb::arg("inv_Tp") = nb::none()
   )
       .def_prop_rw("inv_Ta", &IbsStruct::inv_Ta, &IbsStruct::set_inv_Ta)
       .def_prop_rw("inv_Tb", &IbsStruct::inv_Tb, &IbsStruct::set_inv_Tb)
-      .def_prop_rw("inv_Tz", &IbsStruct::inv_Tz, &IbsStruct::set_inv_Tz)
+      .def_prop_rw("inv_Tp", &IbsStruct::inv_Tp, &IbsStruct::set_inv_Tp)
 
       .def("__repr__", [](const IbsStruct &self) { return to_string(self); })
 

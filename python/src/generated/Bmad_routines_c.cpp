@@ -1001,7 +1001,7 @@ err_flag : bool
       &Bmad::cimp1,
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(This is an implementation of equations 34,38-40 from "Intrabeam
 scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
 It is a modified version of the Piwinski IBS formulation.

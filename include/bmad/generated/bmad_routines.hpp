@@ -498,9 +498,9 @@ extern "C" void fortran_bane1(
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
     void *rates /* 0D_NOT_type out */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
-IbsStruct bane1(EleStruct &ele, double coulomb_log, double n_part);
+IbsStruct bane1(EleStruct &ele, double coulomb_log, double lambda);
 extern "C" void fortran_bbi_kick(
     double &x /* 0D_NOT_real in */,
     double &y /* 0D_NOT_real in */,
@@ -715,9 +715,9 @@ extern "C" void fortran_bjmt1(
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
     void *rates /* 0D_NOT_type out */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
-IbsStruct bjmt1(EleStruct &ele, double coulomb_log, double n_part);
+IbsStruct bjmt1(EleStruct &ele, double coulomb_log, double lambda);
 
 // Skipped unusable routine bjmt_integrand:
 // - Untranslated type: c_ptr (0D)
@@ -1164,9 +1164,9 @@ extern "C" void fortran_cimp1(
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
     void *rates /* 0D_NOT_type out */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
-IbsStruct cimp1(EleStruct &ele, double coulomb_log, double n_part);
+IbsStruct cimp1(EleStruct &ele, double coulomb_log, double lambda);
 extern "C" bool fortran_classical_radius(
     int &species /* 0D_NOT_integer in */,
     double &radius /* 0D_NOT_real out */
@@ -5238,9 +5238,9 @@ extern "C" void fortran_mpxx1(
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
     void *rates /* 0D_NOT_type out */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
-IbsStruct mpxx1(EleStruct &ele, double coulomb_log, double n_part);
+IbsStruct mpxx1(EleStruct &ele, double coulomb_log, double lambda);
 
 // Skipped unusable routine mpxx_integrand:
 // - Untranslated type: c_ptr (0D)
@@ -5248,20 +5248,20 @@ extern "C" void fortran_mpzt1(
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
     void *rates /* 0D_NOT_type out */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
-IbsStruct mpzt1(EleStruct &ele, double coulomb_log, double n_part);
+IbsStruct mpzt1(EleStruct &ele, double coulomb_log, double lambda);
 extern "C" void fortran_multi_coulomb_log(
     void *ibs_sim_params /* 0D_NOT_type inout */,
     void *ele /* 0D_NOT_type inout */,
     double &coulomb_log /* 0D_NOT_real in */,
-    double &n_part /* 0D_NOT_real in */
+    double &lambda /* 0D_NOT_real in */
 );
 void multi_coulomb_log(
     IbsSimParamStruct &ibs_sim_params,
     EleStruct &ele,
     double coulomb_log,
-    double n_part
+    double lambda
 );
 extern "C" void fortran_multi_turn_tracking_analysis(
     Bmad::array_descriptor_t &track /* 1D_NOT_type in */,
