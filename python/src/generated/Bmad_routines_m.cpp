@@ -1550,7 +1550,7 @@ mom_comp : float
       &Bmad::mpxx1,
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(Modified Piwinski, further modified to treat Coulomb Log
 in the same manner as Bjorken-Mtingwa, CIMP, Bane, Kubo & Oide, etc.
 This formula is derived in Section 2.8.4 of Michael Ehrlichman's Graduate Thesis.
@@ -1561,7 +1561,7 @@ This formula is derived in Section 2.8.4 of Michael Ehrlichman's Graduate Thesis
       &Bmad::mpzt1,
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(Modified Piwinski with Zotter's integral.  This is Piwinski's original derivation,
 generalized to take the derivatives of the optics functions.  Also, Piwinski's
 original cumbersome triple integral is reaplaced by Zotter's single integral.  Zotter's
@@ -1576,7 +1576,7 @@ rates returns betatron growth rates.  Multiply by two to get transverse emittanc
       nb::arg("ibs_sim_params"),
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(Calculates the value of the Coulomb log using various methods.
 
 ibs_sim_params%clog_to_use == 1   Classic coulomb log (pi/2 max scattering angle)

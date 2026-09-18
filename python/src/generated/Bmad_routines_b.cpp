@@ -10,7 +10,7 @@ void init_Bmad_routines_b(nb::module_ &m) {
       &Bmad::bane1,
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(This is an implementation of equations 10-15 from "Intrabeam
 scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
 It is a high energy approximation of the Bjorken-Mtingwa IBS
@@ -672,7 +672,7 @@ integ_prob : float
       &Bmad::bjmt1,
       nb::arg("ele"),
       nb::arg("coulomb_log"),
-      nb::arg("n_part"),
+      nb::arg("lambda_"),
       R"""(This is an implementation of equations 1-9 from "Intrabeam
 scattering formulas for high energy beams" Kubo,Mtingwa,Wolski.
 

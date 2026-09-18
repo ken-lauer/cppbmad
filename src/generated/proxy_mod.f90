@@ -29154,7 +29154,7 @@ contains
     end select
   end subroutine
 
-  ! dispatch: ibs_sim_param_struct%logical (2 fields)
+  ! dispatch: ibs_sim_param_struct%logical (3 fields)
 
   subroutine ibs_sim_param_struct_get_logical(struct_obj_ptr, field_id, value_out) &
       bind(c, name='ibs_sim_param_struct_get_logical')
@@ -29166,6 +29166,7 @@ contains
     select case(field_id)
     case(0); value_out = struct_obj%set_dispersion
     case(1); value_out = struct_obj%do_pwd
+    case(2); value_out = struct_obj%bunched
     end select
   end subroutine
 
@@ -29180,6 +29181,7 @@ contains
     select case(field_id)
     case(0); struct_obj%set_dispersion = value_in
     case(1); struct_obj%do_pwd = value_in
+    case(2); struct_obj%bunched = value_in
     end select
   end subroutine
 
@@ -29376,7 +29378,7 @@ contains
     select case(field_id)
     case(0); value_out = struct_obj%inv_Ta
     case(1); value_out = struct_obj%inv_Tb
-    case(2); value_out = struct_obj%inv_Tz
+    case(2); value_out = struct_obj%inv_Tp
     end select
   end subroutine
 
@@ -29391,7 +29393,7 @@ contains
     select case(field_id)
     case(0); struct_obj%inv_Ta = value_in
     case(1); struct_obj%inv_Tb = value_in
-    case(2); struct_obj%inv_Tz = value_in
+    case(2); struct_obj%inv_Tp = value_in
     end select
   end subroutine
 

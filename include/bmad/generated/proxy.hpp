@@ -24122,7 +24122,8 @@ public:
       std::optional<double> etap_set = std::nullopt,
       std::optional<bool> do_pwd = std::nullopt,
       std::optional<double> inductance = std::nullopt,
-      std::optional<std::string> formula = std::nullopt
+      std::optional<std::string> formula = std::nullopt,
+      std::optional<bool> bunched = std::nullopt
   )
       : FortranProxy() {
     if (tau_a)
@@ -24141,6 +24142,8 @@ public:
       set_inductance(*inductance);
     if (formula)
       set_formula(*formula);
+    if (bunched)
+      set_bunched(*bunched);
   }
 
   double tau_a() const; // 0D_NOT_real [dispatch:0]
@@ -24159,6 +24162,8 @@ public:
   void set_inductance(double value);
   std::string formula() const; // 0D_NOT_character
   void set_formula(const std::string &value);
+  bool bunched() const; // 0D_NOT_logical [dispatch:2]
+  void set_bunched(bool value);
 };
 
 template <>
@@ -24180,23 +24185,23 @@ public:
   explicit IbsStruct(
       std::optional<double> inv_Ta = std::nullopt,
       std::optional<double> inv_Tb = std::nullopt,
-      std::optional<double> inv_Tz = std::nullopt
+      std::optional<double> inv_Tp = std::nullopt
   )
       : FortranProxy() {
     if (inv_Ta)
       set_inv_Ta(*inv_Ta);
     if (inv_Tb)
       set_inv_Tb(*inv_Tb);
-    if (inv_Tz)
-      set_inv_Tz(*inv_Tz);
+    if (inv_Tp)
+      set_inv_Tp(*inv_Tp);
   }
 
   double inv_Ta() const; // 0D_NOT_real [dispatch:0]
   void set_inv_Ta(double value);
   double inv_Tb() const; // 0D_NOT_real [dispatch:1]
   void set_inv_Tb(double value);
-  double inv_Tz() const; // 0D_NOT_real [dispatch:2]
-  void set_inv_Tz(double value);
+  double inv_Tp() const; // 0D_NOT_real [dispatch:2]
+  void set_inv_Tp(double value);
 };
 
 template <>
