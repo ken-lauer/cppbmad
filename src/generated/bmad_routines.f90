@@ -197,7 +197,7 @@ use beam_utils, only: calc_bunch_params, calc_bunch_params_slice, calc_bunch_par
     init_beam_distribution, init_bunch_distribution, init_spin_distribution, track1_bunch_hom
 
 use wall3d_mod, only: calc_wall_radius, create_concatenated_wall3d, mark_patch_regions, &
-    pointer_to_wall3d, re_allocate, wall3d_d_radius, wall3d_initializer, &
+    pointer_to_wall3d, re_allocate, wall3d_d_radius, wall3d_initializer, wall3d_section_index, &
     wall3d_section_initializer, wall3d_to_position
 
 use rad_int_common, only: calc_wiggler_g_params, propagate_part_way
@@ -37794,7 +37794,7 @@ subroutine fortran_track_complex_taylor (start_orb, complex_taylor, end_orb) bin
 
 end subroutine
 subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_end, all_orb, &
-    ix_branch, track_state, ix_ele_end) bind(c)
+    ix_branch, track_state, ix_ele_end, one_turn) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: coord_struct, lat_struct
@@ -37814,6 +37814,11 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   type(c_ptr), intent(in), value :: ix_ele_end  ! 0D_NOT_integer
   integer(c_int) :: f_ix_ele_end
   integer(c_int), pointer :: f_ix_ele_end_ptr
+  type(c_ptr), intent(in), value :: one_turn  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_one_turn
+  logical, target :: f_one_turn_native
+  logical, pointer :: f_one_turn_native_ptr
+  logical(c_bool), pointer :: f_one_turn_ptr
   ! ** Out parameters **
   type(c_ptr), value :: orbit_end  ! 0D_NOT_type
   type(coord_struct), pointer :: f_orbit_end
@@ -37856,8 +37861,16 @@ subroutine fortran_track_from_s_to_s (lat, s_start, s_end, orbit_start, orbit_en
   else
     f_ix_ele_end_ptr => null()
   endif
+  ! in: f_one_turn 0D_NOT_logical
+  if (c_associated(one_turn)) then
+    call c_f_pointer(one_turn, f_one_turn_ptr)
+    f_one_turn_native = f_one_turn_ptr
+    f_one_turn_native_ptr => f_one_turn_native
+  else
+    f_one_turn_native_ptr => null()
+  endif
   call track_from_s_to_s(f_lat, f_s_start, f_s_end, f_orbit_start, f_orbit_end, f_all_orb%data, &
-      f_ix_branch_ptr, f_track_state, f_ix_ele_end_ptr)
+      f_ix_branch_ptr, f_track_state, f_ix_ele_end_ptr, f_one_turn_native_ptr)
 
   ! out: f_orbit_end 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
@@ -41154,6 +41167,41 @@ subroutine fortran_wall3d_initializer (wall3d, err) bind(c)
   ! out: f_err 0D_NOT_logical
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
+end subroutine
+subroutine fortran_wall3d_section_index (s, wall3d, ix0, ix) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: wall3d_struct
+  implicit none
+  ! ** In parameters **
+  real(c_double) :: s  ! 0D_NOT_real
+  real(rp) :: f_s
+  type(c_ptr), value :: wall3d  ! 0D_NOT_type
+  type(wall3d_struct), pointer :: f_wall3d
+  type(c_ptr), intent(in), value :: ix0  ! 0D_NOT_integer
+  integer(c_int) :: f_ix0
+  integer(c_int), pointer :: f_ix0_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: ix  ! 0D_NOT_integer
+  integer :: f_ix
+  integer(c_int), pointer :: f_ix_ptr
+  ! ** End of parameters **
+  ! in: f_s 0D_NOT_real
+  f_s = s
+  ! in: f_wall3d 0D_NOT_type
+  if (.not. c_associated(wall3d)) return
+  call c_f_pointer(wall3d, f_wall3d)
+  ! in: f_ix0 0D_NOT_integer
+  if (c_associated(ix0)) then
+    call c_f_pointer(ix0, f_ix0_ptr)
+  else
+    f_ix0_ptr => null()
+  endif
+  f_ix = wall3d_section_index(f_s, f_wall3d, f_ix0_ptr)
+
+  ! out: f_ix 0D_NOT_integer
+  call c_f_pointer(ix, f_ix_ptr)
+  f_ix_ptr = f_ix
 end subroutine
 subroutine fortran_wall3d_section_initializer (section, err) bind(c)
 

@@ -3132,6 +3132,7 @@ end_orb : 1D array of complex
       nb::arg("orbit_start"),
       nb::arg("ix_branch") = nb::none(),
       nb::arg("ix_ele_end") = nb::none(),
+      nb::arg("one_turn") = nb::none(),
       R"""(Wrapper for Fortran routine track_from_s_to_s
 
 Parameters
@@ -3153,6 +3154,11 @@ ix_branch : int, optional
 
 ix_ele_end : int, optional
     If present, ignore s_end and track to in between ix_ele_end and ix_ele_end+1
+
+one_turn : bool, optional
+    Default True. Only relevant if lattice geometry is closed and s_start == s_end. If False, no tracking is
+    done. If True, the particle is tracked for one turn. For an open geometry lattice with s_start == s_end,
+    no tracking will always be done.
 
 Returns
 -------

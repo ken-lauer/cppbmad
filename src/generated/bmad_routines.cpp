@@ -16478,7 +16478,8 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
     double s_end,
     CoordStruct &orbit_start,
     std::optional<int> ix_branch,
-    std::optional<int> ix_ele_end
+    std::optional<int> ix_ele_end,
+    std::optional<bool> one_turn
 ) {
   CoordStruct _orbit_end;
   // intent=out allocatable type array
@@ -16498,6 +16499,13 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
   } else {
     _ix_ele_end = nullptr;
   }
+  bool one_turn_lvalue;
+  auto *_one_turn{&one_turn_lvalue};
+  if (one_turn.has_value()) {
+    one_turn_lvalue = one_turn.value();
+  } else {
+    _one_turn = nullptr;
+  }
   fortran_track_from_s_to_s(/* void* */ lat.get_fortran_ptr(),
                             /* double& */ s_start,
                             /* double& */ s_end,
@@ -16506,7 +16514,8 @@ Bmad::TrackFromSToS Bmad::track_from_s_to_s(
                             /* void* */ all_orb.get_fortran_ptr(),
                             /* int* */ _ix_branch,
                             /* int& */ _track_state,
-                            /* int* */ _ix_ele_end);
+                            /* int* */ _ix_ele_end,
+                            /* bool* */ _one_turn);
   return TrackFromSToS{std::move(_orbit_end), std::move(all_orb), _track_state};
 }
 double Bmad::track_func(double s_target, int status) {
@@ -18104,6 +18113,21 @@ bool Bmad::wall3d_initializer(Wall3dStruct &wall3d) {
   bool _err{};
   fortran_wall3d_initializer(/* void* */ wall3d.get_fortran_ptr(), /* bool& */ _err);
   return _err;
+}
+int Bmad::wall3d_section_index(double s, Wall3dStruct &wall3d, std::optional<int> ix0) {
+  int ix0_lvalue;
+  auto *_ix0{&ix0_lvalue};
+  if (ix0.has_value()) {
+    ix0_lvalue = ix0.value();
+  } else {
+    _ix0 = nullptr;
+  }
+  int _ix{};
+  fortran_wall3d_section_index(/* double& */ s,
+                               /* void* */ wall3d.get_fortran_ptr(),
+                               /* int* */ _ix0,
+                               /* int& */ _ix);
+  return _ix;
 }
 bool Bmad::wall3d_section_initializer(Wall3dSectionStruct &section) {
   bool _err{};

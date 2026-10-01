@@ -4732,7 +4732,7 @@ Fortran source: [`bmad/multiparticle/envelope_mod.f90`]({{ upstream_source }}/bm
 
 ### beam_equal_beam
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5330)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5332)
 
 ::: pybmad.bmad.beam_equal_beam
     options:
@@ -4939,7 +4939,7 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`]({{ upstream_source }}/bmad/
 
 ### branch_equal_branch
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4846)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4848)
 
 ::: pybmad.bmad.branch_equal_branch
     options:
@@ -4966,7 +4966,7 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`]({{ upstream_source }}/bmad/ptc/p
 
 ### bunch_equal_bunch
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5277)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5279)
 
 ::: pybmad.bmad.bunch_equal_bunch
     options:
@@ -5293,7 +5293,7 @@ Fortran sources (overloaded):
 
 ### complex_taylor_equal_complex_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5143)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5145)
 
 ::: pybmad.bmad.complex_taylor_equal_complex_taylor
     options:
@@ -5329,7 +5329,7 @@ Fortran source: [`bmad/modules/complex_taylor_mod.f90`]({{ upstream_source }}/bm
 
 ### complex_taylors_equal_complex_taylors
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5179)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5181)
 
 ::: pybmad.bmad.complex_taylors_equal_complex_taylors
     options:
@@ -5482,7 +5482,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### coord_equal_coord
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4895)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4897)
 
 ::: pybmad.bmad.coord_equal_coord
     options:
@@ -5599,7 +5599,7 @@ Fortran source: [`bmad/space_charge/open_spacecharge_core_mod.f90`]({{ upstream_
 
 ### create_concatenated_wall3d
 
-Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1204)
+Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1296)
 
 ::: pybmad.bmad.create_concatenated_wall3d
     options:
@@ -5959,7 +5959,7 @@ Fortran source: [`bmad/modules/time_tracker_mod.f90`]({{ upstream_source }}/bmad
 
 ### drift_particle_to_s
 
-Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}/bmad/space_charge/space_charge_mod.f90#L638)
+Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}/bmad/space_charge/space_charge_mod.f90#L645)
 
 ::: pybmad.bmad.drift_particle_to_s
     options:
@@ -5968,7 +5968,7 @@ Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}
 
 ### drift_particle_to_t
 
-Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}/bmad/space_charge/space_charge_mod.f90#L685)
+Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}/bmad/space_charge/space_charge_mod.f90#L692)
 
 ::: pybmad.bmad.drift_particle_to_t
     options:
@@ -6040,7 +6040,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### ele_equal_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4269)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4271)
 
 ::: pybmad.bmad.ele_equal_ele
     options:
@@ -6049,7 +6049,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### ele_equals_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4300)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4302)
 
 ::: pybmad.bmad.ele_equals_ele
     options:
@@ -6247,7 +6247,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### ele_vec_equal_ele_vec
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4680)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4682)
 
 ::: pybmad.bmad.ele_vec_equal_ele_vec
     options:
@@ -6322,7 +6322,7 @@ Fortran source: [`bmad/modules/time_tracker_mod.f90`]({{ upstream_source }}/bmad
 
 ### em_field_plus_em_field
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4235)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4237)
 
 ::: pybmad.bmad.em_field_plus_em_field
     options:
@@ -7771,7 +7771,7 @@ Fortran source: [`bmad/modules/gg_coef_table_mod.f90`]({{ upstream_source }}/bma
 
 ### gg_taylor_equal_gg_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5000)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5002)
 
 ::: pybmad.bmad.gg_taylor_equal_gg_taylor
     options:
@@ -7780,7 +7780,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### gg_taylors_equal_gg_taylors
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5046)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5048)
 
 ::: pybmad.bmad.gg_taylors_equal_gg_taylors
     options:
@@ -8095,7 +8095,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### init_complex_taylor_series
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5217)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5219)
 
 ::: pybmad.bmad.init_complex_taylor_series
     options:
@@ -8144,7 +8144,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### init_gg_taylor_series
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5084)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L5086)
 
 ::: pybmad.bmad.init_gg_taylor_series
     options:
@@ -8399,7 +8399,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### lat_equal_lat
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4723)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4725)
 
 ::: pybmad.bmad.lat_equal_lat
     options:
@@ -8444,7 +8444,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### lat_vec_equal_lat_vec
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4804)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4806)
 
 ::: pybmad.bmad.lat_vec_equal_lat_vec
     options:
@@ -8912,7 +8912,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### map1_times_map1
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4195)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4197)
 
 ::: pybmad.bmad.map1_times_map1
     options:
@@ -8930,7 +8930,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### mark_patch_regions
 
-Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1538)
+Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1630)
 
 ::: pybmad.bmad.mark_patch_regions
     options:
@@ -10015,10 +10015,10 @@ Fortran sources (overloaded):
 
 Fortran sources (overloaded):
 
-- `pointer_to_ele1`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4056)
-- `pointer_to_ele2`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4104)
-- `pointer_to_ele3`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4132)
-- `pointer_to_ele4`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4165)
+- `pointer_to_ele1`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4058)
+- `pointer_to_ele2`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4106)
+- `pointer_to_ele3`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4134)
+- `pointer_to_ele4`: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4167)
 
 ::: pybmad.bmad.pointer_to_ele
     options:
@@ -10144,7 +10144,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### pointer_to_wall3d
 
-Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1089)
+Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1181)
 
 ::: pybmad.bmad.pointer_to_wall3d
     options:
@@ -11647,7 +11647,7 @@ Fortran source: [`bmad/photon/track1_photon_mod.f90`]({{ upstream_source }}/bmad
 
 ### taylor_equal_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4928)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4930)
 
 ::: pybmad.bmad.taylor_equal_taylor
     options:
@@ -11683,7 +11683,7 @@ Fortran source: [`bmad/modules/mad_mod.f90`]({{ upstream_source }}/bmad/modules/
 
 ### taylors_equal_taylors
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4965)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L4967)
 
 ::: pybmad.bmad.taylors_equal_taylors
     options:
@@ -11818,7 +11818,7 @@ Fortran source: [`bmad/multiparticle/touschek_mod.f90`]({{ upstream_source }}/bm
 
 ### track1
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3179)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3181)
 
 ::: pybmad.bmad.track1
     options:
@@ -11836,7 +11836,7 @@ Fortran source: [`bmad/multiparticle/beam_mod.f90`]({{ upstream_source }}/bmad/m
 
 ### track1_bmad
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3192)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3194)
 
 ::: pybmad.bmad.track1_bmad
     options:
@@ -11845,7 +11845,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_bmad_photon
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3204)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3206)
 
 ::: pybmad.bmad.track1_bmad_photon
     options:
@@ -11890,7 +11890,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### track1_bunch_space_charge
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3213)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3215)
 
 ::: pybmad.bmad.track1_bunch_space_charge
     options:
@@ -11935,7 +11935,7 @@ Fortran source: [`bmad/photon/track1_photon_mod.f90`]({{ upstream_source }}/bmad
 
 ### track1_linear
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3223)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3225)
 
 ::: pybmad.bmad.track1_linear
     options:
@@ -12007,7 +12007,7 @@ Fortran source: [`bmad/modules/radiation_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### track1_runge_kutta
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3231)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3233)
 
 ::: pybmad.bmad.track1_runge_kutta
     options:
@@ -12025,7 +12025,7 @@ Fortran source: [`bmad/photon/track1_photon_mod.f90`]({{ upstream_source }}/bmad
 
 ### track1_spin
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3243)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3245)
 
 ::: pybmad.bmad.track1_spin
     options:
@@ -12034,7 +12034,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_spin_integration
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3252)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3254)
 
 ::: pybmad.bmad.track1_spin_integration
     options:
@@ -12043,7 +12043,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_spin_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3261)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3263)
 
 ::: pybmad.bmad.track1_spin_taylor
     options:
@@ -12061,7 +12061,7 @@ Fortran source: [`bmad/multiparticle/wake_mod.f90`]({{ upstream_source }}/bmad/m
 
 ### track1_symp_lie_ptc
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3269)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3271)
 
 ::: pybmad.bmad.track1_symp_lie_ptc
     options:
@@ -12070,7 +12070,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3278)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3280)
 
 ::: pybmad.bmad.track1_taylor
     options:
@@ -12079,7 +12079,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_time_runge_kutta
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3288)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3290)
 
 ::: pybmad.bmad.track1_time_runge_kutta
     options:
@@ -12385,7 +12385,7 @@ Fortran source: [`bmad/space_charge/space_charge_mod.f90`]({{ upstream_source }}
 
 ### track_many
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3159)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3161)
 
 ::: pybmad.bmad.track_many
     options:
@@ -12394,7 +12394,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track_to_surface
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3170)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3172)
 
 ::: pybmad.bmad.track_to_surface
     options:
@@ -12412,7 +12412,7 @@ Fortran source: [`bmad/modules/time_tracker_mod.f90`]({{ upstream_source }}/bmad
 
 ### tracking_rad_map_setup
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3299)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3301)
 
 ::: pybmad.bmad.tracking_rad_map_setup
     options:
@@ -12421,7 +12421,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_ac_kick
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3309)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3311)
 
 ::: pybmad.bmad.transfer_ac_kick
     options:
@@ -12430,7 +12430,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_branch
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3315)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3317)
 
 ::: pybmad.bmad.transfer_branch
     options:
@@ -12439,7 +12439,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_branch_parameters
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3322)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3324)
 
 ::: pybmad.bmad.transfer_branch_parameters
     options:
@@ -12448,7 +12448,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_branches
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3329)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3331)
 
 ::: pybmad.bmad.transfer_branches
     options:
@@ -12457,7 +12457,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3336)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3338)
 
 ::: pybmad.bmad.transfer_ele
     options:
@@ -12466,7 +12466,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_ele_taylor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3344)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3346)
 
 ::: pybmad.bmad.transfer_ele_taylor
     options:
@@ -12475,7 +12475,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_eles
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3351)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3353)
 
 ::: pybmad.bmad.transfer_eles
     options:
@@ -12484,7 +12484,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_fieldmap
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3358)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3360)
 
 ::: pybmad.bmad.transfer_fieldmap
     options:
@@ -12502,7 +12502,7 @@ Fortran source: [`bmad/modules/fixer_mod.f90`]({{ upstream_source }}/bmad/module
 
 ### transfer_lat
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3365)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3367)
 
 ::: pybmad.bmad.transfer_lat
     options:
@@ -12511,7 +12511,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_lat_parameters
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3372)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3374)
 
 ::: pybmad.bmad.transfer_lat_parameters
     options:
@@ -12520,7 +12520,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_map_calc
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3379)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3381)
 
 ::: pybmad.bmad.transfer_map_calc
     options:
@@ -12538,7 +12538,7 @@ Fortran source: [`bmad/modules/transfer_map_mod.f90`]({{ upstream_source }}/bmad
 
 ### transfer_mat2_from_twiss
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3400)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3402)
 
 ::: pybmad.bmad.transfer_mat2_from_twiss
     options:
@@ -12547,7 +12547,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_mat_from_twiss
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3392)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3394)
 
 ::: pybmad.bmad.transfer_mat_from_twiss
     options:
@@ -12556,7 +12556,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_matrix_calc
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3407)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3409)
 
 ::: pybmad.bmad.transfer_matrix_calc
     options:
@@ -12565,7 +12565,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_twiss
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3417)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3419)
 
 ::: pybmad.bmad.transfer_twiss
     options:
@@ -12574,7 +12574,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### transfer_wake
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3424)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3426)
 
 ::: pybmad.bmad.transfer_wake
     options:
@@ -12592,7 +12592,7 @@ Fortran source: [`bmad/modules/complex_taylor_mod.f90`]({{ upstream_source }}/bm
 
 ### twiss1_propagate
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3479)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3481)
 
 ::: pybmad.bmad.twiss1_propagate
     options:
@@ -12658,7 +12658,7 @@ Fortran source: [`bmad/modules/twiss_and_track_mod.f90`]({{ upstream_source }}/b
 
 ### twiss_and_track_from_s_to_s
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3436)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3438)
 
 ::: pybmad.bmad.twiss_and_track_from_s_to_s
     options:
@@ -12667,7 +12667,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_and_track_intra_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3448)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3450)
 
 ::: pybmad.bmad.twiss_and_track_intra_ele
     options:
@@ -12676,7 +12676,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_at_element
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3461)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3463)
 
 ::: pybmad.bmad.twiss_at_element
     options:
@@ -12685,7 +12685,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_at_start
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3470)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3472)
 
 ::: pybmad.bmad.twiss_at_start
     options:
@@ -12694,7 +12694,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_from_tracking
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3507)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3509)
 
 ::: pybmad.bmad.twiss_from_tracking
     options:
@@ -12703,7 +12703,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_propagate1
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3517)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3519)
 
 ::: pybmad.bmad.twiss_propagate1
     options:
@@ -12712,7 +12712,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_propagate_all
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3524)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3526)
 
 ::: pybmad.bmad.twiss_propagate_all
     options:
@@ -12721,7 +12721,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### twiss_to_1_turn_mat
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3532)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3534)
 
 ::: pybmad.bmad.twiss_to_1_turn_mat
     options:
@@ -12739,7 +12739,7 @@ Fortran source: [`bmad/modules/complex_taylor_mod.f90`]({{ upstream_source }}/bm
 
 ### type_coord
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3539)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3541)
 
 ::: pybmad.bmad.type_coord
     options:
@@ -12748,7 +12748,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### type_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3545)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3547)
 
 ::: pybmad.bmad.type_ele
     options:
@@ -12793,7 +12793,7 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`]({{ upstream_source }}/bmad/ptc/p
 
 ### type_taylors
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3558)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3560)
 
 ::: pybmad.bmad.type_taylors
     options:
@@ -12802,7 +12802,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### type_twiss
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3569)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3571)
 
 ::: pybmad.bmad.type_twiss
     options:
@@ -12820,7 +12820,7 @@ Fortran source: [`bmad/ptc/ptc_layout_mod.f90`]({{ upstream_source }}/bmad/ptc/p
 
 ### update_fibre_from_ele
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3601)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3603)
 
 ::: pybmad.bmad.update_fibre_from_ele
     options:
@@ -12829,7 +12829,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### update_floor_angles
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3594)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3596)
 
 ::: pybmad.bmad.update_floor_angles
     options:
@@ -12838,7 +12838,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### valid_field_calc
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3608)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3610)
 
 ::: pybmad.bmad.valid_field_calc
     options:
@@ -12847,7 +12847,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### valid_fringe_type
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3616)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3618)
 
 ::: pybmad.bmad.valid_fringe_type
     options:
@@ -12856,7 +12856,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### valid_mat6_calc_method
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3624)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3626)
 
 ::: pybmad.bmad.valid_mat6_calc_method
     options:
@@ -12865,7 +12865,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### valid_spin_tracking_method
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3632)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3634)
 
 ::: pybmad.bmad.valid_spin_tracking_method
     options:
@@ -12874,7 +12874,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### valid_tracking_method
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3640)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3642)
 
 ::: pybmad.bmad.valid_tracking_method
     options:
@@ -12883,7 +12883,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### value_of_attribute
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3648)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3650)
 
 ::: pybmad.bmad.value_of_attribute
     options:
@@ -12901,7 +12901,7 @@ Fortran source: [`bmad/output/write_lattice_file_mod.f90`]({{ upstream_source }}
 
 ### vec_to_polar
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3659)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3661)
 
 ::: pybmad.bmad.vec_to_polar
     options:
@@ -12910,7 +12910,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### vec_to_spinor
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3667)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3669)
 
 ::: pybmad.bmad.vec_to_spinor
     options:
@@ -12937,7 +12937,7 @@ Fortran source: [`bmad/photon/photon_init_mod.f90`]({{ upstream_source }}/bmad/p
 
 ### w_mat_for_bend_angle
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3675)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3677)
 
 ::: pybmad.bmad.w_mat_for_bend_angle
     options:
@@ -12946,7 +12946,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### w_mat_for_tilt
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3698)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3700)
 
 ::: pybmad.bmad.w_mat_for_tilt
     options:
@@ -12955,7 +12955,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### w_mat_for_x_pitch
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3682)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3684)
 
 ::: pybmad.bmad.w_mat_for_x_pitch
     options:
@@ -12964,7 +12964,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### w_mat_for_y_pitch
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3690)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3692)
 
 ::: pybmad.bmad.w_mat_for_y_pitch
     options:
@@ -12989,6 +12989,15 @@ Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modul
       show_root_heading: false
       show_root_toc_entry: false
 
+### wall3d_section_index
+
+Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1093)
+
+::: pybmad.bmad.wall3d_section_index
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### wall3d_section_initializer
 
 Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L207)
@@ -13000,7 +13009,7 @@ Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modul
 
 ### wall3d_to_position
 
-Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1153)
+Fortran source: [`bmad/modules/wall3d_mod.f90`]({{ upstream_source }}/bmad/modules/wall3d_mod.f90#L1245)
 
 ::: pybmad.bmad.wall3d_to_position
     options:
@@ -13081,7 +13090,7 @@ Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bm
 
 ### write_beam_floor_positions
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3706)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3708)
 
 ::: pybmad.bmad.write_beam_floor_positions
     options:
@@ -13135,7 +13144,7 @@ Fortran source: [`bmad/interface/blender_interface_mod.f90`]({{ upstream_source 
 
 ### write_bmad_lattice_file
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3726)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3728)
 
 ::: pybmad.bmad.write_bmad_lattice_file
     options:
@@ -13144,7 +13153,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_digested_bmad_file
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3715)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3717)
 
 ::: pybmad.bmad.write_digested_bmad_file
     options:
@@ -13207,7 +13216,7 @@ Fortran source: [`bmad/output/write_lattice_file_mod.f90`]({{ upstream_source }}
 
 ### write_lattice_elegant_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3736)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3738)
 
 ::: pybmad.bmad.write_lattice_elegant_format
     options:
@@ -13216,7 +13225,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_lattice_foreign_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3748)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3750)
 
 ::: pybmad.bmad.write_lattice_foreign_format
     options:
@@ -13225,7 +13234,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_lattice_mad_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3760)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3762)
 
 ::: pybmad.bmad.write_lattice_mad_format
     options:
@@ -13234,7 +13243,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_lattice_pals_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3772)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3774)
 
 ::: pybmad.bmad.write_lattice_pals_format
     options:
@@ -13243,7 +13252,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_lattice_sad_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3780)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3782)
 
 ::: pybmad.bmad.write_lattice_sad_format
     options:
@@ -13252,7 +13261,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### write_lattice_scibmad_format
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3789)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3791)
 
 ::: pybmad.bmad.write_lattice_scibmad_format
     options:
@@ -13333,7 +13342,7 @@ Fortran source: [`bmad/photon/photon_utils_mod.f90`]({{ upstream_source }}/bmad/
 
 ### zero_ele_kicks
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3808)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3810)
 
 ::: pybmad.bmad.zero_ele_kicks
     options:
@@ -13342,7 +13351,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### zero_ele_offsets
 
-Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3814)
+Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }}/bmad/modules/bmad_routine_interface.f90#L3816)
 
 ::: pybmad.bmad.zero_ele_offsets
     options:

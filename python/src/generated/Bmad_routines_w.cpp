@@ -211,6 +211,40 @@ err : bool
 )"""
   );
   m.def(
+      "wall3d_section_index",
+      &Bmad::wall3d_section_index,
+      nb::arg("s"),
+      nb::arg("wall3d"),
+      nb::arg("ix0") = nb::none(),
+      R"""(Function to find the index ix so that wall3d%section(ix)%s <= s < wall3d%section(ix+1)%s.
+Boundary cases:
+  If s <  wall3d%section(1)%s     then ix = 0
+  If s >= wall3d%section(n_sec)%s then ix = n_sec
+  If there are no sections        then ix = 0
+This is the same convention as bracket_index and bracket_index2.
+
+Use this routine instead of bracket_index(s, wall3d%section%s, 1) since passing the strided array
+wall3d%section%s forces a temporary copy of the array which, with a large branch wall, dominates
+the computation time.
+
+Parameters
+----------
+s : float
+    Longitudinal position.
+
+wall3d : Wall3dStruct
+    Wall.
+
+ix0 : int, optional
+    Initial guess for ix. Using a good guess speeds up the search.
+
+Returns
+-------
+ix : int
+    Section index.
+)"""
+  );
+  m.def(
       "wall3d_section_initializer",
       &Bmad::wall3d_section_initializer,
       nb::arg("section"),
