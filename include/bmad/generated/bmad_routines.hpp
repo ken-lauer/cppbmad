@@ -9805,7 +9805,8 @@ extern "C" void fortran_track_from_s_to_s(
     void *all_orb /* 1D_ALLOC_type out */,
     int *ix_branch /* 0D_NOT_integer in */,
     int &track_state /* 0D_NOT_integer out */,
-    int *ix_ele_end /* 0D_NOT_integer in */
+    int *ix_ele_end /* 0D_NOT_integer in */,
+    bool *one_turn /* 0D_NOT_logical in */
 );
 struct TrackFromSToS {
   CoordStruct orbit_end;
@@ -9818,7 +9819,8 @@ Bmad::TrackFromSToS track_from_s_to_s(
     double s_end,
     CoordStruct &orbit_start,
     std::optional<int> ix_branch = std::nullopt,
-    std::optional<int> ix_ele_end = std::nullopt
+    std::optional<int> ix_ele_end = std::nullopt,
+    std::optional<bool> one_turn = std::nullopt
 );
 extern "C" bool fortran_track_func(
     double &s_target /* 0D_NOT_real in */,
@@ -10602,6 +10604,13 @@ extern "C" void fortran_wall3d_initializer(
     bool &err /* 0D_NOT_logical out */
 );
 bool wall3d_initializer(Wall3dStruct &wall3d);
+extern "C" bool fortran_wall3d_section_index(
+    double &s /* 0D_NOT_real in */,
+    void *wall3d /* 0D_NOT_type in */,
+    int *ix0 /* 0D_NOT_integer in */,
+    int &ix /* 0D_NOT_integer out */
+);
+int wall3d_section_index(double s, Wall3dStruct &wall3d, std::optional<int> ix0 = std::nullopt);
 extern "C" void fortran_wall3d_section_initializer(
     void *section /* 0D_NOT_type inout */,
     bool &err /* 0D_NOT_logical out */

@@ -2763,6 +2763,7 @@
 | `WALL3D` | Enum | [Enums](enums.md) |
 | [`wall3d_d_radius`](bmad.md#wall3d_d_radius) | Routine | [Bmad](bmad.md) |
 | [`wall3d_initializer`](bmad.md#wall3d_initializer) | Routine | [Bmad](bmad.md) |
+| [`wall3d_section_index`](bmad.md#wall3d_section_index) | Routine | [Bmad](bmad.md) |
 | [`wall3d_section_initializer`](bmad.md#wall3d_section_initializer) | Routine | [Bmad](bmad.md) |
 | [`wall3d_to_position`](bmad.md#wall3d_to_position) | Routine | [Bmad](bmad.md) |
 | [Wall3DSectionStruct](bmad.md#wall3dsectionstruct) | Struct | [Bmad](bmad.md) |

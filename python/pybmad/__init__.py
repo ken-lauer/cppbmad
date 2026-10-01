@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20260918.0"
+__version__ = "20261001.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -1784,6 +1784,7 @@ w_mat_to_axis_angle = simutils.w_mat_to_axis_angle
 w_mat_to_quat = simutils.w_mat_to_quat
 wall3d_d_radius = bmad.wall3d_d_radius
 wall3d_initializer = bmad.wall3d_initializer
+wall3d_section_index = bmad.wall3d_section_index
 wall3d_section_initializer = bmad.wall3d_section_initializer
 wall3d_to_position = bmad.wall3d_to_position
 word_len = simutils.word_len
@@ -4723,6 +4724,7 @@ __all__ = [
     "w_mat_to_quat",
     "wall3d_d_radius",
     "wall3d_initializer",
+    "wall3d_section_index",
     "wall3d_section_initializer",
     "wall3d_to_position",
     "word_len",
