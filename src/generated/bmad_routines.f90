@@ -8243,7 +8243,7 @@ subroutine fortran_dspline_len (s_chord0, s_chord1, spline, dtheta_ref, dlen) bi
   f_dlen_ptr = f_dlen
 end subroutine
 subroutine fortran_dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_param, ap_point, &
-    check_xy_init) bind(c)
+    ix_angle, check_xy_init) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: aperture_param_struct, aperture_point_struct, branch_struct, coord_struct, ele_struct
@@ -8259,6 +8259,8 @@ subroutine fortran_dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_para
   real(rp) :: f_theta_xy
   type(c_ptr), value :: ap_param  ! 0D_NOT_type
   type(aperture_param_struct), pointer :: f_ap_param
+  integer(c_int) :: ix_angle  ! 0D_NOT_integer
+  integer :: f_ix_angle
   type(c_ptr), intent(in), value :: check_xy_init  ! 0D_NOT_logical
   logical(c_bool), pointer :: f_check_xy_init
   logical, target :: f_check_xy_init_native
@@ -8285,6 +8287,8 @@ subroutine fortran_dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_para
   ! out: f_ap_point 0D_NOT_type
   if (.not. c_associated(ap_point)) return
   call c_f_pointer(ap_point, f_ap_point)
+  ! in: f_ix_angle 0D_NOT_integer
+  f_ix_angle = ix_angle
   ! in: f_check_xy_init 0D_NOT_logical
   if (c_associated(check_xy_init)) then
     call c_f_pointer(check_xy_init, f_check_xy_init_ptr)
@@ -8294,7 +8298,7 @@ subroutine fortran_dynamic_aperture_point (branch, ele0, orb0, theta_xy, ap_para
     f_check_xy_init_native_ptr => null()
   endif
   call dynamic_aperture_point(f_branch, f_ele0, f_orb0, f_theta_xy, f_ap_param, f_ap_point, &
-      f_check_xy_init_native_ptr)
+      f_ix_angle, f_check_xy_init_native_ptr)
 
   ! out: f_ap_point 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type

@@ -959,6 +959,14 @@ void ApertureParamStruct::set_start_ele(const std::string &value) {
       static_cast<int>(value.length())
   );
 }
+bool ApertureParamStruct::debug() const {
+  bool value;
+  aperture_param_struct_get_logical(fortran_ptr_, 0, &value);
+  return value;
+}
+void ApertureParamStruct::set_debug(bool value) {
+  aperture_param_struct_set_logical(fortran_ptr_, 0, value);
+}
 double AperturePointStruct::x() const {
   double value;
   aperture_point_struct_get_real(fortran_ptr_, 0, &value);

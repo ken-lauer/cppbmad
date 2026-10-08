@@ -2069,6 +2069,7 @@ extern "C" void fortran_dynamic_aperture_point(
     double &theta_xy /* 0D_NOT_real in */,
     void *ap_param /* 0D_NOT_type in */,
     void *ap_point /* 0D_NOT_type out */,
+    int &ix_angle /* 0D_NOT_integer in */,
     bool *check_xy_init /* 0D_NOT_logical in */
 );
 AperturePointStruct dynamic_aperture_point(
@@ -2077,6 +2078,7 @@ AperturePointStruct dynamic_aperture_point(
     CoordStruct &orb0,
     double theta_xy,
     ApertureParamStruct &ap_param,
+    int ix_angle,
     std::optional<bool> check_xy_init = std::nullopt
 );
 extern "C" void fortran_dynamic_aperture_scan(

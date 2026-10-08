@@ -2788,7 +2788,7 @@ lat : LatStruct
     As an output, lat: Lattice with names made unique.
 
 key : int
-    Class key of elements to consider.
+    Class key of elements to consider. 0 => all elements will be considered.
 
 suffix : str
     Suffix string. Must have a single "?" character.

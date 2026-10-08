@@ -245,7 +245,7 @@ void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &cls) {
           &NametableStruct::index,
           &NametableStruct::set_index,
           nb::for_getter(nb::keep_alive<0, 1>()),
-          "Sorted index for names(:) array. names(an_index(i)) is in alphabetical order."
+          "Sorted index for %name(:) array. %name(%index(i)) is in alphabetical order."
       )
       .def_prop_rw(
           "n_min",
@@ -257,7 +257,7 @@ void init_nametable_struct(nb::module_ &m, nb::class_<NametableStruct> &cls) {
           "n_max",
           &NametableStruct::n_max,
           &NametableStruct::set_n_max,
-          "Use only names(n_min:n_max) part of array."
+          "Use only %name(n_min:n_max) part of array."
       )
 
       .def("__repr__", [](const NametableStruct &self) { return to_string(self); })

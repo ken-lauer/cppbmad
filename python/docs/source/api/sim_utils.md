@@ -349,9 +349,9 @@ All attributes may be passed to the initializer as arguments:
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `name` | 1D array of str | Array of names. |
-| `index` | 1D array of int | Sorted index for names(:) array. names(an_index(i)) is in alphabetical order. |
+| `index` | 1D array of int | Sorted index for %name(:) array. %name(%index(i)) is in alphabetical order. |
 | `n_min` | int | Set to 0 for use in a lattice. |
-| `n_max` | int | Use only names(n_min:n_max) part of array. |
+| `n_max` | int | Use only %name(n_min:n_max) part of array. |
 
 ::: pybmad.OutIoOutputDirectStruct
     options:
