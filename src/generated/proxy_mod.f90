@@ -6118,6 +6118,33 @@ contains
     end select
   end subroutine
 
+  ! dispatch: aperture_param_struct%logical (1 fields)
+
+  subroutine aperture_param_struct_get_logical(struct_obj_ptr, field_id, value_out) &
+      bind(c, name='aperture_param_struct_get_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(out) :: value_out
+    type(aperture_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); value_out = struct_obj%debug
+    end select
+  end subroutine
+
+
+  subroutine aperture_param_struct_set_logical(struct_obj_ptr, field_id, value_in) &
+      bind(c, name='aperture_param_struct_set_logical')
+    type(c_ptr), intent(in), value :: struct_obj_ptr
+    integer(c_int), intent(in), value :: field_id
+    logical(c_bool), intent(in), value :: value_in
+    type(aperture_param_struct), pointer :: struct_obj
+    call c_f_pointer(struct_obj_ptr, struct_obj)
+    select case(field_id)
+    case(0); struct_obj%debug = value_in
+    end select
+  end subroutine
+
   ! dispatch: aperture_param_struct%real (6 fields)
 
   subroutine aperture_param_struct_get_real(struct_obj_ptr, field_id, value_out) &

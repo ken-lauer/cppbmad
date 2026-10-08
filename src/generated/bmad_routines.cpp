@@ -3462,6 +3462,7 @@ AperturePointStruct Bmad::dynamic_aperture_point(
     CoordStruct &orb0,
     double theta_xy,
     ApertureParamStruct &ap_param,
+    int ix_angle,
     std::optional<bool> check_xy_init
 ) {
   AperturePointStruct _ap_point;
@@ -3478,6 +3479,7 @@ AperturePointStruct Bmad::dynamic_aperture_point(
                                  /* double& */ theta_xy,
                                  /* void* */ ap_param.get_fortran_ptr(),
                                  /* void* */ _ap_point.get_fortran_ptr(),
+                                 /* int& */ ix_angle,
                                  /* bool* */ _check_xy_init);
   return std::move(_ap_point);
 }

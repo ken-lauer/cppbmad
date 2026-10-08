@@ -145,7 +145,8 @@ std::string to_string(const ApertureParamStruct &self) {
        std::pair{"y_init", to_string(self.y_init())},
        std::pair{"rel_accuracy", to_string(self.rel_accuracy())},
        std::pair{"abs_accuracy", to_string(self.abs_accuracy())},
-       std::pair{"start_ele", self.start_ele()}}
+       std::pair{"start_ele", self.start_ele()},
+       std::pair{"debug", to_string(self.debug())}}
   );
 }
 std::string to_string(const AperturePointStruct &self) {

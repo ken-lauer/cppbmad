@@ -573,6 +573,8 @@ void anormal_mode_struct_get_synch_int_info(const void *s, double **d, int *boun
 void anormal_mode_struct_set_synch_int(void *s, const void *d, const int *shape);
 void aperture_param_struct_get_integer(const void *struct_obj, int field_id, int *value_out);
 void aperture_param_struct_set_integer(void *struct_obj, int field_id, int value_in);
+void aperture_param_struct_get_logical(const void *struct_obj, int field_id, bool *value_out);
+void aperture_param_struct_set_logical(void *struct_obj, int field_id, bool value_in);
 void aperture_param_struct_get_real(const void *struct_obj, int field_id, double *value_out);
 void aperture_param_struct_set_real(void *struct_obj, int field_id, double value_in);
 void aperture_param_struct_get_start_ele_info(const void *s, char **d, int *bounds, bool *a);
@@ -18486,7 +18488,8 @@ public:
       std::optional<double> y_init = std::nullopt,
       std::optional<double> rel_accuracy = std::nullopt,
       std::optional<double> abs_accuracy = std::nullopt,
-      std::optional<std::string> start_ele = std::nullopt
+      std::optional<std::string> start_ele = std::nullopt,
+      std::optional<bool> debug = std::nullopt
   )
       : FortranProxy() {
     if (min_angle)
@@ -18507,6 +18510,8 @@ public:
       set_abs_accuracy(*abs_accuracy);
     if (start_ele)
       set_start_ele(*start_ele);
+    if (debug)
+      set_debug(*debug);
   }
 
   double min_angle() const; // 0D_NOT_real [dispatch:0]
@@ -18527,6 +18532,8 @@ public:
   void set_abs_accuracy(double value);
   std::string start_ele() const; // 0D_NOT_character
   void set_start_ele(const std::string &value);
+  bool debug() const; // 0D_NOT_logical [dispatch:0]
+  void set_debug(bool value);
 };
 
 template <>

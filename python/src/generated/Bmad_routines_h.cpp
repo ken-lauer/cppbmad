@@ -267,12 +267,18 @@ err_flag : bool
       nb::arg("orb"),
       nb::arg("mat6") = nb::none(),
       nb::arg("make_matrix") = nb::none(),
-      R"""(Subroutine to track through the edge field of an sbend using a 2nd order map.
+      R"""(Subroutine to track through the edge field of an sbend using a symplectic 2nd order map.
 Adapted from:
-  Hwang and S. Y. Lee,
+  K. Hwang and S. Y. Lee,
   "Dipole Fringe Field Thin Map for Compact Synchrotrons",
-  Phys. Rev. ST Accel. Beams, 12, 122401, (2015).
+  Phys. Rev. ST Accel. Beams, 18, 122401, (2015).
 See the Bmad manual for details.
+
+The Lie generator is Omega = K + B where K is independent of the transverse momenta and
+B = B1 + B2 + B3 is linear in them. The map is the product
+  exp(:K/2:) exp(:B1:) exp(:B2:) exp(:B3:) exp(:K/2:)
+where each factor is evaluated exactly. Since {K, {K, B}} = 0, this agrees with exp(:Omega:)
+through second order and is exactly symplectic. Backwards time tracking uses the exact inverse map.
 
 Parameters
 ----------

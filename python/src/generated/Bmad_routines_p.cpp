@@ -1842,6 +1842,7 @@ branch_ptr : BranchStruct, optional
       R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele1 (lat, ix_nametable) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
     Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
@@ -1883,6 +1884,7 @@ ele_ptr : EleStruct, optional
       R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele1 (lat, ix_nametable) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
     Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
@@ -1921,6 +1923,7 @@ ele_ptr : EleStruct, optional
       R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele1 (lat, ix_nametable) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
     Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)
@@ -1959,6 +1962,7 @@ ele_ptr : EleStruct, optional
       R"""(Routine to return a pointer to an element.
 pointer_to_ele is an overloaded name for:
     Function pointer_to_ele1 (lat, ix_ele, ix_branch) result (ele_ptr)
+    Function pointer_to_ele1 (lat, ix_nametable) result (ele_ptr)
     Function pointer_to_ele2 (lat, ele_loc) result (ele_ptr)
     Function pointer_to_ele3 (lat, ele_name) result (ele_ptr)
     Function pointer_to_ele4 (lat, foreign_ele) result (ele_ptr)

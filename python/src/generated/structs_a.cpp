@@ -360,7 +360,8 @@ void init_aperture_param_struct(nb::module_ &m, nb::class_<ApertureParamStruct> 
              std::optional<double>,
              std::optional<double>,
              std::optional<double>,
-             std::optional<std::string>>(),
+             std::optional<std::string>,
+             std::optional<bool>>(),
          nb::arg("min_angle") = nb::none(),
          nb::arg("max_angle") = nb::none(),
          nb::arg("n_angle") = nb::none(),
@@ -369,7 +370,8 @@ void init_aperture_param_struct(nb::module_ &m, nb::class_<ApertureParamStruct> 
          nb::arg("y_init") = nb::none(),
          nb::arg("rel_accuracy") = nb::none(),
          nb::arg("abs_accuracy") = nb::none(),
-         nb::arg("start_ele") = nb::none()
+         nb::arg("start_ele") = nb::none(),
+         nb::arg("debug") = nb::none()
   )
       .def_prop_rw(
           "min_angle",
@@ -417,6 +419,12 @@ void init_aperture_param_struct(nb::module_ &m, nb::class_<ApertureParamStruct> 
           &ApertureParamStruct::start_ele,
           &ApertureParamStruct::set_start_ele,
           "Element to start tracking at."
+      )
+      .def_prop_rw(
+          "debug",
+          &ApertureParamStruct::debug,
+          &ApertureParamStruct::set_debug,
+          "Used for code debugging."
       )
 
       .def("__repr__", [](const ApertureParamStruct &self) { return to_string(self); })

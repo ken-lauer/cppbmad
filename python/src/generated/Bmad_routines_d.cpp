@@ -478,6 +478,7 @@ dlen : float
       nb::arg("orb0"),
       nb::arg("theta_xy"),
       nb::arg("ap_param"),
+      nb::arg("ix_angle"),
       nb::arg("check_xy_init") = nb::none(),
       R"""(Subroutine to determine one dynamic aperture point by tracking.
 This routine works by determining where on a radial line y = const * x the aperture is.
@@ -499,6 +500,9 @@ theta_xy : float
 
 ap_param : ApertureParamStruct
     Structure holding the input data:
+
+ix_angle : int
+    Angle index. Used for printing.
 
 check_xy_init : bool, optional
     If True, do not check that aperture_param.x_init and .y_init are non-zero. Default is True.
