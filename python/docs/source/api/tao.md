@@ -2301,6 +2301,17 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_complete
+
+Not exposed at the top level — import as `pybmad.tao.tao_complete`.
+
+Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L63)
+
+::: pybmad.tao.tao_complete
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_constraint_type_name
 
 Not exposed at the top level — import as `pybmad.tao.tao_constraint_type_name`.
@@ -2774,6 +2785,17 @@ Fortran source: [`tao/code/tao_input_struct.f90`]({{ upstream_source }}/tao/code
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_enum_value_names
+
+Not exposed at the top level — import as `pybmad.tao.tao_enum_value_names`.
+
+Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L153)
+
+::: pybmad.tao.tao_enum_value_names
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_eval_floor_orbit
 
 Not exposed at the top level — import as `pybmad.tao.tao_eval_floor_orbit`.
@@ -2789,7 +2811,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_a_datum`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L246)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L247)
 
 ::: pybmad.tao.tao_evaluate_a_datum
     options:
@@ -2811,7 +2833,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_element_parameters`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L335)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L336)
 
 ::: pybmad.tao.tao_evaluate_element_parameters
     options:
@@ -2822,7 +2844,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_expression`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L260)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L261)
 
 ::: pybmad.tao.tao_evaluate_expression
     options:
@@ -2833,7 +2855,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_expression_new`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L282)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L283)
 
 ::: pybmad.tao.tao_evaluate_expression_new
     options:
@@ -2844,7 +2866,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_expression_old`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L304)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L305)
 
 ::: pybmad.tao.tao_evaluate_expression_old
     options:
@@ -2877,7 +2899,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_tree`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L350)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L351)
 
 ::: pybmad.tao.tao_evaluate_tree
     options:
@@ -2888,7 +2910,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_evaluate_tune`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L326)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L327)
 
 ::: pybmad.tao.tao_evaluate_tune
     options:
@@ -2921,7 +2943,7 @@ Fortran source: [`tao/code/tao_expression_tree_mod.f90`]({{ upstream_source }}/t
 
 Not exposed at the top level — import as `pybmad.tao.tao_find_data`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L362)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L363)
 
 ::: pybmad.tao.tao_find_data
     options:
@@ -2932,7 +2954,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_find_plot_region`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L397)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L398)
 
 ::: pybmad.tao.tao_find_plot_region
     options:
@@ -2943,7 +2965,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_find_plots`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L406)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L407)
 
 ::: pybmad.tao.tao_find_plots
     options:
@@ -2954,7 +2976,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_find_var`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L382)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L383)
 
 ::: pybmad.tao.tao_find_var
     options:
@@ -2965,7 +2987,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_fixer`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L417)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L418)
 
 ::: pybmad.tao.tao_fixer
     options:
@@ -2976,7 +2998,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_floor_to_screen`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L422)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L423)
 
 ::: pybmad.tao.tao_floor_to_screen
     options:
@@ -2987,7 +3009,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_floor_to_screen_coords`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L429)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L430)
 
 ::: pybmad.tao.tao_floor_to_screen_coords
     options:
@@ -3020,7 +3042,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_get_opt_vars`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L436)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L437)
 
 ::: pybmad.tao.tao_get_opt_vars
     options:
@@ -3031,7 +3053,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_get_user_input`.
 
-Fortran source: [`tao/code/tao_get_user_input_mod.f90`]({{ upstream_source }}/tao/code/tao_get_user_input_mod.f90#L46)
+Fortran source: [`tao/code/tao_get_user_input_mod.f90`]({{ upstream_source }}/tao/code/tao_get_user_input_mod.f90#L47)
 
 ::: pybmad.tao.tao_get_user_input
     options:
@@ -3097,7 +3119,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_graph_name`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L447)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L448)
 
 ::: pybmad.tao.tao_graph_name
     options:
@@ -3141,7 +3163,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_help`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L455)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L456)
 
 ::: pybmad.tao.tao_help
     options:
@@ -3152,7 +3174,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_init`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L462)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L463)
 
 ::: pybmad.tao.tao_init
     options:
@@ -3229,7 +3251,7 @@ Fortran source: [`tao/code/tao_init_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_init_find_elements`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L467)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L468)
 
 ::: pybmad.tao.tao_init_find_elements
     options:
@@ -3251,7 +3273,7 @@ Fortran source: [`tao/code/tao_init_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_init_lattice`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L477)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L478)
 
 ::: pybmad.tao.tao_init_lattice
     options:
@@ -3262,7 +3284,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_init_plotting`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L483)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L484)
 
 ::: pybmad.tao.tao_init_plotting
     options:
@@ -3306,7 +3328,7 @@ Fortran source: [`tao/code/tao_lattice_calc_mod.f90`]({{ upstream_source }}/tao/
 
 Not exposed at the top level — import as `pybmad.tao.tao_is_valid_name`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L488)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L489)
 
 ::: pybmad.tao.tao_is_valid_name
     options:
@@ -3317,7 +3339,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_json_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L494)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L495)
 
 ::: pybmad.tao.tao_json_cmd
     options:
@@ -3328,7 +3350,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_key_info_to_str`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L500)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L501)
 
 ::: pybmad.tao.tao_key_info_to_str
     options:
@@ -3339,7 +3361,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_lat_bookkeeper`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L508)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L509)
 
 ::: pybmad.tao.tao_lat_bookkeeper
     options:
@@ -3350,7 +3372,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_lat_emit_calc`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L516)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L517)
 
 ::: pybmad.tao.tao_lat_emit_calc
     options:
@@ -3361,7 +3383,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_lat_sigma_calc_needed`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L525)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L526)
 
 ::: pybmad.tao.tao_lat_sigma_calc_needed
     options:
@@ -3394,7 +3416,7 @@ Fortran source: [`tao/code/tao_struct.f90`]({{ upstream_source }}/tao/code/tao_s
 
 Not exposed at the top level — import as `pybmad.tao.tao_lattice_calc`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L532)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L533)
 
 ::: pybmad.tao.tao_lattice_calc
     options:
@@ -3416,7 +3438,7 @@ Fortran source: [`tao/code/tao_struct.f90`]({{ upstream_source }}/tao/code/tao_s
 
 Not exposed at the top level — import as `pybmad.tao.tao_limit_calc`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L538)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L539)
 
 ::: pybmad.tao.tao_limit_calc
     options:
@@ -3438,7 +3460,7 @@ Fortran source: [`tao/code/tao_lm_optimizer_mod.f90`]({{ upstream_source }}/tao/
 
 Not exposed at the top level — import as `pybmad.tao.tao_lmdif_optimizer`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L543)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L544)
 
 ::: pybmad.tao.tao_lmdif_optimizer
     options:
@@ -3460,7 +3482,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_locate_all_elements`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L548)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L549)
 
 ::: pybmad.tao.tao_locate_all_elements
     options:
@@ -3471,7 +3493,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_locate_elements`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L557)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L558)
 
 ::: pybmad.tao.tao_locate_elements
     options:
@@ -3482,7 +3504,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_mark_lattice_ele`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L570)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L571)
 
 ::: pybmad.tao.tao_mark_lattice_ele
     options:
@@ -3493,7 +3515,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_merit`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L576)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L577)
 
 ::: pybmad.tao.tao_merit
     options:
@@ -3526,7 +3548,7 @@ Fortran source: [`tao/code/tao_command_mod.f90`]({{ upstream_source }}/tao/code/
 
 Not exposed at the top level — import as `pybmad.tao.tao_one_turn_map_calc_needed`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L583)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L584)
 
 ::: pybmad.tao.tao_one_turn_map_calc_needed
     options:
@@ -3537,7 +3559,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_open_file`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L590)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L591)
 
 ::: pybmad.tao.tao_open_file
     options:
@@ -3548,7 +3570,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_open_scratch_file`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L598)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L599)
 
 ::: pybmad.tao.tao_open_scratch_file
     options:
@@ -3559,7 +3581,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_optimization_status`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L604)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L605)
 
 ::: pybmad.tao.tao_optimization_status
     options:
@@ -3581,7 +3603,7 @@ Fortran source: [`tao/code/tao_wave_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_oreint_building_wall_pt`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L611)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L612)
 
 ::: pybmad.tao.tao_oreint_building_wall_pt
     options:
@@ -3592,7 +3614,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_param_value_at_s`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L645)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L646)
 
 ::: pybmad.tao.tao_param_value_at_s
     options:
@@ -3614,7 +3636,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_parse_command_args`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L657)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L658)
 
 ::: pybmad.tao.tao_parse_command_args
     options:
@@ -3625,7 +3647,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_parse_element_param_str`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L664)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L665)
 
 ::: pybmad.tao.tao_parse_element_param_str
     options:
@@ -3647,7 +3669,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_pause_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L672)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L673)
 
 ::: pybmad.tao.tao_pause_cmd
     options:
@@ -3680,7 +3702,7 @@ Fortran source: [`tao/code/tao_wave_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_pick_universe`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L678)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L679)
 
 ::: pybmad.tao.tao_pick_universe
     options:
@@ -3691,7 +3713,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_pipe_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L688)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L689)
 
 ::: pybmad.tao.tao_pipe_cmd
     options:
@@ -3702,7 +3724,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_place_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L694)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L695)
 
 ::: pybmad.tao.tao_place_cmd
     options:
@@ -3713,7 +3735,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_plot_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L701)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L702)
 
 ::: pybmad.tao.tao_plot_cmd
     options:
@@ -3757,7 +3779,7 @@ Fortran source: [`tao/code/tao_plot_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_plot_setup`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L707)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L708)
 
 ::: pybmad.tao.tao_plot_setup
     options:
@@ -3768,7 +3790,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_plot_struct_transfer`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L711)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L712)
 
 ::: pybmad.tao.tao_plot_struct_transfer
     options:
@@ -3790,7 +3812,7 @@ Fortran source: [`tao/code/tao_plot_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_branches`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L625)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L626)
 
 ::: pybmad.tao.tao_pointer_to_branches
     options:
@@ -3801,7 +3823,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_building_wall_shape`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L717)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L718)
 
 ::: pybmad.tao.tao_pointer_to_building_wall_shape
     options:
@@ -3812,7 +3834,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_datum`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L617)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L618)
 
 ::: pybmad.tao.tao_pointer_to_datum
     options:
@@ -3834,7 +3856,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_ele_shape`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L724)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L725)
 
 ::: pybmad.tao.tao_pointer_to_ele_shape
     options:
@@ -3845,7 +3867,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_tao_lat`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L736)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L738)
 
 ::: pybmad.tao.tao_pointer_to_tao_lat
     options:
@@ -3858,8 +3880,8 @@ Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_universe`.
 
 Fortran sources (overloaded):
 
-- `tao_pointer_to_universe_int`: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1268)
-- `tao_pointer_to_universe_str`: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1300)
+- `tao_pointer_to_universe_int`: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1270)
+- `tao_pointer_to_universe_str`: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1302)
 
 ::: pybmad.tao.tao_pointer_to_universe
     options:
@@ -3870,7 +3892,7 @@ Fortran sources (overloaded):
 
 Not exposed at the top level — import as `pybmad.tao.tao_pointer_to_universes`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L634)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L635)
 
 ::: pybmad.tao.tao_pointer_to_universes
     options:
@@ -3903,7 +3925,7 @@ Fortran source: [`tao/code/tao_init_variables_mod.f90`]({{ upstream_source }}/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_print_command_line_info`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L744)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L746)
 
 ::: pybmad.tao.tao_print_command_line_info
     options:
@@ -3925,7 +3947,7 @@ Fortran source: [`tao/code/tao_top10_mod.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_ptc_normal_form`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L749)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L751)
 
 ::: pybmad.tao.tao_ptc_normal_form
     options:
@@ -3936,7 +3958,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_python_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L757)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L759)
 
 ::: pybmad.tao.tao_python_cmd
     options:
@@ -3947,7 +3969,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_quiet_set`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L876)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L878)
 
 ::: pybmad.tao.tao_quiet_set
     options:
@@ -3958,7 +3980,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_rad_int_calc_needed`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L763)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L765)
 
 ::: pybmad.tao.tao_rad_int_calc_needed
     options:
@@ -3969,7 +3991,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_re_allocate_expression_info`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L770)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L772)
 
 ::: pybmad.tao.tao_re_allocate_expression_info
     options:
@@ -4002,7 +4024,7 @@ Fortran source: [`tao/code/tao_command_mod.f90`]({{ upstream_source }}/tao/code/
 
 Not exposed at the top level — import as `pybmad.tao.tao_read_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L788)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L790)
 
 ::: pybmad.tao.tao_read_cmd
     options:
@@ -4013,9 +4035,20 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_read_phase_space_index`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L794)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L796)
 
 ::: pybmad.tao.tao_read_phase_space_index
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
+### tao_register_completion
+
+Not exposed at the top level — import as `pybmad.tao.tao_register_completion`.
+
+Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L1027)
+
+::: pybmad.tao.tao_register_completion
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -4024,7 +4057,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_regression_test`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L778)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L780)
 
 ::: pybmad.tao.tao_regression_test
     options:
@@ -4035,7 +4068,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_remove_blank_characters`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L783)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L785)
 
 ::: pybmad.tao.tao_remove_blank_characters
     options:
@@ -4046,7 +4079,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_run_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L802)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L804)
 
 ::: pybmad.tao.tao_run_cmd
     options:
@@ -4079,7 +4112,7 @@ Fortran source: [`tao/code/tao_scale_mod.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_scale_ping_data`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L808)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L810)
 
 ::: pybmad.tao.tao_scale_ping_data
     options:
@@ -4112,7 +4145,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_beam_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L986)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L992)
 
 ::: pybmad.tao.tao_set_beam_cmd
     options:
@@ -4123,7 +4156,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_beam_init_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1141)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1143)
 
 ::: pybmad.tao.tao_set_beam_init_cmd
     options:
@@ -4134,7 +4167,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_bmad_com_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L734)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L735)
 
 ::: pybmad.tao.tao_set_bmad_com_cmd
     options:
@@ -4145,7 +4178,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_branch_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2308)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2310)
 
 ::: pybmad.tao.tao_set_branch_cmd
     options:
@@ -4156,7 +4189,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_calculate_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L196)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L197)
 
 ::: pybmad.tao.tao_set_calculate_cmd
     options:
@@ -4167,7 +4200,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_curve_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1489)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1491)
 
 ::: pybmad.tao.tao_set_curve_cmd
     options:
@@ -4189,7 +4222,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_data_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2411)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2413)
 
 ::: pybmad.tao.tao_set_data_cmd
     options:
@@ -4200,7 +4233,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_data_useit_opt`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L814)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L816)
 
 ::: pybmad.tao.tao_set_data_useit_opt
     options:
@@ -4211,7 +4244,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_default_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2741)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2743)
 
 ::: pybmad.tao.tao_set_default_cmd
     options:
@@ -4222,7 +4255,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_drawing_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3513)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3515)
 
 ::: pybmad.tao.tao_set_drawing_cmd
     options:
@@ -4233,7 +4266,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_dynamic_aperture_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2794)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2796)
 
 ::: pybmad.tao.tao_set_dynamic_aperture_cmd
     options:
@@ -4244,7 +4277,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_elements_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3034)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3036)
 
 ::: pybmad.tao.tao_set_elements_cmd
     options:
@@ -4255,7 +4288,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_flags_for_changed_attribute`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L820)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L822)
 
 ::: pybmad.tao.tao_set_flags_for_changed_attribute
     options:
@@ -4277,7 +4310,7 @@ Fortran source: [`tao/code/tao_plot_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_geodesic_lm_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L825)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L831)
 
 ::: pybmad.tao.tao_set_geodesic_lm_cmd
     options:
@@ -4288,7 +4321,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_global_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L485)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L486)
 
 ::: pybmad.tao.tao_set_global_cmd
     options:
@@ -4299,7 +4332,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_graph_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1933)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1935)
 
 ::: pybmad.tao.tao_set_graph_cmd
     options:
@@ -4310,7 +4343,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_integer_value`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3330)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3332)
 
 ::: pybmad.tao.tao_set_integer_value
     options:
@@ -4321,7 +4354,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_invalid`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L830)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L832)
 
 ::: pybmad.tao.tao_set_invalid
     options:
@@ -4332,7 +4365,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_key_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L241)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L242)
 
 ::: pybmad.tao.tao_set_key_cmd
     options:
@@ -4343,7 +4376,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_lattice_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L345)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L346)
 
 ::: pybmad.tao.tao_set_lattice_cmd
     options:
@@ -4354,7 +4387,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_logical_value`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3281)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3283)
 
 ::: pybmad.tao.tao_set_logical_value
     options:
@@ -4365,7 +4398,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_openmp_n_threads`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L156)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L157)
 
 ::: pybmad.tao.tao_set_openmp_n_threads
     options:
@@ -4376,7 +4409,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_opt_vars`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L851)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L853)
 
 ::: pybmad.tao.tao_set_opt_vars
     options:
@@ -4387,7 +4420,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_opti_de_param_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L877)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L883)
 
 ::: pybmad.tao.tao_set_opti_de_param_cmd
     options:
@@ -4398,7 +4431,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_particle_start_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1313)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1315)
 
 ::: pybmad.tao.tao_set_particle_start_cmd
     options:
@@ -4409,7 +4442,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_plot_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1754)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1756)
 
 ::: pybmad.tao.tao_set_plot_cmd
     options:
@@ -4420,7 +4453,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_plot_page_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1402)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1404)
 
 ::: pybmad.tao.tao_set_plot_page_cmd
     options:
@@ -4442,7 +4475,7 @@ Fortran source: [`tao/code/tao_input_struct.f90`]({{ upstream_source }}/tao/code
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_ptc_com_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L785)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L786)
 
 ::: pybmad.tao.tao_set_ptc_com_cmd
     options:
@@ -4453,7 +4486,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_qp_axis_struct`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3764)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3766)
 
 ::: pybmad.tao.tao_set_qp_axis_struct
     options:
@@ -4464,7 +4497,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_qp_point_struct`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3882)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3884)
 
 ::: pybmad.tao.tao_set_qp_point_struct
     options:
@@ -4475,7 +4508,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_qp_rect_struct`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3703)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3705)
 
 ::: pybmad.tao.tao_set_qp_rect_struct
     options:
@@ -4486,7 +4519,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_ran_state_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L282)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L283)
 
 ::: pybmad.tao.tao_set_ran_state_cmd
     options:
@@ -4497,7 +4530,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_real_value`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3455)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3457)
 
 ::: pybmad.tao.tao_set_real_value
     options:
@@ -4508,7 +4541,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_region_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1876)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L1878)
 
 ::: pybmad.tao.tao_set_region_cmd
     options:
@@ -4519,7 +4552,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_space_charge_com_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L662)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L663)
 
 ::: pybmad.tao.tao_set_space_charge_com_cmd
     options:
@@ -4530,7 +4563,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_symbolic_number_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3612)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L3614)
 
 ::: pybmad.tao.tao_set_symbolic_number_cmd
     options:
@@ -4541,7 +4574,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_tune_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L26)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L27)
 
 ::: pybmad.tao.tao_set_tune_cmd
     options:
@@ -4552,7 +4585,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_universe_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2881)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2883)
 
 ::: pybmad.tao.tao_set_universe_cmd
     options:
@@ -4563,7 +4596,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_var_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2162)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L2164)
 
 ::: pybmad.tao.tao_set_var_cmd
     options:
@@ -4574,7 +4607,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_var_model_value`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L840)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L842)
 
 ::: pybmad.tao.tao_set_var_model_value
     options:
@@ -4585,7 +4618,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_var_useit_opt`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L848)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L850)
 
 ::: pybmad.tao.tao_set_var_useit_opt
     options:
@@ -4596,7 +4629,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_wave_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L925)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L931)
 
 ::: pybmad.tao.tao_set_wave_cmd
     options:
@@ -4607,7 +4640,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_z_tune_cmd`.
 
-Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L109)
+Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_set_mod.f90#L110)
 
 ::: pybmad.tao.tao_set_z_tune_cmd
     options:
@@ -4618,7 +4651,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_setup_key_table`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L858)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L860)
 
 ::: pybmad.tao.tao_setup_key_table
     options:
@@ -4629,7 +4662,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_shape_init`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L923)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L925)
 
 ::: pybmad.tao.tao_shape_init
     options:
@@ -4640,7 +4673,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_show_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L931)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L933)
 
 ::: pybmad.tao.tao_show_cmd
     options:
@@ -4662,7 +4695,7 @@ Fortran source: [`tao/code/tao_top10_mod.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_show_this`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L936)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L938)
 
 ::: pybmad.tao.tao_show_this
     options:
@@ -4673,7 +4706,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_single_mode`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L882)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L884)
 
 ::: pybmad.tao.tao_single_mode
     options:
@@ -4695,7 +4728,7 @@ Fortran source: [`tao/code/tao_lattice_calc_mod.f90`]({{ upstream_source }}/tao/
 
 Not exposed at the top level — import as `pybmad.tao.tao_spin_matrices_calc_needed`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L913)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L915)
 
 ::: pybmad.tao.tao_spin_matrices_calc_needed
     options:
@@ -4706,7 +4739,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_spin_tracking_turn_on`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L920)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L922)
 
 ::: pybmad.tao.tao_spin_tracking_turn_on
     options:
@@ -4717,7 +4750,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_split_component`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L887)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L889)
 
 ::: pybmad.tao.tao_split_component
     options:
@@ -4728,7 +4761,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_srdt_calc_needed`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L863)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L865)
 
 ::: pybmad.tao.tao_srdt_calc_needed
     options:
@@ -4739,7 +4772,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_subin_uni_number`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L944)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L946)
 
 ::: pybmad.tao.tao_subin_uni_number
     options:
@@ -4757,11 +4790,22 @@ Fortran source: [`tao/code/tao_svd_optimizer_mod.f90`]({{ upstream_source }}/tao
       show_root_heading: false
       show_root_toc_entry: false
 
+### tao_switches_for
+
+Not exposed at the top level — import as `pybmad.tao.tao_switches_for`.
+
+Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L310)
+
+::: pybmad.tao.tao_switches_for
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+
 ### tao_symbol_import_from_lat
 
 Not exposed at the top level — import as `pybmad.tao.tao_symbol_import_from_lat`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L870)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L872)
 
 ::: pybmad.tao.tao_symbol_import_from_lat
     options:
@@ -4772,7 +4816,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_taper_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L952)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L954)
 
 ::: pybmad.tao.tao_taper_cmd
     options:
@@ -4816,7 +4860,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_to_real`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L958)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L960)
 
 ::: pybmad.tao.tao_to_real
     options:
@@ -4871,7 +4915,7 @@ Fortran source: [`tao/code/tao_top10_mod.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_top_level`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L966)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L968)
 
 ::: pybmad.tao.tao_top_level
     options:
@@ -4893,7 +4937,7 @@ Fortran source: [`tao/code/tao_data_and_eval_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_turn_on_special_calcs_if_needed_for_plotting`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L972)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L974)
 
 ::: pybmad.tao.tao_turn_on_special_calcs_if_needed_for_plotting
     options:
@@ -4915,7 +4959,7 @@ Fortran source: [`tao/code/tao_expression_tree_mod.f90`]({{ upstream_source }}/t
 
 Not exposed at the top level — import as `pybmad.tao.tao_uni_atsign_index`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1364)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1366)
 
 ::: pybmad.tao.tao_uni_atsign_index
     options:
@@ -4926,7 +4970,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_universe_index`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L977)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L979)
 
 ::: pybmad.tao.tao_universe_index
     options:
@@ -4937,7 +4981,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_use_data`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L984)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L986)
 
 ::: pybmad.tao.tao_use_data
     options:
@@ -4948,7 +4992,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_use_var`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L990)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L992)
 
 ::: pybmad.tao.tao_use_var
     options:
@@ -4959,7 +5003,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_user_is_terminating_optimization`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L996)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L998)
 
 ::: pybmad.tao.tao_user_is_terminating_optimization
     options:
@@ -4970,7 +5014,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var1_name`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1001)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1003)
 
 ::: pybmad.tao.tao_var1_name
     options:
@@ -4981,7 +5025,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var_attrib_name`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1008)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1010)
 
 ::: pybmad.tao.tao_var_attrib_name
     options:
@@ -5003,7 +5047,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var_repoint`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1015)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1017)
 
 ::: pybmad.tao.tao_var_repoint
     options:
@@ -5014,7 +5058,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var_show_use`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1018)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1020)
 
 ::: pybmad.tao.tao_var_show_use
     options:
@@ -5025,7 +5069,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var_target_calc`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1026)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1028)
 
 ::: pybmad.tao.tao_var_target_calc
     options:
@@ -5036,7 +5080,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_var_useit_plot_calc`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1031)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1033)
 
 ::: pybmad.tao.tao_var_useit_plot_calc
     options:
@@ -5102,7 +5146,7 @@ Fortran source: [`tao/code/tao_wave_mod.f90`]({{ upstream_source }}/tao/code/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_write_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1038)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1040)
 
 ::: pybmad.tao.tao_write_cmd
     options:
@@ -5124,7 +5168,7 @@ Fortran source: [`tao/code/tao_top10_mod.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_x_axis_cmd`.
 
-Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1043)
+Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/tao_interface.f90#L1045)
 
 ::: pybmad.tao.tao_x_axis_cmd
     options:

@@ -2175,6 +2175,7 @@
 | [`tao_cmd_history_record`](tao.md#tao_cmd_history_record) | Routine | [Tao](tao.md) |
 | [`tao_cmd_split`](tao.md#tao_cmd_split) | Routine | [Tao](tao.md) |
 | [`tao_command`](tao.md#tao_command) | Routine | [Tao](tao.md) |
+| [`tao_complete`](tao.md#tao_complete) | Routine | [Tao](tao.md) |
 | [`tao_constraint_type_name`](tao.md#tao_constraint_type_name) | Routine | [Tao](tao.md) |
 | [`tao_control_tree_list`](tao.md#tao_control_tree_list) | Routine | [Tao](tao.md) |
 | [`tao_count_strings`](tao.md#tao_count_strings) | Routine | [Tao](tao.md) |
@@ -2218,6 +2219,7 @@
 | [`tao_ele_shape_info`](tao.md#tao_ele_shape_info) | Routine | [Tao](tao.md) |
 | [`tao_ele_shape_input_to_struct`](tao.md#tao_ele_shape_input_to_struct) | Routine | [Tao](tao.md) |
 | [`tao_ele_shape_struct_to_input`](tao.md#tao_ele_shape_struct_to_input) | Routine | [Tao](tao.md) |
+| [`tao_enum_value_names`](tao.md#tao_enum_value_names) | Routine | [Tao](tao.md) |
 | [`tao_eval_floor_orbit`](tao.md#tao_eval_floor_orbit) | Routine | [Tao](tao.md) |
 | [`tao_evaluate_a_datum`](tao.md#tao_evaluate_a_datum) | Routine | [Tao](tao.md) |
 | [`tao_evaluate_datum_at_s`](tao.md#tao_evaluate_datum_at_s) | Routine | [Tao](tao.md) |
@@ -2331,6 +2333,7 @@
 | [`tao_re_execute`](tao.md#tao_re_execute) | Routine | [Tao](tao.md) |
 | [`tao_read_cmd`](tao.md#tao_read_cmd) | Routine | [Tao](tao.md) |
 | [`tao_read_phase_space_index`](tao.md#tao_read_phase_space_index) | Routine | [Tao](tao.md) |
+| [`tao_register_completion`](tao.md#tao_register_completion) | Routine | [Tao](tao.md) |
 | [`tao_regression_test`](tao.md#tao_regression_test) | Routine | [Tao](tao.md) |
 | [`tao_remove_blank_characters`](tao.md#tao_remove_blank_characters) | Routine | [Tao](tao.md) |
 | [`tao_run_cmd`](tao.md#tao_run_cmd) | Routine | [Tao](tao.md) |
@@ -2398,6 +2401,7 @@
 | [`tao_srdt_calc_needed`](tao.md#tao_srdt_calc_needed) | Routine | [Tao](tao.md) |
 | [`tao_subin_uni_number`](tao.md#tao_subin_uni_number) | Routine | [Tao](tao.md) |
 | [`tao_svd_optimizer`](tao.md#tao_svd_optimizer) | Routine | [Tao](tao.md) |
+| [`tao_switches_for`](tao.md#tao_switches_for) | Routine | [Tao](tao.md) |
 | [`tao_symbol_import_from_lat`](tao.md#tao_symbol_import_from_lat) | Routine | [Tao](tao.md) |
 | [`tao_taper_cmd`](tao.md#tao_taper_cmd) | Routine | [Tao](tao.md) |
 | [`tao_to_change_number`](tao.md#tao_to_change_number) | Routine | [Tao](tao.md) |

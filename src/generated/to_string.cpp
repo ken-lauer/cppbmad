@@ -5350,6 +5350,16 @@ std::string to_string(const Bmad::T6ToB123 &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Tao::TaoComplete &self) {
+  return repr(
+      &self,
+      "Tao::TaoComplete",
+      {std::pair{"word_start", to_string(self.word_start)},
+       std::pair{"context", self.context},
+       std::pair{"matches", to_string(self.matches)},
+       std::pair{"common_prefix", self.common_prefix}}
+  );
+}
 std::string to_string(const Tao::TaoCurveRmsCalc &self) {
   return repr(
       &self,
@@ -5383,6 +5393,13 @@ std::string to_string(const Tao::TaoEleShapeInfo &self) {
        std::pair{"label_name", self.label_name},
        std::pair{"y1", to_string(self.y1)},
        std::pair{"y2", to_string(self.y2)}}
+  );
+}
+std::string to_string(const Tao::TaoEnumValueNames &self) {
+  return repr(
+      &self,
+      "Tao::TaoEnumValueNames",
+      {std::pair{"names", to_string(self.names)}, std::pair{"ix_names", to_string(self.ix_names)}}
   );
 }
 std::string to_string(const Tao::TaoEvalFloorOrbit &self) {

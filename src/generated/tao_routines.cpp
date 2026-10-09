@@ -278,6 +278,21 @@ bool Tao::tao_command(std::string command_line, bool err) {
   fortran_tao_command(/* const char* */ _command_line, /* bool& */ err, /* bool& */ _err_is_fatal);
   return _err_is_fatal;
 }
+Tao::TaoComplete Tao::tao_complete(std::string line, int cursor) {
+  auto _line = line.c_str();
+  int _word_start{};
+  char _context[4096];
+  // intent=out character array container
+  auto matches{CharacterAlloc1D()};
+  char _common_prefix[4096];
+  fortran_tao_complete(/* const char* */ _line,
+                       /* int& */ cursor,
+                       /* int& */ _word_start,
+                       /* const char* */ _context,
+                       /* void* */ matches.get_fortran_ptr(),
+                       /* const char* */ _common_prefix);
+  return TaoComplete{_word_start, _context, std::move(matches), _common_prefix};
+}
 std::string Tao::tao_constraint_type_name(TaoDataStruct &datum) {
   char _datum_name[4096];
   fortran_tao_constraint_type_name(/* void* */ datum.get_fortran_ptr(),
@@ -628,7 +643,8 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    optional_ref<int> ix_shape_min
+    optional_ref<int> ix_shape_min,
+    std::optional<bool> include_undrawn
 ) {
   // ele_shapes: TaoEleShapeStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _ele_shapes_desc;
@@ -642,6 +658,13 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
   double _y2{};
   auto *_ix_shape_min =
       ix_shape_min.has_value() ? &ix_shape_min->get() : nullptr; // inout, optional
+  bool include_undrawn_lvalue;
+  auto *_include_undrawn{&include_undrawn_lvalue};
+  if (include_undrawn.has_value()) {
+    include_undrawn_lvalue = include_undrawn.value();
+  } else {
+    _include_undrawn = nullptr;
+  }
   fortran_tao_ele_shape_info(/* int& */ ix_uni,
                              /* void* */ ele.get_fortran_ptr(),
                              /* Bmad::array_descriptor_t& */ _ele_shapes_desc,
@@ -649,7 +672,8 @@ Tao::TaoEleShapeInfo Tao::tao_ele_shape_info(
                              /* const char* */ _label_name,
                              /* double& */ _y1,
                              /* double& */ _y2,
-                             /* int* */ _ix_shape_min);
+                             /* int* */ _ix_shape_min,
+                             /* bool* */ _include_undrawn);
   return TaoEleShapeInfo{
       std::move((_e_shape ? std::make_optional<TaoEleShapeStruct>(_e_shape) : std::nullopt)),
       _label_name,
@@ -673,6 +697,31 @@ TaoEleShapeInput Tao::tao_ele_shape_struct_to_input(TaoEleShapeStruct &shape_str
   fortran_tao_ele_shape_struct_to_input(/* void* */ shape_struct.get_fortran_ptr(),
                                         /* void* */ _shape_input.get_fortran_ptr());
   return std::move(_shape_input);
+}
+Tao::TaoEnumValueNames Tao::tao_enum_value_names(
+    std::string who,
+    optional_ref<EleStruct> ele,
+    std::optional<bool> switch_attribs
+) {
+  auto _who = who.c_str();
+  // intent=out character array container
+  auto names{CharacterAlloc1D()};
+  // intent=out allocatable general array
+  auto ix_names{IntAlloc1D()};
+  auto *_ele = ele.has_value() ? ele->get().get_fortran_ptr() : nullptr; // input, optional
+  bool switch_attribs_lvalue;
+  auto *_switch_attribs{&switch_attribs_lvalue};
+  if (switch_attribs.has_value()) {
+    switch_attribs_lvalue = switch_attribs.value();
+  } else {
+    _switch_attribs = nullptr;
+  }
+  fortran_tao_enum_value_names(/* const char* */ _who,
+                               /* void* */ names.get_fortran_ptr(),
+                               /* void* */ ix_names.get_fortran_ptr(),
+                               /* void* */ _ele,
+                               /* bool* */ _switch_attribs);
+  return TaoEnumValueNames{std::move(names), std::move(ix_names)};
 }
 Tao::TaoEvalFloorOrbit Tao::tao_eval_floor_orbit(
     TaoDataStruct &datum,
@@ -2304,7 +2353,8 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shape,
-    optional_ref<int> ix_shape_min
+    optional_ref<int> ix_shape_min,
+    std::optional<bool> include_undrawn
 ) {
   // ele_shape: TaoEleShapeStruct in (CppWrapperTypeArgumentArray)
   Bmad::array_descriptor_t _ele_shape_desc;
@@ -2316,6 +2366,13 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
   double _dat_var_value{};
   auto *_ix_shape_min =
       ix_shape_min.has_value() ? &ix_shape_min->get() : nullptr; // inout, optional
+  bool include_undrawn_lvalue;
+  auto *_include_undrawn{&include_undrawn_lvalue};
+  if (include_undrawn.has_value()) {
+    include_undrawn_lvalue = include_undrawn.value();
+  } else {
+    _include_undrawn = nullptr;
+  }
   void *_e_shape;
   fortran_tao_pointer_to_ele_shape(/* int& */ ix_uni,
                                    /* void* */ ele.get_fortran_ptr(),
@@ -2323,6 +2380,7 @@ Tao::TaoPointerToEleShape Tao::tao_pointer_to_ele_shape(
                                    /* const char* */ _dat_var_name,
                                    /* double& */ _dat_var_value,
                                    /* int* */ _ix_shape_min,
+                                   /* bool* */ _include_undrawn,
                                    /* void* */ &_e_shape);
   return TaoPointerToEleShape{
       _dat_var_name,
@@ -2546,6 +2604,7 @@ int Tao::tao_read_phase_space_index(std::string name, int ixc, std::optional<boo
                                      /* int& */ _ix_ps);
   return _ix_ps;
 }
+void Tao::tao_register_completion() { fortran_tao_register_completion(); }
 void Tao::tao_regression_test(std::string cmd_str) {
   auto _cmd_str = cmd_str.c_str();
   fortran_tao_regression_test(/* const char* */ _cmd_str);
@@ -3346,6 +3405,13 @@ bool Tao::tao_svd_optimizer() {
   bool _abort{};
   fortran_tao_svd_optimizer(/* bool& */ _abort);
   return _abort;
+}
+CharacterAlloc1D Tao::tao_switches_for(std::string context) {
+  auto _context = context.c_str();
+  // intent=out character array container
+  auto switches{CharacterAlloc1D()};
+  fortran_tao_switches_for(/* const char* */ _context, /* void* */ switches.get_fortran_ptr());
+  return std::move(switches);
 }
 void Tao::tao_symbol_import_from_lat(LatStruct &lat) {
   fortran_tao_symbol_import_from_lat(/* void* */ lat.get_fortran_ptr());
