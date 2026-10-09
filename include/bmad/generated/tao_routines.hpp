@@ -242,6 +242,21 @@ extern "C" void fortran_tao_command(
     bool &err_is_fatal /* 0D_NOT_logical out */
 );
 bool tao_command(std::string command_line, bool err);
+extern "C" void fortran_tao_complete(
+    const char *line /* 0D_NOT_character in */,
+    int &cursor /* 0D_NOT_integer in */,
+    int &word_start /* 0D_NOT_integer out */,
+    const char *context /* 0D_NOT_character out */,
+    void *matches /* 1D_ALLOC_character out */,
+    const char *common_prefix /* 0D_NOT_character out */
+);
+struct TaoComplete {
+  int word_start;
+  std::string context;
+  CharacterAlloc1D matches;
+  std::string common_prefix;
+};
+Tao::TaoComplete tao_complete(std::string line, int cursor);
 extern "C" bool fortran_tao_constraint_type_name(
     void *datum /* 0D_NOT_type in */,
     const char *datum_name /* 0D_NOT_character out */
@@ -515,7 +530,8 @@ extern "C" void fortran_tao_ele_shape_info(
     const char *label_name /* 0D_NOT_character out */,
     double &y1 /* 0D_NOT_real out */,
     double &y2 /* 0D_NOT_real out */,
-    int *ix_shape_min /* 0D_NOT_integer inout */
+    int *ix_shape_min /* 0D_NOT_integer inout */,
+    bool *include_undrawn /* 0D_NOT_logical in */
 );
 struct TaoEleShapeInfo {
   std::optional<TaoEleShapeStruct> e_shape;
@@ -527,7 +543,8 @@ Tao::TaoEleShapeInfo tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    optional_ref<int> ix_shape_min = std::nullopt
+    optional_ref<int> ix_shape_min = std::nullopt,
+    std::optional<bool> include_undrawn = std::nullopt
 );
 extern "C" bool fortran_tao_ele_shape_input_to_struct(
     void *shape_input /* 0D_NOT_type inout */,
@@ -543,6 +560,22 @@ extern "C" bool fortran_tao_ele_shape_struct_to_input(
     void *shape_input /* 0D_NOT_type out */
 );
 TaoEleShapeInput tao_ele_shape_struct_to_input(TaoEleShapeStruct &shape_struct);
+extern "C" void fortran_tao_enum_value_names(
+    const char *who /* 0D_NOT_character in */,
+    void *names /* 1D_ALLOC_character out */,
+    void *ix_names /* 1D_ALLOC_integer out */,
+    void *ele /* 0D_NOT_type in */,
+    bool *switch_attribs /* 0D_NOT_logical in */
+);
+struct TaoEnumValueNames {
+  CharacterAlloc1D names;
+  IntAlloc1D ix_names;
+};
+Tao::TaoEnumValueNames tao_enum_value_names(
+    std::string who,
+    optional_ref<EleStruct> ele = std::nullopt,
+    std::optional<bool> switch_attribs = std::nullopt
+);
 extern "C" bool fortran_tao_eval_floor_orbit(
     void *datum /* 0D_NOT_type in */,
     void *ele /* 0D_NOT_type in */,
@@ -1705,6 +1738,7 @@ extern "C" bool fortran_tao_pointer_to_ele_shape(
     const char *dat_var_name /* 0D_NOT_character out */,
     double &dat_var_value /* 0D_NOT_real out */,
     int *ix_shape_min /* 0D_NOT_integer inout */,
+    bool *include_undrawn /* 0D_NOT_logical in */,
     void *e_shape /* 0D_PTR_type out */
 );
 struct TaoPointerToEleShape {
@@ -1716,7 +1750,8 @@ Tao::TaoPointerToEleShape tao_pointer_to_ele_shape(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shape,
-    optional_ref<int> ix_shape_min = std::nullopt
+    optional_ref<int> ix_shape_min = std::nullopt,
+    std::optional<bool> include_undrawn = std::nullopt
 );
 extern "C" bool fortran_tao_pointer_to_tao_lat(
     void *u /* 0D_NOT_type in */,
@@ -1855,10 +1890,22 @@ int tao_read_phase_space_index(
     int ixc,
     std::optional<bool> print_err = std::nullopt
 );
+extern "C" void fortran_tao_register_completion();
+void tao_register_completion();
 extern "C" void fortran_tao_regression_test(const char *cmd_str /* 0D_NOT_character in */);
 void tao_regression_test(std::string cmd_str);
 extern "C" void fortran_tao_remove_blank_characters(const char *str /* 0D_NOT_character inout */);
 void tao_remove_blank_characters(std::string &str);
+
+// Skipped unusable routine tao_rl_complete_c:
+// - Argument not defined: line_c (have: [])
+// - Argument not defined: point (have: [])
+// - Argument not defined: istart (have: [])
+// - Argument not defined: iend (have: [])
+// - Argument not defined: buf_c (have: [])
+// - Argument not defined: buf_size (have: [])
+// - Argument not defined: tao_rl_complete_c (have: [])
+// - Translated arg count mismatch (unsupported?)
 extern "C" void fortran_tao_run_cmd(
     const char *which /* 0D_NOT_character in */,
     bool &abort /* 0D_NOT_logical out */
@@ -2410,6 +2457,11 @@ Tao::TaoSubinUniNumber tao_subin_uni_number(std::string name_in, int ix_uni);
 // - Variable inout sized array: 2D_NOT_real
 extern "C" void fortran_tao_svd_optimizer(bool &abort /* 0D_NOT_logical out */);
 bool tao_svd_optimizer();
+extern "C" bool fortran_tao_switches_for(
+    const char *context /* 0D_NOT_character in */,
+    void *switches /* 1D_ALLOC_character out */
+);
+CharacterAlloc1D tao_switches_for(std::string context);
 extern "C" void fortran_tao_symbol_import_from_lat(void *lat /* 0D_NOT_type inout */);
 void tao_symbol_import_from_lat(LatStruct &lat);
 extern "C" void fortran_tao_taper_cmd(

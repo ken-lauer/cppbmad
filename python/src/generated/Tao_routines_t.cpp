@@ -28,9 +28,11 @@ PyTaoEleShapeInfo python_tao_ele_shape_info(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shapes,
-    std::optional<int> ix_shape_min = std::nullopt
+    std::optional<int> ix_shape_min = std::nullopt,
+    std::optional<bool> include_undrawn = std::nullopt
 ) {
-  auto _result = Tao::tao_ele_shape_info(ix_uni, ele, ele_shapes, make_opt_ref(ix_shape_min));
+  auto _result =
+      Tao::tao_ele_shape_info(ix_uni, ele, ele_shapes, make_opt_ref(ix_shape_min), include_undrawn);
   auto py_result{PyTaoEleShapeInfo{_result, ix_shape_min}};
   return py_result;
 }
@@ -55,9 +57,16 @@ PyTaoPointerToEleShape python_tao_pointer_to_ele_shape(
     int ix_uni,
     EleStruct &ele,
     TaoEleShapeStructArray1D ele_shape,
-    std::optional<int> ix_shape_min = std::nullopt
+    std::optional<int> ix_shape_min = std::nullopt,
+    std::optional<bool> include_undrawn = std::nullopt
 ) {
-  auto _result = Tao::tao_pointer_to_ele_shape(ix_uni, ele, ele_shape, make_opt_ref(ix_shape_min));
+  auto _result = Tao::tao_pointer_to_ele_shape(
+      ix_uni,
+      ele,
+      ele_shape,
+      make_opt_ref(ix_shape_min),
+      include_undrawn
+  );
   auto py_result{PyTaoPointerToEleShape{_result, ix_shape_min}};
   return py_result;
 }
@@ -555,6 +564,62 @@ Returns
 -------
 err_is_fatal : bool
     Set True on non-recoverable error. False otherwise
+)"""
+  );
+  nb::class_<Tao::TaoComplete>(m, "TaoComplete", "tao_complete return type")
+      .def_ro("word_start", &Tao::TaoComplete::word_start)
+      .def_ro("context", &Tao::TaoComplete::context)
+      .def_ro("matches", &Tao::TaoComplete::matches)
+      .def_ro("common_prefix", &Tao::TaoComplete::common_prefix)
+      .def("__len__", [](const Tao::TaoComplete &) { return 4; })
+      .def("__getitem__", [](const Tao::TaoComplete &s, int i) -> nb::object {
+        if (i < 0)
+          i += 4;
+        if (i == 0)
+          return nb::cast(s.word_start);
+        if (i == 1)
+          return nb::cast(s.context);
+        if (i == 2)
+          return nb::cast(s.matches);
+        if (i == 3)
+          return nb::cast(s.common_prefix);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_complete",
+      &Tao::tao_complete,
+      nb::arg("line"),
+      nb::arg("cursor"),
+      R"""(Compute completion candidates for the whitespace-delimited token ending at
+line(cursor-1:cursor-1). Only text to the left of the cursor is considered.
+
+This routine must not do any terminal I/O (out_io, print, etc.): on the
+interactive path it runs inside readline() while the prompt is being edited.
+
+Parameters
+----------
+line : str
+    Command line being typed.
+
+cursor : int
+    1-based cursor position. The token being completed ends at cursor-1. Use len_trim(line)+1 for end-of-line.
+
+Returns
+-------
+word_start : int
+    1-based index in line of the start of the token being completed.
+
+context : str
+    'LIST' = matches(:) holds the candidates (possibly none), 'FILE' = token is a file path, 'NONE' = command
+    not recognized.
+
+matches : 1D array of str
+    Candidates, at most max_matches$.
+
+common_prefix : str, optional
+    Text to replace the token with right away: the sole candidate when there is just one, otherwise the token
+    as typed followed by whatever all candidates (including any beyond the max_matches$ cap) agree on. Never
+    shorter than the token.
 )"""
   );
   m.def(
@@ -1462,6 +1527,7 @@ value : float
       nb::arg("ele"),
       nb::arg("ele_shapes"),
       nb::arg("ix_shape_min") = nb::none(),
+      nb::arg("include_undrawn") = nb::none(),
       R"""(Wrapper for Fortran routine tao_ele_shape_info
 
 Parameters
@@ -1479,6 +1545,9 @@ ix_shape_min : int, optional
     Index of minimum ele_shape(:) index to start search from. Default is 1.
     This parameter is an input/output and is modified in-place.
     As an output, ix_shape_min: Ele_shape(
+
+include_undrawn : bool, optional
+    If True, shapes with .draw = False are also considered. Default is False.
 
 Returns
 -------
@@ -1531,6 +1600,57 @@ shape_struct : TaoEleShapeStruct
 Returns
 -------
 shape_input : TaoEleShapeInput
+)"""
+  );
+  nb::class_<Tao::TaoEnumValueNames>(m, "TaoEnumValueNames", "tao_enum_value_names return type")
+      .def_ro("names", &Tao::TaoEnumValueNames::names)
+      .def_ro("ix_names", &Tao::TaoEnumValueNames::ix_names)
+      .def("__len__", [](const Tao::TaoEnumValueNames &) { return 2; })
+      .def("__getitem__", [](const Tao::TaoEnumValueNames &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.names);
+        if (i == 1)
+          return nb::cast(s.ix_names);
+        throw nb::index_error();
+      });
+  m.def(
+      "tao_enum_value_names",
+      [](std::string who, EleStruct *ele, std::optional<bool> switch_attribs) {
+        auto fn = static_cast<
+            Tao::TaoEnumValueNames (*)(std::string, optional_ref<EleStruct>, std::optional<bool>)>(
+            &Tao::tao_enum_value_names
+        );
+        return fn(who, ptr_to_opt_ref(ele), switch_attribs);
+      },
+      nb::arg("who"),
+      nb::arg("ele") = nb::none(),
+      nb::arg("switch_attribs") = nb::none(),
+      R"""(Allowed values of an enumerated Tao or Bmad parameter, for "pipe enum" and for
+tab completion of "set ... = <value>".
+
+Parameters
+----------
+who : str
+    Enum name as accepted by "pipe enum": a Tao name like "track_type" or "symbol^type", "prompt_color"
+    (terminal colors), anything else containing "color" (plot colors), or a Bmad switch attribute name like
+    "tracking_method".
+
+ele : EleStruct, optional
+    For switch attributes, the element being set. Restricts the values to those valid for that element.
+
+switch_attribs : bool, optional
+    If False, do not consult Bmad's switch attribute table for names not in the Tao list (that lookup prints
+    an error for unknown names). Default True.
+
+Returns
+-------
+names : 1D array of str
+    Value names. Not allocated if who is not a known enum.
+
+ix_names : 1D array of int
+    Index of each value, or no_enum_index$ for enums whose values have no index.
 )"""
   );
   nb::class_<Tao::TaoEvalFloorOrbit>(m, "TaoEvalFloorOrbit", "tao_eval_floor_orbit return type")
@@ -4921,6 +5041,7 @@ ele : EleStruct, optional
       nb::arg("ele"),
       nb::arg("ele_shape"),
       nb::arg("ix_shape_min") = nb::none(),
+      nb::arg("include_undrawn") = nb::none(),
       R"""(Wrapper for Fortran routine tao_pointer_to_ele_shape
 
 Parameters
@@ -4938,6 +5059,9 @@ ix_shape_min : int, optional
     Index of minimum ele_shape(:) index to start search from. Default is 1.
     This parameter is an input/output and is modified in-place.
     As an output, ix_shape_min: Ele_shape(
+
+include_undrawn : bool, optional
+    If True, shapes with .draw = False are also considered. Default is False.
 
 Returns
 -------
@@ -5364,6 +5488,13 @@ Returns
 -------
 ix_ps : int
     Index at <name>(<ixc>:<ixc>). Returns 0 if bad index.
+)"""
+  );
+  m.def(
+      "tao_register_completion",
+      &Tao::tao_register_completion,
+      R"""(Install tao_rl_complete_c as the readline tab completion callback and name the
+application "Tao" for inputrc "$if Tao" blocks. Idempotent.
 )"""
   );
   m.def(
@@ -6891,6 +7022,17 @@ Returns
 -------
 abort : bool
     Set True if svd step increases the merit function.
+)"""
+  );
+  m.def(
+      "tao_switches_for",
+      &Tao::tao_switches_for,
+      nb::arg("context"),
+      R"""(Switch names for a command, or for "show <subcommand>". Zero-length if none.
+Shared by the parsers (tao_command, tao_show_cmd, tao_show_this, tao_pipe_cmd) and
+by tab completion. The 'place', 'show merit' and 'show top10' lists are
+completion-only since those parsers accept a different set. The set parser also
+accepts the deprecated '-lord_no_set', which is deliberately left out of 'set'.
 )"""
   );
   m.def(

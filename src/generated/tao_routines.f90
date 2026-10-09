@@ -77,6 +77,8 @@ use tao_change_mod, only: tao_change_ele, tao_change_tune, tao_change_var, tao_c
 use tao_command_mod, only: tao_cmd_history_record, tao_cmd_split, tao_next_switch, &
     tao_next_word, tao_re_execute
 
+use tao_completion_mod, only: tao_complete, tao_register_completion
+
 use tao_plot_window_mod, only: tao_create_plot_window, tao_destroy_plot_window
 
 use tao_struct, only: tao_deallocate_plot_cache, &
@@ -91,6 +93,8 @@ use tao_plot_mod, only: tao_draw_beam_chamber_wall, tao_draw_curve_data, &
 
 use tao_input_struct, only: tao_ele_shape_input_to_struct, tao_ele_shape_struct_to_input, &
     tao_set_plotting
+
+use tao_command_names_mod, only: tao_enum_value_names, tao_switches_for
 
 use tao_geodesic_lm_optimizer_mod, only: tao_geodesic_lm_optimizer
 
@@ -982,6 +986,67 @@ subroutine fortran_tao_command (command_line, err, err_is_fatal) bind(c)
   ! out: f_err_is_fatal 0D_NOT_logical
   call c_f_pointer(err_is_fatal, f_err_is_fatal_ptr)
   f_err_is_fatal_ptr = f_err_is_fatal
+end subroutine
+subroutine fortran_tao_complete (line, cursor, word_start, context, matches, common_prefix) &
+    bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: line
+  character(len=4096), target :: f_line
+  character(kind=c_char), pointer :: f_line_ptr(:)
+  integer(c_int) :: cursor  ! 0D_NOT_integer
+  integer :: f_cursor
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: word_start  ! 0D_NOT_integer
+  integer :: f_word_start
+  integer(c_int), pointer :: f_word_start_ptr
+  type(c_ptr), intent(in), value :: context
+  character(len=4096), target :: f_context
+  character(kind=c_char), pointer :: f_context_ptr(:)
+  type(c_ptr), intent(in), value :: matches
+  type(character_container_alloc), pointer :: f_matches
+  character(100), allocatable :: f_matches_local(:)
+  type(c_ptr), intent(in), value :: common_prefix
+  character(len=4096), target :: f_common_prefix
+  character(kind=c_char), pointer :: f_common_prefix_ptr(:)
+  character(len=4096), pointer :: f_common_prefix_call_ptr
+  ! ** End of parameters **
+  ! in: f_line 0D_NOT_character
+  if (.not. c_associated(line)) return
+  call c_f_pointer(line, f_line_ptr, [huge(0)])
+  call to_f_str(f_line_ptr, f_line)
+  ! in: f_cursor 0D_NOT_integer
+  f_cursor = cursor
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(matches))   call c_f_pointer(matches, f_matches)
+  ! out: f_common_prefix 0D_NOT_character
+  if (c_associated(common_prefix)) then
+    call c_f_pointer(common_prefix, f_common_prefix_ptr, [huge(0)])
+    f_common_prefix_call_ptr => f_common_prefix
+  else
+    f_common_prefix_call_ptr => null()
+  endif
+  call tao_complete(f_line, f_cursor, f_word_start, f_context, f_matches_local, &
+      f_common_prefix_call_ptr)
+
+  ! out: f_word_start 0D_NOT_integer
+  call c_f_pointer(word_start, f_word_start_ptr)
+  f_word_start_ptr = f_word_start
+  ! out: f_context 0D_NOT_character
+  call c_f_pointer(context, f_context_ptr, [len_trim(f_context) + 1])
+  call to_c_str(f_context, f_context_ptr)
+  !! copy allocatable character result into container
+  if (c_associated(matches) .and. allocated(f_matches_local)) then
+    if (allocated(f_matches%data)) deallocate(f_matches%data)
+    allocate(f_matches%data, source=f_matches_local)
+  endif
+  ! out: f_common_prefix 0D_NOT_character
+  if (c_associated(common_prefix)) then
+    call c_f_pointer(common_prefix, f_common_prefix_ptr, [len_trim(f_common_prefix) + 1])
+    call to_c_str(f_common_prefix, f_common_prefix_ptr)
+  endif
 end subroutine
 subroutine fortran_tao_constraint_type_name (datum, datum_name) bind(c)
 
@@ -2082,7 +2147,7 @@ subroutine fortran_tao_ele_geometry_with_misalignments (datum, ele, valid_value,
   f_value_ptr = f_value
 end subroutine
 subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_name, y1, y2, &
-    ix_shape_min) bind(c)
+    ix_shape_min, include_undrawn) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -2096,6 +2161,11 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   type(array_descriptor_t), intent(in) :: ele_shapes
   type(tao_ele_shape_struct), pointer :: f_ele_shapes(:)
   type(tao_ele_shape_struct), pointer :: f_ele_shapes_ptr(:)
+  type(c_ptr), intent(in), value :: include_undrawn  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_undrawn
+  logical, target :: f_include_undrawn_native
+  logical, pointer :: f_include_undrawn_native_ptr
+  logical(c_bool), pointer :: f_include_undrawn_ptr
   ! ** Out parameters **
   type(c_ptr) :: e_shape  ! 0D_PTR_type
   type(tao_ele_shape_struct), pointer :: f_e_shape
@@ -2133,8 +2203,16 @@ subroutine fortran_tao_ele_shape_info (ix_uni, ele, ele_shapes, e_shape, label_n
   else
     f_ix_shape_min_ptr => null()
   endif
+  ! in: f_include_undrawn 0D_NOT_logical
+  if (c_associated(include_undrawn)) then
+    call c_f_pointer(include_undrawn, f_include_undrawn_ptr)
+    f_include_undrawn_native = f_include_undrawn_ptr
+    f_include_undrawn_native_ptr => f_include_undrawn_native
+  else
+    f_include_undrawn_native_ptr => null()
+  endif
   call tao_ele_shape_info(f_ix_uni, f_ele, f_ele_shapes, f_e_shape, f_label_name, f_y1, f_y2, &
-      f_ix_shape_min_ptr)
+      f_ix_shape_min_ptr, f_include_undrawn_native_ptr)
 
   ! out: f_e_shape 0D_PTR_type
   e_shape = c_loc(f_e_shape)
@@ -2211,6 +2289,56 @@ subroutine fortran_tao_ele_shape_struct_to_input (shape_struct, shape_input) bin
 
   ! out: f_shape_input 0D_NOT_type
   ! TODO may require output conversion? 0D_NOT_type
+end subroutine
+subroutine fortran_tao_enum_value_names (who, names, ix_names, ele, switch_attribs) bind(c)
+
+  use array_desc_mod
+  use bmad_struct, only: ele_struct
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: who
+  character(len=4096), target :: f_who
+  character(kind=c_char), pointer :: f_who_ptr(:)
+  type(c_ptr), value :: ele  ! 0D_NOT_type
+  type(ele_struct), pointer :: f_ele
+  type(c_ptr), intent(in), value :: switch_attribs  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_switch_attribs
+  logical, target :: f_switch_attribs_native
+  logical, pointer :: f_switch_attribs_native_ptr
+  logical(c_bool), pointer :: f_switch_attribs_ptr
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: names
+  type(character_container_alloc), pointer :: f_names
+  character(200), allocatable :: f_names_local(:)
+  type(c_ptr), intent(in), value :: ix_names
+  type(integer_container_alloc), pointer :: f_ix_names
+  ! ** End of parameters **
+  ! in: f_who 0D_NOT_character
+  if (.not. c_associated(who)) return
+  call c_f_pointer(who, f_who_ptr, [huge(0)])
+  call to_f_str(f_who_ptr, f_who)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(names))   call c_f_pointer(names, f_names)
+  !! container general array (1D_ALLOC_integer)
+  if (c_associated(ix_names))   call c_f_pointer(ix_names, f_ix_names)
+  ! in: f_ele 0D_NOT_type
+  if (c_associated(ele))   call c_f_pointer(ele, f_ele)
+  ! in: f_switch_attribs 0D_NOT_logical
+  if (c_associated(switch_attribs)) then
+    call c_f_pointer(switch_attribs, f_switch_attribs_ptr)
+    f_switch_attribs_native = f_switch_attribs_ptr
+    f_switch_attribs_native_ptr => f_switch_attribs_native
+  else
+    f_switch_attribs_native_ptr => null()
+  endif
+  call tao_enum_value_names(f_who, f_names_local, f_ix_names%data, f_ele, &
+      f_switch_attribs_native_ptr)
+
+  !! copy allocatable character result into container
+  if (c_associated(names) .and. allocated(f_names_local)) then
+    if (allocated(f_names%data)) deallocate(f_names%data)
+    allocate(f_names%data, source=f_names_local)
+  endif
 end subroutine
 subroutine fortran_tao_eval_floor_orbit (datum, ele, orbit, bunch_params, valid_value, &
     why_invalid, value) bind(c)
@@ -6144,7 +6272,7 @@ subroutine fortran_tao_pointer_to_datum_ele (lat, ele_name, ix_ele, datum, valid
   ele = c_loc(f_ele)
 end subroutine
 subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_name, &
-    dat_var_value, ix_shape_min, e_shape) bind(c)
+    dat_var_value, ix_shape_min, include_undrawn, e_shape) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -6158,6 +6286,11 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   type(array_descriptor_t), intent(in) :: ele_shape
   type(tao_ele_shape_struct), pointer :: f_ele_shape(:)
   type(tao_ele_shape_struct), pointer :: f_ele_shape_ptr(:)
+  type(c_ptr), intent(in), value :: include_undrawn  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_include_undrawn
+  logical, target :: f_include_undrawn_native
+  logical, pointer :: f_include_undrawn_native_ptr
+  logical(c_bool), pointer :: f_include_undrawn_ptr
   ! ** Out parameters **
   type(c_ptr), intent(in), value :: dat_var_name
   character(len=4096), target :: f_dat_var_name
@@ -6204,10 +6337,18 @@ subroutine fortran_tao_pointer_to_ele_shape (ix_uni, ele, ele_shape, dat_var_nam
   else
     f_ix_shape_min_ptr => null()
   endif
+  ! in: f_include_undrawn 0D_NOT_logical
+  if (c_associated(include_undrawn)) then
+    call c_f_pointer(include_undrawn, f_include_undrawn_ptr)
+    f_include_undrawn_native = f_include_undrawn_ptr
+    f_include_undrawn_native_ptr => f_include_undrawn_native
+  else
+    f_include_undrawn_native_ptr => null()
+  endif
   ! out: f_e_shape 0D_PTR_type
   if (c_associated(e_shape))   call c_f_pointer(e_shape, f_e_shape)
   f_e_shape => tao_pointer_to_ele_shape(f_ix_uni, f_ele, f_ele_shape, f_dat_var_name_call_ptr, &
-      f_dat_var_value, f_ix_shape_min_ptr)
+      f_dat_var_value, f_ix_shape_min_ptr, f_include_undrawn_native_ptr)
 
   ! out: f_dat_var_name 0D_NOT_character
   if (c_associated(dat_var_name)) then
@@ -6768,6 +6909,14 @@ subroutine fortran_tao_read_phase_space_index (name, ixc, print_err, ix_ps) bind
   ! out: f_ix_ps 0D_NOT_integer
   call c_f_pointer(ix_ps, f_ix_ps_ptr)
   f_ix_ps_ptr = f_ix_ps
+end subroutine
+subroutine fortran_tao_register_completion () bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** End of parameters **
+  call tao_register_completion()
+
 end subroutine
 subroutine fortran_tao_regression_test (cmd_str) bind(c)
 
@@ -8962,6 +9111,33 @@ subroutine fortran_tao_svd_optimizer (abort) bind(c)
   ! out: f_abort 0D_NOT_logical
   call c_f_pointer(abort, f_abort_ptr)
   f_abort_ptr = f_abort
+end subroutine
+subroutine fortran_tao_switches_for (context, switches) bind(c)
+
+  use array_desc_mod
+  implicit none
+  ! ** In parameters **
+  type(c_ptr), intent(in), value :: context
+  character(len=4096), target :: f_context
+  character(kind=c_char), pointer :: f_context_ptr(:)
+  ! ** Out parameters **
+  type(c_ptr), intent(in), value :: switches
+  type(character_container_alloc), pointer :: f_switches
+  character(28), allocatable :: f_switches_local(:)
+  ! ** End of parameters **
+  ! in: f_context 0D_NOT_character
+  if (.not. c_associated(context)) return
+  call c_f_pointer(context, f_context_ptr, [huge(0)])
+  call to_f_str(f_context_ptr, f_context)
+  !! container character array (1D_ALLOC_character)
+  if (c_associated(switches))   call c_f_pointer(switches, f_switches)
+  f_switches_local = tao_switches_for(f_context)
+
+  !! copy allocatable character result into container
+  if (c_associated(switches) .and. allocated(f_switches_local)) then
+    if (allocated(f_switches%data)) deallocate(f_switches%data)
+    allocate(f_switches%data, source=f_switches_local)
+  endif
 end subroutine
 subroutine fortran_tao_symbol_import_from_lat (lat) bind(c)
 
