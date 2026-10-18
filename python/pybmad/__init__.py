@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20261014.0"
+__version__ = "20261018.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -1949,6 +1949,8 @@ from ._enums import STEADY_STATE_3D
 from ._enums import SLICE
 from ._enums import FFT_3D
 from ._enums import CATHODE_FFT_3D
+from ._enums import AVERAGED
+from ._enums import UNAVERAGED
 from ._enums import MAGNETIC
 from ._enums import ELECTRIC
 from ._enums import MIXED
@@ -2519,6 +2521,7 @@ from ._enums import B3_GRADIENT
 from ._enums import E3_GRADIENT
 from ._enums import PTC_FRINGE_GEOMETRY
 from ._enums import E_TOT_SET
+from ._enums import FEL_METHOD
 from ._enums import BS_FIELD
 from ._enums import P0C_SET
 from ._enums import PTC_FIELD_GEOMETRY
@@ -4889,6 +4892,8 @@ __all__ = [
     "SLICE",
     "FFT_3D",
     "CATHODE_FFT_3D",
+    "AVERAGED",
+    "UNAVERAGED",
     "MAGNETIC",
     "ELECTRIC",
     "MIXED",
@@ -5459,6 +5464,7 @@ __all__ = [
     "E3_GRADIENT",
     "PTC_FRINGE_GEOMETRY",
     "E_TOT_SET",
+    "FEL_METHOD",
     "BS_FIELD",
     "P0C_SET",
     "PTC_FIELD_GEOMETRY",

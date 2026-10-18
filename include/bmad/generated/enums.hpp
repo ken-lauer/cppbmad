@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 363;
+const int BMAD_INC_VERSION = 364;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -139,6 +139,8 @@ const int STEADY_STATE_3D = 3;
 const int SLICE = 2;
 const int FFT_3D = 3;
 const int CATHODE_FFT_3D = 4;
+const int AVERAGED = 2;
+const int UNAVERAGED = 3;
 const int MAGNETIC = 1;
 const int ELECTRIC = 2;
 const int MIXED = 3;
@@ -719,6 +721,7 @@ const int B3_GRADIENT = 48;
 const int E3_GRADIENT = 48;
 const int PTC_FRINGE_GEOMETRY = 48;
 const int E_TOT_SET = 48;
+const int FEL_METHOD = 48;
 const int BS_FIELD = 49;
 const int P0C_SET = 49;
 const int PTC_FIELD_GEOMETRY = 49;
@@ -1293,6 +1296,7 @@ enum class EleAttribute : size_t {
   E3_GRADIENT = 48 - 1,
   PTC_FRINGE_GEOMETRY = 48 - 1,
   E_TOT_SET = 48 - 1,
+  FEL_METHOD = 48 - 1,
   BS_FIELD = 49 - 1,
   P0C_SET = 49 - 1,
   PTC_FIELD_GEOMETRY = 49 - 1,
@@ -1619,6 +1623,7 @@ enum class EleAttributeFortran : size_t {
   E3_GRADIENT = 48,
   PTC_FRINGE_GEOMETRY = 48,
   E_TOT_SET = 48,
+  FEL_METHOD = 48,
   BS_FIELD = 49,
   P0C_SET = 49,
   PTC_FIELD_GEOMETRY = 49,

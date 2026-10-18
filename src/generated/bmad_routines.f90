@@ -15438,7 +15438,8 @@ subroutine fortran_hdf5_read_grid_field (file_name, ele, g_field, err_flag, pmd_
       f_combine_native_ptr)
 
 end subroutine
-subroutine fortran_hdf5_write_beam (file_name, bunches, append, error, lat, alive_only) bind(c)
+subroutine fortran_hdf5_write_beam (file_name, bunches, append, error, lat, alive_only, &
+    as_patches) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: bunch_struct, lat_struct
@@ -15456,6 +15457,11 @@ subroutine fortran_hdf5_write_beam (file_name, bunches, append, error, lat, aliv
   logical, target :: f_alive_only_native
   logical, pointer :: f_alive_only_native_ptr
   logical(c_bool), pointer :: f_alive_only_ptr
+  type(c_ptr), intent(in), value :: as_patches  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_as_patches
+  logical, target :: f_as_patches_native
+  logical, pointer :: f_as_patches_native_ptr
+  logical(c_bool), pointer :: f_as_patches_ptr
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: bunches
   type(bunch_struct), pointer :: f_bunches(:)
@@ -15488,8 +15494,16 @@ subroutine fortran_hdf5_write_beam (file_name, bunches, append, error, lat, aliv
   else
     f_alive_only_native_ptr => null()
   endif
+  ! in: f_as_patches 0D_NOT_logical
+  if (c_associated(as_patches)) then
+    call c_f_pointer(as_patches, f_as_patches_ptr)
+    f_as_patches_native = f_as_patches_ptr
+    f_as_patches_native_ptr => f_as_patches_native
+  else
+    f_as_patches_native_ptr => null()
+  endif
   call hdf5_write_beam(f_file_name, f_bunches, f_append, f_error, f_lat, &
-      f_alive_only_native_ptr)
+      f_alive_only_native_ptr, f_as_patches_native_ptr)
 
 end subroutine
 subroutine fortran_hdf5_write_grid_field (file_name, ele, g_field, err_flag) bind(c)
@@ -41582,8 +41596,8 @@ subroutine fortran_write_astra_lattice_file (astra_file_unit, lat, astra_lattice
   call c_f_pointer(err, f_err_ptr)
   f_err_ptr = f_err
 end subroutine
-subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat, alive_only) &
-    bind(c)
+subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat, alive_only, &
+    as_patches) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: beam_struct, lat_struct
@@ -41609,6 +41623,11 @@ subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat,
   logical, target :: f_alive_only_native
   logical, pointer :: f_alive_only_native_ptr
   logical(c_bool), pointer :: f_alive_only_ptr
+  type(c_ptr), intent(in), value :: as_patches  ! 0D_NOT_logical
+  logical(c_bool), pointer :: f_as_patches
+  logical, target :: f_as_patches_native
+  logical, pointer :: f_as_patches_native_ptr
+  logical(c_bool), pointer :: f_as_patches_ptr
   ! ** End of parameters **
   ! in: f_file_name 0D_NOT_character
   if (.not. c_associated(file_name)) return
@@ -41641,8 +41660,16 @@ subroutine fortran_write_beam_file (file_name, beam, new_file, file_format, lat,
   else
     f_alive_only_native_ptr => null()
   endif
+  ! in: f_as_patches 0D_NOT_logical
+  if (c_associated(as_patches)) then
+    call c_f_pointer(as_patches, f_as_patches_ptr)
+    f_as_patches_native = f_as_patches_ptr
+    f_as_patches_native_ptr => f_as_patches_native
+  else
+    f_as_patches_native_ptr => null()
+  endif
   call write_beam_file(f_file_name, f_beam, f_new_file_native_ptr, f_file_format_ptr, f_lat, &
-      f_alive_only_native_ptr)
+      f_alive_only_native_ptr, f_as_patches_native_ptr)
 
 end subroutine
 subroutine fortran_write_beam_floor_positions (file_name, beam, ele, new_file) bind(c)

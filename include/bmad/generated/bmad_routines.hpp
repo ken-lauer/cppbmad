@@ -3920,7 +3920,8 @@ extern "C" void fortran_hdf5_write_beam(
     bool &append /* 0D_NOT_logical in */,
     bool &error /* 0D_NOT_logical in */,
     void *lat /* 0D_NOT_type inout */,
-    bool *alive_only /* 0D_NOT_logical in */
+    bool *alive_only /* 0D_NOT_logical in */,
+    bool *as_patches /* 0D_NOT_logical in */
 );
 void hdf5_write_beam(
     std::string file_name,
@@ -3928,7 +3929,8 @@ void hdf5_write_beam(
     bool append,
     bool error,
     optional_ref<LatStruct> lat = std::nullopt,
-    std::optional<bool> alive_only = std::nullopt
+    std::optional<bool> alive_only = std::nullopt,
+    std::optional<bool> as_patches = std::nullopt
 );
 extern "C" void fortran_hdf5_write_grid_field(
     const char *file_name /* 0D_NOT_character in */,
@@ -10740,7 +10742,8 @@ extern "C" void fortran_write_beam_file(
     bool *new_file /* 0D_NOT_logical in */,
     int *file_format /* 0D_NOT_integer in */,
     void *lat /* 0D_NOT_type in */,
-    bool *alive_only /* 0D_NOT_logical in */
+    bool *alive_only /* 0D_NOT_logical in */,
+    bool *as_patches /* 0D_NOT_logical in */
 );
 void write_beam_file(
     std::string file_name,
@@ -10748,7 +10751,8 @@ void write_beam_file(
     std::optional<bool> new_file = std::nullopt,
     std::optional<int> file_format = std::nullopt,
     optional_ref<LatStruct> lat = std::nullopt,
-    std::optional<bool> alive_only = std::nullopt
+    std::optional<bool> alive_only = std::nullopt,
+    std::optional<bool> as_patches = std::nullopt
 );
 extern "C" void fortran_write_beam_floor_positions(
     const char *file_name /* 0D_NOT_character in */,

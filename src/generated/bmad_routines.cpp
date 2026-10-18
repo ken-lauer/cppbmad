@@ -6133,7 +6133,8 @@ void Bmad::hdf5_write_beam(
     bool append,
     bool error,
     optional_ref<LatStruct> lat,
-    std::optional<bool> alive_only
+    std::optional<bool> alive_only,
+    std::optional<bool> as_patches
 ) {
   auto _file_name = file_name.c_str();
   // bunches: BunchStruct inout (CppWrapperTypeArgumentArray)
@@ -6150,12 +6151,20 @@ void Bmad::hdf5_write_beam(
   } else {
     _alive_only = nullptr;
   }
+  bool as_patches_lvalue;
+  auto *_as_patches{&as_patches_lvalue};
+  if (as_patches.has_value()) {
+    as_patches_lvalue = as_patches.value();
+  } else {
+    _as_patches = nullptr;
+  }
   fortran_hdf5_write_beam(/* const char* */ _file_name,
                           /* Bmad::array_descriptor_t& */ _bunches_desc,
                           /* bool& */ append,
                           /* bool& */ error,
                           /* void* */ _lat,
-                          /* bool* */ _alive_only);
+                          /* bool* */ _alive_only,
+                          /* bool* */ _as_patches);
 }
 void Bmad::hdf5_write_grid_field(
     std::string file_name,
@@ -18306,7 +18315,8 @@ void Bmad::write_beam_file(
     std::optional<bool> new_file,
     std::optional<int> file_format,
     optional_ref<LatStruct> lat,
-    std::optional<bool> alive_only
+    std::optional<bool> alive_only,
+    std::optional<bool> as_patches
 ) {
   auto _file_name = file_name.c_str();
   bool new_file_lvalue;
@@ -18331,12 +18341,20 @@ void Bmad::write_beam_file(
   } else {
     _alive_only = nullptr;
   }
+  bool as_patches_lvalue;
+  auto *_as_patches{&as_patches_lvalue};
+  if (as_patches.has_value()) {
+    as_patches_lvalue = as_patches.value();
+  } else {
+    _as_patches = nullptr;
+  }
   fortran_write_beam_file(/* const char* */ _file_name,
                           /* void* */ beam.get_fortran_ptr(),
                           /* bool* */ _new_file,
                           /* int* */ _file_format,
                           /* void* */ _lat,
-                          /* bool* */ _alive_only);
+                          /* bool* */ _alive_only,
+                          /* bool* */ _as_patches);
 }
 void Bmad::write_beam_floor_positions(
     std::string file_name,

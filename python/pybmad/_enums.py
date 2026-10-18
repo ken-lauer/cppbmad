@@ -286,6 +286,7 @@ class EleAttribute(enum.IntEnum):
     E3_GRADIENT = 48 - 1
     PTC_FRINGE_GEOMETRY = 48 - 1
     E_TOT_SET = 48 - 1
+    FEL_METHOD = 48 - 1
     BS_FIELD = 49 - 1
     P0C_SET = 49 - 1
     PTC_FIELD_GEOMETRY = 49 - 1
@@ -401,7 +402,7 @@ class EleKey(enum.IntEnum):
     N_KEY = 70
 
 # Constants from bmad_struct.f90
-BMAD_INC_VERSION = 363
+BMAD_INC_VERSION = 364
 NONE = 1
 # maximum multipole order
 N_POLE_MAXX = 21
@@ -525,6 +526,8 @@ STEADY_STATE_3D = 3
 SLICE = 2
 FFT_3D = 3
 CATHODE_FFT_3D = 4
+AVERAGED = 2
+UNAVERAGED = 3
 MAGNETIC = 1
 ELECTRIC = 2
 MIXED = 3
@@ -1105,6 +1108,7 @@ B3_GRADIENT = EleAttribute.B3_GRADIENT
 E3_GRADIENT = EleAttribute.E3_GRADIENT
 PTC_FRINGE_GEOMETRY = EleAttribute.PTC_FRINGE_GEOMETRY
 E_TOT_SET = EleAttribute.E_TOT_SET
+FEL_METHOD = EleAttribute.FEL_METHOD
 BS_FIELD = EleAttribute.BS_FIELD
 P0C_SET = EleAttribute.P0C_SET
 PTC_FIELD_GEOMETRY = EleAttribute.PTC_FIELD_GEOMETRY

@@ -745,7 +745,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`]({{ upstream_sou
 
 ### atomic_number
 
-Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1766)
+Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1768)
 
 ::: pybmad.simutils.atomic_number
     options:
@@ -1479,7 +1479,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`]({{ upstream_sou
 
 ### is_subatomic_species
 
-Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1799)
+Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1801)
 
 ::: pybmad.simutils.is_subatomic_species
     options:
@@ -2773,7 +2773,7 @@ Fortran source: [`sim_utils/interfaces/sim_utils_interface.f90`]({{ upstream_sou
 
 ### x0_radiation_length
 
-Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1732)
+Fortran source: [`sim_utils/interfaces/particle_species_mod.f90`]({{ upstream_source }}/sim_utils/interfaces/particle_species_mod.f90#L1734)
 
 ::: pybmad.simutils.x0_radiation_length
     options:
