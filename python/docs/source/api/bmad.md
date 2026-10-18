@@ -15,7 +15,7 @@ Core Bmad particle accelerator simulation library.
 
 ### AcKickerFreqStruct
 
-Fortran struct: `ac_kicker_freq_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L698))
+Fortran struct: `ac_kicker_freq_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L708))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -36,7 +36,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### AcKickerStruct
 
-Fortran struct: `ac_kicker_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L704))
+Fortran struct: `ac_kicker_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L714))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -56,7 +56,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### AcKickerTimeStruct
 
-Fortran struct: `ac_kicker_time_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L692))
+Fortran struct: `ac_kicker_time_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L702))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -77,7 +77,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### AnormalModeStruct
 
-Fortran struct: `anormal_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2001))
+Fortran struct: `anormal_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2011))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -102,7 +102,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ApertureParamStruct
 
-Fortran struct: `aperture_param_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2153))
+Fortran struct: `aperture_param_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2163))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -130,7 +130,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### AperturePointStruct
 
-Fortran struct: `aperture_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2144))
+Fortran struct: `aperture_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2154))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -153,7 +153,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ApertureScanStruct
 
-Fortran struct: `aperture_scan_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2168))
+Fortran struct: `aperture_scan_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2178))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -217,7 +217,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BeamInitStruct
 
-Fortran struct: `beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1162))
+Fortran struct: `beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1172))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -270,7 +270,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BeamStruct
 
-Fortran struct: `beam_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1137))
+Fortran struct: `beam_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1147))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -289,7 +289,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BmadCommonStruct
 
-Fortran struct: `bmad_common_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2314))
+Fortran struct: `bmad_common_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2324))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -350,7 +350,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BmadNormalFormStruct
 
-Fortran struct: `bmad_normal_form_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1589))
+Fortran struct: `bmad_normal_form_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1599))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -376,7 +376,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BookkeepingStateStruct
 
-Fortran struct: `bookkeeping_state_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L958))
+Fortran struct: `bookkeeping_state_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L968))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -403,7 +403,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BpmPhaseCouplingStruct
 
-Fortran struct: `bpm_phase_coupling_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L589))
+Fortran struct: `bpm_phase_coupling_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L599))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -431,7 +431,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BranchPointerStruct
 
-Fortran struct: `branch_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L931))
+Fortran struct: `branch_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L941))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -450,7 +450,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BranchStruct
 
-Fortran struct: `branch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1618))
+Fortran struct: `branch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1628))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -486,7 +486,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BunchParamsStruct
 
-Fortran struct: `bunch_params_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1212))
+Fortran struct: `bunch_params_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1222))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -527,7 +527,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BunchStruct
 
-Fortran struct: `bunch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1117))
+Fortran struct: `bunch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1127))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -559,7 +559,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### BunchTrackStruct
 
-Fortran struct: `bunch_track_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1238))
+Fortran struct: `bunch_track_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1248))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -580,7 +580,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CartesianMapStruct
 
-Fortran struct: `cartesian_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L732))
+Fortran struct: `cartesian_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L742))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -604,7 +604,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CartesianMapTerm1Struct
 
-Fortran struct: `cartesian_map_term1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L718))
+Fortran struct: `cartesian_map_term1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L728))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -631,7 +631,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CartesianMapTermStruct
 
-Fortran struct: `cartesian_map_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L726))
+Fortran struct: `cartesian_map_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L736))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -652,7 +652,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ComplexTaylorStruct
 
-Fortran struct: `complex_taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L509))
+Fortran struct: `complex_taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L519))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -672,7 +672,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ComplexTaylorTermStruct
 
-Fortran struct: `complex_taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L491))
+Fortran struct: `complex_taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L501))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -692,7 +692,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ControlRamp1Struct
 
-Fortran struct: `control_ramp1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1380))
+Fortran struct: `control_ramp1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1390))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -715,7 +715,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ControlStruct
 
-Fortran struct: `control_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1362))
+Fortran struct: `control_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1372))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -741,7 +741,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ControlVar1Struct
 
-Fortran struct: `control_var1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1374))
+Fortran struct: `control_var1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1384))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -762,7 +762,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ControllerStruct
 
-Fortran struct: `controller_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1397))
+Fortran struct: `controller_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1407))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -784,7 +784,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterDir1DStruct
 
-Fortran struct: `converter_dir_1D_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1266))
+Fortran struct: `converter_dir_1D_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1276))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -804,7 +804,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterDir2DStruct
 
-Fortran struct: `converter_dir_2D_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1271))
+Fortran struct: `converter_dir_2D_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1281))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -824,7 +824,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterDirCoefStruct
 
-Fortran struct: `converter_dir_coef_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1276))
+Fortran struct: `converter_dir_coef_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1286))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -846,7 +846,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterDirectionOutStruct
 
-Fortran struct: `converter_direction_out_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1283))
+Fortran struct: `converter_direction_out_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1293))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -871,7 +871,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterDistributionStruct
 
-Fortran struct: `converter_distribution_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1344))
+Fortran struct: `converter_distribution_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1354))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -891,7 +891,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterProbPcRStruct
 
-Fortran struct: `converter_prob_pc_r_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1249))
+Fortran struct: `converter_prob_pc_r_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1259))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -920,7 +920,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterStruct
 
-Fortran struct: `converter_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1352))
+Fortran struct: `converter_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1362))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -941,7 +941,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ConverterSubDistributionStruct
 
-Fortran struct: `converter_sub_distribution_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1292))
+Fortran struct: `converter_sub_distribution_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1302))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -963,7 +963,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CoordArrayStruct
 
-Fortran struct: `coord_array_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L581))
+Fortran struct: `coord_array_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L591))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -982,7 +982,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CoordStruct
 
-Fortran struct: `coord_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L551))
+Fortran struct: `coord_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L561))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1198,7 +1198,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CylindricalMapStruct
 
-Fortran struct: `cylindrical_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L754))
+Fortran struct: `cylindrical_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L764))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1226,7 +1226,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CylindricalMapTerm1Struct
 
-Fortran struct: `cylindrical_map_term1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L743))
+Fortran struct: `cylindrical_map_term1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L753))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1246,7 +1246,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### CylindricalMapTermStruct
 
-Fortran struct: `cylindrical_map_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L748))
+Fortran struct: `cylindrical_map_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L758))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1316,7 +1316,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ElePointerStruct
 
-Fortran struct: `ele_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L923))
+Fortran struct: `ele_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L933))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1337,7 +1337,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### EleStruct
 
-Fortran struct: `ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1422))
+Fortran struct: `ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1432))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1448,7 +1448,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### EllipseBeamInitStruct
 
-Fortran struct: `ellipse_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1141))
+Fortran struct: `ellipse_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1151))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1469,7 +1469,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### EmFieldStruct
 
-Fortran struct: `em_field_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2052))
+Fortran struct: `em_field_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2062))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1538,7 +1538,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ExtraParsingInfoStruct
 
-Fortran struct: `extra_parsing_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2226))
+Fortran struct: `extra_parsing_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2236))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1629,7 +1629,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### FloorPositionStruct
 
-Fortran struct: `floor_position_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L855))
+Fortran struct: `floor_position_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L865))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1652,7 +1652,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### FoilStruct
 
-Fortran struct: `foil_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1309))
+Fortran struct: `foil_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1319))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1696,7 +1696,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GenGradCurveStruct
 
-Fortran struct: `gen_grad_curve_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L775))
+Fortran struct: `gen_grad_curve_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L785))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1718,7 +1718,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GenGradientsStruct
 
-Fortran struct: `gen_gradients_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L784))
+Fortran struct: `gen_gradients_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L794))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1747,7 +1747,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GgTaylorStruct
 
-Fortran struct: `gg_taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L839))
+Fortran struct: `gg_taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L849))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1767,7 +1767,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GgTaylorTermStruct
 
-Fortran struct: `gg_taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L834))
+Fortran struct: `gg_taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L844))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1810,7 +1810,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GridBeamInitStruct
 
-Fortran struct: `grid_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1153))
+Fortran struct: `grid_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1163))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1834,7 +1834,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GridFieldPt1Struct
 
-Fortran struct: `grid_field_pt1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L802))
+Fortran struct: `grid_field_pt1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L812))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1854,7 +1854,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GridFieldPtStruct
 
-Fortran struct: `grid_field_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L807))
+Fortran struct: `grid_field_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L817))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1875,7 +1875,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### GridFieldStruct
 
-Fortran struct: `grid_field_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L813))
+Fortran struct: `grid_field_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L823))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -1907,7 +1907,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### HighEnergySpaceChargeStruct
 
-Fortran struct: `high_energy_space_charge_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L863))
+Fortran struct: `high_energy_space_charge_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L873))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2044,7 +2044,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### KvBeamInitStruct
 
-Fortran struct: `kv_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1147))
+Fortran struct: `kv_beam_init_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1157))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2065,7 +2065,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatEleLocStruct
 
-Fortran struct: `lat_ele_loc_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L881))
+Fortran struct: `lat_ele_loc_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L891))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2085,7 +2085,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatEleOrder1Struct
 
-Fortran struct: `lat_ele_order1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L888))
+Fortran struct: `lat_ele_order1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L898))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2105,7 +2105,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatEleOrderArrayStruct
 
-Fortran struct: `lat_ele_order_array_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L893))
+Fortran struct: `lat_ele_order_array_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L903))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2124,7 +2124,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatEleOrderStruct
 
-Fortran struct: `lat_ele_order_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L912))
+Fortran struct: `lat_ele_order_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L922))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2143,7 +2143,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatParamStruct
 
-Fortran struct: `lat_param_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1532))
+Fortran struct: `lat_param_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1542))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2178,7 +2178,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatPointerStruct
 
-Fortran struct: `lat_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L937))
+Fortran struct: `lat_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L947))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2197,7 +2197,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LatStruct
 
-Fortran struct: `lat_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1656))
+Fortran struct: `lat_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1666))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2247,7 +2247,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LinacNormalModeStruct
 
-Fortran struct: `linac_normal_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2011))
+Fortran struct: `linac_normal_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2021))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2272,7 +2272,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LinearEleIsfStruct
 
-Fortran struct: `linear_ele_isf_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L339))
+Fortran struct: `linear_ele_isf_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L349))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2291,7 +2291,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### LinearIsf1Struct
 
-Fortran struct: `linear_isf1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L330))
+Fortran struct: `linear_isf1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L340))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2357,7 +2357,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MaterialStruct
 
-Fortran struct: `material_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1301))
+Fortran struct: `material_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1311))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2413,7 +2413,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### Mode3Struct
 
-Fortran struct: `mode3_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L943))
+Fortran struct: `mode3_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L953))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2437,7 +2437,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ModeInfoStruct
 
-Fortran struct: `mode_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1568))
+Fortran struct: `mode_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1578))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2482,7 +2482,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MultipassAllInfoStruct
 
-Fortran struct: `multipass_all_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2135))
+Fortran struct: `multipass_all_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2145))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2502,7 +2502,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MultipassBranchInfoStruct
 
-Fortran struct: `multipass_branch_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2128))
+Fortran struct: `multipass_branch_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2138))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2521,7 +2521,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MultipassEleInfoStruct
 
-Fortran struct: `multipass_ele_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2121))
+Fortran struct: `multipass_ele_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2131))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2543,7 +2543,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MultipassLordInfoStruct
 
-Fortran struct: `multipass_lord_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2110))
+Fortran struct: `multipass_lord_info_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2120))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2625,7 +2625,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### MultipoleCacheStruct
 
-Fortran struct: `multipole_cache_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L973))
+Fortran struct: `multipole_cache_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L983))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2657,7 +2657,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### NormalModesStruct
 
-Fortran struct: `normal_modes_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2021))
+Fortran struct: `normal_modes_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2031))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2789,7 +2789,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PhotonElementStruct
 
-Fortran struct: `photon_element_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1099))
+Fortran struct: `photon_element_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1109))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2886,7 +2886,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PhotonMaterialStruct
 
-Fortran struct: `photon_material_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1084))
+Fortran struct: `photon_material_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1094))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -2962,7 +2962,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PhotonTargetStruct
 
-Fortran struct: `photon_target_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1076))
+Fortran struct: `photon_target_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1086))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3005,7 +3005,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PixelDetecStruct
 
-Fortran struct: `pixel_detec_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1053))
+Fortran struct: `pixel_detec_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1063))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3029,7 +3029,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PixelPtStruct
 
-Fortran struct: `pixel_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1043))
+Fortran struct: `pixel_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1053))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3057,7 +3057,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PmdHeaderStruct
 
-Fortran struct: `pmd_header_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2454))
+Fortran struct: `pmd_header_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2464))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3086,7 +3086,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PreTrackerStruct
 
-Fortran struct: `pre_tracker_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1640))
+Fortran struct: `pre_tracker_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1650))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3108,7 +3108,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PtcBranch1Struct
 
-Fortran struct: `ptc_branch1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1561))
+Fortran struct: `ptc_branch1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1571))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3127,7 +3127,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PtcLayoutPointerStruct
 
-Fortran struct: `ptc_layout_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1557))
+Fortran struct: `ptc_layout_pointer_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1567))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3142,7 +3142,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### PtcNormalFormStruct
 
-Fortran struct: `ptc_normal_form_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1600))
+Fortran struct: `ptc_normal_form_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1610))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3196,7 +3196,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RadInt1Struct
 
-Fortran struct: `rad_int1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2421))
+Fortran struct: `rad_int1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2431))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3232,7 +3232,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RadIntAllEleStruct
 
-Fortran struct: `rad_int_all_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2448))
+Fortran struct: `rad_int_all_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2458))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3251,7 +3251,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RadIntBranchStruct
 
-Fortran struct: `rad_int_branch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2444))
+Fortran struct: `rad_int_branch_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2454))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3352,7 +3352,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RadMapEleStruct
 
-Fortran struct: `rad_map_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L996))
+Fortran struct: `rad_map_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1006))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3373,7 +3373,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RadMapStruct
 
-Fortran struct: `rad_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L988))
+Fortran struct: `rad_map_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L998))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3396,7 +3396,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RamperLordStruct
 
-Fortran struct: `ramper_lord_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1391))
+Fortran struct: `ramper_lord_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1401))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3417,7 +3417,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### ResonanceHStruct
 
-Fortran struct: `resonance_h_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1579))
+Fortran struct: `resonance_h_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1589))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3437,7 +3437,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RfEleStruct
 
-Fortran struct: `rf_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1337))
+Fortran struct: `rf_ele_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1347))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3457,7 +3457,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### RfStairStepStruct
 
-Fortran struct: `rf_stair_step_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1316))
+Fortran struct: `rf_stair_step_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1326))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3544,7 +3544,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpaceChargeCommonStruct
 
-Fortran struct: `space_charge_common_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2177))
+Fortran struct: `space_charge_common_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2187))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3581,7 +3581,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpinAxisStruct
 
-Fortran struct: `spin_axis_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L291))
+Fortran struct: `spin_axis_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L301))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3602,7 +3602,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpinEigenStruct
 
-Fortran struct: `spin_eigen_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L286))
+Fortran struct: `spin_eigen_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L296))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3622,7 +3622,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpinMatchingStruct
 
-Fortran struct: `spin_matching_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L297))
+Fortran struct: `spin_matching_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L307))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3651,7 +3651,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpinOrbitMap1Struct
 
-Fortran struct: `spin_orbit_map1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L322))
+Fortran struct: `spin_orbit_map1_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L332))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3672,7 +3672,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SpinPolarStruct
 
-Fortran struct: `spin_polar_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L313))
+Fortran struct: `spin_polar_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L323))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3694,7 +3694,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### StrongBeamStruct
 
-Fortran struct: `strong_beam_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2070))
+Fortran struct: `strong_beam_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2080))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3758,7 +3758,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceCurvatureStruct
 
-Fortran struct: `surface_curvature_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1063))
+Fortran struct: `surface_curvature_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1073))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3780,7 +3780,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceDisplacementPtStruct
 
-Fortran struct: `surface_displacement_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1030))
+Fortran struct: `surface_displacement_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1040))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3804,7 +3804,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceDisplacementStruct
 
-Fortran struct: `surface_displacement_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1035))
+Fortran struct: `surface_displacement_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1045))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3826,7 +3826,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceHMisalignPtStruct
 
-Fortran struct: `surface_h_misalign_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1017))
+Fortran struct: `surface_h_misalign_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1027))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3850,7 +3850,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceHMisalignStruct
 
-Fortran struct: `surface_h_misalign_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1022))
+Fortran struct: `surface_h_misalign_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1032))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3872,7 +3872,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceSegmentedPtStruct
 
-Fortran struct: `surface_segmented_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1004))
+Fortran struct: `surface_segmented_pt_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1014))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3895,7 +3895,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### SurfaceSegmentedStruct
 
-Fortran struct: `surface_segmented_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1009))
+Fortran struct: `surface_segmented_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1019))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3917,7 +3917,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### TargetPointStruct
 
-Fortran struct: `target_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1072))
+Fortran struct: `target_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L1082))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3936,7 +3936,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### TaylorStruct
 
-Fortran struct: `taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L500))
+Fortran struct: `taylor_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L510))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3956,7 +3956,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### TaylorTermStruct
 
-Fortran struct: `taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L486))
+Fortran struct: `taylor_term_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L496))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -3976,7 +3976,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### TrackPointStruct
 
-Fortran struct: `track_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2079))
+Fortran struct: `track_point_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2089))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4001,7 +4001,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### TrackStruct
 
-Fortran struct: `track_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2091))
+Fortran struct: `track_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2101))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4058,7 +4058,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeLrModeStruct
 
-Fortran struct: `wake_lr_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L656))
+Fortran struct: `wake_lr_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L666))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4089,7 +4089,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeLrStruct
 
-Fortran struct: `wake_lr_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L672))
+Fortran struct: `wake_lr_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L682))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4114,7 +4114,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeSrModeStruct
 
-Fortran struct: `wake_sr_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L626))
+Fortran struct: `wake_sr_mode_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L636))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4142,7 +4142,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeSrStruct
 
-Fortran struct: `wake_sr_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L640))
+Fortran struct: `wake_sr_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L650))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4170,7 +4170,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeSrZLongStruct
 
-Fortran struct: `wake_sr_z_long_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L614))
+Fortran struct: `wake_sr_z_long_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L624))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4197,7 +4197,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### WakeStruct
 
-Fortran struct: `wake_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L685))
+Fortran struct: `wake_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L695))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4217,7 +4217,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### Wall3DSectionStruct
 
-Fortran struct: `wall3d_section_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L439))
+Fortran struct: `wall3d_section_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L449))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4255,7 +4255,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### Wall3DStruct
 
-Fortran struct: `wall3d_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L471))
+Fortran struct: `wall3d_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L481))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4283,7 +4283,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### Wall3DVertexStruct
 
-Fortran struct: `wall3d_vertex_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L423))
+Fortran struct: `wall3d_vertex_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L433))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4310,7 +4310,7 @@ All attributes may be passed to the initializer as arguments:
 
 ### XyDispStruct
 
-Fortran struct: `xy_disp_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L874))
+Fortran struct: `xy_disp_struct` ([`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L884))
 
 All attributes may be passed to the initializer as arguments:
 
@@ -4608,9 +4608,9 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 Fortran sources (overloaded):
 
-- `attribute_free1`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3072)
-- `attribute_free2`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3101)
-- `attribute_free3`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3141)
+- `attribute_free1`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3080)
+- `attribute_free2`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3109)
+- `attribute_free3`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3149)
 
 ::: pybmad.bmad.attribute_free
     options:
@@ -4661,7 +4661,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### attribute_type
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2037)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2038)
 
 ::: pybmad.bmad.attribute_type
     options:
@@ -4670,7 +4670,7 @@ Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### attribute_units
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2140)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2142)
 
 ::: pybmad.bmad.attribute_units
     options:
@@ -5492,7 +5492,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### coord_state_name
 
-Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2636)
+Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2646)
 
 ::: pybmad.bmad.coord_state_name
     options:
@@ -5789,7 +5789,7 @@ Fortran source: [`bmad/photon/photon_reflection_mod.f90`]({{ upstream_source }}/
 
 ### custom_attribute_ubound_index
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2832)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2840)
 
 ::: pybmad.bmad.custom_attribute_ubound_index
     options:
@@ -5798,7 +5798,7 @@ Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### custom_ele_attrib_name_list
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3004)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3012)
 
 ::: pybmad.bmad.custom_ele_attrib_name_list
     options:
@@ -6059,7 +6059,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### ele_finalizer
 
-Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2816)
+Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2826)
 
 ::: pybmad.bmad.ele_finalizer
     options:
@@ -7376,7 +7376,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### field_attribute_free
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3474)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3482)
 
 ::: pybmad.bmad.field_attribute_free
     options:
@@ -7844,7 +7844,7 @@ Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modul
 
 ### has_attribute
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2804)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2812)
 
 ::: pybmad.bmad.has_attribute
     options:
@@ -7862,7 +7862,7 @@ Fortran source: [`bmad/photon/photon_utils_mod.f90`]({{ upstream_source }}/bmad/
 
 ### has_orientation_attributes
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1988)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1989)
 
 ::: pybmad.bmad.has_orientation_attributes
     options:
@@ -8042,7 +8042,7 @@ Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`]({{ upstream_s
 
 ### init_attribute_name1
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1942)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1943)
 
 ::: pybmad.bmad.init_attribute_name1
     options:
@@ -8292,7 +8292,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### is_attribute
 
-Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2678)
+Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2688)
 
 ::: pybmad.bmad.is_attribute
     options:
@@ -9219,7 +9219,7 @@ Fortran source: [`bmad/modules/mode3_mod.f90`]({{ upstream_source }}/bmad/module
 
 ### n_attrib_string_max_len
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2774)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2782)
 
 ::: pybmad.bmad.n_attrib_string_max_len
     options:
@@ -10100,7 +10100,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### pointer_to_slave
 
-Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2744)
+Fortran source: [`bmad/modules/bmad_struct.f90`]({{ upstream_source }}/bmad/modules/bmad_struct.f90#L2754)
 
 ::: pybmad.bmad.pointer_to_slave
     options:
@@ -10556,7 +10556,7 @@ Fortran sources (overloaded):
 
 ### read_beam_ascii
 
-Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L834)
+Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L836)
 
 ::: pybmad.bmad.read_beam_ascii
     options:
@@ -10565,7 +10565,7 @@ Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bm
 
 ### read_beam_file
 
-Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L380)
+Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L382)
 
 ::: pybmad.bmad.read_beam_file
     options:
@@ -11010,7 +11010,7 @@ Fortran source: [`bmad/modules/dynamic_aperture_mod.f90`]({{ upstream_source }}/
 
 ### set_custom_attribute_name
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2863)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2871)
 
 ::: pybmad.bmad.set_custom_attribute_name
     options:
@@ -11558,7 +11558,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### string_attrib
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2350)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2352)
 
 ::: pybmad.bmad.string_attrib
     options:
@@ -11594,7 +11594,7 @@ Fortran source: [`bmad/photon/photon_utils_mod.f90`]({{ upstream_source }}/bmad/
 
 ### switch_attrib_value_name
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2431)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2433)
 
 ::: pybmad.bmad.switch_attrib_value_name
     options:
@@ -13028,7 +13028,7 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`]({{ upstream_source }}/bmad/
 
 ### write_ascii_beam_file
 
-Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L123)
+Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L125)
 
 ::: pybmad.bmad.write_ascii_beam_file
     options:
@@ -13082,7 +13082,7 @@ Fortran source: [`bmad/interface/astra_interface_mod.f90`]({{ upstream_source }}
 
 ### write_beam_file
 
-Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L29)
+Fortran source: [`bmad/multiparticle/beam_file_io.f90`]({{ upstream_source }}/bmad/multiparticle/beam_file_io.f90#L31)
 
 ::: pybmad.bmad.write_beam_file
     options:

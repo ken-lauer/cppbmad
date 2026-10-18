@@ -204,16 +204,18 @@ combine : bool, optional
          bool append,
          bool error,
          LatStruct *lat,
-         std::optional<bool> alive_only) {
+         std::optional<bool> alive_only,
+         std::optional<bool> as_patches) {
         auto fn = static_cast<void (*)(
             std::string,
             BunchStructArray1D,
             bool,
             bool,
             optional_ref<LatStruct>,
+            std::optional<bool>,
             std::optional<bool>
         )>(&Bmad::hdf5_write_beam);
-        return fn(file_name, bunches, append, error, ptr_to_opt_ref(lat), alive_only);
+        return fn(file_name, bunches, append, error, ptr_to_opt_ref(lat), alive_only, as_patches);
       },
       nb::arg("file_name"),
       nb::arg("bunches"),
@@ -221,6 +223,7 @@ combine : bool, optional
       nb::arg("error"),
       nb::arg("lat") = nb::none(),
       nb::arg("alive_only") = nb::none(),
+      nb::arg("as_patches") = nb::none(),
       R"""(Wrapper for Fortran routine hdf5_write_beam
 
 Parameters
@@ -236,6 +239,8 @@ error : bool
 lat : LatStruct, optional
 
 alive_only : bool, optional
+
+as_patches : bool, optional
 )"""
   );
   m.def(

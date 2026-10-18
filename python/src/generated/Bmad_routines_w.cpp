@@ -538,16 +538,26 @@ err : bool
          std::optional<bool> new_file,
          std::optional<int> file_format,
          LatStruct *lat,
-         std::optional<bool> alive_only) {
+         std::optional<bool> alive_only,
+         std::optional<bool> as_patches) {
         auto fn = static_cast<void (*)(
             std::string,
             BeamStruct &,
             std::optional<bool>,
             std::optional<int>,
             optional_ref<LatStruct>,
+            std::optional<bool>,
             std::optional<bool>
         )>(&Bmad::write_beam_file);
-        return fn(file_name, beam, new_file, file_format, ptr_to_opt_ref(lat), alive_only);
+        return fn(
+            file_name,
+            beam,
+            new_file,
+            file_format,
+            ptr_to_opt_ref(lat),
+            alive_only,
+            as_patches
+        );
       },
       nb::arg("file_name"),
       nb::arg("beam"),
@@ -555,6 +565,7 @@ err : bool
       nb::arg("file_format") = nb::none(),
       nb::arg("lat") = nb::none(),
       nb::arg("alive_only") = nb::none(),
+      nb::arg("as_patches") = nb::none(),
       R"""(Routine to write a beam file.
 
 A '.h5' suffix will be appended to the created file if hdf5$ format is used and file_name does not
@@ -579,6 +590,10 @@ lat : LatStruct, optional
 
 alive_only : bool, optional
     Only write live (includes pre_born) particles to the file? Default is False.
+
+as_patches : bool, optional
+    For hdf5$ format, write the bunches as particlePatches of one species record (see hdf5_write_beam).
+    Ignored for ascii$. Default is False.
 )"""
   );
   m.def(

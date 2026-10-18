@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `363` |  |
+| `BMAD_INC_VERSION` | `364` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
@@ -121,6 +121,8 @@ Fortran integer and real parameters exposed as Python constants.
 | `SLICE` | `2` |  |
 | `FFT_3D` | `3` |  |
 | `CATHODE_FFT_3D` | `4` |  |
+| `AVERAGED` | `2` |  |
+| `UNAVERAGED` | `3` |  |
 | `MAGNETIC` | `1` |  |
 | `ELECTRIC` | `2` |  |
 | `MIXED` | `3` |  |
@@ -691,6 +693,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `E3_GRADIENT` | `48` |  |
 | `PTC_FRINGE_GEOMETRY` | `48` |  |
 | `E_TOT_SET` | `48` |  |
+| `FEL_METHOD` | `48` |  |
 | `BS_FIELD` | `49` |  |
 | `P0C_SET` | `49` |  |
 | `PTC_FIELD_GEOMETRY` | `49` |  |

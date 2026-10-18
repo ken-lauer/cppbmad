@@ -135,6 +135,7 @@
 | [`autoscale_phase_and_amp`](bmad.md#autoscale_phase_and_amp) | Routine | [Bmad](bmad.md) |
 | `AVERAGE` | Enum | [Enums](enums.md) |
 | [`average_twiss`](bmad.md#average_twiss) | Routine | [Bmad](bmad.md) |
+| `AVERAGED` | Enum | [Enums](enums.md) |
 | [`axis_angle_to_quat`](sim_utils.md#axis_angle_to_quat) | Routine | [Sim Utils](sim_utils.md) |
 | [`axis_angle_to_w_mat`](sim_utils.md#axis_angle_to_w_mat) | Routine | [Sim Utils](sim_utils.md) |
 | `B0` | Enum | [Enums](enums.md) |
@@ -839,6 +840,7 @@
 | `FB1` | Enum | [Enums](enums.md) |
 | `FB2` | Enum | [Enums](enums.md) |
 | `FEEDBACK` | Enum | [Enums](enums.md) |
+| `FEL_METHOD` | Enum | [Enums](enums.md) |
 | [`fft1`](bmad.md#fft1) | Routine | [Bmad](bmad.md) |
 | [`fft_1d`](sim_utils.md#fft_1d) | Routine | [Sim Utils](sim_utils.md) |
 | `FFT_3D` | Enum | [Enums](enums.md) |
@@ -2691,6 +2693,7 @@
 | `UB_SUBATOMIC` | Enum | [Enums](enums.md) |
 | `UNARY_MINUS` | Enum | [Enums](enums.md) |
 | `UNARY_PLUS` | Enum | [Enums](enums.md) |
+| `UNAVERAGED` | Enum | [Enums](enums.md) |
 | `UNDIFFRACTED` | Enum | [Enums](enums.md) |
 | `UNDULATOR` | Enum | [Enums](enums.md) |
 | `UNIFORM` | Enum | [Enums](enums.md) |
