@@ -248,13 +248,15 @@ extern "C" void fortran_tao_complete(
     int &word_start /* 0D_NOT_integer out */,
     const char *context /* 0D_NOT_character out */,
     void *matches /* 1D_ALLOC_character out */,
-    const char *common_prefix /* 0D_NOT_character out */
+    const char *common_prefix /* 0D_NOT_character out */,
+    bool &no_append /* 0D_NOT_logical out */
 );
 struct TaoComplete {
   int word_start;
   std::string context;
   CharacterAlloc1D matches;
   std::string common_prefix;
+  bool no_append;
 };
 Tao::TaoComplete tao_complete(std::string line, int cursor);
 extern "C" bool fortran_tao_constraint_type_name(

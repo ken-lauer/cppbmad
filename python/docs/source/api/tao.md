@@ -2305,7 +2305,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_complete`.
 
-Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L63)
+Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L65)
 
 ::: pybmad.tao.tao_complete
     options:
@@ -2789,7 +2789,7 @@ Fortran source: [`tao/code/tao_input_struct.f90`]({{ upstream_source }}/tao/code
 
 Not exposed at the top level — import as `pybmad.tao.tao_enum_value_names`.
 
-Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L153)
+Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L186)
 
 ::: pybmad.tao.tao_enum_value_names
     options:
@@ -4046,7 +4046,7 @@ Fortran source: [`tao/code/tao_interface.f90`]({{ upstream_source }}/tao/code/ta
 
 Not exposed at the top level — import as `pybmad.tao.tao_register_completion`.
 
-Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L1027)
+Fortran source: [`tao/code/tao_completion_mod.f90`]({{ upstream_source }}/tao/code/tao_completion_mod.f90#L1215)
 
 ::: pybmad.tao.tao_register_completion
     options:
@@ -4794,7 +4794,7 @@ Fortran source: [`tao/code/tao_svd_optimizer_mod.f90`]({{ upstream_source }}/tao
 
 Not exposed at the top level — import as `pybmad.tao.tao_switches_for`.
 
-Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L310)
+Fortran source: [`tao/code/tao_command_names_mod.f90`]({{ upstream_source }}/tao/code/tao_command_names_mod.f90#L343)
 
 ::: pybmad.tao.tao_switches_for
     options:

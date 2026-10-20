@@ -5357,7 +5357,8 @@ std::string to_string(const Tao::TaoComplete &self) {
       {std::pair{"word_start", to_string(self.word_start)},
        std::pair{"context", self.context},
        std::pair{"matches", to_string(self.matches)},
-       std::pair{"common_prefix", self.common_prefix}}
+       std::pair{"common_prefix", self.common_prefix},
+       std::pair{"no_append", to_string(self.no_append)}}
   );
 }
 std::string to_string(const Tao::TaoCurveRmsCalc &self) {

@@ -987,8 +987,8 @@ subroutine fortran_tao_command (command_line, err, err_is_fatal) bind(c)
   call c_f_pointer(err_is_fatal, f_err_is_fatal_ptr)
   f_err_is_fatal_ptr = f_err_is_fatal
 end subroutine
-subroutine fortran_tao_complete (line, cursor, word_start, context, matches, common_prefix) &
-    bind(c)
+subroutine fortran_tao_complete (line, cursor, word_start, context, matches, common_prefix, &
+    no_append) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1012,6 +1012,9 @@ subroutine fortran_tao_complete (line, cursor, word_start, context, matches, com
   character(len=4096), target :: f_common_prefix
   character(kind=c_char), pointer :: f_common_prefix_ptr(:)
   character(len=4096), pointer :: f_common_prefix_call_ptr
+  type(c_ptr), intent(in), value :: no_append  ! 0D_NOT_logical
+  logical :: f_no_append
+  logical(c_bool), pointer :: f_no_append_ptr
   ! ** End of parameters **
   ! in: f_line 0D_NOT_character
   if (.not. c_associated(line)) return
@@ -1028,8 +1031,14 @@ subroutine fortran_tao_complete (line, cursor, word_start, context, matches, com
   else
     f_common_prefix_call_ptr => null()
   endif
+  ! out: f_no_append 0D_NOT_logical
+  if (c_associated(no_append)) then
+    call c_f_pointer(no_append, f_no_append_ptr)
+  else
+    f_no_append_ptr => null()
+  endif
   call tao_complete(f_line, f_cursor, f_word_start, f_context, f_matches_local, &
-      f_common_prefix_call_ptr)
+      f_common_prefix_call_ptr, f_no_append)
 
   ! out: f_word_start 0D_NOT_integer
   call c_f_pointer(word_start, f_word_start_ptr)
@@ -1047,6 +1056,9 @@ subroutine fortran_tao_complete (line, cursor, word_start, context, matches, com
     call c_f_pointer(common_prefix, f_common_prefix_ptr, [len_trim(f_common_prefix) + 1])
     call to_c_str(f_common_prefix, f_common_prefix_ptr)
   endif
+  ! out: f_no_append 0D_NOT_logical
+  call c_f_pointer(no_append, f_no_append_ptr)
+  f_no_append_ptr = f_no_append
 end subroutine
 subroutine fortran_tao_constraint_type_name (datum, datum_name) bind(c)
 
