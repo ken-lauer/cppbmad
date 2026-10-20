@@ -285,13 +285,15 @@ Tao::TaoComplete Tao::tao_complete(std::string line, int cursor) {
   // intent=out character array container
   auto matches{CharacterAlloc1D()};
   char _common_prefix[4096];
+  bool _no_append{};
   fortran_tao_complete(/* const char* */ _line,
                        /* int& */ cursor,
                        /* int& */ _word_start,
                        /* const char* */ _context,
                        /* void* */ matches.get_fortran_ptr(),
-                       /* const char* */ _common_prefix);
-  return TaoComplete{_word_start, _context, std::move(matches), _common_prefix};
+                       /* const char* */ _common_prefix,
+                       /* bool& */ _no_append);
+  return TaoComplete{_word_start, _context, std::move(matches), _common_prefix, _no_append};
 }
 std::string Tao::tao_constraint_type_name(TaoDataStruct &datum) {
   char _datum_name[4096];

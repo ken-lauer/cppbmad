@@ -571,10 +571,11 @@ err_is_fatal : bool
       .def_ro("context", &Tao::TaoComplete::context)
       .def_ro("matches", &Tao::TaoComplete::matches)
       .def_ro("common_prefix", &Tao::TaoComplete::common_prefix)
-      .def("__len__", [](const Tao::TaoComplete &) { return 4; })
+      .def_ro("no_append", &Tao::TaoComplete::no_append)
+      .def("__len__", [](const Tao::TaoComplete &) { return 5; })
       .def("__getitem__", [](const Tao::TaoComplete &s, int i) -> nb::object {
         if (i < 0)
-          i += 4;
+          i += 5;
         if (i == 0)
           return nb::cast(s.word_start);
         if (i == 1)
@@ -583,6 +584,8 @@ err_is_fatal : bool
           return nb::cast(s.matches);
         if (i == 3)
           return nb::cast(s.common_prefix);
+        if (i == 4)
+          return nb::cast(s.no_append);
         throw nb::index_error();
       });
   m.def(
@@ -620,6 +623,10 @@ common_prefix : str, optional
     Text to replace the token with right away: the sole candidate when there is just one, otherwise the token
     as typed followed by whatever all candidates (including any beyond the max_matches$ cap) agree on. Never
     shorter than the token.
+
+no_append : bool, optional
+    True if a completed candidate is not a whole word, so no blank should follow it (eg "set data orbit.x"
+    before "|").
 )"""
   );
   m.def(
