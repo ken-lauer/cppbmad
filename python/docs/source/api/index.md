@@ -571,6 +571,7 @@
 | `DPHI_B` | Enum | [Enums](enums.md) |
 | `DPHI_ORIGIN` | Enum | [Enums](enums.md) |
 | `DPSI_ORIGIN` | Enum | [Enums](enums.md) |
+| `DPZ_ELE_DPZ_START` | Enum | [Enums](enums.md) |
 | `DRIFT` | Enum | [Enums](enums.md) |
 | [`drift_and_pipe_track_methods_adjustment`](bmad.md#drift_and_pipe_track_methods_adjustment) | Routine | [Bmad](bmad.md) |
 | `DRIFT_KICK` | Enum | [Enums](enums.md) |

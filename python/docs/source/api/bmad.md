@@ -4608,9 +4608,9 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 Fortran sources (overloaded):
 
-- `attribute_free1`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3080)
-- `attribute_free2`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3109)
-- `attribute_free3`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3149)
+- `attribute_free1`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3081)
+- `attribute_free2`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3110)
+- `attribute_free3`: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3150)
 
 ::: pybmad.bmad.attribute_free
     options:
@@ -4661,7 +4661,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### attribute_type
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2038)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2039)
 
 ::: pybmad.bmad.attribute_type
     options:
@@ -4670,7 +4670,7 @@ Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### attribute_units
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2142)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2143)
 
 ::: pybmad.bmad.attribute_units
     options:
@@ -5789,7 +5789,7 @@ Fortran source: [`bmad/photon/photon_reflection_mod.f90`]({{ upstream_source }}/
 
 ### custom_attribute_ubound_index
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2840)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2841)
 
 ::: pybmad.bmad.custom_attribute_ubound_index
     options:
@@ -5798,7 +5798,7 @@ Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### custom_ele_attrib_name_list
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3012)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3013)
 
 ::: pybmad.bmad.custom_ele_attrib_name_list
     options:
@@ -7376,7 +7376,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### field_attribute_free
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3482)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L3483)
 
 ::: pybmad.bmad.field_attribute_free
     options:
@@ -7844,7 +7844,7 @@ Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modul
 
 ### has_attribute
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2812)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2813)
 
 ::: pybmad.bmad.has_attribute
     options:
@@ -7862,7 +7862,7 @@ Fortran source: [`bmad/photon/photon_utils_mod.f90`]({{ upstream_source }}/bmad/
 
 ### has_orientation_attributes
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1989)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1990)
 
 ::: pybmad.bmad.has_orientation_attributes
     options:
@@ -8042,7 +8042,7 @@ Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`]({{ upstream_s
 
 ### init_attribute_name1
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1943)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L1944)
 
 ::: pybmad.bmad.init_attribute_name1
     options:
@@ -9219,7 +9219,7 @@ Fortran source: [`bmad/modules/mode3_mod.f90`]({{ upstream_source }}/bmad/module
 
 ### n_attrib_string_max_len
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2782)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2783)
 
 ::: pybmad.bmad.n_attrib_string_max_len
     options:
@@ -11010,7 +11010,7 @@ Fortran source: [`bmad/modules/dynamic_aperture_mod.f90`]({{ upstream_source }}/
 
 ### set_custom_attribute_name
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2871)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2872)
 
 ::: pybmad.bmad.set_custom_attribute_name
     options:
@@ -11558,7 +11558,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### string_attrib
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2352)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2353)
 
 ::: pybmad.bmad.string_attrib
     options:
@@ -11594,7 +11594,7 @@ Fortran source: [`bmad/photon/photon_utils_mod.f90`]({{ upstream_source }}/bmad/
 
 ### switch_attrib_value_name
 
-Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2433)
+Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/modules/attribute_mod.f90#L2434)
 
 ::: pybmad.bmad.switch_attrib_value_name
     options:
