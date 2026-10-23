@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20261021.0"
+__version__ = "20261023.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -2332,6 +2332,7 @@ from ._enums import SIG_VX
 from ._enums import SIG_VY
 from ._enums import CONSTANT_REF_ENERGY
 from ._enums import KS
+from ._enums import REF_TILT_TOT
 from ._enums import SIG_E
 from ._enums import SIG_PZ
 from ._enums import AUTOSCALE_AMPLITUDE
@@ -2539,7 +2540,7 @@ from ._enums import Y_OFFSET_TOT
 from ._enums import Z_OFFSET_TOT
 from ._enums import TILT_TOT
 from ._enums import ROLL_TOT
-from ._enums import REF_TILT_TOT
+from ._enums import DPZ_ELE_DPZ_START
 from ._enums import MULTIPASS_REF_ENERGY
 from ._enums import DISPATCH
 from ._enums import REF_TIME_START
@@ -5275,6 +5276,7 @@ __all__ = [
     "SIG_VY",
     "CONSTANT_REF_ENERGY",
     "KS",
+    "REF_TILT_TOT",
     "SIG_E",
     "SIG_PZ",
     "AUTOSCALE_AMPLITUDE",
@@ -5482,7 +5484,7 @@ __all__ = [
     "Z_OFFSET_TOT",
     "TILT_TOT",
     "ROLL_TOT",
-    "REF_TILT_TOT",
+    "DPZ_ELE_DPZ_START",
     "MULTIPASS_REF_ENERGY",
     "DISPATCH",
     "REF_TIME_START",

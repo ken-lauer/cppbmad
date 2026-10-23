@@ -97,6 +97,7 @@ class EleAttribute(enum.IntEnum):
     SIG_VY = 18 - 1
     CONSTANT_REF_ENERGY = 18 - 1
     KS = 18 - 1
+    REF_TILT_TOT = 18 - 1
     SIG_E = 19 - 1
     SIG_PZ = 19 - 1
     AUTOSCALE_AMPLITUDE = 19 - 1
@@ -304,7 +305,7 @@ class EleAttribute(enum.IntEnum):
     Z_OFFSET_TOT = 59 - 1
     TILT_TOT = 60 - 1  # Important: tilt_tot$ = roll_tot$
     ROLL_TOT = 60 - 1
-    REF_TILT_TOT = 61 - 1
+    DPZ_ELE_DPZ_START = 61 - 1
     MULTIPASS_REF_ENERGY = 62 - 1
     DISPATCH = 63 - 1
     REF_TIME_START = 64 - 1
@@ -918,6 +919,7 @@ SIG_VX = EleAttribute.SIG_VX
 SIG_VY = EleAttribute.SIG_VY
 CONSTANT_REF_ENERGY = EleAttribute.CONSTANT_REF_ENERGY
 KS = EleAttribute.KS
+REF_TILT_TOT = EleAttribute.REF_TILT_TOT
 SIG_E = EleAttribute.SIG_E
 SIG_PZ = EleAttribute.SIG_PZ
 AUTOSCALE_AMPLITUDE = EleAttribute.AUTOSCALE_AMPLITUDE
@@ -1127,7 +1129,7 @@ Z_OFFSET_TOT = EleAttribute.Z_OFFSET_TOT
 # Important: tilt_tot$ = roll_tot$
 TILT_TOT = EleAttribute.TILT_TOT
 ROLL_TOT = EleAttribute.ROLL_TOT
-REF_TILT_TOT = EleAttribute.REF_TILT_TOT
+DPZ_ELE_DPZ_START = EleAttribute.DPZ_ELE_DPZ_START
 MULTIPASS_REF_ENERGY = EleAttribute.MULTIPASS_REF_ENERGY
 DISPATCH = EleAttribute.DISPATCH
 REF_TIME_START = EleAttribute.REF_TIME_START

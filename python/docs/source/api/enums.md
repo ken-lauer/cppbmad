@@ -504,6 +504,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `SIG_VY` | `18` |  |
 | `CONSTANT_REF_ENERGY` | `18` |  |
 | `KS` | `18` |  |
+| `REF_TILT_TOT` | `18` |  |
 | `SIG_E` | `19` |  |
 | `SIG_PZ` | `19` |  |
 | `AUTOSCALE_AMPLITUDE` | `19` |  |
@@ -711,7 +712,7 @@ Fortran integer and real parameters exposed as Python constants.
 | `Z_OFFSET_TOT` | `59` |  |
 | `TILT_TOT` | `60` | Important: tilt_tot$ = roll_tot$ |
 | `ROLL_TOT` | `60` |  |
-| `REF_TILT_TOT` | `61` |  |
+| `DPZ_ELE_DPZ_START` | `61` |  |
 | `MULTIPASS_REF_ENERGY` | `62` |  |
 | `DISPATCH` | `63` |  |
 | `REF_TIME_START` | `64` |  |
