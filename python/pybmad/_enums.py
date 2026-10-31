@@ -403,7 +403,7 @@ class EleKey(enum.IntEnum):
     N_KEY = 70
 
 # Constants from bmad_struct.f90
-BMAD_INC_VERSION = 364
+BMAD_INC_VERSION = 365
 NONE = 1
 # maximum multipole order
 N_POLE_MAXX = 21
