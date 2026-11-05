@@ -4507,7 +4507,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### aperture_bookkeeper
 
-Fortran source: [`bmad/modules/bookkeeper_mod.f90`]({{ upstream_source }}/bmad/modules/bookkeeper_mod.f90#L1850)
+Fortran source: [`bmad/modules/bookkeeper_mod.f90`]({{ upstream_source }}/bmad/modules/bookkeeper_mod.f90#L1865)
 
 ::: pybmad.bmad.aperture_bookkeeper
     options:
