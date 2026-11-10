@@ -2371,7 +2371,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_curve_check_universe`.
 
-Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3077)
+Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3081)
 
 ::: pybmad.tao.tao_curve_check_universe
     options:
@@ -2393,7 +2393,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_curve_datum_calc`.
 
-Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L2886)
+Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L2890)
 
 ::: pybmad.tao.tao_curve_datum_calc
     options:
@@ -2525,7 +2525,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_data_useit_plot_calc`.
 
-Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L2787)
+Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L2791)
 
 ::: pybmad.tao.tao_data_useit_plot_calc
     options:
@@ -3141,7 +3141,7 @@ Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/c
 
 Not exposed at the top level — import as `pybmad.tao.tao_graph_s_min_max_calc`.
 
-Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3116)
+Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3120)
 
 ::: pybmad.tao.tao_graph_s_min_max_calc
     options:
@@ -4211,7 +4211,7 @@ Fortran source: [`tao/code/tao_set_mod.f90`]({{ upstream_source }}/tao/code/tao_
 
 Not exposed at the top level — import as `pybmad.tao.tao_set_curve_invalid`.
 
-Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3045)
+Fortran source: [`tao/code/tao_graph_setup_mod.f90`]({{ upstream_source }}/tao/code/tao_graph_setup_mod.f90#L3049)
 
 ::: pybmad.tao.tao_set_curve_invalid
     options:

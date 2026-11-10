@@ -52,6 +52,8 @@ str : str
       nb::arg("y_size"),
       nb::arg("x_res"),
       nb::arg("y_res"),
+      nb::arg("x_pix") = nb::none(),
+      nb::arg("y_pix") = nb::none(),
       R"""(Wrapper for Fortran routine display_size_and_resolution
 
 Parameters
@@ -65,6 +67,10 @@ y_size : float
 x_res : float
 
 y_res : float
+
+x_pix : int, optional
+
+y_pix : int, optional
 )"""
   );
   m.def(
