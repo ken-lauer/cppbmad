@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20261108.0"
+__version__ = "20261110.0"
 
 # Globals
 from ._pybmad import get_bmad_com

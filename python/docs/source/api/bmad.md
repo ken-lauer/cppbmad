@@ -7259,7 +7259,7 @@ Fortran source: [`bmad/parsing/bmad_parser_mod.f90`]({{ upstream_source }}/bmad/
 
 ### exact_bend_edge_kick
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L1514)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L1539)
 
 ::: pybmad.bmad.exact_bend_edge_kick
     options:
@@ -7268,7 +7268,7 @@ Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modul
 
 ### exact_bend_edge_kick_ptc
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L1999)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L2024)
 
 ::: pybmad.bmad.exact_bend_edge_kick_ptc
     options:
@@ -7835,7 +7835,7 @@ Fortran source: [`bmad/modules/em_field_mod.f90`]({{ upstream_source }}/bmad/mod
 
 ### hard_multipole_edge_kick
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L732)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L757)
 
 ::: pybmad.bmad.hard_multipole_edge_kick
     options:
@@ -10920,7 +10920,7 @@ Fortran source: [`bmad/space_charge/csr_and_space_charge_mod.f90`]({{ upstream_s
 
 ### sad_mult_hard_bend_edge_kick
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L488)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L513)
 
 ::: pybmad.bmad.sad_mult_hard_bend_edge_kick
     options:
@@ -10929,7 +10929,7 @@ Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modul
 
 ### sad_soft_bend_edge_kick
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L933)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L958)
 
 ::: pybmad.bmad.sad_soft_bend_edge_kick
     options:
@@ -11279,7 +11279,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### soft_quadrupole_edge_kick
 
-Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L596)
+Fortran source: [`bmad/modules/fringe_mod.f90`]({{ upstream_source }}/bmad/modules/fringe_mod.f90#L621)
 
 ::: pybmad.bmad.soft_quadrupole_edge_kick
     options:

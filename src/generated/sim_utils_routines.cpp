@@ -659,13 +659,31 @@ void SimUtils::display_size_and_resolution(
     double x_size,
     double y_size,
     double x_res,
-    double y_res
+    double y_res,
+    std::optional<int> x_pix,
+    std::optional<int> y_pix
 ) {
+  int x_pix_lvalue;
+  auto *_x_pix{&x_pix_lvalue};
+  if (x_pix.has_value()) {
+    x_pix_lvalue = x_pix.value();
+  } else {
+    _x_pix = nullptr;
+  }
+  int y_pix_lvalue;
+  auto *_y_pix{&y_pix_lvalue};
+  if (y_pix.has_value()) {
+    y_pix_lvalue = y_pix.value();
+  } else {
+    _y_pix = nullptr;
+  }
   fortran_display_size_and_resolution(/* int& */ ix_screen,
                                       /* double& */ x_size,
                                       /* double& */ y_size,
                                       /* double& */ x_res,
-                                      /* double& */ y_res);
+                                      /* double& */ y_res,
+                                      /* int* */ _x_pix,
+                                      /* int* */ _y_pix);
 }
 double SimUtils::dj_bessel(int m, double arg) {
   double _dj_bes{};

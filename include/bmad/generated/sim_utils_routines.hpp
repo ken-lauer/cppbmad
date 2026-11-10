@@ -404,14 +404,18 @@ extern "C" void fortran_display_size_and_resolution(
     double &x_size /* 0D_NOT_real in */,
     double &y_size /* 0D_NOT_real in */,
     double &x_res /* 0D_NOT_real in */,
-    double &y_res /* 0D_NOT_real in */
+    double &y_res /* 0D_NOT_real in */,
+    int *x_pix /* 0D_NOT_integer in */,
+    int *y_pix /* 0D_NOT_integer in */
 );
 void display_size_and_resolution(
     int ix_screen,
     double x_size,
     double y_size,
     double x_res,
-    double y_res
+    double y_res,
+    std::optional<int> x_pix = std::nullopt,
+    std::optional<int> y_pix = std::nullopt
 );
 extern "C" bool fortran_dj_bessel(
     int &m /* 0D_NOT_integer in */,

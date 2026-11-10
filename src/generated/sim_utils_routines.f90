@@ -1557,8 +1557,8 @@ subroutine fortran_detab (str) bind(c)
   call detab(f_str)
 
 end subroutine
-subroutine fortran_display_size_and_resolution (ix_screen, x_size, y_size, x_res, y_res) &
-    bind(c)
+subroutine fortran_display_size_and_resolution (ix_screen, x_size, y_size, x_res, y_res, x_pix, &
+    y_pix) bind(c)
 
   use array_desc_mod
   implicit none
@@ -1573,6 +1573,12 @@ subroutine fortran_display_size_and_resolution (ix_screen, x_size, y_size, x_res
   real(rp) :: f_x_res
   real(c_double) :: y_res  ! 0D_NOT_real
   real(rp) :: f_y_res
+  type(c_ptr), intent(in), value :: x_pix  ! 0D_NOT_integer
+  integer(c_int) :: f_x_pix
+  integer(c_int), pointer :: f_x_pix_ptr
+  type(c_ptr), intent(in), value :: y_pix  ! 0D_NOT_integer
+  integer(c_int) :: f_y_pix
+  integer(c_int), pointer :: f_y_pix_ptr
   ! ** End of parameters **
   ! in: f_ix_screen 0D_NOT_integer
   f_ix_screen = ix_screen
@@ -1584,7 +1590,20 @@ subroutine fortran_display_size_and_resolution (ix_screen, x_size, y_size, x_res
   f_x_res = x_res
   ! in: f_y_res 0D_NOT_real
   f_y_res = y_res
-  call display_size_and_resolution(f_ix_screen, f_x_size, f_y_size, f_x_res, f_y_res)
+  ! in: f_x_pix 0D_NOT_integer
+  if (c_associated(x_pix)) then
+    call c_f_pointer(x_pix, f_x_pix_ptr)
+  else
+    f_x_pix_ptr => null()
+  endif
+  ! in: f_y_pix 0D_NOT_integer
+  if (c_associated(y_pix)) then
+    call c_f_pointer(y_pix, f_y_pix_ptr)
+  else
+    f_y_pix_ptr => null()
+  endif
+  call display_size_and_resolution(f_ix_screen, f_x_size, f_y_size, f_x_res, f_y_res, &
+      f_x_pix_ptr, f_y_pix_ptr)
 
 end subroutine
 subroutine fortran_dj_bessel (m, arg, dj_bes) bind(c)
