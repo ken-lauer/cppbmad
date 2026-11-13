@@ -532,6 +532,8 @@
 | `DETA_DPZ_Y` | Enum | [Enums](enums.md) |
 | `DETA_DPZ_Y_STORED` | Enum | [Enums](enums.md) |
 | `DETA_DS_MASTER` | Enum | [Enums](enums.md) |
+| `DETA_DS_X` | Enum | [Enums](enums.md) |
+| `DETA_DS_Y` | Enum | [Enums](enums.md) |
 | [`detab`](sim_utils.md#detab) | Routine | [Sim Utils](sim_utils.md) |
 | `DETAP_DPZ_X` | Enum | [Enums](enums.md) |
 | `DETAP_DPZ_X_STORED` | Enum | [Enums](enums.md) |

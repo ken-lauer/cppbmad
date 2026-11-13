@@ -2,7 +2,7 @@
 from __future__ import annotations
 import sys as _sys
 
-__version__ = "20261110.0"
+__version__ = "20261113.0"
 
 # Globals
 from ._pybmad import get_bmad_com
@@ -2674,7 +2674,9 @@ from ._enums import SUPERIMPOSE
 from ._enums import SUPER_OFFSET
 from ._enums import REFERENCE
 from ._enums import CARTESIAN_MAP
+from ._enums import DETA_DS_X
 from ._enums import CYLINDRICAL_MAP
+from ._enums import DETA_DS_Y
 from ._enums import GRID_FIELD
 from ._enums import GEN_GRADIENTS
 from ._enums import CREATE_JUMBO_SLAVE
@@ -5618,7 +5620,9 @@ __all__ = [
     "SUPER_OFFSET",
     "REFERENCE",
     "CARTESIAN_MAP",
+    "DETA_DS_X",
     "CYLINDRICAL_MAP",
+    "DETA_DS_Y",
     "GRID_FIELD",
     "GEN_GRADIENTS",
     "CREATE_JUMBO_SLAVE",
