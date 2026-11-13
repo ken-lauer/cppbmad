@@ -1840,6 +1840,9 @@ end_orb : CoordStruct
       nb::arg("ele"),
       R"""(Subroutine to apply the short range wake fields to a bunch.
 
+Note: If ele has short range mode wakes, bunch%ix_z must first be set by calling order_particles_in_z.
+The z_long wake does not use bunch%ix_z.
+
 Parameters
 ----------
 bunch : BunchStruct

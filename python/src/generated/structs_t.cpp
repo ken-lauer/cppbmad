@@ -8375,7 +8375,7 @@ void init_tao_title_struct(nb::module_ &m, nb::class_<TaoTitleStruct> &cls) {
           "justify",
           &TaoTitleStruct::justify,
           &TaoTitleStruct::set_justify,
-          "Left, Center, or Right justification."
+          "Horizontal (L, C, R) and vertical (B, C, T) justification."
       )
       .def_prop_rw(
           "draw_it",
