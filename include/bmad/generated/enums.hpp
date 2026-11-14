@@ -15,7 +15,7 @@
 namespace Bmad {
 
 // Enums from bmad_struct.f90
-const int BMAD_INC_VERSION = 365;
+const int BMAD_INC_VERSION = 366;
 const int NONE = 1;
 // maximum multipole order
 const int N_POLE_MAXX = 21;
@@ -878,7 +878,9 @@ const int SUPERIMPOSE = 120;
 const int SUPER_OFFSET = 121;
 const int REFERENCE = 122;
 const int CARTESIAN_MAP = 123;
+const int DETA_DS_X = 123;
 const int CYLINDRICAL_MAP = 124;
+const int DETA_DS_Y = 124;
 const int GRID_FIELD = 125;
 const int GEN_GRADIENTS = 126;
 const int CREATE_JUMBO_SLAVE = 127;

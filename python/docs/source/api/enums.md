@@ -6,7 +6,7 @@ Fortran integer and real parameters exposed as Python constants.
 
 | Name | Value | Description |
 |------|-------|-------------|
-| `BMAD_INC_VERSION` | `365` |  |
+| `BMAD_INC_VERSION` | `366` |  |
 | `NONE` | `1` |  |
 | `N_POLE_MAXX` | `21` | maximum multipole order |
 | `OLD_CONTROL_VAR_OFFSET` | `1000` | For indexing into ele%control%var(:) array |
@@ -846,7 +846,9 @@ Fortran integer and real parameters exposed as Python constants.
 | `SUPER_OFFSET` | `121` |  |
 | `REFERENCE` | `122` |  |
 | `CARTESIAN_MAP` | `123` |  |
+| `DETA_DS_X` | `123` |  |
 | `CYLINDRICAL_MAP` | `124` |  |
+| `DETA_DS_Y` | `124` |  |
 | `GRID_FIELD` | `125` |  |
 | `GEN_GRADIENTS` | `126` |  |
 | `CREATE_JUMBO_SLAVE` | `127` |  |

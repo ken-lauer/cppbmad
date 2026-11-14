@@ -1666,7 +1666,7 @@ All attributes may be passed to the initializer as arguments:
 | `x` | float | x, y rwt lower left corner |
 | `y` | float | x, y rwt lower left corner |
 | `units` | str | %BOX, POINTS, etc... |
-| `justify` | str | Left, Center, or Right justification. |
+| `justify` | str | Horizontal (L, C, R) and vertical (B, C, T) justification. |
 | `draw_it` | bool | draw the title? |
 
 ::: pybmad.TaoTop10Struct
