@@ -4194,6 +4194,13 @@ std::string to_string(const Bmad::EleToFibre &self) {
        std::pair{"err_flag", to_string(self.err_flag)}}
   );
 }
+std::string to_string(const Bmad::EleToPtcMagneticBnAn &self) {
+  return repr(
+      &self,
+      "Bmad::EleToPtcMagneticBnAn",
+      {std::pair{"n_max", to_string(self.n_max)}, std::pair{"crab_bn1", to_string(self.crab_bn1)}}
+  );
+}
 std::string to_string(const Bmad::EleToTaylor &self) {
   return repr(
       &self,

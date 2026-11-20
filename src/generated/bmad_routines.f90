@@ -9108,7 +9108,7 @@ subroutine fortran_ele_to_fibre (ele, ptc_fibre, use_offsets, err_flag, integ_or
   call c_f_pointer(err_flag, f_err_flag_ptr)
   f_err_flag_ptr = f_err_flag
 end subroutine
-subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
+subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max, crab_bn1) bind(c)
 
   use array_desc_mod
   use bmad_struct, only: ele_struct
@@ -9120,6 +9120,9 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
   type(c_ptr), intent(in), value :: n_max  ! 0D_NOT_integer
   integer :: f_n_max
   integer(c_int), pointer :: f_n_max_ptr
+  type(c_ptr), intent(in), value :: crab_bn1  ! 0D_NOT_real
+  real(rp) :: f_crab_bn1
+  real(c_double), pointer :: f_crab_bn1_ptr
   ! ** Inout parameters **
   type(array_descriptor_t), intent(in) :: bn
   real(rp), pointer :: f_bn(:)
@@ -9151,11 +9154,20 @@ subroutine fortran_ele_to_ptc_magnetic_bn_an (ele, bn, an, n_max) bind(c)
   else
     f_n_max_ptr => null()
   endif
-  call ele_to_ptc_magnetic_bn_an(f_ele, f_bn, f_an, f_n_max)
+  ! out: f_crab_bn1 0D_NOT_real
+  if (c_associated(crab_bn1)) then
+    call c_f_pointer(crab_bn1, f_crab_bn1_ptr)
+  else
+    f_crab_bn1_ptr => null()
+  endif
+  call ele_to_ptc_magnetic_bn_an(f_ele, f_bn, f_an, f_n_max, f_crab_bn1)
 
   ! out: f_n_max 0D_NOT_integer
   call c_f_pointer(n_max, f_n_max_ptr)
   f_n_max_ptr = f_n_max
+  ! out: f_crab_bn1 0D_NOT_real
+  call c_f_pointer(crab_bn1, f_crab_bn1_ptr)
+  f_crab_bn1_ptr = f_crab_bn1
 end subroutine
 subroutine fortran_ele_to_spin_taylor (ele, param, orb0) bind(c)
 
