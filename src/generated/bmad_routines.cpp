@@ -3820,7 +3820,8 @@ Bmad::EleToFibre Bmad::ele_to_fibre(
       _err_flag
   };
 }
-int Bmad::ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D<Real> &an) {
+Bmad::EleToPtcMagneticBnAn
+Bmad::ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D<Real> &an) {
   // bn: inout NOT (CppWrapperGeneralArgumentArray) ([':'])
   Bmad::array_descriptor_t _bn_desc;
   _bn_desc.rank = 1;
@@ -3832,11 +3833,13 @@ int Bmad::ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D
   _an_desc.data_ptr = an.data();
   _an_desc.dims[0] = an.size();
   int _n_max{};
+  double _crab_bn1{};
   fortran_ele_to_ptc_magnetic_bn_an(/* void* */ ele.get_fortran_ptr(),
                                     /* Bmad::array_descriptor_t& */ _bn_desc,
                                     /* Bmad::array_descriptor_t& */ _an_desc,
-                                    /* int& */ _n_max);
-  return _n_max;
+                                    /* int& */ _n_max,
+                                    /* double& */ _crab_bn1);
+  return EleToPtcMagneticBnAn{_n_max, _crab_bn1};
 }
 void Bmad::ele_to_spin_taylor(EleStruct &ele, LatParamStruct &param, CoordStruct &orb0) {
   fortran_ele_to_spin_taylor(/* void* */ ele.get_fortran_ptr(),

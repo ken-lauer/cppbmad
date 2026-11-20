@@ -575,6 +575,23 @@ ptc_fibre : Fibre, optional
     PTC fibre element.
 )"""
   );
+  nb::class_<Bmad::EleToPtcMagneticBnAn>(
+      m,
+      "EleToPtcMagneticBnAn",
+      "ele_to_ptc_magnetic_bn_an return type"
+  )
+      .def_ro("n_max", &Bmad::EleToPtcMagneticBnAn::n_max)
+      .def_ro("crab_bn1", &Bmad::EleToPtcMagneticBnAn::crab_bn1)
+      .def("__len__", [](const Bmad::EleToPtcMagneticBnAn &) { return 2; })
+      .def("__getitem__", [](const Bmad::EleToPtcMagneticBnAn &s, int i) -> nb::object {
+        if (i < 0)
+          i += 2;
+        if (i == 0)
+          return nb::cast(s.n_max);
+        if (i == 1)
+          return nb::cast(s.crab_bn1);
+        throw nb::index_error();
+      });
   m.def(
       "ele_to_ptc_magnetic_bn_an",
       &Bmad::ele_to_ptc_magnetic_bn_an,
@@ -604,6 +621,11 @@ Returns
 -------
 n_max : int, optional
     Maximum non-zero multipole component. Set to zero if there are no multipoles.
+
+crab_bn1 : float, optional
+    For a crab_cavity, if present, the RF deflecting field is returned here and is not included in bn(1). The
+    PTC cavity modulates the multipoles set at fibre creation by the RF so this is needed to separate the RF
+    field from the static kicks and multipoles.
 )"""
   );
   m.def(

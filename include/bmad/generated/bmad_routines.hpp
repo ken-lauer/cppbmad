@@ -2290,9 +2290,15 @@ extern "C" void fortran_ele_to_ptc_magnetic_bn_an(
     void *ele /* 0D_NOT_type in */,
     Bmad::array_descriptor_t &bn /* 1D_NOT_real inout */,
     Bmad::array_descriptor_t &an /* 1D_NOT_real inout */,
-    int &n_max /* 0D_NOT_integer out */
+    int &n_max /* 0D_NOT_integer out */,
+    double &crab_bn1 /* 0D_NOT_real out */
 );
-int ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D<Real> &an);
+struct EleToPtcMagneticBnAn {
+  int n_max;
+  double crab_bn1;
+};
+Bmad::EleToPtcMagneticBnAn
+ele_to_ptc_magnetic_bn_an(EleStruct &ele, FArray1D<Real> &bn, FArray1D<Real> &an);
 extern "C" void fortran_ele_to_spin_taylor(
     void *ele /* 0D_NOT_type inout */,
     void *param /* 0D_NOT_type in */,

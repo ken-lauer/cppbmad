@@ -331,6 +331,7 @@ std::string to_string(const SimUtils::Elbd &self);
 std::string to_string(const SimUtils::Elcbd &self);
 std::string to_string(const Bmad::EleMisalignmentLSCalc &self);
 std::string to_string(const Bmad::EleToFibre &self);
+std::string to_string(const Bmad::EleToPtcMagneticBnAn &self);
 std::string to_string(const Bmad::EleToTaylor &self);
 std::string to_string(const Bmad::ElecMultipoleField &self);
 std::string to_string(const Bmad::ElementAtSBranch &self);
