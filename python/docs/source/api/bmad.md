@@ -4985,7 +4985,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### calc_bunch_params
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1337)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1339)
 
 ::: pybmad.bmad.calc_bunch_params
     options:
@@ -4994,7 +4994,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### calc_bunch_params_slice
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1209)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1211)
 
 ::: pybmad.bmad.calc_bunch_params_slice
     options:
@@ -5003,7 +5003,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### calc_bunch_params_z_slice
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1279)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1281)
 
 ::: pybmad.bmad.calc_bunch_params_z_slice
     options:
@@ -5012,7 +5012,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### calc_bunch_sigma_matrix_etc
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1768)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1770)
 
 ::: pybmad.bmad.calc_bunch_sigma_matrix_etc
     options:
@@ -5021,7 +5021,7 @@ Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad
 
 ### calc_emittances_and_twiss_from_sigma_matrix
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1465)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1467)
 
 ::: pybmad.bmad.calc_emittances_and_twiss_from_sigma_matrix
     options:
@@ -5039,7 +5039,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### calc_spin_params
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1719)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1721)
 
 ::: pybmad.bmad.calc_spin_params
     options:
@@ -8060,7 +8060,7 @@ Fortran source: [`bmad/modules/attribute_mod.f90`]({{ upstream_source }}/bmad/mo
 
 ### init_beam_distribution
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L223)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L225)
 
 ::: pybmad.bmad.init_beam_distribution
     options:
@@ -8087,7 +8087,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### init_bunch_distribution
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L339)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L341)
 
 ::: pybmad.bmad.init_bunch_distribution
     options:
@@ -8190,7 +8190,7 @@ Fortran source: [`bmad/photon/photon_init_mod.f90`]({{ upstream_source }}/bmad/p
 
 ### init_spin_distribution
 
-Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1152)
+Fortran source: [`bmad/multiparticle/beam_utils.f90`]({{ upstream_source }}/bmad/multiparticle/beam_utils.f90#L1154)
 
 ::: pybmad.bmad.init_spin_distribution
     options:
@@ -9435,7 +9435,7 @@ Fortran source: [`bmad/modules/mode3_mod.f90`]({{ upstream_source }}/bmad/module
 
 ### order_particles_in_z
 
-Fortran source: [`bmad/multiparticle/wake_mod.f90`]({{ upstream_source }}/bmad/multiparticle/wake_mod.f90#L637)
+Fortran source: [`bmad/multiparticle/wake_mod.f90`]({{ upstream_source }}/bmad/multiparticle/wake_mod.f90#L639)
 
 ::: pybmad.bmad.order_particles_in_z
     options:
@@ -12053,7 +12053,7 @@ Fortran source: [`bmad/modules/bmad_routine_interface.f90`]({{ upstream_source }
 
 ### track1_sr_wake
 
-Fortran source: [`bmad/multiparticle/wake_mod.f90`]({{ upstream_source }}/bmad/multiparticle/wake_mod.f90#L705)
+Fortran source: [`bmad/multiparticle/wake_mod.f90`]({{ upstream_source }}/bmad/multiparticle/wake_mod.f90#L707)
 
 ::: pybmad.bmad.track1_sr_wake
     options:
